@@ -1,0 +1,97 @@
+Assalomu alaykum, {0}	Здравствуйте, {0}	Hello, {0}
+Baholandi	Оценено	Graded
+Batafsil tahlil (savollar va mavzular kesimi) veb-versiyada.	Подробный анализ (по вопросам и темам) — в веб-версии.	Detailed analysis (by question and topic) is in the web version.
+Belgilangan javoblar	Отмеченные ответы	Marked answers
+Belgilangan: {0} / {1}	Отмечено: {0} / {1}	Marked: {0} / {1}
+Boshqa guruhlar	Другие группы	Other groups
+Bu varaqa hozirgina tekshirildi. Keyingisini qo'ying.	Этот бланк только что проверен. Положите следующий.	This sheet was just checked. Place the next one.
+Bugungi darslar (maktab)	Уроки сегодня (школа)	Today's lessons (school)
+Chiroqni yoqib bo'lmadi.	Не удалось включить фонарик.	Could not turn on the flashlight.
+English	English	English
+Galereya	Галерея	Gallery
+Hammasi keldi	Все пришли	All present
+Hammasi serverga yuborilgan.	Всё отправлено на сервер.	Everything has been sent to the server.
+Hisobdan chiqilsinmi?	Выйти из аккаунта?	Sign out?
+Internet bo'lmasa ham ishlaydi: varaqalar telefonda saqlanadi va keyin yuboriladi.	Работает и без интернета: бланки сохраняются в телефоне и отправляются позже.	Works offline too: sheets are kept on the phone and sent later.
+Internet yo'q — navbatda	Нет интернета — в очереди	No internet — queued
+Javob berilgan	Отвечено	Answered
+Javob varaqasini kameraga ko'rsating	Покажите бланк ответов камере	Show the answer sheet to the camera
+Kameraga ruxsat berilmagan. Telefon sozlamalarida EduX ga kamera ruxsatini bering.	Нет доступа к камере. Разрешите EduX доступ к камере в настройках телефона.	Camera access denied. Allow EduX to use the camera in your phone settings.
+Ketma-ket rejim: tekshirilgan varaqani olib, keyingisini qo'ying.	Поточный режим: уберите проверенный бланк и положите следующий.	Continuous mode: remove the checked sheet and place the next one.
+Ko'proq	Ещё	More
+Ko'rib chiqiladigan varaqa yo'q.	Бланков на проверку нет.	No sheets to review.
+Mavzu (ixtiyoriy)	Тема (необязательно)	Topic (optional)
+Natija (server)	Результат (сервер)	Result (server)
+Navbat: {0}	Очередь: {0}	Queue: {0}
+O'qituvchi bergan havolani shu yerga qo'ying	Вставьте сюда ссылку от учителя	Paste the link from your teacher here
+O'quvchi kodi 6 ta raqamdan iborat.	Код ученика состоит из 6 цифр.	The student code has 6 digits.
+O'zbekcha	O'zbekcha	O'zbekcha
+Ovoz va tebranish	Звук и вибрация	Sound and vibration
+Platforma egasi paneli veb-versiyada ishlaydi. Ilovada tashkilot xodimi, o'quvchi yoki ota-ona sifatida kiring.	Панель владельца платформы работает в веб-версии. В приложение входите как сотрудник организации, ученик или родитель.	The platform owner panel is in the web version. Sign in to the app as staff, a student or a parent.
+QR kod o'qilmadi. Rasmni yaqinroq va aniqroq oling yoki testni tanlab skanerlang.	QR-код не распознан. Снимите ближе и чётче или выберите тест перед сканированием.	QR code not read. Take a closer, sharper photo or choose the test before scanning.
+Qorong'i — chiroqni yoqing	Темно — включите фонарик	Too dark — turn on the flashlight
+Rasm o'qilmadi. JPG yoki PNG fayl yuboring.	Изображение не прочитано. Отправьте файл JPG или PNG.	Image not read. Send a JPG or PNG file.
+Server bilan xavfsiz ulanib bo'lmadi (sertifikat).	Не удалось установить защищённое соединение с сервером (сертификат).	Could not connect securely to the server (certificate).
+Server javob bermadi. Internetni tekshirib, qayta urinib ko'ring.	Сервер не ответил. Проверьте интернет и попробуйте снова.	The server didn't respond. Check your internet and try again.
+Serverda	На сервере	On server
+Shu seansda: {0}	За этот сеанс: {0}	This session: {0}
+Skaner yadrosini yuklab bo'lmadi: {0}	Не удалось загрузить модуль сканера: {0}	Could not load the scanner engine: {0}
+Skanerlashni boshlash	Начать сканирование	Start scanning
+Summani kiriting.	Введите сумму.	Enter the amount.
+Tanlangan test uchun	Для выбранного теста	For a selected test
+Tashkilotingiz o'z serverida ishlasa yoki alohida manzil berilgan bo'lsa, shu yerga yozing.	Если ваша организация работает на своём сервере или вам дали отдельный адрес, укажите его здесь.	If your organization runs its own server or you were given a separate address, enter it here.
+Tashkilotni almashtirish	Сменить организацию	Switch organization
+Tashkilotni tanlang	Выберите организацию	Choose an organization
+Tayyor	Готово	Ready
+Tayyor — suratga oling	Готово — сделайте снимок	Ready — take the photo
+Tekshirildi — keyingi varaqani qo'ying	Проверено — положите следующий бланк	Checked — place the next sheet
+Tekshirilmagan vazifalar	Непроверенные задания	Unchecked assignments
+Telefonda	В телефоне	On phone
+Telefonda hisoblangan	Подсчитано на телефоне	Calculated on the phone
+Telefonni qimirlatmang	Не двигайте телефон	Hold the phone still
+Telefonni varaqa ustida tekis ushlang — ilova o'zi suratga oladi.	Держите телефон ровно над бланком — приложение само сделает снимок.	Hold the phone level over the sheet — the app takes the photo itself.
+Test tanlansa, uning kaliti telefonga oldindan yuklanadi: QR kod o'qilmasa ham varaqa tekshiriladi va natija internetsiz ham darhol chiqadi.	Если выбрать тест, его ключ заранее загружается в телефон: бланк проверяется даже без QR-кода, а результат появляется сразу, даже без интернета.	If you choose a test, its key is preloaded to the phone: sheets are checked even if the QR code isn't read, and results appear instantly, even offline.
+Test va o'quvchi varaqadagi QR kod va kod doirachalaridan o'zi aniqlanadi.	Тест и ученик определяются автоматически по QR-коду и кружкам кода на бланке.	The test and student are detected automatically from the QR code and code bubbles on the sheet.
+Testdan chiqilsinmi? Javoblaringiz saqlangan, keyin davom ettirishingiz mumkin.	Выйти из теста? Ваши ответы сохранены, можно продолжить позже.	Leave the test? Your answers are saved; you can continue later.
+Til	Язык	Language
+To'lash	Оплатить	Pay
+To'rt burchak ko'ringan va rasm tiniq bo'lganda	Когда видны все четыре угла и снимок чёткий	When all four corners are visible and the image is sharp
+To'rt burchakdagi belgi ham ko'rinsin	Все четыре угловых маркера должны быть видны	All four corner markers must be visible
+Topshirilgan testlar	Сданные тесты	Tests taken
+Ushlab turing...	Держите ровно...	Hold still...
+Varaqa telefondan o'chirilsinmi? Serverdagi natija o'zgarmaydi.	Удалить бланк с телефона? Результат на сервере не изменится.	Delete the sheet from the phone? The server result won't change.
+Varaqalarni tekshirish	Проверить бланки	Check sheets
+Varaqani o'zi suratga olsin	Автоматическая съёмка бланка	Capture sheets automatically
+Varaqaning burchak belgilari topilmadi. To'rt burchak ham ko'rinadigan qilib qayta rasmga oling.	Угловые маркеры бланка не найдены. Сфотографируйте заново так, чтобы были видны все четыре угла.	The sheet's corner markers weren't found. Retake the photo with all four corners visible.
+Varaqaning to'rt burchagidagi qora kvadrat belgilar ekranda ko'rinsin.	Чёрные квадратные маркеры в четырёх углах бланка должны быть видны на экране.	The black square markers in the four corners of the sheet must be visible on screen.
+Variantni kiriting.	Введите вариант.	Enter the variant.
+Yana {0} ta — qidiruvni aniqlashtiring	Ещё {0} — уточните поиск	{0} more — refine the search
+Yangi lidlar (bugun)	Новые лиды (сегодня)	New leads (today)
+Yaqinroq keling	Подойдите ближе	Move closer
+Yashil — to'g'ri, qizil — xato, sariq — shubhali. Kattalashtirish uchun ikki barmoq bilan suring.	Зелёный — верно, красный — ошибка, жёлтый — сомнительно. Чтобы увеличить, разведите двумя пальцами.	Green — correct, red — wrong, yellow — doubtful. Pinch with two fingers to zoom.
+Yaxshi natija uchun	Для лучшего результата	For best results
+Yorug' joyda, soya tushirmasdan suratga oling; qorong'ida chiroqni yoqing.	Снимайте в светлом месте без теней; в темноте включайте фонарик.	Shoot in a bright place without shadows; turn on the flashlight when it's dark.
+Yuborilgan varaqalar telefondan o'chirilsinmi? Serverdagi natijalar saqlanadi.	Удалить отправленные бланки с телефона? Результаты на сервере сохранятся.	Delete sent sheets from the phone? Server results are kept.
+Yuborilishi kutilmoqda	Ожидают отправки	Waiting to send
+Yuborilishi kutilmoqda: {0}	Ожидают отправки: {0}	Waiting to send: {0}
+ball	балл.	pts
+bir nechta javob	несколько ответов	multiple answers
+rasm sifati past	низкое качество снимка	low image quality
+server ishlamadi — telefon o'qishi	сервер не работал — распознано телефоном	server was down — read by the phone
+server o'qiy olmadi — telefon o'qishi	сервер не распознал — распознано телефоном	server couldn't read it — read by the phone
+so'm	сум	UZS
+telefon boshqacha o'qidi	телефон распознал иначе	the phone read it differently
+{0} daqiqa	{0} мин	{0} min
+{0} ta baho	оценок: {0}	{0} grades
+{0} ta faol lid	активных лидов: {0}	{0} active leads
+{0} ta natija	результатов: {0}	{0} results
+{0} ta natija (7 kun)	результатов за 7 дней: {0}	{0} results (7 days)
+{0} ta o'quvchi	учеников: {0}	{0} students
+{0} ta qoldirilgan	пропусков: {0}	{0} missed
+{0} ta savol	вопросов: {0}	{0} questions
+{0} ta savolga javob berilmagan.	Без ответа вопросов: {0}.	{0} questions unanswered.
+{0} ta shubhali joy	сомнительных мест: {0}	{0} doubtful spots
+{0} ta sinov darsida	на пробном уроке: {0}	{0} on trial lesson
+{0} ta test	тестов: {0}	{0} tests
+{0}-variant	вариант {0}	variant {0}
+Русский	Русский	Русский

@@ -1,0 +1,351 @@
+// Umumiy komponentlar: yuklanish holatlari, kartalar, ko'rsatkichlar, xabarlar.
+import 'package:flutter/material.dart';
+import 'package:flutter_math_fork/flutter_math.dart';
+
+import 'api.dart';
+import 'i18n.dart';
+import 'theme.dart';
+
+/// Ma'lumot yuklanadigan sahifa qismi: yuklanmoqda / xato (qayta urinish) / natija. Pastga tortib yangilash bilan.
+class AsyncView<T> extends StatefulWidget {
+  const AsyncView({super.key, required this.load, required this.builder, this.refreshable = true});
+
+  final Future<T> Function() load;
+  final Widget Function(BuildContext context, T data, Future<void> Function() reload) builder;
+  final bool refreshable;
+
+  @override
+  State<AsyncView<T>> createState() => AsyncViewState<T>();
+}
+
+class AsyncViewState<T> extends State<AsyncView<T>> {
+  T? _data;
+  bool _hasData = false;
+  Object? _error;
+  bool _loading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    reload();
+  }
+
+  Future<void> reload() async {
+    if (mounted) setState(() => _loading = true);
+    try {
+      final data = await widget.load();
+      if (!mounted) return;
+      setState(() {
+        _data = data;
+        _hasData = true;
+        _error = null;
+        _loading = false;
+      });
+    } catch (error) {
+      if (!mounted) return;
+      setState(() {
+        _error = error;
+        _loading = false;
+      });
+      if (_hasData) showMessage(context, errorText(error), error: true);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (!_hasData) {
+      if (_loading) return const Center(child: CircularProgressIndicator());
+      return ErrorState(message: errorText(_error), onRetry: reload);
+    }
+    final child = widget.builder(context, _data as T, reload);
+    if (!widget.refreshable) return child;
+    return RefreshIndicator(onRefresh: reload, child: child);
+  }
+}
+
+String errorText(Object? error) {
+  if (error is ApiException) return error.message;
+  return tr("Ma'lumotni yuklab bo'lmadi.");
+}
+
+void showMessage(BuildContext context, String text, {bool error = false}) {
+  final messenger = ScaffoldMessenger.maybeOf(context);
+  if (messenger == null) return;
+  messenger
+    ..hideCurrentSnackBar()
+    ..showSnackBar(SnackBar(
+      content: Text(text),
+      behavior: SnackBarBehavior.floating,
+      backgroundColor: error ? AppColors.danger : AppColors.ink,
+    ));
+}
+
+Future<bool> confirm(BuildContext context, String text, {String? action, bool danger = false}) async {
+  final result = await showDialog<bool>(
+    context: context,
+    builder: (context) => AlertDialog(
+      content: Text(text),
+      actions: <Widget>[
+        TextButton(onPressed: () => Navigator.pop(context, false), child: Text(tr('Bekor qilish'))),
+        FilledButton(
+          style: danger ? FilledButton.styleFrom(backgroundColor: AppColors.danger) : null,
+          onPressed: () => Navigator.pop(context, true),
+          child: Text(action ?? tr('Tasdiqlash')),
+        ),
+      ],
+    ),
+  );
+  return result ?? false;
+}
+
+class ErrorState extends StatelessWidget {
+  const ErrorState({super.key, required this.message, this.onRetry});
+
+  final String message;
+  final VoidCallback? onRetry;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(32),
+        child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+          const Icon(Icons.cloud_off_rounded, size: 48, color: AppColors.muted),
+          const SizedBox(height: 12),
+          Text(message, textAlign: TextAlign.center, style: const TextStyle(color: AppColors.muted)),
+          if (onRetry != null) ...<Widget>[
+            const SizedBox(height: 16),
+            OutlinedButton.icon(onPressed: onRetry, icon: const Icon(Icons.refresh), label: Text(tr('Qayta urinish'))),
+          ],
+        ]),
+      ),
+    );
+  }
+}
+
+class EmptyState extends StatelessWidget {
+  const EmptyState({super.key, required this.text, this.icon = Icons.inbox_outlined, this.action});
+
+  final String text;
+  final IconData icon;
+  final Widget? action;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 48),
+      child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+        Icon(icon, size: 44, color: AppColors.muted.withAlpha(140)),
+        const SizedBox(height: 12),
+        Text(text, textAlign: TextAlign.center, style: const TextStyle(color: AppColors.muted)),
+        if (action != null) ...<Widget>[const SizedBox(height: 16), action!],
+      ]),
+    );
+  }
+}
+
+/// Oq karta (veb-tizimdagi `card`).
+class AppCard extends StatelessWidget {
+  const AppCard({super.key, required this.child, this.padding = const EdgeInsets.all(16), this.onTap, this.color});
+
+  final Widget child;
+  final EdgeInsets padding;
+  final VoidCallback? onTap;
+  final Color? color;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: color ?? Colors.white,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16), side: const BorderSide(color: AppColors.line)),
+      clipBehavior: Clip.antiAlias,
+      child: InkWell(onTap: onTap, child: Padding(padding: padding, child: child)),
+    );
+  }
+}
+
+class SectionTitle extends StatelessWidget {
+  const SectionTitle(this.title, {super.key, this.trailing});
+
+  final String title;
+  final Widget? trailing;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(4, 20, 4, 10),
+      child: Row(children: <Widget>[
+        Expanded(child: Text(title, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: AppColors.ink))),
+        if (trailing != null) trailing!,
+      ]),
+    );
+  }
+}
+
+/// Bosh sahifadagi rangli ko'rsatkich.
+class StatCard extends StatelessWidget {
+  const StatCard({super.key, required this.label, required this.value, required this.icon, this.color = AppColors.brand, this.hint, this.onTap});
+
+  final String label;
+  final String value;
+  final IconData icon;
+  final Color color;
+  final String? hint;
+  final VoidCallback? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return AppCard(
+      onTap: onTap,
+      padding: const EdgeInsets.all(14),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
+        Row(children: <Widget>[
+          Container(
+            width: 34,
+            height: 34,
+            decoration: BoxDecoration(color: color.withAlpha(28), borderRadius: BorderRadius.circular(10)),
+            child: Icon(icon, size: 19, color: color),
+          ),
+          const Spacer(),
+          if (onTap != null) const Icon(Icons.chevron_right, size: 18, color: AppColors.muted),
+        ]),
+        const SizedBox(height: 10),
+        Text(value, style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w800, color: AppColors.ink)),
+        const SizedBox(height: 2),
+        Text(label, maxLines: 2, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 12.5, color: AppColors.muted)),
+        if (hint != null && hint!.isNotEmpty)
+          Text(hint!, maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 12, color: color, fontWeight: FontWeight.w600)),
+      ]),
+    );
+  }
+}
+
+/// Ikki ustunli ko'rsatkichlar to'ri.
+class StatGrid extends StatelessWidget {
+  const StatGrid({super.key, required this.children});
+
+  final List<Widget> children;
+
+  @override
+  Widget build(BuildContext context) {
+    final rows = <Widget>[];
+    for (var i = 0; i < children.length; i += 2) {
+      rows.add(Padding(
+        padding: const EdgeInsets.only(bottom: 10),
+        child: IntrinsicHeight(
+          child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
+            Expanded(child: children[i]),
+            const SizedBox(width: 10),
+            Expanded(child: i + 1 < children.length ? children[i + 1] : const SizedBox()),
+          ]),
+        ),
+      ));
+    }
+    return Column(children: rows);
+  }
+}
+
+class Pill extends StatelessWidget {
+  const Pill(this.text, {super.key, this.color = AppColors.brand});
+
+  final String text;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 3),
+      decoration: BoxDecoration(color: color.withAlpha(26), borderRadius: BorderRadius.circular(99)),
+      child: Text(text, style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: color)),
+    );
+  }
+}
+
+class KeyValue extends StatelessWidget {
+  const KeyValue(this.label, this.value, {super.key, this.valueColor});
+
+  final String label;
+  final String value;
+  final Color? valueColor;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 6),
+      child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
+        Expanded(child: Text(label, style: const TextStyle(color: AppColors.muted))),
+        const SizedBox(width: 12),
+        Flexible(
+          child: Text(value,
+              textAlign: TextAlign.end,
+              style: TextStyle(fontWeight: FontWeight.w600, color: valueColor ?? AppColors.ink)),
+        ),
+      ]),
+    );
+  }
+}
+
+/// Bosh harflar doirasi.
+class Avatar extends StatelessWidget {
+  const Avatar(this.name, {super.key, this.size = 40, this.color = AppColors.brand});
+
+  final String name;
+  final double size;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    final parts = name.trim().split(RegExp(r'\s+')).where((part) => part.isNotEmpty).toList();
+    final letters = parts.take(2).map((part) => part.substring(0, 1).toUpperCase()).join();
+    return Container(
+      width: size,
+      height: size,
+      alignment: Alignment.center,
+      decoration: BoxDecoration(color: color.withAlpha(30), shape: BoxShape.circle),
+      child: Text(letters, style: TextStyle(color: color, fontWeight: FontWeight.w700, fontSize: size * 0.36)),
+    );
+  }
+}
+
+/// Matn + LaTeX formulalar ($...$, \(...\), $$...$$, \[...\]) — veb-tizimdagi RichText kabi.
+class MathText extends StatelessWidget {
+  const MathText(this.text, {super.key, this.style});
+
+  final String text;
+  final TextStyle? style;
+
+  static final RegExp _pattern =
+      RegExp(r'\$\$([\s\S]+?)\$\$|\\\[([\s\S]+?)\\\]|\\\(([\s\S]+?)\\\)|\$(?!\s)([^$\n]*?[^\s$])\$(?!\d)');
+
+  @override
+  Widget build(BuildContext context) {
+    final base = style ?? DefaultTextStyle.of(context).style;
+    final matches = _pattern.allMatches(text).toList();
+    if (matches.isEmpty) return Text(text, style: base);
+    final spans = <InlineSpan>[];
+    var last = 0;
+    for (final match in matches) {
+      if (match.start > last) spans.add(TextSpan(text: text.substring(last, match.start)));
+      final display = match.group(1) != null || match.group(2) != null;
+      final formula = match.group(1) ?? match.group(2) ?? match.group(3) ?? match.group(4) ?? '';
+      spans.add(WidgetSpan(
+        alignment: PlaceholderAlignment.middle,
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 2, vertical: display ? 6 : 0),
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Math.tex(
+              formula,
+              mathStyle: display ? MathStyle.display : MathStyle.text,
+              textStyle: base,
+              onErrorFallback: (error) => Text(match.group(0) ?? formula, style: base),
+            ),
+          ),
+        ),
+      ));
+      last = match.end;
+    }
+    if (last < text.length) spans.add(TextSpan(text: text.substring(last)));
+    return Text.rich(TextSpan(style: base, children: spans));
+  }
+}

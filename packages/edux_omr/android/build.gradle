@@ -1,0 +1,54 @@
+// EduX varaqa o'quvchisi: C++ yadro NDK bilan yig'iladi (../src/CMakeLists.txt).
+group 'uz.edux.edux_omr'
+version '1.0'
+
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:8.1.0'
+    }
+}
+
+rootProject.allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+apply plugin: 'com.android.library'
+
+android {
+    if (project.android.hasProperty("namespace")) {
+        namespace 'uz.edux.edux_omr'
+    }
+
+    compileSdk 34
+
+    // Ilova bilan bir xil NDK (flutter.ndkVersion)
+    ndkVersion android.ndkVersion
+
+    externalNativeBuild {
+        cmake {
+            path "../src/CMakeLists.txt"
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    defaultConfig {
+        minSdkVersion 21
+        externalNativeBuild {
+            cmake {
+                arguments "-DANDROID_STL=c++_static"
+                cppFlags "-std=c++17"
+            }
+        }
+    }
+}

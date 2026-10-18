@@ -1,0 +1,93 @@
+# EduX mobil ilovasini yig'ish: tahlil, testlar, Android APK (har push'da) va AAB (qo'lda ishga tushirganda).
+# Sozlamalar (repo → Settings → Secrets and variables → Actions):
+#   vars.EDUX_SERVER            — ilova sukut bo'yicha ulanadigan server (masalan https://app.edux.uz)
+#   secrets.GOOGLE_SERVICES_JSON — Firebase google-services.json (push uchun; bo'lmasa push o'chiq yig'iladi)
+#   secrets.ANDROID_KEYSTORE_BASE64, ANDROID_KEYSTORE_PASSWORD, ANDROID_KEY_ALIAS, ANDROID_KEY_PASSWORD — Play Market imzosi (ixtiyoriy)
+name: Build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  android:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Flutter versiyasi
+        run: flutter --version
+
+      - name: Platforma papkalari (android/ios)
+        run: |
+          flutter create --org uz.edux --project-name edux --platforms=android,ios .
+          if [ -f test/widget_test.dart ] && grep -q "MyApp" test/widget_test.dart; then rm test/widget_test.dart; fi
+          flutter pub get
+          dart run tool/configure_platforms.dart
+          dart run flutter_launcher_icons
+
+      - name: Firebase (push)
+        env:
+          GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
+        run: |
+          if [ -n "$GOOGLE_SERVICES_JSON" ]; then
+            echo "$GOOGLE_SERVICES_JSON" > android/app/google-services.json
+            echo "google-services.json qo'yildi"
+          else
+            echo "::warning::GOOGLE_SERVICES_JSON yo'q — ilova push'siz yig'iladi"
+          fi
+          dart run tool/configure_firebase.dart
+
+      - name: Imzo (Play Market)
+        env:
+          KEYSTORE: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          STORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: |
+          if [ -n "$KEYSTORE" ]; then
+            echo "$KEYSTORE" | base64 -d > android/app/upload.jks
+            printf 'storeFile=upload.jks\nstorePassword=%s\nkeyAlias=%s\nkeyPassword=%s\n' "$STORE_PASSWORD" "$KEY_ALIAS" "$KEY_PASSWORD" > android/key.properties
+            echo "Imzo kaliti qo'yildi"
+          else
+            echo "::notice::Imzo kaliti yo'q — APK sinov (debug) kaliti bilan imzolanadi"
+          fi
+          dart run tool/configure_signing.dart
+
+      - name: Tahlil
+        run: flutter analyze --no-fatal-infos --no-fatal-warnings
+
+      - name: Testlar
+        run: flutter test
+
+      - name: APK
+        run: flutter build apk --release --split-per-abi --dart-define=EDUX_SERVER=${{ vars.EDUX_SERVER || 'https://app.edux.uz' }}
+
+      - name: AAB (Play Market)
+        if: github.event_name == 'workflow_dispatch'
+        run: flutter build appbundle --release --dart-define=EDUX_SERVER=${{ vars.EDUX_SERVER || 'https://app.edux.uz' }}
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: edux-android
+          path: |
+            build/app/outputs/flutter-apk/*.apk
+            build/app/outputs/bundle/release/*.aab
+          if-no-files-found: error

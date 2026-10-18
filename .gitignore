@@ -1,0 +1,21 @@
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+build/
+*.iml
+.idea/
+ios/Pods/
+ios/.symlinks/
+android/.gradle/
+android/local.properties
+android/key.properties
+*.jks
+
+# Firebase va imzo fayllari repoga qo'shilmaydi
+android/app/google-services.json
+android/app/upload.jks
+/android/
+/ios/
+.metadata
+pubspec.lock.bak
