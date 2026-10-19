@@ -17,31 +17,60 @@ const List<String> _suggestions = <String>[
   'Mening yechimimni tekshir: 2x + 6 = 14, x = 5',
 ];
 
-class TutorPage extends StatelessWidget {
+class TutorPage extends StatefulWidget {
   const TutorPage({super.key});
 
   @override
+  State<TutorPage> createState() => _TutorPageState();
+}
+
+class _TutorPageState extends State<TutorPage> {
+  Map<String, dynamic>? _status;
+  Object? _error;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => _load());
+  }
+
+  Future<void> _load() async {
+    setState(() {
+      _status = null;
+      _error = null;
+    });
+    try {
+      final status = asMap(await AppScope.read(context).api.get('ai/status'));
+      if (mounted) setState(() => _status = status);
+    } catch (error) {
+      if (mounted) setState(() => _error = error);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final session = AppScope.of(context);
-    return AsyncView<Map<String, dynamic>>(
-      refreshable: false,
-      load: () async => asMap(await session.api.get('ai/status')),
-      builder: (context, status, reload) {
-        if (status['tutor'] != true) {
-          return Scaffold(
-            appBar: AppBar(title: Text(tr('AI ustoz'))),
-            body: Center(
-              child: EmptyState(
-                icon: Icons.auto_awesome_outlined,
-                text: tr("AI ustoz tashkilotingizda yoqilmagan. O'qituvchingiz yoki markaz ma'muriyatidan so'rang."),
-                action: OutlinedButton.icon(onPressed: reload, icon: const Icon(Icons.refresh), label: Text(tr('Qayta urinish'))),
-              ),
-            ),
-          );
-        }
-        return _TutorChat(remaining: status['remaining'] == null ? null : asInt(status['remaining']));
-      },
-    );
+    final status = _status;
+    if (status != null && status['tutor'] == true) {
+      return _TutorChat(remaining: status['remaining'] == null ? null : asInt(status['remaining']));
+    }
+    final error = _error;
+    Widget body;
+    if (error is ApiException && error.isForbidden) {
+      body = ForbiddenState(details: error.message, onRetry: _load);
+    } else if (error != null) {
+      body = ErrorState(message: errorText(error), onRetry: _load);
+    } else if (status == null) {
+      body = const Center(child: CircularProgressIndicator());
+    } else {
+      body = Center(
+        child: EmptyState(
+          icon: Icons.auto_awesome_outlined,
+          text: tr("AI ustoz tashkilotingizda yoqilmagan. O'qituvchingiz yoki markaz ma'muriyatidan so'rang."),
+          action: OutlinedButton.icon(onPressed: _load, icon: const Icon(Icons.refresh), label: Text(tr('Qayta urinish'))),
+        ),
+      );
+    }
+    return Scaffold(appBar: AppBar(title: Text(tr('AI ustoz'))), body: body);
   }
 }
 
