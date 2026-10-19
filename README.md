@@ -17,6 +17,20 @@ Actions sozlamalari (Settings → Secrets and variables → Actions):
 
 Play Market uchun `.aab`: Actions → Build → «Run workflow».
 
+## 3.1 da yangi
+
+**Xodimlar (bosh sahifadagi «Bo'limlar» va «Ko'proq» menyusi; modul, imkoniyat va rolga qarab ko'rinadi)**
+- **Call markazi** (CRM + `callcenter`; direktor, administrator, marketolog, kassir): jonli kiruvchi qo'ng'iroq va qo'ng'iroq qiluvchi kartasi (o'quvchi/ota-ona, balans, guruhlar, lid, ochiq vazifalar, so'nggi qo'ng'iroqlar). Holat **faqat sahifa ochiq va ilova oldingi planda bo'lganda** har 10 soniyada so'raladi. Javobsiz qo'ng'iroqlar navbati («Hal qilindi», natija), natija belgilash (qayta qo'ng'iroq vaqti → vazifa, notanish raqam → lid), jurnal (bugun / 7 kun / shu oy), skriptlar, operator holati, raqam bo'yicha qidirish, qo'lda qayd. Tezkor amallar: qayta qo'ng'iroq (`tel:`), lid yoki o'quvchi kartasini ochish. Barcha so'rovlar `lib/features/callcenter/callcenter_repository.dart` da.
+- **AI yordamchi** (`ai`): AI ustoz oynasi xodimlar uchun (`ai/status` → `staff`, `kind: staff`), suhbatlar tarixi va oylik limit.
+- **Mavzular bo'yicha test** (Test moduli; direktor, administrator, o'qituvchi): fan → bo'lim → mavzu (savollar soni bilan), savollarni ko'rib chiqish (LaTeX), mavzular va har biridan nechta savol tanlanadi → qoralama test (`POST bank/topics/exam`). Test raqami va nomi ko'rsatiladi, veb-versiyada e'lon qilinadi.
+- **Moliya** (CRM; direktor, administrator, kassir): bugungi to'lovlar (usullar bo'yicha), kassalar qoldig'i, qarzdorlar (qo'ng'iroq, SMS, Telegram/SMS eslatma, to'lov qabul qilish), joriy oy kunlari va oxirgi 12 oy bo'yicha tushum/xarajat. So'rovlar `lib/features/finance/finance_repository.dart` da.
+
+**Sifat**
+- **Internetsiz ko'rish**: bosh sahifa (xodim, o'quvchi), kundalik (joriy hafta), testlarim, «Farzandim» (farzandlar ro'yxati va Umumiy tab), o'quvchilar ro'yxati — oxirgi muvaffaqiyatli javob telefonda saqlanadi va internet bo'lmasa «Internet yo'q» belgisi bilan ko'rsatiladi; pastga tortib yangilash qayta urinadi. Ilova internetsiz ochilsa ham foydalanuvchi va tashkilot konteksti nusxadan tiklanadi. Chiqishda nusxalar o'chiriladi.
+- **Bildirishnomalar markazi**: kelgan push xabarlar (ilova ochiq, fonda yoki yopiq bo'lganda ham) telefonda saqlanadi, o'qilgan/o'qilmagan, bosilganda tegishli sahifa ochiladi; bosh sahifada qo'ng'iroqcha va o'qilmaganlar soni.
+- **Dizayn**: bir xil oraliqlar va kartalar, skelet yuklanish, yangilangan bo'sh/xato holatlari, kattaroq bosish maydonlari; tungi rejim va tashkilot rangi saqlanadi.
+- **iPhone**: Info.plist ruxsat matnlari (kamera, galereya, mikrofon), push fon rejimi, minimal iOS 15.0 (Firebase); GitHub Actions'da imzosiz iOS yig'ish (`edux-ios-unsigned` artefakti) — Android yig'ilishiga ta'sir qilmaydi.
+
 ## 3.0 da yangi
 
 **Kirish**
@@ -126,11 +140,13 @@ open ios/Runner.xcworkspace     # Signing & Capabilities → Team, Bundle ID uz.
 flutter build ipa --release --dart-define=EDUX_SERVER=https://app.sizning-domen.uz
 ```
 
-Tayyor `.ipa` ni Transporter yoki Xcode Organizer orqali App Store Connect / TestFlight'ga yuklang. Kamera va galereya ruxsat matnlari `configure_platforms.dart` tomonidan qo'shilgan.
+Tayyor `.ipa` ni Transporter yoki Xcode Organizer orqali App Store Connect / TestFlight'ga yuklang. Kamera, galereya va mikrofon ruxsat matnlari, push fon rejimi va minimal iOS 15.0 `configure_platforms.dart` tomonidan qo'yiladi (Podfile `flutter build ios --config-only` dan keyin paydo bo'lsa, skriptni qayta ishga tushiring).
 
 ### GitHub Actions
 
-`.github/workflows/build.yml` har push'da testlarni ishga tushiradi, Android APK yig'adi (Artifacts bo'limida) va iOS'ni imzosiz tekshirib ko'radi. Server manzilini repozitoriy o'zgaruvchisi `EDUX_SERVER` orqali bering.
+`.github/workflows/build.yml` har push'da testlarni ishga tushiradi, Android APK yig'adi (Artifacts bo'limida) va alohida `ios` job'ida (macos-latest) iOS'ni imzosiz yig'adi: `flutter build ios --release --no-codesign`, natija — `edux-ios-unsigned` artefaktidagi `Runner.app` arxivi. iOS job xato bersa ham Android yig'ilishi va Releases davom etadi. Server manzilini repozitoriy o'zgaruvchisi `EDUX_SERVER` orqali bering.
+
+iOS'da push uchun Firebase'ning `GoogleService-Info.plist` faylini Xcode'da Runner'ga qo'shing va Signing & Capabilities'da «Push Notifications» va «Background Modes → Remote notifications» ni yoqing (CI dagi imzosiz yig'ishda push o'chiq).
 
 ## Testlar
 
@@ -145,18 +161,22 @@ cd packages/edux_omr && bash tool/test.sh /yo'l/edux/omr-service 96   # C++ yadr
 
 EduX server **1.8.0** yoki yangiroq: `device_result` maydoni va `GET /api/v1/scans/kit/{exam}` shu versiyada qo'shilgan. Eski serverda ilova ishlaydi, lekin telefon natijasi solishtirilmaydi va internetsiz baholash bo'lmaydi.
 
-3.0 imkoniyatlari uchun server **1.28** tavsiya etiladi (`context.features`). `features` qaytarmaydigan eski serverda qo'shimcha bo'limlar cheklanmagan deb hisoblanadi va mavjud bo'lmagan bo'lim ochilsa, 403/404 xabari ko'rsatiladi.
+3.0 va 3.1 imkoniyatlari uchun server **1.28** tavsiya etiladi (call markazi — 1.25+, mavzulashtirilgan baza — 1.27+) (`context.features`). `features` qaytarmaydigan eski serverda qo'shimcha bo'limlar cheklanmagan deb hisoblanadi va mavjud bo'lmagan bo'lim ochilsa, 403/404 xabari ko'rsatiladi.
 
 ## Tuzilma
 
 ```
 lib/
-  core/              API, sessiya, tarjima, format, mavzu, umumiy vidjetlar
+  core/              API, sessiya, tarjima, format, mavzu, umumiy vidjetlar, internetsiz nusxa, bildirishnomalar ombori
   features/
     auth/            kirish (parol, bir martalik kod, Telegram), tashkilot tanlash
     shell/           rolga, modul va imkoniyatlarga qarab pastki menyu
     scanner/         skaner, navbat, test kaliti, natija, tekshiruv
     staff/           bosh sahifa, o'quvchilar, to'lov, davomat, testlar
+    callcenter/      call markazi va CallCenterRepository (barcha call-markaz so'rovlari)
+    finance/         moliya (bugun, qarzdorlar, hisobot) va FinanceRepository
+    testing/         mavzular bo'yicha test (bank/topics)
+    notifications/   bildirishnomalar markazi va qo'ng'iroqcha
     student/         bosh sahifa, onlayn testlar, kurslar, uy vazifasi, kundalik, to'lov, to'lov havolasi
     guardian/        «Farzandim» va GuardianRepository (ota-onaning barcha so'rovlari)
     olympiad/        olimpiadalarim, olimpiada sahifasi
@@ -175,6 +195,10 @@ tool/                platforma sozlash, tarjima tekshiruvi
 - Virtual laboratoriyada vebdagi interaktiv tajriba (mayatnik, linza animatsiyasi) yo'q — topshiriq matni, qiymatlar va javob.
 - Tashqi (boshqa markazdagi) ishtirokchi olimpiada testini brauzerdagi shaxsiy havola orqali ishlaydi.
 
-- Push-bildirishnomalar yo'q (Telegram bot orqali bildirishnomalar ishlaydi). Firebase qo'shish uchun alohida loyiha sozlamalari kerak.
+- Push-bildirishnomalar Firebase sozlangan yig'ilishdagina ishlaydi (`GOOGLE_SERVICES_JSON`; iOS'da `GoogleService-Info.plist` va imzo). Bildirishnomalar markazi faqat shu telefonga kelgan xabarlarni ko'rsatadi — serverda xabarlar tarixi endpointi yo'q; ilova o'chirilsa yoki chiqilsa ro'yxat tozalanadi.
+- Call markazi: jonli holat so'rov orqali (10 s) — real vaqt (WebSocket) yo'q; qo'ng'iroq yozuvini tinglash va matnga o'girish, statistika, skript/ovozli operator sozlamalari vebda. Marketolog o'quvchi kartasini ocha olmaydi (server ruxsati).
+- Moliya: to'lovni bekor qilish, qaytarish, xarajat va kassa o'tkazmalari, eksport — vebda. Bugungi ro'yxatda birinchi 50 ta to'lov.
+- Mavzular bo'yicha test: faqat qoralama yaratiladi (guruh, e'lon qilish, variantlar — vebda); filtrlar (qiyinlik, yil) ilovada yo'q, til tanlash bor.
+- Internetsiz nusxa faqat ko'rish uchun: o'zgartirish (to'lov, davomat, test) internet talab qiladi.
 - Faqat HTTPS serverlar: Android/iOS sukut bo'yicha shifrlanmagan HTTP'ni bloklaydi. Mahalliy sinov uchun `http://` kerak bo'lsa, AndroidManifest'ga `android:usesCleartextTraffic="true"` qo'shing.
 - Ilova yozilgan muhitda Flutter SDK yo'q edi: C++ yadro to'liq sinovdan o'tgan, Dart kodi sintaksis bo'yicha tekshirilgan, lekin birinchi `flutter analyze` / `flutter run` ni ishlab chiquvchi kompyuterida bajarish kerak.
