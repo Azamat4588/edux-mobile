@@ -11,13 +11,17 @@ import '../../core/sms_gateway.dart';
 import '../access/checkin_page.dart';
 import '../access/kiosk_page.dart';
 import '../access/sms_gateway_page.dart';
+import '../callcenter/callcenter_page.dart';
 import '../crm/leads_page.dart';
 import '../crm/tasks_page.dart';
+import '../finance/finance_page.dart';
 import '../fun/achievements_page.dart';
 import '../fun/games_page.dart';
 import '../fun/labs_page.dart';
 import '../olympiad/olympiads_page.dart';
+import '../notifications/notifications_page.dart';
 import '../support/support_page.dart';
+import '../testing/topic_tests_page.dart';
 import '../tutor/tutor_page.dart';
 import '../student/certificates_page.dart';
 import '../../core/session.dart';
@@ -112,6 +116,12 @@ class _HomeShellState extends State<HomeShell> with WidgetsBindingObserver {
     final testing = session.hasModule('testing') && <String>['director', 'admin', 'teacher'].contains(session.role);
     final crm = session.hasModule('crm');
     final extra = <Widget>[
+      _MenuTile(icon: Icons.notifications_none_rounded, label: tr('Bildirishnomalar'), page: const NotificationsPage()),
+      if (session.canCallCenter) _MenuTile(icon: Icons.headset_mic_outlined, label: tr('Call markazi'), page: const CallCenterPage()),
+      if (session.canSeeFinance) _MenuTile(icon: Icons.account_balance_wallet_outlined, label: tr('Moliya'), page: const FinancePage()),
+      if (session.canBuildTopicTests)
+        _MenuTile(icon: Icons.account_tree_outlined, label: tr("Mavzular bo'yicha test"), page: const TopicTestsPage()),
+      if (session.canUseStaffAi) _MenuTile(icon: Icons.auto_awesome_outlined, label: tr('AI yordamchi'), page: const StaffAssistantPage()),
       if (crm && <String>['director', 'admin', 'marketer'].contains(session.role))
         _MenuTile(icon: Icons.person_search_outlined, label: tr('Lidlar'), page: const LeadsPage()),
       if (crm) _MenuTile(icon: Icons.task_alt, label: tr('Vazifalar'), page: const TasksPage()),
@@ -151,6 +161,7 @@ class _HomeShellState extends State<HomeShell> with WidgetsBindingObserver {
     final full = !session.isGuest;
     final fun = full && session.hasFeature('fun') && (session.hasModule('testing') || session.hasModule('lms'));
     final extra = <Widget>[
+      _MenuTile(icon: Icons.notifications_none_rounded, label: tr('Bildirishnomalar'), page: const NotificationsPage()),
       if (full && session.hasModule('testing') && session.hasFeature('olympiad'))
         _MenuTile(icon: Icons.emoji_events_outlined, label: tr('Olimpiadalarim'), page: const OlympiadsPage()),
       if (full && session.hasFeature('ai'))
@@ -178,6 +189,7 @@ class _HomeShellState extends State<HomeShell> with WidgetsBindingObserver {
   /// Ota-ona: bitta «Farzandim» (farzand almashtirgich + Umumiy / Kundalik / Testlar / To'lov tablari).
   List<_Tab> _guardianTabs(Session session) {
     final extra = <Widget>[
+      _MenuTile(icon: Icons.notifications_none_rounded, label: tr('Bildirishnomalar'), page: const NotificationsPage()),
       _MenuTile(icon: Icons.support_agent_outlined, label: tr('Murojaatlar'), page: const SupportPage()),
     ];
     return <_Tab>[

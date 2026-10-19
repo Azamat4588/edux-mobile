@@ -8,9 +8,15 @@ import '../../core/session.dart';
 import '../../core/theme.dart';
 import '../../core/widgets.dart';
 import '../access/checkin_page.dart';
+import '../callcenter/callcenter_page.dart';
+import '../crm/leads_page.dart';
+import '../crm/tasks_page.dart';
+import '../finance/finance_page.dart';
 import '../notifications/notifications_page.dart';
 import '../scanner/scanner_page.dart';
 import '../scanner/scans_page.dart';
+import '../testing/topic_tests_page.dart';
+import '../tutor/tutor_page.dart';
 import 'attendance_page.dart';
 import 'students_page.dart';
 
@@ -93,6 +99,9 @@ class StaffHomePage extends StatelessWidget {
                 icon: Icons.warning_amber_rounded,
                 color: AppColors.danger,
                 hint: asInt(crm['debt_total']) > 0 ? money(asInt(crm['debt_total'])) : null,
+                onTap: session.canSeeFinance
+                    ? () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const FinancePage(initialTab: 1)))
+                    : null,
               ),
               if (crm['income_today'] != null)
                 StatCard(
@@ -100,6 +109,9 @@ class StaffHomePage extends StatelessWidget {
                   value: groupDigits(asInt(crm['income_today'])),
                   icon: Icons.payments_outlined,
                   color: AppColors.success,
+                  onTap: session.canSeeFinance
+                      ? () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const FinancePage()))
+                      : null,
                 ),
               if (crm['new_leads_today'] != null)
                 StatCard(
@@ -128,6 +140,7 @@ class StaffHomePage extends StatelessWidget {
               Text(dayTitle(DateTime.now()), style: TextStyle(color: AppColors.muted)),
               const SizedBox(height: 16),
               _QuickActions(session: session, onOpenTab: onOpenTab),
+              _SectionTiles(session: session),
               if (cards.isNotEmpty) ...<Widget>[
                 SectionTitle(tr('Bugun')),
                 StatGrid(children: cards),
@@ -198,6 +211,75 @@ class _QuickActions extends StatelessWidget {
       children: actions
           .map((action) => Expanded(child: Padding(padding: const EdgeInsets.symmetric(horizontal: 4), child: action)))
           .toList(),
+    );
+  }
+}
+
+/// Bo'limlar (3.1): call markazi, moliya, mavzular bo'yicha test, AI yordamchi, lidlar, vazifalar —
+/// modul, imkoniyat va rolga qarab.
+class _SectionTiles extends StatelessWidget {
+  const _SectionTiles({required this.session});
+
+  final Session session;
+
+  @override
+  Widget build(BuildContext context) {
+    final crm = session.hasModule('crm');
+    final tiles = <Widget>[
+      if (session.canCallCenter)
+        _SectionTile(icon: Icons.headset_mic_outlined, label: tr('Call markazi'), color: const Color(0xFF0891B2), page: const CallCenterPage()),
+      if (session.canSeeFinance)
+        _SectionTile(icon: Icons.account_balance_wallet_outlined, label: tr('Moliya'), color: AppColors.success, page: const FinancePage()),
+      if (session.canBuildTopicTests)
+        _SectionTile(icon: Icons.account_tree_outlined, label: tr("Mavzular bo'yicha test"), color: const Color(0xFF7C3AED), page: const TopicTestsPage()),
+      if (session.canUseStaffAi)
+        _SectionTile(icon: Icons.auto_awesome_outlined, label: tr('AI yordamchi'), color: AppColors.warning, page: const StaffAssistantPage()),
+      if (crm && <String>['director', 'admin', 'marketer'].contains(session.role))
+        _SectionTile(icon: Icons.person_search_outlined, label: tr('Lidlar'), color: AppColors.brand, page: const LeadsPage()),
+      if (crm) _SectionTile(icon: Icons.task_alt, label: tr('Vazifalar'), color: AppColors.danger, page: const TasksPage()),
+    ];
+    if (tiles.isEmpty) return const SizedBox();
+    return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
+      SectionTitle(tr("Bo'limlar")),
+      GridView.count(
+        crossAxisCount: 2,
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        padding: EdgeInsets.zero,
+        mainAxisSpacing: AppSpacing.s,
+        crossAxisSpacing: AppSpacing.s,
+        childAspectRatio: 2.6,
+        children: tiles,
+      ),
+    ]);
+  }
+}
+
+class _SectionTile extends StatelessWidget {
+  const _SectionTile({required this.icon, required this.label, required this.color, required this.page});
+
+  final IconData icon;
+  final String label;
+  final Color color;
+  final Widget page;
+
+  @override
+  Widget build(BuildContext context) {
+    return AppCard(
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.m),
+      onTap: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => page)),
+      child: Row(children: <Widget>[
+        Container(
+          width: 38,
+          height: 38,
+          decoration: BoxDecoration(color: AppColors.soft(color), borderRadius: BorderRadius.circular(AppRadius.control)),
+          child: Icon(icon, size: 21, color: color),
+        ),
+        const SizedBox(width: AppSpacing.s),
+        Expanded(
+          child: Text(label, maxLines: 2, overflow: TextOverflow.ellipsis, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 13.5)),
+        ),
+      ]),
     );
   }
 }

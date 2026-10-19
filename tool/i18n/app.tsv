@@ -342,3 +342,102 @@ Hammasini o'qilgan deb belgilash	Отметить все как прочитан
 Hozircha bildirishnoma yo'q. Push-bildirishnomalar bu ilova yig'ilishida yoqilmagan bo'lishi mumkin.	Уведомлений пока нет. Push-уведомления могут быть не включены в этой сборке приложения.	No notifications yet. Push notifications may not be enabled in this app build.
 Hozircha bildirishnoma yo'q. To'lov, baho, test natijasi va vazifalar haqidagi xabarlar shu yerda saqlanadi.	Уведомлений пока нет. Здесь сохраняются сообщения об оплатах, оценках, результатах тестов и задачах.	No notifications yet. Messages about payments, grades, test results and tasks are kept here.
 Internet yo'q. {0} holatidagi ma'lumot ko'rsatilmoqda.	Нет интернета. Показаны данные на {0}.	No internet. Showing data as of {0}.
+7 kun	7 дней	7 days
+AI yordamchi	AI-помощник	AI assistant
+AI yordamchi tashkilotingizda yoqilmagan yoki oylik limit tugagan. Direktor uni sozlamalarda yoqishi mumkin.	AI-помощник не включён в вашей организации или месячный лимит исчерпан. Директор может включить его в настройках.	The AI assistant is not enabled in your organization or the monthly limit is used up. The director can enable it in settings.
+Barcha tillar	Все языки	All languages
+Bitta testga ko'pi bilan {0} ta savol qo'shish mumkin.	В один тест можно добавить не более {0} вопросов.	A test can have at most {0} questions.
+Bo'sh qolsa, fan va mavzu nomidan tuziladi.	Если оставить пустым, название составится из предмета и темы.	If left empty, the title is built from the subject and topic.
+Bu davrda qo'ng'iroq yo'q.	За этот период звонков нет.	No calls in this period.
+Bu mavzuda savol yo'q.	В этой теме нет вопросов.	There are no questions in this topic.
+Bu ota-onaga yaqinda eslatma yuborilgan.	Этому родителю недавно уже отправлялось напоминание.	A reminder was recently sent to this parent.
+Bu oyda hali to'lov yo'q.	В этом месяце оплат пока нет.	No payments this month yet.
+Bugun hali to'lov qabul qilinmagan.	Сегодня оплат ещё не принималось.	No payments received today yet.
+Bugun: {0} ta qo'ng'iroq	Сегодня: {0} звонков	Today: {0} calls
+Bugungi to'lovlar	Оплаты за сегодня	Today's payments
+Call markazi	Колл-центр	Call center
+Chiquvchi	Исходящий	Outgoing
+Davomiyligi (daqiqa)	Длительность (мин)	Duration (min)
+Eslatma yuborildi: Telegram — {0}, SMS — {1}	Напоминание отправлено: Telegram — {0}, SMS — {1}	Reminder sent: Telegram — {0}, SMS — {1}
+Eslatma yuborilmadi: ota-ona Telegram botga ulanmagan va SMS shabloni yoqilmagan.	Напоминание не отправлено: родитель не подключён к Telegram-боту и SMS-шаблон не включён.	Reminder not sent: the parent is not connected to the Telegram bot and the SMS template is off.
+Eslatma yuborish (Telegram/SMS)	Отправить напоминание (Telegram/SMS)	Send reminder (Telegram/SMS)
+Gaplashilmoqda	Идёт разговор	Talking
+Hal qilindi	Решено	Handled
+Hal qilindi deb belgilandi.	Отмечено как решённое.	Marked as handled.
+Hisobot	Отчёт	Report
+Hozir faol qo'ng'iroq yo'q. Kiruvchi qo'ng'iroq bo'lsa, shu yerda qo'ng'iroq qiluvchi kartasi chiqadi.	Сейчас активных звонков нет. При входящем звонке здесь появится карточка звонящего.	No active calls right now. When a call comes in, the caller card appears here.
+Ichki raqam: {0}	Внутренний номер: {0}	Extension: {0}
+Ishda emas	Не в сети	Offline
+Ismi	Имя	Name
+Javoblarni yuborishdan oldin tekshiring: AI xato qilishi mumkin. Shaxsiy ma'lumotlarni yozmang.	Проверяйте ответы перед отправкой: AI может ошибаться. Не вводите персональные данные.	Check answers before sending them on: AI can make mistakes. Do not enter personal data.
+Javobsiz qo'ng'iroq yo'q. Hammasiga qayta qo'ng'iroq qilingan.	Пропущенных звонков нет. Всем перезвонили.	No missed calls. Everyone has been called back.
+Jiringlamoqda	Звонит	Ringing
+Jonli	Сейчас	Live
+Kamaytirish	Уменьшить	Decrease
+Kassalar	Кассы	Cash desks
+Kiruvchi	Входящий	Incoming
+Ko'paytirish	Увеличить	Increase
+Kunlar bo'yicha tushum	Поступления по дням	Income by day
+Kursga yozildi	Записался на курс	Enrolled in a course
+Ma'lumot berildi	Предоставлена информация	Information given
+Mavzular bo'yicha test	Тест по темам	Test by topics
+Mavzularni belgilang va har biridan nechta savol olinishini tanlang. Savollar tasodifiy tanlanadi.	Отметьте темы и выберите, сколько вопросов взять из каждой. Вопросы выбираются случайно.	Select topics and choose how many questions to take from each. Questions are picked at random.
+Mavzulashtirilgan savollar bazasi hali to'ldirilmagan.	База вопросов по темам ещё не заполнена.	The topic-based question bank has not been filled yet.
+Mening holatim	Мой статус	My status
+Natija saqlandi.	Результат сохранён.	Outcome saved.
+Natijani tanlang.	Выберите результат.	Choose an outcome.
+Navbat	Очередь	Queue
+Notanish raqam. Natijani «Qiziqdi» yoki «Sinov darsiga yozildi» deb belgilasangiz, yangi lid yaratiladi.	Неизвестный номер. Если отметить результат «Заинтересовался» или «Записался на пробный урок», будет создан новый лид.	Unknown number. If you mark the outcome as "Interested" or "Booked a trial lesson", a new lead is created.
+O'chirilsa — osondan qiyinga tartib bilan.	Если выключено — по порядку от лёгких к сложным.	If off, questions go in order from easy to hard.
+Ochiq vazifalar	Открытые задачи	Open tasks
+Operatorlar	Операторы	Operators
+Oxirgi to'lov: {0}	Последняя оплата: {0}	Last payment: {0}
+Oylar bo'yicha (12 oy)	По месяцам (12 мес.)	By month (12 months)
+Qabul qilyapti	Принимает звонки	Available
+Qarzdor yo'q. Hamma to'lovlar o'z vaqtida.	Должников нет. Все оплаты вовремя.	No debtors. All payments are on time.
+Qayta qo'ng'iroq vaqti	Время обратного звонка	Callback time
+Qayta qo'ng'iroq vaqtini kiriting.	Укажите время обратного звонка.	Enter the callback time.
+Qiziqdi	Заинтересовался	Interested
+Qiziqishi (kurs, fan)	Интерес (курс, предмет)	Interest (course, subject)
+Qiziqmadi	Не заинтересовался	Not interested
+Qo'ng'iroq qayd etildi.	Звонок записан.	Call logged.
+Qo'ng'iroqni qayd etish	Записать звонок	Log a call
+Qoralama test yaratildi	Черновик теста создан	Draft test created
+Qoralama yaratish	Создать черновик	Create draft
+Raqam bo'yicha qidirish	Поиск по номеру	Search by number
+Savollar tili	Язык вопросов	Question language
+Savollarni ko'rish	Посмотреть вопросы	View questions
+Savollarni tasodifiy tanlash	Выбирать вопросы случайно	Pick questions at random
+Shikoyat	Жалоба	Complaint
+Sinov darsiga yozildi	Записался на пробный урок	Booked a trial lesson
+Skriptlar	Скрипты	Scripts
+Skriptlar hali qo'shilmagan. Ularni veb-versiyada direktor yoki administrator qo'shadi.	Скрипты ещё не добавлены. Их добавляет директор или администратор в веб-версии.	No scripts yet. The director or an administrator adds them in the web version.
+So'nggi qo'ng'iroqlar	Последние звонки	Recent calls
+Tanaffus	Перерыв	On break
+Telefon raqamini to'liq kiriting.	Введите номер телефона полностью.	Enter the full phone number.
+Test nomi (ixtiyoriy)	Название теста (необязательно)	Test title (optional)
+Test raqami: #{0}	Номер теста: #{0}	Test number: #{0}
+Test tuzish	Составить тест	Build test
+Testni veb-versiyada (Testlar bo'limi) ko'rib chiqing, guruhlarni belgilang va e'lon qiling — shundan keyin o'quvchilarga ochiladi.	Проверьте тест в веб-версии (раздел «Тесты»), укажите группы и опубликуйте — после этого он откроется ученикам.	Review the test in the web version (Tests section), choose groups and publish it — then it opens for students.
+To'lov masalasi	Вопрос оплаты	Payment question
+To'lov qilmagan	Не платил	No payments yet
+To'lovlar soni	Количество оплат	Number of payments
+Vaqt (daqiqa, ixtiyoriy)	Время (мин, необязательно)	Time (min, optional)
+Vaqt 1 dan 600 daqiqagacha bo'lishi kerak.	Время должно быть от 1 до 600 минут.	Time must be between 1 and 600 minutes.
+Xat, e'lon, dars rejasi yoki test savollarini tayyorlashda yordam so'rang.	Попросите помочь с письмом, объявлением, планом урока или тестовыми вопросами.	Ask for help with a letter, an announcement, a lesson plan or test questions.
+Yana yuklash	Загрузить ещё	Load more
+Yana {0} ta to'lov — to'liq ro'yxat veb-versiyada.	Ещё {0} оплат — полный список в веб-версии.	{0} more payments — the full list is in the web version.
+Yangi lid yaratiladi	Будет создан новый лид	A new lead will be created
+Yaxshi	Хорошо	OK
+Yozmoqda...	Печатает...	Typing...
+smena ochiq	смена открыта	shift open
+{0} marta	{0} раз	{0} times
+{0} ta mavzu	{0} тем	{0} topics
+{0} ta mavzu tanlandi	Выбрано тем: {0}	{0} topics selected
+{0} ta mavzudan {1} ta savol	{1} вопросов из {0} тем	{1} questions from {0} topics
+{0} ta tanlandi	выбрано: {0}	{0} selected
+{0} ta to'lov	{0} оплат	{0} payments
+Qarzdor ota-onaga muloyim eslatma matnini yozib ber	Напиши вежливое напоминание родителю-должнику	Write a polite reminder for a parent who owes a payment
+7-sinf uchun kasrlar mavzusida 10 ta test savoli tuz	Составь 10 тестовых вопросов по дробям для 7 класса	Make 10 test questions on fractions for grade 7
+Ota-onalar majlisi uchun qisqa reja tuz	Составь краткий план родительского собрания	Draft a short plan for a parents' meeting
+Yangi guruh ochilishi haqida Telegram e'loni yoz	Напиши объявление в Telegram об открытии новой группы	Write a Telegram announcement about a new group opening
