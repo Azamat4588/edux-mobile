@@ -1,14 +1,18 @@
 // `flutter create` yaratgan Android va iOS fayllariga EduX sozlamalarini qo'shadi:
-// kamera va galereya ruxsatlari, ilova nomi, havolalarni ochish, iOS minimal versiyasi.
-// Takror ishga tushirish xavfsiz (qo'shilgan narsa qayta qo'shilmaydi).
+// kamera, galereya va mikrofon ruxsat matnlari, ilova nomi, havolalarni ochish, push (fon rejimi),
+// iOS minimal versiyasi (Firebase va mobile_scanner uchun 15.0). Takror ishga tushirish xavfsiz.
 //
-//   dart run tool/configure_platforms.dart
+//   dart run tool/configure_platforms.dart          # Android va iOS
+//   dart run tool/configure_platforms.dart --ios    # faqat iOS (macOS CI, android/ papkasiz)
 import 'dart:io';
 
-void main() {
-  _android();
+/// firebase_core 5 / firebase_messaging 17 (Firebase iOS SDK 12) iOS 15 talab qiladi; mobile_scanner 7 — 13+.
+const String iosMinimum = '15.0';
+
+void main(List<String> args) {
+  if (!args.contains('--ios')) _android();
   _ios();
-  stdout.writeln('EduX: Android va iOS sozlamalari tayyor.');
+  stdout.writeln('EduX: platforma sozlamalari tayyor.');
 }
 
 void _android() {
@@ -216,17 +220,36 @@ void _ios() {
   }
   var text = plist.readAsStringSync();
   final entries = <String, String>{
+    // camera, mobile_scanner (QR kirish nazorati), kiosk (yuz), WebView ichidagi kamera
     'NSCameraUsageDescription':
-        '<string>Javob varaqalarini skanerlash va uy vazifasi suratini yuborish uchun kamera kerak.</string>',
+        '<string>Javob varaqalarini skanerlash, QR kodni o\'qish va uy vazifasi suratini yuborish uchun kamera kerak.</string>',
+    // image_picker
     'NSPhotoLibraryUsageDescription':
         '<string>Varaqa yoki uy vazifasi rasmini galereyadan tanlash uchun.</string>',
-    'LSApplicationQueriesSchemes': '<array>\n\t\t<string>https</string>\n\t\t<string>tel</string>\n\t</array>',
+    // camera plagini audio API larini ham bog'laydi (ilova ovoz yozmaydi) — App Store bu matnni talab qiladi.
+    'NSMicrophoneUsageDescription':
+        '<string>EduX ovoz yozmaydi; ruxsat faqat kamera bilan ishlash uchun so\'raladi.</string>',
+    'LSApplicationQueriesSchemes':
+        '<array>\n\t\t<string>https</string>\n\t\t<string>tel</string>\n\t\t<string>sms</string>\n\t\t<string>tg</string>\n\t</array>',
+    // Push (Firebase Cloud Messaging): fon rejimida xabar qabul qilish
+    'UIBackgroundModes': '<array>\n\t\t<string>remote-notification</string>\n\t</array>',
+    // Faqat standart HTTPS — eksport shifrlash hujjati talab qilinmaydi (TestFlight savoli)
+    'ITSAppUsesNonExemptEncryption': '<false/>',
   };
   entries.forEach((key, value) {
     if (!text.contains('<key>$key</key>')) {
       text = text.replaceFirst(RegExp(r'</dict>\s*</plist>\s*$'), '\t<key>$key</key>\n\t$value\n</dict>\n</plist>\n');
     }
   });
+  // Eski versiyada qo'shilgan ro'yxatga yangi sxemalar (sms, tg) ham qo'shilsin
+  final schemes = RegExp(r'(<key>LSApplicationQueriesSchemes</key>\s*<array>)([\s\S]*?)(</array>)').firstMatch(text);
+  if (schemes != null) {
+    var inner = schemes.group(2)!;
+    for (final scheme in <String>['https', 'tel', 'sms', 'tg']) {
+      if (!inner.contains('<string>$scheme</string>')) inner = '$inner\t<string>$scheme</string>\n\t';
+    }
+    text = text.replaceRange(schemes.start, schemes.end, '${schemes.group(1)}$inner${schemes.group(3)}');
+  }
   text = text.replaceFirstMapped(
     RegExp(r'(<key>CFBundleDisplayName</key>\s*<string>)[^<]*(</string>)'),
     (match) => '${match.group(1)}EduX${match.group(2)}',
@@ -237,8 +260,42 @@ void _ios() {
   final podfile = File('ios/Podfile');
   if (podfile.existsSync()) {
     var pods = podfile.readAsStringSync();
-    pods = pods.replaceFirst(RegExp(r"^#?\s*platform :ios, '[0-9.]+'", multiLine: true), "platform :ios, '13.0'");
+    pods = pods.replaceFirst(RegExp(r"^#?\s*platform :ios, '[0-9.]+'", multiLine: true), "platform :ios, '$iosMinimum'");
+    if (!pods.contains('platform :ios')) pods = "platform :ios, '$iosMinimum'\n$pods";
+    // Barcha pod'lar ham kamida shu versiyaga yig'ilsin (eski pod'lar Xcode 16 da xato bermasin)
+    if (!pods.contains('EDUX_DEPLOYMENT_TARGET')) {
+      pods = pods.replaceFirst(
+        'flutter_additional_ios_build_settings(target)',
+        "flutter_additional_ios_build_settings(target)\n"
+            "    target.build_configurations.each do |config| # EDUX_DEPLOYMENT_TARGET\n"
+            "      if config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'].to_f < $iosMinimum\n"
+            "        config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '$iosMinimum'\n"
+            "      end\n"
+            "    end",
+      );
+    }
     podfile.writeAsStringSync(pods);
-    stdout.writeln('  ios: Podfile (iOS 13+)');
+    stdout.writeln('  ios: Podfile (iOS $iosMinimum+)');
+  } else {
+    stdout.writeln('  ios: Podfile hali yo\'q — `flutter build ios --config-only` dan keyin qayta ishga tushiring');
+  }
+
+  // Xcode loyihasi va Flutter freymvorki ham shu minimal versiya bilan
+  final project = File('ios/Runner.xcodeproj/project.pbxproj');
+  if (project.existsSync()) {
+    final text = project.readAsStringSync().replaceAll(
+          RegExp(r'IPHONEOS_DEPLOYMENT_TARGET = [0-9.]+;'),
+          'IPHONEOS_DEPLOYMENT_TARGET = $iosMinimum;',
+        );
+    project.writeAsStringSync(text);
+    stdout.writeln('  ios: project.pbxproj (IPHONEOS_DEPLOYMENT_TARGET $iosMinimum)');
+  }
+  final framework = File('ios/Flutter/AppFrameworkInfo.plist');
+  if (framework.existsSync()) {
+    final text = framework.readAsStringSync().replaceFirstMapped(
+          RegExp(r'(<key>MinimumOSVersion</key>\s*<string>)[^<]*(</string>)'),
+          (match) => '${match.group(1)}$iosMinimum${match.group(2)}',
+        );
+    framework.writeAsStringSync(text);
   }
 }

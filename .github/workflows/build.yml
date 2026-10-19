@@ -1,5 +1,7 @@
 # EduX mobil ilovasini yig'ish: tahlil, testlar, Android APK. main ga har push'dan keyin APK
 # «Releases → latest» sahifasiga qo'yiladi — telefonga shu yerdan yuklab o'rnatiladi.
+# iOS: alohida job (macos-latest) imzosiz `.app` yig'adi va Artifacts ga qo'yadi; u Android job'iga bog'liq emas
+# va xato bersa ham Android yig'ilishi/Releases to'xtamaydi.
 # Sozlamalar (repo → Settings → Secrets and variables → Actions):
 #   vars.EDUX_SERVER             — ilova sukut bo'yicha ulanadigan server (masalan https://app.edux.uz)
 #   secrets.GOOGLE_SERVICES_JSON — Firebase google-services.json matni (push uchun; bo'lmasa push o'chiq)
@@ -128,3 +130,61 @@ jobs:
           gh release create latest build/app/outputs/flutter-apk/*.apk \
             --prerelease --title "EduX $version (yig'ish ${{ github.run_number }})" \
             --notes "Avtomatik yig'ish: ${{ github.sha }}. Ko'pchilik telefonlar uchun: app-arm64-v8a-release.apk. Eski telefonlar: app-armeabi-v7a-release.apk. Server: $EDUX_SERVER"
+
+  ios:
+    # Imzosiz iOS yig'ish: loyiha sozlamalari, plaginlar (CocoaPods) va Dart kodi iOS da yig'ilishini tekshiradi.
+    # App Store / TestFlight uchun imzo va GoogleService-Info.plist alohida (README → iPhone).
+    runs-on: macos-latest
+    timeout-minutes: 60
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Platforma papkasi (ios)
+        run: |
+          set -o pipefail
+          flutter --version
+          flutter create --org uz.edux --project-name edux --platforms=ios . 2>&1 | tee -a ci-ios.log
+          if [ -f test/widget_test.dart ] && grep -q "MyApp" test/widget_test.dart; then rm test/widget_test.dart; fi
+          flutter pub get 2>&1 | tee -a ci-ios.log
+          dart run tool/configure_platforms.dart --ios 2>&1 | tee -a ci-ios.log
+          dart run flutter_launcher_icons 2>&1 | tee -a ci-ios.log
+
+      - name: Xcode sozlamasi va CocoaPods
+        run: |
+          set -o pipefail
+          # Podfile shu bosqichda yaratiladi — keyin minimal iOS versiyasi qayta qo'yiladi
+          flutter build ios --config-only --release --no-codesign --dart-define=EDUX_SERVER=$EDUX_SERVER 2>&1 | tee -a ci-ios.log
+          dart run tool/configure_platforms.dart --ios 2>&1 | tee -a ci-ios.log
+          (cd ios && pod install --repo-update) 2>&1 | tee -a ci-ios.log
+
+      - name: iOS (imzosiz)
+        run: |
+          set -o pipefail
+          flutter build ios --release --no-codesign --build-number=${{ github.run_number }} --dart-define=EDUX_SERVER=$EDUX_SERVER 2>&1 | tee build-ios.log
+
+      - name: .app arxivi
+        run: |
+          cd build/ios/iphoneos
+          ditto -c -k --sequesterRsrc --keepParent Runner.app "$GITHUB_WORKSPACE/edux-ios-unsigned.app.zip"
+
+      - name: Xato tafsilotlari
+        if: failure()
+        run: |
+          for file in ci-ios.log build-ios.log; do
+            [ -f "$file" ] || continue
+            grep -nE "(error|Error|ERROR|FAILED|Exception|CocoaPods|\.dart:[0-9]+:[0-9]+)" "$file" | grep -v "warning" | head -12 | while IFS= read -r line; do
+              echo "::error title=iOS $file::$(echo "$line" | cut -c1-900)"
+            done
+          done
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: edux-ios-unsigned
+          path: edux-ios-unsigned.app.zip
+          if-no-files-found: error
