@@ -20,6 +20,9 @@ const Map<String, String> _stateLabels = <String, String>{
   'closed': 'Yopilgan',
 };
 
+/// Ilovada hozir ochiq test sahifalari soni: test davomida AI ustoz o'chadi (server ham tekshiradi).
+final ValueNotifier<int> activeTestPages = ValueNotifier<int>(0);
+
 Color _stateColor(String state) {
   if (state == 'open' || state == 'in_progress') return AppColors.brand;
   if (state == 'finished') return AppColors.success;
@@ -147,11 +150,13 @@ class _TakeTestPageState extends State<TakeTestPage> {
   @override
   void initState() {
     super.initState();
+    activeTestPages.value++;
     _start();
   }
 
   @override
   void dispose() {
+    activeTestPages.value = activeTestPages.value > 0 ? activeTestPages.value - 1 : 0;
     _timer?.cancel();
     for (final timer in _textTimers.values) {
       timer.cancel();

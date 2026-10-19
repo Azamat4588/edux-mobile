@@ -121,3 +121,69 @@ To'lov havolasi orqali to'lash	Оплатить по платёжной ссыл
 To'lov sahifasida to'lovni yakunlang. Tasdiq kelishi bir necha daqiqa olishi mumkin.	Завершите оплату на странице платежа. Подтверждение может занять несколько минут.	Complete the payment on the payment page. Confirmation may take a few minutes.
 To'lov tasdiqlangach, balans shu sahifada yangilanadi — «Yangilash» tugmasini bosing.	После подтверждения оплаты баланс обновится на этой странице — нажмите «Обновить».	Once the payment is confirmed, the balance updates on this page — tap «Refresh».
 Yangilash	Обновить	Refresh
+AI ustoz	AI-наставник	AI tutor
+AI ustoz tashkilotingizda yoqilmagan. O'qituvchingiz yoki markaz ma'muriyatidan so'rang.	AI-наставник не включён в вашей организации. Обратитесь к учителю или администрации центра.	The AI tutor is not enabled in your organization. Ask your teacher or the center's administration.
+Badal to'lanmagan	Взнос не оплачен	Fee not paid
+Bepul	Бесплатно	Free
+Boshlanishi kutilmoqda	Ожидается начало	Waiting to start
+Davom etmoqda	Идёт	In progress
+Davomiyligi	Длительность	Duration
+E'lonlar	Объявления	Announcements
+Hali olimpiadada qatnashmagansiz. Olimpiada havolasini oching yoki «Qo'shilish» tugmasini bosib havolani qo'ying.	Вы ещё не участвовали в олимпиадах. Откройте ссылку на олимпиаду или нажмите «Присоединиться» и вставьте ссылку.	You haven't taken part in any olympiad yet. Open an olympiad link or tap «Join» and paste the link.
+Hali suhbat yo'q.	Бесед пока нет.	No conversations yet.
+Hudud (ixtiyoriy)	Регион (необязательно)	Region (optional)
+Ishtirok badali	Взнос за участие	Entry fee
+Ishtirokchi №{0}	Участник №{0}	Participant #{0}
+Ism-familiya	Фамилия и имя	Full name
+Ism-familiya va telefon raqamini to'liq kiriting.	Полностью укажите фамилию, имя и номер телефона.	Enter your full name and phone number.
+Javoblarim	Мои ответы	My answers
+Maktab (ixtiyoriy)	Школа (необязательно)	School (optional)
+Masalan, masalani yuboring va qayerda to'xtab qolganingizni yozing. Test ishlayotganingizda ustoz o'chadi.	Например, пришлите задачу и напишите, где застряли. Во время теста наставник отключается.	For example, send a problem and write where you got stuck. The tutor is off while you take a test.
+Natija tahlili hozircha ochiq emas.	Разбор результата пока недоступен.	The result review is not available yet.
+Natijalar e'lon qilindi	Результаты объявлены	Results announced
+O'qituvchi yoki markaz yuborgan olimpiada havolasini qo'ying (…/o/…).	Вставьте ссылку на олимпиаду от учителя или центра (…/o/…).	Paste the olympiad link from your teacher or center (…/o/…).
+O'rin	Место	Place
+Olimpiada	Олимпиада	Olympiad
+Olimpiada boshlanganda shu sahifadan kirasiz.	Когда олимпиада начнётся, вы войдёте с этой страницы.	When the olympiad starts, you'll enter from this page.
+Olimpiada haqida	Об олимпиаде	About the olympiad
+Olimpiada havolasi noto'g'ri. To'liq havolani qo'ying.	Неверная ссылка на олимпиаду. Вставьте полную ссылку.	Invalid olympiad link. Paste the full link.
+Olimpiada yakunlandi. Natijalar e'lon qilinishini kuting.	Олимпиада завершена. Ожидайте объявления результатов.	The olympiad has ended. Wait for the results.
+Olimpiada {0} da boshlanadi. Shu sahifadan kirasiz.	Олимпиада начнётся {0}. Вы войдёте с этой страницы.	The olympiad starts at {0}. You'll enter from this page.
+Olimpiadada qatnashish uchun badalni to'lang: {0}	Чтобы участвовать в олимпиаде, оплатите взнос: {0}	To take part in the olympiad, pay the fee: {0}
+Olimpiadaga qo'shilish	Присоединиться к олимпиаде	Join an olympiad
+Olimpiadalarim	Мои олимпиады	My olympiads
+Olimpiadani boshlash	Начать олимпиаду	Start the olympiad
+Onlayn to'lov yoqilmagan. Badalni markaz ma'muriyatiga topshiring.	Онлайн-оплата не включена. Передайте взнос администрации центра.	Online payment is not enabled. Pay the fee to the center's administration.
+Qo'shilish	Присоединиться	Join
+Qoidalar	Правила	Rules
+Ro'yxat yopiladi	Регистрация закрывается	Registration closes
+Ro'yxatdan o'tdingiz. Olimpiada boshlanganda shu sahifadan kirasiz.	Вы зарегистрированы. Когда олимпиада начнётся, войдёте с этой страницы.	You are registered. When the olympiad starts, you'll enter from this page.
+Ro'yxatdan o'tdingiz. Qatnashish uchun badalni to'lang.	Вы зарегистрированы. Для участия оплатите взнос.	You are registered. Pay the fee to take part.
+Ro'yxatdan o'tgan	Зарегистрирован	Registered
+Ro'yxatdan o'tilmagan	Не зарегистрирован	Not registered
+Ro'yxatdan o'tish ochiq	Регистрация открыта	Registration open
+Ro'yxatdan o'tish yopilgan.	Регистрация закрыта.	Registration is closed.
+Ro'yxatdan olib tashlash	Убрать из списка	Remove from list
+Savolingizni yozing...	Напишите свой вопрос...	Type your question...
+Sertifikatni ochish	Открыть сертификат	Open certificate
+Shu oy: {0} ta javob qoldi	В этом месяце осталось ответов: {0}	This month: {0} replies left
+Sinf (ixtiyoriy)	Класс (необязательно)	Grade (optional)
+Siz hali ro'yxatdan o'tmagansiz.	Вы ещё не зарегистрированы.	You are not registered yet.
+Siz testni topshirdingiz. Natijalar e'lon qilinganda shu yerda ko'rinadi.	Вы сдали тест. Результаты появятся здесь после объявления.	You have taken the test. Results will appear here once announced.
+Suhbat	Беседа	Conversation
+Suhbat o'chirilsinmi?	Удалить беседу?	Delete the conversation?
+Suhbatlar	Беседы	Conversations
+Telegramda xabarlarni olish	Получать уведомления в Telegram	Get notifications in Telegram
+Test davomida AI ustoz ishlamaydi. Testni yakunlagach savol bering.	Во время теста AI-наставник не работает. Задайте вопрос после завершения теста.	The AI tutor doesn't work during a test. Ask your question after finishing the test.
+Test havolasi hali tayyor emas. Olimpiada boshlanganda qayta urinib ko'ring.	Ссылка на тест ещё не готова. Попробуйте снова, когда олимпиада начнётся.	The test link isn't ready yet. Try again when the olympiad starts.
+To'lovdan keyin sahifani pastga tortib yangilang.	После оплаты потяните страницу вниз, чтобы обновить.	After paying, pull the page down to refresh.
+Tushunmagan mavzuingizni so'rang. Ustoz javobni aytmaydi — o'zingiz yechishingizga yordam beradi.	Спросите тему, которую не поняли. Наставник не даёт готовый ответ — он помогает решить самому.	Ask about a topic you didn't understand. The tutor won't give the answer — it helps you solve it yourself.
+Ustoz yozmoqda...	Наставник печатает...	The tutor is typing...
+Yakunlandi	Завершена	Finished
+Yangi suhbat	Новая беседа	New conversation
+{0}-o'rin	{0}-е место	Place {0}
+{0}-sinflar	{0} классы	Grades {0}
+Kvadrat tenglamani qanday yechaman?	Как решить квадратное уравнение?	How do I solve a quadratic equation?
+Present Perfect qachon ishlatiladi?	Когда используется Present Perfect?	When is Present Perfect used?
+Fotosintezni oddiy tilda tushuntir	Объясни фотосинтез простыми словами	Explain photosynthesis in simple words
+Mening yechimimni tekshir: 2x + 6 = 14, x = 5	Проверь моё решение: 2x + 6 = 14, x = 5	Check my solution: 2x + 6 = 14, x = 5
