@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 
-import '../../core/api.dart';
 import '../../core/i18n.dart';
 import '../../core/session.dart';
 import '../../core/sms_gateway.dart';
