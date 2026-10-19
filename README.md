@@ -2,6 +2,29 @@
 
 Flutter'da yozilgan to'liq native ilova (WebView emas). EduX serveri bilan o'sha API orqali ishlaydi, o'zbek, rus va ingliz tillarida.
 
+## Yuklab olish
+
+Har `main` push'dan keyin GitHub Actions ilovani yig'adi va **Releases → latest** ga qo'yadi:
+ko'pchilik telefonlar uchun `app-arm64-v8a-release.apk`, eski telefonlar uchun `app-armeabi-v7a-release.apk`.
+
+Actions sozlamalari (Settings → Secrets and variables → Actions):
+
+| Nomi | Turi | Nima uchun |
+|---|---|---|
+| `EDUX_SERVER` | Variable | Ilova ulanadigan server, masalan `https://app.edux.uz` |
+| `GOOGLE_SERVICES_JSON` | Secret | Firebase `google-services.json` matni — push-bildirishnomalar uchun |
+| `ANDROID_KEYSTORE_BASE64`, `ANDROID_KEYSTORE_PASSWORD`, `ANDROID_KEY_ALIAS`, `ANDROID_KEY_PASSWORD` | Secret | Play Market imzosi (bo'lmasa sinov kaliti) |
+
+Play Market uchun `.aab`: Actions → Build → «Run workflow».
+
+## 2.0 da yangi
+
+- Tungi, kunduzgi va «qurilmaga qarab» rejim; tashkilot tanlagan asosiy rang (veb bilan umumiy sozlama).
+- Push-bildirishnomalar (Firebase): to'lov, davomat, test natijasi, baho, sertifikat, yangi lid, vazifa. Bosilganda kerakli sahifa ochiladi.
+- Mock imtihonlar: bo'limlar o'z vaqti bilan, Listening audio (bir marta), Reading matni, ochiq javob va esse, IELTS band / daraja natijasi.
+- O'quvchi: «Mock natijalarim» (o'sish), «Sertifikatlarim» (QR sahifa).
+- Xodim (CRM): lidlar (holat, qo'ng'iroq, izoh, yangi lid) va vazifalar (bugun, muddati o'tgan, bajarildi).
+
 ## Imkoniyatlar
 
 **O'qituvchi / administrator**
