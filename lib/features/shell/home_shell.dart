@@ -48,12 +48,12 @@ class _HomeShellState extends State<HomeShell> {
     super.initState();
     ScanQueue.instance.kick();
     // Push xabari bosilganda ochiladigan sahifalar.
-    PushService.instance.routes
-      ..['attempt'] = (data) => asInt(data['attempt_id']) > 0 ? AttemptResultPage(attemptId: asInt(data['attempt_id'])) : null
-      ..['certificate'] = (_) => const CertificatesPage()
-      ..['task'] = (_) => const TasksPage()
-      ..['lead'] = (data) => asInt(data['lead_id']) > 0 ? LeadPage(leadId: asInt(data['lead_id'])) : const LeadsPage()
-      ..['assignment'] = (_) => const AssignmentsPage();
+    final routes = PushService.instance.routes;
+    routes['attempt'] = (data) => asInt(data['attempt_id']) > 0 ? AttemptResultPage(attemptId: asInt(data['attempt_id'])) : null;
+    routes['certificate'] = (_) => const CertificatesPage();
+    routes['task'] = (_) => const TasksPage();
+    routes['lead'] = (data) => asInt(data['lead_id']) > 0 ? LeadPage(leadId: asInt(data['lead_id'])) : const LeadsPage();
+    routes['assignment'] = (_) => const AssignmentsPage();
   }
 
   void _go(int index) => setState(() => _index = index);
