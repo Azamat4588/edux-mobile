@@ -88,6 +88,13 @@ class Session extends ChangeNotifier implements ApiCredentials {
   bool get canSeeStudents => <String>['director', 'admin', 'teacher', 'cashier'].contains(role);
   bool get readOnly => asMap(context['subscription'])['can_write'] == false;
 
+  // 3.1: xodim bo'limlari (modul, imkoniyat va rolga qarab).
+  bool get canCallCenter =>
+      <String>['director', 'admin', 'marketer', 'cashier'].contains(role) && hasModule('crm') && hasFeature('callcenter');
+  bool get canSeeFinance => <String>['director', 'admin', 'cashier'].contains(role) && hasModule('crm');
+  bool get canBuildTopicTests => <String>['director', 'admin', 'teacher'].contains(role) && hasModule('testing');
+  bool get canUseStaffAi => isStaff && hasFeature('ai');
+
   String get userName => asText(user['name']);
   String get organizationName => asText(asMap(context['organization'])['name']);
   String? get organizationLogo {
