@@ -69,6 +69,7 @@ class Session extends ChangeNotifier implements ApiCredentials {
   bool get canScan => <String>['director', 'admin', 'teacher'].contains(role) && hasModule('testing');
   bool get canTakePayments => <String>['director', 'admin', 'cashier'].contains(role) && hasModule('crm');
   bool get canMarkAttendance => <String>['director', 'admin', 'teacher'].contains(role) && hasModule('crm');
+  bool get canCheckIn => <String>['director', 'admin', 'teacher'].contains(role);
   bool get canSeeStudents => <String>['director', 'admin', 'teacher', 'cashier'].contains(role);
   bool get readOnly => asMap(context['subscription'])['can_write'] == false;
 

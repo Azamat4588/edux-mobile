@@ -7,6 +7,7 @@ import '../../core/i18n.dart';
 import '../../core/session.dart';
 import '../../core/theme.dart';
 import '../../core/widgets.dart';
+import '../access/checkin_page.dart';
 import '../scanner/scanner_page.dart';
 import '../scanner/scans_page.dart';
 import 'attendance_page.dart';
@@ -179,6 +180,14 @@ class _QuickActions extends StatelessWidget {
       if (session.canSeeStudents)
         _Action(icon: Icons.search, label: tr('Qidirish'), color: AppColors.warning, onTap: () => onOpenTab('students')),
     ];
+    if (session.canCheckIn && actions.length < 4) {
+      actions.add(_Action(
+        icon: Icons.qr_code_scanner,
+        label: tr('Kirish'),
+        color: const Color(0xFF0891B2),
+        onTap: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const CheckinPage())),
+      ));
+    }
     if (actions.isEmpty) return const SizedBox();
     return Row(
       children: actions

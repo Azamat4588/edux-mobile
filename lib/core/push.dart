@@ -26,7 +26,7 @@ class PushService {
 
   static final PushService instance = PushService._();
 
-  static const String appVersion = '2.0.0';
+  static const String appVersion = '2.1.0';
 
   bool _ready = false;
   bool _initTried = false;
@@ -34,6 +34,9 @@ class PushService {
   Session? _session;
   StreamSubscription<String>? _refresh;
   final Map<String, PushRoute> routes = <String, PushRoute>{};
+
+  /// Jim (ma'lumot) xabarlari: data.type → ishlov beruvchi (masalan, SMS shlyuzni uyg'otish).
+  final Map<String, void Function(Map<String, dynamic>)> dataHandlers = <String, void Function(Map<String, dynamic>)>{};
   Map<String, dynamic>? _pending;
 
   bool get available => _ready;
@@ -110,6 +113,8 @@ class PushService {
   }
 
   void _foreground(RemoteMessage message) {
+    final handler = dataHandlers[asText(message.data['type'])];
+    if (handler != null) handler(Map<String, dynamic>.from(message.data));
     final context = rootNavigator.currentContext;
     final notification = message.notification;
     if (context == null || notification == null) return;

@@ -1,9 +1,15 @@
 // Asosiy oyna: pastki menyu rol va yoqilgan modullarga qarab tuziladi (xodim / o'quvchi / ota-ona).
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import '../../core/api.dart';
 import '../../core/i18n.dart';
 import '../../core/push.dart';
+import '../../core/sms_gateway.dart';
+import '../access/checkin_page.dart';
+import '../access/kiosk_page.dart';
+import '../access/sms_gateway_page.dart';
 import '../crm/leads_page.dart';
 import '../crm/tasks_page.dart';
 import '../student/certificates_page.dart';
@@ -54,6 +60,11 @@ class _HomeShellState extends State<HomeShell> {
     routes['task'] = (_) => const TasksPage();
     routes['lead'] = (data) => asInt(data['lead_id']) > 0 ? LeadPage(leadId: asInt(data['lead_id'])) : const LeadsPage();
     routes['assignment'] = (_) => const AssignmentsPage();
+    // Jim xabar: navbatda telefon orqali yuboriladigan SMS bor.
+    PushService.instance.dataHandlers['sms_gateway'] = (_) => SmsGatewayService.instance.poke();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) SmsGatewayService.instance.resume(AppScope.read(context));
+    });
   }
 
   void _go(int index) => setState(() => _index = index);
@@ -75,6 +86,10 @@ class _HomeShellState extends State<HomeShell> {
         _MenuTile(icon: Icons.fact_check_outlined, label: tr('Davomat'), page: const AttendancePage()),
       if (session.canScan)
         _MenuTile(icon: Icons.rate_review_outlined, label: tr('Tekshirilgan varaqalar'), page: const ScansPage()),
+      if (session.canCheckIn) _MenuTile(icon: Icons.qr_code_scanner, label: tr('Kirish nazorati'), page: const CheckinPage()),
+      if (session.isManager) _MenuTile(icon: Icons.face_retouching_natural, label: tr('Kiosk rejimi'), page: const KioskPage()),
+      if (session.isManager && crm && Platform.isAndroid)
+        _MenuTile(icon: Icons.sms_outlined, label: tr('SMS shlyuz'), page: const SmsGatewayPage()),
     ];
     return <_Tab>[
       _Tab(tr('Bosh sahifa'), Icons.home_outlined, Icons.home, StaffHomePage(onOpenTab: (key) => _openStaffTab(session, key))),
