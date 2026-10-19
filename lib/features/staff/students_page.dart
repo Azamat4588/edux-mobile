@@ -177,7 +177,7 @@ const Map<String, String> attendanceLabels = <String, String>{
   'excused': 'Sababli',
 };
 
-const Map<String, Color> attendanceColors = <String, Color>{
+Map<String, Color> get attendanceColors => <String, Color>{
   'present': AppColors.success,
   'absent': AppColors.danger,
   'late': AppColors.warning,

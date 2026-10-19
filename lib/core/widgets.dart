@@ -184,12 +184,13 @@ class SectionTitle extends StatelessWidget {
 
 /// Bosh sahifadagi rangli ko'rsatkich.
 class StatCard extends StatelessWidget {
-  StatCard({super.key, required this.label, required this.value, required this.icon, this.color = AppColors.brand, this.hint, this.onTap});
+  const StatCard({super.key, required this.label, required this.value, required this.icon, Color? color, this.hint, this.onTap}) : _color = color;
 
   final String label;
   final String value;
   final IconData icon;
-  final Color color;
+  final Color? _color;
+  Color get color => _color ?? AppColors.brand;
   final String? hint;
   final VoidCallback? onTap;
 
@@ -246,10 +247,11 @@ class StatGrid extends StatelessWidget {
 }
 
 class Pill extends StatelessWidget {
-  Pill(this.text, {super.key, this.color = AppColors.brand});
+  const Pill(this.text, {super.key, Color? color}) : _color = color;
 
   final String text;
-  final Color color;
+  final Color? _color;
+  Color get color => _color ?? AppColors.brand;
 
   @override
   Widget build(BuildContext context) {
@@ -287,11 +289,12 @@ class KeyValue extends StatelessWidget {
 
 /// Bosh harflar doirasi.
 class Avatar extends StatelessWidget {
-  Avatar(this.name, {super.key, this.size = 40, this.color = AppColors.brand});
+  const Avatar(this.name, {super.key, this.size = 40, Color? color}) : _color = color;
 
   final String name;
   final double size;
-  final Color color;
+  final Color? _color;
+  Color get color => _color ?? AppColors.brand;
 
   @override
   Widget build(BuildContext context) {
