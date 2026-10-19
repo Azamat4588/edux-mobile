@@ -11,23 +11,30 @@ import '../../core/session.dart';
 import '../../core/theme.dart';
 import '../../core/widgets.dart';
 
-const List<(String, String)> leadStatuses = <(String, String)>[
-  ('new', 'Yangi'),
-  ('contacted', "Bog'lanildi"),
-  ('trial', 'Sinov darsi'),
-  ('enrolled', "O'quvchi bo'ldi"),
-  ('lost', 'Rad etdi'),
-];
+const Map<String, String> leadStatusLabels = <String, String>{
+  'new': 'Yangi',
+  'contacted': "Bog'lanildi",
+  'trial': 'Sinov darsi',
+  'enrolled': "O'quvchi bo'ldi",
+  'lost': 'Rad etdi',
+};
 
-String leadStatusLabel(String status) => tr(leadStatuses.firstWhere((item) => item.$1 == status, orElse: () => (status, status)).$2);
+String leadStatusLabel(String status) => tr(leadStatusLabels[status] ?? status);
 
-Color leadStatusColor(String status) => switch (status) {
-      'new' => AppColors.brand,
-      'contacted' => AppColors.warning,
-      'trial' => const Color(0xFF7C3AED),
-      'enrolled' => AppColors.success,
-      _ => AppColors.muted,
-    };
+Color leadStatusColor(String status) {
+  switch (status) {
+    case 'new':
+      return AppColors.brand;
+    case 'contacted':
+      return AppColors.warning;
+    case 'trial':
+      return const Color(0xFF7C3AED);
+    case 'enrolled':
+      return AppColors.success;
+    default:
+      return AppColors.muted;
+  }
+}
 
 class LeadsPage extends StatefulWidget {
   const LeadsPage({super.key});
@@ -93,11 +100,11 @@ class _LeadsPageState extends State<LeadsPage> {
                   SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: Row(children: <Widget>[
-                      for (final (key, label) in leadStatuses)
+                      for (final key in leadStatusLabels.keys)
                         Padding(
                           padding: const EdgeInsets.only(right: 8),
                           child: ChoiceChip(
-                            label: Text('${tr(label)} ${asInt(counts[key])}'),
+                            label: Text('${leadStatusLabel(key)} ${asInt(counts[key])}'),
                             selected: _status == key,
                             selectedColor: AppColors.soft(leadStatusColor(key)),
                             onSelected: (_) {
@@ -234,9 +241,9 @@ class _LeadPageState extends State<LeadPage> {
               if (lead['student_id'] == null) ...<Widget>[
                 SectionTitle(tr('Holat')),
                 Wrap(spacing: 8, runSpacing: 8, children: <Widget>[
-                  for (final (key, label) in leadStatuses.where((item) => item.$1 != 'enrolled'))
+                  for (final key in leadStatusLabels.keys.where((item) => item != 'enrolled'))
                     ChoiceChip(
-                      label: Text(tr(label)),
+                      label: Text(leadStatusLabel(key)),
                       selected: status == key,
                       selectedColor: AppColors.soft(leadStatusColor(key)),
                       onSelected: status == key ? null : (_) => _status(key),

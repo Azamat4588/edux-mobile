@@ -1,4 +1,7 @@
-// Onlayn to'lov (Click / Payme): o'quvchi o'zi uchun, ota-ona farzandi uchun. To'lov sahifasi brauzerda ochiladi.
+// Onlayn to'lov (Click / Payme): o'quvchi o'zi uchun, ota-ona farzandi uchun. To'lov sahifasi brauzerda ochiladi,
+// ilovaga qaytilganda buyurtma holati (GET /pay/orders/{id}) tekshiriladi.
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -10,7 +13,10 @@ import '../../core/session.dart';
 import '../../core/theme.dart';
 import '../../core/widgets.dart';
 
-Future<void> startOnlinePayment(BuildContext context, {int? studentId, int suggested = 0}) async {
+/// To'lov tugagach (yoki bekor qilinganda) chaqiriladi — masalan, balansni yangilash uchun.
+typedef PaymentDone = void Function(bool paid);
+
+Future<void> startOnlinePayment(BuildContext context, {int? studentId, int suggested = 0, PaymentDone? onDone}) async {
   final api = AppScope.read(context).api;
   Map<String, dynamic> options;
   try {
@@ -27,7 +33,7 @@ Future<void> startOnlinePayment(BuildContext context, {int? studentId, int sugge
     return;
   }
   if (!context.mounted) return;
-  await showModalBottomSheet<void>(
+  final orderId = await showModalBottomSheet<int>(
     context: context,
     isScrollControlled: true,
     useSafeArea: true,
@@ -37,6 +43,136 @@ Future<void> startOnlinePayment(BuildContext context, {int? studentId, int sugge
       child: _PayForm(studentId: studentId, providers: providers, suggested: suggested, minAmount: asInt(options['min_amount'], 1000)),
     ),
   );
+  if (orderId == null || !context.mounted) return;
+  final paid = await showOrderStatus(context, orderId);
+  onDone?.call(paid);
+}
+
+/// To'lov sahifasidan qaytgach: buyurtma holati. true — to'landi.
+Future<bool> showOrderStatus(BuildContext context, int orderId) async {
+  final result = await showModalBottomSheet<bool>(
+    context: context,
+    isDismissible: true,
+    useSafeArea: true,
+    shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(22))),
+    builder: (_) => _OrderStatus(orderId: orderId),
+  );
+  return result ?? false;
+}
+
+class _OrderStatus extends StatefulWidget {
+  const _OrderStatus({required this.orderId});
+
+  final int orderId;
+
+  @override
+  State<_OrderStatus> createState() => _OrderStatusState();
+}
+
+class _OrderStatusState extends State<_OrderStatus> with WidgetsBindingObserver {
+  Map<String, dynamic> _order = <String, dynamic>{};
+  bool _checking = false;
+  String? _error;
+  Timer? _timer;
+  int _checks = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    _check();
+    // To'lov tizimi tasdig'i bir necha soniyada keladi: 2 daqiqa davomida o'zi tekshirib turadi.
+    _timer = Timer.periodic(const Duration(seconds: 5), (_) {
+      if (_checks > 24 || (_order.isNotEmpty && asText(_order['status']) != 'open')) {
+        _timer?.cancel();
+        return;
+      }
+      _check();
+    });
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    _timer?.cancel();
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) _check();
+  }
+
+  Future<void> _check() async {
+    if (_checking || !mounted) return;
+    setState(() => _checking = true);
+    _checks++;
+    try {
+      final order = asMap(await AppScope.read(context).api.get('pay/orders/${widget.orderId}'));
+      if (!mounted) return;
+      setState(() {
+        _order = order;
+        _error = null;
+      });
+    } on ApiException catch (error) {
+      if (mounted) setState(() => _error = error.message);
+    } finally {
+      if (mounted) setState(() => _checking = false);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final status = asText(_order['status']);
+    final paid = status == 'paid';
+    final voided = status == 'void';
+    final color = paid ? AppColors.success : (voided ? AppColors.danger : AppColors.warning);
+    final icon = paid ? Icons.check_circle_rounded : (voided ? Icons.cancel_rounded : Icons.hourglass_top_rounded);
+    final title = _order.isEmpty
+        ? tr('Tekshirilmoqda...')
+        : paid
+            ? tr("To'lov qabul qilindi")
+            : voided
+                ? tr("To'lov bekor qilindi")
+                : tr("To'lov kutilmoqda");
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(20, 20, 20, 24),
+      child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
+        Icon(icon, size: 56, color: color),
+        const SizedBox(height: 10),
+        Text(title, textAlign: TextAlign.center, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w800)),
+        const SizedBox(height: 6),
+        if (_order.isNotEmpty) ...<Widget>[
+          KeyValue(tr('Summa'), money(asInt(_order['amount']))),
+          if (asMap(_order['student'])['full_name'] != null) KeyValue(tr("O'quvchi"), asText(asMap(_order['student'])['full_name'])),
+          if (_order['receipt'] != null) KeyValue(tr('Kvitansiya'), asText(_order['receipt'])),
+          if (_order['paid_at'] != null) KeyValue(tr('Sana'), dateTime(_order['paid_at'])),
+        ],
+        if (!paid && !voided && _order.isNotEmpty)
+          Padding(
+            padding: const EdgeInsets.only(top: 6),
+            child: Text(tr("To'lov sahifasida to'lovni yakunlang. Tasdiq kelishi bir necha daqiqa olishi mumkin."),
+                textAlign: TextAlign.center, style: TextStyle(color: AppColors.muted)),
+          ),
+        if (_error != null)
+          Padding(
+            padding: const EdgeInsets.only(top: 8),
+            child: Text(_error!, textAlign: TextAlign.center, style: const TextStyle(color: AppColors.danger)),
+          ),
+        const SizedBox(height: 18),
+        if (!paid && !voided)
+          OutlinedButton.icon(
+            onPressed: _checking ? null : _check,
+            icon: _checking
+                ? const SizedBox(width: 18, height: 18, child: CircularProgressIndicator(strokeWidth: 2))
+                : const Icon(Icons.refresh),
+            label: Text(tr('Holatni tekshirish')),
+          ),
+        const SizedBox(height: 10),
+        FilledButton(onPressed: () => Navigator.pop(context, paid), child: Text(paid ? tr('Tayyor') : tr('Yopish'))),
+      ]),
+    );
+  }
 }
 
 class _PayForm extends StatefulWidget {
@@ -84,10 +220,8 @@ class _PayFormState extends State<_PayForm> {
       final url = Uri.tryParse(asText(checkout['url']));
       if (url == null) throw ApiException(500, tr("To'lov sahifasini ochib bo'lmadi. Qayta urinib ko'ring."));
       await launchUrl(url, mode: LaunchMode.externalApplication);
-      if (mounted) {
-        Navigator.pop(context);
-        showMessage(context, tr("To'lov tasdiqlangach, kvitansiya «So'nggi to'lovlar» ro'yxatida ko'rinadi."));
-      }
+      // Varaq yopiladi va buyurtma holati ko'rsatiladi (startOnlinePayment davomi).
+      if (mounted) Navigator.pop(context, asInt(order['id']));
     } on ApiException catch (error) {
       if (mounted) setState(() => _error = error.message);
     } finally {

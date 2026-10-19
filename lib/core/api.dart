@@ -19,6 +19,7 @@ class ApiException implements Exception {
 
   bool get isNetwork => status == 0;
   bool get isUnauthorized => status == 401;
+  bool get isForbidden => status == 403;
 
   /// Maydon xatosi (validatsiya) — birinchisi.
   String? field(String name) {

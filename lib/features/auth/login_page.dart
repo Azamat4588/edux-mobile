@@ -1,4 +1,5 @@
-// Kirish: telefon (yoki email) va parol; o'quvchi — shaxsiy havola orqali. Til va server manzili shu yerda.
+// Kirish: telefon (yoki email) va parol, bir martalik kod (Telegram/SMS), «Telegram orqali kirish»;
+// o'quvchi — shaxsiy havola orqali. Ota-ona hisobsiz ham to'lov havolasi bilan to'lay oladi. Til va server manzili shu yerda.
 import 'package:flutter/material.dart';
 
 import '../../core/api.dart';
@@ -7,6 +8,8 @@ import '../../core/session.dart';
 import '../../core/theme.dart';
 import '../../core/widgets.dart';
 import '../settings/language_button.dart';
+import '../student/pay_link_page.dart';
+import 'passwordless.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -21,6 +24,29 @@ class _LoginPageState extends State<LoginPage> {
   bool _busy = false;
   bool _hidden = true;
   String? _error;
+
+  /// GET /auth/options: login_code, telegram_login (server sozlamasiga qarab tugmalar).
+  Map<String, dynamic> _options = <String, dynamic>{};
+  bool _codeMode = false;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => _loadOptions());
+  }
+
+  Future<void> _loadOptions() async {
+    try {
+      final options = await AppScope.read(context).authOptions();
+      if (!mounted) return;
+      setState(() {
+        _options = options;
+        if (options['login_code'] != true) _codeMode = false;
+      });
+    } catch (_) {
+      // Eski server yoki internet yo'q: faqat parol bilan kirish ko'rinadi.
+    }
+  }
 
   @override
   void dispose() {
@@ -115,7 +141,10 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
     controller.dispose();
-    if (value != null) await session.setServer(value);
+    if (value != null) {
+      await session.setServer(value);
+      await _loadOptions();
+    }
   }
 
   @override
@@ -138,8 +167,25 @@ class _LoginPageState extends State<LoginPage> {
             const SizedBox(height: 36),
             Text(tr('Hisobingizga kiring'), style: TextStyle(fontSize: 26, fontWeight: FontWeight.w800, color: AppColors.ink)),
             const SizedBox(height: 6),
-            Text(tr('Telefon raqamingiz va parolingizni kiriting.'), style: TextStyle(color: AppColors.muted, fontSize: 15)),
-            const SizedBox(height: 28),
+            Text(_codeMode ? tr('Telefon raqamingizga bir martalik kod yuboramiz.') : tr('Telefon raqamingiz va parolingizni kiriting.'),
+                style: TextStyle(color: AppColors.muted, fontSize: 15)),
+            const SizedBox(height: 22),
+            if (_options['login_code'] == true) ...<Widget>[
+              SegmentedButton<bool>(
+                segments: <ButtonSegment<bool>>[
+                  ButtonSegment<bool>(value: false, icon: const Icon(Icons.password_rounded), label: Text(tr('Parol'))),
+                  ButtonSegment<bool>(value: true, icon: const Icon(Icons.sms_outlined), label: Text(tr('Kod bilan'))),
+                ],
+                selected: <bool>{_codeMode},
+                onSelectionChanged: _busy
+                    ? null
+                    : (value) => setState(() {
+                          _codeMode = value.first;
+                          _error = null;
+                        }),
+              ),
+              const SizedBox(height: 18),
+            ],
             if (_error != null) ...<Widget>[
               Container(
                 padding: const EdgeInsets.all(12),
@@ -148,36 +194,52 @@ class _LoginPageState extends State<LoginPage> {
               ),
               const SizedBox(height: 16),
             ],
-            TextField(
-              controller: _login,
-              keyboardType: TextInputType.phone,
-              autocorrect: false,
-              textInputAction: TextInputAction.next,
-              autofillHints: const <String>[AutofillHints.telephoneNumber, AutofillHints.email],
-              decoration: InputDecoration(labelText: tr('Telefon raqam yoki email'), hintText: '+998 90 123 45 67'),
-            ),
-            const SizedBox(height: 14),
-            TextField(
-              controller: _password,
-              obscureText: _hidden,
-              textInputAction: TextInputAction.done,
-              autofillHints: const <String>[AutofillHints.password],
-              onSubmitted: (_) => _submit(),
-              decoration: InputDecoration(
-                labelText: tr('Parol'),
-                suffixIcon: IconButton(
-                  icon: Icon(_hidden ? Icons.visibility_outlined : Icons.visibility_off_outlined),
-                  onPressed: () => setState(() => _hidden = !_hidden),
+            if (_codeMode)
+              CodeLoginForm(
+                busy: _busy,
+                onBusy: (value) => setState(() => _busy = value),
+                onError: (message) => setState(() => _error = message),
+              )
+            else ...<Widget>[
+              TextField(
+                controller: _login,
+                keyboardType: TextInputType.phone,
+                autocorrect: false,
+                textInputAction: TextInputAction.next,
+                autofillHints: const <String>[AutofillHints.telephoneNumber, AutofillHints.email],
+                decoration: InputDecoration(labelText: tr('Telefon raqam yoki email'), hintText: '+998 90 123 45 67'),
+              ),
+              const SizedBox(height: 14),
+              TextField(
+                controller: _password,
+                obscureText: _hidden,
+                textInputAction: TextInputAction.done,
+                autofillHints: const <String>[AutofillHints.password],
+                onSubmitted: (_) => _submit(),
+                decoration: InputDecoration(
+                  labelText: tr('Parol'),
+                  suffixIcon: IconButton(
+                    icon: Icon(_hidden ? Icons.visibility_outlined : Icons.visibility_off_outlined),
+                    onPressed: () => setState(() => _hidden = !_hidden),
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(height: 20),
-            FilledButton(
-              onPressed: _busy ? null : _submit,
-              child: _busy
-                  ? const SizedBox(width: 22, height: 22, child: CircularProgressIndicator(strokeWidth: 2.4, color: Colors.white))
-                  : Text(tr('Kirish')),
-            ),
+              const SizedBox(height: 20),
+              FilledButton(
+                onPressed: _busy ? null : _submit,
+                child: _busy
+                    ? const SizedBox(width: 22, height: 22, child: CircularProgressIndicator(strokeWidth: 2.4, color: Colors.white))
+                    : Text(tr('Kirish')),
+              ),
+            ],
+            if (_options['telegram_login'] == true) ...<Widget>[
+              const SizedBox(height: 12),
+              OutlinedButton.icon(
+                onPressed: _busy ? null : () => loginWithTelegram(context),
+                icon: const Icon(Icons.send_rounded, color: Color(0xFF229ED9)),
+                label: Text(tr('Telegram orqali kirish')),
+              ),
+            ],
             const SizedBox(height: 12),
             OutlinedButton.icon(
               onPressed: _busy ? null : _inviteLogin,
@@ -185,8 +247,20 @@ class _LoginPageState extends State<LoginPage> {
               label: Text(tr('Havola orqali kirish')),
             ),
             const SizedBox(height: 18),
-            Text(tr("Parolni unutgan bo'lsangiz, tashkilot direktoriga murojaat qiling."),
-                textAlign: TextAlign.center, style: TextStyle(color: AppColors.muted, fontSize: 13)),
+            Text(
+                _options['login_code'] == true
+                    ? tr("Parolni unutgan bo'lsangiz, «Kod bilan» kiring yoki tashkilot direktoriga murojaat qiling.")
+                    : tr("Parolni unutgan bo'lsangiz, tashkilot direktoriga murojaat qiling."),
+                textAlign: TextAlign.center,
+                style: TextStyle(color: AppColors.muted, fontSize: 13)),
+            const SizedBox(height: 8),
+            Center(
+              child: TextButton.icon(
+                onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const PayLinkPage())),
+                icon: const Icon(Icons.payments_outlined, size: 18),
+                label: Text(tr("To'lov havolasi orqali to'lash")),
+              ),
+            ),
             const SizedBox(height: 28),
             Center(
               child: TextButton.icon(

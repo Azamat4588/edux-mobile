@@ -62,6 +62,15 @@ class Session extends ChangeNotifier implements ApiCredentials {
   List<String> get modules => ((context['modules'] as List?) ?? const <dynamic>[]).map((item) => '$item').toList();
   bool hasModule(String module) => modules.contains(module);
 
+  /// Qo'shimcha imkoniyatlar (server 1.28+): ai, callcenter, sms, olympiad, access, fun, branches, telegram.
+  List<String> get features => ((context['features'] as List?) ?? const <dynamic>[]).map((item) => '$item').toList();
+
+  /// Eski server `features` qaytarmaydi — unda qo'shimchalar alohida cheklanmagan deb hisoblanadi.
+  bool hasFeature(String feature) => context['features'] is! List || features.contains(feature);
+
+  /// Bitta test ishtirokchisi (havola orqali kirgan mehmon): kabinetida faqat o'sha test.
+  bool get isGuest => context['guest'] == true;
+
   bool get isStaff => <String>['director', 'admin', 'teacher', 'cashier', 'marketer'].contains(role);
   bool get isStudent => role == 'student';
   bool get isGuardian => role == 'guardian';
@@ -197,6 +206,31 @@ class Session extends ChangeNotifier implements ApiCredentials {
       'device_name': 'EduX mobil',
     }));
     await _accept(data);
+  }
+
+  /// Kirish oynasi uchun: parolsiz kirish yoqilganmi (kod, Telegram), parolni tiklash va h.k.
+  Future<Map<String, dynamic>> authOptions() async => asMap(await api.get('auth/options'));
+
+  /// Bir martalik kod: Telegramga (hisob bog'langan bo'lsa) yoki SMS bilan. Javob — server xabari.
+  Future<String> requestLoginCode(String phone) async {
+    final data = asMap(await api.post('auth/code', <String, Object?>{'phone': phone.trim()}));
+    return asText(data['message']);
+  }
+
+  Future<void> loginWithCode(String phone, String code) async {
+    final data = asMap(await api.post('auth/code/verify', <String, Object?>{'phone': phone.trim(), 'code': code.trim()}));
+    await _accept(data);
+  }
+
+  /// Telegram orqali kirish: {key, url} — url botni ochadi, key bilan holat so'raladi.
+  Future<Map<String, dynamic>> startTelegramLogin() async => asMap(await api.post('auth/telegram-link'));
+
+  /// Holat: pending | need_phone | expired | ok (ok bo'lsa — kirildi).
+  Future<String> pollTelegramLogin(String key) async {
+    final data = asMap(await api.get('auth/telegram-link/$key'));
+    final status = asText(data['status'], 'expired');
+    if (status == 'ok') await _accept(data);
+    return status;
   }
 
   /// O'quvchining shaxsiy havolasi: https://.../join/<token> yoki tokenning o'zi.

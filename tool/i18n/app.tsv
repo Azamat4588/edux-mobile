@@ -95,3 +95,29 @@ telefon boshqacha o'qidi	телефон распознал иначе	the phone 
 {0} ta test	тестов: {0}	{0} tests
 {0}-variant	вариант {0}	variant {0}
 Русский	Русский	Русский
+Bot telefon raqamingizni so'radi: Telegramda «Telefon raqamni yuborish» tugmasini bosing. Raqam tizimdagi hisobingizniki bo'lishi kerak.	Бот запросил ваш номер телефона: нажмите в Telegram кнопку «Отправить номер телефона». Номер должен совпадать с номером вашего аккаунта в системе.	The bot asked for your phone number: tap «Send phone number» in Telegram. It must be the number of your account in the system.
+Bu bo'lim hozircha mavjud emas	Этот раздел пока недоступен	This section is not available yet
+Eng kam summa: {0}	Минимальная сумма: {0}	Minimum amount: {0}
+Havola noto'g'ri. Markaz yuborgan to'liq havolani qo'ying.	Неверная ссылка. Вставьте полную ссылку, которую прислал центр.	Invalid link. Paste the full link sent by the center.
+Holatni tekshirish	Проверить статус	Check status
+Kirish havolasi eskirdi. Qaytadan «Telegram orqali kirish» tugmasini bosing.	Ссылка для входа устарела. Нажмите «Войти через Telegram» ещё раз.	The sign-in link has expired. Tap «Sign in with Telegram» again.
+Kod 6 ta raqamdan iborat.	Код состоит из 6 цифр.	The code has 6 digits.
+Kod olish	Получить код	Get code
+Kodni qayta yuborish	Отправить код повторно	Resend code
+Kodni qayta yuborish ({0} s)	Отправить код повторно ({0} с)	Resend code ({0} s)
+Markaz SMS yoki Telegram orqali yuborgan to'lov havolasini qo'ying — hisobga kirmasdan to'lash mumkin.	Вставьте платёжную ссылку, которую центр прислал по SMS или в Telegram, — оплатить можно без входа в аккаунт.	Paste the payment link the center sent by SMS or Telegram — you can pay without signing in.
+Parolni unutgan bo'lsangiz, «Kod bilan» kiring yoki tashkilot direktoriga murojaat qiling.	Если забыли пароль, войдите «По коду» или обратитесь к директору организации.	If you forgot your password, sign in «With code» or contact your organization's director.
+Qo'yish	Вставить	Paste
+Raqamni o'zgartirish	Изменить номер	Change number
+Tashkilotingizda bu imkoniyat yoqilmagan yoki sizga ruxsat berilmagan. Savollar bo'lsa, o'quv markazi yoki maktab ma'muriyatiga murojaat qiling.	В вашей организации эта возможность не включена или у вас нет доступа. По вопросам обратитесь в администрацию учебного центра или школы.	This feature is not enabled in your organization or you don't have access. For questions, contact your learning center or school administration.
+Telefon raqamingizga bir martalik kod yuboramiz.	Мы отправим одноразовый код на ваш номер телефона.	We will send a one-time code to your phone number.
+Telegram orqali kirib bo'lmadi. Qayta urinib ko'ring.	Не удалось войти через Telegram. Попробуйте ещё раз.	Could not sign in with Telegram. Please try again.
+Telegram orqali kirish	Войти через Telegram	Sign in with Telegram
+Telegramda EduX botida «Start» tugmasini bosing. Tasdiqlangach, ilova o'zi ochiladi.	Нажмите «Start» в боте EduX в Telegram. После подтверждения приложение откроется само.	Tap «Start» in the EduX bot in Telegram. Once confirmed, the app will open by itself.
+Telegramni ochish	Открыть Telegram	Open Telegram
+To'lov bekor qilindi	Платёж отменён	Payment cancelled
+To'lov havolasi	Платёжная ссылка	Payment link
+To'lov havolasi orqali to'lash	Оплатить по платёжной ссылке	Pay with a payment link
+To'lov sahifasida to'lovni yakunlang. Tasdiq kelishi bir necha daqiqa olishi mumkin.	Завершите оплату на странице платежа. Подтверждение может занять несколько минут.	Complete the payment on the payment page. Confirmation may take a few minutes.
+To'lov tasdiqlangach, balans shu sahifada yangilanadi — «Yangilash» tugmasini bosing.	После подтверждения оплаты баланс обновится на этой странице — нажмите «Обновить».	Once the payment is confirmed, the balance updates on this page — tap «Refresh».
+Yangilash	Обновить	Refresh

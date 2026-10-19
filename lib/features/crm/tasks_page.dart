@@ -9,12 +9,12 @@ import '../../core/session.dart';
 import '../../core/theme.dart';
 import '../../core/widgets.dart';
 
-const List<(String, String)> _tabs = <(String, String)>[
-  ('overdue', "Muddati o'tgan"),
-  ('today', 'Bugun'),
-  ('upcoming', 'Keyingi'),
-  ('done', 'Bajarilgan'),
-];
+const Map<String, String> _tabLabels = <String, String>{
+  'overdue': "Muddati o'tgan",
+  'today': 'Bugun',
+  'upcoming': 'Keyingi',
+  'done': 'Bajarilgan',
+};
 
 class TasksPage extends StatefulWidget {
   const TasksPage({super.key, this.initialTab = 'today'});
@@ -71,11 +71,11 @@ class _TasksPageState extends State<TasksPage> {
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(children: <Widget>[
-                  for (final (key, label) in _tabs)
+                  for (final key in _tabLabels.keys)
                     Padding(
                       padding: const EdgeInsets.only(right: 8),
                       child: ChoiceChip(
-                        label: Text('${tr(label)} ${asInt(counts[key])}'),
+                        label: Text('${tr(_tabLabels[key]!)} ${asInt(counts[key])}'),
                         selected: _tab == key,
                         selectedColor: key == 'overdue' ? AppColors.soft(AppColors.danger) : AppColors.soft(AppColors.brand),
                         onSelected: (_) {

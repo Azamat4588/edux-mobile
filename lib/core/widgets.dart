@@ -55,6 +55,8 @@ class AsyncViewState<T> extends State<AsyncView<T>> {
   Widget build(BuildContext context) {
     if (!_hasData) {
       if (_loading) return const Center(child: CircularProgressIndicator());
+      final error = _error;
+      if (error is ApiException && error.isForbidden) return ForbiddenState(details: error.message, onRetry: reload);
       return ErrorState(message: errorText(_error), onRetry: reload);
     }
     final child = widget.builder(context, _data as T, reload);
@@ -113,6 +115,45 @@ class ErrorState extends StatelessWidget {
           Icon(Icons.cloud_off_rounded, size: 48, color: AppColors.muted),
           const SizedBox(height: 12),
           Text(message, textAlign: TextAlign.center, style: TextStyle(color: AppColors.muted)),
+          if (onRetry != null) ...<Widget>[
+            const SizedBox(height: 16),
+            OutlinedButton.icon(onPressed: onRetry, icon: const Icon(Icons.refresh), label: Text(tr('Qayta urinish'))),
+          ],
+        ]),
+      ),
+    );
+  }
+}
+
+/// 403: bo'lim tashkilotda yoqilmagan yoki shu rolga ruxsat yo'q — qo'rqitmaydigan tushuntirish bilan.
+class ForbiddenState extends StatelessWidget {
+  const ForbiddenState({super.key, this.details, this.onRetry});
+
+  final String? details;
+  final VoidCallback? onRetry;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(32),
+        child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+          Container(
+            width: 64,
+            height: 64,
+            decoration: BoxDecoration(color: AppColors.soft(AppColors.warning), shape: BoxShape.circle),
+            child: const Icon(Icons.lock_outline_rounded, size: 32, color: AppColors.warning),
+          ),
+          const SizedBox(height: 14),
+          Text(tr("Bu bo'lim hozircha mavjud emas"),
+              textAlign: TextAlign.center, style: TextStyle(fontSize: 17, fontWeight: FontWeight.w700, color: AppColors.ink)),
+          const SizedBox(height: 6),
+          Text(tr("Tashkilotingizda bu imkoniyat yoqilmagan yoki sizga ruxsat berilmagan. Savollar bo'lsa, o'quv markazi yoki maktab ma'muriyatiga murojaat qiling."),
+              textAlign: TextAlign.center, style: TextStyle(color: AppColors.muted)),
+          if (details != null && details!.isNotEmpty) ...<Widget>[
+            const SizedBox(height: 10),
+            Text(details!, textAlign: TextAlign.center, style: TextStyle(color: AppColors.muted, fontSize: 12)),
+          ],
           if (onRetry != null) ...<Widget>[
             const SizedBox(height: 16),
             OutlinedButton.icon(onPressed: onRetry, icon: const Icon(Icons.refresh), label: Text(tr('Qayta urinish'))),
