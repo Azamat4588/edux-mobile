@@ -53,6 +53,25 @@ class AppColors {
   static Color soft(Color color) => Color.alphaBlend(color.withAlpha(dark ? 46 : 22), card);
 }
 
+/// Bir xil oraliqlar (3.1 dizayn): 4 / 8 / 12 / 16 / 24.
+class AppSpacing {
+  AppSpacing._();
+
+  static const double xs = 4;
+  static const double s = 8;
+  static const double m = 12;
+  static const double l = 16;
+  static const double xl = 24;
+}
+
+class AppRadius {
+  AppRadius._();
+
+  static const double card = 16;
+  static const double control = 12;
+  static const double sheet = 22;
+}
+
 class AppTheme {
   AppTheme._();
 
@@ -131,6 +150,23 @@ ThemeData buildTheme() {
     ),
     chipTheme: base.chipTheme.copyWith(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
     dividerTheme: DividerThemeData(color: AppColors.line, space: 1, thickness: 1),
-    listTileTheme: ListTileThemeData(iconColor: AppColors.muted),
+    listTileTheme: ListTileThemeData(
+      iconColor: AppColors.muted,
+      minVerticalPadding: 10,
+      contentPadding: const EdgeInsets.symmetric(horizontal: AppSpacing.l),
+    ),
+    // Kattaroq bosish maydoni (kamida 48×48)
+    materialTapTargetSize: MaterialTapTargetSize.padded,
+    iconButtonTheme: IconButtonThemeData(style: IconButton.styleFrom(minimumSize: const Size(48, 48))),
+    textButtonTheme: TextButtonThemeData(
+      style: TextButton.styleFrom(
+        minimumSize: const Size(48, 44),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppRadius.control)),
+      ),
+    ),
+    snackBarTheme: SnackBarThemeData(
+      behavior: SnackBarBehavior.floating,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppRadius.control)),
+    ),
   );
 }

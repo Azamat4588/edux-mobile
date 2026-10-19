@@ -1,5 +1,6 @@
 // Kirish holati: server, token, foydalanuvchi, tashkilot va uning konteksti (rol, modullar).
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
@@ -8,6 +9,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'api.dart';
 import 'i18n.dart';
+import 'notification_store.dart';
+import 'offline_cache.dart';
 import 'push.dart';
 import 'theme.dart';
 
@@ -54,6 +57,9 @@ class Session extends ChangeNotifier implements ApiCredentials {
 
   @override
   int? get organizationId => _organizationId;
+
+  /// Ilova internetsiz ochildi: foydalanuvchi va tashkilot konteksti telefondagi nusxadan (3.1).
+  bool contextFromCache = false;
 
   bool get signedIn => _token != null;
   bool get hasContext => context.isNotEmpty;
@@ -154,17 +160,42 @@ class Session extends ChangeNotifier implements ApiCredentials {
     }
     if (_token != null) {
       try {
-        _apply(asMap(await api.get('me')));
+        final me = asMap(await api.get('me'));
+        _apply(me);
+        unawaited(prefs.setString('offline.me', jsonEncode(me)));
         await _chooseOrganization(prefs);
       } on ApiException catch (error) {
         if (error.isUnauthorized) {
           await _forget();
+        } else {
+          // Internet yo'q: token saqlanadi, oxirgi foydalanuvchi va kontekst nusxasi bilan ochiladi.
+          _restoreOffline(prefs);
         }
-        // Internet yo'q: token saqlanadi, kontekst keyin yuklanadi (Bosh sahifa qayta urinadi).
       }
     }
     restoring = false;
     notifyListeners();
+  }
+
+  /// Internetsiz ochilish: telefonda saqlangan `me` va tanlangan tashkilot konteksti (bo'lmasa — oddiy kutish oynasi).
+  void _restoreOffline(SharedPreferences prefs) {
+    try {
+      final me = prefs.getString('offline.me');
+      final organization = _organizationId;
+      final context = organization == null ? null : prefs.getString('offline.context.$organization');
+      if (me == null || context == null) return;
+      _apply(asMap(jsonDecode(me)));
+      this.context = asMap(jsonDecode(context));
+      contextFromCache = true;
+      _setCacheScope();
+    } catch (_) {
+      // nusxa buzilgan — oddiy yo'l bilan qayta urinadi
+    }
+  }
+
+  void _setCacheScope() {
+    final organization = _organizationId;
+    OfflineCache.scope = organization == null ? '' : '${asInt(user['id'])}-$organization';
   }
 
   Future<void> _loadSite() async {
@@ -248,7 +279,9 @@ class Session extends ChangeNotifier implements ApiCredentials {
     _token = token;
     await _secure.write(key: 'token', value: token);
     _apply(data);
-    await _chooseOrganization(await SharedPreferences.getInstance());
+    final prefs = await SharedPreferences.getInstance();
+    unawaited(prefs.setString('offline.me', jsonEncode(<String, Object?>{'user': data['user'], 'memberships': data['memberships']})));
+    await _chooseOrganization(prefs);
     notifyListeners();
   }
 
@@ -289,6 +322,13 @@ class Session extends ChangeNotifier implements ApiCredentials {
 
   Future<void> loadContext() async {
     context = asMap(await api.get('context'));
+    contextFromCache = false;
+    _setCacheScope();
+    final organization = _organizationId;
+    if (organization != null) {
+      final prefs = await SharedPreferences.getInstance();
+      unawaited(prefs.setString('offline.context.$organization', jsonEncode(context)));
+    }
     notifyListeners();
     // Push: qurilma ro'yxatdan o'tadi (Firebase sozlangan bo'lsa).
     unawaited(PushService.instance.attach(this));
@@ -309,6 +349,16 @@ class Session extends ChangeNotifier implements ApiCredentials {
 
   Future<void> _forget() async {
     _token = null;
+    contextFromCache = false;
+    OfflineCache.scope = '';
+    await OfflineCache.clear();
+    await NotificationStore.instance.clear();
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      for (final key in prefs.getKeys().where((key) => key.startsWith('offline.')).toList()) {
+        await prefs.remove(key);
+      }
+    } catch (_) {}
     user = <String, dynamic>{};
     memberships = <Membership>[];
     context = <String, dynamic>{};

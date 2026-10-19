@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import '../../core/api.dart';
 import '../../core/i18n.dart';
+import '../../core/notification_store.dart';
 import '../../core/push.dart';
 import '../../core/sms_gateway.dart';
 import '../access/checkin_page.dart';
@@ -52,13 +53,17 @@ class HomeShell extends StatefulWidget {
   State<HomeShell> createState() => _HomeShellState();
 }
 
-class _HomeShellState extends State<HomeShell> {
+class _HomeShellState extends State<HomeShell> with WidgetsBindingObserver {
   int _index = 0;
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     ScanQueue.instance.kick();
+    // Bildirishnomalar markazi: telefondagi ro'yxat; sahifasiz xabar bosilganda — bosh tab.
+    NotificationStore.instance.load();
+    PushService.instance.onHome = _home;
     // Push xabari bosilganda ochiladigan sahifalar.
     final routes = PushService.instance.routes;
     routes['attempt'] = (data) => asInt(data['attempt_id']) > 0 ? AttemptResultPage(attemptId: asInt(data['attempt_id'])) : null;
@@ -73,7 +78,29 @@ class _HomeShellState extends State<HomeShell> {
     });
   }
 
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    if (PushService.instance.onHome == _home) PushService.instance.onHome = null;
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state != AppLifecycleState.resumed) return;
+    // Fonda kelgan xabarlar va (internetsiz ochilgan bo'lsa) tashkilot konteksti yangilansin.
+    NotificationStore.instance.load();
+    final session = AppScope.read(context);
+    if (session.contextFromCache) {
+      session.loadContext().catchError((Object _) {});
+    }
+  }
+
   void _go(int index) => setState(() => _index = index);
+
+  void _home() {
+    if (mounted) _go(0);
+  }
 
   List<_Tab> _tabs(Session session) {
     if (session.isStudent) return _studentTabs(session);

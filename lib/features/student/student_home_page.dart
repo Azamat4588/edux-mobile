@@ -8,6 +8,7 @@ import '../../core/session.dart';
 import '../../core/theme.dart';
 import '../../core/widgets.dart';
 import '../fun/games_page.dart';
+import '../notifications/notifications_page.dart';
 import '../olympiad/olympiads_page.dart';
 import '../tutor/tutor_page.dart';
 import 'online_pay.dart';
@@ -27,9 +28,12 @@ class StudentHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final session = AppScope.of(context);
     return Scaffold(
-      appBar: AppBar(title: Text(session.organizationName)),
+      appBar: AppBar(title: Text(session.organizationName), actions: const <Widget>[NotificationBell()]),
       body: AsyncView<Map<String, dynamic>>(
         load: () => _load(session),
+        cacheKey: 'student_home',
+        decode: asMap,
+        skeleton: const SkeletonList(header: true, count: 3),
         builder: (context, data, reload) => ListView(children: <Widget>[
           StudentOverviewBody(insights: asMap(data['insights']), crm: asMap(data['crm']), onPaid: reload),
           const _QuickActions(),

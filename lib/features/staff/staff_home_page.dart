@@ -8,6 +8,7 @@ import '../../core/session.dart';
 import '../../core/theme.dart';
 import '../../core/widgets.dart';
 import '../access/checkin_page.dart';
+import '../notifications/notifications_page.dart';
 import '../scanner/scanner_page.dart';
 import '../scanner/scans_page.dart';
 import 'attendance_page.dart';
@@ -45,9 +46,13 @@ class StaffHomePage extends StatelessWidget {
           const SizedBox(width: 10),
           Expanded(child: Text(session.organizationName, maxLines: 1, overflow: TextOverflow.ellipsis)),
         ]),
+        actions: const <Widget>[NotificationBell()],
       ),
       body: AsyncView<Map<String, dynamic>>(
         load: () => _load(session),
+        cacheKey: 'staff_home',
+        decode: asMap,
+        skeleton: const SkeletonList(header: true, count: 3),
         builder: (context, data, reload) {
           final overview = asMap(data['overview']);
           final testing = asMap(overview['testing']);

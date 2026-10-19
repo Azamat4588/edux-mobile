@@ -3,6 +3,7 @@
 //
 // Oqim: kirgandan keyin token olinadi → POST /devices; token yangilansa — qayta; chiqishda DELETE /devices.
 // Xabar bosilganda: kerak bo'lsa tashkilot almashtiriladi va tegishli sahifa ochiladi (PushRouter).
+// 3.1: har bir xabar bildirishnomalar markaziga yoziladi (NotificationStore) — ilova yopiq bo'lganda ham (fon handler).
 import 'dart:async';
 import 'dart:io';
 
@@ -12,6 +13,7 @@ import 'package:flutter/material.dart';
 
 import 'api.dart';
 import 'i18n.dart';
+import 'notification_store.dart';
 import 'session.dart';
 import 'theme.dart';
 
@@ -21,12 +23,40 @@ final GlobalKey<NavigatorState> rootNavigator = GlobalKey<NavigatorState>();
 /// Xabar turi (server: data.type) → ochiladigan sahifa. Sahifalar shell tomonidan ro'yxatdan o'tkaziladi.
 typedef PushRoute = Widget? Function(Map<String, dynamic> data);
 
+/// RemoteMessage → bildirishnomalar markazi yozuvi (bildirishnoma matni bo'lmagan jim xabarlar — null).
+AppNotification? notificationOf(RemoteMessage message, {bool read = false}) {
+  final notification = message.notification;
+  if (notification == null) return null;
+  final title = notification.title ?? '';
+  final body = notification.body ?? '';
+  if (title.isEmpty && body.isEmpty) return null;
+  final sent = message.sentTime ?? DateTime.now();
+  return AppNotification(
+    id: message.messageId ?? '${sent.millisecondsSinceEpoch}-${title.hashCode}',
+    title: title,
+    body: body,
+    data: Map<String, dynamic>.from(message.data),
+    receivedAt: sent,
+    read: read,
+  );
+}
+
+/// Ilova fonda yoki yopiq bo'lganda kelgan xabar (alohida isolate): faqat markazga yoziladi.
+@pragma('vm:entry-point')
+Future<void> pushBackgroundHandler(RemoteMessage message) async {
+  final item = notificationOf(message);
+  if (item == null) return;
+  try {
+    await NotificationStore.persist(item);
+  } catch (_) {}
+}
+
 class PushService {
   PushService._();
 
   static final PushService instance = PushService._();
 
-  static const String appVersion = '2.1.0';
+  static const String appVersion = '3.1.0';
 
   bool _ready = false;
   bool _initTried = false;
@@ -39,7 +69,13 @@ class PushService {
   final Map<String, void Function(Map<String, dynamic>)> dataHandlers = <String, void Function(Map<String, dynamic>)>{};
   Map<String, dynamic>? _pending;
 
+  /// Sahifasi bo'lmagan xabar (to'lov, davomat, keldi) bosilganda — bosh tabga qaytish (shell o'rnatadi).
+  VoidCallback? onHome;
+
   bool get available => _ready;
+
+  /// Bu turdagi xabar uchun alohida sahifa bormi.
+  bool hasRoute(String type) => routes.containsKey(type);
 
   Future<void> _init() async {
     if (_initTried) return;
@@ -52,10 +88,17 @@ class PushService {
       _ready = false;
       return;
     }
+    FirebaseMessaging.onBackgroundMessage(pushBackgroundHandler);
     FirebaseMessaging.onMessage.listen(_foreground);
-    FirebaseMessaging.onMessageOpenedApp.listen((message) => _open(message.data));
+    FirebaseMessaging.onMessageOpenedApp.listen((message) {
+      _remember(message, read: true);
+      open(Map<String, dynamic>.from(message.data));
+    });
     final initial = await FirebaseMessaging.instance.getInitialMessage();
-    if (initial != null) _pending = Map<String, dynamic>.from(initial.data);
+    if (initial != null) {
+      _remember(initial, read: true);
+      _pending = Map<String, dynamic>.from(initial.data);
+    }
   }
 
   /// Kirgandan keyin (tashkilot konteksti yuklangach) chaqiriladi.
@@ -76,7 +119,7 @@ class PushService {
     final pending = _pending;
     if (pending != null) {
       _pending = null;
-      Future<void>.delayed(const Duration(milliseconds: 600), () => _open(pending));
+      Future<void>.delayed(const Duration(milliseconds: 600), () => open(pending));
     }
   }
 
@@ -112,7 +155,13 @@ class PushService {
     if (token != null) await _register(token);
   }
 
+  void _remember(RemoteMessage message, {bool read = false}) {
+    final item = notificationOf(message, read: read);
+    if (item != null) unawaited(NotificationStore.instance.add(item));
+  }
+
   void _foreground(RemoteMessage message) {
+    _remember(message);
     final handler = dataHandlers[asText(message.data['type'])];
     if (handler != null) handler(Map<String, dynamic>.from(message.data));
     final context = rootNavigator.currentContext;
@@ -128,12 +177,21 @@ class PushService {
         if ((notification.body ?? '').isNotEmpty) Text(notification.body!, style: const TextStyle(color: Colors.white)),
       ]),
       action: routes.containsKey(asText(message.data['type']))
-          ? SnackBarAction(label: tr('Ochish'), textColor: Colors.white, onPressed: () => _open(message.data))
+          ? SnackBarAction(
+              label: tr('Ochish'),
+              textColor: Colors.white,
+              onPressed: () {
+                final item = notificationOf(message);
+                if (item != null) unawaited(NotificationStore.instance.markRead(item.id));
+                open(Map<String, dynamic>.from(message.data));
+              },
+            )
           : null,
     ));
   }
 
-  Future<void> _open(Map<String, dynamic> data) async {
+  /// Xabar bo'yicha sahifani ochish (push bosilganda va bildirishnomalar markazidan).
+  Future<void> open(Map<String, dynamic> data) async {
     final session = _session;
     if (session == null || !session.signedIn) {
       _pending = data;
@@ -147,8 +205,13 @@ class PushService {
     final builder = routes[asText(data['type'])];
     final page = builder?.call(data);
     final navigator = rootNavigator.currentState;
-    if (page != null && navigator != null) {
+    if (navigator == null) return;
+    if (page != null) {
       await navigator.push(MaterialPageRoute<void>(builder: (_) => page));
+    } else {
+      // To'lov, davomat va h.k. — bosh sahifada ko'rinadi
+      navigator.popUntil((route) => route.isFirst);
+      onHome?.call();
     }
   }
 }

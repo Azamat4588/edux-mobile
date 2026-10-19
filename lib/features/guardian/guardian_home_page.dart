@@ -1,15 +1,19 @@
 // «Farzandim» (ota-ona): bir nechta farzand bo'lsa — tepada almashtirgich; tablar: Umumiy, Kundalik (maktab),
 // Testlar, To'lov (CRM). Barcha so'rovlar GuardianRepository orqali.
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../core/api.dart';
 import '../../core/format.dart';
 import '../../core/i18n.dart';
+import '../../core/offline_cache.dart';
 import '../../core/session.dart';
 import '../../core/theme.dart';
 import '../../core/widgets.dart';
 import '../staff/students_page.dart';
+import '../notifications/notifications_page.dart';
 import '../student/diary_page.dart';
 import 'guardian_repository.dart';
 
@@ -38,7 +42,17 @@ class _GuardianHomePageState extends State<GuardianHomePage> {
     setState(() => _error = null);
     try {
       _repository.invalidate();
-      final children = await _repository.children();
+      var children = <GuardianChild>[];
+      try {
+        children = await _repository.children();
+        unawaited(OfflineCache.write('guardian_children', children.map((item) => item.toJson()).toList()));
+      } on ApiException catch (error) {
+        // Internet yo'q: oxirgi farzandlar ro'yxati (tablar o'z nusxalarini ko'rsatadi)
+        if (!error.isNetwork) rethrow;
+        final cached = await OfflineCache.read('guardian_children');
+        if (cached == null || cached.data is! List) rethrow;
+        children = asList(cached.data).map(GuardianChild.fromJson).toList();
+      }
       final prefs = await SharedPreferences.getInstance();
       final saved = prefs.getInt('$_prefsKey.${_repository.session.organizationId}');
       if (!mounted) return;
@@ -73,13 +87,13 @@ class _GuardianHomePageState extends State<GuardianHomePage> {
       } else if (error != null) {
         body = ErrorState(message: errorText(error), onRetry: _load);
       } else {
-        body = const Center(child: CircularProgressIndicator());
+        body = const SkeletonList(header: true, count: 3);
       }
-      return Scaffold(appBar: AppBar(title: Text(tr('Farzandim'))), body: body);
+      return Scaffold(appBar: AppBar(title: Text(tr('Farzandim')), actions: const <Widget>[NotificationBell()]), body: body);
     }
     if (children.isEmpty) {
       return Scaffold(
-        appBar: AppBar(title: Text(tr('Farzandim'))),
+        appBar: AppBar(title: Text(tr('Farzandim')), actions: const <Widget>[NotificationBell()]),
         body: RefreshIndicator(
           onRefresh: _load,
           child: ListView(children: <Widget>[
@@ -107,6 +121,7 @@ class _GuardianHomePageState extends State<GuardianHomePage> {
       child: Scaffold(
         appBar: AppBar(
           title: Text(children.length > 1 ? tr('Farzandlarim') : tr('Farzandim')),
+          actions: const <Widget>[NotificationBell()],
           bottom: children.length < 2 && tabs.length < 2
               ? null
               : PreferredSize(
@@ -200,20 +215,24 @@ class _OverviewTab extends StatelessWidget {
       repository.insights(child.id),
       repository.finance(child.id).catchError((Object _) => null),
     ]);
-    return <String, dynamic>{'insights': asMap(results[0]), 'finance': results[1]};
+    // Internetsiz nusxa uchun JSON ko'rinishida (ChildFinance — xom xarita ustidagi qobiq).
+    final finance = results[1] is ChildFinance ? (results[1] as ChildFinance).raw : null;
+    return <String, dynamic>{'insights': asMap(results[0]), 'finance': finance};
   }
 
   @override
   Widget build(BuildContext context) {
     return AsyncView<Map<String, dynamic>>(
       key: ValueKey<String>('overview-${child.id}'),
+      cacheKey: 'child_overview_${child.id}',
+      decode: asMap,
       load: () {
         repository.invalidate();
         return _load();
       },
       builder: (context, data, reload) {
         final insights = asMap(data['insights']);
-        final finance = data['finance'] is ChildFinance ? data['finance'] as ChildFinance : null;
+        final finance = data['finance'] is Map ? ChildFinance(asMap(data['finance'])) : null;
         final testing = asMap(insights['testing']);
         final school = asMap(insights['school']);
         final crm = asMap(insights['crm']);

@@ -15,10 +15,20 @@ import '../student/online_pay.dart';
 class GuardianChild {
   const GuardianChild({required this.id, required this.name, this.code, this.groups = const <String>[]});
 
+  factory GuardianChild.fromJson(Map<String, dynamic> json) => GuardianChild(
+        id: asInt(json['id']),
+        name: asText(json['name']),
+        code: json['code']?.toString(),
+        groups: ((json['groups'] as List?) ?? const <dynamic>[]).map((value) => '$value').toList(),
+      );
+
   final int id;
   final String name;
   final String? code;
   final List<String> groups;
+
+  /// Internetsiz nusxa uchun.
+  Map<String, dynamic> toJson() => <String, dynamic>{'id': id, 'name': name, 'code': code, 'groups': groups};
 
   String get firstName {
     final parts = name.trim().split(RegExp(r'\s+'));

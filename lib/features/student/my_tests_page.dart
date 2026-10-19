@@ -40,6 +40,8 @@ class MyTestsPage extends StatelessWidget {
       appBar: AppBar(title: Text(tr('Testlar'))),
       body: AsyncView<List<Map<String, dynamic>>>(
         load: () async => asList(asMap(await api.get('my/exams'))['exams'], 'exams'),
+        cacheKey: 'my_tests',
+        decode: (raw) => asList(raw),
         builder: (context, exams, reload) {
           if (exams.isEmpty) {
             return ListView(children: <Widget>[

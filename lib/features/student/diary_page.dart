@@ -94,6 +94,9 @@ class _DiaryWeekViewState extends State<DiaryWeekView> {
     return AsyncView<Map<String, dynamic>>(
       key: ValueKey<String>('${widget.studentId}-$_date-$_version'),
       load: () => repository.diaryWeek(widget.studentId, date: _date),
+      // Joriy hafta internetsiz ham ko'rinsin
+      cacheKey: _date == null ? 'diary_${widget.studentId ?? 'me'}' : null,
+      decode: asMap,
       builder: (context, data, reload) {
         if (data['has_year'] == false) {
           return ListView(children: <Widget>[

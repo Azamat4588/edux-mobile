@@ -7,6 +7,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../core/api.dart';
 import '../../core/format.dart';
 import '../../core/i18n.dart';
+import '../../core/offline_cache.dart';
 import '../../core/session.dart';
 import '../../core/theme.dart';
 import '../../core/widgets.dart';
@@ -29,6 +30,9 @@ class _StudentsPageState extends State<StudentsPage> {
   int _total = 0;
   bool _loading = true;
   String? _error;
+
+  /// Internetsiz nusxa ko'rsatilmoqda (faqat qidiruvsiz ro'yxat saqlanadi).
+  DateTime? _offlineAt;
 
   @override
   void initState() {
@@ -54,17 +58,32 @@ class _StudentsPageState extends State<StudentsPage> {
       _loading = true;
       _error = null;
     });
+    final query = _search.text.trim();
     try {
       final crm = session.hasModule('crm');
-      final data = await session.api.get(crm ? 'crm/students' : 'students', query: <String, Object?>{'search': _search.text.trim()});
+      final data = await session.api.get(crm ? 'crm/students' : 'students', query: <String, Object?>{'search': query});
       if (!mounted) return;
       setState(() {
         _items = asList(data);
         _total = data is Map ? asInt(data['total'], _items.length) : _items.length;
         _loading = false;
+        _offlineAt = null;
       });
+      if (query.isEmpty) unawaited(OfflineCache.write('students', <String, Object?>{'data': _items, 'total': _total}));
     } on ApiException catch (error) {
       if (!mounted) return;
+      final cached = query.isEmpty && error.isNetwork ? await OfflineCache.read('students') : null;
+      if (!mounted) return;
+      if (cached != null && cached.data is Map) {
+        setState(() {
+          _items = asList(cached.data);
+          _total = asInt(asMap(cached.data)['total'], _items.length);
+          _loading = false;
+          _error = null;
+          _offlineAt = cached.savedAt;
+        });
+        return;
+      }
       setState(() {
         _error = error.message;
         _loading = false;
@@ -118,10 +137,10 @@ class _StudentsPageState extends State<StudentsPage> {
         ),
       ),
       body: _loading && _items.isEmpty
-          ? const Center(child: CircularProgressIndicator())
+          ? const SkeletonList()
           : _error != null && _items.isEmpty
               ? ErrorState(message: _error!, onRetry: _load)
-              : RefreshIndicator(
+              : _withOfflineBanner(RefreshIndicator(
                   onRefresh: _load,
                   child: _items.isEmpty
                       ? ListView(children: <Widget>[EmptyState(text: tr("Hech narsa topilmadi. Qidiruv so'zini yoki filtrni o'zgartirib ko'ring."))])
@@ -140,8 +159,17 @@ class _StudentsPageState extends State<StudentsPage> {
                             return _StudentTile(student: _items[index], onTap: () => _open(_items[index]));
                           },
                         ),
-                ),
+                )),
     );
+  }
+
+  Widget _withOfflineBanner(Widget child) {
+    final offlineAt = _offlineAt;
+    if (offlineAt == null) return child;
+    return Column(children: <Widget>[
+      OfflineBanner(savedAt: offlineAt, onRetry: _loading ? null : _load),
+      Expanded(child: child),
+    ]);
   }
 }
 

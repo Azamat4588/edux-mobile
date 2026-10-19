@@ -335,3 +335,10 @@ O'qituvchi tekshirmoqda	Учитель проверяет	Teacher is grading
 So'nggi test natijalari	Последние результаты тестов	Latest test results
 To'lov ma'lumotlari topilmadi.	Данные об оплате не найдены.	No payment data found.
 Topshirilishi kerak	Нужно сдать	To be taken
+Barcha bildirishnomalar o'chirilsinmi?	Удалить все уведомления?	Delete all notifications?
+Bildirishnoma	Уведомление	Notification
+Bildirishnomalar	Уведомления	Notifications
+Hammasini o'qilgan deb belgilash	Отметить все как прочитанные	Mark all as read
+Hozircha bildirishnoma yo'q. Push-bildirishnomalar bu ilova yig'ilishida yoqilmagan bo'lishi mumkin.	Уведомлений пока нет. Push-уведомления могут быть не включены в этой сборке приложения.	No notifications yet. Push notifications may not be enabled in this app build.
+Hozircha bildirishnoma yo'q. To'lov, baho, test natijasi va vazifalar haqidagi xabarlar shu yerda saqlanadi.	Уведомлений пока нет. Здесь сохраняются сообщения об оплатах, оценках, результатах тестов и задачах.	No notifications yet. Messages about payments, grades, test results and tasks are kept here.
+Internet yo'q. {0} holatidagi ma'lumot ko'rsatilmoqda.	Нет интернета. Показаны данные на {0}.	No internet. Showing data as of {0}.
