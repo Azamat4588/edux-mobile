@@ -17,6 +17,30 @@ Actions sozlamalari (Settings → Secrets and variables → Actions):
 
 Play Market uchun `.aab`: Actions → Build → «Run workflow».
 
+## 3.0 da yangi
+
+**Kirish**
+- Bir martalik kod bilan kirish: telefon raqamga kod Telegramga (hisob bog'langan bo'lsa) yoki SMS bilan keladi (`POST auth/code`, `auth/code/verify`).
+- «Telegram orqali kirish»: bot ochiladi, «Start» bosilgach ilova o'zi kiradi (`POST auth/telegram-link`, `GET auth/telegram-link/{key}` — 2 soniyada bir so'rov, ilovaga qaytilganda darhol).
+- Tugmalar server sozlamasiga qarab ko'rinadi (`GET auth/options`). Ota-ona hisobsiz ham **to'lov havolasi** (`/p/…`) bilan to'lay oladi.
+
+**O'quvchi**
+- **Olimpiadalarim**: havola (`…/o/…`) orqali qo'shilish, ro'yxatdan o'tish, badal to'lovi (Click/Payme), testni ilovadagi test oynasida ishlash, natija, o'rin va sertifikat, e'lonlar va reyting.
+- **AI ustoz**: chat (formulalar LaTeX'da), suhbatlar tarixi, oylik limit. Test oynasi ochiq bo'lsa ustoz o'chadi (server ham tekshiradi).
+- **O'yinlar**: viktorina-blits, «Juftini top», «So'z yig'ish» — rekord va reyting. **Yutuqlarim**: XP, daraja, ketma-ket kunlar, nishonlar, haftalik reyting.
+- **Virtual laboratoriya**: tasodifiy qiymatli topshiriqlar, 3 ta urinish, XP.
+- Onlayn to'lovdan keyin buyurtma holati kuzatiladi (`GET pay/orders/{id}`), balans o'zi yangilanadi.
+- **Murojaatlar**: qo'llab-quvvatlashga yozish va yozishma (barcha rollar uchun).
+
+**Ota-ona — «Farzandim»**
+- Bir nechta farzand bo'lsa — tepada almashtirgich (tanlov eslab qolinadi).
+- Tablar: **Umumiy** (balans va to'lash, davomat, so'nggi baholar va natijalar), **Kundalik** (maktab moduli), **Testlar**, **To'lov** (hisoblanmalar, to'lovlar, onlayn to'lov).
+- Barcha so'rovlar `lib/features/guardian/guardian_repository.dart` da — endpointlar to'plami bitta joyda almashtiriladi.
+
+**Tashkilot imkoniyatlari**
+- `GET context` dagi `modules` va `features` (ai, olympiad, fun, …) bo'yicha menyu tuziladi: yoqilmagan bo'lim ko'rinmaydi.
+- Server 403 qaytarsa, «Bu bo'lim hozircha mavjud emas» degan tushunarli oyna chiqadi.
+
 ## 2.0 da yangi
 
 - Tungi, kunduzgi va «qurilmaga qarab» rejim; tashkilot tanlagan asosiy rang (veb bilan umumiy sozlama).
@@ -41,8 +65,10 @@ Play Market uchun `.aab`: Actions → Build → «Run workflow».
 - Kurslar, darslar, materiallarni ochish; uy vazifasini matn yoki daftar surati bilan yuborish.
 - Kundalik: haftalik jadval, mavzu, uy vazifasi, baho, davomat.
 
+- Olimpiadalar, AI ustoz, o'yinlar, yutuqlar, virtual laboratoriya (tashkilotda yoqilgan bo'lsa), murojaatlar.
+
 **Ota-ona**
-- Farzandlar: balans, to'lov, davomat, natijalar, baholar, kundalik.
+- «Farzandim»: farzand almashtirgich; Umumiy, Kundalik, Testlar, To'lov tablari; onlayn to'lov.
 
 ## Skaner qanday ishlaydi
 
@@ -119,18 +145,24 @@ cd packages/edux_omr && bash tool/test.sh /yo'l/edux/omr-service 96   # C++ yadr
 
 EduX server **1.8.0** yoki yangiroq: `device_result` maydoni va `GET /api/v1/scans/kit/{exam}` shu versiyada qo'shilgan. Eski serverda ilova ishlaydi, lekin telefon natijasi solishtirilmaydi va internetsiz baholash bo'lmaydi.
 
+3.0 imkoniyatlari uchun server **1.28** tavsiya etiladi (`context.features`). `features` qaytarmaydigan eski serverda qo'shimcha bo'limlar cheklanmagan deb hisoblanadi va mavjud bo'lmagan bo'lim ochilsa, 403/404 xabari ko'rsatiladi.
+
 ## Tuzilma
 
 ```
 lib/
   core/              API, sessiya, tarjima, format, mavzu, umumiy vidjetlar
   features/
-    auth/            kirish, tashkilot tanlash
-    shell/           rolga qarab pastki menyu
+    auth/            kirish (parol, bir martalik kod, Telegram), tashkilot tanlash
+    shell/           rolga, modul va imkoniyatlarga qarab pastki menyu
     scanner/         skaner, navbat, test kaliti, natija, tekshiruv
     staff/           bosh sahifa, o'quvchilar, to'lov, davomat, testlar
-    student/         bosh sahifa, onlayn testlar, kurslar, uy vazifasi, kundalik, to'lov
-    guardian/        farzandlar
+    student/         bosh sahifa, onlayn testlar, kurslar, uy vazifasi, kundalik, to'lov, to'lov havolasi
+    guardian/        «Farzandim» va GuardianRepository (ota-onaning barcha so'rovlari)
+    olympiad/        olimpiadalarim, olimpiada sahifasi
+    tutor/           AI ustoz
+    fun/             o'yinlar, yutuqlar, virtual laboratoriya
+    support/         murojaatlar
     settings/        til, skaner sozlamalari, chiqish
 packages/edux_omr/   C++ OMR yadrosi (quirc — ISC, stb — public domain) va Dart FFI
 assets/i18n/         ru.json, en.json (kalit — o'zbekcha matn)
@@ -138,6 +170,10 @@ tool/                platforma sozlash, tarjima tekshiruvi
 ```
 
 ## Cheklovlar
+
+- Olimpiadalar ro'yxati: serverda o'quvchi uchun «mening olimpiadalarim» endpointi yo'q — ochilgan/ro'yxatdan o'tilgan olimpiada havolalari telefonda saqlanadi. `/o/…`, `/p/…` havolalarini ilovaga to'g'ridan-to'g'ri ochish (App Links / Universal Links) hali sozlanmagan: havola nusxalanib ilovaga qo'yiladi.
+- Virtual laboratoriyada vebdagi interaktiv tajriba (mayatnik, linza animatsiyasi) yo'q — topshiriq matni, qiymatlar va javob.
+- Tashqi (boshqa markazdagi) ishtirokchi olimpiada testini brauzerdagi shaxsiy havola orqali ishlaydi.
 
 - Push-bildirishnomalar yo'q (Telegram bot orqali bildirishnomalar ishlaydi). Firebase qo'shish uchun alohida loyiha sozlamalari kerak.
 - Faqat HTTPS serverlar: Android/iOS sukut bo'yicha shifrlanmagan HTTP'ni bloklaydi. Mahalliy sinov uchun `http://` kerak bo'lsa, AndroidManifest'ga `android:usesCleartextTraffic="true"` qo'shing.

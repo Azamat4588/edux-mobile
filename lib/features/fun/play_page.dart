@@ -1,6 +1,7 @@
 // O'yin oynasi: viktorina-blits (javob serverda tekshiriladi), «Juftini top» (xotira kartalari), «So'z yig'ish».
 // POST /my/games → sessiya; quiz: POST /my/games/{id}/answer; oxirida POST /my/games/{id}/finish → ball, rekord, reyting.
 import 'dart:async';
+import 'dart:ui' show FontFeature;
 
 import 'package:flutter/material.dart';
 
