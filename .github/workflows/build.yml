@@ -74,7 +74,8 @@ jobs:
 
       - name: Tahlil
         run: |
-          flutter analyze --no-fatal-infos --no-fatal-warnings > analyze.log 2>&1; status=$?
+          status=0
+          flutter analyze --no-fatal-infos --no-fatal-warnings > analyze.log 2>&1 || status=$?
           cat analyze.log
           # Xatolar annotatsiya bo'lib chiqadi (Actions sahifasida va API orqali ko'rinadi).
           grep -E "^\s*error •" analyze.log | head -40 | while IFS= read -r line; do
