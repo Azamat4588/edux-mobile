@@ -1,5 +1,6 @@
 // «AI ustoz» (o'quvchi): mavzuni tushuntiradi va yo'naltiradi, tayyor javobni bermaydi. Test davomida ishlamaydi
 // (ilova test oynasi ochiqligini biladi, server ham tekshiradi). API: ai/status, ai/chat, ai/conversations.
+// 3.1: xuddi shu oyna xodimlar uchun «AI yordamchi» (kind: staff) — ai/status → staff.
 import 'package:flutter/material.dart';
 
 import '../../core/api.dart';
@@ -17,8 +18,26 @@ const List<String> _suggestions = <String>[
   'Mening yechimimni tekshir: 2x + 6 = 14, x = 5',
 ];
 
+const List<String> _staffSuggestions = <String>[
+  "Qarzdor ota-onaga muloyim eslatma matnini yozib ber",
+  "7-sinf uchun kasrlar mavzusida 10 ta test savoli tuz",
+  "Ota-onalar majlisi uchun qisqa reja tuz",
+  "Yangi guruh ochilishi haqida Telegram e'loni yoz",
+];
+
+/// Xodimlar uchun AI yordamchi (3.1): o'sha chat, kind = staff.
+class StaffAssistantPage extends StatelessWidget {
+  const StaffAssistantPage({super.key});
+
+  @override
+  Widget build(BuildContext context) => const TutorPage(staff: true);
+}
+
 class TutorPage extends StatefulWidget {
-  const TutorPage({super.key});
+  const TutorPage({super.key, this.staff = false});
+
+  /// true — xodim yordamchisi (kind: staff), false — o'quvchi ustozi (kind: tutor).
+  final bool staff;
 
   @override
   State<TutorPage> createState() => _TutorPageState();
@@ -50,8 +69,9 @@ class _TutorPageState extends State<TutorPage> {
   @override
   Widget build(BuildContext context) {
     final status = _status;
-    if (status != null && status['tutor'] == true) {
-      return _TutorChat(remaining: status['remaining'] == null ? null : asInt(status['remaining']));
+    final title = widget.staff ? tr('AI yordamchi') : tr('AI ustoz');
+    if (status != null && status[widget.staff ? 'staff' : 'tutor'] == true) {
+      return _TutorChat(staff: widget.staff, remaining: status['remaining'] == null ? null : asInt(status['remaining']));
     }
     final error = _error;
     Widget body;
@@ -65,12 +85,14 @@ class _TutorPageState extends State<TutorPage> {
       body = Center(
         child: EmptyState(
           icon: Icons.auto_awesome_outlined,
-          text: tr("AI ustoz tashkilotingizda yoqilmagan. O'qituvchingiz yoki markaz ma'muriyatidan so'rang."),
+          text: widget.staff
+              ? tr("AI yordamchi tashkilotingizda yoqilmagan yoki oylik limit tugagan. Direktor uni sozlamalarda yoqishi mumkin.")
+              : tr("AI ustoz tashkilotingizda yoqilmagan. O'qituvchingiz yoki markaz ma'muriyatidan so'rang."),
           action: OutlinedButton.icon(onPressed: _load, icon: const Icon(Icons.refresh), label: Text(tr('Qayta urinish'))),
         ),
       );
     }
-    return Scaffold(appBar: AppBar(title: Text(tr('AI ustoz'))), body: body);
+    return Scaffold(appBar: AppBar(title: Text(title)), body: body);
   }
 }
 
@@ -85,9 +107,10 @@ class _Message {
 }
 
 class _TutorChat extends StatefulWidget {
-  const _TutorChat({required this.remaining});
+  const _TutorChat({required this.remaining, this.staff = false});
 
   final int? remaining;
+  final bool staff;
 
   @override
   State<_TutorChat> createState() => _TutorChatState();
@@ -101,6 +124,11 @@ class _TutorChatState extends State<_TutorChat> {
   int? _remaining;
   bool _sending = false;
   bool _opening = false;
+
+  String get _kind => widget.staff ? 'staff' : 'tutor';
+
+  /// Test davomidagi cheklov faqat o'quvchi ustoziga tegishli.
+  int _locked(int testing) => widget.staff ? 0 : testing;
 
   @override
   void initState() {
@@ -126,7 +154,7 @@ class _TutorChatState extends State<_TutorChat> {
   Future<void> _send([String? preset]) async {
     final text = (preset ?? _input.text).trim();
     if (text.isEmpty || _sending) return;
-    if (activeTestPages.value > 0) {
+    if (_locked(activeTestPages.value) > 0) {
       showMessage(context, tr("Test davomida AI ustoz ishlamaydi. Testni yakunlagach savol bering."), error: true);
       return;
     }
@@ -138,7 +166,7 @@ class _TutorChatState extends State<_TutorChat> {
     _toEnd();
     try {
       final data = asMap(await AppScope.read(context).api.post('ai/chat', <String, Object?>{
-        'kind': 'tutor',
+        'kind': _kind,
         'message': text,
         'conversation_id': _conversationId,
         'locale': I18n.locale,
@@ -176,7 +204,7 @@ class _TutorChatState extends State<_TutorChat> {
       useSafeArea: true,
       isScrollControlled: true,
       shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(22))),
-      builder: (_) => FractionallySizedBox(heightFactor: 0.7, child: _HistorySheet(currentId: _conversationId)),
+      builder: (_) => FractionallySizedBox(heightFactor: 0.7, child: _HistorySheet(currentId: _conversationId, kind: _kind)),
     );
     if (picked == null || !mounted) return;
     if (picked == -1) {
@@ -207,7 +235,7 @@ class _TutorChatState extends State<_TutorChat> {
     return Scaffold(
       appBar: AppBar(
         title: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
-          Text(tr('AI ustoz')),
+          Text(widget.staff ? tr('AI yordamchi') : tr('AI ustoz')),
           if (_remaining != null)
             Text(tr('Shu oy: {0} ta javob qoldi', <Object?>[_remaining]),
                 style: TextStyle(fontSize: 12, color: AppColors.muted, fontWeight: FontWeight.w500)),
@@ -219,7 +247,9 @@ class _TutorChatState extends State<_TutorChat> {
       ),
       body: ValueListenableBuilder<int>(
         valueListenable: activeTestPages,
-        builder: (context, testing, _) => Column(children: <Widget>[
+        builder: (context, active, _) {
+          final testing = _locked(active);
+          return Column(children: <Widget>[
           if (testing > 0)
             Material(
               color: AppColors.soft(AppColors.warning),
@@ -235,13 +265,13 @@ class _TutorChatState extends State<_TutorChat> {
           if (_opening) const LinearProgressIndicator(minHeight: 2),
           Expanded(
             child: _messages.isEmpty
-                ? _Intro(onPick: testing > 0 ? null : _send)
+                ? _Intro(staff: widget.staff, onPick: testing > 0 ? null : _send)
                 : ListView.builder(
                     controller: _scroll,
                     padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
                     itemCount: _messages.length + (_sending ? 1 : 0),
                     itemBuilder: (context, index) {
-                      if (index >= _messages.length) return const _Typing();
+                      if (index >= _messages.length) return _Typing(staff: widget.staff);
                       return _Bubble(message: _messages[index]);
                     },
                   ),
@@ -272,16 +302,18 @@ class _TutorChatState extends State<_TutorChat> {
               ]),
             ),
           ),
-        ]),
+        ]);
+        },
       ),
     );
   }
 }
 
 class _Intro extends StatelessWidget {
-  const _Intro({required this.onPick});
+  const _Intro({required this.onPick, this.staff = false});
 
   final ValueChanged<String>? onPick;
+  final bool staff;
 
   @override
   Widget build(BuildContext context) {
@@ -298,14 +330,22 @@ class _Intro extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 14),
-        Text(tr("Tushunmagan mavzuingizni so'rang. Ustoz javobni aytmaydi — o'zingiz yechishingizga yordam beradi."),
-            textAlign: TextAlign.center, style: TextStyle(color: AppColors.ink, fontSize: 15)),
+        Text(
+            staff
+                ? tr("Xat, e'lon, dars rejasi yoki test savollarini tayyorlashda yordam so'rang.")
+                : tr("Tushunmagan mavzuingizni so'rang. Ustoz javobni aytmaydi — o'zingiz yechishingizga yordam beradi."),
+            textAlign: TextAlign.center,
+            style: TextStyle(color: AppColors.ink, fontSize: 15)),
         const SizedBox(height: 6),
-        Text(tr("Masalan, masalani yuboring va qayerda to'xtab qolganingizni yozing. Test ishlayotganingizda ustoz o'chadi."),
-            textAlign: TextAlign.center, style: TextStyle(color: AppColors.muted, fontSize: 13)),
+        Text(
+            staff
+                ? tr("Javoblarni yuborishdan oldin tekshiring: AI xato qilishi mumkin. Shaxsiy ma'lumotlarni yozmang.")
+                : tr("Masalan, masalani yuboring va qayerda to'xtab qolganingizni yozing. Test ishlayotganingizda ustoz o'chadi."),
+            textAlign: TextAlign.center,
+            style: TextStyle(color: AppColors.muted, fontSize: 13)),
         const SizedBox(height: 20),
         Wrap(spacing: 8, runSpacing: 8, alignment: WrapAlignment.center, children: <Widget>[
-          for (final item in _suggestions)
+          for (final item in staff ? _staffSuggestions : _suggestions)
             ActionChip(label: Text(tr(item)), onPressed: onPick == null ? null : () => onPick!(tr(item))),
         ]),
       ],
@@ -354,7 +394,9 @@ class _Bubble extends StatelessWidget {
 }
 
 class _Typing extends StatelessWidget {
-  const _Typing();
+  const _Typing({this.staff = false});
+
+  final bool staff;
 
   @override
   Widget build(BuildContext context) {
@@ -367,7 +409,7 @@ class _Typing extends StatelessWidget {
         child: Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
           const SizedBox(width: 14, height: 14, child: CircularProgressIndicator(strokeWidth: 2)),
           const SizedBox(width: 10),
-          Text(tr('Ustoz yozmoqda...'), style: TextStyle(color: AppColors.muted)),
+          Text(staff ? tr('Yozmoqda...') : tr('Ustoz yozmoqda...'), style: TextStyle(color: AppColors.muted)),
         ]),
       ),
     );
@@ -376,7 +418,9 @@ class _Typing extends StatelessWidget {
 
 /// Oldingi suhbatlar: tanlash (id) yoki o'chirish.
 class _HistorySheet extends StatelessWidget {
-  const _HistorySheet({required this.currentId});
+  const _HistorySheet({required this.currentId, this.kind = 'tutor'});
+
+  final String kind;
 
   /// Joriy suhbat o'chirilsa, varaq -1 bilan yopiladi (yangi suhbat boshlanadi).
   final int? currentId;
@@ -394,7 +438,7 @@ class _HistorySheet extends StatelessWidget {
       ),
       Expanded(
         child: AsyncView<List<Map<String, dynamic>>>(
-          load: () async => asList(await api.get('ai/conversations', query: <String, Object?>{'kind': 'tutor'})),
+          load: () async => asList(await api.get('ai/conversations', query: <String, Object?>{'kind': kind})),
           builder: (context, items, reload) {
             if (items.isEmpty) {
               return ListView(children: <Widget>[EmptyState(icon: Icons.forum_outlined, text: tr("Hali suhbat yo'q."))]);
