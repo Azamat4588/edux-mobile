@@ -12,6 +12,12 @@ import '../access/kiosk_page.dart';
 import '../access/sms_gateway_page.dart';
 import '../crm/leads_page.dart';
 import '../crm/tasks_page.dart';
+import '../fun/achievements_page.dart';
+import '../fun/games_page.dart';
+import '../fun/labs_page.dart';
+import '../olympiad/olympiads_page.dart';
+import '../support/support_page.dart';
+import '../tutor/tutor_page.dart';
 import '../student/certificates_page.dart';
 import '../../core/session.dart';
 import '../../core/theme.dart';
@@ -90,6 +96,7 @@ class _HomeShellState extends State<HomeShell> {
       if (session.isManager) _MenuTile(icon: Icons.face_retouching_natural, label: tr('Kiosk rejimi'), page: const KioskPage()),
       if (session.isManager && crm && Platform.isAndroid)
         _MenuTile(icon: Icons.sms_outlined, label: tr('SMS shlyuz'), page: const SmsGatewayPage()),
+      _MenuTile(icon: Icons.support_agent_outlined, label: tr('Murojaatlar'), page: const SupportPage()),
     ];
     return <_Tab>[
       _Tab(tr('Bosh sahifa'), Icons.home_outlined, Icons.home, StaffHomePage(onOpenTab: (key) => _openStaffTab(session, key))),
@@ -112,13 +119,25 @@ class _HomeShellState extends State<HomeShell> {
   }
 
   List<_Tab> _studentTabs(Session session) {
+    // Qo'shimcha imkoniyatlar (server: context.features) — tashkilotda yoqilgan bo'lsagina ko'rinadi.
+    // Bitta test ishtirokchisi (mehmon) uchun faqat o'sha test.
+    final full = !session.isGuest;
+    final fun = full && session.hasFeature('fun') && (session.hasModule('testing') || session.hasModule('lms'));
     final extra = <Widget>[
+      if (full && session.hasModule('testing') && session.hasFeature('olympiad'))
+        _MenuTile(icon: Icons.emoji_events_outlined, label: tr('Olimpiadalarim'), page: const OlympiadsPage()),
+      if (full && session.hasFeature('ai'))
+        _MenuTile(icon: Icons.auto_awesome_outlined, label: tr('AI ustoz'), page: const TutorPage()),
+      if (fun) _MenuTile(icon: Icons.sports_esports_outlined, label: tr("O'yinlar"), page: const GamesPage()),
+      if (fun) _MenuTile(icon: Icons.military_tech_outlined, label: tr('Yutuqlarim'), page: const AchievementsPage()),
+      if (fun) _MenuTile(icon: Icons.science_outlined, label: tr('Virtual laboratoriya'), page: const LabsPage()),
       if (session.hasModule('testing'))
-        _MenuTile(icon: Icons.emoji_events_outlined, label: tr('Mock natijalarim'), page: const MockProgressPage()),
+        _MenuTile(icon: Icons.trending_up_rounded, label: tr('Mock natijalarim'), page: const MockProgressPage()),
       if (session.hasModule('testing') || session.hasModule('lms'))
         _MenuTile(icon: Icons.workspace_premium_outlined, label: tr('Sertifikatlarim'), page: const CertificatesPage()),
       if (session.hasModule('lms'))
         _MenuTile(icon: Icons.task_outlined, label: tr('Uy vazifalari'), page: const AssignmentsPage()),
+      _MenuTile(icon: Icons.support_agent_outlined, label: tr('Murojaatlar'), page: const SupportPage()),
     ];
     return <_Tab>[
       _Tab(tr('Bosh sahifa'), Icons.home_outlined, Icons.home, const StudentHomePage()),
@@ -129,11 +148,14 @@ class _HomeShellState extends State<HomeShell> {
     ];
   }
 
+  /// Ota-ona: bitta «Farzandim» (farzand almashtirgich + Umumiy / Kundalik / Testlar / To'lov tablari).
   List<_Tab> _guardianTabs(Session session) {
+    final extra = <Widget>[
+      _MenuTile(icon: Icons.support_agent_outlined, label: tr('Murojaatlar'), page: const SupportPage()),
+    ];
     return <_Tab>[
-      _Tab(tr('Farzandlarim'), Icons.family_restroom_outlined, Icons.family_restroom, const GuardianHomePage()),
-      if (session.hasModule('school')) _Tab(tr('Kundalik'), Icons.event_note_outlined, Icons.event_note, const DiaryPage()),
-      _Tab(tr("Ko'proq"), Icons.menu, Icons.menu, const SettingsPage()),
+      _Tab(tr('Farzandim'), Icons.family_restroom_outlined, Icons.family_restroom, const GuardianHomePage()),
+      _Tab(tr("Ko'proq"), Icons.menu, Icons.menu, SettingsPage(extra: extra)),
     ];
   }
 

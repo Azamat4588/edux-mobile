@@ -7,6 +7,9 @@ import '../../core/i18n.dart';
 import '../../core/session.dart';
 import '../../core/theme.dart';
 import '../../core/widgets.dart';
+import '../fun/games_page.dart';
+import '../olympiad/olympiads_page.dart';
+import '../tutor/tutor_page.dart';
 import 'online_pay.dart';
 
 class StudentHomePage extends StatelessWidget {
@@ -28,7 +31,8 @@ class StudentHomePage extends StatelessWidget {
       body: AsyncView<Map<String, dynamic>>(
         load: () => _load(session),
         builder: (context, data, reload) => ListView(children: <Widget>[
-          StudentOverviewBody(insights: asMap(data['insights']), crm: asMap(data['crm'])),
+          StudentOverviewBody(insights: asMap(data['insights']), crm: asMap(data['crm']), onPaid: reload),
+          const _QuickActions(),
         ]),
       ),
     );
@@ -37,12 +41,15 @@ class StudentHomePage extends StatelessWidget {
 
 /// O'quvchi haqida umumiy ko'rinish (o'quvchi va ota-ona sahifalarida) — ro'yxat ichiga qo'yiladi.
 class StudentOverviewBody extends StatelessWidget {
-  const StudentOverviewBody({super.key, required this.insights, required this.crm, this.studentId, this.showGreeting = true});
+  const StudentOverviewBody({super.key, required this.insights, required this.crm, this.studentId, this.showGreeting = true, this.onPaid});
 
   final Map<String, dynamic> insights;
   final Map<String, dynamic> crm;
   final int? studentId;
   final bool showGreeting;
+
+  /// To'lov oynasi yopilgach (balansni yangilash uchun).
+  final VoidCallback? onPaid;
 
   @override
   Widget build(BuildContext context) {
@@ -100,7 +107,12 @@ class StudentOverviewBody extends StatelessWidget {
                 ]),
               ),
               FilledButton.tonal(
-                onPressed: () => startOnlinePayment(context, studentId: studentId, suggested: balance < 0 ? -balance : 0),
+                onPressed: () => startOnlinePayment(
+                  context,
+                  studentId: studentId,
+                  suggested: balance < 0 ? -balance : 0,
+                  onDone: (_) => onPaid?.call(),
+                ),
                 child: Text(tr("To'lash")),
               ),
             ]),
@@ -202,6 +214,62 @@ class StudentOverviewBody extends StatelessWidget {
             ]),
           ),
         ],
+      ]),
+    );
+  }
+}
+
+/// Tashkilotda yoqilgan qo'shimcha bo'limlarga tezkor o'tish (olimpiada, AI ustoz, o'yinlar).
+class _QuickActions extends StatelessWidget {
+  const _QuickActions();
+
+  @override
+  Widget build(BuildContext context) {
+    final session = AppScope.of(context);
+    if (session.isGuest) return const SizedBox();
+    final fun = session.hasFeature('fun') && (session.hasModule('testing') || session.hasModule('lms'));
+    final actions = <Widget>[
+      if (session.hasModule('testing') && session.hasFeature('olympiad'))
+        _QuickAction(icon: Icons.emoji_events_rounded, label: tr('Olimpiadalarim'), color: AppColors.sun, page: const OlympiadsPage()),
+      if (session.hasFeature('ai'))
+        _QuickAction(icon: Icons.auto_awesome_rounded, label: tr('AI ustoz'), color: const Color(0xFF7C3AED), page: const TutorPage()),
+      if (fun) _QuickAction(icon: Icons.sports_esports_rounded, label: tr("O'yinlar"), color: AppColors.success, page: const GamesPage()),
+    ];
+    if (actions.isEmpty) return const SizedBox();
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 0, 16, 24),
+      child: Row(children: <Widget>[
+        for (var i = 0; i < actions.length; i++) ...<Widget>[
+          if (i > 0) const SizedBox(width: 10),
+          Expanded(child: actions[i]),
+        ],
+      ]),
+    );
+  }
+}
+
+class _QuickAction extends StatelessWidget {
+  const _QuickAction({required this.icon, required this.label, required this.color, required this.page});
+
+  final IconData icon;
+  final String label;
+  final Color color;
+  final Widget page;
+
+  @override
+  Widget build(BuildContext context) {
+    return AppCard(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 14),
+      onTap: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => page)),
+      child: Column(children: <Widget>[
+        Container(
+          width: 40,
+          height: 40,
+          decoration: BoxDecoration(color: color.withAlpha(36), borderRadius: BorderRadius.circular(12)),
+          child: Icon(icon, color: color),
+        ),
+        const SizedBox(height: 8),
+        Text(label, textAlign: TextAlign.center, maxLines: 2, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 12.5)),
       ]),
     );
   }

@@ -7,6 +7,7 @@ import '../../core/i18n.dart';
 import '../../core/session.dart';
 import '../../core/theme.dart';
 import '../../core/widgets.dart';
+import '../guardian/guardian_repository.dart';
 import '../staff/students_page.dart';
 
 class DiaryPage extends StatefulWidget {
@@ -20,24 +21,64 @@ class DiaryPage extends StatefulWidget {
 }
 
 class _DiaryPageState extends State<DiaryPage> {
-  String? _date;
   int? _studentId;
-  List<Map<String, dynamic>> _children = <Map<String, dynamic>>[];
-  int _version = 0;
+  List<GuardianChild> _children = <GuardianChild>[];
 
   @override
   void initState() {
     super.initState();
     _studentId = widget.studentId;
+    WidgetsBinding.instance.addPostFrameCallback((_) => _loadChildren());
   }
 
-  Future<Map<String, dynamic>> _load(Session session) async {
-    if (session.isGuardian && _children.isEmpty) {
-      _children = asList(asMap(await session.api.get('my/children'))['children'], 'children');
-      _studentId ??= _children.isNotEmpty ? asInt(_children.first['id']) : null;
+  Future<void> _loadChildren() async {
+    final session = AppScope.read(context);
+    if (!session.isGuardian) return;
+    try {
+      final children = await GuardianRepository(session).children();
+      if (!mounted) return;
+      setState(() {
+        _children = children;
+        _studentId ??= children.isNotEmpty ? children.first.id : null;
+      });
+    } catch (_) {
+      // Ro'yxatsiz ham ishlaydi: server birinchi farzandni ko'rsatadi.
     }
-    return asMap(await session.api.get('school/my/diary', query: <String, Object?>{'student_id': _studentId, 'date': _date}));
   }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(tr('Kundalik')),
+        actions: <Widget>[
+          if (_children.length > 1)
+            PopupMenuButton<int>(
+              icon: const Icon(Icons.switch_account_outlined),
+              onSelected: (id) => setState(() => _studentId = id),
+              itemBuilder: (context) =>
+                  _children.map((child) => PopupMenuItem<int>(value: child.id, child: Text(child.name))).toList(),
+            ),
+        ],
+      ),
+      body: DiaryWeekView(key: ValueKey<int?>(_studentId), studentId: _studentId),
+    );
+  }
+}
+
+/// Haftalik kundalik (sahifa tanasi): o'quvchi o'zi uchun (studentId: null) yoki ota-ona farzandi uchun.
+class DiaryWeekView extends StatefulWidget {
+  const DiaryWeekView({super.key, this.studentId});
+
+  final int? studentId;
+
+  @override
+  State<DiaryWeekView> createState() => _DiaryWeekViewState();
+}
+
+class _DiaryWeekViewState extends State<DiaryWeekView> {
+  String? _date;
+  int _version = 0;
 
   void _go(String? date) {
     if (date == null) return;
@@ -49,58 +90,41 @@ class _DiaryPageState extends State<DiaryPage> {
 
   @override
   Widget build(BuildContext context) {
-    final session = AppScope.of(context);
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(tr('Kundalik')),
-        actions: <Widget>[
-          if (_children.length > 1)
-            PopupMenuButton<int>(
-              icon: const Icon(Icons.switch_account_outlined),
-              onSelected: (id) => setState(() {
-                _studentId = id;
-                _version++;
-              }),
-              itemBuilder: (context) => _children
-                  .map((child) => PopupMenuItem<int>(value: asInt(child['id']), child: Text(asText(child['full_name']))))
-                  .toList(),
-            ),
-        ],
-      ),
-      body: AsyncView<Map<String, dynamic>>(
-        key: ValueKey<String>('$_studentId-$_date-$_version'),
-        load: () => _load(session),
-        builder: (context, data, reload) {
-          if (data['has_year'] == false) {
-            return ListView(children: <Widget>[
-              EmptyState(text: tr("Maktabda o'quv yili hali ochilmagan. Dars jadvali va baholar shu yerda paydo bo'ladi.")),
-            ]);
-          }
-          final days = asList(data['days'], 'days');
-          final today = asText(data['today']);
-          return ListView(
-            padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
-            children: <Widget>[
-              Row(children: <Widget>[
-                IconButton(onPressed: () => _go(data['previous'] as String?), icon: const Icon(Icons.chevron_left)),
-                Expanded(
-                  child: Column(children: <Widget>[
-                    Text('${date(data['week_start'])} – ${date(data['week_end'])}',
-                        textAlign: TextAlign.center, style: const TextStyle(fontWeight: FontWeight.w700)),
-                    if (asMap(data['student'])['full_name'] != null)
-                      Text(asText(asMap(data['student'])['full_name']), style: TextStyle(color: AppColors.muted, fontSize: 13)),
-                  ]),
-                ),
-                IconButton(onPressed: () => _go(data['next'] as String?), icon: const Icon(Icons.chevron_right)),
-              ]),
-              for (final day in days) ...<Widget>[
-                const SizedBox(height: 10),
-                _DayCard(day: day, isToday: asText(day['date']) == today),
-              ],
+    final repository = GuardianRepository(AppScope.of(context));
+    return AsyncView<Map<String, dynamic>>(
+      key: ValueKey<String>('${widget.studentId}-$_date-$_version'),
+      load: () => repository.diaryWeek(widget.studentId, date: _date),
+      builder: (context, data, reload) {
+        if (data['has_year'] == false) {
+          return ListView(children: <Widget>[
+            EmptyState(text: tr("Maktabda o'quv yili hali ochilmagan. Dars jadvali va baholar shu yerda paydo bo'ladi.")),
+          ]);
+        }
+        final days = asList(data['days'], 'days');
+        final today = asText(data['today']);
+        return ListView(
+          padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
+          children: <Widget>[
+            Row(children: <Widget>[
+              IconButton(onPressed: () => _go(data['previous'] as String?), icon: const Icon(Icons.chevron_left)),
+              Expanded(
+                child: Column(children: <Widget>[
+                  Text('${date(data['week_start'])} – ${date(data['week_end'])}',
+                      textAlign: TextAlign.center, style: const TextStyle(fontWeight: FontWeight.w700)),
+                  if (asMap(data['student'])['full_name'] != null)
+                    Text(asText(asMap(data['student'])['full_name']), style: TextStyle(color: AppColors.muted, fontSize: 13)),
+                ]),
+              ),
+              IconButton(onPressed: () => _go(data['next'] as String?), icon: const Icon(Icons.chevron_right)),
+            ]),
+            if (days.isEmpty) EmptyState(text: tr('Dars yo\'q')),
+            for (final day in days) ...<Widget>[
+              const SizedBox(height: 10),
+              _DayCard(day: day, isToday: asText(day['date']) == today),
             ],
-          );
-        },
-      ),
+          ],
+        );
+      },
     );
   }
 }
