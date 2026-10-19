@@ -4,6 +4,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'core/api.dart';
 import 'core/i18n.dart';
+import 'core/push.dart';
 import 'core/session.dart';
 import 'core/theme.dart';
 import 'core/widgets.dart';
@@ -47,6 +48,7 @@ class _EduxAppState extends State<EduxApp> with WidgetsBindingObserver {
     return MaterialApp(
       // Til yoki ko'rinish almashganda butun daraxt yangi ranglarda qayta quriladi
       key: ValueKey<String>('${I18n.locale}-$dark-${accent.key}'),
+      navigatorKey: rootNavigator,
       title: 'EduX',
       debugShowCheckedModeBanner: false,
       theme: buildTheme(),

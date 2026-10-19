@@ -91,6 +91,10 @@ class Api {
 
   Future<dynamic> delete(String path) => _send(() => _client.delete(uri(path), headers: headers(json: false)));
 
+  /// DELETE so'rovi tanasi bilan (masalan, qurilma tokenini o'chirish).
+  Future<dynamic> deleteJson(String path, Object body) =>
+      _send(() => _client.delete(uri(path), headers: headers(), body: jsonEncode(body)));
+
   /// Fayl yuklash (multipart/form-data).
   Future<dynamic> multipart(
     String path, {

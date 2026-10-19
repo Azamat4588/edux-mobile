@@ -1,7 +1,12 @@
 // Asosiy oyna: pastki menyu rol va yoqilgan modullarga qarab tuziladi (xodim / o'quvchi / ota-ona).
 import 'package:flutter/material.dart';
 
+import '../../core/api.dart';
 import '../../core/i18n.dart';
+import '../../core/push.dart';
+import '../crm/leads_page.dart';
+import '../crm/tasks_page.dart';
+import '../student/certificates_page.dart';
 import '../../core/session.dart';
 import '../../core/theme.dart';
 import '../guardian/guardian_home_page.dart';
@@ -42,6 +47,13 @@ class _HomeShellState extends State<HomeShell> {
   void initState() {
     super.initState();
     ScanQueue.instance.kick();
+    // Push xabari bosilganda ochiladigan sahifalar.
+    PushService.instance.routes
+      ..['attempt'] = (data) => asInt(data['attempt_id']) > 0 ? AttemptResultPage(attemptId: asInt(data['attempt_id'])) : null
+      ..['certificate'] = (_) => const CertificatesPage()
+      ..['task'] = (_) => const TasksPage()
+      ..['lead'] = (data) => asInt(data['lead_id']) > 0 ? LeadPage(leadId: asInt(data['lead_id'])) : const LeadsPage()
+      ..['assignment'] = (_) => const AssignmentsPage();
   }
 
   void _go(int index) => setState(() => _index = index);
@@ -54,7 +66,11 @@ class _HomeShellState extends State<HomeShell> {
 
   List<_Tab> _staffTabs(Session session) {
     final testing = session.hasModule('testing') && <String>['director', 'admin', 'teacher'].contains(session.role);
+    final crm = session.hasModule('crm');
     final extra = <Widget>[
+      if (crm && <String>['director', 'admin', 'marketer'].contains(session.role))
+        _MenuTile(icon: Icons.person_search_outlined, label: tr('Lidlar'), page: const LeadsPage()),
+      if (crm) _MenuTile(icon: Icons.task_alt, label: tr('Vazifalar'), page: const TasksPage()),
       if (session.canMarkAttendance)
         _MenuTile(icon: Icons.fact_check_outlined, label: tr('Davomat'), page: const AttendancePage()),
       if (session.canScan)
@@ -82,6 +98,10 @@ class _HomeShellState extends State<HomeShell> {
 
   List<_Tab> _studentTabs(Session session) {
     final extra = <Widget>[
+      if (session.hasModule('testing'))
+        _MenuTile(icon: Icons.emoji_events_outlined, label: tr('Mock natijalarim'), page: const MockProgressPage()),
+      if (session.hasModule('testing') || session.hasModule('lms'))
+        _MenuTile(icon: Icons.workspace_premium_outlined, label: tr('Sertifikatlarim'), page: const CertificatesPage()),
       if (session.hasModule('lms'))
         _MenuTile(icon: Icons.task_outlined, label: tr('Uy vazifalari'), page: const AssignmentsPage()),
     ];

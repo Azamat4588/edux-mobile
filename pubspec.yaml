@@ -24,6 +24,9 @@ dependencies:
   flutter_math_fork: ^0.7.2
   wakelock_plus: ^1.2.8
   open_filex: ^4.5.0
+  firebase_core: ^5.0.0
+  firebase_messaging: ^17.0.0
+  audioplayers: ^6.8.1
 
 dev_dependencies:
   flutter_test:

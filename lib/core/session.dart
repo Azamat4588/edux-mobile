@@ -8,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'api.dart';
 import 'i18n.dart';
+import 'push.dart';
 import 'theme.dart';
 
 /// Ilova yig'ilganda beriladi: flutter build ... --dart-define=EDUX_SERVER=https://app.edux.uz
@@ -183,6 +184,7 @@ class Session extends ChangeNotifier implements ApiCredentials {
       try {
         await loadContext();
       } catch (_) {}
+      unawaited(PushService.instance.updateLocale());
     }
     notifyListeners();
   }
@@ -253,10 +255,13 @@ class Session extends ChangeNotifier implements ApiCredentials {
   Future<void> loadContext() async {
     context = asMap(await api.get('context'));
     notifyListeners();
+    // Push: qurilma ro'yxatdan o'tadi (Firebase sozlangan bo'lsa).
+    unawaited(PushService.instance.attach(this));
   }
 
   Future<void> signOut() async {
     if (_token != null) {
+      await PushService.instance.detach(this);
       try {
         await api.post('auth/logout');
       } catch (_) {

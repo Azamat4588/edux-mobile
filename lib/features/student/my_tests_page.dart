@@ -1,6 +1,7 @@
 // O'quvchi testlari: ro'yxat, ilovada ishlash (taymer, javoblar darhol saqlanadi) va natija tahlili.
 import 'dart:async';
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/api.dart';
@@ -9,6 +10,7 @@ import '../../core/i18n.dart';
 import '../../core/session.dart';
 import '../../core/theme.dart';
 import '../../core/widgets.dart';
+import 'certificates_page.dart';
 
 const Map<String, String> _stateLabels = <String, String>{
   'open': 'Topshirish mumkin',
@@ -123,8 +125,16 @@ class _TakeTestPageState extends State<TakeTestPage> {
   bool _loading = true;
   String? _error;
   int _attemptId = 0;
+  List<Map<String, dynamic>> _all = <Map<String, dynamic>>[];
   List<Map<String, dynamic>> _questions = <Map<String, dynamic>>[];
   final Map<int, Set<int>> _selected = <int, Set<int>>{};
+  // Ochiq javob (qisqa javob yoki esse): matn darhol yoziladi, serverga biroz kechikib saqlanadi.
+  final Map<int, String> _texts = <int, String>{};
+  final Map<int, Timer> _textTimers = <int, Timer>{};
+  // Mock imtihon bo'limlari: faqat joriy bo'lim savollari ko'rinadi, har bo'limning o'z vaqti bor.
+  List<Map<String, dynamic>> _sections = <Map<String, dynamic>>[];
+  int? _section;
+  bool _advancing = false;
   final Set<int> _unsynced = <int>{};
   final PageController _pages = PageController();
   int _page = 0;
@@ -143,8 +153,95 @@ class _TakeTestPageState extends State<TakeTestPage> {
   @override
   void dispose() {
     _timer?.cancel();
+    for (final timer in _textTimers.values) {
+      timer.cancel();
+    }
     _pages.dispose();
     super.dispose();
+  }
+
+  bool get _isMock => _sections.isNotEmpty;
+
+  Map<String, dynamic> get _currentSection =>
+      _sections.firstWhere((item) => asInt(item['number']) == _section, orElse: () => <String, dynamic>{});
+
+  bool get _lastSection => !_isMock || _sections.isEmpty || asInt(_sections.last['number']) == _section;
+
+  bool _isAnswered(Map<String, dynamic> question) {
+    final id = asInt(question['question_id']);
+    if (_isOpen(question)) return (_texts[id] ?? '').trim().isNotEmpty;
+    return (_selected[id] ?? <int>{}).isNotEmpty;
+  }
+
+  static bool _isOpen(Map<String, dynamic> question) => question['type'] == 'text' || question['type'] == 'essay';
+
+  /// Server javobi (yangi urinish yoki keyingi bo'lim) — holatni shundan quradi.
+  void _accept(Map<String, dynamic> data) {
+    final serverTime = DateTime.tryParse(asText(data['server_time']));
+    _offset = serverTime == null ? Duration.zero : serverTime.difference(DateTime.now());
+    final sections = data['sections'] is List ? asList(data['sections'], 'sections') : <Map<String, dynamic>>[];
+    final section = data['section'] == null ? null : asInt(data['section']);
+    _deadline = DateTime.tryParse(asText(section != null ? (data['section_deadline_at'] ?? data['deadline_at']) : data['deadline_at']));
+    final questions = asList(data['questions'], 'questions');
+    for (final question in questions) {
+      final id = asInt(question['question_id']);
+      _selected[id] = ((question['selected_option_ids'] as List?) ?? const <dynamic>[]).map((v) => asInt(v)).toSet();
+      if (question['text_answer'] != null) _texts[id] = asText(question['text_answer']);
+    }
+    _attemptId = asInt(data['attempt_id']);
+    _all = questions;
+    _sections = sections;
+    _section = sections.isEmpty ? null : (section ?? asInt(sections.first['number']));
+    _questions = _isMock ? questions.where((q) => asInt(q['block']) == _section).toList() : questions;
+    _page = 0;
+    if (_pages.hasClients) _pages.jumpToPage(0);
+  }
+
+  void _setText(Map<String, dynamic> question, String value) {
+    final id = asInt(question['question_id']);
+    _texts[id] = value;
+    _unsynced.add(id);
+    _textTimers[id]?.cancel();
+    _textTimers[id] = Timer(const Duration(milliseconds: 900), () => _sync(id));
+    setState(() {});
+  }
+
+  /// Bo'lim vaqti tugadi yoki o'quvchi «Keyingi bo'lim» ni bosdi.
+  Future<void> _nextSection({bool auto = false}) async {
+    if (_advancing) return;
+    if (!auto && !await confirm(context, tr("Keyingi bo'limga o'tilsinmi? Bu bo'limga qaytib bo'lmaydi."), action: tr("O'tish"))) return;
+    setState(() => _advancing = true);
+    for (final id in _unsynced.toList()) {
+      await _sync(id);
+    }
+    if (!mounted) return;
+    try {
+      final data = asMap(await AppScope.read(context).api.post('attempts/$_attemptId/next-section', <String, Object?>{'section': _section}));
+      if (!mounted) return;
+      if (data['finished'] == true) {
+        _timer?.cancel();
+        Navigator.of(context).pushReplacement(MaterialPageRoute<void>(builder: (_) => AttemptResultPage(attemptId: _attemptId)));
+        return;
+      }
+      setState(() {
+        _accept(data);
+        _advancing = false;
+      });
+      _restartTimer();
+      if (auto) showMessage(context, tr("Bo'lim vaqti tugadi. Keyingi bo'lim boshlandi."));
+    } on ApiException catch (error) {
+      if (!mounted) return;
+      setState(() => _advancing = false);
+      showMessage(context, error.message, error: true);
+    }
+  }
+
+  void _restartTimer() {
+    _timer?.cancel();
+    if (_deadline != null) {
+      _tick();
+      _timer = Timer.periodic(const Duration(seconds: 1), (_) => _tick());
+    }
   }
 
   Future<void> _start() async {
@@ -154,23 +251,11 @@ class _TakeTestPageState extends State<TakeTestPage> {
     });
     try {
       final data = asMap(await AppScope.read(context).api.post('exams/${widget.examId}/attempt'));
-      final serverTime = DateTime.tryParse(asText(data['server_time']));
-      _offset = serverTime == null ? Duration.zero : serverTime.difference(DateTime.now());
-      _deadline = DateTime.tryParse(asText(data['deadline_at']));
-      final questions = asList(data['questions'], 'questions');
-      for (final question in questions) {
-        _selected[asInt(question['question_id'])] =
-            ((question['selected_option_ids'] as List?) ?? const <dynamic>[]).map((v) => asInt(v)).toSet();
-      }
       setState(() {
-        _attemptId = asInt(data['attempt_id']);
-        _questions = questions;
+        _accept(data);
         _loading = false;
       });
-      if (_deadline != null) {
-        _tick();
-        _timer = Timer.periodic(const Duration(seconds: 1), (_) => _tick());
-      }
+      _restartTimer();
     } on ApiException catch (error) {
       setState(() {
         _error = error.message;
@@ -187,7 +272,11 @@ class _TakeTestPageState extends State<TakeTestPage> {
     setState(() => _left = left.isNegative ? Duration.zero : left);
     if (left.isNegative || left == Duration.zero) {
       _timer?.cancel();
-      _finish(auto: true);
+      if (_isMock && !_lastSection) {
+        _nextSection(auto: true);
+      } else {
+        _finish(auto: true);
+      }
     }
   }
 
@@ -213,7 +302,10 @@ class _TakeTestPageState extends State<TakeTestPage> {
     try {
       await AppScope.read(context).api.put(
         'attempts/$_attemptId/answers/$questionId',
-        <String, Object?>{'option_ids': (_selected[questionId] ?? <int>{}).toList()},
+        <String, Object?>{
+          'option_ids': (_selected[questionId] ?? <int>{}).toList(),
+          if (_texts.containsKey(questionId)) 'text': _texts[questionId],
+        },
       );
       if (mounted) setState(() => _unsynced.remove(questionId));
       return true;
@@ -226,7 +318,7 @@ class _TakeTestPageState extends State<TakeTestPage> {
   Future<void> _finish({bool auto = false}) async {
     if (_finishing) return;
     if (!auto) {
-      final blank = _questions.where((q) => (_selected[asInt(q['question_id'])] ?? <int>{}).isEmpty).length;
+      final blank = _all.where((q) => !_isAnswered(q)).length;
       final text = blank > 0
           ? '${tr('{0} ta savolga javob berilmagan.', <Object?>[blank])} ${tr('Test yakunlansinmi?')}'
           : tr('Test yakunlansinmi?');
@@ -274,7 +366,7 @@ class _TakeTestPageState extends State<TakeTestPage> {
             spacing: 8,
             runSpacing: 8,
             children: List<Widget>.generate(_questions.length, (index) {
-              final answered = (_selected[asInt(_questions[index]['question_id'])] ?? <int>{}).isNotEmpty;
+              final answered = _isAnswered(_questions[index]);
               return InkWell(
                 onTap: () {
                   Navigator.pop(context);
@@ -303,7 +395,8 @@ class _TakeTestPageState extends State<TakeTestPage> {
   @override
   Widget build(BuildContext context) {
     final api = AppScope.of(context).api;
-    final answered = _questions.where((q) => (_selected[asInt(q['question_id'])] ?? <int>{}).isNotEmpty).length;
+    final answered = _questions.where(_isAnswered).length;
+    final section = _currentSection;
     final lowTime = _left != null && _left!.inSeconds < 60;
     return PopScope(
       canPop: _loading || _error != null,
@@ -332,6 +425,13 @@ class _TakeTestPageState extends State<TakeTestPage> {
                 ? ErrorState(message: _error!, onRetry: _start)
                 : Column(children: <Widget>[
                     LinearProgressIndicator(value: _questions.isEmpty ? 0 : answered / _questions.length, minHeight: 3),
+                    if (_isMock) _SectionHeader(
+                      key: ValueKey<int?>(_section),
+                      section: section,
+                      index: _sections.indexOf(section) + 1,
+                      total: _sections.length,
+                      audioUrl: section['audio_url'] == null ? null : api.absolute(asText(section['audio_url'])),
+                    ),
                     Expanded(
                       child: PageView.builder(
                         controller: _pages,
@@ -341,6 +441,9 @@ class _TakeTestPageState extends State<TakeTestPage> {
                           question: _questions[index],
                           total: _questions.length,
                           selected: _selected[asInt(_questions[index]['question_id'])] ?? <int>{},
+                          text: _texts[asInt(_questions[index]['question_id'])] ?? '',
+                          onText: (value) => _setText(_questions[index], value),
+                          api: api,
                           unsynced: _unsynced.contains(asInt(_questions[index]['question_id'])),
                           imageUrl: _questions[index]['image_url'] == null ? null : api.absolute(asText(_questions[index]['image_url'])),
                           imageHeaders: api.headers(json: false),
@@ -372,6 +475,11 @@ class _TakeTestPageState extends State<TakeTestPage> {
                         onPressed: () => _pages.nextPage(duration: const Duration(milliseconds: 220), curve: Curves.easeOut),
                         icon: const Icon(Icons.chevron_right),
                       )
+                    else if (!_lastSection)
+                      FilledButton(
+                        onPressed: _advancing ? null : () => _nextSection(),
+                        child: Text(tr("Keyingi bo'lim")),
+                      )
                     else
                       FilledButton(
                         onPressed: _finishing ? null : () => _finish(),
@@ -395,8 +503,15 @@ class _QuestionView extends StatelessWidget {
     required this.unsynced,
     required this.onTap,
     required this.imageHeaders,
+    required this.text,
+    required this.onText,
+    required this.api,
     this.imageUrl,
   });
+
+  final String text;
+  final ValueChanged<String> onText;
+  final Api api;
 
   final Map<String, dynamic> question;
   final int total;
@@ -434,9 +549,13 @@ class _QuestionView extends StatelessWidget {
           ),
         ],
         const SizedBox(height: 18),
+        if (question['type'] == 'text' || question['type'] == 'essay')
+          _OpenAnswer(text: text, essay: question['type'] == 'essay', onChanged: onText),
         for (var i = 0; i < options.length; i++) ...<Widget>[
           _OptionTile(
             letter: 'ABCDE'[i.clamp(0, 4)],
+            imageUrl: options[i]['image_url'] == null ? null : api.absolute(asText(options[i]['image_url'])),
+            imageHeaders: imageHeaders,
             body: asText(options[i]['body']),
             selected: selected.contains(asInt(options[i]['id'])),
             multiple: multiple,
@@ -450,8 +569,18 @@ class _QuestionView extends StatelessWidget {
 }
 
 class _OptionTile extends StatelessWidget {
-  const _OptionTile({required this.letter, required this.body, required this.selected, required this.multiple, required this.onTap});
+  const _OptionTile({
+    required this.letter,
+    required this.body,
+    required this.selected,
+    required this.multiple,
+    required this.onTap,
+    this.imageUrl,
+    this.imageHeaders = const <String, String>{},
+  });
 
+  final String? imageUrl;
+  final Map<String, String> imageHeaders;
   final String letter;
   final String body;
   final bool selected;
@@ -484,7 +613,19 @@ class _OptionTile extends StatelessWidget {
               child: Text(letter, style: TextStyle(fontWeight: FontWeight.w800, color: selected ? Colors.white : AppColors.ink)),
             ),
             const SizedBox(width: 12),
-            Expanded(child: MathText(body, style: TextStyle(fontSize: 16, color: AppColors.ink))),
+            Expanded(
+              child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
+                if (body.isNotEmpty) MathText(body, style: TextStyle(fontSize: 16, color: AppColors.ink)),
+                if (imageUrl != null)
+                  Padding(
+                    padding: EdgeInsets.only(top: body.isNotEmpty ? 8 : 0),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: Image.network(imageUrl!, headers: imageHeaders, height: 120, fit: BoxFit.contain, errorBuilder: (_, __, ___) => const SizedBox()),
+                    ),
+                  ),
+              ]),
+            ),
           ]),
         ),
       ),
@@ -541,6 +682,14 @@ class AttemptResultPage extends StatelessWidget {
                   if (data['finished_at'] != null) KeyValue(tr('Topshirildi'), dateTime(data['finished_at'])),
                 ]),
               ),
+              if (data['mock_result'] is Map) ...<Widget>[
+                const SizedBox(height: 12),
+                AppCard(child: MockResultSummary(result: asMap(data['mock_result']))),
+              ] else if (asInt(data['pending']) > 0) ...<Widget>[
+                const SizedBox(height: 12),
+                Text(tr("{0} ta ochiq javobni o'qituvchi baholaydi — ball keyin yangilanadi.", <Object?>[asInt(data['pending'])]),
+                    textAlign: TextAlign.center, style: TextStyle(color: AppColors.warning)),
+              ],
               if (data['review_later'] == true) ...<Widget>[
                 const SizedBox(height: 12),
                 Text(tr("To'g'ri javoblar test yopilgandan keyin shu sahifada ko'rinadi."),
@@ -585,6 +734,31 @@ class _ReviewCard extends StatelessWidget {
           Image.network(api.absolute(asText(item['image_url'])), headers: api.headers(json: false), errorBuilder: (_, __, ___) => const SizedBox()),
         ],
         const SizedBox(height: 8),
+        if (item['type'] == 'text' || item['type'] == 'essay') ...<Widget>[
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(color: AppColors.surface, borderRadius: BorderRadius.circular(10)),
+            child: Text(asText(item['text_answer'], tr('Javob yozilmagan')), style: TextStyle(color: AppColors.ink)),
+          ),
+          if (item['accepted_answers'] is List && (item['accepted_answers'] as List).isNotEmpty) ...<Widget>[
+            const SizedBox(height: 6),
+            Text('${tr("To'g'ri javob")}: ${(item['accepted_answers'] as List).join(' / ')}', style: const TextStyle(color: AppColors.success)),
+          ],
+          if (item['type'] == 'essay')
+            Padding(
+              padding: const EdgeInsets.only(top: 6),
+              child: Text(
+                item['graded'] == true ? '${tr('Ball')}: ${number(asDouble(item['points']))}' : tr("O'qituvchi hali baholamagan"),
+                style: TextStyle(fontWeight: FontWeight.w600, color: item['graded'] == true ? AppColors.brand : AppColors.warning),
+              ),
+            ),
+          if (asText(item['feedback']).isNotEmpty)
+            Padding(
+              padding: const EdgeInsets.only(top: 6),
+              child: Text('${tr("O'qituvchi izohi")}: ${asText(item['feedback'])}', style: TextStyle(color: AppColors.muted)),
+            ),
+        ],
         for (var i = 0; i < options.length; i++)
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 3),
@@ -614,6 +788,156 @@ class _ReviewCard extends StatelessWidget {
         if (item['explanation'] != null && asText(item['explanation']).isNotEmpty) ...<Widget>[
           const Divider(height: 18),
           MathText(asText(item['explanation']), style: TextStyle(color: AppColors.muted)),
+        ],
+      ]),
+    );
+  }
+}
+
+
+/// Ochiq javob: qisqa (bir qator) yoki esse (ko'p qator, so'zlar soni bilan).
+class _OpenAnswer extends StatefulWidget {
+  const _OpenAnswer({required this.text, required this.essay, required this.onChanged});
+
+  final String text;
+  final bool essay;
+  final ValueChanged<String> onChanged;
+
+  @override
+  State<_OpenAnswer> createState() => _OpenAnswerState();
+}
+
+class _OpenAnswerState extends State<_OpenAnswer> {
+  late final TextEditingController _controller = TextEditingController(text: widget.text);
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final words = _controller.text.trim().isEmpty ? 0 : _controller.text.trim().split(RegExp(r'\s+')).length;
+    return Column(crossAxisAlignment: CrossAxisAlignment.end, children: <Widget>[
+      TextField(
+        controller: _controller,
+        minLines: widget.essay ? 8 : 1,
+        maxLines: widget.essay ? 20 : 2,
+        maxLength: widget.essay ? 20000 : 500,
+        textCapitalization: TextCapitalization.sentences,
+        decoration: InputDecoration(hintText: widget.essay ? tr('Javobingizni shu yerga yozing') : tr('Javob'), counterText: ''),
+        onChanged: (value) {
+          setState(() {});
+          widget.onChanged(value);
+        },
+      ),
+      if (widget.essay) Padding(padding: const EdgeInsets.only(top: 6), child: Text(tr('{0} ta so\'z', <Object?>[words]), style: TextStyle(color: AppColors.muted, fontSize: 12))),
+    ]);
+  }
+}
+
+/// Mock bo'limi sarlavhasi: nomi, ko'rsatma, o'qish matni (Reading) va audio (Listening — bir marta eshittiriladi).
+class _SectionHeader extends StatefulWidget {
+  const _SectionHeader({super.key, required this.section, required this.index, required this.total, this.audioUrl});
+
+  final Map<String, dynamic> section;
+  final int index;
+  final int total;
+  final String? audioUrl;
+
+  @override
+  State<_SectionHeader> createState() => _SectionHeaderState();
+}
+
+class _SectionHeaderState extends State<_SectionHeader> {
+  final AudioPlayer _player = AudioPlayer();
+  bool _played = false;
+  bool _playing = false;
+  Duration _position = Duration.zero;
+  Duration _duration = Duration.zero;
+
+  @override
+  void initState() {
+    super.initState();
+    _player.onPositionChanged.listen((value) {
+      if (mounted) setState(() => _position = value);
+    });
+    _player.onDurationChanged.listen((value) {
+      if (mounted) setState(() => _duration = value);
+    });
+    _player.onPlayerComplete.listen((_) {
+      if (mounted) setState(() => _playing = false);
+    });
+  }
+
+  @override
+  void dispose() {
+    _player.dispose();
+    super.dispose();
+  }
+
+  Future<void> _play() async {
+    final url = widget.audioUrl;
+    if (url == null || _played) return;
+    setState(() {
+      _played = true;
+      _playing = true;
+    });
+    await _player.play(UrlSource(url));
+  }
+
+  void _passage() {
+    showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      builder: (context) => DraggableScrollableSheet(
+        expand: false,
+        initialChildSize: 0.85,
+        builder: (context, controller) => ListView(controller: controller, padding: const EdgeInsets.all(20), children: <Widget>[
+          Text(asText(widget.section['name']), style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w700)),
+          const SizedBox(height: 12),
+          SelectableText(asText(widget.section['passage']), style: TextStyle(fontSize: 16, height: 1.55, color: AppColors.ink)),
+        ]),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final section = widget.section;
+    final instructions = asText(section['instructions']);
+    final hasPassage = asText(section['passage']).trim().isNotEmpty;
+    final progress = _duration.inMilliseconds == 0 ? 0.0 : _position.inMilliseconds / _duration.inMilliseconds;
+    return Container(
+      width: double.infinity,
+      margin: const EdgeInsets.fromLTRB(16, 10, 16, 0),
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(color: AppColors.soft(AppColors.brand), borderRadius: BorderRadius.circular(14)),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
+        Row(children: <Widget>[
+          Expanded(child: Text(asText(section['name']), style: TextStyle(fontWeight: FontWeight.w800, color: AppColors.ink))),
+          Text('${widget.index}/${widget.total}', style: TextStyle(color: AppColors.muted, fontWeight: FontWeight.w600)),
+        ]),
+        if (instructions.isNotEmpty) ...<Widget>[
+          const SizedBox(height: 4),
+          Text(instructions, style: TextStyle(color: AppColors.muted, fontSize: 13)),
+        ],
+        if (hasPassage || widget.audioUrl != null) const SizedBox(height: 10),
+        Wrap(spacing: 8, runSpacing: 8, crossAxisAlignment: WrapCrossAlignment.center, children: <Widget>[
+          if (hasPassage) OutlinedButton.icon(onPressed: _passage, icon: const Icon(Icons.article_outlined), label: Text(tr('Matnni ochish'))),
+          if (widget.audioUrl != null)
+            FilledButton.icon(
+              onPressed: _played ? null : _play,
+              icon: Icon(_playing ? Icons.graphic_eq : Icons.play_arrow),
+              label: Text(_played ? (_playing ? tr('Eshittirilmoqda...') : tr('Audio tugadi')) : tr('Audioni boshlash')),
+            ),
+        ]),
+        if (widget.audioUrl != null && _played) ...<Widget>[
+          const SizedBox(height: 8),
+          LinearProgressIndicator(value: progress.clamp(0.0, 1.0), minHeight: 4, borderRadius: BorderRadius.circular(4)),
+          const SizedBox(height: 4),
+          Text(tr('Audio faqat bir marta eshittiriladi.'), style: TextStyle(color: AppColors.muted, fontSize: 12)),
         ],
       ]),
     );
