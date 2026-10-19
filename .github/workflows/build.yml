@@ -149,7 +149,8 @@ jobs:
         run: |
           set -o pipefail
           flutter --version
-          flutter create --org uz.edux --project-name edux --platforms=ios . 2>&1 | tee -a ci-ios.log
+          # flutter_launcher_icons android papkasini ham kutadi — shuning uchun ikkalasi yaratiladi.
+          flutter create --org uz.edux --project-name edux --platforms=android,ios . 2>&1 | tee -a ci-ios.log
           if [ -f test/widget_test.dart ] && grep -q "MyApp" test/widget_test.dart; then rm test/widget_test.dart; fi
           flutter pub get 2>&1 | tee -a ci-ios.log
           dart run tool/configure_platforms.dart --ios 2>&1 | tee -a ci-ios.log
