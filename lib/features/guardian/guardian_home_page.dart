@@ -49,10 +49,10 @@ class GuardianHomePage extends StatelessWidget {
                   Expanded(
                     child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
                       Text(asText(child['full_name']), style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 16)),
-                      if (groups.isNotEmpty) Text(groups, style: const TextStyle(color: AppColors.muted)),
+                      if (groups.isNotEmpty) Text(groups, style: TextStyle(color: AppColors.muted)),
                     ]),
                   ),
-                  const Icon(Icons.chevron_right, color: AppColors.muted),
+                  Icon(Icons.chevron_right, color: AppColors.muted),
                 ]),
               );
             },
@@ -131,7 +131,7 @@ class _ChildView extends StatelessWidget {
                             dateTime(payment['paid_at']),
                             tr(paymentMethods[payment['method']] ?? asText(payment['method'])),
                           ].join(' · ')),
-                          trailing: payment['receipt'] != null ? Text(asText(payment['receipt']), style: const TextStyle(color: AppColors.muted)) : null,
+                          trailing: payment['receipt'] != null ? Text(asText(payment['receipt']), style: TextStyle(color: AppColors.muted)) : null,
                         ),
                     ]),
                   ),

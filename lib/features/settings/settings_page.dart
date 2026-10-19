@@ -71,7 +71,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     <String>[if (membership != null) roleLabel(membership.role), session.organizationName]
                         .where((item) => item.isNotEmpty)
                         .join(' · '),
-                    style: const TextStyle(color: AppColors.muted),
+                    style: TextStyle(color: AppColors.muted),
                   ),
                 ]),
               ),
@@ -96,6 +96,23 @@ class _SettingsPageState extends State<SettingsPage> {
                       .toList(),
                   onChanged: (code) {
                     if (code != null) session.setLocale(code);
+                  },
+                ),
+              ),
+              const Divider(),
+              ListTile(
+                leading: const Icon(Icons.dark_mode_outlined),
+                title: Text(tr('Rejim')),
+                trailing: DropdownButton<String>(
+                  value: <String>['light', 'dark', 'system'].contains(session.themeMode) ? session.themeMode : 'system',
+                  underline: const SizedBox(),
+                  items: <DropdownMenuItem<String>>[
+                    DropdownMenuItem<String>(value: 'light', child: Text(tr('Kunduzgi'))),
+                    DropdownMenuItem<String>(value: 'dark', child: Text(tr('Tungi'))),
+                    DropdownMenuItem<String>(value: 'system', child: Text(tr('Qurilmaga qarab'))),
+                  ],
+                  onChanged: (mode) {
+                    if (mode != null) session.setThemeMode(mode);
                   },
                 ),
               ),
@@ -155,7 +172,7 @@ class _SettingsPageState extends State<SettingsPage> {
             ]),
           ),
           const SizedBox(height: 24),
-          const Center(child: Text('EduX 1.0.0', style: TextStyle(color: AppColors.muted, fontSize: 12))),
+          Center(child: Text('EduX 2.0.0', style: TextStyle(color: AppColors.muted, fontSize: 12))),
         ],
       ),
     );

@@ -117,9 +117,9 @@ class StaffHomePage extends StatelessWidget {
             padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
             children: <Widget>[
               Text(tr('Assalomu alaykum, {0}', <Object?>[firstName]),
-                  style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w800, color: AppColors.ink)),
+                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.w800, color: AppColors.ink)),
               const SizedBox(height: 4),
-              Text(dayTitle(DateTime.now()), style: const TextStyle(color: AppColors.muted)),
+              Text(dayTitle(DateTime.now()), style: TextStyle(color: AppColors.muted)),
               const SizedBox(height: 16),
               _QuickActions(session: session, onOpenTab: onOpenTab),
               if (cards.isNotEmpty) ...<Widget>[
@@ -229,7 +229,7 @@ class _LessonRow extends StatelessWidget {
         width: 56,
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
           Text(asText(lesson['start']), style: const TextStyle(fontWeight: FontWeight.w700)),
-          Text(asText(lesson['end']), style: const TextStyle(color: AppColors.muted, fontSize: 12)),
+          Text(asText(lesson['end']), style: TextStyle(color: AppColors.muted, fontSize: 12)),
         ]),
       ),
       title: Text(

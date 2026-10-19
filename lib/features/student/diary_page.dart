@@ -88,7 +88,7 @@ class _DiaryPageState extends State<DiaryPage> {
                     Text('${date(data['week_start'])} – ${date(data['week_end'])}',
                         textAlign: TextAlign.center, style: const TextStyle(fontWeight: FontWeight.w700)),
                     if (asMap(data['student'])['full_name'] != null)
-                      Text(asText(asMap(data['student'])['full_name']), style: const TextStyle(color: AppColors.muted, fontSize: 13)),
+                      Text(asText(asMap(data['student'])['full_name']), style: TextStyle(color: AppColors.muted, fontSize: 13)),
                   ]),
                 ),
                 IconButton(onPressed: () => _go(data['next'] as String?), icon: const Icon(Icons.chevron_right)),
@@ -117,7 +117,7 @@ class _DayCard extends StatelessWidget {
     final parsed = parseDate(day['date']) ?? DateTime.now();
     return AppCard(
       padding: EdgeInsets.zero,
-      color: isToday ? const Color(0xFFF0F5FF) : Colors.white,
+      color: isToday ? AppColors.soft(AppColors.brand) : AppColors.card,
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
         Padding(
           padding: const EdgeInsets.fromLTRB(16, 12, 16, 4),
@@ -130,7 +130,7 @@ class _DayCard extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 4, 16, 14),
             child: Text(day['in_term'] == false ? tr("Ta'til yoki dars bo'lmaydigan kun.") : tr('Dars yo\'q'),
-                style: const TextStyle(color: AppColors.muted)),
+                style: TextStyle(color: AppColors.muted)),
           ),
         for (final item in items) ...<Widget>[
           const Divider(),
@@ -141,21 +141,21 @@ class _DayCard extends StatelessWidget {
                 width: 46,
                 child: Column(children: <Widget>[
                   Text('${asInt(item['period_number'])}', style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 16)),
-                  Text(asText(item['starts_at']), style: const TextStyle(color: AppColors.muted, fontSize: 11)),
+                  Text(asText(item['starts_at']), style: TextStyle(color: AppColors.muted, fontSize: 11)),
                 ]),
               ),
               const SizedBox(width: 8),
               Expanded(
                 child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
                   Text(asText(item['subject']), style: const TextStyle(fontWeight: FontWeight.w700)),
-                  if (item['topic'] != null) Text(asText(item['topic']), style: const TextStyle(color: AppColors.muted)),
+                  if (item['topic'] != null) Text(asText(item['topic']), style: TextStyle(color: AppColors.muted)),
                   if (item['homework'] != null && asText(item['homework']).isNotEmpty)
                     Padding(
                       padding: const EdgeInsets.only(top: 4),
                       child: Text('🏠 ${asText(item['homework'])}', style: const TextStyle(fontSize: 13)),
                     ),
                   if (item['note'] != null && asText(item['note']).isNotEmpty)
-                    Text(asText(item['note']), style: const TextStyle(fontSize: 12, color: AppColors.muted)),
+                    Text(asText(item['note']), style: TextStyle(fontSize: 12, color: AppColors.muted)),
                 ]),
               ),
               Column(crossAxisAlignment: CrossAxisAlignment.end, children: <Widget>[

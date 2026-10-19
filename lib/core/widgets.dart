@@ -110,9 +110,9 @@ class ErrorState extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(32),
         child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-          const Icon(Icons.cloud_off_rounded, size: 48, color: AppColors.muted),
+          Icon(Icons.cloud_off_rounded, size: 48, color: AppColors.muted),
           const SizedBox(height: 12),
-          Text(message, textAlign: TextAlign.center, style: const TextStyle(color: AppColors.muted)),
+          Text(message, textAlign: TextAlign.center, style: TextStyle(color: AppColors.muted)),
           if (onRetry != null) ...<Widget>[
             const SizedBox(height: 16),
             OutlinedButton.icon(onPressed: onRetry, icon: const Icon(Icons.refresh), label: Text(tr('Qayta urinish'))),
@@ -137,7 +137,7 @@ class EmptyState extends StatelessWidget {
       child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
         Icon(icon, size: 44, color: AppColors.muted.withAlpha(140)),
         const SizedBox(height: 12),
-        Text(text, textAlign: TextAlign.center, style: const TextStyle(color: AppColors.muted)),
+        Text(text, textAlign: TextAlign.center, style: TextStyle(color: AppColors.muted)),
         if (action != null) ...<Widget>[const SizedBox(height: 16), action!],
       ]),
     );
@@ -156,8 +156,8 @@ class AppCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: color ?? Colors.white,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16), side: const BorderSide(color: AppColors.line)),
+      color: color ?? AppColors.card,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16), side: BorderSide(color: AppColors.line)),
       clipBehavior: Clip.antiAlias,
       child: InkWell(onTap: onTap, child: Padding(padding: padding, child: child)),
     );
@@ -175,7 +175,7 @@ class SectionTitle extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.fromLTRB(4, 20, 4, 10),
       child: Row(children: <Widget>[
-        Expanded(child: Text(title, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: AppColors.ink))),
+        Expanded(child: Text(title, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: AppColors.ink))),
         if (trailing != null) trailing!,
       ]),
     );
@@ -184,7 +184,7 @@ class SectionTitle extends StatelessWidget {
 
 /// Bosh sahifadagi rangli ko'rsatkich.
 class StatCard extends StatelessWidget {
-  const StatCard({super.key, required this.label, required this.value, required this.icon, this.color = AppColors.brand, this.hint, this.onTap});
+  StatCard({super.key, required this.label, required this.value, required this.icon, this.color = AppColors.brand, this.hint, this.onTap});
 
   final String label;
   final String value;
@@ -207,12 +207,12 @@ class StatCard extends StatelessWidget {
             child: Icon(icon, size: 19, color: color),
           ),
           const Spacer(),
-          if (onTap != null) const Icon(Icons.chevron_right, size: 18, color: AppColors.muted),
+          if (onTap != null) Icon(Icons.chevron_right, size: 18, color: AppColors.muted),
         ]),
         const SizedBox(height: 10),
-        Text(value, style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w800, color: AppColors.ink)),
+        Text(value, style: TextStyle(fontSize: 22, fontWeight: FontWeight.w800, color: AppColors.ink)),
         const SizedBox(height: 2),
-        Text(label, maxLines: 2, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 12.5, color: AppColors.muted)),
+        Text(label, maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 12.5, color: AppColors.muted)),
         if (hint != null && hint!.isNotEmpty)
           Text(hint!, maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 12, color: color, fontWeight: FontWeight.w600)),
       ]),
@@ -246,7 +246,7 @@ class StatGrid extends StatelessWidget {
 }
 
 class Pill extends StatelessWidget {
-  const Pill(this.text, {super.key, this.color = AppColors.brand});
+  Pill(this.text, {super.key, this.color = AppColors.brand});
 
   final String text;
   final Color color;
@@ -273,7 +273,7 @@ class KeyValue extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6),
       child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
-        Expanded(child: Text(label, style: const TextStyle(color: AppColors.muted))),
+        Expanded(child: Text(label, style: TextStyle(color: AppColors.muted))),
         const SizedBox(width: 12),
         Flexible(
           child: Text(value,
@@ -287,7 +287,7 @@ class KeyValue extends StatelessWidget {
 
 /// Bosh harflar doirasi.
 class Avatar extends StatelessWidget {
-  const Avatar(this.name, {super.key, this.size = 40, this.color = AppColors.brand});
+  Avatar(this.name, {super.key, this.size = 40, this.color = AppColors.brand});
 
   final String name;
   final double size;

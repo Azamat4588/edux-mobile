@@ -88,10 +88,10 @@ class _GroupTile extends StatelessWidget {
               Text(<String>[
                 if (teacher['name'] != null) asText(teacher['name']),
                 tr('{0} ta o\'quvchi', <Object?>[asInt(group['students_count'])]),
-              ].join(' · '), style: const TextStyle(color: AppColors.muted)),
+              ].join(' · '), style: TextStyle(color: AppColors.muted)),
             ]),
           ),
-          const Icon(Icons.chevron_right, color: AppColors.muted),
+          Icon(Icons.chevron_right, color: AppColors.muted),
         ]),
       ),
     );
@@ -236,7 +236,7 @@ class _AttendanceSheetPageState extends State<AttendanceSheetPage> {
                       Row(children: <Widget>[
                         Expanded(
                           child: Text(tr('Belgilangan: {0} / {1}', <Object?>[marked, _students.length]),
-                              style: const TextStyle(color: AppColors.muted)),
+                              style: TextStyle(color: AppColors.muted)),
                         ),
                         TextButton.icon(
                           onPressed: () => _setAll('present'),

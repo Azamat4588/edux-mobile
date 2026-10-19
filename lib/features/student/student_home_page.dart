@@ -70,7 +70,7 @@ class StudentOverviewBody extends StatelessWidget {
               child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
                 Text(name, style: const TextStyle(fontSize: 19, fontWeight: FontWeight.w800)),
                 if (student['code'] != null)
-                  Text('${tr("O'quvchi kodi")}: ${asText(student['code'])}', style: const TextStyle(color: AppColors.muted)),
+                  Text('${tr("O'quvchi kodi")}: ${asText(student['code'])}', style: TextStyle(color: AppColors.muted)),
               ]),
             ),
           ]),
@@ -78,23 +78,23 @@ class StudentOverviewBody extends StatelessWidget {
         ],
         if (showGreeting) ...<Widget>[
           Text(tr('Assalomu alaykum, {0}', <Object?>[firstName]),
-              style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w800, color: AppColors.ink)),
+              style: TextStyle(fontSize: 22, fontWeight: FontWeight.w800, color: AppColors.ink)),
           const SizedBox(height: 4),
           Text(<String>[
             if (student['code'] != null) '${tr("O'quvchi kodi")}: ${asText(student['code'])}',
             dayTitle(DateTime.now()),
-          ].join(' · '), style: const TextStyle(color: AppColors.muted)),
+          ].join(' · '), style: TextStyle(color: AppColors.muted)),
           const SizedBox(height: 14),
         ],
         if (hasBalance)
           AppCard(
-            color: balance < 0 ? const Color(0xFFFFF1F2) : Colors.white,
+            color: balance < 0 ? AppColors.soft(AppColors.danger) : AppColors.card,
             child: Row(children: <Widget>[
               Icon(Icons.account_balance_wallet_outlined, color: balance < 0 ? AppColors.danger : AppColors.success, size: 30),
               const SizedBox(width: 12),
               Expanded(
                 child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
-                  Text(balance < 0 ? tr('Qarz') : tr('Balans'), style: const TextStyle(color: AppColors.muted)),
+                  Text(balance < 0 ? tr('Qarz') : tr('Balans'), style: TextStyle(color: AppColors.muted)),
                   Text(money(balance.abs()),
                       style: TextStyle(fontSize: 22, fontWeight: FontWeight.w800, color: balance < 0 ? AppColors.danger : AppColors.ink)),
                 ]),
@@ -113,7 +113,7 @@ class StudentOverviewBody extends StatelessWidget {
               for (var i = 0; i < upcoming.length && i < 5; i++) ...<Widget>[
                 if (i > 0) const Divider(),
                 ListTile(
-                  leading: const Icon(Icons.event_outlined, color: AppColors.brand),
+                  leading: Icon(Icons.event_outlined, color: AppColors.brand),
                   title: Text('${dayTitle(parseDate(upcoming[i]['date']) ?? DateTime.now())}, ${asText(upcoming[i]['start'])}'),
                   subtitle: Text(<String>[asText(upcoming[i]['group']), if (upcoming[i]['room'] != null) asText(upcoming[i]['room'])].join(' · ')),
                 ),
@@ -138,7 +138,7 @@ class StudentOverviewBody extends StatelessWidget {
                 Expanded(
                   child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
                     Text(asText(attempt['exam']), style: const TextStyle(fontWeight: FontWeight.w600)),
-                    Text(date(attempt['finished_at']), style: const TextStyle(color: AppColors.muted, fontSize: 13)),
+                    Text(date(attempt['finished_at']), style: TextStyle(color: AppColors.muted, fontSize: 13)),
                   ]),
                 ),
                 Text('${asInt(attempt['correct'])}/${asInt(attempt['total'])}', style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 16)),
@@ -185,7 +185,7 @@ class StudentOverviewBody extends StatelessWidget {
                   child: LinearProgressIndicator(value: asDouble(course['percent']) / 100, minHeight: 8),
                 ),
                 const SizedBox(height: 4),
-                Text('${asInt(course['done'])} / ${asInt(course['total'])} ${tr('dars')}', style: const TextStyle(color: AppColors.muted, fontSize: 12)),
+                Text('${asInt(course['done'])} / ${asInt(course['total'])} ${tr('dars')}', style: TextStyle(color: AppColors.muted, fontSize: 12)),
               ]),
             ),
             const SizedBox(height: 8),
@@ -214,7 +214,7 @@ class _MarkBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (value == null) return const Text('—', style: TextStyle(color: AppColors.muted));
+    if (value == null) return Text('—', style: TextStyle(color: AppColors.muted));
     final v = value!.toDouble();
     final color = v >= 4.5 ? AppColors.success : (v >= 3.5 ? AppColors.brand : (v >= 3 ? AppColors.warning : AppColors.danger));
     return Container(
@@ -236,7 +236,7 @@ class _Count extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(children: <Widget>[
       Text('$value', style: TextStyle(fontSize: 22, fontWeight: FontWeight.w800, color: color)),
-      Text(label, style: const TextStyle(color: AppColors.muted, fontSize: 12)),
+      Text(label, style: TextStyle(color: AppColors.muted, fontSize: 12)),
     ]);
   }
 }

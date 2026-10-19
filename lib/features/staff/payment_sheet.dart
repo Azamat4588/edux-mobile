@@ -98,7 +98,7 @@ class _PaymentFormState extends State<_PaymentForm> {
       child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, mainAxisSize: MainAxisSize.min, children: <Widget>[
         Text(tr("To'lov qabul qilish"), style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w800)),
         const SizedBox(height: 2),
-        Text(widget.studentName, style: const TextStyle(color: AppColors.muted)),
+        Text(widget.studentName, style: TextStyle(color: AppColors.muted)),
         const SizedBox(height: 18),
         if (_error != null) ...<Widget>[
           Text(_error!, style: const TextStyle(color: AppColors.danger)),

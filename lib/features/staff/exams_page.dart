@@ -71,7 +71,7 @@ class _ExamTile extends StatelessWidget {
             if (exam['questions_count'] != null) tr('{0} ta savol', <Object?>[asInt(exam['questions_count'])]),
             tr('{0} ta natija', <Object?>[asInt(exam['finished_attempts_count'])]),
           ].join(' · '),
-          style: const TextStyle(color: AppColors.muted),
+          style: TextStyle(color: AppColors.muted),
         ),
       ]),
     );
@@ -125,7 +125,7 @@ class ExamDetailPage extends StatelessWidget {
               SectionTitle(tr('Reyting')),
               if (body.isEmpty)
                 AppCard(child: Text(tr("Hali hech kim topshirmagan. Onlayn topshirilgan yoki varaqadan tekshirilgan natijalar shu yerda darhol ko'rinadi."),
-                    style: const TextStyle(color: AppColors.muted)))
+                    style: TextStyle(color: AppColors.muted)))
               else
                 AppCard(
                   padding: EdgeInsets.zero,
@@ -136,7 +136,7 @@ class ExamDetailPage extends StatelessWidget {
                         leading: CircleAvatar(
                           radius: 16,
                           backgroundColor: i < 3 ? AppColors.sun.withAlpha(90) : AppColors.surface,
-                          child: Text('${i + 1}', style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 13, color: AppColors.ink)),
+                          child: Text('${i + 1}', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 13, color: AppColors.ink)),
                         ),
                         title: Text(nameIndex < body[i].length ? body[i][nameIndex] : '—'),
                         subtitle: correctIndex >= 0 && correctIndex < body[i].length
@@ -155,12 +155,12 @@ class ExamDetailPage extends StatelessWidget {
                 ),
               const SizedBox(height: 8),
               Text(tr('Batafsil tahlil (savollar va mavzular kesimi) veb-versiyada.'),
-                  textAlign: TextAlign.center, style: const TextStyle(color: AppColors.muted, fontSize: 12)),
+                  textAlign: TextAlign.center, style: TextStyle(color: AppColors.muted, fontSize: 12)),
               if (exam['published_at'] != null)
                 Padding(
                   padding: const EdgeInsets.only(top: 4),
                   child: Text('${tr("E'lon qilingan")}: ${date(exam['published_at'])}',
-                      textAlign: TextAlign.center, style: const TextStyle(color: AppColors.muted, fontSize: 12)),
+                      textAlign: TextAlign.center, style: TextStyle(color: AppColors.muted, fontSize: 12)),
                 ),
             ],
           );

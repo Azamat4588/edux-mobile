@@ -115,7 +115,7 @@ class _PayFormState extends State<_PayForm> {
         ),
         if (widget.suggested > 0) ...<Widget>[
           const SizedBox(height: 6),
-          Text('${tr('Hozirgi qarz:')} ${money(widget.suggested)}', style: const TextStyle(color: AppColors.muted)),
+          Text('${tr('Hozirgi qarz:')} ${money(widget.suggested)}', style: TextStyle(color: AppColors.muted)),
         ],
         const SizedBox(height: 18),
         if (widget.providers['click'] == true)

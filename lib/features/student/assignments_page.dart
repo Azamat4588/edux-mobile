@@ -68,7 +68,7 @@ class AssignmentCard extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(top: 2),
             child: Text(<String>[asText(asMap(assignment['course'])['title']), asText(asMap(assignment['lesson'])['title'])].join(' · '),
-                style: const TextStyle(color: AppColors.muted, fontSize: 13)),
+                style: TextStyle(color: AppColors.muted, fontSize: 13)),
           ),
         if (asText(assignment['description']).isNotEmpty) ...<Widget>[
           const SizedBox(height: 8),
@@ -82,7 +82,7 @@ class AssignmentCard extends StatelessWidget {
           const Divider(height: 20),
           if (asText(submission['content']).isNotEmpty) Text(asText(submission['content'])),
           if (submission['has_file'] == true)
-            Text('📎 ${asText(submission['file_name'])}', style: const TextStyle(color: AppColors.muted)),
+            Text('📎 ${asText(submission['file_name'])}', style: TextStyle(color: AppColors.muted)),
           if (asText(submission['feedback']).isNotEmpty) ...<Widget>[
             const SizedBox(height: 8),
             Container(
@@ -95,7 +95,7 @@ class AssignmentCard extends StatelessWidget {
         ],
         if (assignment['closed_reason'] != null && !graded) ...<Widget>[
           const SizedBox(height: 6),
-          Text(tr(asText(assignment['closed_reason'])), style: const TextStyle(color: AppColors.muted, fontSize: 13)),
+          Text(tr(asText(assignment['closed_reason'])), style: TextStyle(color: AppColors.muted, fontSize: 13)),
         ],
         if (canSubmit) ...<Widget>[
           const SizedBox(height: 12),

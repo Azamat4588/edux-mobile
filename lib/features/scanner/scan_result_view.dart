@@ -163,7 +163,7 @@ class ScanResultCard extends StatelessWidget {
     final correct = item.serverCorrect ?? item.localCorrect;
     final total = item.serverTotal ?? item.localTotal;
     return Material(
-      color: Colors.white,
+      color: AppColors.card,
       borderRadius: BorderRadius.circular(18),
       clipBehavior: Clip.antiAlias,
       child: InkWell(
@@ -205,7 +205,7 @@ class ScanResultCard extends StatelessWidget {
                 ]),
               ]),
             ),
-            const Icon(Icons.chevron_right, color: AppColors.muted),
+            Icon(Icons.chevron_right, color: AppColors.muted),
           ]),
         ),
       ),
@@ -276,7 +276,7 @@ class _ScanDetails extends StatelessWidget {
                   if (item.variant != null) tr('{0}-variant', <Object?>[item.variant]),
                   if (item.studentCode != null) '#${item.studentCode}',
                 ].join(' · '),
-                style: const TextStyle(color: AppColors.muted),
+                style: TextStyle(color: AppColors.muted),
               ),
             ]),
           ),
@@ -288,11 +288,11 @@ class _ScanDetails extends StatelessWidget {
               Icon(style.icon, color: style.color, size: 20),
               const SizedBox(width: 8),
               Expanded(child: Text(style.label, style: TextStyle(color: style.color, fontWeight: FontWeight.w700))),
-              Text(dateTime(item.createdAt.toIso8601String()), style: const TextStyle(color: AppColors.muted, fontSize: 12)),
+              Text(dateTime(item.createdAt.toIso8601String()), style: TextStyle(color: AppColors.muted, fontSize: 12)),
             ]),
             if (item.message != null && item.message!.isNotEmpty) ...<Widget>[
               const SizedBox(height: 8),
-              Align(alignment: Alignment.centerLeft, child: Text(tr(item.message!), style: const TextStyle(color: AppColors.muted))),
+              Align(alignment: Alignment.centerLeft, child: Text(tr(item.message!), style: TextStyle(color: AppColors.muted))),
             ],
             const Divider(height: 20),
             if (item.serverCorrect != null)
@@ -306,7 +306,7 @@ class _ScanDetails extends StatelessWidget {
         if (flags.isNotEmpty) ...<Widget>[
           const SizedBox(height: 12),
           AppCard(
-            color: const Color(0xFFFFFBEB),
+            color: AppColors.soft(AppColors.warning),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: flags
@@ -367,7 +367,7 @@ class _ScanDetails extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Text(tr("Yashil — to'g'ri, qizil — xato, sariq — shubhali. Kattalashtirish uchun ikki barmoq bilan suring."),
-              textAlign: TextAlign.center, style: const TextStyle(color: AppColors.muted, fontSize: 12)),
+              textAlign: TextAlign.center, style: TextStyle(color: AppColors.muted, fontSize: 12)),
         ],
       ],
     );

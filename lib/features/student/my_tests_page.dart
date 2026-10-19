@@ -103,7 +103,7 @@ class _ExamCard extends StatelessWidget {
             ),
           ]),
         ),
-        if (canTake || state == 'finished') const Icon(Icons.chevron_right, color: AppColors.muted),
+        if (canTake || state == 'finished') Icon(Icons.chevron_right, color: AppColors.muted),
       ]),
     );
   }
@@ -286,7 +286,7 @@ class _TakeTestPageState extends State<TakeTestPage> {
                   height: 46,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                    color: answered ? AppColors.brand : Colors.white,
+                    color: answered ? AppColors.brand : AppColors.card,
                     borderRadius: BorderRadius.circular(10),
                     border: Border.all(color: index == _page ? AppColors.ink : AppColors.line, width: index == _page ? 2 : 1),
                   ),
@@ -415,14 +415,14 @@ class _QuestionView extends StatelessWidget {
       children: <Widget>[
         Row(children: <Widget>[
           Text(tr('{0}-savol', <Object?>[asInt(question['number'])]),
-              style: const TextStyle(fontWeight: FontWeight.w700, color: AppColors.brand)),
+              style: TextStyle(fontWeight: FontWeight.w700, color: AppColors.brand)),
           const SizedBox(width: 8),
           if (multiple) Pill(tr('bir nechta javob'), color: AppColors.warning),
           const Spacer(),
-          if (unsynced) const Icon(Icons.cloud_upload_outlined, size: 18, color: AppColors.muted),
+          if (unsynced) Icon(Icons.cloud_upload_outlined, size: 18, color: AppColors.muted),
         ]),
         const SizedBox(height: 10),
-        MathText(asText(question['body']), style: const TextStyle(fontSize: 18, height: 1.4, color: AppColors.ink)),
+        MathText(asText(question['body']), style: TextStyle(fontSize: 18, height: 1.4, color: AppColors.ink)),
         if (imageUrl != null) ...<Widget>[
           const SizedBox(height: 12),
           ClipRRect(
@@ -461,7 +461,7 @@ class _OptionTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: selected ? AppColors.brand.withAlpha(20) : Colors.white,
+      color: selected ? AppColors.soft(AppColors.brand) : AppColors.card,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(14),
         side: BorderSide(color: selected ? AppColors.brand : AppColors.line, width: selected ? 2 : 1),
@@ -484,7 +484,7 @@ class _OptionTile extends StatelessWidget {
               child: Text(letter, style: TextStyle(fontWeight: FontWeight.w800, color: selected ? Colors.white : AppColors.ink)),
             ),
             const SizedBox(width: 12),
-            Expanded(child: MathText(body, style: const TextStyle(fontSize: 16, color: AppColors.ink))),
+            Expanded(child: MathText(body, style: TextStyle(fontSize: 16, color: AppColors.ink))),
           ]),
         ),
       ),
@@ -529,7 +529,7 @@ class AttemptResultPage extends StatelessWidget {
                       Center(
                         child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
                           Text('$correct/$total', style: const TextStyle(fontSize: 28, fontWeight: FontWeight.w800)),
-                          Text(tr("to'g'ri"), style: const TextStyle(color: AppColors.muted)),
+                          Text(tr("to'g'ri"), style: TextStyle(color: AppColors.muted)),
                         ]),
                       ),
                     ]),
@@ -544,7 +544,7 @@ class AttemptResultPage extends StatelessWidget {
               if (data['review_later'] == true) ...<Widget>[
                 const SizedBox(height: 12),
                 Text(tr("To'g'ri javoblar test yopilgandan keyin shu sahifada ko'rinadi."),
-                    textAlign: TextAlign.center, style: const TextStyle(color: AppColors.muted)),
+                    textAlign: TextAlign.center, style: TextStyle(color: AppColors.muted)),
               ],
               if (review.isNotEmpty) ...<Widget>[
                 SectionTitle(tr('Javoblar tahlili')),
@@ -608,12 +608,12 @@ class _ReviewCard extends StatelessWidget {
               ),
               const SizedBox(width: 10),
               Expanded(child: MathText(asText(options[i]['body']))),
-              if (options[i]['selected'] == true) Text(tr('sizning javobingiz'), style: const TextStyle(color: AppColors.muted, fontSize: 12)),
+              if (options[i]['selected'] == true) Text(tr('sizning javobingiz'), style: TextStyle(color: AppColors.muted, fontSize: 12)),
             ]),
           ),
         if (item['explanation'] != null && asText(item['explanation']).isNotEmpty) ...<Widget>[
           const Divider(height: 18),
-          MathText(asText(item['explanation']), style: const TextStyle(color: AppColors.muted)),
+          MathText(asText(item['explanation']), style: TextStyle(color: AppColors.muted)),
         ],
       ]),
     );

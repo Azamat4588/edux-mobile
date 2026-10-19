@@ -96,22 +96,22 @@ class ScannerHubPage extends StatelessWidget {
               if (exams.isNotEmpty) ...<Widget>[
                 SectionTitle(tr('Tanlangan test uchun')),
                 Text(tr("Test tanlansa, uning kaliti telefonga oldindan yuklanadi: QR kod o'qilmasa ham varaqa tekshiriladi va natija internetsiz ham darhol chiqadi."),
-                    style: const TextStyle(color: AppColors.muted, fontSize: 13)),
+                    style: TextStyle(color: AppColors.muted, fontSize: 13)),
                 const SizedBox(height: 10),
                 for (final exam in exams) ...<Widget>[
                   AppCard(
                     onTap: () => _open(context, examId: asInt(exam['id']), title: asText(exam['title'])),
                     child: Row(children: <Widget>[
-                      const Icon(Icons.assignment_outlined, color: AppColors.brand),
+                      Icon(Icons.assignment_outlined, color: AppColors.brand),
                       const SizedBox(width: 12),
                       Expanded(
                         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
                           Text(asText(exam['title']), style: const TextStyle(fontWeight: FontWeight.w700)),
                           Text(tr('{0} ta natija', <Object?>[asInt(exam['finished_attempts_count'])]),
-                              style: const TextStyle(color: AppColors.muted, fontSize: 13)),
+                              style: TextStyle(color: AppColors.muted, fontSize: 13)),
                         ]),
                       ),
-                      const Icon(Icons.document_scanner_outlined, color: AppColors.muted),
+                      Icon(Icons.document_scanner_outlined, color: AppColors.muted),
                     ]),
                   ),
                   const SizedBox(height: 8),

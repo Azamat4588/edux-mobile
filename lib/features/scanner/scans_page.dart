@@ -67,7 +67,7 @@ class _QueueTab extends StatelessWidget {
               Expanded(
                 child: Text(
                   waiting > 0 ? tr('Yuborilishi kutilmoqda: {0}', <Object?>[waiting]) : tr("Hammasi serverga yuborilgan."),
-                  style: const TextStyle(color: AppColors.muted),
+                  style: TextStyle(color: AppColors.muted),
                 ),
               ),
               if (waiting > 0)
@@ -171,9 +171,9 @@ class _ServerScanTile extends StatelessWidget {
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
             Text(name, style: const TextStyle(fontWeight: FontWeight.w700)),
             const SizedBox(height: 2),
-            Text(subtitle.join(' · '), style: const TextStyle(color: AppColors.muted, fontSize: 13)),
+            Text(subtitle.join(' · '), style: TextStyle(color: AppColors.muted, fontSize: 13)),
             const SizedBox(height: 2),
-            Text(dateTime(scan['created_at']), style: const TextStyle(color: AppColors.muted, fontSize: 12)),
+            Text(dateTime(scan['created_at']), style: TextStyle(color: AppColors.muted, fontSize: 12)),
           ]),
         ),
         Pill(style.label, color: style.color),

@@ -201,7 +201,7 @@ class _ScanReviewPageState extends State<ScanReviewPage> {
       children: <Widget>[
         if (flags.isNotEmpty)
           AppCard(
-            color: const Color(0xFFFFFBEB),
+            color: AppColors.soft(AppColors.warning),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: flags
@@ -266,7 +266,7 @@ class _ScanReviewPageState extends State<ScanReviewPage> {
           ),
         ],
         SectionTitle(tr('Javoblar')),
-        Text(tr("To'g'ri javobni belgilash uchun harfni bosing."), style: const TextStyle(color: AppColors.muted, fontSize: 13)),
+        Text(tr("To'g'ri javobni belgilash uchun harfni bosing."), style: TextStyle(color: AppColors.muted, fontSize: 13)),
         const SizedBox(height: 8),
         AppCard(
           padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 10),
@@ -275,7 +275,7 @@ class _ScanReviewPageState extends State<ScanReviewPage> {
               final flagged = _flagged.contains(question);
               final expected = key != null && question < key.length ? key[question] : null;
               return Container(
-                color: flagged ? const Color(0xFFFFFBEB) : null,
+                color: flagged ? AppColors.soft(AppColors.warning) : null,
                 padding: const EdgeInsets.symmetric(vertical: 4),
                 child: Row(children: <Widget>[
                   SizedBox(
@@ -333,10 +333,10 @@ class _Bubble extends StatelessWidget {
         alignment: Alignment.center,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: selected ? AppColors.ink : Colors.white,
+          color: selected ? AppColors.ink : AppColors.card,
           border: Border.all(color: border, width: doubtful || correct == true ? 2.4 : 1.4),
         ),
-        child: Text(letter, style: TextStyle(fontWeight: FontWeight.w700, color: selected ? Colors.white : AppColors.muted)),
+        child: Text(letter, style: TextStyle(fontWeight: FontWeight.w700, color: selected ? AppColors.card : AppColors.muted)),
       ),
     );
   }

@@ -12,15 +12,41 @@ import 'features/auth/organization_picker.dart';
 import 'features/scanner/scan_queue.dart';
 import 'features/shell/home_shell.dart';
 
-class EduxApp extends StatelessWidget {
+class EduxApp extends StatefulWidget {
   const EduxApp({super.key});
+
+  @override
+  State<EduxApp> createState() => _EduxAppState();
+}
+
+class _EduxAppState extends State<EduxApp> with WidgetsBindingObserver {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  // «Qurilmaga qarab» rejimida telefon mavzusi o'zgarsa — darhol ergashadi.
+  @override
+  void didChangePlatformBrightness() => setState(() {});
 
   @override
   Widget build(BuildContext context) {
     final session = AppScope.of(context);
+    final mode = session.themeMode;
+    final platformDark = WidgetsBinding.instance.platformDispatcher.platformBrightness == Brightness.dark;
+    final dark = mode == 'dark' || (mode == 'system' && platformDark);
+    final accent = session.accent;
+    AppTheme.apply(dark: dark, accent: accent);
     return MaterialApp(
-      // Til almashganda butun daraxt yangi tilda qayta quriladi
-      key: ValueKey<String>(I18n.locale),
+      // Til yoki ko'rinish almashganda butun daraxt yangi ranglarda qayta quriladi
+      key: ValueKey<String>('${I18n.locale}-$dark-${accent.key}'),
       title: 'EduX',
       debugShowCheckedModeBanner: false,
       theme: buildTheme(),
@@ -63,13 +89,16 @@ class _Splash extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.brand,
-      body: Center(
+      body: Container(
+        decoration: BoxDecoration(gradient: AppColors.gradient),
+        alignment: Alignment.center,
+        child: Center(
         child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
           Image.asset('assets/brand/mark.png', width: 84, height: 84),
           const SizedBox(height: 18),
           const SizedBox(width: 26, height: 26, child: CircularProgressIndicator(strokeWidth: 2.6, color: Colors.white)),
         ]),
+        ),
       ),
     );
   }

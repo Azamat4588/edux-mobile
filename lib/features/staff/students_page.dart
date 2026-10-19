@@ -134,7 +134,7 @@ class _StudentsPageState extends State<StudentsPage> {
                               return Padding(
                                 padding: const EdgeInsets.all(16),
                                 child: Text(tr('Yana {0} ta — qidiruvni aniqlashtiring', <Object?>[_total - _items.length]),
-                                    textAlign: TextAlign.center, style: const TextStyle(color: AppColors.muted)),
+                                    textAlign: TextAlign.center, style: TextStyle(color: AppColors.muted)),
                               );
                             }
                             return _StudentTile(student: _items[index], onTap: () => _open(_items[index]));
@@ -264,8 +264,8 @@ class _Card extends StatelessWidget {
               child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
                 Text(asText(student['full_name']), style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w800)),
                 const SizedBox(height: 2),
-                Text('${tr("O'quvchi kodi")}: ${asText(student['code'])}', style: const TextStyle(color: AppColors.muted)),
-                if (student['archived'] == true) ...<Widget>[const SizedBox(height: 4), Pill(tr('Arxivda'), color: AppColors.muted)],
+                Text('${tr("O'quvchi kodi")}: ${asText(student['code'])}', style: TextStyle(color: AppColors.muted)),
+                if (student['archived'] == true) ...<Widget>[SizedBox(height: 4), Pill(tr('Arxivda'), color: AppColors.muted)],
               ]),
             ),
             if (phone.isNotEmpty)

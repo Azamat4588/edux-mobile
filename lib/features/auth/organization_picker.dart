@@ -72,15 +72,15 @@ class _OrganizationPickerState extends State<OrganizationPicker> {
                 child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
                   Text(item.organization, style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 16)),
                   const SizedBox(height: 2),
-                  Text(roleLabel(item.role), style: const TextStyle(color: AppColors.muted)),
+                  Text(roleLabel(item.role), style: TextStyle(color: AppColors.muted)),
                 ]),
               ),
               if (_busy == item.organizationId)
                 const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2))
               else if (current)
-                const Icon(Icons.check_circle, color: AppColors.brand)
+                Icon(Icons.check_circle, color: AppColors.brand)
               else
-                const Icon(Icons.chevron_right, color: AppColors.muted),
+                Icon(Icons.chevron_right, color: AppColors.muted),
             ]),
           );
         },

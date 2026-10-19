@@ -155,7 +155,7 @@ class _ReadOnlyBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: const Color(0xFFFFF7ED),
+      color: AppColors.soft(AppColors.warning),
       child: SafeArea(
         bottom: false,
         child: Padding(

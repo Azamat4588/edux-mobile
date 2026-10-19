@@ -1,4 +1,6 @@
 // Kirish holati: server, token, foydalanuvchi, tashkilot va uning konteksti (rol, modullar).
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -6,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'api.dart';
 import 'i18n.dart';
+import 'theme.dart';
 
 /// Ilova yig'ilganda beriladi: flutter build ... --dart-define=EDUX_SERVER=https://app.edux.uz
 const String defaultServer = String.fromEnvironment('EDUX_SERVER', defaultValue: 'https://app.edux.uz');
@@ -37,6 +40,10 @@ class Session extends ChangeNotifier implements ApiCredentials {
   List<Membership> memberships = <Membership>[];
   Map<String, dynamic> context = <String, dynamic>{};
   bool restoring = true;
+
+  /// Platforma dizayn standarti (GET /site → theme.defaults) va oxirgi tanlangan rejim (internetsiz ochilganda ham).
+  Map<String, dynamic> siteTheme = <String, dynamic>{};
+  String _cachedMode = 'system';
 
   @override
   String get server => _server;
@@ -71,6 +78,35 @@ class Session extends ChangeNotifier implements ApiCredentials {
     return logo == null ? null : api.absolute(logo.toString());
   }
 
+  /// Ko'rinish: shaxsiy tanlov → tashkilot brendi → platforma standarti (veb bilan bir xil qoida).
+  Map<String, dynamic> get appearance => asMap(user['appearance']);
+  String get themeMode {
+    final mode = asText(appearance['mode']);
+    return mode.isNotEmpty ? mode : (_cachedMode.isNotEmpty ? _cachedMode : asText(siteTheme['mode'], 'system'));
+  }
+
+  Accent get accent {
+    for (final candidate in <Object?>[appearance['accent'], asMap(context['theme'])['accent'], siteTheme['accent']]) {
+      if (candidate != null && '$candidate'.isNotEmpty) return accentOf('$candidate');
+    }
+    return accents.first;
+  }
+
+  /// Kunduzgi/tungi/qurilmaga qarab: darhol qo'llanadi, hisobga saqlanadi (veb bilan umumiy).
+  Future<void> setThemeMode(String mode) async {
+    _cachedMode = mode;
+    user = <String, dynamic>{...user, 'appearance': <String, dynamic>{...appearance, 'mode': mode}};
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('theme.mode', mode);
+    notifyListeners();
+    try {
+      final data = asMap(await api.put('profile/appearance', <String, Object?>{'mode': mode}));
+      user = <String, dynamic>{...user, 'appearance': asMap(data['appearance'])};
+    } catch (_) {
+      // internet yo'q: telefonda saqlangan, keyingi safar server bilan tenglashadi
+    }
+  }
+
   /// Tashkilot turiga qarab atamalar (Guruh/Sinf, O'quvchi/Talaba).
   String term(String key, String fallback) {
     final value = asMap(context['terms'])[key];
@@ -98,6 +134,8 @@ class Session extends ChangeNotifier implements ApiCredentials {
     await I18n.load(prefs.getString('locale') ?? I18n.fromDevice(languageCode));
     _server = prefs.getString('server') ?? defaultServer;
     _organizationId = prefs.getInt('organization');
+    _cachedMode = prefs.getString('theme.mode') ?? 'system';
+    unawaited(_loadSite());
     try {
       _token = await _secure.read(key: 'token');
     } catch (_) {
@@ -118,6 +156,13 @@ class Session extends ChangeNotifier implements ApiCredentials {
     notifyListeners();
   }
 
+  Future<void> _loadSite() async {
+    try {
+      siteTheme = asMap(asMap(asMap(await api.get('site'))['theme'])['defaults']);
+      notifyListeners();
+    } catch (_) {}
+  }
+
   Future<void> setServer(String value) async {
     var clean = value.trim();
     if (clean.isEmpty) clean = defaultServer;
@@ -126,6 +171,7 @@ class Session extends ChangeNotifier implements ApiCredentials {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('server', _server);
     notifyListeners();
+    unawaited(_loadSite());
   }
 
   Future<void> setLocale(String code) async {

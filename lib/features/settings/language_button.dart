@@ -20,9 +20,9 @@ class LanguageButton extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
         child: Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
-          const Icon(Icons.language, size: 20, color: AppColors.muted),
+          Icon(Icons.language, size: 20, color: AppColors.muted),
           const SizedBox(width: 6),
-          Text(I18n.locale.toUpperCase(), style: const TextStyle(fontWeight: FontWeight.w700, color: AppColors.muted)),
+          Text(I18n.locale.toUpperCase(), style: TextStyle(fontWeight: FontWeight.w700, color: AppColors.muted)),
         ]),
       ),
     );

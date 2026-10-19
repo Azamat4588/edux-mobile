@@ -55,7 +55,7 @@ class _LoginPageState extends State<LoginPage> {
         title: Text(tr('Havola orqali kirish')),
         content: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
           Text(tr("O'quvchi shu havola orqali parolsiz kiradi: testlar, kurslar, jadval, to'lov va baholar bitta kabinetda."),
-              style: const TextStyle(color: AppColors.muted)),
+              style: TextStyle(color: AppColors.muted)),
           const SizedBox(height: 14),
           TextField(
             controller: controller,
@@ -99,7 +99,7 @@ class _LoginPageState extends State<LoginPage> {
         title: Text(tr('Tizim manzili')),
         content: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
           Text(tr("Tashkilotingiz o'z serverida ishlasa yoki alohida manzil berilgan bo'lsa, shu yerga yozing."),
-              style: const TextStyle(color: AppColors.muted)),
+              style: TextStyle(color: AppColors.muted)),
           const SizedBox(height: 14),
           TextField(
             controller: controller,
@@ -123,7 +123,7 @@ class _LoginPageState extends State<LoginPage> {
     final session = AppScope.of(context);
     final host = Uri.tryParse(session.server)?.host ?? session.server;
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.card,
       body: SafeArea(
         child: ListView(
           padding: const EdgeInsets.fromLTRB(24, 8, 24, 24),
@@ -133,12 +133,12 @@ class _LoginPageState extends State<LoginPage> {
             Row(children: <Widget>[
               Image.asset('assets/brand/mark.png', width: 48, height: 48),
               const SizedBox(width: 12),
-              const Text('EduX', style: TextStyle(fontSize: 28, fontWeight: FontWeight.w800, color: AppColors.ink)),
+              Text('EduX', style: TextStyle(fontSize: 28, fontWeight: FontWeight.w800, color: AppColors.ink)),
             ]),
             const SizedBox(height: 36),
-            Text(tr('Hisobingizga kiring'), style: const TextStyle(fontSize: 26, fontWeight: FontWeight.w800, color: AppColors.ink)),
+            Text(tr('Hisobingizga kiring'), style: TextStyle(fontSize: 26, fontWeight: FontWeight.w800, color: AppColors.ink)),
             const SizedBox(height: 6),
-            Text(tr('Telefon raqamingiz va parolingizni kiriting.'), style: const TextStyle(color: AppColors.muted, fontSize: 15)),
+            Text(tr('Telefon raqamingiz va parolingizni kiriting.'), style: TextStyle(color: AppColors.muted, fontSize: 15)),
             const SizedBox(height: 28),
             if (_error != null) ...<Widget>[
               Container(
@@ -186,13 +186,13 @@ class _LoginPageState extends State<LoginPage> {
             ),
             const SizedBox(height: 18),
             Text(tr("Parolni unutgan bo'lsangiz, tashkilot direktoriga murojaat qiling."),
-                textAlign: TextAlign.center, style: const TextStyle(color: AppColors.muted, fontSize: 13)),
+                textAlign: TextAlign.center, style: TextStyle(color: AppColors.muted, fontSize: 13)),
             const SizedBox(height: 28),
             Center(
               child: TextButton.icon(
                 onPressed: _changeServer,
                 icon: const Icon(Icons.dns_outlined, size: 18),
-                label: Text(host, style: const TextStyle(color: AppColors.muted)),
+                label: Text(host, style: TextStyle(color: AppColors.muted)),
               ),
             ),
           ],

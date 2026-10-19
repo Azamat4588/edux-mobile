@@ -48,10 +48,10 @@ class CoursesPage extends StatelessWidget {
                 child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
                   Row(children: <Widget>[
                     Expanded(child: Text(asText(course['title']), style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 16))),
-                    if (locked) const Icon(Icons.lock_outline, color: AppColors.muted, size: 20),
+                    if (locked) Icon(Icons.lock_outline, color: AppColors.muted, size: 20),
                   ]),
                   if (asMap(course['subject'])['name'] != null)
-                    Text(asText(asMap(course['subject'])['name']), style: const TextStyle(color: AppColors.muted)),
+                    Text(asText(asMap(course['subject'])['name']), style: TextStyle(color: AppColors.muted)),
                   const SizedBox(height: 10),
                   ClipRRect(
                     borderRadius: BorderRadius.circular(8),
@@ -59,7 +59,7 @@ class CoursesPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 4),
                   Text('${asInt(progress['done'])} / ${asInt(progress['total'])} ${tr('dars')}',
-                      style: const TextStyle(color: AppColors.muted, fontSize: 12)),
+                      style: TextStyle(color: AppColors.muted, fontSize: 12)),
                 ]),
               );
             },
@@ -91,12 +91,12 @@ class CoursePage extends StatelessWidget {
             padding: const EdgeInsets.all(16),
             children: <Widget>[
               if (asText(course['description']).isNotEmpty) ...<Widget>[
-                Text(asText(course['description']), style: const TextStyle(color: AppColors.muted)),
+                Text(asText(course['description']), style: TextStyle(color: AppColors.muted)),
                 const SizedBox(height: 12),
               ],
               if (locked)
                 AppCard(
-                  color: const Color(0xFFFFFBEB),
+                  color: AppColors.soft(AppColors.warning),
                   child: Text(tr("Kursni ochish uchun to'lovni tashkilot ma'muriyatiga topshiring: ular sizga ruxsat beradi.")),
                 ),
               for (final section in sections) ...<Widget>[
@@ -202,7 +202,7 @@ class _LessonPageState extends State<LessonPage> {
           return ListView(
             padding: const EdgeInsets.fromLTRB(16, 16, 16, 32),
             children: <Widget>[
-              Text(asText(asMap(lesson['section'])['title']), style: const TextStyle(color: AppColors.muted)),
+              Text(asText(asMap(lesson['section'])['title']), style: TextStyle(color: AppColors.muted)),
               const SizedBox(height: 4),
               Text(asText(lesson['title']), style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w800)),
               const SizedBox(height: 14),
@@ -213,13 +213,13 @@ class _LessonPageState extends State<LessonPage> {
                     const Icon(Icons.play_circle_fill, color: AppColors.danger, size: 40),
                     const SizedBox(width: 12),
                     Expanded(child: Text(tr('Videoni ochish'), style: const TextStyle(fontWeight: FontWeight.w700))),
-                    const Icon(Icons.open_in_new, color: AppColors.muted),
+                    Icon(Icons.open_in_new, color: AppColors.muted),
                   ]),
                 ),
                 const SizedBox(height: 12),
               ],
               if (asText(lesson['content']).isNotEmpty)
-                AppCard(child: MathText(asText(lesson['content']), style: const TextStyle(fontSize: 16, height: 1.5, color: AppColors.ink))),
+                AppCard(child: MathText(asText(lesson['content']), style: TextStyle(fontSize: 16, height: 1.5, color: AppColors.ink))),
               if (materials.isNotEmpty) ...<Widget>[
                 SectionTitle(tr('Materiallar')),
                 AppCard(
@@ -227,7 +227,7 @@ class _LessonPageState extends State<LessonPage> {
                   child: Column(children: <Widget>[
                     for (final material in materials)
                       ListTile(
-                        leading: const Icon(Icons.insert_drive_file_outlined, color: AppColors.brand),
+                        leading: Icon(Icons.insert_drive_file_outlined, color: AppColors.brand),
                         title: Text(asText(material['title'])),
                         subtitle: Text(asText(material['original_name'])),
                         trailing: _opening == asInt(material['id'])
@@ -255,7 +255,7 @@ class _LessonPageState extends State<LessonPage> {
               if (done && lesson['completed_at'] != null)
                 Padding(
                   padding: const EdgeInsets.only(top: 6),
-                  child: Text(dateTime(lesson['completed_at']), textAlign: TextAlign.center, style: const TextStyle(color: AppColors.muted, fontSize: 12)),
+                  child: Text(dateTime(lesson['completed_at']), textAlign: TextAlign.center, style: TextStyle(color: AppColors.muted, fontSize: 12)),
                 ),
             ],
           );
