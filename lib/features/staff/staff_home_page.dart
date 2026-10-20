@@ -213,7 +213,7 @@ class _QuickActions extends StatelessWidget {
     if (session.canCheckIn && actions.length < 4) {
       actions.add(_Action(
         icon: Icons.qr_code_scanner,
-        label: tr('Kirish'),
+        label: tr('Keldi-ketdi'),
         color: const Color(0xFF0891B2),
         onTap: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const CheckinPage())),
       ));

@@ -17,6 +17,13 @@ Actions sozlamalari (Settings → Secrets and variables → Actions):
 
 Play Market uchun `.aab`: Actions → Build → «Run workflow».
 
+## 3.3 da yangi (server: yordam markazi)
+
+- «Ko'proq» → «Yordam markazi»: veb-tizimdagi qo'llanmalar (`<server>/help`; brauzerda kirilmagan bo'lsa ochiq `/yordam`)
+  tashqi brauzerda, ilova tilida (`?lang=`).
+- Ekran sarlavhasidagi «?» — shu ekran maqolasi (`<server>/yordam/<slug>`): Skaner → `varaqani-skanerlash`,
+  Davomat → `davomat-belgilash`, Testlar → `test-natijalari`, Farzandim → `farzandim`. Slug'lar: `lib/core/help_links.dart`.
+
 ## 3.2 da yangi (server 1.29 bilan moslik)
 
 **Menyu va atamalar veb 1.29 bilan bir xil** (`docs/navigation.md`): bo'lim faqat rol, modul (`context.modules`),

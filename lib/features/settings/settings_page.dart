@@ -1,7 +1,8 @@
-// Ko'proq: profil, tashkilotni almashtirish, til, skaner sozlamalari, chiqish.
+// Ko'proq: profil, tashkilotni almashtirish, til, skaner sozlamalari, yordam markazi, chiqish.
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../core/help_links.dart';
 import '../../core/i18n.dart';
 import '../../core/push.dart';
 import '../../core/session.dart';
@@ -155,6 +156,14 @@ class _SettingsPageState extends State<SettingsPage> {
           AppCard(
             padding: EdgeInsets.zero,
             child: Column(children: <Widget>[
+              ListTile(
+                leading: const Icon(Icons.help_outline),
+                title: Text(tr('Yordam markazi')),
+                subtitle: Text(tr("Qo'llanmalar: qayerda nima bor va qanday qilinadi.")),
+                trailing: const Icon(Icons.open_in_new, size: 18),
+                onTap: () => HelpLinks.open(context),
+              ),
+              const Divider(),
               ListTile(
                 leading: const Icon(Icons.dns_outlined),
                 title: Text(tr('Tizim manzili')),

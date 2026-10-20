@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../core/api.dart';
 import '../../core/format.dart';
+import '../../core/help_links.dart';
 import '../../core/i18n.dart';
 import '../../core/offline_cache.dart';
 import '../../core/session.dart';
@@ -126,11 +127,11 @@ class _GuardianHomePageState extends State<GuardianHomePage> {
       } else {
         body = const SkeletonList(header: true, count: 3);
       }
-      return Scaffold(appBar: AppBar(title: Text(tr('Farzandim')), actions: const <Widget>[NotificationBell()]), body: body);
+      return Scaffold(appBar: AppBar(title: Text(tr('Farzandim')), actions: const <Widget>[HelpButton(HelpLinks.guardian), NotificationBell()]), body: body);
     }
     if (children.isEmpty) {
       return Scaffold(
-        appBar: AppBar(title: Text(tr('Farzandim')), actions: const <Widget>[NotificationBell()]),
+        appBar: AppBar(title: Text(tr('Farzandim')), actions: const <Widget>[HelpButton(HelpLinks.guardian), NotificationBell()]),
         body: RefreshIndicator(
           onRefresh: _load,
           child: ListView(children: <Widget>[
@@ -161,7 +162,7 @@ class _GuardianHomePageState extends State<GuardianHomePage> {
       child: Scaffold(
         appBar: AppBar(
           title: Text(tr('Farzandim')),
-          actions: const <Widget>[NotificationBell()],
+          actions: const <Widget>[HelpButton(HelpLinks.guardian), NotificationBell()],
           bottom: children.length < 2 && tabs.length < 2
               ? null
               : PreferredSize(

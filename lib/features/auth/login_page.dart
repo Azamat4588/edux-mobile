@@ -160,7 +160,7 @@ class _LoginPageState extends State<LoginPage> {
             const Align(alignment: Alignment.centerRight, child: LanguageButton()),
             const SizedBox(height: 24),
             Row(children: <Widget>[
-              Image.asset('assets/brand/mark.png', width: 48, height: 48),
+              GestureDetector(onLongPress: _changeServer, child: Image.asset('assets/brand/mark.png', width: 48, height: 48)),
               const SizedBox(width: 12),
               Text('EduX', style: TextStyle(fontSize: 28, fontWeight: FontWeight.w800, color: AppColors.ink)),
             ]),
@@ -261,14 +261,18 @@ class _LoginPageState extends State<LoginPage> {
                 label: Text(tr("To'lov havolasi orqali to'lash")),
               ),
             ),
-            const SizedBox(height: 28),
-            Center(
-              child: TextButton.icon(
-                onPressed: _changeServer,
-                icon: const Icon(Icons.dns_outlined, size: 18),
-                label: Text(host, style: TextStyle(color: AppColors.muted)),
+            // Server manzili so'ralmaydi: ilova standart serverga ulanadi. O'z serveri bo'lgan tashkilot uchun —
+            // logotipni uzoq bosib manzilni o'zgartirish mumkin; standartdan farqli bo'lsa, manzil shu yerda ko'rinadi.
+            if (session.server != defaultServer) ...<Widget>[
+              const SizedBox(height: 28),
+              Center(
+                child: TextButton.icon(
+                  onPressed: _changeServer,
+                  icon: const Icon(Icons.dns_outlined, size: 18),
+                  label: Text(host, style: TextStyle(color: AppColors.muted)),
+                ),
               ),
-            ),
+            ],
           ],
         ),
       ),
