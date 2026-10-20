@@ -14,6 +14,13 @@ adb shell am broadcast -a com.android.systemui.demo -e command battery -e level 
 adb shell am broadcast -a com.android.systemui.demo -e command network -e wifi show -e level 4 || true
 adb shell am broadcast -a com.android.systemui.demo -e command network -e mobile show -e datatype none -e level 4 || true
 adb shell am broadcast -a com.android.systemui.demo -e command notifications -e visible false || true
+# No ANR / crash dialogs of other apps (Pixel Launcher is slow on CI) over the screenshots.
+adb shell settings put global hide_error_dialogs 1 || true
+adb shell settings put global anr_show_background 0 || true
+# Let the freshly booted system settle (dexopt, launcher) before the app starts.
+until [ "$(adb shell getprop sys.boot_completed | tr -d '\r')" = "1" ]; do sleep 2; done
+sleep 45
+adb shell am broadcast -a android.intent.action.CLOSE_SYSTEM_DIALOGS || true
 adb shell wm size
 adb shell wm density
 flutter test integration_test/shots_test.dart -d emulator-5554 --reporter expanded \

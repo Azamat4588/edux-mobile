@@ -112,6 +112,26 @@ class Handler(BaseHTTPRequestHandler):
         m = re.match(r'Bearer\s+shots-(\w+)', auth)
         return m.group(1) if m else None
 
+    @staticmethod
+    def _focus(adb):
+        out = subprocess.run([adb, 'shell', 'dumpsys', 'window', 'displays'], capture_output=True, timeout=20).stdout.decode('utf-8', 'replace')
+        lines = [line.strip() for line in out.splitlines() if 'mCurrentFocus' in line or 'mFocusedApp' in line]
+        return ' '.join(lines)
+
+    def _dismiss_system_dialogs(self, adb):
+        """A slow CI emulator sometimes shows «… isn't responding» (ANR) over the app: close it before capturing."""
+        for _ in range(4):
+            focus = self._focus(adb)
+            if 'Not Responding' not in focus and 'Application Error' not in focus and 'uz.edux' in focus:
+                return
+            if 'Not Responding' not in focus and 'Application Error' not in focus:
+                return
+            log(f'  system dialog over the app ({focus[:160]}) -> closing')
+            subprocess.run([adb, 'shell', 'am', 'broadcast', '-a', 'android.intent.action.CLOSE_SYSTEM_DIALOGS'], capture_output=True, timeout=20)
+            subprocess.run([adb, 'shell', 'input', 'keyevent', 'KEYCODE_ESCAPE'], capture_output=True, timeout=20)
+            import time
+            time.sleep(1.5)
+
     def _shot(self, name, body):
         name = re.sub(r'[^A-Za-z0-9._-]+', '_', name)
         os.makedirs(self.shots, exist_ok=True)
@@ -123,6 +143,7 @@ class Handler(BaseHTTPRequestHandler):
             return self._send(200, {'ok': True, 'source': 'upload', 'bytes': len(body)})
         adb = shutil.which('adb') or os.path.join(os.environ.get('ANDROID_HOME', os.environ.get('ANDROID_SDK_ROOT', '')), 'platform-tools', 'adb')
         try:
+            self._dismiss_system_dialogs(adb)
             png = subprocess.run([adb, 'exec-out', 'screencap', '-p'], capture_output=True, timeout=40).stdout
         except Exception as error:  # noqa: BLE001
             log(f'SHOT {name} FAILED: {error}')

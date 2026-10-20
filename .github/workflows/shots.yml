@@ -74,6 +74,7 @@ jobs:
           arch: x86_64
           profile: pixel_6
           ram-size: 4096M
+          cores: 3
           disk-size: 6000M
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none -camera-front none
           disable-animations: true
