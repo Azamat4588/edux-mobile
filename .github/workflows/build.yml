@@ -5,7 +5,8 @@
 # Sozlamalar (repo → Settings → Secrets and variables → Actions):
 #   vars.EDUX_SERVER             — ilova sukut bo'yicha ulanadigan server (masalan https://app.edux.uz)
 #   secrets.GOOGLE_SERVICES_JSON — Firebase google-services.json matni (push uchun; bo'lmasa push o'chiq)
-#   secrets.ANDROID_KEYSTORE_BASE64, ANDROID_KEYSTORE_PASSWORD, ANDROID_KEY_ALIAS, ANDROID_KEY_PASSWORD — Play Market imzosi (ixtiyoriy)
+#   secrets.ANDROID_KEYSTORE_BASE64, ANDROID_KEYSTORE_PASSWORD, ANDROID_KEY_ALIAS, ANDROID_KEY_PASSWORD — Play Market imzosi (ixtiyoriy;
+#     bo'lsa har yig'ishda imzolangan .aab ham chiqadi va «latest» relizga qo'shiladi)
 name: Build
 
 on:
@@ -68,6 +69,8 @@ jobs:
           if [ -n "$KEYSTORE" ]; then
             echo "$KEYSTORE" | base64 -d > android/app/upload.jks
             printf 'storeFile=upload.jks\nstorePassword=%s\nkeyAlias=%s\nkeyPassword=%s\n' "$STORE_PASSWORD" "$KEY_ALIAS" "$KEY_PASSWORD" > android/key.properties
+            # Imzo bor — Play Market uchun .aab ham yig'iladi va relizga qo'shiladi.
+            echo "SIGNED_RELEASE=true" >> "$GITHUB_ENV"
           else
             echo "::notice::Imzo kaliti yo'q — APK sinov kaliti bilan imzolanadi"
           fi
@@ -99,8 +102,11 @@ jobs:
           flutter build apk --release --split-per-abi --build-number=${{ github.run_number }} --dart-define=EDUX_SERVER=$EDUX_SERVER 2>&1 | tee build.log
 
       - name: AAB (Play Market)
-        if: github.event_name == 'workflow_dispatch'
-        run: flutter build appbundle --release --build-number=${{ github.run_number }} --dart-define=EDUX_SERVER=$EDUX_SERVER
+        # Imzo kaliti bo'lsa har yig'ishda; bo'lmasa faqat qo'lda (sinov kaliti bilan — Play qabul qilmaydi).
+        if: github.event_name == 'workflow_dispatch' || env.SIGNED_RELEASE == 'true'
+        run: |
+          set -o pipefail
+          flutter build appbundle --release --build-number=${{ github.run_number }} --dart-define=EDUX_SERVER=$EDUX_SERVER 2>&1 | tee -a build.log
 
       - name: Xato tafsilotlari
         if: failure()
@@ -127,9 +133,17 @@ jobs:
         run: |
           version=$(grep '^version:' pubspec.yaml | sed -E 's/version: *([^+]+).*/\1/')
           gh release delete latest --yes --cleanup-tag || true
-          gh release create latest build/app/outputs/flutter-apk/*.apk \
+          files=(build/app/outputs/flutter-apk/*.apk)
+          notes="Avtomatik yig'ish: ${{ github.sha }}. Ko'pchilik telefonlar uchun: app-arm64-v8a-release.apk. Eski telefonlar: app-armeabi-v7a-release.apk. Server: $EDUX_SERVER"
+          # Imzolangan App Bundle — Google Play Console'ga yuklash uchun.
+          if [ "$SIGNED_RELEASE" = "true" ] && [ -f build/app/outputs/bundle/release/app-release.aab ]; then
+            cp build/app/outputs/bundle/release/app-release.aab "edux-$version-${{ github.run_number }}.aab"
+            files+=("edux-$version-${{ github.run_number }}.aab")
+            notes="$notes. Google Play: edux-$version-${{ github.run_number }}.aab (versionCode ${{ github.run_number }})."
+          fi
+          gh release create latest "${files[@]}" \
             --prerelease --title "EduX $version (yig'ish ${{ github.run_number }})" \
-            --notes "Avtomatik yig'ish: ${{ github.sha }}. Ko'pchilik telefonlar uchun: app-arm64-v8a-release.apk. Eski telefonlar: app-armeabi-v7a-release.apk. Server: $EDUX_SERVER"
+            --notes "$notes"
 
   ios:
     # Imzosiz iOS yig'ish: loyiha sozlamalari, plaginlar (CocoaPods) va Dart kodi iOS da yig'ilishini tekshiradi.
