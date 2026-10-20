@@ -15,7 +15,28 @@ Actions sozlamalari (Settings → Secrets and variables → Actions):
 | `GOOGLE_SERVICES_JSON` | Secret | Firebase `google-services.json` matni — push-bildirishnomalar uchun |
 | `ANDROID_KEYSTORE_BASE64`, `ANDROID_KEYSTORE_PASSWORD`, `ANDROID_KEY_ALIAS`, `ANDROID_KEY_PASSWORD` | Secret | Play Market imzosi (bo'lmasa sinov kaliti) |
 
-Play Market uchun `.aab`: Actions → Build → «Run workflow».
+Play Market uchun `.aab`: imzo kaliti secrets'da bo'lsa, har `main` yig'ishida imzolangan `edux-<versiya>-<yig'ish>.aab`
+ham **Releases → latest** ga qo'shiladi (kalitsiz — faqat Actions → Build → «Run workflow», sinov kaliti bilan, Play qabul qilmaydi).
+
+### Google Play'ga yuklash
+
+1. Kalit: `keytool -genkey -v -keystore edux.jks -keyalg RSA -keysize 2048 -validity 10000 -alias edux`;
+   secrets: `ANDROID_KEYSTORE_BASE64` (`base64 -w0 edux.jks`), `ANDROID_KEYSTORE_PASSWORD`, `ANDROID_KEY_ALIAS`, `ANDROID_KEY_PASSWORD`.
+   Kalit faylini va parolni xavfsiz joyda saqlang — yo'qolsa ilovani yangilab bo'lmaydi.
+2. [Play Console](https://play.google.com/console) → ilova yaratish (paket nomi `uz.edux.edux`) → **Play App Signing** yoqilgan holda
+   Testing → Internal testing → Create release → `.aab` ni yuklang (versionCode = yig'ish raqami, har safar o'sadi).
+3. Store listing (tavsif, skrinshotlar, ikonka 512×512), Data safety, Content rating, Privacy policy havolasi
+   (`<server>/privacy`) to'ldirilgach — Production'ga chiqarish.
+
+**iPhone / App Store:** Apple Developer Program (yiliga $99) hisobi va imzo sertifikatlari kerak. Ungacha CI dagi `ios` job
+imzosiz yig'ishni tekshiradi xolos; hisob ochilgach Xcode'da Team tanlab `flutter build ipa` → Transporter/TestFlight (pastda «iPhone»).
+
+## Kompyuter ilovasi
+
+Windows, macOS va Linux uchun EduX ilovasi alohida repozitoriyda: [Azamat4588/edux-desktop](https://github.com/Azamat4588/edux-desktop)
+(Tauri; serverning veb ilovasini o'z oynasida ochadi — barcha rollar uchun). O'rnatuvchilar o'zgarmas havolalarda:
+`…/edux-desktop/releases/download/desktop-latest/EduX-Setup-x64.exe`, `EduX-x64.msi`, `EduX-macOS-universal.dmg`,
+`EduX-linux-x86_64.AppImage`, `EduX-linux-amd64.deb`.
 
 ## 3.3 da yangi (server: yordam markazi)
 
