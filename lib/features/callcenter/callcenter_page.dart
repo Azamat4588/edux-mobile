@@ -550,7 +550,8 @@ class CallerCardView extends StatelessWidget {
       ],
       for (final lead in leads) ...<Widget>[
         AppCard(
-          onTap: () => _push(context, LeadPage(leadId: asInt(lead['id']))),
+          // Lid kartasi (crm/leads) kassirga yopiq — faqat direktor, administrator, marketolog.
+          onTap: AppScope.of(context).canSeeLeads ? () => _push(context, LeadPage(leadId: asInt(lead['id']))) : null,
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
             Row(children: <Widget>[
               const Icon(Icons.person_search_outlined, size: 20),

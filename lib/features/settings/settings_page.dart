@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../core/i18n.dart';
+import '../../core/push.dart';
 import '../../core/session.dart';
 import '../../core/theme.dart';
 import '../../core/widgets.dart';
@@ -172,7 +173,7 @@ class _SettingsPageState extends State<SettingsPage> {
             ]),
           ),
           const SizedBox(height: 24),
-          Center(child: Text('EduX 2.0.0', style: TextStyle(color: AppColors.muted, fontSize: 12))),
+          Center(child: Text('EduX ${PushService.appVersion}', style: TextStyle(color: AppColors.muted, fontSize: 12))),
         ],
       ),
     );
