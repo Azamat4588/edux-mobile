@@ -24,7 +24,7 @@ class ScansPage extends StatelessWidget {
       initialIndex: initialTab,
       child: Scaffold(
         appBar: AppBar(
-          title: Text(tr('Tekshirilgan varaqalar')),
+          title: Text(tr('Varaqalar')),
           bottom: TabBar(
             isScrollable: true,
             tabAlignment: TabAlignment.start,

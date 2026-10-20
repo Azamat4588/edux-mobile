@@ -1,9 +1,9 @@
 // Ota-ona («Farzandim») uchun barcha server so'rovlari shu yerda: endpointlar to'plami keyinchalik bitta joyda almashtiriladi.
 //
-// Hozirgi manbalar (server 1.28):
+// Hozirgi manbalar (server 1.29, docs/navigation.md «Farzandim»):
 //   GET my/insights[?student_id]   — farzandlar ro'yxati + bitta farzand haqida umumiy holat (har qanday modul);
 //   GET crm/my/children            — balans, hisoblanmalar, to'lovlar, oylik davomat (CRM moduli);
-//   GET my/children                — test natijalari (Test moduli);
+//   GET my/children                — farzandlar (modulga bog'liq emas); `attempts` faqat Test moduli yoqilgan bo'lsa;
 //   GET school/my/students|diary|progress — maktab kundaligi va baholar (Maktab moduli);
 //   pay/*                           — onlayn to'lov (online_pay.dart orqali).
 import 'package:flutter/widgets.dart';
@@ -70,6 +70,11 @@ class GuardianRepository {
 
   static const Duration _ttl = Duration(seconds: 20);
 
+  /// Farzandlar ro'yxati bilan kelgan birinchi farzandning umumiy holati: «Umumiy» yorlig'i ochilganda
+  /// my/insights ikkinchi marta so'ralmasin (bir marta ishlatiladi).
+  Map<String, dynamic>? _firstInsights;
+  DateTime? _firstInsightsAt;
+
   /// Keyingi so'rovlar serverdan yangidan olinsin (pastga tortib yangilash).
   void invalidate() {
     _crm = null;
@@ -84,6 +89,8 @@ class GuardianRepository {
       list = asList(data['children'], 'children')
           .map((item) => GuardianChild(id: asInt(item['id']), name: asText(item['full_name']), code: item['code']?.toString()))
           .toList();
+      _firstInsights = data;
+      _firstInsightsAt = DateTime.now();
     } on ApiException catch (error) {
       // 404 — farzand biriktirilmagan; boshqa xatolarda zaxira manbalar sinab ko'riladi.
       if (error.status == 404) return <GuardianChild>[];
@@ -102,7 +109,8 @@ class GuardianRepository {
         if (error.isNetwork) rethrow;
       }
     }
-    if (list.isEmpty && hasTesting) {
+    // my/children 1.29 dan modulga bog'liq emas — oxirgi zaxira har doim.
+    if (list.isEmpty) {
       list = asList(asMap(await _api.get('my/children'))['children'], 'children')
           .map((item) => GuardianChild(
                 id: asInt(item['id']),
@@ -127,8 +135,15 @@ class GuardianRepository {
   }
 
   /// Bitta farzand bo'yicha umumiy holat (testing / lms / school / crm bo'limlari — yoqilgan modullarga qarab).
-  Future<Map<String, dynamic>> insights(int childId) async =>
-      asMap(await _api.get('my/insights', query: <String, Object?>{'student_id': childId}));
+  Future<Map<String, dynamic>> insights(int childId) async {
+    final first = _firstInsights;
+    final at = _firstInsightsAt;
+    _firstInsights = null;
+    if (first != null && at != null && DateTime.now().difference(at) < _ttl && asInt(asMap(first['student'])['id']) == childId) {
+      return first;
+    }
+    return asMap(await _api.get('my/insights', query: <String, Object?>{'student_id': childId}));
+  }
 
   Future<List<Map<String, dynamic>>> _crmChildren() {
     final fresh = _crmAt != null && DateTime.now().difference(_crmAt!) < _ttl;

@@ -17,7 +17,7 @@ class CertificatesPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final session = AppScope.of(context);
     return Scaffold(
-      appBar: AppBar(title: Text(tr('Sertifikatlarim'))),
+      appBar: AppBar(title: Text(tr('Sertifikatlar'))),
       body: AsyncView<List<Map<String, dynamic>>>(
         load: () async => asList(await session.api.get('my/certificates')),
         builder: (context, items, reload) {
@@ -69,7 +69,7 @@ class MockProgressPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final api = AppScope.of(context).api;
     return Scaffold(
-      appBar: AppBar(title: Text(tr('Mock natijalarim'))),
+      appBar: AppBar(title: Text(tr('Mock natijalari'))),
       body: AsyncView<List<Map<String, dynamic>>>(
         load: () async => asList(asMap(await api.get('my/mock'))['items'], 'items'),
         builder: (context, items, reload) {

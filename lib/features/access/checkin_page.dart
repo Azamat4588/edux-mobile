@@ -107,7 +107,7 @@ class _CheckinPageState extends State<CheckinPage> {
         foregroundColor: Colors.white,
         title: Text(tr('Kirish nazorati')),
         actions: <Widget>[
-          if (session.isManager)
+          if (session.canUseKiosk)
             IconButton(
               tooltip: tr('Kiosk rejimi'),
               icon: const Icon(Icons.face_retouching_natural),

@@ -1,4 +1,4 @@
-// Vazifalar (CRM): bugungi, muddati o'tgan, keyingi va bajarilgan. Bajarildi deb belgilash, yangi vazifa qo'shish.
+// Topshiriqlar (CRM; veb: «Topshiriqlar»): bugungi, muddati o'tgan, keyingi va bajarilgan. Bajarildi deb belgilash, yangi topshiriq qo'shish.
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -53,7 +53,7 @@ class _TasksPageState extends State<TasksPage> {
   Widget build(BuildContext context) {
     final api = AppScope.of(context).api;
     return Scaffold(
-      appBar: AppBar(title: Text(tr('Vazifalar'))),
+      appBar: AppBar(title: Text(tr('Topshiriqlar'))),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: _add,
         icon: const Icon(Icons.add_task),

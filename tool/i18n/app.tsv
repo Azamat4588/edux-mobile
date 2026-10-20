@@ -441,3 +441,54 @@ Qarzdor ota-onaga muloyim eslatma matnini yozib ber	Напиши вежливо�
 7-sinf uchun kasrlar mavzusida 10 ta test savoli tuz	Составь 10 тестовых вопросов по дробям для 7 класса	Make 10 test questions on fractions for grade 7
 Ota-onalar majlisi uchun qisqa reja tuz	Составь краткий план родительского собрания	Draft a short plan for a parents' meeting
 Yangi guruh ochilishi haqida Telegram e'loni yoz	Напиши объявление в Telegram об открытии новой группы	Write a Telegram announcement about a new group opening
+3 oylik	3 месяца	3 months
+6 oylik	6 месяцев	6 months
+AI javoblari (shu oy)	Ответы ИИ (в этом месяце)	AI replies (this month)
+Bepul berilgan	Предоставлен бесплатно	Granted for free
+Hozir qo'shish	Подключить сейчас	Add now
+Jami, {0} uchun	Итого за {0}	Total for {0}
+Limitlar	Лимиты	Limits
+Mock natijalari	Результаты мок-экзаменов	Mock results
+Modullar va obuna	Модули и подписка	Modules and subscription
+Modullarni o'zim tanlayman	Выберу модули сам	I'll choose modules myself
+O'quvchilar chegarasi	Лимит учеников	Student limit
+O'quvchilar cheklanmagan	Ученики без ограничений	Unlimited students
+Paket: {0}	Пакет: {0}	Plan: {0}
+Paketda	В пакете	In plan
+Paketni tanlang.	Выберите пакет.	Select a plan.
+Paketni tanlang. Kerak bo'lsa, unga kirmagan qo'shimchalarni ham belgilang.	Выберите пакет. При необходимости отметьте и дополнения, не входящие в него.	Select a plan. If needed, also check add-ons not included in it.
+Qo'shimcha imkoniyatlar	Дополнительные возможности	Extra features
+Qo'shimcha o'quvchilar: {0} ta	Дополнительные ученики: {0}	Extra students: {0}
+SMS (shu oy)	SMS (в этом месяце)	SMS (this month)
+Sertifikatlar	Сертификаты	Certificates
+Shaxsiy chegirma ({0}%)	Персональная скидка ({0}%)	Personal discount ({0}%)
+Sinov davrida	В пробный период	During trial
+Sotib olingan	Куплено	Purchased
+Tarifga kiritilgan	Включено в тариф	Included in plan
+Tavsiya etiladi	Рекомендуется	Recommended
+Tayyor paket	Готовый пакет	Ready-made plan
+Topshiriqlar	Поручения	Tasks
+{0} raqamli hisob chiqarildi: to'lagach «{1}» yoqiladi.	Выставлен счёт № {0}: после оплаты будет подключено «{1}».	Invoice #{0} issued: “{1}” will be enabled after payment.
+{0} ta xodim	{0} сотрудников	{0} staff
+{0} tagacha o'quvchi	До {0} учеников	Up to {0} students
+{0} to'lov chegirmasi ({1}%)	Скидка за оплату {0} ({1}%)	{0} payment discount ({1}%)
+{0} — bepul	{0} — бесплатно	{0} — free
+«{0}» yoqildi.	«{0}» подключено.	“{0}” enabled.
+Sinov davrida ochiq	Открыт в пробный период	Open during trial
+Ochiq — obuna rejasida	Открыт — в плане подписки	Open — in subscription plan
+Yoqilmagan	Не включён	Not enabled
+Sinovga kirmaydi	Не входит в пробный период	Not in trial
+Obuna rejasida bor, lekin hozir ochiq emas	Есть в плане подписки, но сейчас не открыт	In the subscription plan, but not open right now
+Bugungi topshiriqlar	Задачи на сегодня	Today's tasks
+Faol o'quvchilar soni to'langan pog'onadan oshdi. Joriy davrda hech narsa cheklanmaydi; keyingi davr hisobi yangi pog'ona ({0}) narxida chiqadi.	Число активных учеников превысило оплаченный уровень. В текущем периоде ничего не ограничивается; счёт на следующий период будет по новому уровню ({0}).	The number of active students exceeded the paid tier. Nothing is limited in the current period; the next invoice will use the new tier ({0}).
+Faol o'quvchilar: {0}	Активных учеников: {0}	Active students: {0}
+Hozircha ma'lumot yo'q.	Пока данных нет.	No data yet.
+Obuna to'xtatilgan. Platforma ma'muriyati obunangizni vaqtincha to'xtatdi: ma'lumotlar ko'rinadi, lekin yangi yozuv kiritib bo'lmaydi.	Подписка приостановлена. Администрация платформы временно приостановила вашу подписку: данные видны, но добавлять новые записи нельзя.	Subscription suspended. The platform administration has temporarily suspended your subscription: data is visible, but new records cannot be added.
+Obuna to'xtatilgan: ma'lumotlar ko'rinadi, lekin yangi yozuv kiritib bo'lmaydi. Platforma ma'muriyatiga murojaat qiling.	Подписка приостановлена: данные видны, но добавлять новые записи нельзя. Обратитесь к администрации платформы.	Subscription suspended: data is visible, but new records cannot be added. Contact the platform administration.
+Shaxsiy chegirma	Персональная скидка	Personal discount
+Sinov davrida modullarni veb-versiyadagi «Modullar va obuna» sahifasida yoqasiz.	В пробный период модули включаются на странице «Модули и подписка» в веб-версии.	During the trial, modules are enabled on the "Modules and subscription" page in the web version.
+Sinov muddati {0} gacha, {1} kun qoldi.	Пробный период до {0}, осталось дней: {1}.	Trial until {0}, {1} days left.
+To'lanmagan hisob {0}	Неоплаченный счёт {0}	Unpaid invoice {0}
+Yana {0} ta	Ещё {0}	{0} more
+oy	мес.	mo
+«{0}» qo'shilsinmi? Qolgan kunlar uchun hisob chiqariladi.	Подключить «{0}»? Будет выставлен счёт за оставшиеся дни.	Add "{0}"? An invoice for the remaining days will be issued.

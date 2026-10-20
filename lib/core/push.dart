@@ -4,6 +4,8 @@
 // Oqim: kirgandan keyin token olinadi → POST /devices; token yangilansa — qayta; chiqishda DELETE /devices.
 // Xabar bosilganda: kerak bo'lsa tashkilot almashtiriladi va tegishli sahifa ochiladi (PushRouter).
 // 3.1: har bir xabar bildirishnomalar markaziga yoziladi (NotificationStore) — ilova yopiq bo'lganda ham (fon handler).
+// 3.2: server data.type (payment, attendance, arrival, attempt, assignment, certificate, lead, task, sms_gateway) yoki
+// veb manzili (data.route / data.url, masalan /child/tests) bo'yicha sahifa tanlanadi; noma'lum bo'lsa — bosh sahifa.
 import 'dart:async';
 import 'dart:io';
 
@@ -56,7 +58,7 @@ class PushService {
 
   static final PushService instance = PushService._();
 
-  static const String appVersion = '3.1.0';
+  static const String appVersion = '3.2.0';
 
   bool _ready = false;
   bool _initTried = false;
@@ -69,13 +71,53 @@ class PushService {
   final Map<String, void Function(Map<String, dynamic>)> dataHandlers = <String, void Function(Map<String, dynamic>)>{};
   Map<String, dynamic>? _pending;
 
-  /// Sahifasi bo'lmagan xabar (to'lov, davomat, keldi) bosilganda — bosh tabga qaytish (shell o'rnatadi).
-  VoidCallback? onHome;
+  /// Sahifasi bo'lmagan xabar (to'lov, davomat, keldi) bosilganda — bosh tabga qaytish (shell o'rnatadi;
+  /// ota-onada xabardagi farzand va tegishli yorliq tanlanadi).
+  void Function(Map<String, dynamic> data)? onHome;
 
   bool get available => _ready;
 
   /// Bu turdagi xabar uchun alohida sahifa bormi.
   bool hasRoute(String type) => routes.containsKey(type);
+
+  /// Xabar ma'lumoti: `type` bo'lmasa (yoki notanish bo'lsa) veb manzilidan (`route` / `url`) turi va id lari olinadi.
+  /// Masalan /my/attempts/15 → attempt (attempt_id 15), /child/payments → payment, /crm/leads?lead=7 → lead.
+  static Map<String, dynamic> normalize(Map<String, dynamic> data) {
+    final type = asText(data['type']);
+    const known = <String>['payment', 'attendance', 'arrival', 'attempt', 'assignment', 'certificate', 'lead', 'task', 'diary', 'sms_gateway'];
+    if (known.contains(type)) return data;
+    final link = asText(data['route'], asText(data['url'], asText(data['link'])));
+    if (link.isEmpty) return data;
+    final uri = Uri.tryParse(link);
+    if (uri == null) return data;
+    final segments = uri.pathSegments.where((item) => item.isNotEmpty).toList();
+    final path = '/${segments.join('/')}';
+    final result = <String, dynamic>{...data};
+    String? id(int index) => segments.length > index && int.tryParse(segments[index]) != null ? segments[index] : null;
+    if (path.startsWith('/my/attempts/') && id(2) != null) {
+      result['type'] = 'attempt';
+      result['attempt_id'] = id(2);
+    } else if (path == '/child/tests' || path == '/my' || path == '/my/progress') {
+      result['type'] = 'attempt';
+    } else if (path == '/child/payments' || path == '/home/payments' || path.startsWith('/pay/orders')) {
+      result['type'] = 'payment';
+    } else if (path == '/child/diary' || path == '/school/diary') {
+      result['type'] = 'diary';
+    } else if (path == '/my/certificates' || path == '/certificates') {
+      result['type'] = 'certificate';
+    } else if (path.startsWith('/learn/assignments') || path.startsWith('/lms/my/assignments')) {
+      result['type'] = 'assignment';
+    } else if (path.startsWith('/crm/leads')) {
+      result['type'] = 'lead';
+      final lead = id(2) ?? uri.queryParameters['lead'] ?? uri.queryParameters['lead_id'];
+      if (lead != null) result['lead_id'] = lead;
+    } else if (path.startsWith('/crm/tasks')) {
+      result['type'] = 'task';
+    }
+    final student = uri.queryParameters['student'] ?? uri.queryParameters['student_id'];
+    if (student != null && result['student_id'] == null) result['student_id'] = student;
+    return result;
+  }
 
   Future<void> _init() async {
     if (_initTried) return;
@@ -162,8 +204,9 @@ class PushService {
 
   void _foreground(RemoteMessage message) {
     _remember(message);
-    final handler = dataHandlers[asText(message.data['type'])];
-    if (handler != null) handler(Map<String, dynamic>.from(message.data));
+    final data = normalize(Map<String, dynamic>.from(message.data));
+    final handler = dataHandlers[asText(data['type'])];
+    if (handler != null) handler(data);
     final context = rootNavigator.currentContext;
     final notification = message.notification;
     if (context == null || notification == null) return;
@@ -176,14 +219,14 @@ class PushService {
         Text(notification.title ?? '', style: const TextStyle(fontWeight: FontWeight.w700, color: Colors.white)),
         if ((notification.body ?? '').isNotEmpty) Text(notification.body!, style: const TextStyle(color: Colors.white)),
       ]),
-      action: routes.containsKey(asText(message.data['type']))
+      action: routes[asText(data['type'])]?.call(data) != null
           ? SnackBarAction(
               label: tr('Ochish'),
               textColor: Colors.white,
               onPressed: () {
                 final item = notificationOf(message);
                 if (item != null) unawaited(NotificationStore.instance.markRead(item.id));
-                open(Map<String, dynamic>.from(message.data));
+                open(data);
               },
             )
           : null,
@@ -191,7 +234,8 @@ class PushService {
   }
 
   /// Xabar bo'yicha sahifani ochish (push bosilganda va bildirishnomalar markazidan).
-  Future<void> open(Map<String, dynamic> data) async {
+  Future<void> open(Map<String, dynamic> raw) async {
+    final data = normalize(raw);
     final session = _session;
     if (session == null || !session.signedIn) {
       _pending = data;
@@ -202,16 +246,23 @@ class PushService {
       await session.selectOrganization(organization);
       await Future<void>.delayed(const Duration(milliseconds: 400));
     }
+    // Sahifa quruvchisi rol, modul va qo'shimchani tekshiradi: ruxsat bo'lmasa null (403 sahifasi o'rniga bosh sahifa).
     final builder = routes[asText(data['type'])];
-    final page = builder?.call(data);
+    Widget? page;
+    try {
+      page = builder?.call(data);
+    } catch (_) {
+      page = null;
+    }
     final navigator = rootNavigator.currentState;
     if (navigator == null) return;
     if (page != null) {
-      await navigator.push(MaterialPageRoute<void>(builder: (_) => page));
+      final target = page;
+      await navigator.push(MaterialPageRoute<void>(builder: (_) => target));
     } else {
       // To'lov, davomat va h.k. — bosh sahifada ko'rinadi
       navigator.popUntil((route) => route.isFirst);
-      onHome?.call();
+      onHome?.call(data);
     }
   }
 }

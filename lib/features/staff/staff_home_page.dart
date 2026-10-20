@@ -26,13 +26,15 @@ class StaffHomePage extends StatelessWidget {
   /// Pastki menyudagi bo'limga o'tish: 'exams', 'scanner', 'students'.
   final void Function(String key) onOpenTab;
 
+  /// overview — direktor, administrator, o'qituvchi (kassir va marketologga yopiq: ularda faqat bo'limlar).
+  /// crm/timetable — xuddi shu rollar; `date` (bugun, standart) va `days` qabul qiladi.
   Future<Map<String, dynamic>> _load(Session session) async {
     final api = session.api;
-    final today = isoDay(DateTime.now());
+    if (!session.canSeeOverview) return <String, dynamic>{'overview': <String, dynamic>{}, 'timetable': <String, dynamic>{}};
     final results = await Future.wait<dynamic>(<Future<dynamic>>[
       api.get('overview'),
-      if (session.hasModule('crm') && session.role != 'marketer')
-        api.get('crm/timetable', query: <String, Object?>{'from': today, 'to': today}).catchError((_) => null),
+      if (session.hasModule('crm'))
+        api.get('crm/timetable', query: <String, Object?>{'date': isoDay(DateTime.now())}).catchError((_) => null),
     ]);
     return <String, dynamic>{
       'overview': asMap(results[0]),
@@ -56,7 +58,7 @@ class StaffHomePage extends StatelessWidget {
       ),
       body: AsyncView<Map<String, dynamic>>(
         load: () => _load(session),
-        cacheKey: 'staff_home',
+        cacheKey: 'staff_home_${session.role}',
         decode: asMap,
         skeleton: const SkeletonList(header: true, count: 3),
         builder: (context, data, reload) {
@@ -93,6 +95,16 @@ class StaffHomePage extends StatelessWidget {
                 hint: asInt(crm['trial']) > 0 ? tr('{0} ta sinov darsida', <Object?>[asInt(crm['trial'])]) : null,
                 onTap: session.canSeeStudents ? () => onOpenTab('students') : null,
               ),
+              if (crm['tasks_today'] != null && session.canSeeTasks)
+                StatCard(
+                  label: tr('Bugungi topshiriqlar'),
+                  value: '${asInt(crm['tasks_today'])}',
+                  icon: Icons.task_alt,
+                  color: asInt(crm['tasks_today']) > 0 ? AppColors.warning : AppColors.success,
+                  onTap: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const TasksPage())),
+                ),
+              // Qarzdorlar, tushum va lidlar faqat rahbarga keladi (o'qituvchida — yo'q).
+              if (crm['debtors'] != null)
               StatCard(
                 label: tr('Qarzdorlar'),
                 value: '${asInt(crm['debtors'])}',
@@ -188,7 +200,7 @@ class _QuickActions extends StatelessWidget {
           color: AppColors.success,
           onTap: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const AttendancePage())),
         ),
-      if (session.canTakePayments)
+      if (session.canTakePayments && !session.readOnly)
         _Action(
           icon: Icons.payments,
           label: tr("To'lov"),
@@ -224,7 +236,6 @@ class _SectionTiles extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final crm = session.hasModule('crm');
     final tiles = <Widget>[
       if (session.canCallCenter)
         _SectionTile(icon: Icons.headset_mic_outlined, label: tr('Call markazi'), color: const Color(0xFF0891B2), page: const CallCenterPage()),
@@ -234,9 +245,9 @@ class _SectionTiles extends StatelessWidget {
         _SectionTile(icon: Icons.account_tree_outlined, label: tr("Mavzular bo'yicha test"), color: const Color(0xFF7C3AED), page: const TopicTestsPage()),
       if (session.canUseStaffAi)
         _SectionTile(icon: Icons.auto_awesome_outlined, label: tr('AI yordamchi'), color: AppColors.warning, page: const StaffAssistantPage()),
-      if (crm && <String>['director', 'admin', 'marketer'].contains(session.role))
+      if (session.canSeeLeads)
         _SectionTile(icon: Icons.person_search_outlined, label: tr('Lidlar'), color: AppColors.brand, page: const LeadsPage()),
-      if (crm) _SectionTile(icon: Icons.task_alt, label: tr('Vazifalar'), color: AppColors.danger, page: const TasksPage()),
+      if (session.canSeeTasks) _SectionTile(icon: Icons.task_alt, label: tr('Topshiriqlar'), color: AppColors.danger, page: const TasksPage()),
     ];
     if (tiles.isEmpty) return const SizedBox();
     return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[

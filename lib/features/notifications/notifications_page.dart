@@ -2,6 +2,7 @@
 // ochiladi. Bosh sahifalardagi qo'ng'iroqcha — o'qilmaganlar soni bilan.
 import 'package:flutter/material.dart';
 
+import '../../core/api.dart';
 import '../../core/format.dart';
 import '../../core/i18n.dart';
 import '../../core/notification_store.dart';
@@ -28,6 +29,8 @@ IconData notificationIcon(String type) {
       return Icons.person_add_alt;
     case 'task':
       return Icons.task_alt;
+    case 'diary':
+      return Icons.event_note_outlined;
     default:
       return Icons.notifications_none_rounded;
   }
@@ -92,7 +95,8 @@ class _NotificationsPageState extends State<NotificationsPage> {
   Future<void> _open(AppNotification item) async {
     await _store.markRead(item.id);
     if (!mounted) return;
-    if (item.data.isEmpty || item.type.isEmpty) return;
+    // Turi yo'q, lekin veb manzili (route/url) bor xabar ham ochiladi; noma'lumi — bosh sahifa.
+    if (item.data.isEmpty) return;
     await PushService.instance.open(item.data);
   }
 
@@ -163,7 +167,8 @@ class _NotificationTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = notificationColor(item.type);
+    final type = asText(PushService.normalize(item.data)['type']);
+    final color = notificationColor(type);
     return ListTile(
       onTap: onTap,
       tileColor: item.read ? null : AppColors.brand.withAlpha(AppColors.dark ? 22 : 10),
@@ -171,7 +176,7 @@ class _NotificationTile extends StatelessWidget {
         width: 44,
         height: 44,
         decoration: BoxDecoration(color: AppColors.soft(color), borderRadius: BorderRadius.circular(AppRadius.control)),
-        child: Icon(notificationIcon(item.type), color: color),
+        child: Icon(notificationIcon(type), color: color),
       ),
       title: Text(
         item.title.isEmpty ? tr('Bildirishnoma') : item.title,

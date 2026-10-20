@@ -59,7 +59,7 @@ class LabsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final api = AppScope.of(context).api;
     return Scaffold(
-      appBar: AppBar(title: Text(tr('Virtual laboratoriya'))),
+      appBar: AppBar(title: Text(tr('Laboratoriya'))),
       body: AsyncView<List<Map<String, dynamic>>>(
         load: () async => asList(asMap(await api.get('my/labs'))['labs'], 'labs'),
         builder: (context, labs, reload) {

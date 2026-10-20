@@ -240,14 +240,17 @@ class _TelegramWaitDialogState extends State<_TelegramWaitDialog> with WidgetsBi
     super.dispose();
   }
 
-  // Telegramdan qaytilganda kutmasdan darhol tekshiriladi.
+  /// Ilova fonda (foydalanuvchi Telegramda) — so'ralmaydi; qaytilganda kutmasdan darhol tekshiriladi.
+  bool _foreground = true;
+
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed) _poll();
+    _foreground = state == AppLifecycleState.resumed;
+    if (_foreground) _poll();
   }
 
   Future<void> _poll() async {
-    if (_polling || !mounted) return;
+    if (_polling || !mounted || !_foreground) return;
     if (DateTime.now().difference(_started) > _limit) {
       _timer?.cancel();
       setState(() => _status = 'expired');

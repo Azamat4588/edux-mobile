@@ -1,4 +1,5 @@
-// Yutuqlarim (o'quvchi): XP, daraja, ketma-ket kunlar, nishonlar, so'nggi XP va haftalik reyting (guruhdoshlar orasida).
+// Yutuqlarim (o'quvchi; 1.29 — veb bilan bir xil: XP va coin bitta joyda): daraja va XP, ketma-ket kunlar, nishonlar,
+// haftalik reyting («fun» qo'shimchasi) va coin balansi (CRM, coin yoqilgan bo'lsa — GET crm/me).
 import 'package:flutter/material.dart';
 
 import '../../core/api.dart';
@@ -12,14 +13,33 @@ import 'fun_labels.dart';
 class AchievementsPage extends StatelessWidget {
   const AchievementsPage({super.key});
 
+  Future<Map<String, dynamic>> _load(Session session) async {
+    final xp = session.hasFeature('fun');
+    final coins = session.coinsEnabled;
+    final results = await Future.wait<dynamic>(<Future<dynamic>>[
+      xp ? session.api.get('my/achievements') : Future<dynamic>.value(null),
+      coins ? session.api.get('crm/me').catchError((Object _) => null) : Future<dynamic>.value(null),
+    ]);
+    final cabinet = results[1] == null ? null : asMap(results[1]);
+    return <String, dynamic>{
+      'xp': results[0] == null ? null : asMap(results[0]),
+      'wallet': cabinet == null
+          ? null
+          : <String, dynamic>{'coins': asInt(cabinet['coins']), 'history': asList(cabinet['coin_history']).take(5).toList()},
+    };
+  }
+
   @override
   Widget build(BuildContext context) {
-    final api = AppScope.of(context).api;
+    final session = AppScope.of(context);
     return Scaffold(
       appBar: AppBar(title: Text(tr('Yutuqlarim'))),
       body: AsyncView<Map<String, dynamic>>(
-        load: () async => asMap(await api.get('my/achievements')),
-        builder: (context, data, reload) {
+        load: () => _load(session),
+        builder: (context, result, reload) {
+          final wallet = result['wallet'] == null ? null : asMap(result['wallet']);
+          final hasXp = result['xp'] != null;
+          final data = asMap(result['xp']);
           final level = asMap(data['level']);
           final badges = asList(data['badges'], 'badges');
           final recent = asList(data['recent'], 'recent');
@@ -28,6 +48,11 @@ class AchievementsPage extends StatelessWidget {
           return ListView(
             padding: const EdgeInsets.fromLTRB(16, 12, 16, 32),
             children: <Widget>[
+              if (wallet != null) ...<Widget>[
+                _WalletCard(coins: asInt(wallet['coins']), history: asList(wallet['history'])),
+                const SizedBox(height: 10),
+              ],
+              if (hasXp) ...<Widget>[
               _LevelCard(xp: asInt(data['xp']), level: level),
               const SizedBox(height: 10),
               StatGrid(children: <Widget>[
@@ -87,10 +112,47 @@ class AchievementsPage extends StatelessWidget {
                   icon: Icons.emoji_events_outlined,
                   text: tr("Test topshiring, o'yin o'ynang yoki laboratoriya topshirig'ini bajaring — XP va nishonlar shu yerda to'planadi."),
                 ),
+              ],
+              if (!hasXp && wallet == null)
+                EmptyState(icon: Icons.emoji_events_outlined, text: tr("Hozircha ma'lumot yo'q.")),
             ],
           );
         },
       ),
+    );
+  }
+}
+
+/// Coin balansi va so'nggi 5 ta harakat (CRM, coin yoqilgan bo'lsa).
+class _WalletCard extends StatelessWidget {
+  const _WalletCard({required this.coins, required this.history});
+
+  final int coins;
+  final List<Map<String, dynamic>> history;
+
+  @override
+  Widget build(BuildContext context) {
+    return AppCard(
+      child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
+        Row(children: <Widget>[
+          const Icon(Icons.stars_rounded, color: AppColors.sun, size: 32),
+          const SizedBox(width: 12),
+          Expanded(child: Text(tr('Coin'), style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 16))),
+          Text('$coins', style: const TextStyle(fontSize: 26, fontWeight: FontWeight.w800, color: AppColors.warning)),
+        ]),
+        for (final item in history)
+          Padding(
+            padding: const EdgeInsets.only(top: 6),
+            child: Row(children: <Widget>[
+              Expanded(
+                child: Text('${date(item['created_at'])} · ${asText(item['reason'])}',
+                    maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: AppColors.muted, fontSize: 13)),
+              ),
+              Text(asInt(item['amount']) > 0 ? '+${asInt(item['amount'])}' : '${asInt(item['amount'])}',
+                  style: TextStyle(fontWeight: FontWeight.w700, color: asInt(item['amount']) > 0 ? AppColors.success : AppColors.danger)),
+            ]),
+          ),
+      ]),
     );
   }
 }
