@@ -190,8 +190,9 @@ class _GuardianHomePageState extends State<GuardianHomePage> {
                 ),
               if (tabs.length > 1)
                 TabBar(
-                  isScrollable: tabs.length > 3,
-                  tabAlignment: tabs.length > 3 ? TabAlignment.start : null,
+                  // 3 ta yorliqda ham «To'lov va davomat» kesilmasin — sig'masa suriladi.
+                  isScrollable: tabs.length > 2,
+                  tabAlignment: tabs.length > 2 ? TabAlignment.start : null,
                   tabs: tabs.map((tab) => Tab(text: tab.label, icon: null)).toList(),
                 ),
             ]),

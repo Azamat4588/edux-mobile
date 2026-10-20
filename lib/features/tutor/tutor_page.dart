@@ -346,7 +346,17 @@ class _Intro extends StatelessWidget {
         const SizedBox(height: 20),
         Wrap(spacing: 8, runSpacing: 8, alignment: WrapAlignment.center, children: <Widget>[
           for (final item in staff ? _staffSuggestions : _suggestions)
-            ActionChip(label: Text(tr(item)), onPressed: onPick == null ? null : () => onPick!(tr(item))),
+            // Uzun tavsiyalar kesilmasin: chip o'rniga ikki qatorgacha o'raladigan tugma.
+            OutlinedButton(
+              style: OutlinedButton.styleFrom(
+                shape: const StadiumBorder(),
+                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                minimumSize: const Size(0, 36),
+                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+              ),
+              onPressed: onPick == null ? null : () => onPick!(tr(item)),
+              child: Text(tr(item), textAlign: TextAlign.center, maxLines: 2, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 13)),
+            ),
         ]),
       ],
     );
