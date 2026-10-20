@@ -1,0 +1,202 @@
+{
+ "method": "GET",
+ "path": "public/olympiads/qpawfft3s432",
+ "query": {},
+ "status": 200,
+ "body": {
+  "olympiad": {
+   "title": "Nemis tili kuzgi olimpiadasi",
+   "subject": "Nemis tili",
+   "grades": "8–11",
+   "description": "A1–A2 darajasidagi grammatika, lug'at va o'qish.",
+   "rules": null,
+   "audience": "both",
+   "price": 0,
+   "registration_closes_at": null,
+   "starts_at": "2026-10-10T10:00:00.000000Z",
+   "ends_at": "2026-10-10T12:00:00.000000Z",
+   "max_participants": null,
+   "winners_count": 3,
+   "certificates": "winners",
+   "results_published_at": "2026-10-11T16:08:55.000000Z",
+   "stage": "results",
+   "registration_open": false,
+   "duration_minutes": 40,
+   "questions": 25,
+   "participants": 22,
+   "telegram_channel": null
+  },
+  "organization": {
+   "name": "Ilm yo'li o'quv markazi",
+   "logo_url": null
+  },
+  "viewer": {
+   "internal": true,
+   "logged_in": true
+  },
+  "announcements": [
+   {
+    "id": 1,
+    "body": "Natijalar e'lon qilindi. Ishtirok etganlar: 19.\n\n1. Normurodov Diyorbek (Al-Xorazmiy maktabi) — 23 ball\n2. Valiyev Sardorbek (5-IDUM) — 22 ball\n3. Ortiqov Muhammadali (38-maktab) — 21 ball",
+    "kind": "results",
+    "created_at": "2026-10-19T16:08:55.000000Z"
+   }
+  ],
+  "leaderboard": [
+   {
+    "rank": 1,
+    "name": "Normurodov Diyorbek",
+    "school": "Al-Xorazmiy maktabi",
+    "region": "Navoiy",
+    "score": 23,
+    "max_score": 25
+   },
+   {
+    "rank": 2,
+    "name": "Valiyev Sardorbek",
+    "school": "5-IDUM",
+    "region": "Andijon",
+    "score": 22,
+    "max_score": 25
+   },
+   {
+    "rank": 3,
+    "name": "Ortiqov Muhammadali",
+    "school": "38-maktab",
+    "region": "Samarqand",
+    "score": 21,
+    "max_score": 25
+   },
+   {
+    "rank": 4,
+    "name": "Usmonova Robiya",
+    "school": "21-maktab",
+    "region": "Farg'ona",
+    "score": 21,
+    "max_score": 25
+   },
+   {
+    "rank": 5,
+    "name": "To'xtasinova Zarnigor",
+    "school": "Prezident maktabi",
+    "region": "Qashqadaryo",
+    "score": 20,
+    "max_score": 25
+   },
+   {
+    "rank": 6,
+    "name": "Sobirova Nilufar",
+    "school": "Prezident maktabi",
+    "region": "Qashqadaryo",
+    "score": 17,
+    "max_score": 25
+   },
+   {
+    "rank": 7,
+    "name": "Raximova Malika",
+    "school": "3-litsey",
+    "region": "Buxoro",
+    "score": 17,
+    "max_score": 25
+   },
+   {
+    "rank": 8,
+    "name": "Nazarov Azizbek",
+    "school": "17-maktab",
+    "region": "Namangan",
+    "score": 17,
+    "max_score": 25
+   },
+   {
+    "rank": 9,
+    "name": "Murodov Abbos",
+    "school": "5-IDUM",
+    "region": "Andijon",
+    "score": 16,
+    "max_score": 25
+   },
+   {
+    "rank": 10,
+    "name": "Jo'rayeva Feruza",
+    "school": "21-maktab",
+    "region": "Farg'ona",
+    "score": 16,
+    "max_score": 25
+   },
+   {
+    "rank": 11,
+    "name": "Eshmatova Lobar",
+    "school": "12-maktab",
+    "region": "Toshkent",
+    "score": 16,
+    "max_score": 25
+   },
+   {
+    "rank": 12,
+    "name": "Ergashev Islom",
+    "school": "5-IDUM",
+    "region": "Andijon",
+    "score": 15,
+    "max_score": 25
+   },
+   {
+    "rank": 13,
+    "name": "Saidova Kamola",
+    "school": "12-maktab",
+    "region": "Toshkent",
+    "score": 15,
+    "max_score": 25
+   },
+   {
+    "rank": 14,
+    "name": "Hamidov Javohir",
+    "school": "38-maktab",
+    "region": "Samarqand",
+    "score": 14,
+    "max_score": 25
+   },
+   {
+    "rank": 15,
+    "name": "Bakirov Shohruh",
+    "school": "Al-Xorazmiy maktabi",
+    "region": "Navoiy",
+    "score": 11,
+    "max_score": 25
+   },
+   {
+    "rank": 16,
+    "name": "Mirzayeva Dilnavoz",
+    "school": "12-maktab",
+    "region": "Toshkent",
+    "score": 11,
+    "max_score": 25
+   },
+   {
+    "rank": 17,
+    "name": "Zokirov Ulug'bek",
+    "school": "17-maktab",
+    "region": "Namangan",
+    "score": 9,
+    "max_score": 25
+   },
+   {
+    "rank": 18,
+    "name": "Toshpo'latova Oydin",
+    "school": "Prezident maktabi",
+    "region": "Qashqadaryo",
+    "score": 9,
+    "max_score": 25
+   },
+   {
+    "rank": 19,
+    "name": "Aminova Sabina",
+    "school": "3-litsey",
+    "region": "Buxoro",
+    "score": 9,
+    "max_score": 25
+   }
+  ],
+  "me": null,
+  "providers": null
+ }
+}

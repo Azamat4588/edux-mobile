@@ -1,0 +1,42 @@
+{
+ "method": "GET",
+ "path": "lms/my/lessons/5",
+ "query": {},
+ "status": 200,
+ "body": {
+  "id": 5,
+  "title": "Yakuniy test",
+  "content": "Bo'limni yakunlash uchun testni ishlang. Test bir marta topshiriladi, shoshilmang.",
+  "video_url": null,
+  "activity": null,
+  "course": {
+   "id": 1,
+   "title": "Kasrlar va ular ustida amallar"
+  },
+  "section": {
+   "id": 2,
+   "title": "Amallar va mustahkamlash"
+  },
+  "materials": [],
+  "exam": {
+   "id": 1,
+   "title": "Matematika: 2-chorak nazorat ishi",
+   "duration_minutes": 30,
+   "open": true,
+   "attempt": {
+    "id": 59,
+    "score": 8,
+    "max_score": 12
+   }
+  },
+  "assignments": [],
+  "completed_at": null,
+  "previous_lesson_id": 4,
+  "next_lesson_id": null,
+  "progress": {
+   "total": 5,
+   "done": 3,
+   "percent": 60
+  }
+ }
+}

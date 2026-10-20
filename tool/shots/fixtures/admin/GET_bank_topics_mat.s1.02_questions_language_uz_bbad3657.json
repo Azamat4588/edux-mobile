@@ -1,0 +1,238 @@
+{
+ "method": "GET",
+ "path": "bank/topics/mat.s1.02/questions",
+ "query": {
+  "language": "uz"
+ },
+ "status": 200,
+ "body": {
+  "topic": {
+   "code": "mat.s1.02",
+   "title": "Oddiy va o'nli kasrlar",
+   "subject": "Matematika",
+   "section_title": "Arifmetika va matnli masalalar"
+  },
+  "questions": [
+   {
+    "id": 433,
+    "difficulty": 1,
+    "body": "Hisoblang: $\\frac{2}{3}+\\frac{3}{4}$.",
+    "options": [
+     "$\\frac{5}{7}$",
+     "$\\frac{5}{12}$",
+     "$\\frac{6}{7}$",
+     "$\\frac{17}{12}$"
+    ],
+    "answer": 3,
+    "explanation": "$\\frac{8}{12}+\\frac{9}{12}=\\frac{17}{12}$.",
+    "year": null,
+    "source_note": null,
+    "collection": {
+     "id": 16,
+     "title": "Matematika — abituriyent testi (1-to'plam)",
+     "source": "edux",
+     "attribution": null,
+     "license": null
+    }
+   },
+   {
+    "id": 434,
+    "difficulty": 1,
+    "body": "Hisoblang: $\\frac{3}{5}:\\frac{9}{10}$.",
+    "options": [
+     "$\\frac{2}{3}$",
+     "$\\frac{27}{50}$",
+     "$\\frac{3}{2}$",
+     "$\\frac{5}{6}$"
+    ],
+    "answer": 0,
+    "explanation": "$\\frac{3}{5}\\cdot\\frac{10}{9}=\\frac{2}{3}$.",
+    "year": null,
+    "source_note": null,
+    "collection": {
+     "id": 16,
+     "title": "Matematika — abituriyent testi (1-to'plam)",
+     "source": "edux",
+     "attribution": null,
+     "license": null
+    }
+   },
+   {
+    "id": 1238,
+    "difficulty": 1,
+    "body": "Hisoblang: $2{,}4\\cdot1{,}5-0{,}6:0{,}2$.",
+    "options": [
+     "15",
+     "3",
+     "$1{,}2$",
+     "$0{,}6$"
+    ],
+    "answer": 3,
+    "explanation": "$3{,}6-3=0{,}6$ (avval ko'paytirish va bo'lish bajariladi).",
+    "year": null,
+    "source_note": null,
+    "collection": {
+     "id": 35,
+     "title": "Matematika — abituriyent testi (2-to'plam)",
+     "source": "edux",
+     "attribution": null,
+     "license": null
+    }
+   },
+   {
+    "id": 1293,
+    "difficulty": 1,
+    "body": "Hisoblang: $1\\frac12\\cdot\\frac49+\\frac13$.",
+    "options": [
+     "$\\frac59$",
+     "$\\frac43$",
+     "$\\frac23$",
+     "1"
+    ],
+    "answer": 3,
+    "explanation": "$\\frac32\\cdot\\frac49=\\frac23$; $\\frac23+\\frac13=1$.",
+    "year": null,
+    "source_note": null,
+    "collection": {
+     "id": 36,
+     "title": "Matematika — abituriyent testi (3-to'plam)",
+     "source": "edux",
+     "attribution": null,
+     "license": null
+    }
+   },
+   {
+    "id": 3196,
+    "difficulty": 1,
+    "body": "Quyidagi kasrlardan eng kattasini toping.",
+    "options": [
+     "$\\frac23$",
+     "$\\frac58$",
+     "$\\frac{7}{12}$",
+     "$\\frac35$"
+    ],
+    "answer": 0,
+    "explanation": "Umumiy maxraj 120: $\\frac58=\\frac{75}{120}$, $\\frac{7}{12}=\\frac{70}{120}$, $\\frac23=\\frac{80}{120}$, $\\frac35=\\frac{72}{120}$. Eng kattasi $\\frac23$.",
+    "year": null,
+    "source_note": null,
+    "collection": {
+     "id": 64,
+     "title": "Matematika — mavzulashtirilgan to'plam: Arifmetika va matnli masalalar, Algebraik ifodalar, tenglamalar va tengsizliklar, Daraja, ildiz, ko'rsatkichli",
+     "source": "edux",
+     "attribution": null,
+     "license": null
+    }
+   },
+   {
+    "id": 3197,
+    "difficulty": 1,
+    "body": "$0{,}375$ sonini qisqarmas oddiy kasr ko'rinishida yozing.",
+    "options": [
+     "$\\frac58$",
+     "$\\frac38$",
+     "$\\frac34$",
+     "$\\frac{7}{20}$"
+    ],
+    "answer": 1,
+    "explanation": "$0{,}375=\\frac{375}{1000}=\\frac{3}{8}$ (surat va maxrajni 125 ga qisqartiramiz).",
+    "year": null,
+    "source_note": null,
+    "collection": {
+     "id": 64,
+     "title": "Matematika — mavzulashtirilgan to'plam: Arifmetika va matnli masalalar, Algebraik ifodalar, tenglamalar va tengsizliklar, Daraja, ildiz, ko'rsatkichli",
+     "source": "edux",
+     "attribution": null,
+     "license": null
+    }
+   },
+   {
+    "id": 3198,
+    "difficulty": 2,
+    "body": "Hisoblang: $\\left(2\\frac56-1\\frac34\\right)\\cdot2\\frac25$.",
+    "options": [
+     "$2{,}4$",
+     "$2{,}6$",
+     "$3{,}1$",
+     "$1{,}3$"
+    ],
+    "answer": 1,
+    "explanation": "$\\frac{17}{6}-\\frac74=\\frac{34-21}{12}=\\frac{13}{12}$; $\\frac{13}{12}\\cdot\\frac{12}{5}=\\frac{13}{5}=2{,}6$.",
+    "year": null,
+    "source_note": null,
+    "collection": {
+     "id": 64,
+     "title": "Matematika — mavzulashtirilgan to'plam: Arifmetika va matnli masalalar, Algebraik ifodalar, tenglamalar va tengsizliklar, Daraja, ildiz, ko'rsatkichli",
+     "source": "edux",
+     "attribution": null,
+     "license": null
+    }
+   },
+   {
+    "id": 3199,
+    "difficulty": 2,
+    "body": "$0{,}(36)$ cheksiz davriy o'nli kasrni qisqarmas oddiy kasr ko'rinishida yozing.",
+    "options": [
+     "$\\frac{9}{25}$",
+     "$\\frac{7}{18}$",
+     "$\\frac{12}{37}$",
+     "$\\frac{4}{11}$"
+    ],
+    "answer": 3,
+    "explanation": "$0{,}(36)=\\frac{36}{99}=\\frac{4}{11}$.",
+    "year": null,
+    "source_note": null,
+    "collection": {
+     "id": 64,
+     "title": "Matematika — mavzulashtirilgan to'plam: Arifmetika va matnli masalalar, Algebraik ifodalar, tenglamalar va tengsizliklar, Daraja, ildiz, ko'rsatkichli",
+     "source": "edux",
+     "attribution": null,
+     "license": null
+    }
+   },
+   {
+    "id": 3200,
+    "difficulty": 2,
+    "body": "Kasrning surati 3 marta orttirilib, maxraji 2 marta kamaytirilsa, kasr qanday o'zgaradi?",
+    "options": [
+     "6 marta ortadi",
+     "1,5 marta ortadi",
+     "6 marta kamayadi",
+     "1,5 marta kamayadi"
+    ],
+    "answer": 0,
+    "explanation": "$\\frac{3a}{b/2}=\\frac{6a}{b}$, ya'ni kasr 6 marta ortadi.",
+    "year": null,
+    "source_note": null,
+    "collection": {
+     "id": 64,
+     "title": "Matematika — mavzulashtirilgan to'plam: Arifmetika va matnli masalalar, Algebraik ifodalar, tenglamalar va tengsizliklar, Daraja, ildiz, ko'rsatkichli",
+     "source": "edux",
+     "attribution": null,
+     "license": null
+    }
+   },
+   {
+    "id": 3201,
+    "difficulty": 3,
+    "body": "Hisoblang: $\\frac{1}{2\\cdot3}+\\frac{1}{3\\cdot4}+\\frac{1}{4\\cdot5}+\\ldots+\\frac{1}{11\\cdot12}$.",
+    "options": [
+     "$\\frac{5}{12}$",
+     "$\\frac{1}{12}$",
+     "$\\frac{11}{12}$",
+     "$\\frac{1}{2}$"
+    ],
+    "answer": 0,
+    "explanation": "$\\frac{1}{n(n+1)}=\\frac1n-\\frac{1}{n+1}$, yig'indi $\\frac12-\\frac{1}{12}=\\frac{5}{12}$.",
+    "year": null,
+    "source_note": null,
+    "collection": {
+     "id": 64,
+     "title": "Matematika — mavzulashtirilgan to'plam: Arifmetika va matnli masalalar, Algebraik ifodalar, tenglamalar va tengsizliklar, Daraja, ildiz, ko'rsatkichli",
+     "source": "edux",
+     "attribution": null,
+     "license": null
+    }
+   }
+  ]
+ }
+}

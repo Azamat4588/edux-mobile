@@ -1,0 +1,102 @@
+{
+ "method": "GET",
+ "path": "my/insights",
+ "query": {
+  "student_id": "11"
+ },
+ "status": 200,
+ "body": {
+  "student": {
+   "id": 11,
+   "full_name": "Ergashev Timur",
+   "code": "143793",
+   "phone": "+998935551201",
+   "groups": [
+    "M-11"
+   ],
+   "guest": false
+  },
+  "modules": [
+   "testing",
+   "crm",
+   "lms"
+  ],
+  "testing": {
+   "count": 0,
+   "average_percent": null,
+   "attempts": [],
+   "pending": [
+    {
+     "id": 1,
+     "title": "Matematika: 2-chorak nazorat ishi",
+     "ends_at": null,
+     "duration_minutes": 30
+    },
+    {
+     "id": 2,
+     "title": "IELTS Mock #1 — Sentyabr",
+     "ends_at": null,
+     "duration_minutes": 90
+    },
+    {
+     "id": 3,
+     "title": "IELTS Mock #2 — Oktyabr",
+     "ends_at": null,
+     "duration_minutes": 90
+    }
+   ]
+  },
+  "lms": {
+   "courses": [
+    {
+     "id": 1,
+     "title": "Kasrlar va ular ustida amallar",
+     "unlocked": true,
+     "total": 5,
+     "done": 5,
+     "percent": 100
+    }
+   ],
+   "assignments": {
+    "pending": [],
+    "graded": [
+     {
+      "id": 1,
+      "title": "1–6-mashqlar",
+      "score": 9,
+      "max_score": 10,
+      "graded_at": "2026-10-18T14:24:00.000000Z"
+     }
+    ]
+   },
+   "average_grade_percent": 90
+  },
+  "school": null,
+  "crm": {
+   "balance": 0,
+   "groups": [
+    {
+     "id": 1,
+     "name": "M-11",
+     "status": "active"
+    }
+   ],
+   "attendance_30d": {
+    "present": 0,
+    "absent": 0,
+    "late": 0,
+    "excused": 0
+   },
+   "average_score": null,
+   "coins": 0,
+   "exams": []
+  },
+  "children": [
+   {
+    "id": 11,
+    "full_name": "Ergashev Timur",
+    "code": "143793"
+   }
+  ]
+ }
+}

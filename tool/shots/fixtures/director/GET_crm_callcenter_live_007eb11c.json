@@ -1,0 +1,44 @@
+{
+ "method": "GET",
+ "path": "crm/callcenter/live",
+ "query": {},
+ "status": 200,
+ "body": {
+  "me": {
+   "status": "available",
+   "extension": "101"
+  },
+  "live": [],
+  "queue": 5,
+  "operators": [
+   {
+    "user_id": 6,
+    "name": "Hamidova Feruza",
+    "extension": null,
+    "status": "offline",
+    "today": 0
+   },
+   {
+    "user_id": 3,
+    "name": "Islomova Shahnoza",
+    "extension": "102",
+    "status": "available",
+    "today": 0
+   },
+   {
+    "user_id": 7,
+    "name": "Rasulov Bekzod",
+    "extension": "103",
+    "status": "break",
+    "today": 0
+   },
+   {
+    "user_id": 1,
+    "name": "Rustamov Akmal",
+    "extension": "101",
+    "status": "available",
+    "today": 0
+   }
+  ]
+ }
+}

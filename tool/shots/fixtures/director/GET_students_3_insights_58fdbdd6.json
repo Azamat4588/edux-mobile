@@ -1,0 +1,110 @@
+{
+ "method": "GET",
+ "path": "students/3/insights",
+ "query": {},
+ "status": 200,
+ "body": {
+  "student": {
+   "id": 3,
+   "full_name": "Karimov Sardor",
+   "code": "415271",
+   "phone": "+998905552335",
+   "groups": [
+    "M-11",
+    "ING-5"
+   ],
+   "guest": false
+  },
+  "modules": [
+   "testing",
+   "crm",
+   "lms"
+  ],
+  "testing": {
+   "count": 2,
+   "average_percent": 37.5,
+   "attempts": [
+    {
+     "id": 8,
+     "exam_id": 3,
+     "exam": "IELTS Mock #2 — Oktyabr",
+     "correct": 7,
+     "total": 13,
+     "score": 7,
+     "max_score": 30,
+     "percent": 23.3,
+     "finished_at": "2026-10-12T11:00:00.000000Z"
+    },
+    {
+     "id": 3,
+     "exam_id": 2,
+     "exam": "IELTS Mock #1 — Sentyabr",
+     "correct": 8,
+     "total": 15,
+     "score": 15.5,
+     "max_score": 30,
+     "percent": 51.7,
+     "finished_at": "2026-09-14T11:00:00.000000Z"
+    }
+   ],
+   "pending": [
+    {
+     "id": 1,
+     "title": "Matematika: 2-chorak nazorat ishi",
+     "ends_at": null,
+     "duration_minutes": 30
+    }
+   ]
+  },
+  "lms": {
+   "courses": [
+    {
+     "id": 1,
+     "title": "Kasrlar va ular ustida amallar",
+     "unlocked": true,
+     "total": 5,
+     "done": 2,
+     "percent": 40
+    }
+   ],
+   "assignments": {
+    "pending": [
+     {
+      "id": 1,
+      "title": "1–6-mashqlar",
+      "course": "Kasrlar va ular ustida amallar",
+      "due_at": "2026-10-24T13:00:00.000000Z",
+      "overdue": false
+     }
+    ],
+    "graded": []
+   },
+   "average_grade_percent": null
+  },
+  "school": null,
+  "crm": {
+   "balance": 0,
+   "groups": [
+    {
+     "id": 1,
+     "name": "M-11",
+     "status": "active"
+    },
+    {
+     "id": 2,
+     "name": "ING-5",
+     "status": "active"
+    }
+   ],
+   "attendance_30d": {
+    "present": 5,
+    "absent": 1,
+    "late": 1,
+    "excused": 1
+   },
+   "average_score": 4.5,
+   "coins": 22,
+   "exams": []
+  }
+ }
+}

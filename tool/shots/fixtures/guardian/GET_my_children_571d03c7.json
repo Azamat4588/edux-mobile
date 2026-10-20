@@ -1,0 +1,25 @@
+{
+ "method": "GET",
+ "path": "my/children",
+ "query": {},
+ "status": 200,
+ "body": {
+  "children": [
+   {
+    "id": 11,
+    "full_name": "Ergashev Timur",
+    "code": "143793",
+    "groups": [
+     "M-11"
+    ],
+    "attempts": [],
+    "balance": 0
+   }
+  ],
+  "modules": [
+   "testing",
+   "crm",
+   "lms"
+  ]
+ }
+}

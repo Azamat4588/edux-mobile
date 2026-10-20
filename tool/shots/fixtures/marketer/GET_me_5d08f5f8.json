@@ -1,0 +1,26 @@
+{
+ "method": "GET",
+ "path": "me",
+ "query": {},
+ "status": 200,
+ "body": {
+  "user": {
+   "id": 7,
+   "name": "Rasulov Bekzod",
+   "phone": "+998901110005",
+   "is_platform_admin": false,
+   "has_password": true,
+   "telegram_linked": false,
+   "appearance": {}
+  },
+  "memberships": [
+   {
+    "organization_id": 1,
+    "organization": "Ilm yo'li o'quv markazi",
+    "role": "marketer"
+   }
+  ],
+  "mode": "platform",
+  "new_requests": 0
+ }
+}

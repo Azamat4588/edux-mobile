@@ -1,0 +1,58 @@
+{
+ "method": "GET",
+ "path": "public/olympiads/sklssskru2zd",
+ "query": {},
+ "status": 200,
+ "body": {
+  "olympiad": {
+   "title": "Viloyat matematika olimpiadasi — 2026",
+   "subject": "Matematika",
+   "grades": "7–9",
+   "description": "7–9-sinf o'quvchilari uchun. Algebra, geometriya va mantiqiy masalalar. G'oliblarga diplom va markazda 1 oylik bepul kurs.",
+   "rules": "Test 60 daqiqa. Bir marta kirish mumkin.\nKalkulyator va telefondan foydalanish taqiqlanadi.\nBall teng bo'lsa, tezroq ishlagan yuqori o'rinda.",
+   "audience": "both",
+   "price": 25000,
+   "registration_closes_at": "2026-10-19T14:08:55.000000Z",
+   "starts_at": "2026-10-19T15:42:55.000000Z",
+   "ends_at": "2026-10-19T17:42:55.000000Z",
+   "max_participants": 300,
+   "winners_count": 3,
+   "certificates": "winners",
+   "results_published_at": null,
+   "stage": "finished",
+   "registration_open": false,
+   "duration_minutes": 60,
+   "questions": 15,
+   "participants": 35,
+   "telegram_channel": "ilmyoli_olimpiada"
+  },
+  "organization": {
+   "name": "Ilm yo'li o'quv markazi",
+   "logo_url": null
+  },
+  "viewer": {
+   "internal": true,
+   "logged_in": true
+  },
+  "announcements": [
+   {
+    "id": 3,
+    "body": "Olimpiada boshlandi! Omad. Natijalar ertaga 18:00 da shu yerda va Telegramda e'lon qilinadi.",
+    "kind": "manual",
+    "created_at": "2026-10-19T16:08:57.000000Z"
+   },
+   {
+    "id": 2,
+    "body": "Eslatma: olimpiada 1 soatdan keyin boshlanadi. Shaxsiy sahifangizdan «Testni boshlash» tugmasini bosasiz.",
+    "kind": "reminder",
+    "created_at": "2026-10-19T16:08:57.000000Z"
+   }
+  ],
+  "leaderboard": [],
+  "me": null,
+  "providers": {
+   "click": false,
+   "payme": false
+  }
+ }
+}

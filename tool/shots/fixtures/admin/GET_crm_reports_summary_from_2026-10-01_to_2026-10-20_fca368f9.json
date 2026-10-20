@@ -1,0 +1,189 @@
+{
+ "method": "GET",
+ "path": "crm/reports/summary",
+ "query": {
+  "from": "2026-10-01",
+  "to": "2026-10-20"
+ },
+ "status": 200,
+ "body": {
+  "from": "2026-10-01",
+  "to": "2026-10-20",
+  "income": {
+   "total": 4544000,
+   "count": 8,
+   "by_method": [
+    {
+     "key": "cash",
+     "label": "Naqd",
+     "value": 1345000
+    },
+    {
+     "key": "card",
+     "label": "Karta",
+     "value": 664000
+    },
+    {
+     "key": "click",
+     "label": "Click",
+     "value": 225000
+    },
+    {
+     "key": "payme",
+     "label": "Payme",
+     "value": 1280000
+    },
+    {
+     "key": "transfer",
+     "label": "Bank o'tkazmasi",
+     "value": 1030000
+    }
+   ],
+   "by_day": [
+    {
+     "date": "2026-10-02",
+     "amount": 1280000
+    },
+    {
+     "date": "2026-10-03",
+     "amount": 830000
+    },
+    {
+     "date": "2026-10-04",
+     "amount": 895000
+    },
+    {
+     "date": "2026-10-05",
+     "amount": 664000
+    },
+    {
+     "date": "2026-10-06",
+     "amount": 225000
+    },
+    {
+     "date": "2026-10-07",
+     "amount": 450000
+    },
+    {
+     "date": "2026-10-08",
+     "amount": 200000
+    }
+   ]
+  },
+  "expenses": {
+   "total": 2530000,
+   "by_category": [
+    {
+     "key": "ijara",
+     "label": "Ijara",
+     "value": 1200000
+    },
+    {
+     "key": "maosh",
+     "label": "Maosh",
+     "value": 800000
+    },
+    {
+     "key": "kommunal",
+     "label": "Kommunal",
+     "value": 160000
+    },
+    {
+     "key": "reklama",
+     "label": "Reklama",
+     "value": 120000
+    },
+    {
+     "key": "jihoz",
+     "label": "Jihoz",
+     "value": 250000
+    },
+    {
+     "key": "qaytarish",
+     "label": "O'quvchiga qaytarilgan pul",
+     "value": 0
+    },
+    {
+     "key": "boshqa",
+     "label": "Boshqa",
+     "value": 0
+    }
+   ]
+  },
+  "profit": 2014000,
+  "charged": 5694000,
+  "debt": {
+   "total": 1600000,
+   "students": 3
+  },
+  "leads": {
+   "total": 4,
+   "by_status": [
+    {
+     "key": "new",
+     "label": "Yangi",
+     "value": 2
+    },
+    {
+     "key": "contacted",
+     "label": "Bog'lanildi",
+     "value": 0
+    },
+    {
+     "key": "trial",
+     "label": "Sinov darsi",
+     "value": 1
+    },
+    {
+     "key": "enrolled",
+     "label": "O'quvchi bo'ldi",
+     "value": 1
+    },
+    {
+     "key": "lost",
+     "label": "Rad etdi",
+     "value": 0
+    }
+   ],
+   "by_source": [
+    {
+     "key": "instagram",
+     "label": "Instagram",
+     "value": 1
+    },
+    {
+     "key": "telegram",
+     "label": "Telegram",
+     "value": 1
+    },
+    {
+     "key": "tavsiya",
+     "label": "Tavsiya",
+     "value": 1
+    },
+    {
+     "key": "reklama",
+     "label": "Reklama",
+     "value": 1
+    },
+    {
+     "key": "sayt",
+     "label": "Sayt",
+     "value": 0
+    },
+    {
+     "key": "qongiroq",
+     "label": "Qo'ng'iroq",
+     "value": 0
+    },
+    {
+     "key": "boshqa",
+     "label": "Boshqa",
+     "value": 0
+    }
+   ],
+   "conversion_percent": 25
+  },
+  "left_students": []
+ }
+}

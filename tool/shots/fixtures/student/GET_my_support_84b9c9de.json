@@ -1,0 +1,9 @@
+{
+ "method": "GET",
+ "path": "my/support",
+ "query": {},
+ "status": 200,
+ "body": {
+  "data": []
+ }
+}

@@ -1,0 +1,24 @@
+{
+ "method": "GET",
+ "path": "auth/options",
+ "query": {},
+ "status": 200,
+ "body": {
+  "password_reset": true,
+  "telegram_bot": "edux_demo_bot",
+  "login_code": true,
+  "telegram_login": true,
+  "ai_chat": true,
+  "mode": "platform",
+  "requests": true,
+  "trial_days": 14,
+  "contacts": {
+   "phone": "+998 71 200 45 45",
+   "telegram": "edux_support",
+   "instagram": null,
+   "email": "support@edux.uz",
+   "address": null
+  },
+  "password_min": 8
+ }
+}

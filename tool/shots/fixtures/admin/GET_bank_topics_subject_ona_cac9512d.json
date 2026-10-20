@@ -1,0 +1,533 @@
+{
+ "method": "GET",
+ "path": "bank/topics",
+ "query": {
+  "subject": "ona"
+ },
+ "status": 200,
+ "body": {
+  "subjects": [
+   {
+    "code": "mat",
+    "subject": "Matematika",
+    "topics": 48,
+    "questions": 585
+   },
+   {
+    "code": "fiz",
+    "subject": "Fizika",
+    "topics": 42,
+    "questions": 461
+   },
+   {
+    "code": "kim",
+    "subject": "Kimyo",
+    "topics": 42,
+    "questions": 420
+   },
+   {
+    "code": "bio",
+    "subject": "Biologiya",
+    "topics": 42,
+    "questions": 420
+   },
+   {
+    "code": "ona",
+    "subject": "Ona tili va adabiyot",
+    "topics": 40,
+    "questions": 400
+   },
+   {
+    "code": "tar",
+    "subject": "O'zbekiston tarixi",
+    "topics": 35,
+    "questions": 350
+   },
+   {
+    "code": "jtar",
+    "subject": "Jahon tarixi",
+    "topics": 30,
+    "questions": 300
+   },
+   {
+    "code": "geo",
+    "subject": "Geografiya",
+    "topics": 38,
+    "questions": 380
+   },
+   {
+    "code": "ing",
+    "subject": "Ingliz tili",
+    "topics": 36,
+    "questions": 360
+   }
+  ],
+  "tree": {
+   "subject": {
+    "code": "ona",
+    "title": "Ona tili va adabiyot"
+   },
+   "sections": [
+    {
+     "code": "ona.s1",
+     "title": "Fonetika va orfoepiya",
+     "topics": [
+      {
+       "code": "ona.s1.01",
+       "title": "Unli tovushlar",
+       "count": 10,
+       "by_difficulty": {
+        "1": 4,
+        "2": 4,
+        "3": 2
+       }
+      },
+      {
+       "code": "ona.s1.02",
+       "title": "Undosh tovushlar",
+       "count": 10,
+       "by_difficulty": {
+        "1": 4,
+        "2": 4,
+        "3": 2
+       }
+      },
+      {
+       "code": "ona.s1.03",
+       "title": "Bo'g'in va urg'u",
+       "count": 10,
+       "by_difficulty": {
+        "1": 4,
+        "2": 4,
+        "3": 2
+       }
+      },
+      {
+       "code": "ona.s1.04",
+       "title": "Fonetik hodisalar",
+       "count": 10,
+       "by_difficulty": {
+        "1": 2,
+        "2": 4,
+        "3": 4
+       }
+      }
+     ]
+    },
+    {
+     "code": "ona.s2",
+     "title": "Imlo",
+     "topics": [
+      {
+       "code": "ona.s2.01",
+       "title": "Tutuq belgisi va o'zlashma so'zlar imlosi",
+       "count": 10,
+       "by_difficulty": {
+        "1": 4,
+        "2": 4,
+        "3": 2
+       }
+      },
+      {
+       "code": "ona.s2.02",
+       "title": "Qo'shma va juft so'zlar imlosi",
+       "count": 10,
+       "by_difficulty": {
+        "1": 4,
+        "2": 4,
+        "3": 2
+       }
+      },
+      {
+       "code": "ona.s2.03",
+       "title": "Qo'shimchalar imlosi",
+       "count": 10,
+       "by_difficulty": {
+        "1": 2,
+        "2": 6,
+        "3": 2
+       }
+      },
+      {
+       "code": "ona.s2.04",
+       "title": "Bosh harflar imlosi",
+       "count": 10,
+       "by_difficulty": {
+        "1": 2,
+        "2": 6,
+        "3": 2
+       }
+      }
+     ]
+    },
+    {
+     "code": "ona.s3",
+     "title": "Leksikologiya va so'z yasalishi",
+     "topics": [
+      {
+       "code": "ona.s3.01",
+       "title": "So'zning o'z va ko'chma ma'nosi",
+       "count": 10,
+       "by_difficulty": {
+        "1": 3,
+        "2": 5,
+        "3": 2
+       }
+      },
+      {
+       "code": "ona.s3.02",
+       "title": "Sinonim, antonim, omonim va paronimlar",
+       "count": 10,
+       "by_difficulty": {
+        "1": 4,
+        "2": 5,
+        "3": 1
+       }
+      },
+      {
+       "code": "ona.s3.03",
+       "title": "Leksik qatlamlar: eskirgan so'zlar, neologizmlar va terminlar",
+       "count": 10,
+       "by_difficulty": {
+        "1": 5,
+        "2": 3,
+        "3": 2
+       }
+      },
+      {
+       "code": "ona.s3.04",
+       "title": "Frazeologizmlar",
+       "count": 10,
+       "by_difficulty": {
+        "1": 2,
+        "2": 6,
+        "3": 2
+       }
+      },
+      {
+       "code": "ona.s3.05",
+       "title": "Morfema va so'z tarkibi",
+       "count": 10,
+       "by_difficulty": {
+        "1": 2,
+        "2": 4,
+        "3": 4
+       }
+      },
+      {
+       "code": "ona.s3.06",
+       "title": "So'z yasalish usullari",
+       "count": 10,
+       "by_difficulty": {
+        "1": 2,
+        "2": 7,
+        "3": 1
+       }
+      }
+     ]
+    },
+    {
+     "code": "ona.s4",
+     "title": "Morfologiya (so'z turkumlari)",
+     "topics": [
+      {
+       "code": "ona.s4.01",
+       "title": "Ot va kelishiklar",
+       "count": 10,
+       "by_difficulty": {
+        "1": 3,
+        "2": 5,
+        "3": 2
+       }
+      },
+      {
+       "code": "ona.s4.02",
+       "title": "Sifat va son",
+       "count": 10,
+       "by_difficulty": {
+        "1": 2,
+        "2": 5,
+        "3": 3
+       }
+      },
+      {
+       "code": "ona.s4.03",
+       "title": "Olmosh va ravish",
+       "count": 10,
+       "by_difficulty": {
+        "1": 4,
+        "2": 4,
+        "3": 2
+       }
+      },
+      {
+       "code": "ona.s4.04",
+       "title": "Fe'l: nisbat, mayl va zamon",
+       "count": 10,
+       "by_difficulty": {
+        "1": 4,
+        "2": 3,
+        "3": 3
+       }
+      },
+      {
+       "code": "ona.s4.05",
+       "title": "Fe'lning vazifa shakllari",
+       "count": 10,
+       "by_difficulty": {
+        "1": 2,
+        "2": 6,
+        "3": 2
+       }
+      },
+      {
+       "code": "ona.s4.06",
+       "title": "Yordamchi va alohida olingan so'zlar",
+       "count": 10,
+       "by_difficulty": {
+        "1": 2,
+        "2": 6,
+        "3": 2
+       }
+      }
+     ]
+    },
+    {
+     "code": "ona.s5",
+     "title": "Sintaksis",
+     "topics": [
+      {
+       "code": "ona.s5.01",
+       "title": "Gapning bosh bo'laklari",
+       "count": 10,
+       "by_difficulty": {
+        "1": 3,
+        "2": 5,
+        "3": 2
+       }
+      },
+      {
+       "code": "ona.s5.02",
+       "title": "Ikkinchi darajali bo'laklar",
+       "count": 10,
+       "by_difficulty": {
+        "1": 3,
+        "2": 5,
+        "3": 2
+       }
+      },
+      {
+       "code": "ona.s5.03",
+       "title": "Sodda gap turlari",
+       "count": 10,
+       "by_difficulty": {
+        "1": 4,
+        "2": 3,
+        "3": 3
+       }
+      },
+      {
+       "code": "ona.s5.04",
+       "title": "Uyushiq bo'laklar, undalma va kirish so'zlar",
+       "count": 10,
+       "by_difficulty": {
+        "1": 3,
+        "2": 5,
+        "3": 2
+       }
+      },
+      {
+       "code": "ona.s5.05",
+       "title": "Bog'langan va bog'lovchisiz qo'shma gaplar",
+       "count": 10,
+       "by_difficulty": {
+        "1": 2,
+        "2": 6,
+        "3": 2
+       }
+      },
+      {
+       "code": "ona.s5.06",
+       "title": "Ergash gapli qo'shma gaplar",
+       "count": 10,
+       "by_difficulty": {
+        "1": 1,
+        "2": 4,
+        "3": 5
+       }
+      }
+     ]
+    },
+    {
+     "code": "ona.s6",
+     "title": "Punktuatsiya va uslubiyat",
+     "topics": [
+      {
+       "code": "ona.s6.01",
+       "title": "Sodda gapda tinish belgilari",
+       "count": 10,
+       "by_difficulty": {
+        "1": 2,
+        "2": 5,
+        "3": 3
+       }
+      },
+      {
+       "code": "ona.s6.02",
+       "title": "Qo'shma va ko'chirma gaplarda tinish belgilari",
+       "count": 10,
+       "by_difficulty": {
+        "1": 2,
+        "2": 5,
+        "3": 3
+       }
+      },
+      {
+       "code": "ona.s6.03",
+       "title": "Nutq uslublari",
+       "count": 10,
+       "by_difficulty": {
+        "1": 4,
+        "2": 5,
+        "3": 1
+       }
+      }
+     ]
+    },
+    {
+     "code": "ona.s7",
+     "title": "Mumtoz adabiyot",
+     "topics": [
+      {
+       "code": "ona.s7.01",
+       "title": "Qadimgi turkiy va ilk mumtoz adabiyot",
+       "count": 10,
+       "by_difficulty": {
+        "1": 2,
+        "2": 6,
+        "3": 2
+       }
+      },
+      {
+       "code": "ona.s7.02",
+       "title": "Alisher Navoiy ijodi",
+       "count": 10,
+       "by_difficulty": {
+        "1": 2,
+        "2": 5,
+        "3": 3
+       }
+      },
+      {
+       "code": "ona.s7.03",
+       "title": "Zahiriddin Muhammad Bobur ijodi",
+       "count": 10,
+       "by_difficulty": {
+        "1": 4,
+        "2": 3,
+        "3": 3
+       }
+      },
+      {
+       "code": "ona.s7.04",
+       "title": "XVIII–XIX asr o'zbek adabiyoti",
+       "count": 10,
+       "by_difficulty": {
+        "1": 2,
+        "2": 6,
+        "3": 2
+       }
+      }
+     ]
+    },
+    {
+     "code": "ona.s8",
+     "title": "Yangi va zamonaviy o'zbek adabiyoti",
+     "topics": [
+      {
+       "code": "ona.s8.01",
+       "title": "Jadid adabiyoti",
+       "count": 10,
+       "by_difficulty": {
+        "1": 2,
+        "2": 5,
+        "3": 3
+       }
+      },
+      {
+       "code": "ona.s8.02",
+       "title": "Abdulla Qodiriy ijodi",
+       "count": 10,
+       "by_difficulty": {
+        "1": 4,
+        "2": 5,
+        "3": 1
+       }
+      },
+      {
+       "code": "ona.s8.03",
+       "title": "XX asr o'zbek adabiyoti",
+       "count": 10,
+       "by_difficulty": {
+        "1": 4,
+        "2": 4,
+        "3": 2
+       }
+      },
+      {
+       "code": "ona.s8.04",
+       "title": "Zamonaviy o'zbek adabiyoti",
+       "count": 10,
+       "by_difficulty": {
+        "1": 2,
+        "2": 5,
+        "3": 3
+       }
+      }
+     ]
+    },
+    {
+     "code": "ona.s9",
+     "title": "Adabiyot nazariyasi",
+     "topics": [
+      {
+       "code": "ona.s9.01",
+       "title": "Adabiy turlar va janrlar",
+       "count": 10,
+       "by_difficulty": {
+        "1": 4,
+        "2": 3,
+        "3": 3
+       }
+      },
+      {
+       "code": "ona.s9.02",
+       "title": "She'r tuzilishi: vazn, qofiya va band",
+       "count": 10,
+       "by_difficulty": {
+        "1": 3,
+        "2": 5,
+        "3": 2
+       }
+      },
+      {
+       "code": "ona.s9.03",
+       "title": "Badiiy tasvir vositalari",
+       "count": 10,
+       "by_difficulty": {
+        "1": 3,
+        "2": 5,
+        "3": 2
+       }
+      }
+     ]
+    }
+   ],
+   "years": [],
+   "languages": {
+    "uz": 400
+   },
+   "language": "uz"
+  }
+ }
+}

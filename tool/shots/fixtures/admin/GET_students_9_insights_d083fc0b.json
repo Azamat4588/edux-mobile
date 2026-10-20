@@ -1,0 +1,93 @@
+{
+ "method": "GET",
+ "path": "students/9/insights",
+ "query": {},
+ "status": 200,
+ "body": {
+  "student": {
+   "id": 9,
+   "full_name": "Qodirov Sherzod",
+   "code": "603779",
+   "phone": "+998905559037",
+   "groups": [
+    "M-11"
+   ],
+   "guest": false
+  },
+  "modules": [
+   "testing",
+   "crm",
+   "lms"
+  ],
+  "testing": {
+   "count": 0,
+   "average_percent": null,
+   "attempts": [],
+   "pending": [
+    {
+     "id": 1,
+     "title": "Matematika: 2-chorak nazorat ishi",
+     "ends_at": null,
+     "duration_minutes": 30
+    },
+    {
+     "id": 2,
+     "title": "IELTS Mock #1 — Sentyabr",
+     "ends_at": null,
+     "duration_minutes": 90
+    },
+    {
+     "id": 3,
+     "title": "IELTS Mock #2 — Oktyabr",
+     "ends_at": null,
+     "duration_minutes": 90
+    }
+   ]
+  },
+  "lms": {
+   "courses": [
+    {
+     "id": 1,
+     "title": "Kasrlar va ular ustida amallar",
+     "unlocked": true,
+     "total": 5,
+     "done": 1,
+     "percent": 20
+    }
+   ],
+   "assignments": {
+    "pending": [
+     {
+      "id": 1,
+      "title": "1–6-mashqlar",
+      "course": "Kasrlar va ular ustida amallar",
+      "due_at": "2026-10-24T13:00:00.000000Z",
+      "overdue": false
+     }
+    ],
+    "graded": []
+   },
+   "average_grade_percent": null
+  },
+  "school": null,
+  "crm": {
+   "balance": -900000,
+   "groups": [
+    {
+     "id": 1,
+     "name": "M-11",
+     "status": "active"
+    }
+   ],
+   "attendance_30d": {
+    "present": 7,
+    "absent": 1,
+    "late": 0,
+    "excused": 0
+   },
+   "average_score": 4.14,
+   "coins": 0,
+   "exams": []
+  }
+ }
+}

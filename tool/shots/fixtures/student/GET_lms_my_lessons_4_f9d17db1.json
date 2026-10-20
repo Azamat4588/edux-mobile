@@ -1,0 +1,32 @@
+{
+ "method": "GET",
+ "path": "lms/my/lessons/4",
+ "query": {},
+ "status": 200,
+ "body": {
+  "id": 4,
+  "title": "Aralash sonlar",
+  "content": "Butun va kasr qismdan iborat son aralash son deyiladi: $2\\frac{1}{3}$.\n\nNoto'g'ri kasrga aylantirish: $2\\frac{1}{3} = \\frac{2 \\cdot 3 + 1}{3} = \\frac{7}{3}$.\n\nTeskari amal: suratni maxrajga bo'lamiz. $\\frac{17}{5} = 3\\frac{2}{5}$, chunki $17 = 5 \\cdot 3 + 2$.",
+  "video_url": null,
+  "activity": null,
+  "course": {
+   "id": 1,
+   "title": "Kasrlar va ular ustida amallar"
+  },
+  "section": {
+   "id": 2,
+   "title": "Amallar va mustahkamlash"
+  },
+  "materials": [],
+  "exam": null,
+  "assignments": [],
+  "completed_at": null,
+  "previous_lesson_id": 3,
+  "next_lesson_id": 5,
+  "progress": {
+   "total": 5,
+   "done": 3,
+   "percent": 60
+  }
+ }
+}

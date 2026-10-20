@@ -1,0 +1,106 @@
+{
+ "method": "GET",
+ "path": "crm/reports/monthly",
+ "query": {},
+ "status": 200,
+ "body": {
+  "data": [
+   {
+    "period": "2025-11",
+    "label": "Noyabr 2025",
+    "income": 0,
+    "expenses": 0,
+    "profit": 0,
+    "charged": 0
+   },
+   {
+    "period": "2025-12",
+    "label": "Dekabr 2025",
+    "income": 0,
+    "expenses": 0,
+    "profit": 0,
+    "charged": 0
+   },
+   {
+    "period": "2026-01",
+    "label": "Yanvar 2026",
+    "income": 0,
+    "expenses": 0,
+    "profit": 0,
+    "charged": 0
+   },
+   {
+    "period": "2026-02",
+    "label": "Fevral 2026",
+    "income": 0,
+    "expenses": 0,
+    "profit": 0,
+    "charged": 0
+   },
+   {
+    "period": "2026-03",
+    "label": "Mart 2026",
+    "income": 0,
+    "expenses": 0,
+    "profit": 0,
+    "charged": 0
+   },
+   {
+    "period": "2026-04",
+    "label": "Aprel 2026",
+    "income": 0,
+    "expenses": 0,
+    "profit": 0,
+    "charged": 0
+   },
+   {
+    "period": "2026-05",
+    "label": "May 2026",
+    "income": 0,
+    "expenses": 0,
+    "profit": 0,
+    "charged": 0
+   },
+   {
+    "period": "2026-06",
+    "label": "Iyun 2026",
+    "income": 0,
+    "expenses": 0,
+    "profit": 0,
+    "charged": 0
+   },
+   {
+    "period": "2026-07",
+    "label": "Iyul 2026",
+    "income": 0,
+    "expenses": 0,
+    "profit": 0,
+    "charged": 0
+   },
+   {
+    "period": "2026-08",
+    "label": "Avgust 2026",
+    "income": 0,
+    "expenses": 0,
+    "profit": 0,
+    "charged": 0
+   },
+   {
+    "period": "2026-09",
+    "label": "Sentabr 2026",
+    "income": 5179000,
+    "expenses": 1530000,
+    "profit": 3649000,
+    "charged": 5629000
+   },
+   {
+    "period": "2026-10",
+    "label": "Oktabr 2026",
+    "income": 4544000,
+    "expenses": 2530000,
+    "profit": 2014000,
+    "charged": 5694000
+   }
+  ]
+ }
+}

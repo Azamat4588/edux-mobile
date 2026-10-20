@@ -1,0 +1,52 @@
+{
+ "method": "GET",
+ "path": "my/games",
+ "query": {},
+ "status": 200,
+ "body": {
+  "sets": [
+   {
+    "id": 1,
+    "title": "Ingliz tili: kundalik so'zlar",
+    "description": "5-sinf, 1-chorak",
+    "count": 10,
+    "subject": null,
+    "best": {
+     "match": null,
+     "scramble": null
+    }
+   }
+  ],
+  "subjects": [
+   {
+    "id": 1,
+    "name": "Matematika",
+    "count": 15,
+    "best": null
+   },
+   {
+    "id": 2,
+    "name": "Fizika",
+    "count": 110,
+    "best": null
+   },
+   {
+    "id": 6,
+    "name": "Ingliz tili (IELTS)",
+    "count": 14,
+    "best": null
+   },
+   {
+    "id": 7,
+    "name": "Nemis tili",
+    "count": 25,
+    "best": null
+   }
+  ],
+  "games": {
+   "quiz": "Viktorina-blits",
+   "match": "Juftini top",
+   "scramble": "So'z yig'ish"
+  }
+ }
+}

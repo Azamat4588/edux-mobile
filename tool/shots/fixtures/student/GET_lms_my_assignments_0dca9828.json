@@ -1,0 +1,44 @@
+{
+ "method": "GET",
+ "path": "lms/my/assignments",
+ "query": {},
+ "status": 200,
+ "body": {
+  "assignments": [
+   {
+    "id": 1,
+    "course_id": 1,
+    "lesson_id": 3,
+    "title": "1–6-mashqlar",
+    "description": "«Mashqlar to'plami» faylidagi 1–6-misollarni daftarda yeching.\nJavobni matn qilib yozing yoki daftar suratini biriktiring. Yechish yo'li ham ko'rinsin.",
+    "due_at": "2026-10-24T13:00:00.000000Z",
+    "max_score": 10,
+    "is_overdue": false,
+    "course": {
+     "id": 1,
+     "title": "Kasrlar va ular ustida amallar"
+    },
+    "lesson": {
+     "id": 3,
+     "title": "Kasrlarni qo'shish va ayirish"
+    },
+    "state": "submitted",
+    "submission": {
+     "id": 2,
+     "assignment_id": 1,
+     "student_id": 1,
+     "content": "Yechimlar faylda.",
+     "file_name": "uy-vazifasi.pdf",
+     "file_size": 831,
+     "has_file": true,
+     "submitted_at": "2026-10-18T18:24:00.000000Z",
+     "is_late": false,
+     "is_graded": false,
+     "score": null,
+     "feedback": null,
+     "graded_at": null
+    }
+   }
+  ]
+ }
+}

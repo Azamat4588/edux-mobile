@@ -1,0 +1,32 @@
+{
+ "method": "GET",
+ "path": "lms/my/lessons/2",
+ "query": {},
+ "status": 200,
+ "body": {
+  "id": 2,
+  "title": "Kasrlarni taqqoslash",
+  "content": "Maxrajlari teng kasrlardan surati kattasi katta: $\\frac{3}{7} < \\frac{5}{7}$.\n\nSuratlari teng kasrlardan maxraji kichigi katta: $\\frac{2}{3} > \\frac{2}{5}$.\n\nBoshqa hollarda kasrlar umumiy maxrajga keltiriladi. Videoni ko'rib, misollarni daftarga yozib oling.",
+  "video_url": "https://www.youtube.com/watch?v=jNQXAC9IVRw",
+  "activity": null,
+  "course": {
+   "id": 1,
+   "title": "Kasrlar va ular ustida amallar"
+  },
+  "section": {
+   "id": 1,
+   "title": "Kasr tushunchasi"
+  },
+  "materials": [],
+  "exam": null,
+  "assignments": [],
+  "completed_at": "2026-10-15T14:07:00.000000Z",
+  "previous_lesson_id": 1,
+  "next_lesson_id": 3,
+  "progress": {
+   "total": 5,
+   "done": 3,
+   "percent": 60
+  }
+ }
+}

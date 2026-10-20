@@ -1,0 +1,301 @@
+{
+ "method": "GET",
+ "path": "crm/payments",
+ "query": {
+  "from": "2026-10-01",
+  "to": "2026-10-20",
+  "page": "1"
+ },
+ "status": 200,
+ "body": {
+  "current_page": 1,
+  "data": [
+   {
+    "id": 16,
+    "organization_id": 1,
+    "student_id": 7,
+    "study_group_id": null,
+    "receipt_number": 16,
+    "amount": 200000,
+    "method": "transfer",
+    "account_id": 3,
+    "paid_at": "2026-10-08T07:33:00.000000Z",
+    "note": "Qolgani oy oxirida",
+    "received_by": 1,
+    "voided_at": null,
+    "voided_by": null,
+    "void_reason": null,
+    "created_at": "2026-10-19T14:23:58.000000Z",
+    "updated_at": "2026-10-19T14:23:58.000000Z",
+    "receipt": "K-000016",
+    "student": {
+     "id": 7,
+     "full_name": "Yusupov Aziz",
+     "code": "489151"
+    },
+    "receiver": {
+     "id": 1,
+     "name": "Rustamov Akmal"
+    }
+   },
+   {
+    "id": 15,
+    "organization_id": 1,
+    "student_id": 6,
+    "study_group_id": null,
+    "receipt_number": 15,
+    "amount": 450000,
+    "method": "payme",
+    "account_id": 4,
+    "paid_at": "2026-10-07T07:16:00.000000Z",
+    "note": null,
+    "received_by": 3,
+    "voided_at": null,
+    "voided_by": null,
+    "void_reason": null,
+    "created_at": "2026-10-19T14:23:58.000000Z",
+    "updated_at": "2026-10-19T14:23:58.000000Z",
+    "receipt": "K-000015",
+    "student": {
+     "id": 6,
+     "full_name": "Rahimova Nigora",
+     "code": "381107"
+    },
+    "receiver": {
+     "id": 3,
+     "name": "Islomova Shahnoza"
+    }
+   },
+   {
+    "id": 14,
+    "organization_id": 1,
+    "student_id": 5,
+    "study_group_id": null,
+    "receipt_number": 14,
+    "amount": 225000,
+    "method": "click",
+    "account_id": 4,
+    "paid_at": "2026-10-06T06:59:00.000000Z",
+    "note": null,
+    "received_by": 3,
+    "voided_at": null,
+    "voided_by": null,
+    "void_reason": null,
+    "created_at": "2026-10-19T14:23:58.000000Z",
+    "updated_at": "2026-10-19T14:23:58.000000Z",
+    "receipt": "K-000014",
+    "student": {
+     "id": 5,
+     "full_name": "Tursunov Jasur",
+     "code": "028030"
+    },
+    "receiver": {
+     "id": 3,
+     "name": "Islomova Shahnoza"
+    }
+   },
+   {
+    "id": 13,
+    "organization_id": 1,
+    "student_id": 4,
+    "study_group_id": null,
+    "receipt_number": 13,
+    "amount": 664000,
+    "method": "card",
+    "account_id": 2,
+    "paid_at": "2026-10-05T06:42:00.000000Z",
+    "note": null,
+    "received_by": 1,
+    "voided_at": null,
+    "voided_by": null,
+    "void_reason": null,
+    "created_at": "2026-10-19T14:23:58.000000Z",
+    "updated_at": "2026-10-19T14:23:58.000000Z",
+    "receipt": "K-000013",
+    "student": {
+     "id": 4,
+     "full_name": "Hasanova Malika",
+     "code": "414548"
+    },
+    "receiver": {
+     "id": 1,
+     "name": "Rustamov Akmal"
+    }
+   },
+   {
+    "id": 12,
+    "organization_id": 1,
+    "student_id": 3,
+    "study_group_id": null,
+    "receipt_number": 12,
+    "amount": 895000,
+    "method": "cash",
+    "account_id": 1,
+    "paid_at": "2026-10-04T06:25:00.000000Z",
+    "note": null,
+    "received_by": 3,
+    "voided_at": null,
+    "voided_by": null,
+    "void_reason": null,
+    "created_at": "2026-10-19T14:23:58.000000Z",
+    "updated_at": "2026-10-19T14:23:58.000000Z",
+    "receipt": "K-000012",
+    "student": {
+     "id": 3,
+     "full_name": "Karimov Sardor",
+     "code": "415271"
+    },
+    "receiver": {
+     "id": 3,
+     "name": "Islomova Shahnoza"
+    }
+   },
+   {
+    "id": 11,
+    "organization_id": 1,
+    "student_id": 2,
+    "study_group_id": null,
+    "receipt_number": 11,
+    "amount": 830000,
+    "method": "transfer",
+    "account_id": 3,
+    "paid_at": "2026-10-03T06:08:00.000000Z",
+    "note": null,
+    "received_by": 3,
+    "voided_at": null,
+    "voided_by": null,
+    "void_reason": null,
+    "created_at": "2026-10-19T14:23:58.000000Z",
+    "updated_at": "2026-10-19T14:23:58.000000Z",
+    "receipt": "K-000011",
+    "student": {
+     "id": 2,
+     "full_name": "Valiyev Bobur",
+     "code": "950634"
+    },
+    "receiver": {
+     "id": 3,
+     "name": "Islomova Shahnoza"
+    }
+   },
+   {
+    "id": 18,
+    "organization_id": 1,
+    "student_id": 1,
+    "study_group_id": null,
+    "receipt_number": 18,
+    "amount": 4500000,
+    "method": "cash",
+    "account_id": 1,
+    "paid_at": "2026-10-02T16:20:00.000000Z",
+    "note": null,
+    "received_by": 3,
+    "voided_at": "2026-10-19T14:23:59.000000Z",
+    "voided_by": 1,
+    "void_reason": "Summa xato kiritilgan (bitta nol ortiqcha)",
+    "created_at": "2026-10-19T14:23:59.000000Z",
+    "updated_at": "2026-10-19T14:23:59.000000Z",
+    "receipt": "K-000018",
+    "student": {
+     "id": 1,
+     "full_name": "Ergasheva Mohinur",
+     "code": "305619"
+    },
+    "receiver": {
+     "id": 3,
+     "name": "Islomova Shahnoza"
+    }
+   },
+   {
+    "id": 17,
+    "organization_id": 1,
+    "student_id": 8,
+    "study_group_id": null,
+    "receipt_number": 17,
+    "amount": 450000,
+    "method": "cash",
+    "account_id": 1,
+    "paid_at": "2026-10-02T07:50:00.000000Z",
+    "note": null,
+    "received_by": 3,
+    "voided_at": null,
+    "voided_by": null,
+    "void_reason": null,
+    "created_at": "2026-10-19T14:23:59.000000Z",
+    "updated_at": "2026-10-19T14:23:59.000000Z",
+    "receipt": "K-000017",
+    "student": {
+     "id": 8,
+     "full_name": "Saidova Zarina",
+     "code": "234003"
+    },
+    "receiver": {
+     "id": 3,
+     "name": "Islomova Shahnoza"
+    }
+   },
+   {
+    "id": 10,
+    "organization_id": 1,
+    "student_id": 1,
+    "study_group_id": null,
+    "receipt_number": 10,
+    "amount": 830000,
+    "method": "payme",
+    "account_id": 4,
+    "paid_at": "2026-10-02T05:51:00.000000Z",
+    "note": null,
+    "received_by": 1,
+    "voided_at": null,
+    "voided_by": null,
+    "void_reason": null,
+    "created_at": "2026-10-19T14:23:58.000000Z",
+    "updated_at": "2026-10-19T14:23:58.000000Z",
+    "receipt": "K-000010",
+    "student": {
+     "id": 1,
+     "full_name": "Ergasheva Mohinur",
+     "code": "305619"
+    },
+    "receiver": {
+     "id": 1,
+     "name": "Rustamov Akmal"
+    }
+   }
+  ],
+  "first_page_url": "__SERVER__/api/v1/crm/payments?page=1",
+  "from": 1,
+  "last_page": 1,
+  "last_page_url": "__SERVER__/api/v1/crm/payments?page=1",
+  "links": [
+   {
+    "url": null,
+    "label": "pagination.previous",
+    "page": null,
+    "active": false
+   },
+   {
+    "url": "__SERVER__/api/v1/crm/payments?page=1",
+    "label": "1",
+    "page": 1,
+    "active": true
+   },
+   {
+    "url": null,
+    "label": "pagination.next",
+    "page": null,
+    "active": false
+   }
+  ],
+  "next_page_url": null,
+  "path": "__SERVER__/api/v1/crm/payments",
+  "per_page": 50,
+  "prev_page_url": null,
+  "to": 9,
+  "total": 9,
+  "summary": {
+   "amount": 4544000,
+   "count": 8
+  }
+ }
+}

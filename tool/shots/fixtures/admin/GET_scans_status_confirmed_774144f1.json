@@ -1,0 +1,16 @@
+{
+ "method": "GET",
+ "path": "scans",
+ "query": {
+  "status": "confirmed"
+ },
+ "status": 422,
+ "body": {
+  "message": "status uchun tanlangan qiymat noto'g'ri.",
+  "errors": {
+   "status": [
+    "status uchun tanlangan qiymat noto'g'ri."
+   ]
+  }
+ }
+}

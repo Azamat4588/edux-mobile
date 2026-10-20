@@ -1,0 +1,75 @@
+{
+ "method": "GET",
+ "path": "crm/tasks",
+ "query": {
+  "tab": "upcoming"
+ },
+ "status": 200,
+ "body": {
+  "current_page": 1,
+  "data": [
+   {
+    "id": 3,
+    "organization_id": 1,
+    "title": "Oylik hisobotni tayyorlash",
+    "note": null,
+    "due_at": "2026-10-23T14:23:59.000000Z",
+    "assigned_to": 1,
+    "created_by": 1,
+    "subject_type": null,
+    "subject_id": null,
+    "completed_at": null,
+    "completed_by": null,
+    "result": null,
+    "created_at": "2026-10-19T14:23:59.000000Z",
+    "updated_at": "2026-10-19T14:23:59.000000Z",
+    "assignee": {
+     "id": 1,
+     "name": "Rustamov Akmal"
+    },
+    "creator": {
+     "id": 1,
+     "name": "Rustamov Akmal"
+    },
+    "subject": null,
+    "overdue": false
+   }
+  ],
+  "first_page_url": "__SERVER__/api/v1/crm/tasks?page=1",
+  "from": 1,
+  "last_page": 1,
+  "last_page_url": "__SERVER__/api/v1/crm/tasks?page=1",
+  "links": [
+   {
+    "url": null,
+    "label": "pagination.previous",
+    "page": null,
+    "active": false
+   },
+   {
+    "url": "__SERVER__/api/v1/crm/tasks?page=1",
+    "label": "1",
+    "page": 1,
+    "active": true
+   },
+   {
+    "url": null,
+    "label": "pagination.next",
+    "page": null,
+    "active": false
+   }
+  ],
+  "next_page_url": null,
+  "path": "__SERVER__/api/v1/crm/tasks",
+  "per_page": 50,
+  "prev_page_url": null,
+  "to": 1,
+  "total": 1,
+  "counts": {
+   "overdue": 2,
+   "today": 0,
+   "upcoming": 1,
+   "done": 0
+  }
+ }
+}

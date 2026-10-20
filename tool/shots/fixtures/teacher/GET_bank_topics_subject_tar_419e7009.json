@@ -1,0 +1,477 @@
+{
+ "method": "GET",
+ "path": "bank/topics",
+ "query": {
+  "subject": "tar"
+ },
+ "status": 200,
+ "body": {
+  "subjects": [
+   {
+    "code": "mat",
+    "subject": "Matematika",
+    "topics": 48,
+    "questions": 585
+   },
+   {
+    "code": "fiz",
+    "subject": "Fizika",
+    "topics": 42,
+    "questions": 461
+   },
+   {
+    "code": "kim",
+    "subject": "Kimyo",
+    "topics": 42,
+    "questions": 420
+   },
+   {
+    "code": "bio",
+    "subject": "Biologiya",
+    "topics": 42,
+    "questions": 420
+   },
+   {
+    "code": "ona",
+    "subject": "Ona tili va adabiyot",
+    "topics": 40,
+    "questions": 400
+   },
+   {
+    "code": "tar",
+    "subject": "O'zbekiston tarixi",
+    "topics": 35,
+    "questions": 350
+   },
+   {
+    "code": "jtar",
+    "subject": "Jahon tarixi",
+    "topics": 30,
+    "questions": 300
+   },
+   {
+    "code": "geo",
+    "subject": "Geografiya",
+    "topics": 38,
+    "questions": 380
+   },
+   {
+    "code": "ing",
+    "subject": "Ingliz tili",
+    "topics": 36,
+    "questions": 360
+   }
+  ],
+  "tree": {
+   "subject": {
+    "code": "tar",
+    "title": "O'zbekiston tarixi"
+   },
+   "sections": [
+    {
+     "code": "tar.s1",
+     "title": "Eng qadimgi va qadimgi davr",
+     "topics": [
+      {
+       "code": "tar.s1.01",
+       "title": "Tosh va bronza davri",
+       "count": 10,
+       "by_difficulty": {
+        "1": 2,
+        "2": 6,
+        "3": 2
+       }
+      },
+      {
+       "code": "tar.s1.02",
+       "title": "Qadimgi Baqtriya, So'g'd va Xorazm",
+       "count": 10,
+       "by_difficulty": {
+        "1": 5,
+        "2": 4,
+        "3": 1
+       }
+      },
+      {
+       "code": "tar.s1.03",
+       "title": "Ahmoniylar va Aleksandr Makedonskiy bosqinlariga qarshi kurash",
+       "count": 10,
+       "by_difficulty": {
+        "1": 4,
+        "2": 5,
+        "3": 1
+       }
+      },
+      {
+       "code": "tar.s1.04",
+       "title": "Kushon, Qang' va Davan davlatlari",
+       "count": 10,
+       "by_difficulty": {
+        "1": 2,
+        "2": 6,
+        "3": 2
+       }
+      },
+      {
+       "code": "tar.s1.05",
+       "title": "Qadimgi dinlar, yozuv va madaniyat",
+       "count": 10,
+       "by_difficulty": {
+        "1": 5,
+        "2": 3,
+        "3": 2
+       }
+      }
+     ]
+    },
+    {
+     "code": "tar.s2",
+     "title": "Ilk o'rta asrlar",
+     "topics": [
+      {
+       "code": "tar.s2.01",
+       "title": "Eftaliylar, Turk xoqonligi va ilk o'rta asr davlatlari",
+       "count": 10,
+       "by_difficulty": {
+        "1": 1,
+        "2": 5,
+        "3": 4
+       }
+      },
+      {
+       "code": "tar.s2.02",
+       "title": "Arab istilosi va xalifalikka qarshi kurash",
+       "count": 10,
+       "by_difficulty": {
+        "1": 3,
+        "2": 5,
+        "3": 2
+       }
+      }
+     ]
+    },
+    {
+     "code": "tar.s3",
+     "title": "IX–XIV asrlarda Movarounnahr va Xorazm",
+     "topics": [
+      {
+       "code": "tar.s3.01",
+       "title": "Somoniylar davlati",
+       "count": 10,
+       "by_difficulty": {
+        "1": 3,
+        "2": 5,
+        "3": 2
+       }
+      },
+      {
+       "code": "tar.s3.02",
+       "title": "Qoraxoniylar davlati",
+       "count": 10,
+       "by_difficulty": {
+        "1": 1,
+        "2": 6,
+        "3": 3
+       }
+      },
+      {
+       "code": "tar.s3.03",
+       "title": "G'aznaviylar va Saljuqiylar",
+       "count": 10,
+       "by_difficulty": {
+        "1": 3,
+        "2": 5,
+        "3": 2
+       }
+      },
+      {
+       "code": "tar.s3.04",
+       "title": "Xorazmshohlar davlati",
+       "count": 10,
+       "by_difficulty": {
+        "1": 2,
+        "2": 5,
+        "3": 3
+       }
+      },
+      {
+       "code": "tar.s3.05",
+       "title": "Mo'g'ul bosqini va Chig'atoy ulusi",
+       "count": 10,
+       "by_difficulty": {
+        "1": 2,
+        "2": 5,
+        "3": 3
+       }
+      },
+      {
+       "code": "tar.s3.06",
+       "title": "IX–XII asrlarda ilm-fan va madaniyat",
+       "count": 10,
+       "by_difficulty": {
+        "1": 6,
+        "2": 3,
+        "3": 1
+       }
+      }
+     ]
+    },
+    {
+     "code": "tar.s4",
+     "title": "Amir Temur va Temuriylar davri",
+     "topics": [
+      {
+       "code": "tar.s4.01",
+       "title": "Amir Temur davlatining tashkil topishi va boshqaruvi",
+       "count": 10,
+       "by_difficulty": {
+        "1": 3,
+        "2": 6,
+        "3": 1
+       }
+      },
+      {
+       "code": "tar.s4.02",
+       "title": "Amir Temurning harbiy yurishlari",
+       "count": 10,
+       "by_difficulty": {
+        "1": 2,
+        "2": 5,
+        "3": 3
+       }
+      },
+      {
+       "code": "tar.s4.03",
+       "title": "Temuriylar davlati va Mirzo Ulug'bek",
+       "count": 10,
+       "by_difficulty": {
+        "1": 2,
+        "2": 5,
+        "3": 3
+       }
+      },
+      {
+       "code": "tar.s4.04",
+       "title": "Temuriylar davri madaniyati va me'morchiligi",
+       "count": 10,
+       "by_difficulty": {
+        "1": 5,
+        "2": 4,
+        "3": 1
+       }
+      }
+     ]
+    },
+    {
+     "code": "tar.s5",
+     "title": "XVI–XIX asrlarda o'zbek davlatchiligi",
+     "topics": [
+      {
+       "code": "tar.s5.01",
+       "title": "Shayboniylar davlati",
+       "count": 10,
+       "by_difficulty": {
+        "1": 3,
+        "2": 4,
+        "3": 3
+       }
+      },
+      {
+       "code": "tar.s5.02",
+       "title": "Zahiriddin Muhammad Bobur va Boburiylar",
+       "count": 10,
+       "by_difficulty": {
+        "1": 4,
+        "2": 5,
+        "3": 1
+       }
+      },
+      {
+       "code": "tar.s5.03",
+       "title": "Buxoro xonligi va amirligi",
+       "count": 10,
+       "by_difficulty": {
+        "1": 2,
+        "2": 6,
+        "3": 2
+       }
+      },
+      {
+       "code": "tar.s5.04",
+       "title": "Xiva xonligi",
+       "count": 10,
+       "by_difficulty": {
+        "1": 2,
+        "2": 6,
+        "3": 2
+       }
+      },
+      {
+       "code": "tar.s5.05",
+       "title": "Qo'qon xonligi",
+       "count": 10,
+       "by_difficulty": {
+        "1": 4,
+        "2": 5,
+        "3": 1
+       }
+      }
+     ]
+    },
+    {
+     "code": "tar.s6",
+     "title": "Rossiya mustamlakachiligi davri",
+     "topics": [
+      {
+       "code": "tar.s6.01",
+       "title": "Rossiya imperiyasining O'rta Osiyoni bosib olishi",
+       "count": 10,
+       "by_difficulty": {
+        "1": 0,
+        "2": 5,
+        "3": 5
+       }
+      },
+      {
+       "code": "tar.s6.02",
+       "title": "Turkiston general-gubernatorligi va mustamlaka boshqaruvi",
+       "count": 10,
+       "by_difficulty": {
+        "1": 3,
+        "2": 5,
+        "3": 2
+       }
+      },
+      {
+       "code": "tar.s6.03",
+       "title": "Mustamlakachilikka qarshi qo'zg'olonlar",
+       "count": 10,
+       "by_difficulty": {
+        "1": 0,
+        "2": 7,
+        "3": 3
+       }
+      },
+      {
+       "code": "tar.s6.04",
+       "title": "Jadidchilik harakati",
+       "count": 10,
+       "by_difficulty": {
+        "1": 2,
+        "2": 5,
+        "3": 3
+       }
+      }
+     ]
+    },
+    {
+     "code": "tar.s7",
+     "title": "Sovet davri",
+     "topics": [
+      {
+       "code": "tar.s7.01",
+       "title": "Turkiston muxtoriyati",
+       "count": 10,
+       "by_difficulty": {
+        "1": 2,
+        "2": 5,
+        "3": 3
+       }
+      },
+      {
+       "code": "tar.s7.02",
+       "title": "Sovet hokimiyatining o'rnatilishi va istiqlolchilik harakati",
+       "count": 10,
+       "by_difficulty": {
+        "1": 3,
+        "2": 7,
+        "3": 0
+       }
+      },
+      {
+       "code": "tar.s7.03",
+       "title": "Milliy-hududiy chegaralanish va O'zbekiston SSR",
+       "count": 10,
+       "by_difficulty": {
+        "1": 1,
+        "2": 4,
+        "3": 5
+       }
+      },
+      {
+       "code": "tar.s7.04",
+       "title": "Qatag'on siyosati",
+       "count": 10,
+       "by_difficulty": {
+        "1": 4,
+        "2": 5,
+        "3": 1
+       }
+      },
+      {
+       "code": "tar.s7.05",
+       "title": "Ikkinchi jahon urushi va urushdan keyingi yillarda O'zbekiston",
+       "count": 10,
+       "by_difficulty": {
+        "1": 3,
+        "2": 5,
+        "3": 2
+       }
+      }
+     ]
+    },
+    {
+     "code": "tar.s8",
+     "title": "Mustaqil O'zbekiston",
+     "topics": [
+      {
+       "code": "tar.s8.01",
+       "title": "Davlat mustaqilligining qo'lga kiritilishi",
+       "count": 10,
+       "by_difficulty": {
+        "1": 4,
+        "2": 3,
+        "3": 3
+       }
+      },
+      {
+       "code": "tar.s8.02",
+       "title": "Davlat ramzlari",
+       "count": 10,
+       "by_difficulty": {
+        "1": 4,
+        "2": 5,
+        "3": 1
+       }
+      },
+      {
+       "code": "tar.s8.03",
+       "title": "Konstitutsiya va davlat boshqaruvi tizimi",
+       "count": 10,
+       "by_difficulty": {
+        "1": 4,
+        "2": 4,
+        "3": 2
+       }
+      },
+      {
+       "code": "tar.s8.04",
+       "title": "Mustaqillik yillaridagi islohotlar va tashqi siyosat",
+       "count": 10,
+       "by_difficulty": {
+        "1": 1,
+        "2": 5,
+        "3": 4
+       }
+      }
+     ]
+    }
+   ],
+   "years": [],
+   "languages": {
+    "uz": 350
+   },
+   "language": "uz"
+  }
+ }
+}

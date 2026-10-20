@@ -1,0 +1,4279 @@
+{
+ "method": "GET",
+ "path": "exams/12",
+ "query": {},
+ "status": 200,
+ "body": {
+  "id": 12,
+  "organization_id": 1,
+  "subject_id": 2,
+  "title": "Fizika — 11 ta mavzu",
+  "status": "draft",
+  "duration_minutes": 83,
+  "starts_at": null,
+  "ends_at": null,
+  "variants_count": 1,
+  "shuffle_questions": true,
+  "shuffle_options": true,
+  "show_answers": false,
+  "seed": 1499551227,
+  "created_by": 1,
+  "published_at": null,
+  "created_at": "2026-10-19T18:06:07.000000Z",
+  "updated_at": "2026-10-19T18:06:07.000000Z",
+  "public_token": null,
+  "kind": "bank",
+  "format": null,
+  "blocks": null,
+  "sheet_options": null,
+  "answer_keys": null,
+  "audience": "students",
+  "price": 0,
+  "pay_mode": "online",
+  "finished_attempts_count": 0,
+  "pending_count": 0,
+  "subject": {
+   "id": 2,
+   "name": "Fizika"
+  },
+  "groups": [],
+  "variants": [],
+  "questions": [
+   {
+    "id": 158,
+    "organization_id": 1,
+    "subject_id": 2,
+    "topic_id": 27,
+    "type": "single",
+    "body": "Tinch holatdan tekis tezlanuvchan harakat boshlagan jism to'rtinchi sekund davomida 14 m yo'l bosdi. Jismning tezlanishi qancha?",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 3,
+    "explanation": "n-sekunddagi yo'l sₙ = a(2n−1)/2 = 7a/2 = 14, demak a = 4 m/s².",
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T18:06:07.000000Z",
+    "updated_at": "2026-10-19T18:06:07.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": 1398,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 12,
+     "question_id": 158,
+     "position": 1,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 551,
+      "question_id": 158,
+      "body": "7 m/s²",
+      "image_path": null,
+      "is_correct": false,
+      "position": 0,
+      "created_at": "2026-10-19T18:06:07.000000Z",
+      "updated_at": "2026-10-19T18:06:07.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 552,
+      "question_id": 158,
+      "body": "3,5 m/s²",
+      "image_path": null,
+      "is_correct": false,
+      "position": 1,
+      "created_at": "2026-10-19T18:06:07.000000Z",
+      "updated_at": "2026-10-19T18:06:07.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 553,
+      "question_id": 158,
+      "body": "4 m/s²",
+      "image_path": null,
+      "is_correct": true,
+      "position": 2,
+      "created_at": "2026-10-19T18:06:07.000000Z",
+      "updated_at": "2026-10-19T18:06:07.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 554,
+      "question_id": 158,
+      "body": "2 m/s²",
+      "image_path": null,
+      "is_correct": false,
+      "position": 3,
+      "created_at": "2026-10-19T18:06:07.000000Z",
+      "updated_at": "2026-10-19T18:06:07.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 27,
+     "name": "Tekis va tekis o'zgaruvchan to'g'ri chiziqli harakat"
+    }
+   },
+   {
+    "id": 71,
+    "organization_id": 1,
+    "subject_id": 2,
+    "topic_id": 20,
+    "type": "single",
+    "body": "Avtomobil $v_0=10$ m/s tezlik bilan harakatlanib, $a=2$ m/s² tezlanish bilan tezlasha boshladi. U 5 s da qancha yo'l bosadi?",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 1,
+    "explanation": "s = v₀t + at²/2 = 50 + 25 = 75 m.",
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T18:01:18.000000Z",
+    "updated_at": "2026-10-19T18:01:18.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": 501,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 12,
+     "question_id": 71,
+     "position": 2,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 203,
+      "question_id": 71,
+      "body": "50 m",
+      "image_path": null,
+      "is_correct": false,
+      "position": 0,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 204,
+      "question_id": 71,
+      "body": "100 m",
+      "image_path": null,
+      "is_correct": false,
+      "position": 1,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 205,
+      "question_id": 71,
+      "body": "75 m",
+      "image_path": null,
+      "is_correct": true,
+      "position": 2,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 206,
+      "question_id": 71,
+      "body": "125 m",
+      "image_path": null,
+      "is_correct": false,
+      "position": 3,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 20,
+     "name": "Kinematika"
+    }
+   },
+   {
+    "id": 126,
+    "organization_id": 1,
+    "subject_id": 2,
+    "topic_id": 20,
+    "type": "single",
+    "body": "Velosipedchi yo'lning birinchi yarmini 40 km/soat, ikkinchi yarmini 60 km/soat tezlik bilan bosib o'tdi. Butun yo'ldagi o'rtacha tezlikni toping.",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 2,
+    "explanation": "v = 2v₁v₂/(v₁+v₂) = 4800/100 = 48 km/soat.",
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T18:03:23.000000Z",
+    "updated_at": "2026-10-19T18:03:23.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": 506,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 12,
+     "question_id": 126,
+     "position": 3,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 423,
+      "question_id": 126,
+      "body": "50 km/soat",
+      "image_path": null,
+      "is_correct": false,
+      "position": 0,
+      "created_at": "2026-10-19T18:03:23.000000Z",
+      "updated_at": "2026-10-19T18:03:23.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 424,
+      "question_id": 126,
+      "body": "48 km/soat",
+      "image_path": null,
+      "is_correct": true,
+      "position": 1,
+      "created_at": "2026-10-19T18:03:23.000000Z",
+      "updated_at": "2026-10-19T18:03:23.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 425,
+      "question_id": 126,
+      "body": "45 km/soat",
+      "image_path": null,
+      "is_correct": false,
+      "position": 2,
+      "created_at": "2026-10-19T18:03:23.000000Z",
+      "updated_at": "2026-10-19T18:03:23.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 426,
+      "question_id": 126,
+      "body": "52 km/soat",
+      "image_path": null,
+      "is_correct": false,
+      "position": 3,
+      "created_at": "2026-10-19T18:03:23.000000Z",
+      "updated_at": "2026-10-19T18:03:23.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 20,
+     "name": "Kinematika"
+    }
+   },
+   {
+    "id": 135,
+    "organization_id": 1,
+    "subject_id": 2,
+    "topic_id": 20,
+    "type": "single",
+    "body": "Tinch holatdan tekis tezlanuvchan harakat boshlagan jism birinchi 3 s da 18 m yo'l bosdi. 5-sekund oxirida uning tezligi qancha bo'ladi?",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 2,
+    "explanation": "18 = a·9/2, a = 4 m/s²; v = at = 20 m/s.",
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T18:03:23.000000Z",
+    "updated_at": "2026-10-19T18:03:23.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": 1456,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 12,
+     "question_id": 135,
+     "position": 4,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 459,
+      "question_id": 135,
+      "body": "20 m/s",
+      "image_path": null,
+      "is_correct": true,
+      "position": 0,
+      "created_at": "2026-10-19T18:03:23.000000Z",
+      "updated_at": "2026-10-19T18:03:23.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 460,
+      "question_id": 135,
+      "body": "18 m/s",
+      "image_path": null,
+      "is_correct": false,
+      "position": 1,
+      "created_at": "2026-10-19T18:03:23.000000Z",
+      "updated_at": "2026-10-19T18:03:23.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 461,
+      "question_id": 135,
+      "body": "10 m/s",
+      "image_path": null,
+      "is_correct": false,
+      "position": 2,
+      "created_at": "2026-10-19T18:03:23.000000Z",
+      "updated_at": "2026-10-19T18:03:23.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 462,
+      "question_id": 135,
+      "body": "50 m/s",
+      "image_path": null,
+      "is_correct": false,
+      "position": 3,
+      "created_at": "2026-10-19T18:03:23.000000Z",
+      "updated_at": "2026-10-19T18:03:23.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 20,
+     "name": "Kinematika"
+    }
+   },
+   {
+    "id": 159,
+    "organization_id": 1,
+    "subject_id": 2,
+    "topic_id": 27,
+    "type": "single",
+    "body": "20 m/s tezlik bilan ketayotgan avtomobil tormozlana boshlab, 40 m yo'l bosib to'xtadi. Tormozlanish tezlanishining moduli qancha?",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 2,
+    "explanation": "a = v₀²/(2s) = 400/80 = 5 m/s².",
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T18:06:07.000000Z",
+    "updated_at": "2026-10-19T18:06:07.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": 1399,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 12,
+     "question_id": 159,
+     "position": 5,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 555,
+      "question_id": 159,
+      "body": "10 m/s²",
+      "image_path": null,
+      "is_correct": false,
+      "position": 0,
+      "created_at": "2026-10-19T18:06:07.000000Z",
+      "updated_at": "2026-10-19T18:06:07.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 556,
+      "question_id": 159,
+      "body": "2,5 m/s²",
+      "image_path": null,
+      "is_correct": false,
+      "position": 1,
+      "created_at": "2026-10-19T18:06:07.000000Z",
+      "updated_at": "2026-10-19T18:06:07.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 557,
+      "question_id": 159,
+      "body": "0,5 m/s²",
+      "image_path": null,
+      "is_correct": false,
+      "position": 2,
+      "created_at": "2026-10-19T18:06:07.000000Z",
+      "updated_at": "2026-10-19T18:06:07.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 558,
+      "question_id": 159,
+      "body": "5 m/s²",
+      "image_path": null,
+      "is_correct": true,
+      "position": 3,
+      "created_at": "2026-10-19T18:06:07.000000Z",
+      "updated_at": "2026-10-19T18:06:07.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 27,
+     "name": "Tekis va tekis o'zgaruvchan to'g'ri chiziqli harakat"
+    }
+   },
+   {
+    "id": 72,
+    "organization_id": 1,
+    "subject_id": 2,
+    "topic_id": 20,
+    "type": "single",
+    "body": "Jism 45 m balandlikdan boshlang'ich tezliksiz tushmoqda. U yerga necha sekundda yetib keladi? ($g=10$ m/s²)",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 1,
+    "explanation": "t = √(2h/g) = √9 = 3 s.",
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T18:01:18.000000Z",
+    "updated_at": "2026-10-19T18:01:18.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": 502,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 12,
+     "question_id": 72,
+     "position": 6,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 207,
+      "question_id": 72,
+      "body": "2 s",
+      "image_path": null,
+      "is_correct": false,
+      "position": 0,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 208,
+      "question_id": 72,
+      "body": "4,5 s",
+      "image_path": null,
+      "is_correct": false,
+      "position": 1,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 209,
+      "question_id": 72,
+      "body": "9 s",
+      "image_path": null,
+      "is_correct": false,
+      "position": 2,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 210,
+      "question_id": 72,
+      "body": "3 s",
+      "image_path": null,
+      "is_correct": true,
+      "position": 3,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 20,
+     "name": "Kinematika"
+    }
+   },
+   {
+    "id": 165,
+    "organization_id": 1,
+    "subject_id": 2,
+    "topic_id": 28,
+    "type": "single",
+    "body": "Havosi so'rib olingan uzun nayda bir xil balandlikdan bir vaqtda qo'yib yuborilgan qo'rg'oshin sharcha va pat qanday tushadi?",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 1,
+    "explanation": "Havo qarshiligi bo'lmaganda barcha jismlar bir xil g tezlanish bilan tushadi, shuning uchun nay tubiga bir vaqtda yetib boradi.",
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T18:06:07.000000Z",
+    "updated_at": "2026-10-19T18:06:07.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": 3396,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 12,
+     "question_id": 165,
+     "position": 7,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 579,
+      "question_id": 165,
+      "body": "Qo'rg'oshin sharcha oldin tushadi",
+      "image_path": null,
+      "is_correct": false,
+      "position": 0,
+      "created_at": "2026-10-19T18:06:07.000000Z",
+      "updated_at": "2026-10-19T18:06:07.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 580,
+      "question_id": 165,
+      "body": "Pat oldin tushadi",
+      "image_path": null,
+      "is_correct": false,
+      "position": 1,
+      "created_at": "2026-10-19T18:06:07.000000Z",
+      "updated_at": "2026-10-19T18:06:07.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 581,
+      "question_id": 165,
+      "body": "Pat umuman tushmaydi",
+      "image_path": null,
+      "is_correct": false,
+      "position": 2,
+      "created_at": "2026-10-19T18:06:07.000000Z",
+      "updated_at": "2026-10-19T18:06:07.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 582,
+      "question_id": 165,
+      "body": "Ikkalasi bir vaqtda tushadi",
+      "image_path": null,
+      "is_correct": true,
+      "position": 3,
+      "created_at": "2026-10-19T18:06:07.000000Z",
+      "updated_at": "2026-10-19T18:06:07.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 28,
+     "name": "Erkin tushish va vertikal otilgan jism harakati"
+    }
+   },
+   {
+    "id": 108,
+    "organization_id": 1,
+    "subject_id": 2,
+    "topic_id": 28,
+    "type": "single",
+    "body": "Jism vertikal yuqoriga 30 m/s tezlik bilan otildi. U necha sekunddan keyin otilgan joyiga qaytib tushadi? ($g=10$ m/s², havo qarshiligi yo'q)",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 2,
+    "explanation": "Ko'tarilish vaqti t = v₀/g = 3 s, tushish vaqti ham 3 s; jami 2v₀/g = 6 s.",
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T18:01:18.000000Z",
+    "updated_at": "2026-10-19T18:01:18.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": 3397,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 12,
+     "question_id": 108,
+     "position": 8,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 351,
+      "question_id": 108,
+      "body": "3 s",
+      "image_path": null,
+      "is_correct": false,
+      "position": 0,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 352,
+      "question_id": 108,
+      "body": "6 s",
+      "image_path": null,
+      "is_correct": true,
+      "position": 1,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 353,
+      "question_id": 108,
+      "body": "12 s",
+      "image_path": null,
+      "is_correct": false,
+      "position": 2,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 354,
+      "question_id": 108,
+      "body": "4,5 s",
+      "image_path": null,
+      "is_correct": false,
+      "position": 3,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 28,
+     "name": "Erkin tushish va vertikal otilgan jism harakati"
+    }
+   },
+   {
+    "id": 109,
+    "organization_id": 1,
+    "subject_id": 2,
+    "topic_id": 28,
+    "type": "single",
+    "body": "Vertikal yuqoriga otilgan jism harakat boshlangandan 1 s va 3 s o'tgan paytlarda bir xil balandlikda bo'ldi. Jismning boshlang'ich tezligi qancha? ($g=10$ m/s², havo qarshiligi yo'q)",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 3,
+    "explanation": "Harakat eng yuqori nuqtaga nisbatan simmetrik: ko'tarilish vaqti (1+3)/2 = 2 s. v₀ = g·t = 10·2 = 20 m/s.",
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T18:01:18.000000Z",
+    "updated_at": "2026-10-19T18:01:18.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": 3399,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 12,
+     "question_id": 109,
+     "position": 9,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 355,
+      "question_id": 109,
+      "body": "40 m/s",
+      "image_path": null,
+      "is_correct": false,
+      "position": 0,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 356,
+      "question_id": 109,
+      "body": "10 m/s",
+      "image_path": null,
+      "is_correct": false,
+      "position": 1,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 357,
+      "question_id": 109,
+      "body": "30 m/s",
+      "image_path": null,
+      "is_correct": false,
+      "position": 2,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 358,
+      "question_id": 109,
+      "body": "20 m/s",
+      "image_path": null,
+      "is_correct": true,
+      "position": 3,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 28,
+     "name": "Erkin tushish va vertikal otilgan jism harakati"
+    }
+   },
+   {
+    "id": 144,
+    "organization_id": 1,
+    "subject_id": 2,
+    "topic_id": 28,
+    "type": "single",
+    "body": "Boshlang'ich tezliksiz erkin tushayotgan jism uchinchi sekund davomida qancha yo'l bosadi? ($g=10$ m/s²)",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 2,
+    "explanation": "s₃ = g·3²/2 − g·2²/2 = 45 − 20 = 25 m.",
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T18:03:23.000000Z",
+    "updated_at": "2026-10-19T18:03:23.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": 3398,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 12,
+     "question_id": 144,
+     "position": 10,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 495,
+      "question_id": 144,
+      "body": "45 m",
+      "image_path": null,
+      "is_correct": false,
+      "position": 0,
+      "created_at": "2026-10-19T18:03:23.000000Z",
+      "updated_at": "2026-10-19T18:03:23.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 496,
+      "question_id": 144,
+      "body": "25 m",
+      "image_path": null,
+      "is_correct": true,
+      "position": 1,
+      "created_at": "2026-10-19T18:03:23.000000Z",
+      "updated_at": "2026-10-19T18:03:23.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 497,
+      "question_id": 144,
+      "body": "30 m",
+      "image_path": null,
+      "is_correct": false,
+      "position": 2,
+      "created_at": "2026-10-19T18:03:23.000000Z",
+      "updated_at": "2026-10-19T18:03:23.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 498,
+      "question_id": 144,
+      "body": "15 m",
+      "image_path": null,
+      "is_correct": false,
+      "position": 3,
+      "created_at": "2026-10-19T18:03:23.000000Z",
+      "updated_at": "2026-10-19T18:03:23.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 28,
+     "name": "Erkin tushish va vertikal otilgan jism harakati"
+    }
+   },
+   {
+    "id": 111,
+    "organization_id": 1,
+    "subject_id": 2,
+    "topic_id": 29,
+    "type": "single",
+    "body": "Bir xil boshlang'ich tezlik bilan otilgan jism gorizontga qanday burchak ostida otilganda eng uzoqqa tushadi? (havo qarshiligi yo'q, otilish va tushish nuqtalari bir sathda)",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 2,
+    "explanation": "L = v₀²·sin2α/g; sin2α eng katta qiymatga (1 ga) 2α = 90°, ya'ni α = 45° da erishadi.",
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T18:01:18.000000Z",
+    "updated_at": "2026-10-19T18:01:18.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": 3404,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 12,
+     "question_id": 111,
+     "position": 11,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 363,
+      "question_id": 111,
+      "body": "$30^\\circ$",
+      "image_path": null,
+      "is_correct": false,
+      "position": 0,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 364,
+      "question_id": 111,
+      "body": "$60^\\circ$",
+      "image_path": null,
+      "is_correct": false,
+      "position": 1,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 365,
+      "question_id": 111,
+      "body": "$45^\\circ$",
+      "image_path": null,
+      "is_correct": true,
+      "position": 2,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 366,
+      "question_id": 111,
+      "body": "$90^\\circ$",
+      "image_path": null,
+      "is_correct": false,
+      "position": 3,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 29,
+     "name": "Gorizontal va qiya otilgan jism harakati"
+    }
+   },
+   {
+    "id": 82,
+    "organization_id": 1,
+    "subject_id": 2,
+    "topic_id": 20,
+    "type": "single",
+    "body": "Jism gorizontga $30^\\circ$ burchak ostida $v_0=20$ m/s tezlik bilan otildi. Uning uchish uzoqligini toping. ($g=10$ m/s², havo qarshiligi hisobga olinmasin)",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 2,
+    "explanation": "L = v₀²·sin2α/g = 400·(√3/2)/10 = 20√3 ≈ 34,6 m.",
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T18:01:18.000000Z",
+    "updated_at": "2026-10-19T18:01:18.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": 541,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 12,
+     "question_id": 82,
+     "position": 12,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 247,
+      "question_id": 82,
+      "body": "20 m",
+      "image_path": null,
+      "is_correct": false,
+      "position": 0,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 248,
+      "question_id": 82,
+      "body": "40 m",
+      "image_path": null,
+      "is_correct": false,
+      "position": 1,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 249,
+      "question_id": 82,
+      "body": "≈34,6 m",
+      "image_path": null,
+      "is_correct": true,
+      "position": 2,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 250,
+      "question_id": 82,
+      "body": "≈17,3 m",
+      "image_path": null,
+      "is_correct": false,
+      "position": 3,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 20,
+     "name": "Kinematika"
+    }
+   },
+   {
+    "id": 166,
+    "organization_id": 1,
+    "subject_id": 2,
+    "topic_id": 29,
+    "type": "single",
+    "body": "Jism gorizontga $30^\\circ$ burchak ostida 20 m/s tezlik bilan otildi. U qanday eng katta balandlikka ko'tariladi? ($g=10$ m/s², havo qarshiligi yo'q)",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 2,
+    "explanation": "H = v₀²·sin²α/(2g) = 400·0,25/20 = 5 m.",
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T18:06:07.000000Z",
+    "updated_at": "2026-10-19T18:06:07.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": 3403,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 12,
+     "question_id": 166,
+     "position": 13,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 583,
+      "question_id": 166,
+      "body": "10 m",
+      "image_path": null,
+      "is_correct": false,
+      "position": 0,
+      "created_at": "2026-10-19T18:06:07.000000Z",
+      "updated_at": "2026-10-19T18:06:07.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 584,
+      "question_id": 166,
+      "body": "5 m",
+      "image_path": null,
+      "is_correct": true,
+      "position": 1,
+      "created_at": "2026-10-19T18:06:07.000000Z",
+      "updated_at": "2026-10-19T18:06:07.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 585,
+      "question_id": 166,
+      "body": "20 m",
+      "image_path": null,
+      "is_correct": false,
+      "position": 2,
+      "created_at": "2026-10-19T18:06:07.000000Z",
+      "updated_at": "2026-10-19T18:06:07.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 586,
+      "question_id": 166,
+      "body": "2,5 m",
+      "image_path": null,
+      "is_correct": false,
+      "position": 3,
+      "created_at": "2026-10-19T18:06:07.000000Z",
+      "updated_at": "2026-10-19T18:06:07.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 29,
+     "name": "Gorizontal va qiya otilgan jism harakati"
+    }
+   },
+   {
+    "id": 74,
+    "organization_id": 1,
+    "subject_id": 2,
+    "topic_id": 20,
+    "type": "single",
+    "body": "Jism 20 m balandlikdan gorizontal yo'nalishda $v_0=15$ m/s tezlik bilan otildi. U otilgan joydan gorizontal bo'yicha qancha uzoqlikka tushadi? ($g=10$ m/s²)",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 2,
+    "explanation": "t = √(2h/g) = 2 s, l = v₀t = 30 m.",
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T18:01:18.000000Z",
+    "updated_at": "2026-10-19T18:01:18.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": 504,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 12,
+     "question_id": 74,
+     "position": 14,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 215,
+      "question_id": 74,
+      "body": "30 m",
+      "image_path": null,
+      "is_correct": true,
+      "position": 0,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 216,
+      "question_id": 74,
+      "body": "20 m",
+      "image_path": null,
+      "is_correct": false,
+      "position": 1,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 217,
+      "question_id": 74,
+      "body": "15 m",
+      "image_path": null,
+      "is_correct": false,
+      "position": 2,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 218,
+      "question_id": 74,
+      "body": "45 m",
+      "image_path": null,
+      "is_correct": false,
+      "position": 3,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 20,
+     "name": "Kinematika"
+    }
+   },
+   {
+    "id": 145,
+    "organization_id": 1,
+    "subject_id": 2,
+    "topic_id": 29,
+    "type": "single",
+    "body": "Jism 5 m balandlikdan gorizontal otildi va otilgan joydan gorizontal bo'yicha 8 m masofaga tushdi. Jismning boshlang'ich tezligi qancha? ($g=10$ m/s²)",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 2,
+    "explanation": "Tushish vaqti t = √(2h/g) = √1 = 1 s. v₀ = L/t = 8/1 = 8 m/s.",
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T18:03:23.000000Z",
+    "updated_at": "2026-10-19T18:03:23.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": 3402,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 12,
+     "question_id": 145,
+     "position": 15,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 499,
+      "question_id": 145,
+      "body": "4 m/s",
+      "image_path": null,
+      "is_correct": false,
+      "position": 0,
+      "created_at": "2026-10-19T18:03:23.000000Z",
+      "updated_at": "2026-10-19T18:03:23.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 500,
+      "question_id": 145,
+      "body": "16 m/s",
+      "image_path": null,
+      "is_correct": false,
+      "position": 1,
+      "created_at": "2026-10-19T18:03:23.000000Z",
+      "updated_at": "2026-10-19T18:03:23.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 501,
+      "question_id": 145,
+      "body": "10 m/s",
+      "image_path": null,
+      "is_correct": false,
+      "position": 2,
+      "created_at": "2026-10-19T18:03:23.000000Z",
+      "updated_at": "2026-10-19T18:03:23.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 502,
+      "question_id": 145,
+      "body": "8 m/s",
+      "image_path": null,
+      "is_correct": true,
+      "position": 3,
+      "created_at": "2026-10-19T18:03:23.000000Z",
+      "updated_at": "2026-10-19T18:03:23.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 29,
+     "name": "Gorizontal va qiya otilgan jism harakati"
+    }
+   },
+   {
+    "id": 113,
+    "organization_id": 1,
+    "subject_id": 2,
+    "topic_id": 30,
+    "type": "single",
+    "body": "Avtobus keskin tormozlanganda yo'lovchilar oldinga og'adi. Bu qaysi hodisa bilan tushuntiriladi?",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 1,
+    "explanation": "Yo'lovchilarning tanasi inersiya tufayli avvalgi tezligini saqlashga intiladi, avtobus esa sekinlashadi.",
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T18:01:18.000000Z",
+    "updated_at": "2026-10-19T18:01:18.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": 3414,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 12,
+     "question_id": 113,
+     "position": 16,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 371,
+      "question_id": 113,
+      "body": "Diffuziya",
+      "image_path": null,
+      "is_correct": false,
+      "position": 0,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 372,
+      "question_id": 113,
+      "body": "Inersiya",
+      "image_path": null,
+      "is_correct": true,
+      "position": 1,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 373,
+      "question_id": 113,
+      "body": "Rezonans",
+      "image_path": null,
+      "is_correct": false,
+      "position": 2,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 374,
+      "question_id": 113,
+      "body": "Elektromagnit induksiya",
+      "image_path": null,
+      "is_correct": false,
+      "position": 3,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 30,
+     "name": "Nyuton qonunlari va jismning og'irligi"
+    }
+   },
+   {
+    "id": 161,
+    "organization_id": 1,
+    "subject_id": 2,
+    "topic_id": 30,
+    "type": "single",
+    "body": "Tinch turgan 5 kg massali jismga 4 s davomida 10 N o'zgarmas kuch ta'sir qildi. Ishqalanish yo'q. Jism qanday tezlikka erishadi?",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 1,
+    "explanation": "a = F/m = 2 m/s²; v = at = 8 m/s.",
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T18:06:07.000000Z",
+    "updated_at": "2026-10-19T18:06:07.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": 1458,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 12,
+     "question_id": 161,
+     "position": 17,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 563,
+      "question_id": 161,
+      "body": "8 m/s",
+      "image_path": null,
+      "is_correct": true,
+      "position": 0,
+      "created_at": "2026-10-19T18:06:07.000000Z",
+      "updated_at": "2026-10-19T18:06:07.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 564,
+      "question_id": 161,
+      "body": "2 m/s",
+      "image_path": null,
+      "is_correct": false,
+      "position": 1,
+      "created_at": "2026-10-19T18:06:07.000000Z",
+      "updated_at": "2026-10-19T18:06:07.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 565,
+      "question_id": 161,
+      "body": "50 m/s",
+      "image_path": null,
+      "is_correct": false,
+      "position": 2,
+      "created_at": "2026-10-19T18:06:07.000000Z",
+      "updated_at": "2026-10-19T18:06:07.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 566,
+      "question_id": 161,
+      "body": "40 m/s",
+      "image_path": null,
+      "is_correct": false,
+      "position": 3,
+      "created_at": "2026-10-19T18:06:07.000000Z",
+      "updated_at": "2026-10-19T18:06:07.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 30,
+     "name": "Nyuton qonunlari va jismning og'irligi"
+    }
+   },
+   {
+    "id": 148,
+    "organization_id": 1,
+    "subject_id": 2,
+    "topic_id": 30,
+    "type": "single",
+    "body": "Biror F kuch $m_1$ massali jismga 6 m/s², $m_2$ massali jismga 3 m/s² tezlanish beradi. Shu kuch bir-biriga mahkamlangan bu ikki jismga qanday tezlanish beradi?",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 3,
+    "explanation": "m₁ = F/6, m₂ = F/3; m₁ + m₂ = F/2. a = F/(m₁ + m₂) = 2 m/s².",
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T18:03:23.000000Z",
+    "updated_at": "2026-10-19T18:03:23.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": 3419,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 12,
+     "question_id": 148,
+     "position": 18,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 511,
+      "question_id": 148,
+      "body": "4,5 m/s²",
+      "image_path": null,
+      "is_correct": false,
+      "position": 0,
+      "created_at": "2026-10-19T18:03:23.000000Z",
+      "updated_at": "2026-10-19T18:03:23.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 512,
+      "question_id": 148,
+      "body": "2 m/s²",
+      "image_path": null,
+      "is_correct": true,
+      "position": 1,
+      "created_at": "2026-10-19T18:03:23.000000Z",
+      "updated_at": "2026-10-19T18:03:23.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 513,
+      "question_id": 148,
+      "body": "9 m/s²",
+      "image_path": null,
+      "is_correct": false,
+      "position": 2,
+      "created_at": "2026-10-19T18:03:23.000000Z",
+      "updated_at": "2026-10-19T18:03:23.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 514,
+      "question_id": 148,
+      "body": "3 m/s²",
+      "image_path": null,
+      "is_correct": false,
+      "position": 3,
+      "created_at": "2026-10-19T18:03:23.000000Z",
+      "updated_at": "2026-10-19T18:03:23.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 30,
+     "name": "Nyuton qonunlari va jismning og'irligi"
+    }
+   },
+   {
+    "id": 75,
+    "organization_id": 1,
+    "subject_id": 2,
+    "topic_id": 21,
+    "type": "single",
+    "body": "Massasi 60 kg bo'lgan odam liftda turibdi. Lift yuqoriga 2 m/s² tezlanish bilan ko'tarilayotganda odamning og'irligi qancha bo'ladi? ($g=10$ m/s²)",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 2,
+    "explanation": "P = m(g + a) = 60·12 = 720 N.",
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T18:01:18.000000Z",
+    "updated_at": "2026-10-19T18:01:18.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": 508,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 12,
+     "question_id": 75,
+     "position": 19,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 219,
+      "question_id": 75,
+      "body": "600 N",
+      "image_path": null,
+      "is_correct": false,
+      "position": 0,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 220,
+      "question_id": 75,
+      "body": "480 N",
+      "image_path": null,
+      "is_correct": false,
+      "position": 1,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 221,
+      "question_id": 75,
+      "body": "720 N",
+      "image_path": null,
+      "is_correct": true,
+      "position": 2,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 222,
+      "question_id": 75,
+      "body": "120 N",
+      "image_path": null,
+      "is_correct": false,
+      "position": 3,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 21,
+     "name": "Dinamika"
+    }
+   },
+   {
+    "id": 147,
+    "organization_id": 1,
+    "subject_id": 2,
+    "topic_id": 30,
+    "type": "single",
+    "body": "Quyidagi hollardan qaysi birida jism vaznsizlik holatida bo'ladi?",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 2,
+    "explanation": "Vaznsizlikda jism tayanchga bosmaydi (P = 0); bu jism faqat og'irlik kuchi ta'sirida g tezlanish bilan harakatlanganda ro'y beradi.",
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T18:03:23.000000Z",
+    "updated_at": "2026-10-19T18:03:23.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": 3418,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 12,
+     "question_id": 147,
+     "position": 20,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 507,
+      "question_id": 147,
+      "body": "Jism Yer sirtida tinch turganda",
+      "image_path": null,
+      "is_correct": false,
+      "position": 0,
+      "created_at": "2026-10-19T18:03:23.000000Z",
+      "updated_at": "2026-10-19T18:03:23.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 508,
+      "question_id": 147,
+      "body": "Lift yuqoriga tezlanish bilan ko'tarilayotganda",
+      "image_path": null,
+      "is_correct": false,
+      "position": 1,
+      "created_at": "2026-10-19T18:03:23.000000Z",
+      "updated_at": "2026-10-19T18:03:23.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 509,
+      "question_id": 147,
+      "body": "Lift o'zgarmas tezlik bilan tushayotganda",
+      "image_path": null,
+      "is_correct": false,
+      "position": 2,
+      "created_at": "2026-10-19T18:03:23.000000Z",
+      "updated_at": "2026-10-19T18:03:23.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 510,
+      "question_id": 147,
+      "body": "Jism faqat og'irlik kuchi ta'sirida erkin tushayotganda",
+      "image_path": null,
+      "is_correct": true,
+      "position": 3,
+      "created_at": "2026-10-19T18:03:23.000000Z",
+      "updated_at": "2026-10-19T18:03:23.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 30,
+     "name": "Nyuton qonunlari va jismning og'irligi"
+    }
+   },
+   {
+    "id": 76,
+    "organization_id": 1,
+    "subject_id": 2,
+    "topic_id": 21,
+    "type": "single",
+    "body": "Bikrligi 200 N/m bo'lgan prujinaga 10 N kuch ta'sir qilsa, u qanchaga cho'ziladi?",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 1,
+    "explanation": "x = F/k = 10/200 = 0,05 m = 5 sm.",
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T18:01:18.000000Z",
+    "updated_at": "2026-10-19T18:01:18.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": 509,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 12,
+     "question_id": 76,
+     "position": 21,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 223,
+      "question_id": 76,
+      "body": "5 sm",
+      "image_path": null,
+      "is_correct": true,
+      "position": 0,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 224,
+      "question_id": 76,
+      "body": "2 sm",
+      "image_path": null,
+      "is_correct": false,
+      "position": 1,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 225,
+      "question_id": 76,
+      "body": "20 sm",
+      "image_path": null,
+      "is_correct": false,
+      "position": 2,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 226,
+      "question_id": 76,
+      "body": "0,5 sm",
+      "image_path": null,
+      "is_correct": false,
+      "position": 3,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 21,
+     "name": "Dinamika"
+    }
+   },
+   {
+    "id": 167,
+    "organization_id": 1,
+    "subject_id": 2,
+    "topic_id": 31,
+    "type": "single",
+    "body": "20 m/s tezlik bilan ketayotgan avtomobil g'ildiraklari to'liq tormozlanib, sirpanib to'xtadi. Shina va yo'l orasidagi ishqalanish koeffitsiyenti 0,5. Tormozlanish yo'li qancha? ($g=10$ m/s²)",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 2,
+    "explanation": "a = μg = 5 m/s²; s = v²/(2a) = 400/10 = 40 m.",
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T18:06:07.000000Z",
+    "updated_at": "2026-10-19T18:06:07.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": 3424,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 12,
+     "question_id": 167,
+     "position": 22,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 587,
+      "question_id": 167,
+      "body": "20 m",
+      "image_path": null,
+      "is_correct": false,
+      "position": 0,
+      "created_at": "2026-10-19T18:06:07.000000Z",
+      "updated_at": "2026-10-19T18:06:07.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 588,
+      "question_id": 167,
+      "body": "40 m",
+      "image_path": null,
+      "is_correct": true,
+      "position": 1,
+      "created_at": "2026-10-19T18:06:07.000000Z",
+      "updated_at": "2026-10-19T18:06:07.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 589,
+      "question_id": 167,
+      "body": "80 m",
+      "image_path": null,
+      "is_correct": false,
+      "position": 2,
+      "created_at": "2026-10-19T18:06:07.000000Z",
+      "updated_at": "2026-10-19T18:06:07.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 590,
+      "question_id": 167,
+      "body": "4 m",
+      "image_path": null,
+      "is_correct": false,
+      "position": 3,
+      "created_at": "2026-10-19T18:06:07.000000Z",
+      "updated_at": "2026-10-19T18:06:07.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 31,
+     "name": "Ishqalanish va elastiklik kuchlari"
+    }
+   },
+   {
+    "id": 115,
+    "organization_id": 1,
+    "subject_id": 2,
+    "topic_id": 31,
+    "type": "single",
+    "body": "Elastiklik kuchi uchun Guk qonuni qaysi formula bilan ifodalanadi?",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 1,
+    "explanation": "Guk qonuni: elastiklik kuchi deformatsiyaga proporsional va unga qarama-qarshi yo'nalgan, F = −kx.",
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T18:01:18.000000Z",
+    "updated_at": "2026-10-19T18:01:18.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": 3420,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 12,
+     "question_id": 115,
+     "position": 23,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 379,
+      "question_id": 115,
+      "body": "$F=\\mu N$",
+      "image_path": null,
+      "is_correct": false,
+      "position": 0,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 380,
+      "question_id": 115,
+      "body": "$F=mg$",
+      "image_path": null,
+      "is_correct": false,
+      "position": 1,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 381,
+      "question_id": 115,
+      "body": "$F=-kx$",
+      "image_path": null,
+      "is_correct": true,
+      "position": 2,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 382,
+      "question_id": 115,
+      "body": "$F=G\\frac{m_1m_2}{r^2}$",
+      "image_path": null,
+      "is_correct": false,
+      "position": 3,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 31,
+     "name": "Ishqalanish va elastiklik kuchlari"
+    }
+   },
+   {
+    "id": 89,
+    "organization_id": 1,
+    "subject_id": 2,
+    "topic_id": 21,
+    "type": "single",
+    "body": "Massasi 5 kg bo'lgan brusokni gorizontal sirt bo'ylab tekis harakatlantirish uchun 15 N gorizontal kuch kerak. Ishqalanish koeffitsiyenti qancha? ($g=10$ m/s²)",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 2,
+    "explanation": "Tekis harakatda F = μmg, μ = 15/50 = 0,3.",
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T18:01:18.000000Z",
+    "updated_at": "2026-10-19T18:01:18.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": 1402,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 12,
+     "question_id": 89,
+     "position": 24,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 275,
+      "question_id": 89,
+      "body": "0,03",
+      "image_path": null,
+      "is_correct": false,
+      "position": 0,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 276,
+      "question_id": 89,
+      "body": "3",
+      "image_path": null,
+      "is_correct": false,
+      "position": 1,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 277,
+      "question_id": 89,
+      "body": "0,15",
+      "image_path": null,
+      "is_correct": false,
+      "position": 2,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 278,
+      "question_id": 89,
+      "body": "0,3",
+      "image_path": null,
+      "is_correct": true,
+      "position": 3,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 21,
+     "name": "Dinamika"
+    }
+   },
+   {
+    "id": 116,
+    "organization_id": 1,
+    "subject_id": 2,
+    "topic_id": 31,
+    "type": "single",
+    "body": "Prujinaga 2 kg massali yuk osilganda u 4 sm ga cho'zildi. Prujinaning bikrligi qancha? ($g=10$ m/s²)",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 2,
+    "explanation": "Muvozanatda kx = mg ⇒ k = 20/0,04 = 500 N/m.",
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T18:01:18.000000Z",
+    "updated_at": "2026-10-19T18:01:18.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": 3421,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 12,
+     "question_id": 116,
+     "position": 25,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 383,
+      "question_id": 116,
+      "body": "500 N/m",
+      "image_path": null,
+      "is_correct": true,
+      "position": 0,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 384,
+      "question_id": 116,
+      "body": "50 N/m",
+      "image_path": null,
+      "is_correct": false,
+      "position": 1,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 385,
+      "question_id": 116,
+      "body": "5000 N/m",
+      "image_path": null,
+      "is_correct": false,
+      "position": 2,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 386,
+      "question_id": 116,
+      "body": "80 N/m",
+      "image_path": null,
+      "is_correct": false,
+      "position": 3,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 31,
+     "name": "Ishqalanish va elastiklik kuchlari"
+    }
+   },
+   {
+    "id": 118,
+    "organization_id": 1,
+    "subject_id": 2,
+    "topic_id": 32,
+    "type": "single",
+    "body": "Gorizontal stolda turgan 2 kg massali brusok stol chetidagi blok orqali o'tkazilgan ip bilan 2 kg massali osilgan yukka bog'langan. Brusok va stol orasidagi ishqalanish koeffitsiyenti 0,25. Ipning taranglik kuchi qancha? ($g=10$ m/s², ip va blok vaznsiz)",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 3,
+    "explanation": "a = (m₂g − μm₁g)/(m₁ + m₂) = (20 − 5)/4 = 3,75 m/s²; T = m₂(g − a) = 2·6,25 = 12,5 N.",
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T18:01:18.000000Z",
+    "updated_at": "2026-10-19T18:01:18.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": 3429,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 12,
+     "question_id": 118,
+     "position": 26,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 391,
+      "question_id": 118,
+      "body": "20 N",
+      "image_path": null,
+      "is_correct": false,
+      "position": 0,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 392,
+      "question_id": 118,
+      "body": "12,5 N",
+      "image_path": null,
+      "is_correct": true,
+      "position": 1,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 393,
+      "question_id": 118,
+      "body": "10 N",
+      "image_path": null,
+      "is_correct": false,
+      "position": 2,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 394,
+      "question_id": 118,
+      "body": "15 N",
+      "image_path": null,
+      "is_correct": false,
+      "position": 3,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 32,
+     "name": "Qiya tekislik va bog'langan jismlar harakati"
+    }
+   },
+   {
+    "id": 101,
+    "organization_id": 1,
+    "subject_id": 2,
+    "topic_id": 21,
+    "type": "single",
+    "body": "Silliq gorizontal stolda turgan 3 kg massali brusok stol chetidagi blok orqali o'tkazilgan ip bilan 1 kg massali osilgan yukka bog'langan. Sistemaning tezlanishi qancha? ($g=10$ m/s², ip va blok vaznsiz)",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 2,
+    "explanation": "a = m₂g/(m₁ + m₂) = 10/4 = 2,5 m/s².",
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T18:01:18.000000Z",
+    "updated_at": "2026-10-19T18:01:18.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": 1460,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 12,
+     "question_id": 101,
+     "position": 27,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 323,
+      "question_id": 101,
+      "body": "5 m/s²",
+      "image_path": null,
+      "is_correct": false,
+      "position": 0,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 324,
+      "question_id": 101,
+      "body": "10 m/s²",
+      "image_path": null,
+      "is_correct": false,
+      "position": 1,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 325,
+      "question_id": 101,
+      "body": "2,5 m/s²",
+      "image_path": null,
+      "is_correct": true,
+      "position": 2,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 326,
+      "question_id": 101,
+      "body": "3,3 m/s²",
+      "image_path": null,
+      "is_correct": false,
+      "position": 3,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 21,
+     "name": "Dinamika"
+    }
+   },
+   {
+    "id": 78,
+    "organization_id": 1,
+    "subject_id": 2,
+    "topic_id": 21,
+    "type": "single",
+    "body": "Silliq gorizontal sirtda ip bilan bog'langan $m_1=2$ kg va $m_2=3$ kg massali jismlar yotibdi. $m_1$ jismga 10 N gorizontal kuch qo'yib tortilsa, ipning taranglik kuchi qancha bo'ladi?",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 2,
+    "explanation": "a = F/(m₁+m₂) = 2 m/s², T = m₂a = 6 N.",
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T18:01:18.000000Z",
+    "updated_at": "2026-10-19T18:01:18.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": 511,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 12,
+     "question_id": 78,
+     "position": 28,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 231,
+      "question_id": 78,
+      "body": "4 N",
+      "image_path": null,
+      "is_correct": false,
+      "position": 0,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 232,
+      "question_id": 78,
+      "body": "6 N",
+      "image_path": null,
+      "is_correct": true,
+      "position": 1,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 233,
+      "question_id": 78,
+      "body": "10 N",
+      "image_path": null,
+      "is_correct": false,
+      "position": 2,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 234,
+      "question_id": 78,
+      "body": "5 N",
+      "image_path": null,
+      "is_correct": false,
+      "position": 3,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 21,
+     "name": "Dinamika"
+    }
+   },
+   {
+    "id": 168,
+    "organization_id": 1,
+    "subject_id": 2,
+    "topic_id": 32,
+    "type": "single",
+    "body": "Qiyalik burchagi α bo'lgan silliq qiya tekislikdan sirpanayotgan jismning tezlanishi qaysi formula bilan topiladi?",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 1,
+    "explanation": "Qiya tekislik bo'ylab faqat og'irlik kuchining mg·sinα tashkil etuvchisi ta'sir qiladi: a = g·sinα.",
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T18:06:07.000000Z",
+    "updated_at": "2026-10-19T18:06:07.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": 3426,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 12,
+     "question_id": 168,
+     "position": 29,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 591,
+      "question_id": 168,
+      "body": "$a=g\\cos\\alpha$",
+      "image_path": null,
+      "is_correct": false,
+      "position": 0,
+      "created_at": "2026-10-19T18:06:07.000000Z",
+      "updated_at": "2026-10-19T18:06:07.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 592,
+      "question_id": 168,
+      "body": "$a=g\\,\\mathrm{tg}\\,\\alpha$",
+      "image_path": null,
+      "is_correct": false,
+      "position": 1,
+      "created_at": "2026-10-19T18:06:07.000000Z",
+      "updated_at": "2026-10-19T18:06:07.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 593,
+      "question_id": 168,
+      "body": "$a=g\\sin\\alpha$",
+      "image_path": null,
+      "is_correct": true,
+      "position": 2,
+      "created_at": "2026-10-19T18:06:07.000000Z",
+      "updated_at": "2026-10-19T18:06:07.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 594,
+      "question_id": 168,
+      "body": "$a=g$",
+      "image_path": null,
+      "is_correct": false,
+      "position": 3,
+      "created_at": "2026-10-19T18:06:07.000000Z",
+      "updated_at": "2026-10-19T18:06:07.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 32,
+     "name": "Qiya tekislik va bog'langan jismlar harakati"
+    }
+   },
+   {
+    "id": 150,
+    "organization_id": 1,
+    "subject_id": 2,
+    "topic_id": 32,
+    "type": "single",
+    "body": "Massasi 4 kg bo'lgan brusok qiyalik burchagi $30^\\circ$ bo'lgan qiya tekislikda tinch turibdi. Brusokka ta'sir qilayotgan ishqalanish kuchi qancha? ($g=10$ m/s²)",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 2,
+    "explanation": "Brusok tinch, shuning uchun ishqalanish kuchi og'irlik kuchining qiyalik bo'ylab tashkil etuvchisini muvozanatlaydi: F = mg·sin30° = 20 N.",
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T18:03:23.000000Z",
+    "updated_at": "2026-10-19T18:03:23.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": 3428,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 12,
+     "question_id": 150,
+     "position": 30,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 519,
+      "question_id": 150,
+      "body": "≈34,6 N",
+      "image_path": null,
+      "is_correct": false,
+      "position": 0,
+      "created_at": "2026-10-19T18:03:23.000000Z",
+      "updated_at": "2026-10-19T18:03:23.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 520,
+      "question_id": 150,
+      "body": "40 N",
+      "image_path": null,
+      "is_correct": false,
+      "position": 1,
+      "created_at": "2026-10-19T18:03:23.000000Z",
+      "updated_at": "2026-10-19T18:03:23.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 521,
+      "question_id": 150,
+      "body": "10 N",
+      "image_path": null,
+      "is_correct": false,
+      "position": 2,
+      "created_at": "2026-10-19T18:03:23.000000Z",
+      "updated_at": "2026-10-19T18:03:23.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 522,
+      "question_id": 150,
+      "body": "20 N",
+      "image_path": null,
+      "is_correct": true,
+      "position": 3,
+      "created_at": "2026-10-19T18:03:23.000000Z",
+      "updated_at": "2026-10-19T18:03:23.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 32,
+     "name": "Qiya tekislik va bog'langan jismlar harakati"
+    }
+   },
+   {
+    "id": 169,
+    "organization_id": 1,
+    "subject_id": 2,
+    "topic_id": 33,
+    "type": "single",
+    "body": "Massasi 2 t bo'lgan avtomobil radiusi 50 m bo'lgan botiq ko'prikning eng pastki nuqtasidan 10 m/s tezlik bilan o'tmoqda. Avtomobil ko'prikka qanday kuch bilan bosadi? ($g=10$ m/s²)",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 2,
+    "explanation": "Pastki nuqtada N − mg = mv²/R ⇒ N = m(g + v²/R) = 2000·(10 + 2) = 24 kN.",
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T18:06:07.000000Z",
+    "updated_at": "2026-10-19T18:06:07.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": 3432,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 12,
+     "question_id": 169,
+     "position": 31,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 595,
+      "question_id": 169,
+      "body": "24 kN",
+      "image_path": null,
+      "is_correct": true,
+      "position": 0,
+      "created_at": "2026-10-19T18:06:07.000000Z",
+      "updated_at": "2026-10-19T18:06:07.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 596,
+      "question_id": 169,
+      "body": "16 kN",
+      "image_path": null,
+      "is_correct": false,
+      "position": 1,
+      "created_at": "2026-10-19T18:06:07.000000Z",
+      "updated_at": "2026-10-19T18:06:07.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 597,
+      "question_id": 169,
+      "body": "20 kN",
+      "image_path": null,
+      "is_correct": false,
+      "position": 2,
+      "created_at": "2026-10-19T18:06:07.000000Z",
+      "updated_at": "2026-10-19T18:06:07.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 598,
+      "question_id": 169,
+      "body": "4 kN",
+      "image_path": null,
+      "is_correct": false,
+      "position": 3,
+      "created_at": "2026-10-19T18:06:07.000000Z",
+      "updated_at": "2026-10-19T18:06:07.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 33,
+     "name": "Aylana bo'ylab harakat dinamikasi"
+    }
+   },
+   {
+    "id": 152,
+    "organization_id": 1,
+    "subject_id": 2,
+    "topic_id": 33,
+    "type": "single",
+    "body": "Silliq gorizontal stolda massasi 0,5 kg bo'lgan sharcha ipga bog'langan holda radiusi 0,5 m bo'lgan aylana bo'ylab 2 m/s tezlik bilan aylanmoqda. Ipning taranglik kuchi qancha?",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 2,
+    "explanation": "T = mv²/R = 0,5·4/0,5 = 4 N.",
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T18:03:23.000000Z",
+    "updated_at": "2026-10-19T18:03:23.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": 3431,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 12,
+     "question_id": 152,
+     "position": 32,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 527,
+      "question_id": 152,
+      "body": "2 N",
+      "image_path": null,
+      "is_correct": false,
+      "position": 0,
+      "created_at": "2026-10-19T18:03:23.000000Z",
+      "updated_at": "2026-10-19T18:03:23.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 528,
+      "question_id": 152,
+      "body": "1 N",
+      "image_path": null,
+      "is_correct": false,
+      "position": 1,
+      "created_at": "2026-10-19T18:03:23.000000Z",
+      "updated_at": "2026-10-19T18:03:23.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 529,
+      "question_id": 152,
+      "body": "8 N",
+      "image_path": null,
+      "is_correct": false,
+      "position": 2,
+      "created_at": "2026-10-19T18:03:23.000000Z",
+      "updated_at": "2026-10-19T18:03:23.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 530,
+      "question_id": 152,
+      "body": "4 N",
+      "image_path": null,
+      "is_correct": true,
+      "position": 3,
+      "created_at": "2026-10-19T18:03:23.000000Z",
+      "updated_at": "2026-10-19T18:03:23.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 33,
+     "name": "Aylana bo'ylab harakat dinamikasi"
+    }
+   },
+   {
+    "id": 162,
+    "organization_id": 1,
+    "subject_id": 2,
+    "topic_id": 33,
+    "type": "single",
+    "body": "Avtomobil gorizontal yo'lda radiusi 50 m bo'lgan burilishdan o'tmoqda. Shinalar va yo'l orasidagi ishqalanish koeffitsiyenti 0,5. Avtomobil sirpanmasdan o'tishi mumkin bo'lgan eng katta tezlik qancha? ($g=10$ m/s²)",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 3,
+    "explanation": "μmg = mv²/R, v = √(μgR) = √250 ≈ 15,8 m/s.",
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T18:06:07.000000Z",
+    "updated_at": "2026-10-19T18:06:07.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": 1459,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 12,
+     "question_id": 162,
+     "position": 33,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 567,
+      "question_id": 162,
+      "body": "5 m/s",
+      "image_path": null,
+      "is_correct": false,
+      "position": 0,
+      "created_at": "2026-10-19T18:06:07.000000Z",
+      "updated_at": "2026-10-19T18:06:07.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 568,
+      "question_id": 162,
+      "body": "≈22,4 m/s",
+      "image_path": null,
+      "is_correct": false,
+      "position": 1,
+      "created_at": "2026-10-19T18:06:07.000000Z",
+      "updated_at": "2026-10-19T18:06:07.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 569,
+      "question_id": 162,
+      "body": "≈15,8 m/s",
+      "image_path": null,
+      "is_correct": true,
+      "position": 2,
+      "created_at": "2026-10-19T18:06:07.000000Z",
+      "updated_at": "2026-10-19T18:06:07.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 570,
+      "question_id": 162,
+      "body": "25 m/s",
+      "image_path": null,
+      "is_correct": false,
+      "position": 3,
+      "created_at": "2026-10-19T18:06:07.000000Z",
+      "updated_at": "2026-10-19T18:06:07.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 33,
+     "name": "Aylana bo'ylab harakat dinamikasi"
+    }
+   },
+   {
+    "id": 84,
+    "organization_id": 1,
+    "subject_id": 2,
+    "topic_id": 21,
+    "type": "single",
+    "body": "Massasi 0,2 kg bo'lgan sharcha 0,4 m uzunlikdagi ipda vertikal tekislikda aylanmoqda. Yuqori nuqtada tezlik minimal mumkin bo'lgan qiymatga teng bo'lsa, quyi nuqtada ipning taranglik kuchi qancha? ($g=10$ m/s²)",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 3,
+    "explanation": "v_yuq² = gl, v_quyi² = 5gl, T = mg + mv²/l = 6mg = 12 N.",
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T18:01:18.000000Z",
+    "updated_at": "2026-10-19T18:01:18.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": 544,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 12,
+     "question_id": 84,
+     "position": 34,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 255,
+      "question_id": 84,
+      "body": "12 N",
+      "image_path": null,
+      "is_correct": true,
+      "position": 0,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 256,
+      "question_id": 84,
+      "body": "2 N",
+      "image_path": null,
+      "is_correct": false,
+      "position": 1,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 257,
+      "question_id": 84,
+      "body": "10 N",
+      "image_path": null,
+      "is_correct": false,
+      "position": 2,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 258,
+      "question_id": 84,
+      "body": "8 N",
+      "image_path": null,
+      "is_correct": false,
+      "position": 3,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 21,
+     "name": "Dinamika"
+    }
+   },
+   {
+    "id": 121,
+    "organization_id": 1,
+    "subject_id": 2,
+    "topic_id": 33,
+    "type": "single",
+    "body": "Avtomobil gorizontal yo'lda burilmoqda. Uning tezligi 2 marta oshirilsa, sirpanmasdan burilish uchun burilish radiusi kamida necha marta katta bo'lishi kerak? (ishqalanish koeffitsiyenti o'zgarmas)",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 2,
+    "explanation": "μmg = mv²/R ⇒ R_min = v²/(μg); v 2 marta ortsa, R_min 4 marta ortadi.",
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T18:01:18.000000Z",
+    "updated_at": "2026-10-19T18:01:18.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": 3436,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 12,
+     "question_id": 121,
+     "position": 35,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 403,
+      "question_id": 121,
+      "body": "2 marta",
+      "image_path": null,
+      "is_correct": false,
+      "position": 0,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 404,
+      "question_id": 121,
+      "body": "√2 marta",
+      "image_path": null,
+      "is_correct": false,
+      "position": 1,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 405,
+      "question_id": 121,
+      "body": "4 marta",
+      "image_path": null,
+      "is_correct": true,
+      "position": 2,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 406,
+      "question_id": 121,
+      "body": "8 marta",
+      "image_path": null,
+      "is_correct": false,
+      "position": 3,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 33,
+     "name": "Aylana bo'ylab harakat dinamikasi"
+    }
+   },
+   {
+    "id": 134,
+    "organization_id": 1,
+    "subject_id": 2,
+    "topic_id": 25,
+    "type": "single",
+    "body": "Sayyoraning massasi Yer massasidan 2 marta, radiusi Yer radiusidan 2 marta katta. Sayyora sirtida erkin tushish tezlanishi qancha? (Yerda $g=10$ m/s²)",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 2,
+    "explanation": "g = GM/R²: g' = g·2/4 = 5 m/s².",
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T18:03:23.000000Z",
+    "updated_at": "2026-10-19T18:03:23.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": 1415,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 12,
+     "question_id": 134,
+     "position": 36,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 455,
+      "question_id": 134,
+      "body": "2,5 m/s²",
+      "image_path": null,
+      "is_correct": false,
+      "position": 0,
+      "created_at": "2026-10-19T18:03:23.000000Z",
+      "updated_at": "2026-10-19T18:03:23.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 456,
+      "question_id": 134,
+      "body": "5 m/s²",
+      "image_path": null,
+      "is_correct": true,
+      "position": 1,
+      "created_at": "2026-10-19T18:03:23.000000Z",
+      "updated_at": "2026-10-19T18:03:23.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 457,
+      "question_id": 134,
+      "body": "20 m/s²",
+      "image_path": null,
+      "is_correct": false,
+      "position": 2,
+      "created_at": "2026-10-19T18:03:23.000000Z",
+      "updated_at": "2026-10-19T18:03:23.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 458,
+      "question_id": 134,
+      "body": "10 m/s²",
+      "image_path": null,
+      "is_correct": false,
+      "position": 3,
+      "created_at": "2026-10-19T18:03:23.000000Z",
+      "updated_at": "2026-10-19T18:03:23.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 25,
+     "name": "Gravitatsiya"
+    }
+   },
+   {
+    "id": 103,
+    "organization_id": 1,
+    "subject_id": 2,
+    "topic_id": 25,
+    "type": "single",
+    "body": "Ikki jism orasidagi masofa o'zgarmagan holda har birining massasi 2 marta oshirildi. Ularning o'zaro tortishish kuchi qanday o'zgaradi?",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 1,
+    "explanation": "F = Gm₁m₂/r²: ko'paytma m₁m₂ 4 marta ortadi.",
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T18:01:18.000000Z",
+    "updated_at": "2026-10-19T18:01:18.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": 1468,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 12,
+     "question_id": 103,
+     "position": 37,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 331,
+      "question_id": 103,
+      "body": "2 marta ortadi",
+      "image_path": null,
+      "is_correct": false,
+      "position": 0,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 332,
+      "question_id": 103,
+      "body": "o'zgarmaydi",
+      "image_path": null,
+      "is_correct": false,
+      "position": 1,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 333,
+      "question_id": 103,
+      "body": "4 marta ortadi",
+      "image_path": null,
+      "is_correct": true,
+      "position": 2,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 334,
+      "question_id": 103,
+      "body": "8 marta ortadi",
+      "image_path": null,
+      "is_correct": false,
+      "position": 3,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 25,
+     "name": "Gravitatsiya"
+    }
+   },
+   {
+    "id": 96,
+    "organization_id": 1,
+    "subject_id": 2,
+    "topic_id": 25,
+    "type": "single",
+    "body": "Yer radiusi 6400 km. Yer sirtidan qanday balandlikda jismga ta'sir qiluvchi tortishish kuchi Yer sirtidagiga nisbatan 4 marta kamayadi?",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 2,
+    "explanation": "F ~ 1/r²: r = 2R bo'lishi kerak, h = r − R = R = 6400 km.",
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T18:01:18.000000Z",
+    "updated_at": "2026-10-19T18:01:18.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": 1416,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 12,
+     "question_id": 96,
+     "position": 38,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 303,
+      "question_id": 96,
+      "body": "12 800 km",
+      "image_path": null,
+      "is_correct": false,
+      "position": 0,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 304,
+      "question_id": 96,
+      "body": "3200 km",
+      "image_path": null,
+      "is_correct": false,
+      "position": 1,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 305,
+      "question_id": 96,
+      "body": "6400 km",
+      "image_path": null,
+      "is_correct": true,
+      "position": 2,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 306,
+      "question_id": 96,
+      "body": "19 200 km",
+      "image_path": null,
+      "is_correct": false,
+      "position": 3,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 25,
+     "name": "Gravitatsiya"
+    }
+   },
+   {
+    "id": 97,
+    "organization_id": 1,
+    "subject_id": 2,
+    "topic_id": 25,
+    "type": "single",
+    "body": "Yer radiusi 6400 km, $g=10$ m/s² deb olib, Yer uchun birinchi kosmik tezlikni hisoblang.",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 2,
+    "explanation": "v = √(gR) = √(10·6,4·10⁶) = 8000 m/s.",
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T18:01:18.000000Z",
+    "updated_at": "2026-10-19T18:01:18.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": 1417,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 12,
+     "question_id": 97,
+     "position": 39,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 307,
+      "question_id": 97,
+      "body": "0,8 km/s",
+      "image_path": null,
+      "is_correct": false,
+      "position": 0,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 308,
+      "question_id": 97,
+      "body": "8 km/s",
+      "image_path": null,
+      "is_correct": true,
+      "position": 1,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 309,
+      "question_id": 97,
+      "body": "6,4 km/s",
+      "image_path": null,
+      "is_correct": false,
+      "position": 2,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 310,
+      "question_id": 97,
+      "body": "11,2 km/s",
+      "image_path": null,
+      "is_correct": false,
+      "position": 3,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 25,
+     "name": "Gravitatsiya"
+    }
+   },
+   {
+    "id": 154,
+    "organization_id": 1,
+    "subject_id": 2,
+    "topic_id": 36,
+    "type": "single",
+    "body": "Oy sirtida erkin tushish tezlanishi 1,6 m/s². Yerda og'irligi 800 N bo'lgan odamning Oydagi og'irligi qancha? (Yerda $g=10$ m/s²)",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 2,
+    "explanation": "m = 800/10 = 80 kg; Oyda P = m·g_Oy = 80·1,6 = 128 N.",
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T18:03:23.000000Z",
+    "updated_at": "2026-10-19T18:03:23.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": 3438,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 12,
+     "question_id": 154,
+     "position": 40,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 535,
+      "question_id": 154,
+      "body": "128 N",
+      "image_path": null,
+      "is_correct": true,
+      "position": 0,
+      "created_at": "2026-10-19T18:03:23.000000Z",
+      "updated_at": "2026-10-19T18:03:23.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 536,
+      "question_id": 154,
+      "body": "80 N",
+      "image_path": null,
+      "is_correct": false,
+      "position": 1,
+      "created_at": "2026-10-19T18:03:23.000000Z",
+      "updated_at": "2026-10-19T18:03:23.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 537,
+      "question_id": 154,
+      "body": "500 N",
+      "image_path": null,
+      "is_correct": false,
+      "position": 2,
+      "created_at": "2026-10-19T18:03:23.000000Z",
+      "updated_at": "2026-10-19T18:03:23.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 538,
+      "question_id": 154,
+      "body": "1280 N",
+      "image_path": null,
+      "is_correct": false,
+      "position": 3,
+      "created_at": "2026-10-19T18:03:23.000000Z",
+      "updated_at": "2026-10-19T18:03:23.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 36,
+     "name": "Butun olam tortishish qonuni va sun'iy yo'ldoshlar"
+    }
+   },
+   {
+    "id": 164,
+    "organization_id": 1,
+    "subject_id": 2,
+    "topic_id": 37,
+    "type": "single",
+    "body": "Raketaning reaktiv harakati qaysi qonunga asoslangan?",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 1,
+    "explanation": "Chiqayotgan gaz impulsi raketaga teng va qarama-qarshi impuls beradi.",
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T18:06:07.000000Z",
+    "updated_at": "2026-10-19T18:06:07.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": 1464,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 12,
+     "question_id": 164,
+     "position": 41,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 575,
+      "question_id": 164,
+      "body": "Guk qonuni",
+      "image_path": null,
+      "is_correct": false,
+      "position": 0,
+      "created_at": "2026-10-19T18:06:07.000000Z",
+      "updated_at": "2026-10-19T18:06:07.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 576,
+      "question_id": 164,
+      "body": "impulsning saqlanish qonuni",
+      "image_path": null,
+      "is_correct": true,
+      "position": 1,
+      "created_at": "2026-10-19T18:06:07.000000Z",
+      "updated_at": "2026-10-19T18:06:07.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 577,
+      "question_id": 164,
+      "body": "Arximed qonuni",
+      "image_path": null,
+      "is_correct": false,
+      "position": 2,
+      "created_at": "2026-10-19T18:06:07.000000Z",
+      "updated_at": "2026-10-19T18:06:07.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 578,
+      "question_id": 164,
+      "body": "Paskal qonuni",
+      "image_path": null,
+      "is_correct": false,
+      "position": 3,
+      "created_at": "2026-10-19T18:06:07.000000Z",
+      "updated_at": "2026-10-19T18:06:07.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 37,
+     "name": "Impuls va impulsning saqlanish qonuni"
+    }
+   },
+   {
+    "id": 133,
+    "organization_id": 1,
+    "subject_id": 2,
+    "topic_id": 23,
+    "type": "single",
+    "body": "Gorizontal 20 m/s tezlik bilan uchayotgan 3 kg massali snaryad ikki bo'lakka ajraldi. 1 kg massali bo'lak avvalgi yo'nalishda 50 m/s tezlik bilan uchdi. Ikkinchi bo'lakning tezligi qanday?",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 3,
+    "explanation": "3·20 = 1·50 + 2·v, v = 5 m/s (musbat — avvalgi yo'nalishda).",
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T18:03:23.000000Z",
+    "updated_at": "2026-10-19T18:03:23.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": 1412,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 12,
+     "question_id": 133,
+     "position": 42,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 451,
+      "question_id": 133,
+      "body": "10 m/s, teskari yo'nalishda",
+      "image_path": null,
+      "is_correct": false,
+      "position": 0,
+      "created_at": "2026-10-19T18:03:23.000000Z",
+      "updated_at": "2026-10-19T18:03:23.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 452,
+      "question_id": 133,
+      "body": "5 m/s, teskari yo'nalishda",
+      "image_path": null,
+      "is_correct": false,
+      "position": 1,
+      "created_at": "2026-10-19T18:03:23.000000Z",
+      "updated_at": "2026-10-19T18:03:23.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 453,
+      "question_id": 133,
+      "body": "30 m/s, avvalgi yo'nalishda",
+      "image_path": null,
+      "is_correct": false,
+      "position": 2,
+      "created_at": "2026-10-19T18:03:23.000000Z",
+      "updated_at": "2026-10-19T18:03:23.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 454,
+      "question_id": 133,
+      "body": "5 m/s, avvalgi yo'nalishda",
+      "image_path": null,
+      "is_correct": true,
+      "position": 3,
+      "created_at": "2026-10-19T18:03:23.000000Z",
+      "updated_at": "2026-10-19T18:03:23.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 23,
+     "name": "Impuls"
+    }
+   },
+   {
+    "id": 160,
+    "organization_id": 1,
+    "subject_id": 2,
+    "topic_id": 37,
+    "type": "single",
+    "body": "Silliq relsda tinch turgan 200 kg massali aravachadan 50 kg massali odam relsga parallel ravishda 4 m/s tezlik bilan (yerga nisbatan) sakradi. Aravacha qanday tezlik oladi?",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 2,
+    "explanation": "Impuls saqlanadi: 50·4 = 200·v, v = 1 m/s.",
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T18:06:07.000000Z",
+    "updated_at": "2026-10-19T18:06:07.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": 1410,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 12,
+     "question_id": 160,
+     "position": 43,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 559,
+      "question_id": 160,
+      "body": "1 m/s",
+      "image_path": null,
+      "is_correct": true,
+      "position": 0,
+      "created_at": "2026-10-19T18:06:07.000000Z",
+      "updated_at": "2026-10-19T18:06:07.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 560,
+      "question_id": 160,
+      "body": "16 m/s",
+      "image_path": null,
+      "is_correct": false,
+      "position": 1,
+      "created_at": "2026-10-19T18:06:07.000000Z",
+      "updated_at": "2026-10-19T18:06:07.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 561,
+      "question_id": 160,
+      "body": "0,8 m/s",
+      "image_path": null,
+      "is_correct": false,
+      "position": 2,
+      "created_at": "2026-10-19T18:06:07.000000Z",
+      "updated_at": "2026-10-19T18:06:07.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 562,
+      "question_id": 160,
+      "body": "4 m/s",
+      "image_path": null,
+      "is_correct": false,
+      "position": 3,
+      "created_at": "2026-10-19T18:06:07.000000Z",
+      "updated_at": "2026-10-19T18:06:07.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 37,
+     "name": "Impuls va impulsning saqlanish qonuni"
+    }
+   },
+   {
+    "id": 85,
+    "organization_id": 1,
+    "subject_id": 2,
+    "topic_id": 24,
+    "type": "single",
+    "body": "Massasi 10 g bo'lgan o'q 400 m/s tezlik bilan ipga osilgan 1,99 kg massali yog'och bo'lagiga kirib qoldi. Bo'lak qanday balandlikka ko'tariladi? ($g=10$ m/s²)",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 3,
+    "explanation": "u = mv/(m+M) = 4/2 = 2 m/s, h = u²/(2g) = 0,2 m.",
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T18:01:18.000000Z",
+    "updated_at": "2026-10-19T18:01:18.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": 545,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 12,
+     "question_id": 85,
+     "position": 44,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 259,
+      "question_id": 85,
+      "body": "40 sm",
+      "image_path": null,
+      "is_correct": false,
+      "position": 0,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 260,
+      "question_id": 85,
+      "body": "20 sm",
+      "image_path": null,
+      "is_correct": true,
+      "position": 1,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 261,
+      "question_id": 85,
+      "body": "2 sm",
+      "image_path": null,
+      "is_correct": false,
+      "position": 2,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 262,
+      "question_id": 85,
+      "body": "80 sm",
+      "image_path": null,
+      "is_correct": false,
+      "position": 3,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 24,
+     "name": "Impuls va energiya"
+    }
+   },
+   {
+    "id": 157,
+    "organization_id": 1,
+    "subject_id": 2,
+    "topic_id": 37,
+    "type": "single",
+    "body": "6 m/s tezlik bilan harakatlanayotgan 2 kg massali sharcha tinch turgan 4 kg massali sharchaga urilib, unga yopishib qoldi. Urilishdan keyingi umumiy tezlik qancha?",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 2,
+    "explanation": "Impulsning saqlanishi: v = m₁v₁/(m₁+m₂) = 12/6 = 2 m/s.",
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T18:06:07.000000Z",
+    "updated_at": "2026-10-19T18:06:07.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": 516,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 12,
+     "question_id": 157,
+     "position": 45,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 547,
+      "question_id": 157,
+      "body": "2 m/s",
+      "image_path": null,
+      "is_correct": true,
+      "position": 0,
+      "created_at": "2026-10-19T18:06:07.000000Z",
+      "updated_at": "2026-10-19T18:06:07.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 548,
+      "question_id": 157,
+      "body": "3 m/s",
+      "image_path": null,
+      "is_correct": false,
+      "position": 1,
+      "created_at": "2026-10-19T18:06:07.000000Z",
+      "updated_at": "2026-10-19T18:06:07.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 549,
+      "question_id": 157,
+      "body": "4 m/s",
+      "image_path": null,
+      "is_correct": false,
+      "position": 2,
+      "created_at": "2026-10-19T18:06:07.000000Z",
+      "updated_at": "2026-10-19T18:06:07.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 550,
+      "question_id": 157,
+      "body": "1,5 m/s",
+      "image_path": null,
+      "is_correct": false,
+      "position": 3,
+      "created_at": "2026-10-19T18:06:07.000000Z",
+      "updated_at": "2026-10-19T18:06:07.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 37,
+     "name": "Impuls va impulsning saqlanish qonuni"
+    }
+   },
+   {
+    "id": 122,
+    "organization_id": 1,
+    "subject_id": 2,
+    "topic_id": 34,
+    "type": "single",
+    "body": "Quyidagi hollardan qaysi birida og'irlik kuchi ish bajarmaydi?",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 1,
+    "explanation": "A = F·s·cosα; gorizontal ko'chishda og'irlik kuchi ko'chishga perpendikulyar (cos90° = 0), shuning uchun A = 0.",
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T18:01:18.000000Z",
+    "updated_at": "2026-10-19T18:01:18.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": 3440,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 12,
+     "question_id": 122,
+     "position": 46,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 407,
+      "question_id": 122,
+      "body": "Jism yuqoriga ko'tarilganda",
+      "image_path": null,
+      "is_correct": false,
+      "position": 0,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 408,
+      "question_id": 122,
+      "body": "Jism gorizontal sirt bo'ylab siljiganda",
+      "image_path": null,
+      "is_correct": true,
+      "position": 1,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 409,
+      "question_id": 122,
+      "body": "Jism erkin tushganda",
+      "image_path": null,
+      "is_correct": false,
+      "position": 2,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 410,
+      "question_id": 122,
+      "body": "Jism qiya tekislikdan sirpanib tushganda",
+      "image_path": null,
+      "is_correct": false,
+      "position": 3,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 34,
+     "name": "Mexanik ish va quvvat"
+    }
+   },
+   {
+    "id": 132,
+    "organization_id": 1,
+    "subject_id": 2,
+    "topic_id": 22,
+    "type": "single",
+    "body": "Avtomobil dvigateli 60 kW quvvat rivojlantirib, avtomobilni 20 m/s o'zgarmas tezlik bilan harakatlantirmoqda. Dvigatelning tortish kuchi qancha?",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 1,
+    "explanation": "P = Fv, F = 60 000/20 = 3000 N.",
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T18:03:23.000000Z",
+    "updated_at": "2026-10-19T18:03:23.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": 1407,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 12,
+     "question_id": 132,
+     "position": 47,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 447,
+      "question_id": 132,
+      "body": "3 kN",
+      "image_path": null,
+      "is_correct": true,
+      "position": 0,
+      "created_at": "2026-10-19T18:03:23.000000Z",
+      "updated_at": "2026-10-19T18:03:23.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 448,
+      "question_id": 132,
+      "body": "0,33 kN",
+      "image_path": null,
+      "is_correct": false,
+      "position": 1,
+      "created_at": "2026-10-19T18:03:23.000000Z",
+      "updated_at": "2026-10-19T18:03:23.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 449,
+      "question_id": 132,
+      "body": "30 kN",
+      "image_path": null,
+      "is_correct": false,
+      "position": 2,
+      "created_at": "2026-10-19T18:03:23.000000Z",
+      "updated_at": "2026-10-19T18:03:23.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 450,
+      "question_id": 132,
+      "body": "1,2 MN",
+      "image_path": null,
+      "is_correct": false,
+      "position": 3,
+      "created_at": "2026-10-19T18:03:23.000000Z",
+      "updated_at": "2026-10-19T18:03:23.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 22,
+     "name": "Ish, energiya, quvvat"
+    }
+   },
+   {
+    "id": 102,
+    "organization_id": 1,
+    "subject_id": 2,
+    "topic_id": 22,
+    "type": "single",
+    "body": "Massasi 1 t bo'lgan avtomobil tinch holatdan 10 s da 20 m/s tezlikka erishdi. Qarshilik kuchlarini hisobga olmasdan dvigatelning o'rtacha quvvatini toping.",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 2,
+    "explanation": "A = mv²/2 = 200 kJ; P = A/t = 20 kW.",
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T18:01:18.000000Z",
+    "updated_at": "2026-10-19T18:01:18.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": 1461,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 12,
+     "question_id": 102,
+     "position": 48,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 327,
+      "question_id": 102,
+      "body": "200 kW",
+      "image_path": null,
+      "is_correct": false,
+      "position": 0,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 328,
+      "question_id": 102,
+      "body": "20 kW",
+      "image_path": null,
+      "is_correct": true,
+      "position": 1,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 329,
+      "question_id": 102,
+      "body": "2 kW",
+      "image_path": null,
+      "is_correct": false,
+      "position": 2,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 330,
+      "question_id": 102,
+      "body": "40 kW",
+      "image_path": null,
+      "is_correct": false,
+      "position": 3,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 22,
+     "name": "Ish, energiya, quvvat"
+    }
+   },
+   {
+    "id": 163,
+    "organization_id": 1,
+    "subject_id": 2,
+    "topic_id": 34,
+    "type": "single",
+    "body": "Elektr dvigatel 200 kg yukni 0,5 m/s o'zgarmas tezlik bilan ko'tarmoqda. Dvigatelning FIK 80 % bo'lsa, u tarmoqdan qanday quvvat oladi? ($g=10$ m/s²)",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 2,
+    "explanation": "P_foyd = mgv = 1000 W; P = 1000/0,8 = 1250 W.",
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T18:06:07.000000Z",
+    "updated_at": "2026-10-19T18:06:07.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": 1462,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 12,
+     "question_id": 163,
+     "position": 49,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 571,
+      "question_id": 163,
+      "body": "1250 W",
+      "image_path": null,
+      "is_correct": true,
+      "position": 0,
+      "created_at": "2026-10-19T18:06:07.000000Z",
+      "updated_at": "2026-10-19T18:06:07.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 572,
+      "question_id": 163,
+      "body": "800 W",
+      "image_path": null,
+      "is_correct": false,
+      "position": 1,
+      "created_at": "2026-10-19T18:06:07.000000Z",
+      "updated_at": "2026-10-19T18:06:07.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 573,
+      "question_id": 163,
+      "body": "2500 W",
+      "image_path": null,
+      "is_correct": false,
+      "position": 2,
+      "created_at": "2026-10-19T18:06:07.000000Z",
+      "updated_at": "2026-10-19T18:06:07.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 574,
+      "question_id": 163,
+      "body": "1000 W",
+      "image_path": null,
+      "is_correct": false,
+      "position": 3,
+      "created_at": "2026-10-19T18:06:07.000000Z",
+      "updated_at": "2026-10-19T18:06:07.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 34,
+     "name": "Mexanik ish va quvvat"
+    }
+   },
+   {
+    "id": 124,
+    "organization_id": 1,
+    "subject_id": 2,
+    "topic_id": 34,
+    "type": "single",
+    "body": "Kilovatt-soat (kW·soat) qaysi fizik kattalikning birligi?",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 1,
+    "explanation": "kW·soat = quvvat × vaqt = 1000 W·3600 s = 3,6·10⁶ J, ya'ni ish (energiya) birligi.",
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T18:01:18.000000Z",
+    "updated_at": "2026-10-19T18:01:18.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": 3444,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 12,
+     "question_id": 124,
+     "position": 50,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 415,
+      "question_id": 124,
+      "body": "Quvvat",
+      "image_path": null,
+      "is_correct": false,
+      "position": 0,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 416,
+      "question_id": 124,
+      "body": "Kuch",
+      "image_path": null,
+      "is_correct": false,
+      "position": 1,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 417,
+      "question_id": 124,
+      "body": "Bosim",
+      "image_path": null,
+      "is_correct": false,
+      "position": 2,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 418,
+      "question_id": 124,
+      "body": "Ish (energiya)",
+      "image_path": null,
+      "is_correct": true,
+      "position": 3,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 34,
+     "name": "Mexanik ish va quvvat"
+    }
+   },
+   {
+    "id": 87,
+    "organization_id": 1,
+    "subject_id": 2,
+    "topic_id": 24,
+    "type": "single",
+    "body": "Silliq sirtda 4 m/s tezlik bilan harakatlanayotgan 0,5 kg massali brusok bikrligi 200 N/m bo'lgan prujinaga urildi. Prujinaning maksimal siqilishi qancha?",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 2,
+    "explanation": "mv²/2 = kx²/2, x = v√(m/k) = 4·0,05 = 0,2 m.",
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T18:01:18.000000Z",
+    "updated_at": "2026-10-19T18:01:18.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": 547,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 12,
+     "question_id": 87,
+     "position": 51,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 267,
+      "question_id": 87,
+      "body": "10 sm",
+      "image_path": null,
+      "is_correct": false,
+      "position": 0,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 268,
+      "question_id": 87,
+      "body": "40 sm",
+      "image_path": null,
+      "is_correct": false,
+      "position": 1,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 269,
+      "question_id": 87,
+      "body": "5 sm",
+      "image_path": null,
+      "is_correct": false,
+      "position": 2,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 270,
+      "question_id": 87,
+      "body": "20 sm",
+      "image_path": null,
+      "is_correct": true,
+      "position": 3,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 24,
+     "name": "Impuls va energiya"
+    }
+   },
+   {
+    "id": 93,
+    "organization_id": 1,
+    "subject_id": 2,
+    "topic_id": 22,
+    "type": "single",
+    "body": "Jism vertikal yuqoriga 10 m/s tezlik bilan otildi. Qanday balandlikda uning kinetik energiyasi potensial energiyasiga teng bo'ladi? ($g=10$ m/s², havo qarshiligi yo'q)",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 3,
+    "explanation": "mgh = (1/2)·mv₀²/2, h = v₀²/(4g) = 100/40 = 2,5 m.",
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T18:01:18.000000Z",
+    "updated_at": "2026-10-19T18:01:18.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": 1408,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 12,
+     "question_id": 93,
+     "position": 52,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 291,
+      "question_id": 93,
+      "body": "1,25 m",
+      "image_path": null,
+      "is_correct": false,
+      "position": 0,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 292,
+      "question_id": 93,
+      "body": "3,75 m",
+      "image_path": null,
+      "is_correct": false,
+      "position": 1,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 293,
+      "question_id": 93,
+      "body": "2,5 m",
+      "image_path": null,
+      "is_correct": true,
+      "position": 2,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 294,
+      "question_id": 93,
+      "body": "5 m",
+      "image_path": null,
+      "is_correct": false,
+      "position": 3,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 22,
+     "name": "Ish, energiya, quvvat"
+    }
+   },
+   {
+    "id": 79,
+    "organization_id": 1,
+    "subject_id": 2,
+    "topic_id": 22,
+    "type": "single",
+    "body": "Massasi 2 kg bo'lgan jism 3 m/s tezlik bilan harakatlanmoqda. Uning kinetik energiyasi nimaga teng?",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 1,
+    "explanation": "E = mv²/2 = 2·9/2 = 9 J.",
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T18:01:18.000000Z",
+    "updated_at": "2026-10-19T18:01:18.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": 513,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 12,
+     "question_id": 79,
+     "position": 53,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 235,
+      "question_id": 79,
+      "body": "6 J",
+      "image_path": null,
+      "is_correct": false,
+      "position": 0,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 236,
+      "question_id": 79,
+      "body": "9 J",
+      "image_path": null,
+      "is_correct": true,
+      "position": 1,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 237,
+      "question_id": 79,
+      "body": "18 J",
+      "image_path": null,
+      "is_correct": false,
+      "position": 2,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 238,
+      "question_id": 79,
+      "body": "3 J",
+      "image_path": null,
+      "is_correct": false,
+      "position": 3,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 22,
+     "name": "Ish, energiya, quvvat"
+    }
+   },
+   {
+    "id": 125,
+    "organization_id": 1,
+    "subject_id": 2,
+    "topic_id": 35,
+    "type": "single",
+    "body": "Massasi 0,1 kg bo'lgan sharcha 0,8 m uzunlikdagi ipga osilgan. Ip gorizontal holatgacha og'dirilib, sharcha qo'yib yuborildi. Eng pastki nuqtada ipning taranglik kuchi qancha? ($g=10$ m/s²)",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 3,
+    "explanation": "mgl = mv²/2 ⇒ v² = 2gl = 16 m²/s². T = mg + mv²/l = 1 + 0,1·16/0,8 = 3 N.",
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T18:01:18.000000Z",
+    "updated_at": "2026-10-19T18:01:18.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": 3446,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 12,
+     "question_id": 125,
+     "position": 54,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 419,
+      "question_id": 125,
+      "body": "1 N",
+      "image_path": null,
+      "is_correct": false,
+      "position": 0,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 420,
+      "question_id": 125,
+      "body": "3 N",
+      "image_path": null,
+      "is_correct": true,
+      "position": 1,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 421,
+      "question_id": 125,
+      "body": "2 N",
+      "image_path": null,
+      "is_correct": false,
+      "position": 2,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 422,
+      "question_id": 125,
+      "body": "4 N",
+      "image_path": null,
+      "is_correct": false,
+      "position": 3,
+      "created_at": "2026-10-19T18:01:18.000000Z",
+      "updated_at": "2026-10-19T18:01:18.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 35,
+     "name": "Mexanik energiya va uning saqlanish qonuni"
+    }
+   },
+   {
+    "id": 128,
+    "organization_id": 1,
+    "subject_id": 2,
+    "topic_id": 22,
+    "type": "single",
+    "body": "Jism 5 m balandlikdan erkin tushmoqda. Havo qarshiligi hisobga olinmasa, yerga urilish paytidagi tezligi qancha bo'ladi? ($g=10$ m/s²)",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 1,
+    "explanation": "mgh = mv²/2, v = √(2gh) = 10 m/s.",
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T18:03:23.000000Z",
+    "updated_at": "2026-10-19T18:03:23.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": 515,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 12,
+     "question_id": 128,
+     "position": 55,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 431,
+      "question_id": 128,
+      "body": "5 m/s",
+      "image_path": null,
+      "is_correct": false,
+      "position": 0,
+      "created_at": "2026-10-19T18:03:23.000000Z",
+      "updated_at": "2026-10-19T18:03:23.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 432,
+      "question_id": 128,
+      "body": "10 m/s",
+      "image_path": null,
+      "is_correct": true,
+      "position": 1,
+      "created_at": "2026-10-19T18:03:23.000000Z",
+      "updated_at": "2026-10-19T18:03:23.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 433,
+      "question_id": 128,
+      "body": "50 m/s",
+      "image_path": null,
+      "is_correct": false,
+      "position": 2,
+      "created_at": "2026-10-19T18:03:23.000000Z",
+      "updated_at": "2026-10-19T18:03:23.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 434,
+      "question_id": 128,
+      "body": "100 m/s",
+      "image_path": null,
+      "is_correct": false,
+      "position": 3,
+      "created_at": "2026-10-19T18:03:23.000000Z",
+      "updated_at": "2026-10-19T18:03:23.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 22,
+     "name": "Ish, energiya, quvvat"
+    }
+   }
+  ]
+ }
+}

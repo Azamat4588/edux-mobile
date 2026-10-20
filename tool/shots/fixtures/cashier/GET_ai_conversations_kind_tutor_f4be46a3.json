@@ -1,0 +1,11 @@
+{
+ "method": "GET",
+ "path": "ai/conversations",
+ "query": {
+  "kind": "tutor"
+ },
+ "status": 200,
+ "body": {
+  "data": []
+ }
+}

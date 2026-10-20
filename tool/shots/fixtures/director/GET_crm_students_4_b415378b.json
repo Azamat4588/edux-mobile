@@ -1,0 +1,559 @@
+{
+ "method": "GET",
+ "path": "crm/students/4",
+ "query": {},
+ "status": 200,
+ "body": {
+  "student": {
+   "id": 4,
+   "full_name": "Hasanova Malika",
+   "code": "414548",
+   "phone": "+998905553452",
+   "archived": false,
+   "created_at": "2026-10-19T14:23:57.000000Z",
+   "account_linked": true,
+   "guardians": 0
+  },
+  "groups": [
+   {
+    "id": 1,
+    "name": "M-11",
+    "is_active": true,
+    "teacher": "Rustamov Akmal",
+    "monthly_fee": 450000
+   },
+   {
+    "id": 2,
+    "name": "ING-5",
+    "is_active": true,
+    "teacher": "Usmonova Dildora",
+    "monthly_fee": 380000
+   }
+  ],
+  "balance": 0,
+  "totals": {
+   "charged": 1328000,
+   "paid": 1328000,
+   "upcoming": 0
+  },
+  "charges": [
+   {
+    "id": 22,
+    "organization_id": 1,
+    "student_id": 4,
+    "study_group_id": 1,
+    "enrollment_id": 4,
+    "period": "2026-10",
+    "cycle": "2026-10",
+    "due_on": "2026-10-01",
+    "kind": "tuition",
+    "base_amount": 450000,
+    "discount_percent": 20,
+    "amount": 360000,
+    "description": null,
+    "cancelled_at": null,
+    "cancelled_by": null,
+    "cancel_reason": null,
+    "created_by": 1,
+    "created_at": "2026-10-19T14:23:58.000000Z",
+    "updated_at": "2026-10-19T14:23:58.000000Z",
+    "covers_from": "2026-10-01",
+    "covers_to": "2026-10-31",
+    "fee_plan_id": null,
+    "penalty_for_id": null,
+    "exam_id": null,
+    "group": {
+     "id": 1,
+     "name": "M-11"
+    }
+   },
+   {
+    "id": 18,
+    "organization_id": 1,
+    "student_id": 4,
+    "study_group_id": 2,
+    "enrollment_id": 14,
+    "period": "2026-10",
+    "cycle": "2026-10",
+    "due_on": "2026-10-01",
+    "kind": "tuition",
+    "base_amount": 380000,
+    "discount_percent": 20,
+    "amount": 304000,
+    "description": null,
+    "cancelled_at": null,
+    "cancelled_by": null,
+    "cancel_reason": null,
+    "created_by": 1,
+    "created_at": "2026-10-19T14:23:58.000000Z",
+    "updated_at": "2026-10-19T14:23:58.000000Z",
+    "covers_from": "2026-10-01",
+    "covers_to": "2026-10-31",
+    "fee_plan_id": null,
+    "penalty_for_id": null,
+    "exam_id": null,
+    "group": {
+     "id": 2,
+     "name": "ING-5"
+    }
+   },
+   {
+    "id": 8,
+    "organization_id": 1,
+    "student_id": 4,
+    "study_group_id": 1,
+    "enrollment_id": 4,
+    "period": "2026-09",
+    "cycle": "2026-09",
+    "due_on": "2026-09-01",
+    "kind": "tuition",
+    "base_amount": 450000,
+    "discount_percent": 20,
+    "amount": 360000,
+    "description": null,
+    "cancelled_at": null,
+    "cancelled_by": null,
+    "cancel_reason": null,
+    "created_by": 1,
+    "created_at": "2026-10-19T14:23:58.000000Z",
+    "updated_at": "2026-10-19T14:23:58.000000Z",
+    "covers_from": "2026-09-01",
+    "covers_to": "2026-09-30",
+    "fee_plan_id": null,
+    "penalty_for_id": null,
+    "exam_id": null,
+    "group": {
+     "id": 1,
+     "name": "M-11"
+    }
+   },
+   {
+    "id": 4,
+    "organization_id": 1,
+    "student_id": 4,
+    "study_group_id": 2,
+    "enrollment_id": 14,
+    "period": "2026-09",
+    "cycle": "2026-09",
+    "due_on": "2026-09-01",
+    "kind": "tuition",
+    "base_amount": 380000,
+    "discount_percent": 20,
+    "amount": 304000,
+    "description": null,
+    "cancelled_at": null,
+    "cancelled_by": null,
+    "cancel_reason": null,
+    "created_by": 1,
+    "created_at": "2026-10-19T14:23:58.000000Z",
+    "updated_at": "2026-10-19T14:23:58.000000Z",
+    "covers_from": "2026-09-01",
+    "covers_to": "2026-09-30",
+    "fee_plan_id": null,
+    "penalty_for_id": null,
+    "exam_id": null,
+    "group": {
+     "id": 2,
+     "name": "ING-5"
+    }
+   }
+  ],
+  "payments": [
+   {
+    "id": 13,
+    "organization_id": 1,
+    "student_id": 4,
+    "study_group_id": null,
+    "receipt_number": 13,
+    "amount": 664000,
+    "method": "card",
+    "account_id": 2,
+    "paid_at": "2026-10-05T06:42:00.000000Z",
+    "note": null,
+    "received_by": 1,
+    "voided_at": null,
+    "voided_by": null,
+    "void_reason": null,
+    "created_at": "2026-10-19T14:23:58.000000Z",
+    "updated_at": "2026-10-19T14:23:58.000000Z",
+    "receipt": "K-000013",
+    "receiver": {
+     "id": 1,
+     "name": "Rustamov Akmal"
+    }
+   },
+   {
+    "id": 4,
+    "organization_id": 1,
+    "student_id": 4,
+    "study_group_id": null,
+    "receipt_number": 4,
+    "amount": 664000,
+    "method": "payme",
+    "account_id": 4,
+    "paid_at": "2026-09-06T05:51:00.000000Z",
+    "note": null,
+    "received_by": 1,
+    "voided_at": null,
+    "voided_by": null,
+    "void_reason": null,
+    "created_at": "2026-10-19T14:23:58.000000Z",
+    "updated_at": "2026-10-19T14:23:58.000000Z",
+    "receipt": "K-000004",
+    "receiver": {
+     "id": 1,
+     "name": "Rustamov Akmal"
+    }
+   }
+  ],
+  "discounts": [
+   {
+    "id": 1,
+    "organization_id": 1,
+    "student_id": 4,
+    "study_group_id": null,
+    "kind": "percent",
+    "percent": 20,
+    "price": null,
+    "reason": "Aka-uka chegirmasi",
+    "created_by": 1,
+    "created_at": "2026-10-19T14:23:58.000000Z",
+    "updated_at": "2026-10-19T14:23:58.000000Z",
+    "valid_from": null,
+    "valid_to": null,
+    "group": null
+   }
+  ],
+  "attendance": {
+   "counts": {
+    "present": 6,
+    "absent": 0,
+    "late": 1,
+    "excused": 1
+   },
+   "month": {
+    "period": "2026-10",
+    "counts": {
+     "present": 6,
+     "absent": 0,
+     "late": 1,
+     "excused": 1
+    }
+   },
+   "recent": [
+    {
+     "date": "2026-10-19",
+     "topic": "Nazorat ishi tahlili",
+     "group": "M-11",
+     "status": "present"
+    },
+    {
+     "date": "2026-10-16",
+     "topic": "Takrorlash",
+     "group": "M-11",
+     "status": "present"
+    },
+    {
+     "date": "2026-10-14",
+     "topic": "Logarifmlar",
+     "group": "M-11",
+     "status": "present"
+    },
+    {
+     "date": "2026-10-12",
+     "topic": "Progressiyalar",
+     "group": "M-11",
+     "status": "present"
+    },
+    {
+     "date": "2026-10-09",
+     "topic": "Funksiya grafigi",
+     "group": "M-11",
+     "status": "present"
+    },
+    {
+     "date": "2026-10-07",
+     "topic": "Tengsizliklar",
+     "group": "M-11",
+     "status": "excused"
+    },
+    {
+     "date": "2026-10-05",
+     "topic": "Viyet teoremasi",
+     "group": "M-11",
+     "status": "late"
+    },
+    {
+     "date": "2026-10-02",
+     "topic": "Kvadrat tenglamalar",
+     "group": "M-11",
+     "status": "present"
+    }
+   ]
+  },
+  "attempts": [
+   {
+    "id": 9,
+    "exam_id": 3,
+    "exam": "IELTS Mock #2 — Oktyabr",
+    "correct": 14,
+    "total": 15,
+    "score": 25,
+    "max_score": 30,
+    "finished_at": "2026-10-12T11:00:00.000000Z"
+   },
+   {
+    "id": 4,
+    "exam_id": 2,
+    "exam": "IELTS Mock #1 — Sentyabr",
+    "correct": 12,
+    "total": 15,
+    "score": 22,
+    "max_score": 30,
+    "finished_at": "2026-09-14T11:00:00.000000Z"
+   }
+  ],
+  "profile": {
+   "id": 4,
+   "organization_id": 1,
+   "student_id": 4,
+   "birth_date": null,
+   "gender": null,
+   "parent_name": "Hasanova Rustam",
+   "parent_phone": "+998935550013",
+   "address": null,
+   "source": null,
+   "note": null,
+   "created_at": "2026-10-19T16:50:56.000000Z",
+   "updated_at": "2026-10-19T16:53:04.000000Z"
+  },
+  "enrollments": [
+   {
+    "id": 14,
+    "group_id": 2,
+    "student": {
+     "id": 4,
+     "full_name": "Hasanova Malika",
+     "code": "414548",
+     "phone": "+998905553452",
+     "archived": false
+    },
+    "status": "active",
+    "joined_on": "2026-10-19",
+    "activated_on": null,
+    "frozen_on": null,
+    "left_on": null,
+    "left_reason": null,
+    "left_from": null,
+    "group": {
+     "id": 2,
+     "name": "ING-5",
+     "teacher": "Usmonova Dildora"
+    }
+   },
+   {
+    "id": 4,
+    "group_id": 1,
+    "student": {
+     "id": 4,
+     "full_name": "Hasanova Malika",
+     "code": "414548",
+     "phone": "+998905553452",
+     "archived": false
+    },
+    "status": "active",
+    "joined_on": "2026-10-19",
+    "activated_on": null,
+    "frozen_on": null,
+    "left_on": null,
+    "left_reason": null,
+    "left_from": null,
+    "group": {
+     "id": 1,
+     "name": "M-11",
+     "teacher": "Rustamov Akmal"
+    }
+   }
+  ],
+  "tags": [],
+  "events": [],
+  "tasks": [],
+  "sms": [],
+  "calls": [
+   {
+    "id": 277,
+    "organization_id": 1,
+    "subject_type": "student",
+    "subject_id": 4,
+    "phone": "+998904492862",
+    "direction": "in",
+    "result": "answered",
+    "duration": 293,
+    "recording_url": "https://pbx.example/rec/129.mp3",
+    "external_id": null,
+    "origin": "pbx",
+    "live_status": null,
+    "extension": null,
+    "outcome": "not_interested",
+    "callback_at": null,
+    "handled_at": "2026-10-08T19:26:00.000000Z",
+    "transcript": null,
+    "summary": null,
+    "note": "Boshqa markazni tanladi",
+    "user_id": 1,
+    "created_at": "2026-10-08T19:26:00.000000Z",
+    "updated_at": "2026-10-08T19:26:00.000000Z",
+    "user": {
+     "id": 1,
+     "name": "Rustamov Akmal"
+    }
+   },
+   {
+    "id": 248,
+    "organization_id": 1,
+    "subject_type": "student",
+    "subject_id": 4,
+    "phone": "+998908842850",
+    "direction": "out",
+    "result": "answered",
+    "duration": 286,
+    "recording_url": "https://pbx.example/rec/100.mp3",
+    "external_id": null,
+    "origin": "pbx",
+    "live_status": null,
+    "extension": null,
+    "outcome": "info",
+    "callback_at": null,
+    "handled_at": "2026-10-17T16:05:00.000000Z",
+    "transcript": null,
+    "summary": null,
+    "note": "Narx va jadval aytildi",
+    "user_id": 7,
+    "created_at": "2026-10-17T16:05:00.000000Z",
+    "updated_at": "2026-10-17T16:05:00.000000Z",
+    "user": {
+     "id": 7,
+     "name": "Rasulov Bekzod"
+    }
+   },
+   {
+    "id": 232,
+    "organization_id": 1,
+    "subject_type": "student",
+    "subject_id": 4,
+    "phone": "+998906207020",
+    "direction": "out",
+    "result": "answered",
+    "duration": 96,
+    "recording_url": "https://pbx.example/rec/84.mp3",
+    "external_id": null,
+    "origin": "pbx",
+    "live_status": null,
+    "extension": null,
+    "outcome": "info",
+    "callback_at": null,
+    "handled_at": "2026-10-05T11:00:00.000000Z",
+    "transcript": null,
+    "summary": null,
+    "note": "Narx va jadval aytildi",
+    "user_id": 3,
+    "created_at": "2026-10-05T11:00:00.000000Z",
+    "updated_at": "2026-10-05T11:00:00.000000Z",
+    "user": {
+     "id": 3,
+     "name": "Islomova Shahnoza"
+    }
+   },
+   {
+    "id": 222,
+    "organization_id": 1,
+    "subject_type": "student",
+    "subject_id": 4,
+    "phone": "+998907079655",
+    "direction": "in",
+    "result": "answered",
+    "duration": 294,
+    "recording_url": "https://pbx.example/rec/74.mp3",
+    "external_id": null,
+    "origin": "pbx",
+    "live_status": null,
+    "extension": null,
+    "outcome": "callback",
+    "callback_at": null,
+    "handled_at": "2026-10-19T04:53:04.000000Z",
+    "transcript": null,
+    "summary": null,
+    "note": "Ertaga 10:00 da qayta qo'ng'iroq",
+    "user_id": 3,
+    "created_at": "2026-10-19T04:53:04.000000Z",
+    "updated_at": "2026-10-19T04:53:04.000000Z",
+    "user": {
+     "id": 3,
+     "name": "Islomova Shahnoza"
+    }
+   },
+   {
+    "id": 208,
+    "organization_id": 1,
+    "subject_type": "student",
+    "subject_id": 4,
+    "phone": "+998908352390",
+    "direction": "out",
+    "result": "answered",
+    "duration": 289,
+    "recording_url": "https://pbx.example/rec/60.mp3",
+    "external_id": null,
+    "origin": "pbx",
+    "live_status": null,
+    "extension": null,
+    "outcome": "info",
+    "callback_at": null,
+    "handled_at": "2026-10-02T10:50:00.000000Z",
+    "transcript": null,
+    "summary": null,
+    "note": "Narx va jadval aytildi",
+    "user_id": 1,
+    "created_at": "2026-10-02T10:50:00.000000Z",
+    "updated_at": "2026-10-02T10:50:00.000000Z",
+    "user": {
+     "id": 1,
+     "name": "Rustamov Akmal"
+    }
+   },
+   {
+    "id": 167,
+    "organization_id": 1,
+    "subject_type": "student",
+    "subject_id": 4,
+    "phone": "+998906445945",
+    "direction": "out",
+    "result": "no_answer",
+    "duration": null,
+    "recording_url": null,
+    "external_id": null,
+    "origin": "pbx",
+    "live_status": null,
+    "extension": null,
+    "outcome": null,
+    "callback_at": null,
+    "handled_at": "2026-10-19T16:53:04.000000Z",
+    "transcript": null,
+    "summary": null,
+    "note": null,
+    "user_id": 3,
+    "created_at": "2026-10-06T16:17:00.000000Z",
+    "updated_at": "2026-10-06T16:17:00.000000Z",
+    "user": {
+     "id": 3,
+     "name": "Islomova Shahnoza"
+    }
+   }
+  ],
+  "coins": 18,
+  "exam_results": [],
+  "offer": {
+   "version": 1,
+   "accepted": false
+  }
+ }
+}

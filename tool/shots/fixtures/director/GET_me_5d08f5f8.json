@@ -1,0 +1,30 @@
+{
+ "method": "GET",
+ "path": "me",
+ "query": {},
+ "status": 200,
+ "body": {
+  "user": {
+   "id": 1,
+   "name": "Rustamov Akmal",
+   "phone": "+998900000001",
+   "is_platform_admin": false,
+   "has_password": true,
+   "telegram_linked": false,
+   "appearance": {
+    "mode": "light",
+    "accent": "blue",
+    "template": "classic"
+   }
+  },
+  "memberships": [
+   {
+    "organization_id": 1,
+    "organization": "Ilm yo'li o'quv markazi",
+    "role": "director"
+   }
+  ],
+  "mode": "platform",
+  "new_requests": 0
+ }
+}

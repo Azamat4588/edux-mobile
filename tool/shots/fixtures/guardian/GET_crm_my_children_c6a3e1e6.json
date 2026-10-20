@@ -1,0 +1,36 @@
+{
+ "method": "GET",
+ "path": "crm/my/children",
+ "query": {},
+ "status": 200,
+ "body": {
+  "children": [
+   {
+    "id": 11,
+    "full_name": "Ergashev Timur",
+    "archived": false,
+    "groups": [
+     "M-11"
+    ],
+    "balance": 0,
+    "payments": [],
+    "charges": [],
+    "attendance": {
+     "period": "2026-10",
+     "counts": {
+      "present": 0,
+      "absent": 0,
+      "late": 0,
+      "excused": 0
+     },
+     "lessons": []
+    },
+    "offer": {
+     "version": 1,
+     "accepted": false
+    }
+   }
+  ],
+  "offer_text": "1. O'quv markazi dars jadvaliga muvofiq ta'lim xizmatini ko'rsatadi.\n2. To'lov har oy boshida amalga oshiriladi.\n3. Uzrli sababsiz qoldirilgan darslar uchun to'lov qaytarilmaydi."
+ }
+}

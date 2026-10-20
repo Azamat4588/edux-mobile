@@ -1,0 +1,37 @@
+{
+ "method": "GET",
+ "path": "crm/callcenter/scripts",
+ "query": {},
+ "status": 200,
+ "body": {
+  "data": [
+   {
+    "id": 4,
+    "organization_id": 1,
+    "title": "Yangi mijoz",
+    "body": "1. Salomlashing: «Ilm yo'li o'quv markazi, ismim …, sizga qanday yordam beray?»\n2. Kim uchun va qaysi fan qiziqtirayotganini so'rang (yoshi, darajasi).\n3. Qulay vaqtni bilib, mos guruhni ayting.\n4. Bepul sinov darsini taklif qiling va sanani kelishing.\n5. Ism va raqamni tasdiqlang.",
+    "position": 1,
+    "created_at": "2026-10-19T16:53:04.000000Z",
+    "updated_at": "2026-10-19T16:53:04.000000Z"
+   },
+   {
+    "id": 5,
+    "organization_id": 1,
+    "title": "Qarzdor ota-ona",
+    "body": "Hurmat bilan salomlashing. Qarz summasi va muddatini ayting. Click/Payme havolasini SMS qilib yuborishni taklif qiling. To'lov sanasini yozib qo'ying.",
+    "position": 2,
+    "created_at": "2026-10-19T16:53:04.000000Z",
+    "updated_at": "2026-10-19T16:53:04.000000Z"
+   },
+   {
+    "id": 6,
+    "organization_id": 1,
+    "title": "Sinov darsidan keyin",
+    "body": "Darsdan taassurotini so'rang. Savollariga javob bering. Guruhga yozilishni taklif qiling, chegirmani eslating.",
+    "position": 3,
+    "created_at": "2026-10-19T16:53:04.000000Z",
+    "updated_at": "2026-10-19T16:53:04.000000Z"
+   }
+  ]
+ }
+}

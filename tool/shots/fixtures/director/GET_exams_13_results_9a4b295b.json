@@ -1,0 +1,231 @@
+{
+ "method": "GET",
+ "path": "exams/13/results",
+ "query": {},
+ "status": 200,
+ "body": {
+  "Natijalar": [
+   [
+    "O'rin",
+    "Kod",
+    "F.I.Sh.",
+    "Guruh",
+    "Variant",
+    "Turi",
+    "To'g'ri",
+    "Noto'g'ri",
+    "Bo'sh",
+    "Ball",
+    "Maks. ball",
+    "Foiz"
+   ]
+  ],
+  "Javoblar": [
+   [
+    "Kod",
+    "F.I.Sh.",
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55
+   ],
+   [
+    "",
+    "To'g'ri, %",
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  ],
+  "Mavzular": [
+   [
+    "Mavzu",
+    "Savollar soni",
+    "O'rtacha to'g'ri, %"
+   ],
+   [
+    "Aylana bo'ylab harakat dinamikasi",
+    3,
+    0
+   ],
+   [
+    "Dinamika",
+    6,
+    0
+   ],
+   [
+    "Erkin tushish va vertikal otilgan jism harakati",
+    5,
+    0
+   ],
+   [
+    "Gorizontal va qiya otilgan jism harakati",
+    4,
+    0
+   ],
+   [
+    "Gravitatsiya",
+    5,
+    0
+   ],
+   [
+    "Impuls",
+    3,
+    0
+   ],
+   [
+    "Impuls va energiya",
+    1,
+    0
+   ],
+   [
+    "Impuls va impulsning saqlanish qonuni",
+    1,
+    0
+   ],
+   [
+    "Ish, energiya, quvvat",
+    3,
+    0
+   ],
+   [
+    "Ishqalanish va elastiklik kuchlari",
+    3,
+    0
+   ],
+   [
+    "Kinematika",
+    4,
+    0
+   ],
+   [
+    "Mexanik energiya va uning saqlanish qonuni",
+    4,
+    0
+   ],
+   [
+    "Mexanik ish va quvvat",
+    3,
+    0
+   ],
+   [
+    "Nyuton qonunlari va jismning og'irligi",
+    5,
+    0
+   ],
+   [
+    "Qiya tekislik va bog'langan jismlar harakati",
+    3,
+    0
+   ],
+   [
+    "Tekis va tekis o'zgaruvchan to'g'ri chiziqli harakat",
+    2,
+    0
+   ]
+  ]
+ }
+}

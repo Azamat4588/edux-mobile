@@ -1,0 +1,553 @@
+{
+ "method": "GET",
+ "path": "bank/topics",
+ "query": {
+  "subject": "kim"
+ },
+ "status": 200,
+ "body": {
+  "subjects": [
+   {
+    "code": "mat",
+    "subject": "Matematika",
+    "topics": 48,
+    "questions": 585
+   },
+   {
+    "code": "fiz",
+    "subject": "Fizika",
+    "topics": 42,
+    "questions": 461
+   },
+   {
+    "code": "kim",
+    "subject": "Kimyo",
+    "topics": 42,
+    "questions": 420
+   },
+   {
+    "code": "bio",
+    "subject": "Biologiya",
+    "topics": 42,
+    "questions": 420
+   },
+   {
+    "code": "ona",
+    "subject": "Ona tili va adabiyot",
+    "topics": 40,
+    "questions": 400
+   },
+   {
+    "code": "tar",
+    "subject": "O'zbekiston tarixi",
+    "topics": 35,
+    "questions": 350
+   },
+   {
+    "code": "jtar",
+    "subject": "Jahon tarixi",
+    "topics": 30,
+    "questions": 300
+   },
+   {
+    "code": "geo",
+    "subject": "Geografiya",
+    "topics": 38,
+    "questions": 380
+   },
+   {
+    "code": "ing",
+    "subject": "Ingliz tili",
+    "topics": 36,
+    "questions": 360
+   }
+  ],
+  "tree": {
+   "subject": {
+    "code": "kim",
+    "title": "Kimyo"
+   },
+   "sections": [
+    {
+     "code": "kim.s1",
+     "title": "Atom tuzilishi va davriy qonun",
+     "topics": [
+      {
+       "code": "kim.s1.01",
+       "title": "Atom tuzilishi va izotoplar",
+       "count": 10,
+       "by_difficulty": {
+        "1": 4,
+        "2": 3,
+        "3": 3
+       }
+      },
+      {
+       "code": "kim.s1.02",
+       "title": "Elektron konfiguratsiya",
+       "count": 10,
+       "by_difficulty": {
+        "1": 2,
+        "2": 7,
+        "3": 1
+       }
+      },
+      {
+       "code": "kim.s1.03",
+       "title": "Davriy qonun va davriy jadval",
+       "count": 10,
+       "by_difficulty": {
+        "1": 6,
+        "2": 3,
+        "3": 1
+       }
+      }
+     ]
+    },
+    {
+     "code": "kim.s2",
+     "title": "Kimyoviy bog'lanish va oksidlanish-qaytarilish",
+     "topics": [
+      {
+       "code": "kim.s2.01",
+       "title": "Kimyoviy bog'lanish turlari",
+       "count": 10,
+       "by_difficulty": {
+        "1": 5,
+        "2": 4,
+        "3": 1
+       }
+      },
+      {
+       "code": "kim.s2.02",
+       "title": "Gibridlanish va molekulalarning fazoviy tuzilishi",
+       "count": 10,
+       "by_difficulty": {
+        "1": 2,
+        "2": 7,
+        "3": 1
+       }
+      },
+      {
+       "code": "kim.s2.03",
+       "title": "Oksidlanish darajasi",
+       "count": 10,
+       "by_difficulty": {
+        "1": 4,
+        "2": 5,
+        "3": 1
+       }
+      },
+      {
+       "code": "kim.s2.04",
+       "title": "Oksidlanish-qaytarilish reaksiyalari",
+       "count": 10,
+       "by_difficulty": {
+        "1": 2,
+        "2": 3,
+        "3": 5
+       }
+      }
+     ]
+    },
+    {
+     "code": "kim.s3",
+     "title": "Kimyoviy hisoblashlar",
+     "topics": [
+      {
+       "code": "kim.s3.01",
+       "title": "Mol, molyar massa va Avogadro soni",
+       "count": 10,
+       "by_difficulty": {
+        "1": 5,
+        "2": 4,
+        "3": 1
+       }
+      },
+      {
+       "code": "kim.s3.02",
+       "title": "Gaz qonunlari va gazlarning nisbiy zichligi",
+       "count": 10,
+       "by_difficulty": {
+        "1": 1,
+        "2": 6,
+        "3": 3
+       }
+      },
+      {
+       "code": "kim.s3.03",
+       "title": "Massa ulushi va formulani aniqlash",
+       "count": 10,
+       "by_difficulty": {
+        "1": 2,
+        "2": 5,
+        "3": 3
+       }
+      },
+      {
+       "code": "kim.s3.04",
+       "title": "Reaksiya tenglamasi bo'yicha hisoblashlar",
+       "count": 10,
+       "by_difficulty": {
+        "1": 2,
+        "2": 7,
+        "3": 1
+       }
+      },
+      {
+       "code": "kim.s3.05",
+       "title": "Mo'l-kam, unum va aralashmalarga oid masalalar",
+       "count": 10,
+       "by_difficulty": {
+        "1": 0,
+        "2": 3,
+        "3": 7
+       }
+      }
+     ]
+    },
+    {
+     "code": "kim.s4",
+     "title": "Eritmalar va elektrolitlar",
+     "topics": [
+      {
+       "code": "kim.s4.01",
+       "title": "Eritmadagi moddaning massa ulushi",
+       "count": 10,
+       "by_difficulty": {
+        "1": 4,
+        "2": 3,
+        "3": 3
+       }
+      },
+      {
+       "code": "kim.s4.02",
+       "title": "Molyar konsentratsiya",
+       "count": 10,
+       "by_difficulty": {
+        "1": 2,
+        "2": 5,
+        "3": 3
+       }
+      },
+      {
+       "code": "kim.s4.03",
+       "title": "Eritmalarni aralashtirish, suyultirish va kristallogidratlar",
+       "count": 10,
+       "by_difficulty": {
+        "1": 1,
+        "2": 5,
+        "3": 4
+       }
+      },
+      {
+       "code": "kim.s4.04",
+       "title": "Elektrolitik dissotsiatsiya va ion almashinish reaksiyalari",
+       "count": 10,
+       "by_difficulty": {
+        "1": 5,
+        "2": 4,
+        "3": 1
+       }
+      },
+      {
+       "code": "kim.s4.05",
+       "title": "Vodorod ko'rsatkich (pH) va tuzlar gidrolizi",
+       "count": 10,
+       "by_difficulty": {
+        "1": 1,
+        "2": 8,
+        "3": 1
+       }
+      }
+     ]
+    },
+    {
+     "code": "kim.s5",
+     "title": "Kimyoviy jarayonlar qonuniyatlari",
+     "topics": [
+      {
+       "code": "kim.s5.01",
+       "title": "Kimyoviy reaksiyalar turlari va issiqlik effekti",
+       "count": 10,
+       "by_difficulty": {
+        "1": 3,
+        "2": 4,
+        "3": 3
+       }
+      },
+      {
+       "code": "kim.s5.02",
+       "title": "Kimyoviy reaksiya tezligi",
+       "count": 10,
+       "by_difficulty": {
+        "1": 3,
+        "2": 5,
+        "3": 2
+       }
+      },
+      {
+       "code": "kim.s5.03",
+       "title": "Kimyoviy muvozanat",
+       "count": 10,
+       "by_difficulty": {
+        "1": 1,
+        "2": 7,
+        "3": 2
+       }
+      },
+      {
+       "code": "kim.s5.04",
+       "title": "Elektroliz",
+       "count": 10,
+       "by_difficulty": {
+        "1": 3,
+        "2": 4,
+        "3": 3
+       }
+      }
+     ]
+    },
+    {
+     "code": "kim.s6",
+     "title": "Noorganik birikmalar va metallar",
+     "topics": [
+      {
+       "code": "kim.s6.01",
+       "title": "Noorganik birikmalarning asosiy sinflari",
+       "count": 10,
+       "by_difficulty": {
+        "1": 5,
+        "2": 3,
+        "3": 2
+       }
+      },
+      {
+       "code": "kim.s6.02",
+       "title": "Metallarning umumiy xossalari va kuchlanish qatori",
+       "count": 10,
+       "by_difficulty": {
+        "1": 4,
+        "2": 3,
+        "3": 3
+       }
+      },
+      {
+       "code": "kim.s6.03",
+       "title": "Ishqoriy, ishqoriy-yer metallar va alyuminiy",
+       "count": 10,
+       "by_difficulty": {
+        "1": 3,
+        "2": 5,
+        "3": 2
+       }
+      },
+      {
+       "code": "kim.s6.04",
+       "title": "Temir, mis va boshqa d-elementlar",
+       "count": 10,
+       "by_difficulty": {
+        "1": 3,
+        "2": 4,
+        "3": 3
+       }
+      }
+     ]
+    },
+    {
+     "code": "kim.s7",
+     "title": "Metallmaslar",
+     "topics": [
+      {
+       "code": "kim.s7.01",
+       "title": "Galogenlar",
+       "count": 10,
+       "by_difficulty": {
+        "1": 3,
+        "2": 5,
+        "3": 2
+       }
+      },
+      {
+       "code": "kim.s7.02",
+       "title": "Kislorod va oltingugurt",
+       "count": 10,
+       "by_difficulty": {
+        "1": 3,
+        "2": 5,
+        "3": 2
+       }
+      },
+      {
+       "code": "kim.s7.03",
+       "title": "Azot va fosfor",
+       "count": 10,
+       "by_difficulty": {
+        "1": 5,
+        "2": 3,
+        "3": 2
+       }
+      },
+      {
+       "code": "kim.s7.04",
+       "title": "Uglerod va kremniy",
+       "count": 10,
+       "by_difficulty": {
+        "1": 3,
+        "2": 5,
+        "3": 2
+       }
+      }
+     ]
+    },
+    {
+     "code": "kim.s8",
+     "title": "Organik kimyo nazariyasi va uglevodorodlar",
+     "topics": [
+      {
+       "code": "kim.s8.01",
+       "title": "Organik birikmalar nomenklaturasi",
+       "count": 10,
+       "by_difficulty": {
+        "1": 4,
+        "2": 5,
+        "3": 1
+       }
+      },
+      {
+       "code": "kim.s8.02",
+       "title": "Izomeriya",
+       "count": 10,
+       "by_difficulty": {
+        "1": 1,
+        "2": 6,
+        "3": 3
+       }
+      },
+      {
+       "code": "kim.s8.03",
+       "title": "Alkanlar va sikloalkanlar",
+       "count": 10,
+       "by_difficulty": {
+        "1": 5,
+        "2": 3,
+        "3": 2
+       }
+      },
+      {
+       "code": "kim.s8.04",
+       "title": "Alkenlar va alkadiyenlar",
+       "count": 10,
+       "by_difficulty": {
+        "1": 3,
+        "2": 5,
+        "3": 2
+       }
+      },
+      {
+       "code": "kim.s8.05",
+       "title": "Alkinlar",
+       "count": 10,
+       "by_difficulty": {
+        "1": 2,
+        "2": 6,
+        "3": 2
+       }
+      },
+      {
+       "code": "kim.s8.06",
+       "title": "Arenlar",
+       "count": 10,
+       "by_difficulty": {
+        "1": 3,
+        "2": 5,
+        "3": 2
+       }
+      }
+     ]
+    },
+    {
+     "code": "kim.s9",
+     "title": "Kislorodli va azotli organik birikmalar",
+     "topics": [
+      {
+       "code": "kim.s9.01",
+       "title": "Spirtlar va fenollar",
+       "count": 10,
+       "by_difficulty": {
+        "1": 3,
+        "2": 6,
+        "3": 1
+       }
+      },
+      {
+       "code": "kim.s9.02",
+       "title": "Aldegidlar va ketonlar",
+       "count": 10,
+       "by_difficulty": {
+        "1": 3,
+        "2": 4,
+        "3": 3
+       }
+      },
+      {
+       "code": "kim.s9.03",
+       "title": "Karbon kislotalar",
+       "count": 10,
+       "by_difficulty": {
+        "1": 2,
+        "2": 6,
+        "3": 2
+       }
+      },
+      {
+       "code": "kim.s9.04",
+       "title": "Murakkab efirlar va yog'lar",
+       "count": 10,
+       "by_difficulty": {
+        "1": 5,
+        "2": 2,
+        "3": 3
+       }
+      },
+      {
+       "code": "kim.s9.05",
+       "title": "Uglevodlar",
+       "count": 10,
+       "by_difficulty": {
+        "1": 4,
+        "2": 4,
+        "3": 2
+       }
+      },
+      {
+       "code": "kim.s9.06",
+       "title": "Aminlar va aminokislotalar",
+       "count": 10,
+       "by_difficulty": {
+        "1": 2,
+        "2": 5,
+        "3": 3
+       }
+      },
+      {
+       "code": "kim.s9.07",
+       "title": "Oqsillar va polimerlar",
+       "count": 10,
+       "by_difficulty": {
+        "1": 4,
+        "2": 5,
+        "3": 1
+       }
+      }
+     ]
+    }
+   ],
+   "years": [],
+   "languages": {
+    "uz": 420
+   },
+   "language": "uz"
+  }
+ }
+}

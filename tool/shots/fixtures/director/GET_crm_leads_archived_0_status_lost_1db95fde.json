@@ -1,0 +1,87 @@
+{
+ "method": "GET",
+ "path": "crm/leads",
+ "query": {
+  "status": "lost",
+  "archived": "0"
+ },
+ "status": 200,
+ "body": {
+  "current_page": 1,
+  "data": [
+   {
+    "id": 5,
+    "organization_id": 1,
+    "full_name": "Abdullayev Otabek",
+    "phone": "+998935551205",
+    "telegram_chat_id": null,
+    "source": "sayt",
+    "interest": "Fizika",
+    "status": "lost",
+    "assigned_to": 3,
+    "note": null,
+    "trial_at": null,
+    "lost_reason": "Narxi to'g'ri kelmadi",
+    "student_id": null,
+    "converted_at": null,
+    "created_by": 3,
+    "created_at": "2026-09-29T14:23:59.000000Z",
+    "updated_at": "2026-10-19T14:23:59.000000Z",
+    "section_id": 1,
+    "planned_group_id": null,
+    "course_id": null,
+    "branch_id": null,
+    "form_id": null,
+    "preferred_time": null,
+    "position": 0,
+    "archived_at": null,
+    "placement_exam_id": null,
+    "placement_student_id": null,
+    "assignee": {
+     "id": 3,
+     "name": "Islomova Shahnoza"
+    },
+    "student": null,
+    "source_name": "Sayt",
+    "tags": []
+   }
+  ],
+  "first_page_url": "__SERVER__/api/v1/crm/leads?page=1",
+  "from": 1,
+  "last_page": 1,
+  "last_page_url": "__SERVER__/api/v1/crm/leads?page=1",
+  "links": [
+   {
+    "url": null,
+    "label": "pagination.previous",
+    "page": null,
+    "active": false
+   },
+   {
+    "url": "__SERVER__/api/v1/crm/leads?page=1",
+    "label": "1",
+    "page": 1,
+    "active": true
+   },
+   {
+    "url": null,
+    "label": "pagination.next",
+    "page": null,
+    "active": false
+   }
+  ],
+  "next_page_url": null,
+  "path": "__SERVER__/api/v1/crm/leads",
+  "per_page": 50,
+  "prev_page_url": null,
+  "to": 1,
+  "total": 1,
+  "counts": {
+   "contacted": 1,
+   "enrolled": 1,
+   "lost": 1,
+   "new": 2,
+   "trial": 1
+  }
+ }
+}

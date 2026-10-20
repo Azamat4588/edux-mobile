@@ -1,0 +1,1202 @@
+{
+ "method": "GET",
+ "path": "exams/8",
+ "query": {},
+ "status": 200,
+ "body": {
+  "id": 8,
+  "organization_id": 1,
+  "subject_id": null,
+  "title": "Matematika olimpiadasi — saralash bosqichi",
+  "status": "published",
+  "duration_minutes": 60,
+  "starts_at": "2026-10-19T15:42:55.000000Z",
+  "ends_at": "2026-10-19T17:42:55.000000Z",
+  "variants_count": 1,
+  "shuffle_questions": true,
+  "shuffle_options": true,
+  "show_answers": false,
+  "seed": 636546369,
+  "created_by": null,
+  "published_at": "2026-10-19T16:08:55.000000Z",
+  "created_at": "2026-10-19T16:08:55.000000Z",
+  "updated_at": "2026-10-19T16:08:55.000000Z",
+  "public_token": null,
+  "kind": "bank",
+  "format": null,
+  "blocks": null,
+  "sheet_options": null,
+  "answer_keys": null,
+  "audience": "students",
+  "price": 0,
+  "pay_mode": "online",
+  "finished_attempts_count": 11,
+  "pending_count": 0,
+  "subject": null,
+  "groups": [],
+  "variants": [
+   {
+    "id": 6,
+    "exam_id": 8,
+    "number": 1
+   }
+  ],
+  "questions": [
+   {
+    "id": 1,
+    "organization_id": 1,
+    "subject_id": 1,
+    "topic_id": 1,
+    "type": "single",
+    "body": "6 × 3 = ?",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 1,
+    "explanation": null,
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T14:23:57.000000Z",
+    "updated_at": "2026-10-19T14:23:57.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": null,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 8,
+     "question_id": 1,
+     "position": 1,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 1,
+      "question_id": 1,
+      "body": "18",
+      "image_path": null,
+      "is_correct": true,
+      "position": 0,
+      "created_at": "2026-10-19T14:23:57.000000Z",
+      "updated_at": "2026-10-19T14:23:57.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 2,
+      "question_id": 1,
+      "body": "19",
+      "image_path": null,
+      "is_correct": false,
+      "position": 1,
+      "created_at": "2026-10-19T14:23:57.000000Z",
+      "updated_at": "2026-10-19T14:23:57.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 3,
+      "question_id": 1,
+      "body": "16",
+      "image_path": null,
+      "is_correct": false,
+      "position": 2,
+      "created_at": "2026-10-19T14:23:57.000000Z",
+      "updated_at": "2026-10-19T14:23:57.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 4,
+      "question_id": 1,
+      "body": "28",
+      "image_path": null,
+      "is_correct": false,
+      "position": 3,
+      "created_at": "2026-10-19T14:23:57.000000Z",
+      "updated_at": "2026-10-19T14:23:57.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 1,
+     "name": "Ko'paytirish"
+    }
+   },
+   {
+    "id": 2,
+    "organization_id": 1,
+    "subject_id": 1,
+    "topic_id": 2,
+    "type": "single",
+    "body": "7 + 8 = ?",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 2,
+    "explanation": null,
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T14:23:57.000000Z",
+    "updated_at": "2026-10-19T14:23:57.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": null,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 8,
+     "question_id": 2,
+     "position": 2,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 5,
+      "question_id": 2,
+      "body": "15",
+      "image_path": null,
+      "is_correct": true,
+      "position": 0,
+      "created_at": "2026-10-19T14:23:57.000000Z",
+      "updated_at": "2026-10-19T14:23:57.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 6,
+      "question_id": 2,
+      "body": "16",
+      "image_path": null,
+      "is_correct": false,
+      "position": 1,
+      "created_at": "2026-10-19T14:23:57.000000Z",
+      "updated_at": "2026-10-19T14:23:57.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 7,
+      "question_id": 2,
+      "body": "13",
+      "image_path": null,
+      "is_correct": false,
+      "position": 2,
+      "created_at": "2026-10-19T14:23:57.000000Z",
+      "updated_at": "2026-10-19T14:23:57.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 8,
+      "question_id": 2,
+      "body": "25",
+      "image_path": null,
+      "is_correct": false,
+      "position": 3,
+      "created_at": "2026-10-19T14:23:57.000000Z",
+      "updated_at": "2026-10-19T14:23:57.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 2,
+     "name": "Qo'shish"
+    }
+   },
+   {
+    "id": 3,
+    "organization_id": 1,
+    "subject_id": 1,
+    "topic_id": 1,
+    "type": "single",
+    "body": "8 × 6 = ?",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 3,
+    "explanation": null,
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T14:23:57.000000Z",
+    "updated_at": "2026-10-19T14:23:57.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": null,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 8,
+     "question_id": 3,
+     "position": 3,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 9,
+      "question_id": 3,
+      "body": "48",
+      "image_path": null,
+      "is_correct": true,
+      "position": 0,
+      "created_at": "2026-10-19T14:23:57.000000Z",
+      "updated_at": "2026-10-19T14:23:57.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 10,
+      "question_id": 3,
+      "body": "49",
+      "image_path": null,
+      "is_correct": false,
+      "position": 1,
+      "created_at": "2026-10-19T14:23:57.000000Z",
+      "updated_at": "2026-10-19T14:23:57.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 11,
+      "question_id": 3,
+      "body": "46",
+      "image_path": null,
+      "is_correct": false,
+      "position": 2,
+      "created_at": "2026-10-19T14:23:57.000000Z",
+      "updated_at": "2026-10-19T14:23:57.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 12,
+      "question_id": 3,
+      "body": "58",
+      "image_path": null,
+      "is_correct": false,
+      "position": 3,
+      "created_at": "2026-10-19T14:23:57.000000Z",
+      "updated_at": "2026-10-19T14:23:57.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 1,
+     "name": "Ko'paytirish"
+    }
+   },
+   {
+    "id": 4,
+    "organization_id": 1,
+    "subject_id": 1,
+    "topic_id": 2,
+    "type": "single",
+    "body": "9 + 4 = ?",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 1,
+    "explanation": null,
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T14:23:57.000000Z",
+    "updated_at": "2026-10-19T14:23:57.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": null,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 8,
+     "question_id": 4,
+     "position": 4,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 13,
+      "question_id": 4,
+      "body": "13",
+      "image_path": null,
+      "is_correct": true,
+      "position": 0,
+      "created_at": "2026-10-19T14:23:57.000000Z",
+      "updated_at": "2026-10-19T14:23:57.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 14,
+      "question_id": 4,
+      "body": "14",
+      "image_path": null,
+      "is_correct": false,
+      "position": 1,
+      "created_at": "2026-10-19T14:23:57.000000Z",
+      "updated_at": "2026-10-19T14:23:57.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 15,
+      "question_id": 4,
+      "body": "11",
+      "image_path": null,
+      "is_correct": false,
+      "position": 2,
+      "created_at": "2026-10-19T14:23:57.000000Z",
+      "updated_at": "2026-10-19T14:23:57.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 16,
+      "question_id": 4,
+      "body": "23",
+      "image_path": null,
+      "is_correct": false,
+      "position": 3,
+      "created_at": "2026-10-19T14:23:57.000000Z",
+      "updated_at": "2026-10-19T14:23:57.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 2,
+     "name": "Qo'shish"
+    }
+   },
+   {
+    "id": 5,
+    "organization_id": 1,
+    "subject_id": 1,
+    "topic_id": 1,
+    "type": "single",
+    "body": "10 × 9 = ?",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 2,
+    "explanation": null,
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T14:23:57.000000Z",
+    "updated_at": "2026-10-19T14:23:57.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": null,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 8,
+     "question_id": 5,
+     "position": 5,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 17,
+      "question_id": 5,
+      "body": "90",
+      "image_path": null,
+      "is_correct": true,
+      "position": 0,
+      "created_at": "2026-10-19T14:23:57.000000Z",
+      "updated_at": "2026-10-19T14:23:57.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 18,
+      "question_id": 5,
+      "body": "91",
+      "image_path": null,
+      "is_correct": false,
+      "position": 1,
+      "created_at": "2026-10-19T14:23:57.000000Z",
+      "updated_at": "2026-10-19T14:23:57.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 19,
+      "question_id": 5,
+      "body": "88",
+      "image_path": null,
+      "is_correct": false,
+      "position": 2,
+      "created_at": "2026-10-19T14:23:57.000000Z",
+      "updated_at": "2026-10-19T14:23:57.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 20,
+      "question_id": 5,
+      "body": "100",
+      "image_path": null,
+      "is_correct": false,
+      "position": 3,
+      "created_at": "2026-10-19T14:23:57.000000Z",
+      "updated_at": "2026-10-19T14:23:57.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 1,
+     "name": "Ko'paytirish"
+    }
+   },
+   {
+    "id": 6,
+    "organization_id": 1,
+    "subject_id": 1,
+    "topic_id": 2,
+    "type": "single",
+    "body": "11 + 7 = ?",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 3,
+    "explanation": null,
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T14:23:57.000000Z",
+    "updated_at": "2026-10-19T14:23:57.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": null,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 8,
+     "question_id": 6,
+     "position": 6,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 21,
+      "question_id": 6,
+      "body": "18",
+      "image_path": null,
+      "is_correct": true,
+      "position": 0,
+      "created_at": "2026-10-19T14:23:57.000000Z",
+      "updated_at": "2026-10-19T14:23:57.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 22,
+      "question_id": 6,
+      "body": "19",
+      "image_path": null,
+      "is_correct": false,
+      "position": 1,
+      "created_at": "2026-10-19T14:23:57.000000Z",
+      "updated_at": "2026-10-19T14:23:57.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 23,
+      "question_id": 6,
+      "body": "16",
+      "image_path": null,
+      "is_correct": false,
+      "position": 2,
+      "created_at": "2026-10-19T14:23:57.000000Z",
+      "updated_at": "2026-10-19T14:23:57.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 24,
+      "question_id": 6,
+      "body": "28",
+      "image_path": null,
+      "is_correct": false,
+      "position": 3,
+      "created_at": "2026-10-19T14:23:57.000000Z",
+      "updated_at": "2026-10-19T14:23:57.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 2,
+     "name": "Qo'shish"
+    }
+   },
+   {
+    "id": 7,
+    "organization_id": 1,
+    "subject_id": 1,
+    "topic_id": 1,
+    "type": "single",
+    "body": "12 × 5 = ?",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 1,
+    "explanation": null,
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T14:23:57.000000Z",
+    "updated_at": "2026-10-19T14:23:57.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": null,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 8,
+     "question_id": 7,
+     "position": 7,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 25,
+      "question_id": 7,
+      "body": "60",
+      "image_path": null,
+      "is_correct": true,
+      "position": 0,
+      "created_at": "2026-10-19T14:23:57.000000Z",
+      "updated_at": "2026-10-19T14:23:57.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 26,
+      "question_id": 7,
+      "body": "61",
+      "image_path": null,
+      "is_correct": false,
+      "position": 1,
+      "created_at": "2026-10-19T14:23:57.000000Z",
+      "updated_at": "2026-10-19T14:23:57.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 27,
+      "question_id": 7,
+      "body": "58",
+      "image_path": null,
+      "is_correct": false,
+      "position": 2,
+      "created_at": "2026-10-19T14:23:57.000000Z",
+      "updated_at": "2026-10-19T14:23:57.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 28,
+      "question_id": 7,
+      "body": "70",
+      "image_path": null,
+      "is_correct": false,
+      "position": 3,
+      "created_at": "2026-10-19T14:23:57.000000Z",
+      "updated_at": "2026-10-19T14:23:57.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 1,
+     "name": "Ko'paytirish"
+    }
+   },
+   {
+    "id": 8,
+    "organization_id": 1,
+    "subject_id": 1,
+    "topic_id": 2,
+    "type": "single",
+    "body": "13 + 3 = ?",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 2,
+    "explanation": null,
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T14:23:57.000000Z",
+    "updated_at": "2026-10-19T14:23:57.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": null,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 8,
+     "question_id": 8,
+     "position": 8,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 29,
+      "question_id": 8,
+      "body": "16",
+      "image_path": null,
+      "is_correct": true,
+      "position": 0,
+      "created_at": "2026-10-19T14:23:57.000000Z",
+      "updated_at": "2026-10-19T14:23:57.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 30,
+      "question_id": 8,
+      "body": "17",
+      "image_path": null,
+      "is_correct": false,
+      "position": 1,
+      "created_at": "2026-10-19T14:23:57.000000Z",
+      "updated_at": "2026-10-19T14:23:57.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 31,
+      "question_id": 8,
+      "body": "14",
+      "image_path": null,
+      "is_correct": false,
+      "position": 2,
+      "created_at": "2026-10-19T14:23:57.000000Z",
+      "updated_at": "2026-10-19T14:23:57.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 32,
+      "question_id": 8,
+      "body": "26",
+      "image_path": null,
+      "is_correct": false,
+      "position": 3,
+      "created_at": "2026-10-19T14:23:57.000000Z",
+      "updated_at": "2026-10-19T14:23:57.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 2,
+     "name": "Qo'shish"
+    }
+   },
+   {
+    "id": 9,
+    "organization_id": 1,
+    "subject_id": 1,
+    "topic_id": 1,
+    "type": "single",
+    "body": "14 × 8 = ?",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 3,
+    "explanation": null,
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T14:23:57.000000Z",
+    "updated_at": "2026-10-19T14:23:57.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": null,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 8,
+     "question_id": 9,
+     "position": 9,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 33,
+      "question_id": 9,
+      "body": "112",
+      "image_path": null,
+      "is_correct": true,
+      "position": 0,
+      "created_at": "2026-10-19T14:23:57.000000Z",
+      "updated_at": "2026-10-19T14:23:57.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 34,
+      "question_id": 9,
+      "body": "113",
+      "image_path": null,
+      "is_correct": false,
+      "position": 1,
+      "created_at": "2026-10-19T14:23:57.000000Z",
+      "updated_at": "2026-10-19T14:23:57.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 35,
+      "question_id": 9,
+      "body": "110",
+      "image_path": null,
+      "is_correct": false,
+      "position": 2,
+      "created_at": "2026-10-19T14:23:57.000000Z",
+      "updated_at": "2026-10-19T14:23:57.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 36,
+      "question_id": 9,
+      "body": "122",
+      "image_path": null,
+      "is_correct": false,
+      "position": 3,
+      "created_at": "2026-10-19T14:23:57.000000Z",
+      "updated_at": "2026-10-19T14:23:57.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 1,
+     "name": "Ko'paytirish"
+    }
+   },
+   {
+    "id": 10,
+    "organization_id": 1,
+    "subject_id": 1,
+    "topic_id": 2,
+    "type": "single",
+    "body": "15 + 6 = ?",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 1,
+    "explanation": null,
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T14:23:57.000000Z",
+    "updated_at": "2026-10-19T14:23:57.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": null,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 8,
+     "question_id": 10,
+     "position": 10,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 37,
+      "question_id": 10,
+      "body": "21",
+      "image_path": null,
+      "is_correct": true,
+      "position": 0,
+      "created_at": "2026-10-19T14:23:57.000000Z",
+      "updated_at": "2026-10-19T14:23:57.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 38,
+      "question_id": 10,
+      "body": "22",
+      "image_path": null,
+      "is_correct": false,
+      "position": 1,
+      "created_at": "2026-10-19T14:23:57.000000Z",
+      "updated_at": "2026-10-19T14:23:57.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 39,
+      "question_id": 10,
+      "body": "19",
+      "image_path": null,
+      "is_correct": false,
+      "position": 2,
+      "created_at": "2026-10-19T14:23:57.000000Z",
+      "updated_at": "2026-10-19T14:23:57.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 40,
+      "question_id": 10,
+      "body": "31",
+      "image_path": null,
+      "is_correct": false,
+      "position": 3,
+      "created_at": "2026-10-19T14:23:57.000000Z",
+      "updated_at": "2026-10-19T14:23:57.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 2,
+     "name": "Qo'shish"
+    }
+   },
+   {
+    "id": 11,
+    "organization_id": 1,
+    "subject_id": 1,
+    "topic_id": 1,
+    "type": "single",
+    "body": "16 × 4 = ?",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 2,
+    "explanation": null,
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T14:23:57.000000Z",
+    "updated_at": "2026-10-19T14:23:57.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": null,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 8,
+     "question_id": 11,
+     "position": 11,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 41,
+      "question_id": 11,
+      "body": "64",
+      "image_path": null,
+      "is_correct": true,
+      "position": 0,
+      "created_at": "2026-10-19T14:23:57.000000Z",
+      "updated_at": "2026-10-19T14:23:57.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 42,
+      "question_id": 11,
+      "body": "65",
+      "image_path": null,
+      "is_correct": false,
+      "position": 1,
+      "created_at": "2026-10-19T14:23:57.000000Z",
+      "updated_at": "2026-10-19T14:23:57.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 43,
+      "question_id": 11,
+      "body": "62",
+      "image_path": null,
+      "is_correct": false,
+      "position": 2,
+      "created_at": "2026-10-19T14:23:57.000000Z",
+      "updated_at": "2026-10-19T14:23:57.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 44,
+      "question_id": 11,
+      "body": "74",
+      "image_path": null,
+      "is_correct": false,
+      "position": 3,
+      "created_at": "2026-10-19T14:23:57.000000Z",
+      "updated_at": "2026-10-19T14:23:57.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 1,
+     "name": "Ko'paytirish"
+    }
+   },
+   {
+    "id": 12,
+    "organization_id": 1,
+    "subject_id": 1,
+    "topic_id": 2,
+    "type": "single",
+    "body": "17 + 9 = ?",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 3,
+    "explanation": null,
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T14:23:57.000000Z",
+    "updated_at": "2026-10-19T14:23:57.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": null,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 8,
+     "question_id": 12,
+     "position": 12,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 45,
+      "question_id": 12,
+      "body": "26",
+      "image_path": null,
+      "is_correct": true,
+      "position": 0,
+      "created_at": "2026-10-19T14:23:57.000000Z",
+      "updated_at": "2026-10-19T14:23:57.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 46,
+      "question_id": 12,
+      "body": "27",
+      "image_path": null,
+      "is_correct": false,
+      "position": 1,
+      "created_at": "2026-10-19T14:23:57.000000Z",
+      "updated_at": "2026-10-19T14:23:57.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 47,
+      "question_id": 12,
+      "body": "24",
+      "image_path": null,
+      "is_correct": false,
+      "position": 2,
+      "created_at": "2026-10-19T14:23:57.000000Z",
+      "updated_at": "2026-10-19T14:23:57.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 48,
+      "question_id": 12,
+      "body": "36",
+      "image_path": null,
+      "is_correct": false,
+      "position": 3,
+      "created_at": "2026-10-19T14:23:57.000000Z",
+      "updated_at": "2026-10-19T14:23:57.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 2,
+     "name": "Qo'shish"
+    }
+   },
+   {
+    "id": 13,
+    "organization_id": 1,
+    "subject_id": 1,
+    "topic_id": 3,
+    "type": "single",
+    "body": "Tenglamani yeching: $x^2 - 5x + 6 = 0$",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 2,
+    "explanation": null,
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T14:23:57.000000Z",
+    "updated_at": "2026-10-19T14:23:57.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": null,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 8,
+     "question_id": 13,
+     "position": 13,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 49,
+      "question_id": 13,
+      "body": "$x = 2$ yoki $x = 3$",
+      "image_path": null,
+      "is_correct": true,
+      "position": 0,
+      "created_at": "2026-10-19T14:23:57.000000Z",
+      "updated_at": "2026-10-19T14:23:57.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 50,
+      "question_id": 13,
+      "body": "$x = -2$ yoki $x = -3$",
+      "image_path": null,
+      "is_correct": false,
+      "position": 1,
+      "created_at": "2026-10-19T14:23:57.000000Z",
+      "updated_at": "2026-10-19T14:23:57.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 51,
+      "question_id": 13,
+      "body": "$x = 1$ yoki $x = 6$",
+      "image_path": null,
+      "is_correct": false,
+      "position": 2,
+      "created_at": "2026-10-19T14:23:57.000000Z",
+      "updated_at": "2026-10-19T14:23:57.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 52,
+      "question_id": 13,
+      "body": "Yechimi yo'q",
+      "image_path": null,
+      "is_correct": false,
+      "position": 3,
+      "created_at": "2026-10-19T14:23:57.000000Z",
+      "updated_at": "2026-10-19T14:23:57.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 3,
+     "name": "Algebra"
+    }
+   },
+   {
+    "id": 14,
+    "organization_id": 1,
+    "subject_id": 1,
+    "topic_id": 3,
+    "type": "single",
+    "body": "Hisoblang: $$\\frac{3}{4} + \\frac{5}{8}$$",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 2,
+    "explanation": null,
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T14:23:57.000000Z",
+    "updated_at": "2026-10-19T14:23:57.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": null,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 8,
+     "question_id": 14,
+     "position": 14,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 53,
+      "question_id": 14,
+      "body": "$\\frac{11}{8}$",
+      "image_path": null,
+      "is_correct": true,
+      "position": 0,
+      "created_at": "2026-10-19T14:23:57.000000Z",
+      "updated_at": "2026-10-19T14:23:57.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 54,
+      "question_id": 14,
+      "body": "$\\frac{8}{12}$",
+      "image_path": null,
+      "is_correct": false,
+      "position": 1,
+      "created_at": "2026-10-19T14:23:57.000000Z",
+      "updated_at": "2026-10-19T14:23:57.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 55,
+      "question_id": 14,
+      "body": "$\\frac{2}{3}$",
+      "image_path": null,
+      "is_correct": false,
+      "position": 2,
+      "created_at": "2026-10-19T14:23:57.000000Z",
+      "updated_at": "2026-10-19T14:23:57.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 56,
+      "question_id": 14,
+      "body": "$\\frac{15}{32}$",
+      "image_path": null,
+      "is_correct": false,
+      "position": 3,
+      "created_at": "2026-10-19T14:23:57.000000Z",
+      "updated_at": "2026-10-19T14:23:57.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 3,
+     "name": "Algebra"
+    }
+   },
+   {
+    "id": 15,
+    "organization_id": 1,
+    "subject_id": 1,
+    "topic_id": 3,
+    "type": "single",
+    "body": "$\\sqrt{144} + 2^3$ ifodaning qiymatini toping",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 2,
+    "explanation": null,
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T14:23:57.000000Z",
+    "updated_at": "2026-10-19T14:23:57.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": null,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 8,
+     "question_id": 15,
+     "position": 15,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 57,
+      "question_id": 15,
+      "body": "20",
+      "image_path": null,
+      "is_correct": true,
+      "position": 0,
+      "created_at": "2026-10-19T14:23:57.000000Z",
+      "updated_at": "2026-10-19T14:23:57.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 58,
+      "question_id": 15,
+      "body": "18",
+      "image_path": null,
+      "is_correct": false,
+      "position": 1,
+      "created_at": "2026-10-19T14:23:57.000000Z",
+      "updated_at": "2026-10-19T14:23:57.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 59,
+      "question_id": 15,
+      "body": "24",
+      "image_path": null,
+      "is_correct": false,
+      "position": 2,
+      "created_at": "2026-10-19T14:23:57.000000Z",
+      "updated_at": "2026-10-19T14:23:57.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 60,
+      "question_id": 15,
+      "body": "14",
+      "image_path": null,
+      "is_correct": false,
+      "position": 3,
+      "created_at": "2026-10-19T14:23:57.000000Z",
+      "updated_at": "2026-10-19T14:23:57.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 3,
+     "name": "Algebra"
+    }
+   }
+  ]
+ }
+}

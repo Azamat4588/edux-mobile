@@ -1,0 +1,238 @@
+{
+ "method": "GET",
+ "path": "bank/topics/mat.s2.01/questions",
+ "query": {
+  "language": "uz"
+ },
+ "status": 200,
+ "body": {
+  "topic": {
+   "code": "mat.s2.01",
+   "title": "Algebraik ifodalar va qisqa ko'paytirish formulalari",
+   "subject": "Matematika",
+   "section_title": "Algebraik ifodalar, tenglamalar va tengsizliklar"
+  },
+  "questions": [
+   {
+    "id": 1249,
+    "difficulty": 1,
+    "body": "$a+b=7$ va $ab=10$ bo'lsa, $a^2+b^2$ ni toping.",
+    "options": [
+     "39",
+     "49",
+     "69",
+     "29"
+    ],
+    "answer": 3,
+    "explanation": "$a^2+b^2=(a+b)^2-2ab=49-20=29$.",
+    "year": null,
+    "source_note": null,
+    "collection": {
+     "id": 35,
+     "title": "Matematika — abituriyent testi (2-to'plam)",
+     "source": "edux",
+     "attribution": null,
+     "license": null
+    }
+   },
+   {
+    "id": 3213,
+    "difficulty": 1,
+    "body": "$(2a-3)^2$ ifodani ko'phad shaklida yozing.",
+    "options": [
+     "$4a^2-6a+9$",
+     "$4a^2+9$",
+     "$4a^2-12a+9$",
+     "$4a^2-12a-9$"
+    ],
+    "answer": 2,
+    "explanation": "$(x-y)^2=x^2-2xy+y^2$: $4a^2-2\\cdot2a\\cdot3+9=4a^2-12a+9$.",
+    "year": null,
+    "source_note": null,
+    "collection": {
+     "id": 64,
+     "title": "Matematika — mavzulashtirilgan to'plam: Arifmetika va matnli masalalar, Algebraik ifodalar, tenglamalar va tengsizliklar, Daraja, ildiz, ko'rsatkichli",
+     "source": "edux",
+     "attribution": null,
+     "license": null
+    }
+   },
+   {
+    "id": 3860,
+    "difficulty": 1,
+    "body": "Soddalashtiring: $(x+5)(x-5)-(x-3)^2$.",
+    "options": [
+     "$6x-16$",
+     "$6x-34$",
+     "$-6x-34$",
+     "$-34$"
+    ],
+    "answer": 1,
+    "explanation": "$(x^2-25)-(x^2-6x+9)=6x-34$.",
+    "year": null,
+    "source_note": null,
+    "collection": {
+     "id": 73,
+     "title": "Matematika — mavzulashtirilgan to'plam: qo'shimcha savollar",
+     "source": "edux",
+     "attribution": null,
+     "license": null
+    }
+   },
+   {
+    "id": 471,
+    "difficulty": 2,
+    "body": "Soddalashtiring: $\\frac{a^2-9}{a^2+3a}$.",
+    "options": [
+     "$\\frac{a+3}{a}$",
+     "$a-3$",
+     "$\\frac{a-3}{a+3}$",
+     "$\\frac{a-3}{a}$"
+    ],
+    "answer": 3,
+    "explanation": "$\\frac{(a-3)(a+3)}{a(a+3)}=\\frac{a-3}{a}$.",
+    "year": null,
+    "source_note": null,
+    "collection": {
+     "id": 17,
+     "title": "Matematika — Milliy sertifikat tayyorlov (1-to'plam)",
+     "source": "edux",
+     "attribution": null,
+     "license": null
+    }
+   },
+   {
+    "id": 1250,
+    "difficulty": 2,
+    "body": "Hisoblang: $\\frac{73^2-27^2}{46}$.",
+    "options": [
+     "100",
+     "46",
+     "54",
+     "92"
+    ],
+    "answer": 0,
+    "explanation": "$\\frac{(73-27)(73+27)}{46}=\\frac{46\\cdot100}{46}=100$.",
+    "year": null,
+    "source_note": null,
+    "collection": {
+     "id": 35,
+     "title": "Matematika — abituriyent testi (2-to'plam)",
+     "source": "edux",
+     "attribution": null,
+     "license": null
+    }
+   },
+   {
+    "id": 1305,
+    "difficulty": 2,
+    "body": "Soddalashtiring: $\\frac{1}{a-1}-\\frac{2}{a^2-1}$.",
+    "options": [
+     "$\\frac{1}{a-1}$",
+     "$-\\frac{1}{a+1}$",
+     "$\\frac{1}{a+1}$",
+     "$\\frac{a-1}{a+1}$"
+    ],
+    "answer": 2,
+    "explanation": "$\\frac{a+1-2}{(a-1)(a+1)}=\\frac{a-1}{(a-1)(a+1)}=\\frac1{a+1}$.",
+    "year": null,
+    "source_note": null,
+    "collection": {
+     "id": 36,
+     "title": "Matematika — abituriyent testi (3-to'plam)",
+     "source": "edux",
+     "attribution": null,
+     "license": null
+    }
+   },
+   {
+    "id": 3214,
+    "difficulty": 2,
+    "body": "$x^3-8$ ifodani ko'paytuvchilarga ajrating.",
+    "options": [
+     "$(x-2)(x^2-2x+4)$",
+     "$(x-2)(x^2+2x+4)$",
+     "$(x-2)^3$",
+     "$(x+2)(x^2-2x+4)$"
+    ],
+    "answer": 1,
+    "explanation": "Kublar ayirmasi: $a^3-b^3=(a-b)(a^2+ab+b^2)$, bu yerda $b=2$.",
+    "year": null,
+    "source_note": null,
+    "collection": {
+     "id": 64,
+     "title": "Matematika — mavzulashtirilgan to'plam: Arifmetika va matnli masalalar, Algebraik ifodalar, tenglamalar va tengsizliklar, Daraja, ildiz, ko'rsatkichli",
+     "source": "edux",
+     "attribution": null,
+     "license": null
+    }
+   },
+   {
+    "id": 1306,
+    "difficulty": 3,
+    "body": "$x+y=4$ va $xy=2$ bo'lsa, $x^3+y^3$ ni toping.",
+    "options": [
+     "64",
+     "58",
+     "52",
+     "40"
+    ],
+    "answer": 3,
+    "explanation": "$x^3+y^3=(x+y)^3-3xy(x+y)=64-24=40$.",
+    "year": null,
+    "source_note": null,
+    "collection": {
+     "id": 36,
+     "title": "Matematika — abituriyent testi (3-to'plam)",
+     "source": "edux",
+     "attribution": null,
+     "license": null
+    }
+   },
+   {
+    "id": 3215,
+    "difficulty": 3,
+    "body": "$x-\\frac1x=3$ bo'lsa, $x^4+\\frac{1}{x^4}$ ni toping.",
+    "options": [
+     "121",
+     "81",
+     "119",
+     "123"
+    ],
+    "answer": 2,
+    "explanation": "$x^2+\\frac{1}{x^2}=\\left(x-\\frac1x\\right)^2+2=11$; $x^4+\\frac{1}{x^4}=11^2-2=119$.",
+    "year": null,
+    "source_note": null,
+    "collection": {
+     "id": 64,
+     "title": "Matematika — mavzulashtirilgan to'plam: Arifmetika va matnli masalalar, Algebraik ifodalar, tenglamalar va tengsizliklar, Daraja, ildiz, ko'rsatkichli",
+     "source": "edux",
+     "attribution": null,
+     "license": null
+    }
+   },
+   {
+    "id": 3861,
+    "difficulty": 3,
+    "body": "$x^4+4$ ifoda quyidagi ko'paytmalardan qaysi biriga aynan teng?",
+    "options": [
+     "$(x^2+2)^2$",
+     "$(x^2+2x+2)(x^2-2x+2)$",
+     "$(x^2+2x-2)(x^2-2x-2)$",
+     "$(x^2+2)(x^2-2)$"
+    ],
+    "answer": 1,
+    "explanation": "$x^4+4=(x^2+2)^2-4x^2=(x^2+2-2x)(x^2+2+2x)$ (kvadratlar ayirmasi).",
+    "year": null,
+    "source_note": null,
+    "collection": {
+     "id": 73,
+     "title": "Matematika — mavzulashtirilgan to'plam: qo'shimcha savollar",
+     "source": "edux",
+     "attribution": null,
+     "license": null
+    }
+   }
+  ]
+ }
+}

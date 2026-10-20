@@ -1,0 +1,26 @@
+{
+ "method": "GET",
+ "path": "me",
+ "query": {},
+ "status": 200,
+ "body": {
+  "user": {
+   "id": 3,
+   "name": "Islomova Shahnoza",
+   "phone": "+998901110001",
+   "is_platform_admin": false,
+   "has_password": true,
+   "telegram_linked": false,
+   "appearance": {}
+  },
+  "memberships": [
+   {
+    "organization_id": 1,
+    "organization": "Ilm yo'li o'quv markazi",
+    "role": "admin"
+   }
+  ],
+  "mode": "platform",
+  "new_requests": 0
+ }
+}

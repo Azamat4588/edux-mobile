@@ -1,0 +1,14 @@
+{
+ "method": "GET",
+ "path": "pay/options",
+ "query": {},
+ "status": 200,
+ "body": {
+  "providers": {
+   "click": false,
+   "payme": false
+  },
+  "min_amount": 1000,
+  "max_amount": 500000000
+ }
+}

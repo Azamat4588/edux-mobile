@@ -1,0 +1,75 @@
+{
+ "method": "GET",
+ "path": "attempts/6",
+ "query": {},
+ "status": 200,
+ "body": {
+  "exam": {
+   "id": 3,
+   "title": "IELTS Mock #2 — Oktyabr"
+  },
+  "source": "online",
+  "correct": 13,
+  "wrong": 2,
+  "blank": 0,
+  "score": 23.5,
+  "max_score": 30,
+  "finished_at": "2026-10-12T11:00:00.000000Z",
+  "pending": 0,
+  "format": "ielts",
+  "mock_result": {
+   "level": "C1",
+   "format": "ielts",
+   "overall": {
+    "label": "Band 7.0",
+    "value": 7
+   },
+   "pending": false,
+   "sections": [
+    {
+     "key": "listening",
+     "max": 6,
+     "name": "Listening",
+     "label": "7.5",
+     "score": 5,
+     "skill": "listening",
+     "value": 7.5,
+     "percent": 83.3
+    },
+    {
+     "key": "reading",
+     "max": 6,
+     "name": "Reading",
+     "label": "7.5",
+     "score": 5,
+     "skill": "reading",
+     "value": 7.5,
+     "percent": 83.3
+    },
+    {
+     "key": "writing",
+     "max": 9,
+     "name": "Writing",
+     "label": "6.5",
+     "score": 6.5,
+     "skill": "writing",
+     "value": 6.5,
+     "percent": 72.2
+    },
+    {
+     "key": "speaking",
+     "max": 9,
+     "name": "Speaking",
+     "label": "7.0",
+     "score": 7,
+     "skill": "speaking",
+     "value": 7,
+     "percent": 77.8
+    }
+   ],
+   "approximate": true
+  },
+  "review": null,
+  "review_later": false
+ }
+}

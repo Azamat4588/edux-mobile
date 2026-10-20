@@ -1,0 +1,47 @@
+{
+ "method": "GET",
+ "path": "crm/attendance",
+ "query": {
+  "group_id": "2",
+  "date": "2026-10-20"
+ },
+ "status": 200,
+ "body": {
+  "group": {
+   "id": 2,
+   "name": "ING-5"
+  },
+  "date": "2026-10-20",
+  "lesson": null,
+  "score_max": 5,
+  "students": [
+   {
+    "id": 4,
+    "full_name": "Hasanova Malika",
+    "code": "414548",
+    "enrollment": "active",
+    "status": null,
+    "score": null,
+    "comment": null
+   },
+   {
+    "id": 3,
+    "full_name": "Karimov Sardor",
+    "code": "415271",
+    "enrollment": "active",
+    "status": null,
+    "score": null,
+    "comment": null
+   },
+   {
+    "id": 12,
+    "full_name": "Sobirov Ulugbek",
+    "code": "604436",
+    "enrollment": "trial",
+    "status": null,
+    "score": null,
+    "comment": null
+   }
+  ]
+ }
+}

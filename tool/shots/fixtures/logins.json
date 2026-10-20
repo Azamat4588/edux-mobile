@@ -1,0 +1,196 @@
+{
+ "recorded_at": "2026-10-20T06:36:46",
+ "password": "password",
+ "logins": {
+  "+998900000001": {
+   "role": "director",
+   "response": {
+    "token": "shots-director",
+    "user": {
+     "id": 1,
+     "name": "Rustamov Akmal",
+     "phone": "+998900000001",
+     "is_platform_admin": false,
+     "has_password": true,
+     "telegram_linked": false,
+     "appearance": {
+      "mode": "light",
+      "accent": "blue",
+      "template": "classic"
+     }
+    },
+    "memberships": [
+     {
+      "organization_id": 1,
+      "organization": "Ilm yo'li o'quv markazi",
+      "role": "director"
+     }
+    ],
+    "mode": "platform",
+    "new_requests": 0
+   }
+  },
+  "+998901110001": {
+   "role": "admin",
+   "response": {
+    "token": "shots-admin",
+    "user": {
+     "id": 3,
+     "name": "Islomova Shahnoza",
+     "phone": "+998901110001",
+     "is_platform_admin": false,
+     "has_password": true,
+     "telegram_linked": false,
+     "appearance": {}
+    },
+    "memberships": [
+     {
+      "organization_id": 1,
+      "organization": "Ilm yo'li o'quv markazi",
+      "role": "admin"
+     }
+    ],
+    "mode": "platform",
+    "new_requests": 0
+   }
+  },
+  "+998901110004": {
+   "role": "cashier",
+   "response": {
+    "token": "shots-cashier",
+    "user": {
+     "id": 6,
+     "name": "Hamidova Feruza",
+     "phone": "+998901110004",
+     "is_platform_admin": false,
+     "has_password": true,
+     "telegram_linked": false,
+     "appearance": {}
+    },
+    "memberships": [
+     {
+      "organization_id": 1,
+      "organization": "Ilm yo'li o'quv markazi",
+      "role": "cashier"
+     }
+    ],
+    "mode": "platform",
+    "new_requests": 0
+   }
+  },
+  "+998901110005": {
+   "role": "marketer",
+   "response": {
+    "token": "shots-marketer",
+    "user": {
+     "id": 7,
+     "name": "Rasulov Bekzod",
+     "phone": "+998901110005",
+     "is_platform_admin": false,
+     "has_password": true,
+     "telegram_linked": false,
+     "appearance": {}
+    },
+    "memberships": [
+     {
+      "organization_id": 1,
+      "organization": "Ilm yo'li o'quv markazi",
+      "role": "marketer"
+     }
+    ],
+    "mode": "platform",
+    "new_requests": 0
+   }
+  },
+  "+998901110002": {
+   "role": "teacher",
+   "response": {
+    "token": "shots-teacher",
+    "user": {
+     "id": 4,
+     "name": "Usmonova Dildora",
+     "phone": "+998901110002",
+     "is_platform_admin": false,
+     "has_password": true,
+     "telegram_linked": false,
+     "appearance": {}
+    },
+    "memberships": [
+     {
+      "organization_id": 1,
+      "organization": "Ilm yo'li o'quv markazi",
+      "role": "teacher"
+     }
+    ],
+    "mode": "platform",
+    "new_requests": 0
+   }
+  },
+  "+998900000005": {
+   "role": "student",
+   "response": {
+    "token": "shots-student",
+    "user": {
+     "id": 11,
+     "name": "Ergasheva Mohinur",
+     "phone": "+998900000005",
+     "is_platform_admin": false,
+     "has_password": true,
+     "telegram_linked": false,
+     "appearance": {}
+    },
+    "memberships": [
+     {
+      "organization_id": 1,
+      "organization": "Ilm yo'li o'quv markazi",
+      "role": "student"
+     }
+    ],
+    "mode": "platform",
+    "new_requests": 0
+   }
+  },
+  "+998900000009": {
+   "role": "guardian",
+   "response": {
+    "token": "shots-guardian",
+    "user": {
+     "id": 10,
+     "name": "Ergashev Rustam",
+     "phone": "+998900000009",
+     "is_platform_admin": false,
+     "has_password": true,
+     "telegram_linked": false,
+     "appearance": {}
+    },
+    "memberships": [
+     {
+      "organization_id": 1,
+      "organization": "Ilm yo'li o'quv markazi",
+      "role": "guardian"
+     }
+    ],
+    "mode": "platform",
+    "new_requests": 0
+   }
+  },
+  "+998900000000": {
+   "role": "owner",
+   "response": {
+    "token": "shots-owner",
+    "user": {
+     "id": 2,
+     "name": "Platforma egasi",
+     "phone": "+998900000000",
+     "is_platform_admin": true,
+     "has_password": true,
+     "telegram_linked": false,
+     "appearance": {}
+    },
+    "memberships": [],
+    "mode": "platform",
+    "new_requests": 0
+   }
+  }
+ }
+}

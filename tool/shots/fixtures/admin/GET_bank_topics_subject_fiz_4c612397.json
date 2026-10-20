@@ -1,0 +1,554 @@
+{
+ "method": "GET",
+ "path": "bank/topics",
+ "query": {
+  "subject": "fiz"
+ },
+ "status": 200,
+ "body": {
+  "subjects": [
+   {
+    "code": "mat",
+    "subject": "Matematika",
+    "topics": 48,
+    "questions": 585
+   },
+   {
+    "code": "fiz",
+    "subject": "Fizika",
+    "topics": 42,
+    "questions": 461
+   },
+   {
+    "code": "kim",
+    "subject": "Kimyo",
+    "topics": 42,
+    "questions": 420
+   },
+   {
+    "code": "bio",
+    "subject": "Biologiya",
+    "topics": 42,
+    "questions": 420
+   },
+   {
+    "code": "ona",
+    "subject": "Ona tili va adabiyot",
+    "topics": 40,
+    "questions": 400
+   },
+   {
+    "code": "tar",
+    "subject": "O'zbekiston tarixi",
+    "topics": 35,
+    "questions": 350
+   },
+   {
+    "code": "jtar",
+    "subject": "Jahon tarixi",
+    "topics": 30,
+    "questions": 300
+   },
+   {
+    "code": "geo",
+    "subject": "Geografiya",
+    "topics": 38,
+    "questions": 380
+   },
+   {
+    "code": "ing",
+    "subject": "Ingliz tili",
+    "topics": 36,
+    "questions": 360
+   }
+  ],
+  "tree": {
+   "subject": {
+    "code": "fiz",
+    "title": "Fizika"
+   },
+   "sections": [
+    {
+     "code": "fiz.s1",
+     "title": "Kinematika",
+     "topics": [
+      {
+       "code": "fiz.s1.01",
+       "title": "Tekis va tekis o'zgaruvchan to'g'ri chiziqli harakat",
+       "count": 10,
+       "by_difficulty": {
+        "1": 3,
+        "2": 6,
+        "3": 1
+       }
+      },
+      {
+       "code": "fiz.s1.02",
+       "title": "Erkin tushish va vertikal otilgan jism harakati",
+       "count": 10,
+       "by_difficulty": {
+        "1": 4,
+        "2": 3,
+        "3": 3
+       }
+      },
+      {
+       "code": "fiz.s1.03",
+       "title": "Gorizontal va qiya otilgan jism harakati",
+       "count": 10,
+       "by_difficulty": {
+        "1": 2,
+        "2": 6,
+        "3": 2
+       }
+      },
+      {
+       "code": "fiz.s1.04",
+       "title": "Aylana bo'ylab tekis harakat",
+       "count": 10,
+       "by_difficulty": {
+        "1": 4,
+        "2": 4,
+        "3": 2
+       }
+      }
+     ]
+    },
+    {
+     "code": "fiz.s2",
+     "title": "Dinamika va saqlanish qonunlari",
+     "topics": [
+      {
+       "code": "fiz.s2.01",
+       "title": "Nyuton qonunlari va jismning og'irligi",
+       "count": 10,
+       "by_difficulty": {
+        "1": 4,
+        "2": 4,
+        "3": 2
+       }
+      },
+      {
+       "code": "fiz.s2.02",
+       "title": "Ishqalanish va elastiklik kuchlari",
+       "count": 10,
+       "by_difficulty": {
+        "1": 2,
+        "2": 7,
+        "3": 1
+       }
+      },
+      {
+       "code": "fiz.s2.03",
+       "title": "Qiya tekislik va bog'langan jismlar harakati",
+       "count": 10,
+       "by_difficulty": {
+        "1": 1,
+        "2": 4,
+        "3": 5
+       }
+      },
+      {
+       "code": "fiz.s2.04",
+       "title": "Aylana bo'ylab harakat dinamikasi",
+       "count": 10,
+       "by_difficulty": {
+        "1": 1,
+        "2": 4,
+        "3": 5
+       }
+      },
+      {
+       "code": "fiz.s2.05",
+       "title": "Butun olam tortishish qonuni va sun'iy yo'ldoshlar",
+       "count": 10,
+       "by_difficulty": {
+        "1": 3,
+        "2": 4,
+        "3": 3
+       }
+      },
+      {
+       "code": "fiz.s2.06",
+       "title": "Impuls va impulsning saqlanish qonuni",
+       "count": 11,
+       "by_difficulty": {
+        "1": 3,
+        "2": 4,
+        "3": 4
+       }
+      },
+      {
+       "code": "fiz.s2.07",
+       "title": "Mexanik ish va quvvat",
+       "count": 10,
+       "by_difficulty": {
+        "1": 4,
+        "2": 5,
+        "3": 1
+       }
+      },
+      {
+       "code": "fiz.s2.08",
+       "title": "Mexanik energiya va uning saqlanish qonuni",
+       "count": 10,
+       "by_difficulty": {
+        "1": 3,
+        "2": 4,
+        "3": 3
+       }
+      }
+     ]
+    },
+    {
+     "code": "fiz.s3",
+     "title": "Statika va gidrostatika",
+     "topics": [
+      {
+       "code": "fiz.s3.01",
+       "title": "Kuch momenti, muvozanat va oddiy mexanizmlar",
+       "count": 10,
+       "by_difficulty": {
+        "1": 5,
+        "2": 2,
+        "3": 3
+       }
+      },
+      {
+       "code": "fiz.s3.02",
+       "title": "Suyuqlik va gaz bosimi, Paskal qonuni",
+       "count": 10,
+       "by_difficulty": {
+        "1": 4,
+        "2": 5,
+        "3": 1
+       }
+      },
+      {
+       "code": "fiz.s3.03",
+       "title": "Arximed kuchi va jismlarning suzishi",
+       "count": 10,
+       "by_difficulty": {
+        "1": 2,
+        "2": 6,
+        "3": 2
+       }
+      }
+     ]
+    },
+    {
+     "code": "fiz.s4",
+     "title": "Molekulyar fizika va termodinamika",
+     "topics": [
+      {
+       "code": "fiz.s4.01",
+       "title": "Molekulyar-kinetik nazariya asoslari",
+       "count": 10,
+       "by_difficulty": {
+        "1": 4,
+        "2": 5,
+        "3": 1
+       }
+      },
+      {
+       "code": "fiz.s4.02",
+       "title": "Ideal gaz holat tenglamasi va izojarayonlar",
+       "count": 10,
+       "by_difficulty": {
+        "1": 3,
+        "2": 3,
+        "3": 4
+       }
+      },
+      {
+       "code": "fiz.s4.03",
+       "title": "Issiqlik miqdori, agregat holat o'zgarishlari va issiqlik balansi",
+       "count": 10,
+       "by_difficulty": {
+        "1": 4,
+        "2": 3,
+        "3": 3
+       }
+      },
+      {
+       "code": "fiz.s4.04",
+       "title": "Termodinamikaning birinchi qonuni",
+       "count": 10,
+       "by_difficulty": {
+        "1": 3,
+        "2": 5,
+        "3": 2
+       }
+      },
+      {
+       "code": "fiz.s4.05",
+       "title": "Issiqlik mashinalari va FIK",
+       "count": 10,
+       "by_difficulty": {
+        "1": 2,
+        "2": 4,
+        "3": 4
+       }
+      }
+     ]
+    },
+    {
+     "code": "fiz.s5",
+     "title": "Elektrostatika va o'zgarmas tok",
+     "topics": [
+      {
+       "code": "fiz.s5.01",
+       "title": "Elektr zaryadi va Kulon qonuni",
+       "count": 10,
+       "by_difficulty": {
+        "1": 2,
+        "2": 6,
+        "3": 2
+       }
+      },
+      {
+       "code": "fiz.s5.02",
+       "title": "Elektr maydon kuchlanganligi va potensial",
+       "count": 10,
+       "by_difficulty": {
+        "1": 1,
+        "2": 7,
+        "3": 2
+       }
+      },
+      {
+       "code": "fiz.s5.03",
+       "title": "Elektr sig'imi va kondensatorlar",
+       "count": 10,
+       "by_difficulty": {
+        "1": 2,
+        "2": 5,
+        "3": 3
+       }
+      },
+      {
+       "code": "fiz.s5.04",
+       "title": "Zanjir qismi uchun Om qonuni va o'tkazgichlarni ulash",
+       "count": 10,
+       "by_difficulty": {
+        "1": 4,
+        "2": 4,
+        "3": 2
+       }
+      },
+      {
+       "code": "fiz.s5.05",
+       "title": "To'liq zanjir uchun Om qonuni",
+       "count": 10,
+       "by_difficulty": {
+        "1": 2,
+        "2": 5,
+        "3": 3
+       }
+      },
+      {
+       "code": "fiz.s5.06",
+       "title": "Elektr tokining ishi va quvvati",
+       "count": 10,
+       "by_difficulty": {
+        "1": 3,
+        "2": 4,
+        "3": 3
+       }
+      },
+      {
+       "code": "fiz.s5.07",
+       "title": "Turli muhitlarda elektr toki",
+       "count": 10,
+       "by_difficulty": {
+        "1": 4,
+        "2": 5,
+        "3": 1
+       }
+      }
+     ]
+    },
+    {
+     "code": "fiz.s6",
+     "title": "Magnetizm va elektromagnit induksiya",
+     "topics": [
+      {
+       "code": "fiz.s6.01",
+       "title": "Magnit maydon va Amper kuchi",
+       "count": 10,
+       "by_difficulty": {
+        "1": 5,
+        "2": 3,
+        "3": 2
+       }
+      },
+      {
+       "code": "fiz.s6.02",
+       "title": "Lorens kuchi va zaryadli zarralar harakati",
+       "count": 10,
+       "by_difficulty": {
+        "1": 2,
+        "2": 4,
+        "3": 4
+       }
+      },
+      {
+       "code": "fiz.s6.03",
+       "title": "Magnit oqimi va elektromagnit induksiya",
+       "count": 10,
+       "by_difficulty": {
+        "1": 2,
+        "2": 6,
+        "3": 2
+       }
+      },
+      {
+       "code": "fiz.s6.04",
+       "title": "O'zinduksiya va magnit maydon energiyasi",
+       "count": 10,
+       "by_difficulty": {
+        "1": 3,
+        "2": 5,
+        "3": 2
+       }
+      }
+     ]
+    },
+    {
+     "code": "fiz.s7",
+     "title": "Tebranishlar va to'lqinlar",
+     "topics": [
+      {
+       "code": "fiz.s7.01",
+       "title": "Mexanik tebranishlar va mayatniklar",
+       "count": 10,
+       "by_difficulty": {
+        "1": 2,
+        "2": 6,
+        "3": 2
+       }
+      },
+      {
+       "code": "fiz.s7.02",
+       "title": "Mexanik to'lqinlar va tovush",
+       "count": 10,
+       "by_difficulty": {
+        "1": 5,
+        "2": 4,
+        "3": 1
+       }
+      },
+      {
+       "code": "fiz.s7.03",
+       "title": "Elektromagnit tebranishlar va o'zgaruvchan tok",
+       "count": 10,
+       "by_difficulty": {
+        "1": 1,
+        "2": 7,
+        "3": 2
+       }
+      }
+     ]
+    },
+    {
+     "code": "fiz.s8",
+     "title": "Optika",
+     "topics": [
+      {
+       "code": "fiz.s8.01",
+       "title": "Yorug'likning qaytishi va yassi ko'zgu",
+       "count": 10,
+       "by_difficulty": {
+        "1": 3,
+        "2": 4,
+        "3": 3
+       }
+      },
+      {
+       "code": "fiz.s8.02",
+       "title": "Yorug'likning sinishi va to'la ichki qaytish",
+       "count": 10,
+       "by_difficulty": {
+        "1": 3,
+        "2": 5,
+        "3": 2
+       }
+      },
+      {
+       "code": "fiz.s8.03",
+       "title": "Linzalar va optik asboblar",
+       "count": 10,
+       "by_difficulty": {
+        "1": 3,
+        "2": 5,
+        "3": 2
+       }
+      },
+      {
+       "code": "fiz.s8.04",
+       "title": "Yorug'likning to'lqin xossalari",
+       "count": 10,
+       "by_difficulty": {
+        "1": 3,
+        "2": 4,
+        "3": 3
+       }
+      }
+     ]
+    },
+    {
+     "code": "fiz.s9",
+     "title": "Kvant, atom va yadro fizikasi",
+     "topics": [
+      {
+       "code": "fiz.s9.01",
+       "title": "Foton, fotoeffekt va de Broyl to'lqinlari",
+       "count": 10,
+       "by_difficulty": {
+        "1": 3,
+        "2": 4,
+        "3": 3
+       }
+      },
+      {
+       "code": "fiz.s9.02",
+       "title": "Atom tuzilishi va atom spektrlari",
+       "count": 10,
+       "by_difficulty": {
+        "1": 2,
+        "2": 5,
+        "3": 3
+       }
+      },
+      {
+       "code": "fiz.s9.03",
+       "title": "Atom yadrosi tarkibi va yadro reaksiyalari",
+       "count": 10,
+       "by_difficulty": {
+        "1": 2,
+        "2": 7,
+        "3": 1
+       }
+      },
+      {
+       "code": "fiz.s9.04",
+       "title": "Radioaktivlik va yemirilish qonuni",
+       "count": 10,
+       "by_difficulty": {
+        "1": 3,
+        "2": 5,
+        "3": 2
+       }
+      }
+     ]
+    }
+   ],
+   "years": [],
+   "languages": {
+    "uz": 421,
+    "ru": 40
+   },
+   "language": "uz"
+  }
+ }
+}

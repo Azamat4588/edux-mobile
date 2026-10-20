@@ -1,0 +1,134 @@
+{
+ "method": "GET",
+ "path": "my/mock",
+ "query": {},
+ "status": 200,
+ "body": {
+  "items": [
+   {
+    "attempt_id": 1,
+    "exam": {
+     "id": 2,
+     "title": "IELTS Mock #1 — Sentyabr",
+     "format": "ielts"
+    },
+    "format_label": "IELTS Academic",
+    "finished_at": "2026-09-14T11:00:00.000000Z",
+    "result": {
+     "level": "B2",
+     "format": "ielts",
+     "overall": {
+      "label": "Band 5.5",
+      "value": 5.5
+     },
+     "pending": false,
+     "sections": [
+      {
+       "key": "listening",
+       "max": 6,
+       "name": "Listening",
+       "label": "5.5",
+       "score": 3,
+       "skill": "listening",
+       "value": 5.5,
+       "percent": 50
+      },
+      {
+       "key": "reading",
+       "max": 6,
+       "name": "Reading",
+       "label": "5.5",
+       "score": 3,
+       "skill": "reading",
+       "value": 5.5,
+       "percent": 50
+      },
+      {
+       "key": "writing",
+       "max": 9,
+       "name": "Writing",
+       "label": "5.5",
+       "score": 5.5,
+       "skill": "writing",
+       "value": 5.5,
+       "percent": 61.1
+      },
+      {
+       "key": "speaking",
+       "max": 9,
+       "name": "Speaking",
+       "label": "6.0",
+       "score": 6,
+       "skill": "speaking",
+       "value": 6,
+       "percent": 66.7
+      }
+     ],
+     "approximate": true
+    }
+   },
+   {
+    "attempt_id": 6,
+    "exam": {
+     "id": 3,
+     "title": "IELTS Mock #2 — Oktyabr",
+     "format": "ielts"
+    },
+    "format_label": "IELTS Academic",
+    "finished_at": "2026-10-12T11:00:00.000000Z",
+    "result": {
+     "level": "C1",
+     "format": "ielts",
+     "overall": {
+      "label": "Band 7.0",
+      "value": 7
+     },
+     "pending": false,
+     "sections": [
+      {
+       "key": "listening",
+       "max": 6,
+       "name": "Listening",
+       "label": "7.5",
+       "score": 5,
+       "skill": "listening",
+       "value": 7.5,
+       "percent": 83.3
+      },
+      {
+       "key": "reading",
+       "max": 6,
+       "name": "Reading",
+       "label": "7.5",
+       "score": 5,
+       "skill": "reading",
+       "value": 7.5,
+       "percent": 83.3
+      },
+      {
+       "key": "writing",
+       "max": 9,
+       "name": "Writing",
+       "label": "6.5",
+       "score": 6.5,
+       "skill": "writing",
+       "value": 6.5,
+       "percent": 72.2
+      },
+      {
+       "key": "speaking",
+       "max": 9,
+       "name": "Speaking",
+       "label": "7.0",
+       "score": 7,
+       "skill": "speaking",
+       "value": 7,
+       "percent": 77.8
+      }
+     ],
+     "approximate": true
+    }
+   }
+  ]
+ }
+}

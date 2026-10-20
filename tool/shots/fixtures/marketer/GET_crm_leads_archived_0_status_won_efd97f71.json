@@ -1,0 +1,17 @@
+{
+ "method": "GET",
+ "path": "crm/leads",
+ "query": {
+  "status": "won",
+  "archived": "0"
+ },
+ "status": 422,
+ "body": {
+  "message": "Holat uchun tanlangan qiymat noto'g'ri.",
+  "errors": {
+   "status": [
+    "Holat uchun tanlangan qiymat noto'g'ri."
+   ]
+  }
+ }
+}

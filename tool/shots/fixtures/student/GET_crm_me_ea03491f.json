@@ -1,0 +1,221 @@
+{
+ "method": "GET",
+ "path": "crm/me",
+ "query": {},
+ "status": 200,
+ "body": {
+  "student": {
+   "id": 1,
+   "full_name": "Ergasheva Mohinur",
+   "code": "305619"
+  },
+  "balance": 0,
+  "groups": [
+   {
+    "id": 1,
+    "name": "M-11",
+    "status": "active",
+    "teacher": "Rustamov Akmal",
+    "course": "Matematika (abituriyent)",
+    "room": "2-xona",
+    "schedule": [
+     {
+      "end": "16:30",
+      "start": "15:00",
+      "weekday": 1
+     },
+     {
+      "end": "16:30",
+      "start": "15:00",
+      "weekday": 3
+     },
+     {
+      "end": "16:30",
+      "start": "15:00",
+      "weekday": 5
+     }
+    ]
+   },
+   {
+    "id": 2,
+    "name": "ING-5",
+    "status": "frozen",
+    "teacher": "Usmonova Dildora",
+    "course": "Ingliz tili (General)",
+    "room": "4-xona",
+    "schedule": [
+     {
+      "end": "17:30",
+      "start": "16:00",
+      "weekday": 2
+     },
+     {
+      "end": "17:30",
+      "start": "16:00",
+      "weekday": 4
+     },
+     {
+      "end": "17:30",
+      "start": "16:00",
+      "weekday": 6
+     }
+    ]
+   }
+  ],
+  "upcoming": [
+   {
+    "date": "2026-10-21",
+    "start": "15:00",
+    "end": "16:30",
+    "group": "M-11",
+    "room": "2-xona"
+   },
+   {
+    "date": "2026-10-23",
+    "start": "15:00",
+    "end": "16:30",
+    "group": "M-11",
+    "room": "2-xona"
+   },
+   {
+    "date": "2026-10-26",
+    "start": "15:00",
+    "end": "16:30",
+    "group": "M-11",
+    "room": "2-xona"
+   },
+   {
+    "date": "2026-10-28",
+    "start": "15:00",
+    "end": "16:30",
+    "group": "M-11",
+    "room": "2-xona"
+   },
+   {
+    "date": "2026-10-30",
+    "start": "15:00",
+    "end": "16:30",
+    "group": "M-11",
+    "room": "2-xona"
+   },
+   {
+    "date": "2026-11-02",
+    "start": "15:00",
+    "end": "16:30",
+    "group": "M-11",
+    "room": "2-xona"
+   }
+  ],
+  "payments": [
+   {
+    "id": 10,
+    "receipt_number": 10,
+    "amount": 830000,
+    "method": "payme",
+    "paid_at": "2026-10-02T05:51:00.000000Z",
+    "receipt": "K-000010"
+   },
+   {
+    "id": 1,
+    "receipt_number": 1,
+    "amount": 830000,
+    "method": "cash",
+    "paid_at": "2026-09-03T05:00:00.000000Z",
+    "receipt": "K-000001"
+   }
+  ],
+  "charges": [
+   {
+    "id": 15,
+    "study_group_id": 2,
+    "period": "2026-10",
+    "kind": "tuition",
+    "amount": 380000,
+    "due_on": "2026-10-01",
+    "description": null,
+    "group": {
+     "id": 2,
+     "name": "ING-5"
+    }
+   },
+   {
+    "id": 19,
+    "study_group_id": 1,
+    "period": "2026-10",
+    "kind": "tuition",
+    "amount": 450000,
+    "due_on": "2026-10-01",
+    "description": null,
+    "group": {
+     "id": 1,
+     "name": "M-11"
+    }
+   },
+   {
+    "id": 1,
+    "study_group_id": 2,
+    "period": "2026-09",
+    "kind": "tuition",
+    "amount": 380000,
+    "due_on": "2026-09-01",
+    "description": null,
+    "group": {
+     "id": 2,
+     "name": "ING-5"
+    }
+   },
+   {
+    "id": 5,
+    "study_group_id": 1,
+    "period": "2026-09",
+    "kind": "tuition",
+    "amount": 450000,
+    "due_on": "2026-09-01",
+    "description": null,
+    "group": {
+     "id": 1,
+     "name": "M-11"
+    }
+   }
+  ],
+  "coins": 30,
+  "coin_history": [
+   {
+    "id": 1,
+    "amount": 30,
+    "reason": "Darsdagi faollik",
+    "created_at": "2026-10-19T14:23:59.000000Z"
+   }
+  ],
+  "shop": [
+   {
+    "id": 1,
+    "name": "Daftar va ruchka",
+    "description": null,
+    "price": 15,
+    "stock": 20
+   },
+   {
+    "id": 2,
+    "name": "Markaz futbolkasi",
+    "description": null,
+    "price": 60,
+    "stock": 5
+   },
+   {
+    "id": 3,
+    "name": "Keyingi oyga 10% chegirma",
+    "description": "Administrator rasmiylashtiradi",
+    "price": 100,
+    "stock": null
+   }
+  ],
+  "orders": [],
+  "exam_results": [],
+  "offer": {
+   "version": 1,
+   "text": "1. O'quv markazi dars jadvaliga muvofiq ta'lim xizmatini ko'rsatadi.\n2. To'lov har oy boshida amalga oshiriladi.\n3. Uzrli sababsiz qoldirilgan darslar uchun to'lov qaytarilmaydi.",
+   "accepted": false
+  }
+ }
+}

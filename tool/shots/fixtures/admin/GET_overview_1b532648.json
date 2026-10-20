@@ -1,0 +1,33 @@
+{
+ "method": "GET",
+ "path": "overview",
+ "query": {},
+ "status": 200,
+ "body": {
+  "modules": [
+   "testing",
+   "crm",
+   "lms"
+  ],
+  "manager": true,
+  "testing": {
+   "open_exams": 6,
+   "needs_review": 0,
+   "finished_week": 31
+  },
+  "crm": {
+   "active_students": 11,
+   "trial": 1,
+   "tasks_today": 2,
+   "income_today": 0,
+   "debtors": 3,
+   "debt_total": 1600000,
+   "new_leads_today": 0,
+   "open_leads": 4
+  },
+  "lms": {
+   "courses": 2,
+   "to_grade": 2
+  }
+ }
+}

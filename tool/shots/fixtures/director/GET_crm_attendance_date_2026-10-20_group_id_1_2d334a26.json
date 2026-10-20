@@ -1,0 +1,119 @@
+{
+ "method": "GET",
+ "path": "crm/attendance",
+ "query": {
+  "group_id": "1",
+  "date": "2026-10-20"
+ },
+ "status": 200,
+ "body": {
+  "group": {
+   "id": 1,
+   "name": "M-11"
+  },
+  "date": "2026-10-20",
+  "lesson": null,
+  "score_max": 5,
+  "students": [
+   {
+    "id": 11,
+    "full_name": "Ergashev Timur",
+    "code": "143793",
+    "enrollment": "active",
+    "status": null,
+    "score": null,
+    "comment": null
+   },
+   {
+    "id": 1,
+    "full_name": "Ergasheva Mohinur",
+    "code": "305619",
+    "enrollment": "active",
+    "status": null,
+    "score": null,
+    "comment": null
+   },
+   {
+    "id": 4,
+    "full_name": "Hasanova Malika",
+    "code": "414548",
+    "enrollment": "active",
+    "status": null,
+    "score": null,
+    "comment": null
+   },
+   {
+    "id": 3,
+    "full_name": "Karimov Sardor",
+    "code": "415271",
+    "enrollment": "active",
+    "status": null,
+    "score": null,
+    "comment": null
+   },
+   {
+    "id": 10,
+    "full_name": "Nazarova Sevara",
+    "code": "735415",
+    "enrollment": "active",
+    "status": null,
+    "score": null,
+    "comment": null
+   },
+   {
+    "id": 9,
+    "full_name": "Qodirov Sherzod",
+    "code": "603779",
+    "enrollment": "active",
+    "status": null,
+    "score": null,
+    "comment": null
+   },
+   {
+    "id": 6,
+    "full_name": "Rahimova Nigora",
+    "code": "381107",
+    "enrollment": "active",
+    "status": null,
+    "score": null,
+    "comment": null
+   },
+   {
+    "id": 8,
+    "full_name": "Saidova Zarina",
+    "code": "234003",
+    "enrollment": "active",
+    "status": null,
+    "score": null,
+    "comment": null
+   },
+   {
+    "id": 5,
+    "full_name": "Tursunov Jasur",
+    "code": "028030",
+    "enrollment": "active",
+    "status": null,
+    "score": null,
+    "comment": null
+   },
+   {
+    "id": 2,
+    "full_name": "Valiyev Bobur",
+    "code": "950634",
+    "enrollment": "active",
+    "status": null,
+    "score": null,
+    "comment": null
+   },
+   {
+    "id": 7,
+    "full_name": "Yusupov Aziz",
+    "code": "489151",
+    "enrollment": "active",
+    "status": null,
+    "score": null,
+    "comment": null
+   }
+  ]
+ }
+}

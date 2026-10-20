@@ -1,0 +1,238 @@
+{
+ "method": "GET",
+ "path": "bank/topics/mat.s2.02/questions",
+ "query": {
+  "language": "uz"
+ },
+ "status": 200,
+ "body": {
+  "topic": {
+   "code": "mat.s2.02",
+   "title": "Chiziqli tenglamalar",
+   "subject": "Matematika",
+   "section_title": "Algebraik ifodalar, tenglamalar va tengsizliklar"
+  },
+  "questions": [
+   {
+    "id": 435,
+    "difficulty": 1,
+    "body": "$3(x-2)=2x+5$ tenglamani yeching.",
+    "options": [
+     "1",
+     "-11",
+     "11",
+     "7"
+    ],
+    "answer": 2,
+    "explanation": "$3x-6=2x+5$, $x=11$.",
+    "year": null,
+    "source_note": null,
+    "collection": {
+     "id": 16,
+     "title": "Matematika — abituriyent testi (1-to'plam)",
+     "source": "edux",
+     "attribution": null,
+     "license": null
+    }
+   },
+   {
+    "id": 1251,
+    "difficulty": 1,
+    "body": "$\\frac{x+2}{3}-\\frac{x-1}{4}=2$ tenglamani yeching.",
+    "options": [
+     "19",
+     "11",
+     "13",
+     "5"
+    ],
+    "answer": 2,
+    "explanation": "$4(x+2)-3(x-1)=24$, $x+11=24$, $x=13$.",
+    "year": null,
+    "source_note": null,
+    "collection": {
+     "id": 35,
+     "title": "Matematika — abituriyent testi (2-to'plam)",
+     "source": "edux",
+     "attribution": null,
+     "license": null
+    }
+   },
+   {
+    "id": 3216,
+    "difficulty": 1,
+    "body": "$0{,}4x-1{,}2=0{,}1x+0{,}3$ tenglamani yeching.",
+    "options": [
+     "3",
+     "5",
+     "−5",
+     "$0{,}5$"
+    ],
+    "answer": 1,
+    "explanation": "$0{,}3x=1{,}5$, $x=5$.",
+    "year": null,
+    "source_note": null,
+    "collection": {
+     "id": 64,
+     "title": "Matematika — mavzulashtirilgan to'plam: Arifmetika va matnli masalalar, Algebraik ifodalar, tenglamalar va tengsizliklar, Daraja, ildiz, ko'rsatkichli",
+     "source": "edux",
+     "attribution": null,
+     "license": null
+    }
+   },
+   {
+    "id": 3862,
+    "difficulty": 1,
+    "body": "$7-2(x+1)=3x-10$ tenglamani yeching.",
+    "options": [
+     "1",
+     "3",
+     "$-3$",
+     "5"
+    ],
+    "answer": 1,
+    "explanation": "$7-2x-2=3x-10\\Rightarrow 5-2x=3x-10\\Rightarrow 5x=15\\Rightarrow x=3$.",
+    "year": null,
+    "source_note": null,
+    "collection": {
+     "id": 73,
+     "title": "Matematika — mavzulashtirilgan to'plam: qo'shimcha savollar",
+     "source": "edux",
+     "attribution": null,
+     "license": null
+    }
+   },
+   {
+    "id": 3217,
+    "difficulty": 2,
+    "body": "$a$ ning qanday qiymatida $(a-3)x=a^2-9$ tenglama cheksiz ko'p yechimga ega?",
+    "options": [
+     "−3",
+     "0",
+     "3",
+     "9"
+    ],
+    "answer": 2,
+    "explanation": "$a=3$ da $0\\cdot x=0$ — har qanday $x$ yechim. $a=-3$ da $-6x=0$, faqat $x=0$; boshqa $a$ larda yagona yechim $x=a+3$.",
+    "year": null,
+    "source_note": null,
+    "collection": {
+     "id": 64,
+     "title": "Matematika — mavzulashtirilgan to'plam: Arifmetika va matnli masalalar, Algebraik ifodalar, tenglamalar va tengsizliklar, Daraja, ildiz, ko'rsatkichli",
+     "source": "edux",
+     "attribution": null,
+     "license": null
+    }
+   },
+   {
+    "id": 3218,
+    "difficulty": 2,
+    "body": "Ona qizidan 3 marta katta. 12 yildan keyin ona qizidan 2 marta katta bo'ladi. Qiz hozir necha yoshda?",
+    "options": [
+     "12",
+     "8",
+     "10",
+     "15"
+    ],
+    "answer": 0,
+    "explanation": "Qiz $x$ yoshda: $3x+12=2(x+12)\\Rightarrow x=12$. Tekshirish: 36 va 12; 12 yildan so'ng 48 va 24.",
+    "year": null,
+    "source_note": null,
+    "collection": {
+     "id": 64,
+     "title": "Matematika — mavzulashtirilgan to'plam: Arifmetika va matnli masalalar, Algebraik ifodalar, tenglamalar va tengsizliklar, Daraja, ildiz, ko'rsatkichli",
+     "source": "edux",
+     "attribution": null,
+     "license": null
+    }
+   },
+   {
+    "id": 3219,
+    "difficulty": 2,
+    "body": "Quyidagi tenglamalardan qaysi biri yechimga ega emas?",
+    "options": [
+     "$2(x+1)=2x+2$",
+     "$5x=0$",
+     "$3(x-1)=3x+1$",
+     "$\\frac{x}{2}=x$"
+    ],
+    "answer": 2,
+    "explanation": "$3x-3=3x+1\\Rightarrow-3=1$ — noto'g'ri tenglik, yechim yo'q. $2(x+1)=2x+2$ — ayniyat (har qanday $x$ yechim), $5x=0$ va $\\frac{x}{2}=x$ tenglamalarda $x=0$.",
+    "year": null,
+    "source_note": null,
+    "collection": {
+     "id": 64,
+     "title": "Matematika — mavzulashtirilgan to'plam: Arifmetika va matnli masalalar, Algebraik ifodalar, tenglamalar va tengsizliklar, Daraja, ildiz, ko'rsatkichli",
+     "source": "edux",
+     "attribution": null,
+     "license": null
+    }
+   },
+   {
+    "id": 3863,
+    "difficulty": 2,
+    "body": "$a$ ning qanday qiymatida $3x-a=ax+6$ tenglamaning ildizi $x=-4$ bo'ladi?",
+    "options": [
+     "6",
+     "$-6$",
+     "2",
+     "$-2$"
+    ],
+    "answer": 0,
+    "explanation": "$x=-4$ ni qo'yamiz: $-12-a=-4a+6\\Rightarrow 3a=18\\Rightarrow a=6$.",
+    "year": null,
+    "source_note": null,
+    "collection": {
+     "id": 73,
+     "title": "Matematika — mavzulashtirilgan to'plam: qo'shimcha savollar",
+     "source": "edux",
+     "attribution": null,
+     "license": null
+    }
+   },
+   {
+    "id": 3864,
+    "difficulty": 2,
+    "body": "Ota 42 yoshda, uning uch farzandi 8, 6 va 4 yoshda. Necha yildan keyin otaning yoshi farzandlari yoshlarining yig'indisiga teng bo'ladi?",
+    "options": [
+     "12 yildan keyin",
+     "8 yildan keyin",
+     "24 yildan keyin",
+     "10 yildan keyin"
+    ],
+    "answer": 0,
+    "explanation": "$t$ yildan keyin: $42+t=(8+6+4)+3t\\Rightarrow 24=2t\\Rightarrow t=12$.",
+    "year": null,
+    "source_note": null,
+    "collection": {
+     "id": 73,
+     "title": "Matematika — mavzulashtirilgan to'plam: qo'shimcha savollar",
+     "source": "edux",
+     "attribution": null,
+     "license": null
+    }
+   },
+   {
+    "id": 3220,
+    "difficulty": 3,
+    "body": "$\\frac{x-1}{3}-\\frac{2x+1}{4}=\\frac{x-5}{6}-1$ tenglamani yeching.",
+    "options": [
+     "$-3{,}75$",
+     "$2{,}25$",
+     "$3{,}75$",
+     "$4{,}25$"
+    ],
+    "answer": 2,
+    "explanation": "12 ga ko'paytiramiz: $4(x-1)-3(2x+1)=2(x-5)-12\\Rightarrow-2x-7=2x-22\\Rightarrow x=\\frac{15}{4}=3{,}75$.",
+    "year": null,
+    "source_note": null,
+    "collection": {
+     "id": 64,
+     "title": "Matematika — mavzulashtirilgan to'plam: Arifmetika va matnli masalalar, Algebraik ifodalar, tenglamalar va tengsizliklar, Daraja, ildiz, ko'rsatkichli",
+     "source": "edux",
+     "attribution": null,
+     "license": null
+    }
+   }
+  ]
+ }
+}

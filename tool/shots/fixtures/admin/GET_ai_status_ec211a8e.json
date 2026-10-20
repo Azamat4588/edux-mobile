@@ -1,0 +1,11 @@
+{
+ "method": "GET",
+ "path": "ai/status",
+ "query": {},
+ "status": 200,
+ "body": {
+  "staff": true,
+  "tutor": false,
+  "remaining": 1500
+ }
+}

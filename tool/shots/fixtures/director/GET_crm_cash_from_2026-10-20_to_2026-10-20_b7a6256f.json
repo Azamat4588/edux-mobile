@@ -1,0 +1,91 @@
+{
+ "method": "GET",
+ "path": "crm/cash",
+ "query": {
+  "from": "2026-10-20",
+  "to": "2026-10-20"
+ },
+ "status": 200,
+ "body": {
+  "from": "2026-10-20",
+  "to": "2026-10-20",
+  "kinds": [
+   {
+    "value": "cash",
+    "label": "Naqd kassa"
+   },
+   {
+    "value": "card",
+    "label": "Karta (terminal)"
+   },
+   {
+    "value": "bank",
+    "label": "Bank hisob raqami"
+   },
+   {
+    "value": "online",
+    "label": "Onlayn (Click/Payme)"
+   }
+  ],
+  "accounts": [
+   {
+    "id": 1,
+    "name": "Asosiy kassa",
+    "kind": "cash",
+    "branch_id": null,
+    "opening_balance": 0,
+    "is_active": true,
+    "position": 0,
+    "branch": null,
+    "balance": -1435000,
+    "in": 0,
+    "out": 0,
+    "open_shift": null
+   },
+   {
+    "id": 2,
+    "name": "Karta (terminal)",
+    "kind": "card",
+    "branch_id": null,
+    "opening_balance": 0,
+    "is_active": true,
+    "position": 1,
+    "branch": null,
+    "balance": 1944000,
+    "in": 0,
+    "out": 0,
+    "open_shift": null
+   },
+   {
+    "id": 3,
+    "name": "Bank hisob raqami",
+    "kind": "bank",
+    "branch_id": null,
+    "opening_balance": 0,
+    "is_active": true,
+    "position": 2,
+    "branch": null,
+    "balance": 1705000,
+    "in": 0,
+    "out": 0,
+    "open_shift": null
+   },
+   {
+    "id": 4,
+    "name": "Click / Payme",
+    "kind": "online",
+    "branch_id": null,
+    "opening_balance": 0,
+    "is_active": true,
+    "position": 3,
+    "branch": null,
+    "balance": 3449000,
+    "in": 0,
+    "out": 0,
+    "open_shift": null
+   }
+  ],
+  "shifts": [],
+  "transfers": []
+ }
+}

@@ -1,0 +1,48 @@
+{
+ "method": "GET",
+ "path": "crm/tasks",
+ "query": {
+  "tab": "upcoming"
+ },
+ "status": 200,
+ "body": {
+  "current_page": 1,
+  "data": [],
+  "first_page_url": "__SERVER__/api/v1/crm/tasks?page=1",
+  "from": null,
+  "last_page": 1,
+  "last_page_url": "__SERVER__/api/v1/crm/tasks?page=1",
+  "links": [
+   {
+    "url": null,
+    "label": "pagination.previous",
+    "page": null,
+    "active": false
+   },
+   {
+    "url": "__SERVER__/api/v1/crm/tasks?page=1",
+    "label": "1",
+    "page": 1,
+    "active": true
+   },
+   {
+    "url": null,
+    "label": "pagination.next",
+    "page": null,
+    "active": false
+   }
+  ],
+  "next_page_url": null,
+  "path": "__SERVER__/api/v1/crm/tasks",
+  "per_page": 50,
+  "prev_page_url": null,
+  "to": null,
+  "total": 0,
+  "counts": {
+   "overdue": 0,
+   "today": 0,
+   "upcoming": 0,
+   "done": 0
+  }
+ }
+}

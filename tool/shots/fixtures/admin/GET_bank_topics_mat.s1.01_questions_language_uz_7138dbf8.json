@@ -1,0 +1,238 @@
+{
+ "method": "GET",
+ "path": "bank/topics/mat.s1.01/questions",
+ "query": {
+  "language": "uz"
+ },
+ "status": 200,
+ "body": {
+  "topic": {
+   "code": "mat.s1.01",
+   "title": "Natural sonlar, bo'linuvchanlik, EKUB va EKUK",
+   "subject": "Matematika",
+   "section_title": "Arifmetika va matnli masalalar"
+  },
+  "questions": [
+   {
+    "id": 1239,
+    "difficulty": 1,
+    "body": "$\\overline{3a5}$ uch xonali son 9 ga bo'linadi. $a$ raqamini toping.",
+    "options": [
+     "0",
+     "1",
+     "4",
+     "9"
+    ],
+    "answer": 1,
+    "explanation": "Raqamlar yig'indisi $8+a$ 9 ga bo'linishi kerak, demak $a=1$.",
+    "year": null,
+    "source_note": null,
+    "collection": {
+     "id": 35,
+     "title": "Matematika — abituriyent testi (2-to'plam)",
+     "source": "edux",
+     "attribution": null,
+     "license": null
+    }
+   },
+   {
+    "id": 1240,
+    "difficulty": 1,
+    "body": "$36$ va $60$ sonlarining EKUBi va EKUKi yig'indisini toping.",
+    "options": [
+     "180",
+     "192",
+     "168",
+     "216"
+    ],
+    "answer": 1,
+    "explanation": "EKUB $=12$, EKUK $=180$; $12+180=192$.",
+    "year": null,
+    "source_note": null,
+    "collection": {
+     "id": 35,
+     "title": "Matematika — abituriyent testi (2-to'plam)",
+     "source": "edux",
+     "attribution": null,
+     "license": null
+    }
+   },
+   {
+    "id": 1295,
+    "difficulty": 1,
+    "body": "$72$ sonining nechta natural bo'luvchisi bor?",
+    "options": [
+     "10",
+     "6",
+     "8",
+     "12"
+    ],
+    "answer": 3,
+    "explanation": "$72=2^3\\cdot3^2$; bo'luvchilar soni $(3+1)(2+1)=12$.",
+    "year": null,
+    "source_note": null,
+    "collection": {
+     "id": 36,
+     "title": "Matematika — abituriyent testi (3-to'plam)",
+     "source": "edux",
+     "attribution": null,
+     "license": null
+    }
+   },
+   {
+    "id": 3191,
+    "difficulty": 1,
+    "body": "Quyidagi sonlardan qaysi biri 4 ga qoldiqsiz bo'linadi?",
+    "options": [
+     "3714",
+     "5126",
+     "7318",
+     "2936"
+    ],
+    "answer": 3,
+    "explanation": "Son 4 ga bo'linishi uchun oxirgi ikki raqamidan tuzilgan son 4 ga bo'linishi kerak: $36:4=9$, qolganlarida 14, 26, 18 esa 4 ga bo'linmaydi.",
+    "year": null,
+    "source_note": null,
+    "collection": {
+     "id": 64,
+     "title": "Matematika — mavzulashtirilgan to'plam: Arifmetika va matnli masalalar, Algebraik ifodalar, tenglamalar va tengsizliklar, Daraja, ildiz, ko'rsatkichli",
+     "source": "edux",
+     "attribution": null,
+     "license": null
+    }
+   },
+   {
+    "id": 3194,
+    "difficulty": 1,
+    "body": "Quyidagi tasdiqlardan qaysi biri noto'g'ri?",
+    "options": [
+     "Ikkita ketma-ket natural son har doim o'zaro tub",
+     "1 soni tub ham, murakkab ham emas",
+     "Ikki tub sonning yig'indisi har doim juft son bo'ladi",
+     "2 — yagona juft tub son"
+    ],
+    "answer": 2,
+    "explanation": "Masalan, $2+3=5$ — toq son. Demak, ikki tub son yig'indisi har doim juft bo'lavermaydi.",
+    "year": null,
+    "source_note": null,
+    "collection": {
+     "id": 64,
+     "title": "Matematika — mavzulashtirilgan to'plam: Arifmetika va matnli masalalar, Algebraik ifodalar, tenglamalar va tengsizliklar, Daraja, ildiz, ko'rsatkichli",
+     "source": "edux",
+     "attribution": null,
+     "license": null
+    }
+   },
+   {
+    "id": 1241,
+    "difficulty": 2,
+    "body": "$7^{2026}$ sonining oxirgi raqamini toping.",
+    "options": [
+     "7",
+     "9",
+     "3",
+     "1"
+    ],
+    "answer": 1,
+    "explanation": "$7$ ning darajalari oxirgi raqami $7,9,3,1$ davr bilan takrorlanadi; $2026=4\\cdot506+2$, demak $9$.",
+    "year": null,
+    "source_note": null,
+    "collection": {
+     "id": 35,
+     "title": "Matematika — abituriyent testi (2-to'plam)",
+     "source": "edux",
+     "attribution": null,
+     "license": null
+    }
+   },
+   {
+    "id": 1294,
+    "difficulty": 2,
+    "body": "$n$ natural sonni 6 ga bo'lganda qoldiq 5 chiqadi. $4n$ ni 6 ga bo'lgandagi qoldiqni toping.",
+    "options": [
+     "5",
+     "2",
+     "4",
+     "1"
+    ],
+    "answer": 1,
+    "explanation": "$4n$ ning qoldig'i $4\\cdot5=20$ ning qoldig'i bilan bir xil, ya'ni $2$.",
+    "year": null,
+    "source_note": null,
+    "collection": {
+     "id": 36,
+     "title": "Matematika — abituriyent testi (3-to'plam)",
+     "source": "edux",
+     "attribution": null,
+     "license": null
+    }
+   },
+   {
+    "id": 3192,
+    "difficulty": 2,
+    "body": "Ikki natural sonning EKUBi 6 ga, EKUKi 180 ga teng. Sonlardan biri 36 bo'lsa, ikkinchisini toping.",
+    "options": [
+     "45",
+     "24",
+     "60",
+     "30"
+    ],
+    "answer": 3,
+    "explanation": "$\\text{EKUB}\\cdot\\text{EKUK}=ab$: $6\\cdot180=1080$, $b=1080:36=30$. Tekshirish: EKUB(36; 30)=6, EKUK(36; 30)=180.",
+    "year": null,
+    "source_note": null,
+    "collection": {
+     "id": 64,
+     "title": "Matematika — mavzulashtirilgan to'plam: Arifmetika va matnli masalalar, Algebraik ifodalar, tenglamalar va tengsizliklar, Daraja, ildiz, ko'rsatkichli",
+     "source": "edux",
+     "attribution": null,
+     "license": null
+    }
+   },
+   {
+    "id": 3195,
+    "difficulty": 2,
+    "body": "Bekatdan birinchi avtobus har 12 minutda, ikkinchisi har 18 minutda, uchinchisi har 30 minutda jo'naydi. Soat 7:00 da uchala avtobus birga jo'nadi. Ular keyingi safar soat nechada yana birga jo'naydi?",
+    "options": [
+     "8:30",
+     "10:00",
+     "9:00",
+     "13:00"
+    ],
+    "answer": 1,
+    "explanation": "EKUK(12; 18; 30) $=180$ minut $=3$ soat. $7:00+3$ soat $=10:00$.",
+    "year": null,
+    "source_note": null,
+    "collection": {
+     "id": 64,
+     "title": "Matematika — mavzulashtirilgan to'plam: Arifmetika va matnli masalalar, Algebraik ifodalar, tenglamalar va tengsizliklar, Daraja, ildiz, ko'rsatkichli",
+     "source": "edux",
+     "attribution": null,
+     "license": null
+    }
+   },
+   {
+    "id": 3193,
+    "difficulty": 3,
+    "body": "1 dan 100 gacha (100 ham kiradi) bo'lgan natural sonlar orasida na 3 ga, na 5 ga bo'linmaydiganlari nechta?",
+    "options": [
+     "47",
+     "53",
+     "54",
+     "60"
+    ],
+    "answer": 1,
+    "explanation": "3 ga bo'linadiganlar 33 ta, 5 ga — 20 ta, 15 ga — 6 ta. 3 yoki 5 ga bo'linadiganlar: $33+20-6=47$. Javob: $100-47=53$.",
+    "year": null,
+    "source_note": null,
+    "collection": {
+     "id": 64,
+     "title": "Matematika — mavzulashtirilgan to'plam: Arifmetika va matnli masalalar, Algebraik ifodalar, tenglamalar va tengsizliklar, Daraja, ildiz, ko'rsatkichli",
+     "source": "edux",
+     "attribution": null,
+     "license": null
+    }
+   }
+  ]
+ }
+}

@@ -1,0 +1,57 @@
+{
+ "method": "GET",
+ "path": "crm/callcenter/caller",
+ "query": {
+  "phone": "+998933332211"
+ },
+ "status": 200,
+ "body": {
+  "phone": "+998933332211",
+  "leads": [],
+  "students": [],
+  "tasks": [],
+  "calls": [
+   {
+    "id": 292,
+    "direction": "in",
+    "result": "no_answer",
+    "outcome": null,
+    "note": null,
+    "summary": null,
+    "duration": null,
+    "user_id": null,
+    "origin": "pbx",
+    "created_at": "2026-10-19T13:53:04.000000Z",
+    "user": null
+   }
+  ],
+  "scripts": [
+   {
+    "id": 4,
+    "title": "Yangi mijoz",
+    "body": "1. Salomlashing: «Ilm yo'li o'quv markazi, ismim …, sizga qanday yordam beray?»\n2. Kim uchun va qaysi fan qiziqtirayotganini so'rang (yoshi, darajasi).\n3. Qulay vaqtni bilib, mos guruhni ayting.\n4. Bepul sinov darsini taklif qiling va sanani kelishing.\n5. Ism va raqamni tasdiqlang."
+   },
+   {
+    "id": 5,
+    "title": "Qarzdor ota-ona",
+    "body": "Hurmat bilan salomlashing. Qarz summasi va muddatini ayting. Click/Payme havolasini SMS qilib yuborishni taklif qiling. To'lov sanasini yozib qo'ying."
+   },
+   {
+    "id": 6,
+    "title": "Sinov darsidan keyin",
+    "body": "Darsdan taassurotini so'rang. Savollariga javob bering. Guruhga yozilishni taklif qiling, chegirmani eslating."
+   }
+  ],
+  "outcomes": {
+   "interested": "Qiziqdi",
+   "trial": "Sinov darsiga yozildi",
+   "enrolled": "Kursga yozildi",
+   "callback": "Qayta qo'ng'iroq",
+   "info": "Ma'lumot berildi",
+   "payment": "To'lov masalasi",
+   "complaint": "Shikoyat",
+   "not_interested": "Qiziqmadi",
+   "other": "Boshqa"
+  }
+ }
+}

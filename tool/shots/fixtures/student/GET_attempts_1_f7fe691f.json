@@ -1,0 +1,75 @@
+{
+ "method": "GET",
+ "path": "attempts/1",
+ "query": {},
+ "status": 200,
+ "body": {
+  "exam": {
+   "id": 2,
+   "title": "IELTS Mock #1 — Sentyabr"
+  },
+  "source": "online",
+  "correct": 9,
+  "wrong": 6,
+  "blank": 0,
+  "score": 17.5,
+  "max_score": 30,
+  "finished_at": "2026-09-14T11:00:00.000000Z",
+  "pending": 0,
+  "format": "ielts",
+  "mock_result": {
+   "level": "B2",
+   "format": "ielts",
+   "overall": {
+    "label": "Band 5.5",
+    "value": 5.5
+   },
+   "pending": false,
+   "sections": [
+    {
+     "key": "listening",
+     "max": 6,
+     "name": "Listening",
+     "label": "5.5",
+     "score": 3,
+     "skill": "listening",
+     "value": 5.5,
+     "percent": 50
+    },
+    {
+     "key": "reading",
+     "max": 6,
+     "name": "Reading",
+     "label": "5.5",
+     "score": 3,
+     "skill": "reading",
+     "value": 5.5,
+     "percent": 50
+    },
+    {
+     "key": "writing",
+     "max": 9,
+     "name": "Writing",
+     "label": "5.5",
+     "score": 5.5,
+     "skill": "writing",
+     "value": 5.5,
+     "percent": 61.1
+    },
+    {
+     "key": "speaking",
+     "max": 9,
+     "name": "Speaking",
+     "label": "6.0",
+     "score": 6,
+     "skill": "speaking",
+     "value": 6,
+     "percent": 66.7
+    }
+   ],
+   "approximate": true
+  },
+  "review": null,
+  "review_later": false
+ }
+}

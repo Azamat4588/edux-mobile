@@ -1,0 +1,25 @@
+{
+ "method": "GET",
+ "path": "public/support",
+ "query": {},
+ "status": 200,
+ "body": {
+  "topics": {
+   "question": "Savol",
+   "bug": "Xatolik",
+   "payment": "To'lov va hisob",
+   "feature": "Taklif",
+   "other": "Boshqa"
+  },
+  "statuses": {
+   "open": "Yangi",
+   "answered": "Javob berilgan",
+   "closed": "Yopilgan"
+  },
+  "contacts": {
+   "phone": "+998 71 200 45 45",
+   "email": "support@edux.uz",
+   "telegram": "edux_support"
+  }
+ }
+}

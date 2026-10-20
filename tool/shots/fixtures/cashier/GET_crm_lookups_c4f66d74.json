@@ -1,0 +1,381 @@
+{
+ "method": "GET",
+ "path": "crm/lookups",
+ "query": {},
+ "status": 200,
+ "body": {
+  "sources": [
+   {
+    "id": 1,
+    "key": "instagram",
+    "name": "Instagram",
+    "is_active": true
+   },
+   {
+    "id": 2,
+    "key": "telegram",
+    "name": "Telegram",
+    "is_active": true
+   },
+   {
+    "id": 3,
+    "key": "tavsiya",
+    "name": "Tavsiya",
+    "is_active": true
+   },
+   {
+    "id": 4,
+    "key": "reklama",
+    "name": "Reklama",
+    "is_active": true
+   },
+   {
+    "id": 5,
+    "key": "sayt",
+    "name": "Sayt",
+    "is_active": true
+   },
+   {
+    "id": 6,
+    "key": "qongiroq",
+    "name": "Qo'ng'iroq",
+    "is_active": true
+   },
+   {
+    "id": 7,
+    "key": "boshqa",
+    "name": "Boshqa",
+    "is_active": true
+   }
+  ],
+  "sections": [
+   {
+    "id": 1,
+    "name": "Yangi so'rovlar",
+    "column": "leads",
+    "sort": 0
+   },
+   {
+    "id": 2,
+    "name": "Qayta qo'ng'iroq",
+    "column": "waiting",
+    "sort": 0
+   },
+   {
+    "id": 3,
+    "name": "O'ylab ko'radi",
+    "column": "waiting",
+    "sort": 1
+   }
+  ],
+  "reasons": {
+   "lead_lost": [
+    {
+     "id": 1,
+     "name": "Narxi to'g'ri kelmadi"
+    },
+    {
+     "id": 2,
+     "name": "Vaqti to'g'ri kelmadi"
+    },
+    {
+     "id": 3,
+     "name": "Boshqa markazni tanladi"
+    },
+    {
+     "id": 4,
+     "name": "Javob bermadi"
+    },
+    {
+     "id": 5,
+     "name": "Fikridan qaytdi"
+    }
+   ],
+   "student_left": [
+    {
+     "id": 6,
+     "name": "Narx qimmat"
+    },
+    {
+     "id": 7,
+     "name": "Vaqti to'g'ri kelmadi"
+    },
+    {
+     "id": 8,
+     "name": "O'qituvchidan norozi"
+    },
+    {
+     "id": 9,
+     "name": "Ko'chib ketdi"
+    },
+    {
+     "id": 10,
+     "name": "O'qishni tugatdi"
+    },
+    {
+     "id": 11,
+     "name": "Boshqa markazga o'tdi"
+    },
+    {
+     "id": 12,
+     "name": "Sabab aytilmadi"
+    }
+   ]
+  },
+  "tags": [
+   {
+    "id": 3,
+    "name": "Issiq",
+    "color": "red",
+    "applies_to": "lead"
+   },
+   {
+    "id": 4,
+    "name": "Kechki vaqt",
+    "color": "blue",
+    "applies_to": "lead"
+   },
+   {
+    "id": 2,
+    "name": "Olimpiadachi",
+    "color": "green",
+    "applies_to": "student"
+   },
+   {
+    "id": 1,
+    "name": "VIP",
+    "color": "purple",
+    "applies_to": "student"
+   }
+  ],
+  "courses": [
+   {
+    "id": 3,
+    "name": "IELTS intensiv (12 dars)",
+    "code": "IELTS",
+    "price": 600000,
+    "billing_mode": "module",
+    "module_lessons": 12,
+    "duration_months": null
+   },
+   {
+    "id": 2,
+    "name": "Ingliz tili (General)",
+    "code": "ENG",
+    "price": 380000,
+    "billing_mode": "monthly",
+    "module_lessons": null,
+    "duration_months": 6
+   },
+   {
+    "id": 1,
+    "name": "Matematika (abituriyent)",
+    "code": "MAT",
+    "price": 450000,
+    "billing_mode": "monthly",
+    "module_lessons": null,
+    "duration_months": 9
+   }
+  ],
+  "rooms": [
+   {
+    "id": 1,
+    "name": "2-xona",
+    "capacity": 12,
+    "branch_id": null
+   },
+   {
+    "id": 2,
+    "name": "4-xona",
+    "capacity": 10,
+    "branch_id": null
+   },
+   {
+    "id": 3,
+    "name": "Katta zal",
+    "capacity": 30,
+    "branch_id": null
+   }
+  ],
+  "lms_courses": [
+   {
+    "id": 2,
+    "title": "Geometriya: uchburchaklar",
+    "price": 0,
+    "audience": "all"
+   },
+   {
+    "id": 1,
+    "title": "Kasrlar va ular ustida amallar",
+    "price": 0,
+    "audience": "groups"
+   }
+  ],
+  "test_exams": [
+   {
+    "id": 9,
+    "title": "Ingliz tili olimpiadasi — 1-tur",
+    "public": false,
+    "online": true
+   },
+   {
+    "id": 8,
+    "title": "Matematika olimpiadasi — saralash bosqichi",
+    "public": false,
+    "online": true
+   },
+   {
+    "id": 7,
+    "title": "Nemis tili — kuzgi olimpiada",
+    "public": false,
+    "online": true
+   },
+   {
+    "id": 3,
+    "title": "IELTS Mock #2 — Oktyabr",
+    "public": false,
+    "online": true
+   },
+   {
+    "id": 2,
+    "title": "IELTS Mock #1 — Sentyabr",
+    "public": false,
+    "online": true
+   },
+   {
+    "id": 1,
+    "title": "Matematika: 2-chorak nazorat ishi",
+    "public": true,
+    "online": true
+   }
+  ],
+  "branches": [],
+  "groups": [
+   {
+    "id": 2,
+    "name": "ING-5",
+    "teacher_id": 4,
+    "branch_id": null
+   },
+   {
+    "id": 1,
+    "name": "M-11",
+    "teacher_id": 1,
+    "branch_id": null
+   }
+  ],
+  "staff": [
+   {
+    "id": 6,
+    "name": "Hamidova Feruza",
+    "role": "cashier"
+   },
+   {
+    "id": 3,
+    "name": "Islomova Shahnoza",
+    "role": "admin"
+   },
+   {
+    "id": 8,
+    "name": "Karimova Nodira",
+    "role": "teacher"
+   },
+   {
+    "id": 7,
+    "name": "Rasulov Bekzod",
+    "role": "marketer"
+   },
+   {
+    "id": 1,
+    "name": "Rustamov Akmal",
+    "role": "director"
+   },
+   {
+    "id": 9,
+    "name": "Toshev Anvar",
+    "role": "teacher"
+   },
+   {
+    "id": 4,
+    "name": "Usmonova Dildora",
+    "role": "teacher"
+   }
+  ],
+  "billing_modes": [
+   {
+    "value": "monthly",
+    "label": "Kalendar oy (har oyning 1-sanasida)",
+    "price_label": "Oylik narx"
+   },
+   {
+    "value": "group_start",
+    "label": "Guruh boshlangan sanada (har oy)",
+    "price_label": "Oylik narx"
+   },
+   {
+    "value": "individual",
+    "label": "Faollashtirilgan sanada (har oy)",
+    "price_label": "Oylik narx"
+   },
+   {
+    "value": "module",
+    "label": "Modul (har N dars uchun)",
+    "price_label": "Modul narxi"
+   },
+   {
+    "value": "daily",
+    "label": "Har dars uchun",
+    "price_label": "Oylik narx"
+   },
+   {
+    "value": "course",
+    "label": "To'liq kurs (bir martalik)",
+    "price_label": "Butun kurs narxi"
+   }
+  ],
+  "pay_types": [
+   {
+    "value": "none",
+    "label": "Belgilanmagan"
+   },
+   {
+    "value": "fixed",
+    "label": "Oyiga belgilangan summa"
+   },
+   {
+    "value": "percent",
+    "label": "Hisoblangan summadan foiz"
+   },
+   {
+    "value": "percent_paid",
+    "label": "To'langan summadan foiz"
+   },
+   {
+    "value": "per_student",
+    "label": "Har o'quvchi uchun summa"
+   },
+   {
+    "value": "per_lesson",
+    "label": "Har dars uchun summa"
+   }
+  ],
+  "enrollment_statuses": [
+   {
+    "value": "trial",
+    "label": "Sinov darsida"
+   },
+   {
+    "value": "active",
+    "label": "Faol"
+   },
+   {
+    "value": "frozen",
+    "label": "Muzlatilgan"
+   },
+   {
+    "value": "left",
+    "label": "Ketgan"
+   }
+  ]
+ }
+}

@@ -1,0 +1,615 @@
+{
+ "method": "GET",
+ "path": "bank/topics",
+ "query": {
+  "subject": "mat"
+ },
+ "status": 200,
+ "body": {
+  "subjects": [
+   {
+    "code": "mat",
+    "subject": "Matematika",
+    "topics": 48,
+    "questions": 585
+   },
+   {
+    "code": "fiz",
+    "subject": "Fizika",
+    "topics": 42,
+    "questions": 461
+   },
+   {
+    "code": "kim",
+    "subject": "Kimyo",
+    "topics": 42,
+    "questions": 420
+   },
+   {
+    "code": "bio",
+    "subject": "Biologiya",
+    "topics": 42,
+    "questions": 420
+   },
+   {
+    "code": "ona",
+    "subject": "Ona tili va adabiyot",
+    "topics": 40,
+    "questions": 400
+   },
+   {
+    "code": "tar",
+    "subject": "O'zbekiston tarixi",
+    "topics": 35,
+    "questions": 350
+   },
+   {
+    "code": "jtar",
+    "subject": "Jahon tarixi",
+    "topics": 30,
+    "questions": 300
+   },
+   {
+    "code": "geo",
+    "subject": "Geografiya",
+    "topics": 38,
+    "questions": 380
+   },
+   {
+    "code": "ing",
+    "subject": "Ingliz tili",
+    "topics": 36,
+    "questions": 360
+   }
+  ],
+  "tree": {
+   "subject": {
+    "code": "mat",
+    "title": "Matematika"
+   },
+   "sections": [
+    {
+     "code": "mat.s1",
+     "title": "Arifmetika va matnli masalalar",
+     "topics": [
+      {
+       "code": "mat.s1.01",
+       "title": "Natural sonlar, bo'linuvchanlik, EKUB va EKUK",
+       "count": 10,
+       "by_difficulty": {
+        "1": 5,
+        "2": 4,
+        "3": 1
+       }
+      },
+      {
+       "code": "mat.s1.02",
+       "title": "Oddiy va o'nli kasrlar",
+       "count": 10,
+       "by_difficulty": {
+        "1": 6,
+        "2": 3,
+        "3": 1
+       }
+      },
+      {
+       "code": "mat.s1.03",
+       "title": "Nisbat va proporsiya",
+       "count": 10,
+       "by_difficulty": {
+        "1": 5,
+        "2": 4,
+        "3": 1
+       }
+      },
+      {
+       "code": "mat.s1.04",
+       "title": "Foizlar",
+       "count": 10,
+       "by_difficulty": {
+        "1": 3,
+        "2": 6,
+        "3": 1
+       }
+      },
+      {
+       "code": "mat.s1.05",
+       "title": "Harakat va ishga oid masalalar",
+       "count": 10,
+       "by_difficulty": {
+        "1": 1,
+        "2": 7,
+        "3": 2
+       }
+      },
+      {
+       "code": "mat.s1.06",
+       "title": "Aralashma va eritmalarga oid masalalar",
+       "count": 10,
+       "by_difficulty": {
+        "1": 1,
+        "2": 5,
+        "3": 4
+       }
+      }
+     ]
+    },
+    {
+     "code": "mat.s2",
+     "title": "Algebraik ifodalar, tenglamalar va tengsizliklar",
+     "topics": [
+      {
+       "code": "mat.s2.01",
+       "title": "Algebraik ifodalar va qisqa ko'paytirish formulalari",
+       "count": 10,
+       "by_difficulty": {
+        "1": 3,
+        "2": 4,
+        "3": 3
+       }
+      },
+      {
+       "code": "mat.s2.02",
+       "title": "Chiziqli tenglamalar",
+       "count": 10,
+       "by_difficulty": {
+        "1": 4,
+        "2": 5,
+        "3": 1
+       }
+      },
+      {
+       "code": "mat.s2.03",
+       "title": "Tenglamalar sistemalari",
+       "count": 10,
+       "by_difficulty": {
+        "1": 2,
+        "2": 6,
+        "3": 2
+       }
+      },
+      {
+       "code": "mat.s2.04",
+       "title": "Kvadrat tenglamalar",
+       "count": 10,
+       "by_difficulty": {
+        "1": 5,
+        "2": 3,
+        "3": 2
+       }
+      },
+      {
+       "code": "mat.s2.05",
+       "title": "Viyet teoremasi",
+       "count": 10,
+       "by_difficulty": {
+        "1": 3,
+        "2": 4,
+        "3": 3
+       }
+      },
+      {
+       "code": "mat.s2.06",
+       "title": "Ratsional va irratsional tenglamalar",
+       "count": 10,
+       "by_difficulty": {
+        "1": 1,
+        "2": 6,
+        "3": 3
+       }
+      },
+      {
+       "code": "mat.s2.07",
+       "title": "Modul. Modulli tenglama va tengsizliklar",
+       "count": 10,
+       "by_difficulty": {
+        "1": 2,
+        "2": 5,
+        "3": 3
+       }
+      },
+      {
+       "code": "mat.s2.08",
+       "title": "Tengsizliklar va intervallar usuli",
+       "count": 10,
+       "by_difficulty": {
+        "1": 3,
+        "2": 4,
+        "3": 3
+       }
+      }
+     ]
+    },
+    {
+     "code": "mat.s3",
+     "title": "Daraja, ildiz, ko'rsatkichli va logarifmik ifodalar",
+     "topics": [
+      {
+       "code": "mat.s3.01",
+       "title": "Darajalar va ularning xossalari",
+       "count": 10,
+       "by_difficulty": {
+        "1": 3,
+        "2": 4,
+        "3": 3
+       }
+      },
+      {
+       "code": "mat.s3.02",
+       "title": "Ildizlar va irratsional ifodalar",
+       "count": 10,
+       "by_difficulty": {
+        "1": 2,
+        "2": 6,
+        "3": 2
+       }
+      },
+      {
+       "code": "mat.s3.03",
+       "title": "Ko'rsatkichli tenglama va tengsizliklar",
+       "count": 10,
+       "by_difficulty": {
+        "1": 2,
+        "2": 5,
+        "3": 3
+       }
+      },
+      {
+       "code": "mat.s3.04",
+       "title": "Logarifm va uning xossalari",
+       "count": 10,
+       "by_difficulty": {
+        "1": 3,
+        "2": 5,
+        "3": 2
+       }
+      },
+      {
+       "code": "mat.s3.05",
+       "title": "Logarifmik tenglama va tengsizliklar",
+       "count": 10,
+       "by_difficulty": {
+        "1": 1,
+        "2": 5,
+        "3": 4
+       }
+      }
+     ]
+    },
+    {
+     "code": "mat.s4",
+     "title": "Funksiyalar va progressiyalar",
+     "topics": [
+      {
+       "code": "mat.s4.01",
+       "title": "Funksiya, aniqlanish sohasi va xossalari",
+       "count": 10,
+       "by_difficulty": {
+        "1": 2,
+        "2": 7,
+        "3": 1
+       }
+      },
+      {
+       "code": "mat.s4.02",
+       "title": "Chiziqli funksiya va to'g'ri chiziq tenglamasi",
+       "count": 10,
+       "by_difficulty": {
+        "1": 3,
+        "2": 5,
+        "3": 2
+       }
+      },
+      {
+       "code": "mat.s4.03",
+       "title": "Kvadrat funksiya va parabola",
+       "count": 10,
+       "by_difficulty": {
+        "1": 2,
+        "2": 5,
+        "3": 3
+       }
+      },
+      {
+       "code": "mat.s4.04",
+       "title": "Ko'rsatkichli va logarifmik funksiyalar",
+       "count": 10,
+       "by_difficulty": {
+        "1": 3,
+        "2": 4,
+        "3": 3
+       }
+      },
+      {
+       "code": "mat.s4.05",
+       "title": "Arifmetik progressiya",
+       "count": 10,
+       "by_difficulty": {
+        "1": 3,
+        "2": 5,
+        "3": 2
+       }
+      },
+      {
+       "code": "mat.s4.06",
+       "title": "Geometrik progressiya",
+       "count": 10,
+       "by_difficulty": {
+        "1": 2,
+        "2": 5,
+        "3": 3
+       }
+      }
+     ]
+    },
+    {
+     "code": "mat.s5",
+     "title": "Trigonometriya",
+     "topics": [
+      {
+       "code": "mat.s5.01",
+       "title": "Trigonometrik funksiyalar va asosiy ayniyatlar",
+       "count": 10,
+       "by_difficulty": {
+        "1": 5,
+        "2": 5,
+        "3": 0
+       }
+      },
+      {
+       "code": "mat.s5.02",
+       "title": "Qo'shish va keltirish formulalari",
+       "count": 10,
+       "by_difficulty": {
+        "1": 4,
+        "2": 4,
+        "3": 2
+       }
+      },
+      {
+       "code": "mat.s5.03",
+       "title": "Ikkilangan burchak formulalari",
+       "count": 10,
+       "by_difficulty": {
+        "1": 2,
+        "2": 6,
+        "3": 2
+       }
+      },
+      {
+       "code": "mat.s5.04",
+       "title": "Trigonometrik tenglamalar",
+       "count": 10,
+       "by_difficulty": {
+        "1": 2,
+        "2": 4,
+        "3": 4
+       }
+      }
+     ]
+    },
+    {
+     "code": "mat.s6",
+     "title": "Hosila va integral",
+     "topics": [
+      {
+       "code": "mat.s6.01",
+       "title": "Hosilani hisoblash",
+       "count": 10,
+       "by_difficulty": {
+        "1": 3,
+        "2": 6,
+        "3": 1
+       }
+      },
+      {
+       "code": "mat.s6.02",
+       "title": "Urinma va hosilaning mexanik ma'nosi",
+       "count": 10,
+       "by_difficulty": {
+        "1": 2,
+        "2": 5,
+        "3": 3
+       }
+      },
+      {
+       "code": "mat.s6.03",
+       "title": "Funksiyani hosila yordamida tekshirish",
+       "count": 10,
+       "by_difficulty": {
+        "1": 1,
+        "2": 4,
+        "3": 5
+       }
+      },
+      {
+       "code": "mat.s6.04",
+       "title": "Boshlang'ich funksiya va integral",
+       "count": 10,
+       "by_difficulty": {
+        "1": 3,
+        "2": 5,
+        "3": 2
+       }
+      }
+     ]
+    },
+    {
+     "code": "mat.s7",
+     "title": "Kombinatorika, ehtimollik va statistika",
+     "topics": [
+      {
+       "code": "mat.s7.01",
+       "title": "Kombinatorika",
+       "count": 10,
+       "by_difficulty": {
+        "1": 4,
+        "2": 5,
+        "3": 1
+       }
+      },
+      {
+       "code": "mat.s7.02",
+       "title": "Ehtimollik",
+       "count": 10,
+       "by_difficulty": {
+        "1": 2,
+        "2": 4,
+        "3": 4
+       }
+      },
+      {
+       "code": "mat.s7.03",
+       "title": "Statistika elementlari",
+       "count": 10,
+       "by_difficulty": {
+        "1": 4,
+        "2": 4,
+        "3": 2
+       }
+      }
+     ]
+    },
+    {
+     "code": "mat.s8",
+     "title": "Planimetriya",
+     "topics": [
+      {
+       "code": "mat.s8.01",
+       "title": "Burchaklar va uchburchak elementlari",
+       "count": 10,
+       "by_difficulty": {
+        "1": 6,
+        "2": 3,
+        "3": 1
+       }
+      },
+      {
+       "code": "mat.s8.02",
+       "title": "To'g'ri burchakli uchburchak va Pifagor teoremasi",
+       "count": 10,
+       "by_difficulty": {
+        "1": 3,
+        "2": 6,
+        "3": 1
+       }
+      },
+      {
+       "code": "mat.s8.03",
+       "title": "Sinuslar va kosinuslar teoremalari",
+       "count": 10,
+       "by_difficulty": {
+        "1": 1,
+        "2": 7,
+        "3": 2
+       }
+      },
+      {
+       "code": "mat.s8.04",
+       "title": "Uchburchak yuzi va o'xshashlik",
+       "count": 10,
+       "by_difficulty": {
+        "1": 2,
+        "2": 5,
+        "3": 3
+       }
+      },
+      {
+       "code": "mat.s8.05",
+       "title": "To'rtburchaklar va ko'pburchaklar",
+       "count": 10,
+       "by_difficulty": {
+        "1": 6,
+        "2": 3,
+        "3": 1
+       }
+      },
+      {
+       "code": "mat.s8.06",
+       "title": "Aylana va doira",
+       "count": 10,
+       "by_difficulty": {
+        "1": 4,
+        "2": 5,
+        "3": 1
+       }
+      }
+     ]
+    },
+    {
+     "code": "mat.s9",
+     "title": "Stereometriya, vektorlar va koordinatalar",
+     "topics": [
+      {
+       "code": "mat.s9.01",
+       "title": "Prizma, kub va parallelepiped",
+       "count": 10,
+       "by_difficulty": {
+        "1": 3,
+        "2": 5,
+        "3": 2
+       }
+      },
+      {
+       "code": "mat.s9.02",
+       "title": "Piramida",
+       "count": 10,
+       "by_difficulty": {
+        "1": 2,
+        "2": 5,
+        "3": 3
+       }
+      },
+      {
+       "code": "mat.s9.03",
+       "title": "Silindr va konus",
+       "count": 10,
+       "by_difficulty": {
+        "1": 2,
+        "2": 5,
+        "3": 3
+       }
+      },
+      {
+       "code": "mat.s9.04",
+       "title": "Shar va sfera",
+       "count": 10,
+       "by_difficulty": {
+        "1": 3,
+        "2": 5,
+        "3": 2
+       }
+      },
+      {
+       "code": "mat.s9.05",
+       "title": "Vektorlar",
+       "count": 10,
+       "by_difficulty": {
+        "1": 4,
+        "2": 4,
+        "3": 2
+       }
+      },
+      {
+       "code": "mat.s9.06",
+       "title": "Koordinatalar usuli",
+       "count": 10,
+       "by_difficulty": {
+        "1": 3,
+        "2": 3,
+        "3": 4
+       }
+      }
+     ]
+    }
+   ],
+   "years": [],
+   "languages": {
+    "uz": 480,
+    "en": 55,
+    "ru": 50
+   },
+   "language": "uz"
+  }
+ }
+}

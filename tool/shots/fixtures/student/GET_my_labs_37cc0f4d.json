@@ -1,0 +1,66 @@
+{
+ "method": "GET",
+ "path": "my/labs",
+ "query": {},
+ "status": 200,
+ "body": {
+  "labs": [
+   {
+    "code": "pendulum",
+    "name": "Matematik mayatnik",
+    "subject": "Fizika",
+    "grades": "7–9",
+    "description": "Ip uzunligi va tebranish davri orasidagi bog'lanish.",
+    "passed": 0
+   },
+   {
+    "code": "projectile",
+    "name": "Gorizontga burchak ostida otish",
+    "subject": "Fizika",
+    "grades": "9–10",
+    "description": "Boshlang'ich tezlik va burchakka qarab uchish uzoqligi.",
+    "passed": 0
+   },
+   {
+    "code": "ohm",
+    "name": "Om qonuni",
+    "subject": "Fizika",
+    "grades": "8",
+    "description": "Kuchlanish, qarshilik va tok kuchi: ampermetr va voltmetr bilan.",
+    "passed": 0
+   },
+   {
+    "code": "lens",
+    "name": "Yupqa linza",
+    "subject": "Fizika",
+    "grades": "8–9",
+    "description": "Buyum, linza va tasvir: fokus masofasini aniqlash.",
+    "passed": 0
+   },
+   {
+    "code": "titration",
+    "name": "Kislota-ishqor titrlash",
+    "subject": "Kimyo",
+    "grades": "9–11",
+    "description": "Byuretkadan ishqor tomizib, neytrallanish nuqtasini topish.",
+    "passed": 0
+   },
+   {
+    "code": "parabola",
+    "name": "Kvadrat funksiya grafigi",
+    "subject": "Matematika",
+    "grades": "8–9",
+    "description": "a, b, c koeffitsiyentlari parabolani qanday o'zgartiradi.",
+    "passed": 0
+   },
+   {
+    "code": "genetics",
+    "name": "Mendel qonunlari",
+    "subject": "Biologiya",
+    "grades": "9–10",
+    "description": "Punnet katagi: belgining avlodda namoyon bo'lish ehtimoli.",
+    "passed": 0
+   }
+  ]
+ }
+}

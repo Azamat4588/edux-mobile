@@ -1,0 +1,1972 @@
+{
+ "method": "GET",
+ "path": "exams/7",
+ "query": {},
+ "status": 200,
+ "body": {
+  "id": 7,
+  "organization_id": 1,
+  "subject_id": null,
+  "title": "Nemis tili — kuzgi olimpiada",
+  "status": "published",
+  "duration_minutes": 40,
+  "starts_at": "2026-10-19T15:08:45.000000Z",
+  "ends_at": "2026-10-19T19:08:45.000000Z",
+  "variants_count": 1,
+  "shuffle_questions": true,
+  "shuffle_options": true,
+  "show_answers": false,
+  "seed": 494195221,
+  "created_by": null,
+  "published_at": "2026-10-19T16:08:45.000000Z",
+  "created_at": "2026-10-19T16:08:45.000000Z",
+  "updated_at": "2026-10-19T16:08:45.000000Z",
+  "public_token": null,
+  "kind": "bank",
+  "format": null,
+  "blocks": null,
+  "sheet_options": null,
+  "answer_keys": null,
+  "audience": "students",
+  "price": 0,
+  "pay_mode": "online",
+  "finished_attempts_count": 19,
+  "pending_count": 0,
+  "subject": null,
+  "groups": [],
+  "variants": [
+   {
+    "id": 5,
+    "exam_id": 7,
+    "number": 1
+   }
+  ],
+  "questions": [
+   {
+    "id": 46,
+    "organization_id": 1,
+    "subject_id": 7,
+    "topic_id": 4,
+    "type": "single",
+    "body": "___ Tisch ist groß.",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 1,
+    "explanation": "Tisch — erkak rodidagi ot (der Tisch).",
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T15:03:47.000000Z",
+    "updated_at": "2026-10-19T15:03:47.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": 251,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 7,
+     "question_id": 46,
+     "position": 1,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 103,
+      "question_id": 46,
+      "body": "Der",
+      "image_path": null,
+      "is_correct": true,
+      "position": 0,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 104,
+      "question_id": 46,
+      "body": "Die",
+      "image_path": null,
+      "is_correct": false,
+      "position": 1,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 105,
+      "question_id": 46,
+      "body": "Das",
+      "image_path": null,
+      "is_correct": false,
+      "position": 2,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 106,
+      "question_id": 46,
+      "body": "Den",
+      "image_path": null,
+      "is_correct": false,
+      "position": 3,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 4,
+     "name": "Artikllar"
+    }
+   },
+   {
+    "id": 47,
+    "organization_id": 1,
+    "subject_id": 7,
+    "topic_id": 5,
+    "type": "single",
+    "body": "Ich ___ aus Usbekistan.",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 1,
+    "explanation": "ich bilan fe'l -e qo'shimchasini oladi: ich komme.",
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T15:03:47.000000Z",
+    "updated_at": "2026-10-19T15:03:47.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": 252,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 7,
+     "question_id": 47,
+     "position": 2,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 107,
+      "question_id": 47,
+      "body": "kommst",
+      "image_path": null,
+      "is_correct": false,
+      "position": 0,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 108,
+      "question_id": 47,
+      "body": "kommt",
+      "image_path": null,
+      "is_correct": false,
+      "position": 1,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 109,
+      "question_id": 47,
+      "body": "komme",
+      "image_path": null,
+      "is_correct": true,
+      "position": 2,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 110,
+      "question_id": 47,
+      "body": "kommen",
+      "image_path": null,
+      "is_correct": false,
+      "position": 3,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 5,
+     "name": "Fe'l tuslanishi"
+    }
+   },
+   {
+    "id": 48,
+    "organization_id": 1,
+    "subject_id": 7,
+    "topic_id": 5,
+    "type": "single",
+    "body": "Wie ___ du?",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 1,
+    "explanation": "du bilan heißen fe'li heißt shaklida bo'ladi.",
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T15:03:47.000000Z",
+    "updated_at": "2026-10-19T15:03:47.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": 253,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 7,
+     "question_id": 48,
+     "position": 3,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 111,
+      "question_id": 48,
+      "body": "heiße",
+      "image_path": null,
+      "is_correct": false,
+      "position": 0,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 112,
+      "question_id": 48,
+      "body": "heißt",
+      "image_path": null,
+      "is_correct": true,
+      "position": 1,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 113,
+      "question_id": 48,
+      "body": "heißen",
+      "image_path": null,
+      "is_correct": false,
+      "position": 2,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 114,
+      "question_id": 48,
+      "body": "heiß",
+      "image_path": null,
+      "is_correct": false,
+      "position": 3,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 5,
+     "name": "Fe'l tuslanishi"
+    }
+   },
+   {
+    "id": 49,
+    "organization_id": 1,
+    "subject_id": 7,
+    "topic_id": 4,
+    "type": "single",
+    "body": "Das ist ___ Lampe.",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 1,
+    "explanation": "Lampe — ayol rodida, Nominativda noaniq artikl eine.",
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T15:03:47.000000Z",
+    "updated_at": "2026-10-19T15:03:47.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": 254,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 7,
+     "question_id": 49,
+     "position": 4,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 115,
+      "question_id": 49,
+      "body": "ein",
+      "image_path": null,
+      "is_correct": false,
+      "position": 0,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 116,
+      "question_id": 49,
+      "body": "einen",
+      "image_path": null,
+      "is_correct": false,
+      "position": 1,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 117,
+      "question_id": 49,
+      "body": "eine",
+      "image_path": null,
+      "is_correct": true,
+      "position": 2,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 118,
+      "question_id": 49,
+      "body": "einem",
+      "image_path": null,
+      "is_correct": false,
+      "position": 3,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 4,
+     "name": "Artikllar"
+    }
+   },
+   {
+    "id": 50,
+    "organization_id": 1,
+    "subject_id": 7,
+    "topic_id": 6,
+    "type": "single",
+    "body": "Ich habe ___ Bruder.",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 2,
+    "explanation": "haben Akkusativ talab qiladi; erkak rodida einen.",
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T15:03:47.000000Z",
+    "updated_at": "2026-10-19T15:03:47.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": 255,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 7,
+     "question_id": 50,
+     "position": 5,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 119,
+      "question_id": 50,
+      "body": "ein",
+      "image_path": null,
+      "is_correct": false,
+      "position": 0,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 120,
+      "question_id": 50,
+      "body": "einen",
+      "image_path": null,
+      "is_correct": true,
+      "position": 1,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 121,
+      "question_id": 50,
+      "body": "eine",
+      "image_path": null,
+      "is_correct": false,
+      "position": 2,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 122,
+      "question_id": 50,
+      "body": "einem",
+      "image_path": null,
+      "is_correct": false,
+      "position": 3,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 6,
+     "name": "Kelishiklar"
+    }
+   },
+   {
+    "id": 51,
+    "organization_id": 1,
+    "subject_id": 7,
+    "topic_id": 7,
+    "type": "single",
+    "body": "das Buch — die ___",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 2,
+    "explanation": "Buch so'zining ko'pligi umlaut va -er bilan: Bücher.",
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T15:03:47.000000Z",
+    "updated_at": "2026-10-19T15:03:47.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": 256,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 7,
+     "question_id": 51,
+     "position": 6,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 123,
+      "question_id": 51,
+      "body": "Bücher",
+      "image_path": null,
+      "is_correct": true,
+      "position": 0,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 124,
+      "question_id": 51,
+      "body": "Buchs",
+      "image_path": null,
+      "is_correct": false,
+      "position": 1,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 125,
+      "question_id": 51,
+      "body": "Buche",
+      "image_path": null,
+      "is_correct": false,
+      "position": 2,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 126,
+      "question_id": 51,
+      "body": "Büchen",
+      "image_path": null,
+      "is_correct": false,
+      "position": 3,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 7,
+     "name": "Ko'plik"
+    }
+   },
+   {
+    "id": 52,
+    "organization_id": 1,
+    "subject_id": 7,
+    "topic_id": 5,
+    "type": "single",
+    "body": "Wir ___ Studenten.",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 1,
+    "explanation": "wir bilan sein fe'li sind shaklida.",
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T15:03:47.000000Z",
+    "updated_at": "2026-10-19T15:03:47.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": 257,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 7,
+     "question_id": 52,
+     "position": 7,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 127,
+      "question_id": 52,
+      "body": "sind",
+      "image_path": null,
+      "is_correct": true,
+      "position": 0,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 128,
+      "question_id": 52,
+      "body": "seid",
+      "image_path": null,
+      "is_correct": false,
+      "position": 1,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 129,
+      "question_id": 52,
+      "body": "ist",
+      "image_path": null,
+      "is_correct": false,
+      "position": 2,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 130,
+      "question_id": 52,
+      "body": "bin",
+      "image_path": null,
+      "is_correct": false,
+      "position": 3,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 5,
+     "name": "Fe'l tuslanishi"
+    }
+   },
+   {
+    "id": 53,
+    "organization_id": 1,
+    "subject_id": 7,
+    "topic_id": 5,
+    "type": "single",
+    "body": "___ du heute Zeit?",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 1,
+    "explanation": "du bilan haben fe'li hast bo'ladi.",
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T15:03:47.000000Z",
+    "updated_at": "2026-10-19T15:03:47.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": 258,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 7,
+     "question_id": 53,
+     "position": 8,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 131,
+      "question_id": 53,
+      "body": "Hat",
+      "image_path": null,
+      "is_correct": false,
+      "position": 0,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 132,
+      "question_id": 53,
+      "body": "Habt",
+      "image_path": null,
+      "is_correct": false,
+      "position": 1,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 133,
+      "question_id": 53,
+      "body": "Habe",
+      "image_path": null,
+      "is_correct": false,
+      "position": 2,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 134,
+      "question_id": 53,
+      "body": "Hast",
+      "image_path": null,
+      "is_correct": true,
+      "position": 3,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 5,
+     "name": "Fe'l tuslanishi"
+    }
+   },
+   {
+    "id": 54,
+    "organization_id": 1,
+    "subject_id": 7,
+    "topic_id": 8,
+    "type": "single",
+    "body": "Das ist ___ Mutter. (ich)",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 2,
+    "explanation": "Mutter ayol rodida, shuning uchun meine.",
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T15:03:47.000000Z",
+    "updated_at": "2026-10-19T15:03:47.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": 259,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 7,
+     "question_id": 54,
+     "position": 9,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 135,
+      "question_id": 54,
+      "body": "mein",
+      "image_path": null,
+      "is_correct": false,
+      "position": 0,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 136,
+      "question_id": 54,
+      "body": "meine",
+      "image_path": null,
+      "is_correct": true,
+      "position": 1,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 137,
+      "question_id": 54,
+      "body": "meinen",
+      "image_path": null,
+      "is_correct": false,
+      "position": 2,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 138,
+      "question_id": 54,
+      "body": "meiner",
+      "image_path": null,
+      "is_correct": false,
+      "position": 3,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 8,
+     "name": "Egalik olmoshlari"
+    }
+   },
+   {
+    "id": 55,
+    "organization_id": 1,
+    "subject_id": 7,
+    "topic_id": 9,
+    "type": "single",
+    "body": "Ich habe ___ Auto.",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 2,
+    "explanation": "Otni inkor qilishda kein ishlatiladi; Auto o'rta rodda — kein.",
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T15:03:47.000000Z",
+    "updated_at": "2026-10-19T15:03:47.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": 260,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 7,
+     "question_id": 55,
+     "position": 10,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 139,
+      "question_id": 55,
+      "body": "kein",
+      "image_path": null,
+      "is_correct": true,
+      "position": 0,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 140,
+      "question_id": 55,
+      "body": "nicht",
+      "image_path": null,
+      "is_correct": false,
+      "position": 1,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 141,
+      "question_id": 55,
+      "body": "keine",
+      "image_path": null,
+      "is_correct": false,
+      "position": 2,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 142,
+      "question_id": 55,
+      "body": "nein",
+      "image_path": null,
+      "is_correct": false,
+      "position": 3,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 9,
+     "name": "Inkor"
+    }
+   },
+   {
+    "id": 56,
+    "organization_id": 1,
+    "subject_id": 7,
+    "topic_id": 9,
+    "type": "single",
+    "body": "Ich wohne ___ in Berlin.",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 2,
+    "explanation": "Fe'l yoki holatni inkor qilishda nicht ishlatiladi.",
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T15:03:47.000000Z",
+    "updated_at": "2026-10-19T15:03:47.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": 261,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 7,
+     "question_id": 56,
+     "position": 11,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 143,
+      "question_id": 56,
+      "body": "kein",
+      "image_path": null,
+      "is_correct": false,
+      "position": 0,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 144,
+      "question_id": 56,
+      "body": "keine",
+      "image_path": null,
+      "is_correct": false,
+      "position": 1,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 145,
+      "question_id": 56,
+      "body": "nein",
+      "image_path": null,
+      "is_correct": false,
+      "position": 2,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 146,
+      "question_id": 56,
+      "body": "nicht",
+      "image_path": null,
+      "is_correct": true,
+      "position": 3,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 9,
+     "name": "Inkor"
+    }
+   },
+   {
+    "id": 57,
+    "organization_id": 1,
+    "subject_id": 7,
+    "topic_id": 10,
+    "type": "single",
+    "body": "___ wohnst du? — In Taschkent.",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 1,
+    "explanation": "Joyni so'rash uchun wo (qayerda) ishlatiladi.",
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T15:03:47.000000Z",
+    "updated_at": "2026-10-19T15:03:47.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": 262,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 7,
+     "question_id": 57,
+     "position": 12,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 147,
+      "question_id": 57,
+      "body": "Wo",
+      "image_path": null,
+      "is_correct": true,
+      "position": 0,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 148,
+      "question_id": 57,
+      "body": "Wer",
+      "image_path": null,
+      "is_correct": false,
+      "position": 1,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 149,
+      "question_id": 57,
+      "body": "Was",
+      "image_path": null,
+      "is_correct": false,
+      "position": 2,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 150,
+      "question_id": 57,
+      "body": "Wann",
+      "image_path": null,
+      "is_correct": false,
+      "position": 3,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 10,
+     "name": "So'roq so'zlari"
+    }
+   },
+   {
+    "id": 58,
+    "organization_id": 1,
+    "subject_id": 7,
+    "topic_id": 10,
+    "type": "single",
+    "body": "___ kostet das? — Fünf Euro.",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 1,
+    "explanation": "Narx so'ralganda wie viel (qancha) ishlatiladi.",
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T15:03:47.000000Z",
+    "updated_at": "2026-10-19T15:03:47.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": 263,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 7,
+     "question_id": 58,
+     "position": 13,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 151,
+      "question_id": 58,
+      "body": "Wo",
+      "image_path": null,
+      "is_correct": false,
+      "position": 0,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 152,
+      "question_id": 58,
+      "body": "Wie viel",
+      "image_path": null,
+      "is_correct": true,
+      "position": 1,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 153,
+      "question_id": 58,
+      "body": "Wer",
+      "image_path": null,
+      "is_correct": false,
+      "position": 2,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 154,
+      "question_id": 58,
+      "body": "Woher",
+      "image_path": null,
+      "is_correct": false,
+      "position": 3,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 10,
+     "name": "So'roq so'zlari"
+    }
+   },
+   {
+    "id": 59,
+    "organization_id": 1,
+    "subject_id": 7,
+    "topic_id": 11,
+    "type": "single",
+    "body": "Es ist 7:30 Uhr. Man sagt: Es ist ___.",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 2,
+    "explanation": "Nemischa 7:30 — 'halb acht' (sakkizga yarim).",
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T15:03:47.000000Z",
+    "updated_at": "2026-10-19T15:03:47.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": 264,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 7,
+     "question_id": 59,
+     "position": 14,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 155,
+      "question_id": 59,
+      "body": "halb acht",
+      "image_path": null,
+      "is_correct": true,
+      "position": 0,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 156,
+      "question_id": 59,
+      "body": "halb sieben",
+      "image_path": null,
+      "is_correct": false,
+      "position": 1,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 157,
+      "question_id": 59,
+      "body": "Viertel nach sieben",
+      "image_path": null,
+      "is_correct": false,
+      "position": 2,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 158,
+      "question_id": 59,
+      "body": "sieben vor halb",
+      "image_path": null,
+      "is_correct": false,
+      "position": 3,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 11,
+     "name": "Vaqt"
+    }
+   },
+   {
+    "id": 60,
+    "organization_id": 1,
+    "subject_id": 7,
+    "topic_id": 12,
+    "type": "single",
+    "body": "23 = ?",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 1,
+    "explanation": "Nemis tilida birlik oldin aytiladi: drei-und-zwanzig.",
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T15:03:47.000000Z",
+    "updated_at": "2026-10-19T15:03:47.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": 265,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 7,
+     "question_id": 60,
+     "position": 15,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 159,
+      "question_id": 60,
+      "body": "zweiunddreißig",
+      "image_path": null,
+      "is_correct": false,
+      "position": 0,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 160,
+      "question_id": 60,
+      "body": "dreizwanzig",
+      "image_path": null,
+      "is_correct": false,
+      "position": 1,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 161,
+      "question_id": 60,
+      "body": "dreiundzwanzig",
+      "image_path": null,
+      "is_correct": true,
+      "position": 2,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 162,
+      "question_id": 60,
+      "body": "zwanzigdrei",
+      "image_path": null,
+      "is_correct": false,
+      "position": 3,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 12,
+     "name": "Sonlar"
+    }
+   },
+   {
+    "id": 61,
+    "organization_id": 1,
+    "subject_id": 7,
+    "topic_id": 13,
+    "type": "single",
+    "body": "Ich arbeite ___ Montag.",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 2,
+    "explanation": "Hafta kunlari bilan am ishlatiladi.",
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T15:03:47.000000Z",
+    "updated_at": "2026-10-19T15:03:47.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": 266,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 7,
+     "question_id": 61,
+     "position": 16,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 163,
+      "question_id": 61,
+      "body": "im",
+      "image_path": null,
+      "is_correct": false,
+      "position": 0,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 164,
+      "question_id": 61,
+      "body": "am",
+      "image_path": null,
+      "is_correct": true,
+      "position": 1,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 165,
+      "question_id": 61,
+      "body": "um",
+      "image_path": null,
+      "is_correct": false,
+      "position": 2,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 166,
+      "question_id": 61,
+      "body": "in",
+      "image_path": null,
+      "is_correct": false,
+      "position": 3,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 13,
+     "name": "Predloglar"
+    }
+   },
+   {
+    "id": 62,
+    "organization_id": 1,
+    "subject_id": 7,
+    "topic_id": 13,
+    "type": "single",
+    "body": "Der Kurs beginnt ___ 9 Uhr.",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 2,
+    "explanation": "Aniq soat bilan um ishlatiladi.",
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T15:03:47.000000Z",
+    "updated_at": "2026-10-19T15:03:47.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": 267,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 7,
+     "question_id": 62,
+     "position": 17,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 167,
+      "question_id": 62,
+      "body": "am",
+      "image_path": null,
+      "is_correct": false,
+      "position": 0,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 168,
+      "question_id": 62,
+      "body": "im",
+      "image_path": null,
+      "is_correct": false,
+      "position": 1,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 169,
+      "question_id": 62,
+      "body": "an",
+      "image_path": null,
+      "is_correct": false,
+      "position": 2,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 170,
+      "question_id": 62,
+      "body": "um",
+      "image_path": null,
+      "is_correct": true,
+      "position": 3,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 13,
+     "name": "Predloglar"
+    }
+   },
+   {
+    "id": 63,
+    "organization_id": 1,
+    "subject_id": 7,
+    "topic_id": 14,
+    "type": "single",
+    "body": "Welcher Satz ist richtig?",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 2,
+    "explanation": "Ajraladigan fe'l old qo'shimchasi gap oxiriga o'tadi.",
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T15:03:47.000000Z",
+    "updated_at": "2026-10-19T15:03:47.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": 268,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 7,
+     "question_id": 63,
+     "position": 18,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 171,
+      "question_id": 63,
+      "body": "Ich aufstehe um 6 Uhr.",
+      "image_path": null,
+      "is_correct": false,
+      "position": 0,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 172,
+      "question_id": 63,
+      "body": "Ich um 6 Uhr aufstehe.",
+      "image_path": null,
+      "is_correct": false,
+      "position": 1,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 173,
+      "question_id": 63,
+      "body": "Ich stehe um 6 Uhr auf.",
+      "image_path": null,
+      "is_correct": true,
+      "position": 2,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 174,
+      "question_id": 63,
+      "body": "Ich stehe um 6 Uhr aufstehen.",
+      "image_path": null,
+      "is_correct": false,
+      "position": 3,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 14,
+     "name": "Ajraladigan fe'llar"
+    }
+   },
+   {
+    "id": 64,
+    "organization_id": 1,
+    "subject_id": 7,
+    "topic_id": 15,
+    "type": "single",
+    "body": "Morgen ___ ich nach Samarkand.",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 2,
+    "explanation": "Fe'l 2-o'rinda turadi va ich bilan fahre shaklida bo'ladi.",
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T15:03:47.000000Z",
+    "updated_at": "2026-10-19T15:03:47.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": 269,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 7,
+     "question_id": 64,
+     "position": 19,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 175,
+      "question_id": 64,
+      "body": "fahren",
+      "image_path": null,
+      "is_correct": false,
+      "position": 0,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 176,
+      "question_id": 64,
+      "body": "fährt",
+      "image_path": null,
+      "is_correct": false,
+      "position": 1,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 177,
+      "question_id": 64,
+      "body": "fahre",
+      "image_path": null,
+      "is_correct": true,
+      "position": 2,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 178,
+      "question_id": 64,
+      "body": "fährst",
+      "image_path": null,
+      "is_correct": false,
+      "position": 3,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 15,
+     "name": "So'z tartibi"
+    }
+   },
+   {
+    "id": 65,
+    "organization_id": 1,
+    "subject_id": 7,
+    "topic_id": 5,
+    "type": "single",
+    "body": "Er ___ gern Bücher.",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 2,
+    "explanation": "lesen fe'li er bilan o'zak o'zgarishi bilan liest bo'ladi.",
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T15:03:47.000000Z",
+    "updated_at": "2026-10-19T15:03:47.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": 270,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 7,
+     "question_id": 65,
+     "position": 20,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 179,
+      "question_id": 65,
+      "body": "lest",
+      "image_path": null,
+      "is_correct": false,
+      "position": 0,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 180,
+      "question_id": 65,
+      "body": "lesen",
+      "image_path": null,
+      "is_correct": false,
+      "position": 1,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 181,
+      "question_id": 65,
+      "body": "liese",
+      "image_path": null,
+      "is_correct": false,
+      "position": 2,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 182,
+      "question_id": 65,
+      "body": "liest",
+      "image_path": null,
+      "is_correct": true,
+      "position": 3,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 5,
+     "name": "Fe'l tuslanishi"
+    }
+   },
+   {
+    "id": 66,
+    "organization_id": 1,
+    "subject_id": 7,
+    "topic_id": 16,
+    "type": "single",
+    "body": "Ich ___ einen Kaffee, bitte.",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 1,
+    "explanation": "ich bilan möchte shakli ishlatiladi.",
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T15:03:47.000000Z",
+    "updated_at": "2026-10-19T15:03:47.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": 271,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 7,
+     "question_id": 66,
+     "position": 21,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 183,
+      "question_id": 66,
+      "body": "möchte",
+      "image_path": null,
+      "is_correct": true,
+      "position": 0,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 184,
+      "question_id": 66,
+      "body": "möchtest",
+      "image_path": null,
+      "is_correct": false,
+      "position": 1,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 185,
+      "question_id": 66,
+      "body": "möchten",
+      "image_path": null,
+      "is_correct": false,
+      "position": 2,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 186,
+      "question_id": 66,
+      "body": "möchtet",
+      "image_path": null,
+      "is_correct": false,
+      "position": 3,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 16,
+     "name": "Modal fe'llar"
+    }
+   },
+   {
+    "id": 67,
+    "organization_id": 1,
+    "subject_id": 7,
+    "topic_id": 17,
+    "type": "single",
+    "body": "Das Haus ist nicht alt, es ist ___.",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 1,
+    "explanation": "Narsalar uchun alt ning zidi neu (yangi).",
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T15:03:47.000000Z",
+    "updated_at": "2026-10-19T15:03:47.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": 272,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 7,
+     "question_id": 67,
+     "position": 22,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 187,
+      "question_id": 67,
+      "body": "jung",
+      "image_path": null,
+      "is_correct": false,
+      "position": 0,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 188,
+      "question_id": 67,
+      "body": "neu",
+      "image_path": null,
+      "is_correct": true,
+      "position": 1,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 189,
+      "question_id": 67,
+      "body": "spät",
+      "image_path": null,
+      "is_correct": false,
+      "position": 2,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 190,
+      "question_id": 67,
+      "body": "langsam",
+      "image_path": null,
+      "is_correct": false,
+      "position": 3,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 17,
+     "name": "Lug'at"
+    }
+   },
+   {
+    "id": 68,
+    "organization_id": 1,
+    "subject_id": 7,
+    "topic_id": 17,
+    "type": "single",
+    "body": "Die Mutter von meiner Mutter ist meine ___.",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 1,
+    "explanation": "Onaning onasi — buvi (Großmutter).",
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T15:03:47.000000Z",
+    "updated_at": "2026-10-19T15:03:47.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": 273,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 7,
+     "question_id": 68,
+     "position": 23,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 191,
+      "question_id": 68,
+      "body": "Tante",
+      "image_path": null,
+      "is_correct": false,
+      "position": 0,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 192,
+      "question_id": 68,
+      "body": "Schwester",
+      "image_path": null,
+      "is_correct": false,
+      "position": 1,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 193,
+      "question_id": 68,
+      "body": "Tochter",
+      "image_path": null,
+      "is_correct": false,
+      "position": 2,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 194,
+      "question_id": 68,
+      "body": "Großmutter",
+      "image_path": null,
+      "is_correct": true,
+      "position": 3,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 17,
+     "name": "Lug'at"
+    }
+   },
+   {
+    "id": 69,
+    "organization_id": 1,
+    "subject_id": 7,
+    "topic_id": 18,
+    "type": "single",
+    "body": "— Guten Tag! Wie geht es Ihnen?\n— ___",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 1,
+    "explanation": "Ahvol so'ralganda 'Danke, gut' deb javob beriladi.",
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T15:03:47.000000Z",
+    "updated_at": "2026-10-19T15:03:47.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": 274,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 7,
+     "question_id": 69,
+     "position": 24,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 195,
+      "question_id": 69,
+      "body": "Ich heiße Anna.",
+      "image_path": null,
+      "is_correct": false,
+      "position": 0,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 196,
+      "question_id": 69,
+      "body": "Ich komme aus Bonn.",
+      "image_path": null,
+      "is_correct": false,
+      "position": 1,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 197,
+      "question_id": 69,
+      "body": "Danke, gut. Und Ihnen?",
+      "image_path": null,
+      "is_correct": true,
+      "position": 2,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 198,
+      "question_id": 69,
+      "body": "Auf Wiedersehen!",
+      "image_path": null,
+      "is_correct": false,
+      "position": 3,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 18,
+     "name": "Muloqot"
+    }
+   },
+   {
+    "id": 70,
+    "organization_id": 1,
+    "subject_id": 7,
+    "topic_id": 19,
+    "type": "single",
+    "body": "Wo ist Peter? Ich sehe ___ nicht.",
+    "accepted_answers": null,
+    "image_path": null,
+    "difficulty": 2,
+    "explanation": "sehen Akkusativ talab qiladi: er → ihn.",
+    "is_shared": true,
+    "created_by": 1,
+    "created_at": "2026-10-19T15:03:47.000000Z",
+    "updated_at": "2026-10-19T15:03:47.000000Z",
+    "deleted_at": null,
+    "exam_id": null,
+    "bank_question_id": 275,
+    "image_url": null,
+    "pivot": {
+     "exam_id": 7,
+     "question_id": 70,
+     "position": 25,
+     "block": 1,
+     "points_x100": 100
+    },
+    "options": [
+     {
+      "id": 199,
+      "question_id": 70,
+      "body": "er",
+      "image_path": null,
+      "is_correct": false,
+      "position": 0,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 200,
+      "question_id": 70,
+      "body": "ihm",
+      "image_path": null,
+      "is_correct": false,
+      "position": 1,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 201,
+      "question_id": 70,
+      "body": "sein",
+      "image_path": null,
+      "is_correct": false,
+      "position": 2,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     },
+     {
+      "id": 202,
+      "question_id": 70,
+      "body": "ihn",
+      "image_path": null,
+      "is_correct": true,
+      "position": 3,
+      "created_at": "2026-10-19T15:03:47.000000Z",
+      "updated_at": "2026-10-19T15:03:47.000000Z",
+      "image_url": null
+     }
+    ],
+    "topic": {
+     "id": 19,
+     "name": "Kishilik olmoshlari"
+    }
+   }
+  ]
+ }
+}

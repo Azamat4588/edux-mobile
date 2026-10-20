@@ -1,0 +1,26 @@
+{
+ "method": "GET",
+ "path": "me",
+ "query": {},
+ "status": 200,
+ "body": {
+  "user": {
+   "id": 11,
+   "name": "Ergasheva Mohinur",
+   "phone": "+998900000005",
+   "is_platform_admin": false,
+   "has_password": true,
+   "telegram_linked": false,
+   "appearance": {}
+  },
+  "memberships": [
+   {
+    "organization_id": 1,
+    "organization": "Ilm yo'li o'quv markazi",
+    "role": "student"
+   }
+  ],
+  "mode": "platform",
+  "new_requests": 0
+ }
+}

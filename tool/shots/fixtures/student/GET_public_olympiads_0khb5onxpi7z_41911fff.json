@@ -1,0 +1,42 @@
+{
+ "method": "GET",
+ "path": "public/olympiads/0khb5onxpi7z",
+ "query": {},
+ "status": 200,
+ "body": {
+  "olympiad": {
+   "title": "Ingliz tili olimpiadasi «Young Speakers»",
+   "subject": "Ingliz tili",
+   "grades": "5–8",
+   "description": "Boshqa maktab o'quvchilari uchun bepul olimpiada: o'qish va grammatika. Barcha ishtirokchilarga sertifikat, g'oliblarga — sovg'alar.",
+   "rules": null,
+   "audience": "external",
+   "price": 0,
+   "registration_closes_at": "2026-10-21T20:00:00.000000Z",
+   "starts_at": "2026-10-22T10:00:00.000000Z",
+   "ends_at": "2026-10-22T11:00:00.000000Z",
+   "max_participants": null,
+   "winners_count": 3,
+   "certificates": "all",
+   "results_published_at": null,
+   "stage": "registration",
+   "registration_open": true,
+   "duration_minutes": 45,
+   "questions": 30,
+   "participants": 19,
+   "telegram_channel": null
+  },
+  "organization": {
+   "name": "Ilm yo'li o'quv markazi",
+   "logo_url": null
+  },
+  "viewer": {
+   "internal": true,
+   "logged_in": true
+  },
+  "announcements": [],
+  "leaderboard": [],
+  "me": null,
+  "providers": null
+ }
+}

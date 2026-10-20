@@ -1,0 +1,21 @@
+{
+ "method": "GET",
+ "path": "my/certificates",
+ "query": {},
+ "status": 200,
+ "body": [
+  {
+   "id": 1,
+   "number": "EDX-2026-0001",
+   "code": "4PU2MZEMXZ",
+   "title": "IELTS Mock #2 — Oktyabr",
+   "subtitle": "IELTS Academic mock imtihoni: Band 7.0 (C1)",
+   "source": "exam",
+   "student": null,
+   "issued_at": "2026-10-19T14:24:05.000000Z",
+   "revoked_at": null,
+   "level": "C1",
+   "overall": "Band 7.0"
+  }
+ ]
+}
