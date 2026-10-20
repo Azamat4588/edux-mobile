@@ -25,24 +25,36 @@ class StudentsPage extends StatefulWidget {
 
 class _StudentsPageState extends State<StudentsPage> {
   final TextEditingController _search = TextEditingController();
+  final ScrollController _scroll = ScrollController();
   Timer? _debounce;
   List<Map<String, dynamic>> _items = <Map<String, dynamic>>[];
   int _total = 0;
+  int _page = 1;
+  int _lastPage = 1;
   bool _loading = true;
+  bool _loadingMore = false;
   String? _error;
+
+  /// So'rovlar ketma-ketligi: eski qidiruv javobi yangisining ustiga yozilmasin.
+  int _request = 0;
 
   /// Internetsiz nusxa ko'rsatilmoqda (faqat qidiruvsiz ro'yxat saqlanadi).
   DateTime? _offlineAt;
 
+  // Kesh kaliti versiyali: 1.29 da ro'yxat manbai (crm/students yoki students) rolga qarab almashdi.
+  static const String _cacheKey = 'students_v2';
+
   @override
   void initState() {
     super.initState();
+    _scroll.addListener(_onScroll);
     _load();
   }
 
   @override
   void dispose() {
     _debounce?.cancel();
+    _scroll.dispose();
     _search.dispose();
     super.dispose();
   }
@@ -52,32 +64,51 @@ class _StudentsPageState extends State<StudentsPage> {
     _debounce = Timer(const Duration(milliseconds: 350), _load);
   }
 
+  /// Ro'yxat oxiriga yaqinlashganda keyingi sahifa (crm/students — 50 ta, students — 100 ta).
+  void _onScroll() {
+    if (!_scroll.hasClients || _loading || _loadingMore || _page >= _lastPage || _offlineAt != null) return;
+    if (_scroll.position.extentAfter < 400) _loadMore();
+  }
+
+  /// Yagona «O'quvchilar» (1.29): rahbar va kassir CRM bilan — crm/students; o'qituvchi yoki CRM siz — students
+  /// (o'qituvchi faqat o'z guruhlari: mine=1). crm/students o'qituvchiga yopiq (403).
+  Future<dynamic> _fetch(Session session, String query, int page) {
+    if (session.usesCrmStudents) {
+      return session.api.get('crm/students', query: <String, Object?>{'search': query, 'page': page});
+    }
+    return session.api.get('students', query: <String, Object?>{'search': query, 'page': page, 'mine': session.isTeacher ? 1 : null});
+  }
+
   Future<void> _load() async {
     final session = AppScope.read(context);
+    final request = ++_request;
     setState(() {
       _loading = true;
       _error = null;
     });
     final query = _search.text.trim();
     try {
-      final crm = session.hasModule('crm');
-      final data = await session.api.get(crm ? 'crm/students' : 'students', query: <String, Object?>{'search': query});
-      if (!mounted) return;
+      final data = await _fetch(session, query, 1);
+      if (!mounted || request != _request) return;
       setState(() {
         _items = asList(data);
         _total = data is Map ? asInt(data['total'], _items.length) : _items.length;
+        _page = data is Map ? asInt(data['current_page'], 1) : 1;
+        _lastPage = data is Map ? asInt(data['last_page'], 1) : 1;
         _loading = false;
         _offlineAt = null;
       });
-      if (query.isEmpty) unawaited(OfflineCache.write('students', <String, Object?>{'data': _items, 'total': _total}));
+      if (query.isEmpty) unawaited(OfflineCache.write(_cacheKey, <String, Object?>{'data': _items, 'total': _total}));
     } on ApiException catch (error) {
-      if (!mounted) return;
-      final cached = query.isEmpty && error.isNetwork ? await OfflineCache.read('students') : null;
+      if (!mounted || request != _request) return;
+      final cached = query.isEmpty && error.isNetwork ? await OfflineCache.read(_cacheKey) : null;
       if (!mounted) return;
       if (cached != null && cached.data is Map) {
         setState(() {
           _items = asList(cached.data);
           _total = asInt(asMap(cached.data)['total'], _items.length);
+          _page = 1;
+          _lastPage = 1;
           _loading = false;
           _error = null;
           _offlineAt = cached.savedAt;
@@ -88,6 +119,25 @@ class _StudentsPageState extends State<StudentsPage> {
         _error = error.message;
         _loading = false;
       });
+    }
+  }
+
+  Future<void> _loadMore() async {
+    final session = AppScope.read(context);
+    final request = _request;
+    setState(() => _loadingMore = true);
+    try {
+      final data = await _fetch(session, _search.text.trim(), _page + 1);
+      if (!mounted || request != _request) return;
+      setState(() {
+        _items = <Map<String, dynamic>>[..._items, ...asList(data)];
+        _page = data is Map ? asInt(data['current_page'], _page + 1) : _page + 1;
+        _lastPage = data is Map ? asInt(data['last_page'], _page) : _page;
+      });
+    } on ApiException catch (error) {
+      if (mounted) showMessage(context, error.message, error: true);
+    } finally {
+      if (mounted) setState(() => _loadingMore = false);
     }
   }
 
@@ -120,7 +170,8 @@ class _StudentsPageState extends State<StudentsPage> {
               textInputAction: TextInputAction.search,
               decoration: InputDecoration(
                 prefixIcon: const Icon(Icons.search),
-                hintText: tr('Ism, kod yoki telefon'),
+                // Umumiy ro'yxat (students) telefon bo'yicha qidirmaydi.
+                hintText: session.usesCrmStudents ? tr('Ism, kod yoki telefon') : tr('Ism yoki kod'),
                 isDense: true,
                 fillColor: AppColors.surface,
                 suffixIcon: _search.text.isEmpty
@@ -145,15 +196,28 @@ class _StudentsPageState extends State<StudentsPage> {
                   child: _items.isEmpty
                       ? ListView(children: <Widget>[EmptyState(text: tr("Hech narsa topilmadi. Qidiruv so'zini yoki filtrni o'zgartirib ko'ring."))])
                       : ListView.separated(
+                          controller: _scroll,
+                          physics: const AlwaysScrollableScrollPhysics(),
                           padding: const EdgeInsets.symmetric(vertical: 8),
                           itemCount: _items.length + (_total > _items.length ? 1 : 0),
                           separatorBuilder: (_, __) => const Divider(indent: 72),
                           itemBuilder: (context, index) {
                             if (index >= _items.length) {
+                              // Keyingi sahifa: aylantirilganda o'zi yuklanadi, internetsiz nusxada — qidiruv maslahati.
+                              final more = _page < _lastPage && _offlineAt == null;
                               return Padding(
                                 padding: const EdgeInsets.all(16),
-                                child: Text(tr('Yana {0} ta — qidiruvni aniqlashtiring', <Object?>[_total - _items.length]),
-                                    textAlign: TextAlign.center, style: TextStyle(color: AppColors.muted)),
+                                child: more
+                                    ? Center(
+                                        child: _loadingMore
+                                            ? const SizedBox(width: 22, height: 22, child: CircularProgressIndicator(strokeWidth: 2.4))
+                                            : TextButton(
+                                                onPressed: _loadMore,
+                                                child: Text(tr('Yana {0} ta', <Object?>[_total - _items.length])),
+                                              ),
+                                      )
+                                    : Text(tr('Yana {0} ta — qidiruvni aniqlashtiring', <Object?>[_total - _items.length]),
+                                        textAlign: TextAlign.center, style: TextStyle(color: AppColors.muted)),
                               );
                             }
                             return _StudentTile(student: _items[index], onTap: () => _open(_items[index]));
@@ -233,12 +297,26 @@ class StudentCardPage extends StatefulWidget {
 class _StudentCardPageState extends State<StudentCardPage> {
   final GlobalKey<AsyncViewState<Map<String, dynamic>>> _view = GlobalKey<AsyncViewState<Map<String, dynamic>>>();
 
+  /// CRM kartasi (balans, to'lovlar, davomat) — rahbar va kassir; o'qituvchi yoki CRM siz — umumiy 360° (insights).
+  /// Kassirga insights yopiq, o'qituvchiga crm/students yopiq (server rollari).
   Future<Map<String, dynamic>> _load(Session session) async {
-    if (session.hasModule('crm')) {
+    if (session.usesCrmStudents) {
       return asMap(await session.api.get('crm/students/${widget.studentId}'));
     }
     final insights = asMap(await session.api.get('students/${widget.studentId}/insights'));
-    return <String, dynamic>{'student': insights['student'], 'insights': insights};
+    final student = asMap(insights['student']);
+    final crm = asMap(insights['crm']);
+    // insights: student.groups — nomlar ro'yxati; CRM bo'lsa guruh holati bilan.
+    final groups = crm['groups'] is List
+        ? asList(crm['groups'])
+        : ((student['groups'] as List?) ?? const <dynamic>[]).map((name) => <String, dynamic>{'name': '$name'}).toList();
+    return <String, dynamic>{
+      'student': student,
+      'groups': groups,
+      'attempts': asList(asMap(insights['testing'])['attempts']),
+      'attendance_30d': crm['attendance_30d'],
+      'insights': insights,
+    };
   }
 
   @override
@@ -246,7 +324,7 @@ class _StudentCardPageState extends State<StudentCardPage> {
     final session = AppScope.of(context);
     return Scaffold(
       appBar: AppBar(title: Text(widget.name)),
-      floatingActionButton: session.canTakePayments
+      floatingActionButton: session.canTakePayments && !session.readOnly
           ? FloatingActionButton.extended(
               onPressed: () async {
                 final paid = await showPaymentSheet(context, studentId: widget.studentId, studentName: widget.name);
@@ -272,8 +350,10 @@ class _Card extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final session = AppScope.of(context);
     final student = asMap(data['student']);
     final groups = asList(data['groups'], 'groups');
+    final attendance30 = asMap(data['attendance_30d']);
     final attendance = asMap(data['attendance']);
     final counts = asMap(attendance['counts']);
     final attempts = data['attempts'] != null ? asList(data['attempts'], 'attempts') : asList(asMap(asMap(data['insights'])['testing'])['attempts'], 'attempts');
@@ -321,8 +401,21 @@ class _Card extends StatelessWidget {
             ),
           ]),
         ],
+        if (!hasBalance && attendance30.values.any((value) => asInt(value) > 0)) ...<Widget>[
+          SectionTitle(tr('Davomat (30 kun)')),
+          AppCard(
+            child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: <Widget>[
+              for (final status in <String>['present', 'late', 'absent', 'excused'])
+                Column(children: <Widget>[
+                  Text('${asInt(attendance30[status])}',
+                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800, color: attendanceColors[status] ?? AppColors.muted)),
+                  Text(tr(attendanceLabels[status] ?? status), style: TextStyle(color: AppColors.muted, fontSize: 12)),
+                ]),
+            ]),
+          ),
+        ],
         if (groups.isNotEmpty) ...<Widget>[
-          SectionTitle(tr('Guruhlar')),
+          SectionTitle(session.term('groups', 'Guruhlar')),
           AppCard(
             padding: EdgeInsets.zero,
             child: Column(children: <Widget>[
@@ -330,7 +423,7 @@ class _Card extends StatelessWidget {
                 if (i > 0) const Divider(),
                 ListTile(
                   title: Text(asText(groups[i]['name']), style: const TextStyle(fontWeight: FontWeight.w600)),
-                  subtitle: Text(asText(groups[i]['teacher'])),
+                  subtitle: groups[i]['teacher'] != null ? Text(asText(groups[i]['teacher'])) : null,
                   trailing: groups[i]['monthly_fee'] != null ? Text(money(asInt(groups[i]['monthly_fee']))) : null,
                 ),
               ],

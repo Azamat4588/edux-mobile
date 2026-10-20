@@ -17,6 +17,13 @@ import '../notifications/notifications_page.dart';
 import '../student/diary_page.dart';
 import 'guardian_repository.dart';
 
+/// Push xabari bosilganda (ota-ona): qaysi farzand (`student_id`) va yorliq (xabar turi) ochilsin — shell yozadi.
+class GuardianFocus {
+  GuardianFocus._();
+
+  static final ValueNotifier<Map<String, dynamic>?> request = ValueNotifier<Map<String, dynamic>?>(null);
+}
+
 class GuardianHomePage extends StatefulWidget {
   const GuardianHomePage({super.key});
 
@@ -32,10 +39,40 @@ class _GuardianHomePageState extends State<GuardianHomePage> {
 
   static const String _prefsKey = 'guardian.child';
 
+  /// Push orqali tanlangan yorliq (kalit) va DefaultTabController ni qayta qurish uchun hisoblagich.
+  String? _focusTab;
+  int _focusSeq = 0;
+
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => _load());
+    GuardianFocus.request.addListener(_onFocus);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _load();
+      _onFocus();
+    });
+  }
+
+  @override
+  void dispose() {
+    GuardianFocus.request.removeListener(_onFocus);
+    super.dispose();
+  }
+
+  /// Xabar turi → yorliq: davomat va to'lov — «To'lov va davomat», test — «Testlar», kundalik — «Kundalik».
+  void _onFocus() {
+    final data = GuardianFocus.request.value;
+    if (data == null || !mounted) return;
+    GuardianFocus.request.value = null;
+    final student = asInt(data['student_id']);
+    final type = asText(data['type']);
+    const tabs = <String, String>{'payment': 'payments', 'attendance': 'payments', 'attempt': 'tests', 'diary': 'diary'};
+    setState(() {
+      if (student > 0 && (_children == null || _children!.any((child) => child.id == student))) _selected = student;
+      _focusTab = tabs[type] ?? 'overview';
+      _focusSeq++;
+    });
+    if (student > 0 && _children != null && _children!.any((child) => child.id == student)) unawaited(_select(student));
   }
 
   Future<void> _load() async {
@@ -106,21 +143,24 @@ class _GuardianHomePageState extends State<GuardianHomePage> {
       );
     }
     final child = children.firstWhere((item) => item.id == _selected, orElse: () => children.first);
+    // Veb «Farzandim» bilan bir xil yorliqlar (1.29): Umumiy · Kundalik (maktab) · Testlar (test) · To'lov va davomat (CRM).
     final tabs = <_ChildTab>[
-      _ChildTab(tr('Umumiy'), Icons.dashboard_outlined, (_) => _OverviewTab(repository: _repository, child: child)),
+      _ChildTab('overview', tr('Umumiy'), Icons.dashboard_outlined, (_) => _OverviewTab(repository: _repository, child: child)),
       if (session.hasModule('school'))
-        _ChildTab(tr('Kundalik'), Icons.event_note_outlined, (_) => DiaryWeekView(key: ValueKey<int>(child.id), studentId: child.id)),
+        _ChildTab('diary', tr('Kundalik'), Icons.event_note_outlined, (_) => DiaryWeekView(key: ValueKey<int>(child.id), studentId: child.id)),
       if (session.hasModule('testing'))
-        _ChildTab(tr('Testlar'), Icons.quiz_outlined, (_) => _TestsTab(repository: _repository, child: child)),
+        _ChildTab('tests', tr('Testlar'), Icons.quiz_outlined, (_) => _TestsTab(repository: _repository, child: child)),
       if (session.hasModule('crm'))
-        _ChildTab(tr("To'lov"), Icons.account_balance_wallet_outlined, (_) => _PaymentsTab(repository: _repository, child: child)),
+        _ChildTab('payments', tr("To'lov va davomat"), Icons.account_balance_wallet_outlined, (_) => _PaymentsTab(repository: _repository, child: child)),
     ];
+    final focus = tabs.indexWhere((tab) => tab.key == _focusTab);
     return DefaultTabController(
-      key: ValueKey<String>('tabs-${tabs.length}'),
+      key: ValueKey<String>('tabs-${tabs.length}-$_focusSeq'),
       length: tabs.length,
+      initialIndex: focus < 0 ? 0 : focus,
       child: Scaffold(
         appBar: AppBar(
-          title: Text(children.length > 1 ? tr('Farzandlarim') : tr('Farzandim')),
+          title: Text(tr('Farzandim')),
           actions: const <Widget>[NotificationBell()],
           bottom: children.length < 2 && tabs.length < 2
               ? null
@@ -167,8 +207,9 @@ class _GuardianHomePageState extends State<GuardianHomePage> {
 }
 
 class _ChildTab {
-  const _ChildTab(this.label, this.icon, this.builder);
+  const _ChildTab(this.key, this.label, this.icon, this.builder);
 
+  final String key;
   final String label;
   final IconData icon;
   final WidgetBuilder builder;

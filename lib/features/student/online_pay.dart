@@ -98,13 +98,17 @@ class _OrderStatusState extends State<_OrderStatus> with WidgetsBindingObserver 
     super.dispose();
   }
 
+  /// Ilova fonda (to'lov ilovasi yoki brauzerda) — so'ralmaydi; qaytilganda darhol tekshiriladi.
+  bool _foreground = true;
+
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed) _check();
+    _foreground = state == AppLifecycleState.resumed;
+    if (_foreground) _check();
   }
 
   Future<void> _check() async {
-    if (_checking || !mounted) return;
+    if (_checking || !mounted || !_foreground) return;
     setState(() => _checking = true);
     _checks++;
     try {

@@ -207,7 +207,8 @@ class StudentOverviewBody extends StatelessWidget {
             const SizedBox(height: 8),
           ],
         ],
-        if (crm['coins'] != null || crmInsights['coins'] != null) ...<Widget>[
+        // Coin CRM sozlamasida o'chirilgan bo'lsa (context.coins_enabled = false) — ko'rsatilmaydi (veb bilan bir xil).
+        if (AppScope.of(context).coinsEnabled && (crm['coins'] != null || crmInsights['coins'] != null)) ...<Widget>[
           const SizedBox(height: 8),
           AppCard(
             child: Row(children: <Widget>[
@@ -231,11 +232,11 @@ class _QuickActions extends StatelessWidget {
   Widget build(BuildContext context) {
     final session = AppScope.of(context);
     if (session.isGuest) return const SizedBox();
-    final fun = session.hasFeature('fun') && (session.hasModule('testing') || session.hasModule('lms'));
+    final fun = session.hasFeature('fun');
     final actions = <Widget>[
       if (session.hasModule('testing') && session.hasFeature('olympiad'))
         _QuickAction(icon: Icons.emoji_events_rounded, label: tr('Olimpiadalarim'), color: AppColors.sun, page: const OlympiadsPage()),
-      if (session.hasFeature('ai'))
+      if (session.canUseTutor)
         _QuickAction(icon: Icons.auto_awesome_rounded, label: tr('AI ustoz'), color: const Color(0xFF7C3AED), page: const TutorPage()),
       if (fun) _QuickAction(icon: Icons.sports_esports_rounded, label: tr("O'yinlar"), color: AppColors.success, page: const GamesPage()),
     ];

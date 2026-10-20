@@ -40,7 +40,8 @@ class SmsGatewayService extends ChangeNotifier {
   /// Ilova ochilganda: bu telefon avval shlyuz qilib yoqilgan bo'lsa — ishni davom ettiradi.
   Future<void> resume(Session session) async {
     _session = session;
-    if (!supported || !session.isManager || !session.hasModule('crm')) {
+    // SMS qo'shimchasi o'chirilgan yoki obuna «faqat o'qish»da — navbatdan SMS olinmaydi (hisobot 402 bo'lardi).
+    if (!supported || !session.canUseSmsGateway || session.readOnly) {
       _stop();
       return;
     }

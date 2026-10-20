@@ -17,6 +17,42 @@ Actions sozlamalari (Settings → Secrets and variables → Actions):
 
 Play Market uchun `.aab`: Actions → Build → «Run workflow».
 
+## 3.2 da yangi (server 1.29 bilan moslik)
+
+**Menyu va atamalar veb 1.29 bilan bir xil** (`docs/navigation.md`): bo'lim faqat rol, modul (`context.modules`),
+qo'shimcha imkoniyat (`context.features`) va server yo'lining ruxsati bo'lsa ko'rinadi — 403 sahifasi o'rniga band umuman chiqmaydi.
+Nomlar: O'quvchilar (tashkilot `terms` bo'yicha), Davomat, Testlar, Varaqalar, Topshiriqlar, Moliya, Yutuqlarim, Farzandim
+(Umumiy · Kundalik · Testlar · To'lov va davomat), Mock natijalari, Sertifikatlar, Laboratoriya.
+
+| Bo'lim | Kimga | Shart (server bilan bir xil) |
+|---|---|---|
+| O'quvchilar | direktor, administrator, o'qituvchi; kassir — CRM bilan | rahbar/kassir + CRM → `crm/students`; o'qituvchi yoki CRM siz → `students` (o'qituvchi `mine=1`), karta — `students/{id}/insights` |
+| Bosh sahifa ko'rsatkichlari | direktor, administrator, o'qituvchi | `overview`, `crm/timetable?date=` (kassir va marketologda faqat bo'limlar) |
+| Kirish nazorati, Kiosk | rahbar (kiosk), o'qituvchi (skaner) | `access` qo'shimchasi |
+| SMS shlyuz | direktor, administrator (Android) | CRM + `sms` qo'shimchasi; obuna «faqat o'qish»da to'xtaydi |
+| AI ustoz / AI yordamchi | o'quvchi / xodim | `ai` qo'shimchasi va `ai/status` (tashkilot sozlamasida yoqilgan) |
+| Yutuqlarim | o'quvchi | `fun` (XP, nishonlar) yoki coin (CRM, `coins_enabled`) — bitta sahifada |
+| O'yinlar, Laboratoriya | o'quvchi | `fun` |
+| Modullar va obuna | direktor, administrator | ko'p tashkilotli rejim (`context.mode` ≠ `single`) |
+
+**Modullar va obuna** (`GET billing`): holat va sanalar, limitlar (o'quvchi, xodim, filial, AI, SMS — sarf chizig'i),
+modullar holati, qo'shimcha imkoniyatlar (qayerdan ochiq; faol davrda «Hozir qo'shish» → `POST billing/addons`), to'lanmagan
+hisoblar (Click, Payme — tashqi sahifa, ilovaga qaytilganda holat yangilanadi; bank o'tkazmasi rekvizitlari), keyingi davr:
+«Tayyor paket» yoki «Modullarni o'zim tanlayman», qo'shimchalar, to'lov davri (oylik, 3 oylik, 6 oylik, yillik — chegirma bilan)
+→ `POST billing/quote` → `POST billing/invoices`. Obuna «faqat o'qish» bo'lsa, tepadagi sariq yozuv rahbarni shu sahifaga olib boradi;
+platforma to'xtatgan obuna (`subscription.suspended`) uchun alohida matn.
+
+**Push**: avval `data.route` (veb route nomi: my.payments, my.attempt, my.certificates, lms.my.assignments, child,
+child.payments, child.diary, child.tests, public.certificate, crm.leads, crm.tasks; id lar `data.link` dan), eski serverda
+`data.type` (payment, attendance, arrival, attempt, assignment, certificate, lead, task) yoki havola bo'yicha sahifa.
+Ota-onaga `child.*` — «Farzandim»da shu farzand (`student_id`) va tegishli yorliq. Rol uchun yopiq sahifa ochilmaydi
+(masalan, ota-onaga test natijasi — «Farzandim»da shu farzandning «Testlar» yorlig'i). Noma'lum xabar — bosh sahifa.
+
+**Optimallashtirish**: pastki menyu tablari birinchi ochilganda quriladi (ilova ochilganda bir xil so'rovlar parallel ketmaydi);
+«Farzandim» birinchi farzand holatini ikki marta so'ramaydi; o'quvchilar ro'yxati sahifalab (aylantirganda) yuklanadi;
+internetsiz nusxalar versiyali (`OfflineCache.version`, `offline.context.v2`) — eski shakl o'qilmaydi; ilova fonda bo'lganda
+Telegram orqali kirish va onlayn to'lov holati so'ralmaydi.
+
 ## 3.1 da yangi
 
 **Xodimlar (bosh sahifadagi «Bo'limlar» va «Ko'proq» menyusi; modul, imkoniyat va rolga qarab ko'rinadi)**

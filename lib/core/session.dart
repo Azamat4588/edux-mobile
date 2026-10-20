@@ -33,6 +33,9 @@ class Session extends ChangeNotifier implements ApiCredentials {
     api = Api(this);
   }
 
+  /// Telefondagi kontekst nusxasi kaliti: server javobi shakli o'zgarganda (1.29) versiya oshiriladi — eski nusxa o'qilmaydi.
+  static const String _contextKey = 'offline.context.v2';
+
   late final Api api;
 
   static const FlutterSecureStorage _secure = FlutterSecureStorage();
@@ -81,19 +84,58 @@ class Session extends ChangeNotifier implements ApiCredentials {
   bool get isStudent => role == 'student';
   bool get isGuardian => role == 'guardian';
   bool get isManager => role == 'director' || role == 'admin';
-  bool get canScan => <String>['director', 'admin', 'teacher'].contains(role) && hasModule('testing');
+  bool get isTeacher => role == 'teacher';
+
+  /// Direktor, administrator va o'qituvchi (server: overview, students, groups, exams yo'llari shu rollarga ochiq).
+  bool get isAcademicStaff => isManager || isTeacher;
+  bool get canScan => isAcademicStaff && hasModule('testing');
   bool get canTakePayments => <String>['director', 'admin', 'cashier'].contains(role) && hasModule('crm');
-  bool get canMarkAttendance => <String>['director', 'admin', 'teacher'].contains(role) && hasModule('crm');
-  bool get canCheckIn => <String>['director', 'admin', 'teacher'].contains(role);
-  bool get canSeeStudents => <String>['director', 'admin', 'teacher', 'cashier'].contains(role);
+  bool get canMarkAttendance => isAcademicStaff && hasModule('crm');
+
+  /// Kirish nazorati (QR / Face ID): `access` qo'shimchasi (server: feature:access).
+  bool get canCheckIn => isAcademicStaff && hasFeature('access');
+  bool get canUseKiosk => isManager && hasFeature('access');
+
+  /// SMS shlyuz: CRM + `sms` qo'shimchasi (server SMS ni shu qo'shimchasiz yubormaydi), direktor va administrator.
+  bool get canUseSmsGateway => isManager && hasModule('crm') && hasFeature('sms');
+
+  /// O'quvchilar ro'yxati (1.29 yagona sahifa): rahbar va o'qituvchi — umumiy `students`, kassir — faqat CRM bilan.
+  bool get canSeeStudents => isAcademicStaff || (role == 'cashier' && hasModule('crm'));
+
+  /// CRM ro'yxati va kartasi (balans, holatlar) — rahbar va kassirga; o'qituvchi CRM bo'lsa ham umumiy ro'yxatni ko'radi.
+  bool get usesCrmStudents => hasModule('crm') && <String>['director', 'admin', 'cashier'].contains(role);
+
+  /// Bosh sahifa ko'rsatkichlari (GET overview) — direktor, administrator, o'qituvchi.
+  bool get canSeeOverview => isAcademicStaff;
+  bool get canSeeLeads => hasModule('crm') && <String>['director', 'admin', 'marketer'].contains(role);
+  bool get canSeeTasks => isStaff && hasModule('crm');
+
+  /// Obuna «faqat o'qish» holatida (yoki platforma to'xtatgan): yozuvlar 402 bilan rad etiladi.
   bool get readOnly => asMap(context['subscription'])['can_write'] == false;
+  bool get suspended => asMap(context['subscription'])['suspended'] == true;
+
+  /// single — bitta tashkilot o'zi uchun o'rnatgan (obuna yo'q).
+  bool get singleMode => asText(context['mode']) == 'single';
+
+  /// «Modullar va obuna» (GET billing) — direktor va administrator, ko'p tashkilotli platformada.
+  bool get canManageBilling => isManager && !singleMode;
+
+  /// Coin (CRM sozlamasi): o'chirilsa coin bloklari yashiriladi. Server bermasa — yoqilgan deb olinadi (veb bilan bir xil).
+  bool get coinsEnabled => hasModule('crm') && context['coins_enabled'] != false;
+
+  /// Rag'bat: XP (`fun`) yoki coin.
+  bool get hasRewards => hasFeature('fun') || coinsEnabled;
 
   // 3.1: xodim bo'limlari (modul, imkoniyat va rolga qarab).
   bool get canCallCenter =>
       <String>['director', 'admin', 'marketer', 'cashier'].contains(role) && hasModule('crm') && hasFeature('callcenter');
   bool get canSeeFinance => <String>['director', 'admin', 'cashier'].contains(role) && hasModule('crm');
-  bool get canBuildTopicTests => <String>['director', 'admin', 'teacher'].contains(role) && hasModule('testing');
-  bool get canUseStaffAi => isStaff && hasFeature('ai');
+  bool get canBuildTopicTests => isAcademicStaff && hasModule('testing');
+
+  /// AI holati (GET ai/status: staff, tutor, remaining) — kontekstdan keyin bir marta olinadi; null — hali noma'lum.
+  Map<String, dynamic>? aiStatus;
+  bool get canUseStaffAi => isStaff && hasFeature('ai') && aiStatus?['staff'] != false;
+  bool get canUseTutor => isStudent && !isGuest && hasFeature('ai') && aiStatus?['tutor'] != false;
 
   String get userName => asText(user['name']);
   String get organizationName => asText(asMap(context['organization'])['name']);
@@ -189,7 +231,7 @@ class Session extends ChangeNotifier implements ApiCredentials {
     try {
       final me = prefs.getString('offline.me');
       final organization = _organizationId;
-      final context = organization == null ? null : prefs.getString('offline.context.$organization');
+      final context = organization == null ? null : prefs.getString('$_contextKey.$organization');
       if (me == null || context == null) return;
       _apply(asMap(jsonDecode(me)));
       this.context = asMap(jsonDecode(context));
@@ -322,6 +364,7 @@ class Session extends ChangeNotifier implements ApiCredentials {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setInt('organization', id);
     context = <String, dynamic>{};
+    aiStatus = null;
     notifyListeners();
     await loadContext();
     notifyListeners();
@@ -334,11 +377,27 @@ class Session extends ChangeNotifier implements ApiCredentials {
     final organization = _organizationId;
     if (organization != null) {
       final prefs = await SharedPreferences.getInstance();
-      unawaited(prefs.setString('offline.context.$organization', jsonEncode(context)));
+      unawaited(prefs.setString('$_contextKey.$organization', jsonEncode(context)));
     }
+    aiStatus = null;
     notifyListeners();
     // Push: qurilma ro'yxatdan o'tadi (Firebase sozlangan bo'lsa).
     unawaited(PushService.instance.attach(this));
+    unawaited(_loadAiStatus());
+  }
+
+  /// AI ustoz / yordamchi menyuda faqat tashkilot sozlamasida yoqilgan bo'lsa ko'rinsin (veb: ai/status).
+  Future<void> _loadAiStatus() async {
+    if (!hasFeature('ai') || isGuardian) return;
+    final organization = _organizationId;
+    try {
+      final status = asMap(await api.get('ai/status'));
+      if (organization != _organizationId) return;
+      aiStatus = status;
+      notifyListeners();
+    } catch (_) {
+      // noma'lum — menyu ochiq qoladi, sahifaning o'zi holatni ko'rsatadi
+    }
   }
 
   Future<void> signOut() async {
@@ -369,6 +428,7 @@ class Session extends ChangeNotifier implements ApiCredentials {
     user = <String, dynamic>{};
     memberships = <Membership>[];
     context = <String, dynamic>{};
+    aiStatus = null;
     try {
       await _secure.delete(key: 'token');
     } catch (_) {}

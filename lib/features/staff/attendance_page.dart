@@ -13,10 +13,10 @@ class AttendancePage extends StatelessWidget {
   const AttendancePage({super.key});
 
   Future<Map<String, dynamic>> _load(Session session) async {
-    final today = isoDay(DateTime.now());
+    // crm/groups — o'qituvchiga faqat o'z guruhlari (server GroupAccess); faol guruhlar so'raladi.
     final results = await Future.wait<dynamic>(<Future<dynamic>>[
-      session.api.get('crm/groups'),
-      session.api.get('crm/timetable', query: <String, Object?>{'from': today, 'to': today}).catchError((_) => null),
+      session.api.get('crm/groups', query: <String, Object?>{'active': 1}),
+      session.api.get('crm/timetable', query: <String, Object?>{'date': isoDay(DateTime.now())}).catchError((_) => null),
     ]);
     return <String, dynamic>{'groups': asList(results[0]), 'timetable': asMap(results[1])};
   }
@@ -265,7 +265,11 @@ class _AttendanceSheetPageState extends State<AttendanceSheetPage> {
             : SafeArea(
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
-                  child: FilledButton(
+                  // Obuna «faqat o'qish»da saqlash 402 bilan rad etiladi — tugma o'chiq, sabab yozilgan.
+                  child: AppScope.of(context).readOnly
+                      ? Text(tr("Obuna muddati tugagan: ma'lumotlar ko'rinadi, lekin yangi yozuv kiritib bo'lmaydi."),
+                          textAlign: TextAlign.center, style: const TextStyle(color: AppColors.warning))
+                      : FilledButton(
                     onPressed: _saving ? null : _save,
                     child: _saving
                         ? const SizedBox(width: 22, height: 22, child: CircularProgressIndicator(strokeWidth: 2.4, color: Colors.white))
