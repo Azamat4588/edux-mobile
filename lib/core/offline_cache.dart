@@ -2,6 +2,7 @@
 // Internet bo'lmasa sahifa shu nusxani «Internet yo'q» belgisi bilan ko'rsatadi; pastga tortib yangilash qayta urinadi.
 //
 // Fayllar foydalanuvchi + tashkilot bo'yicha ajratiladi (scope), chiqishda hammasi o'chiriladi.
+// 3.2: har nusxada shakl versiyasi (`v`) — server javobi o'zgarganda (1.29) eski nusxa o'qilmaydi va sahifa buzilmaydi.
 import 'dart:convert';
 import 'dart:io';
 
@@ -23,6 +24,9 @@ class OfflineCache {
   /// Bitta javob uchun eng katta hajm (katta ro'yxatlar xotirani to'ldirmasin).
   static const int maxBytes = 2 * 1024 * 1024;
 
+  /// Saqlangan javoblar shakli versiyasi. Sahifa o'qiydigan maydonlar o'zgarsa oshiriladi.
+  static const int version = 2;
+
   static Directory? _dir;
 
   static Future<Directory> _root() async {
@@ -40,7 +44,7 @@ class OfflineCache {
   static Future<void> write(String key, Object? data) async {
     if (scope.isEmpty) return;
     try {
-      final text = jsonEncode(<String, Object?>{'saved_at': DateTime.now().toIso8601String(), 'data': data});
+      final text = jsonEncode(<String, Object?>{'v': version, 'saved_at': DateTime.now().toIso8601String(), 'data': data});
       if (text.length > maxBytes) return;
       final dir = await _root();
       final file = File('${dir.path}/${_name(key)}.json');
@@ -60,6 +64,11 @@ class OfflineCache {
       if (!file.existsSync()) return null;
       final raw = jsonDecode(await file.readAsString());
       if (raw is! Map) return null;
+      // Eski ilova versiyasi yozgan nusxa — boshqa shakl bo'lishi mumkin.
+      if (raw['v'] != version) {
+        await file.delete();
+        return null;
+      }
       final savedAt = DateTime.tryParse('${raw['saved_at']}') ?? DateTime.now();
       return CachedEntry(raw['data'], savedAt);
     } catch (_) {
