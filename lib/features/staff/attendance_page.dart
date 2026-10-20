@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../core/api.dart';
 import '../../core/format.dart';
+import '../../core/help_links.dart';
 import '../../core/i18n.dart';
 import '../../core/session.dart';
 import '../../core/theme.dart';
@@ -25,7 +26,7 @@ class AttendancePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final session = AppScope.of(context);
     return Scaffold(
-      appBar: AppBar(title: Text(tr('Davomat'))),
+      appBar: AppBar(title: Text(tr('Davomat')), actions: const <Widget>[HelpButton(HelpLinks.attendance)]),
       body: AsyncView<Map<String, dynamic>>(
         load: () => _load(session),
         builder: (context, data, reload) {

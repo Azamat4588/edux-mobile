@@ -492,3 +492,7 @@ To'lanmagan hisob {0}	Неоплаченный счёт {0}	Unpaid invoice {0}
 Yana {0} ta	Ещё {0}	{0} more
 oy	мес.	mo
 «{0}» qo'shilsinmi? Qolgan kunlar uchun hisob chiqariladi.	Подключить «{0}»? Будет выставлен счёт за оставшиеся дни.	Add "{0}"? An invoice for the remaining days will be issued.
+Yordam markazi	Центр помощи	Help center
+Qo'llanmalar: qayerda nima bor va qanday qilinadi.	Инструкции: где что находится и как это сделать.	Guides: where things are and how to do them.
+Sahifa yordami	Помощь по странице	Page help
+Brauzerni ochib bo'lmadi: {0}	Не удалось открыть браузер: {0}	Could not open the browser: {0}

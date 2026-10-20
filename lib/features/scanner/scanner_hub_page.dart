@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 import '../../core/api.dart';
+import '../../core/help_links.dart';
 import '../../core/i18n.dart';
 import '../../core/session.dart';
 import '../../core/theme.dart';
@@ -29,7 +30,7 @@ class ScannerHubPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final api = AppScope.of(context).api;
     return Scaffold(
-      appBar: AppBar(title: Text(tr('Skaner'))),
+      appBar: AppBar(title: Text(tr('Skaner')), actions: const <Widget>[HelpButton(HelpLinks.scanner)]),
       body: AsyncView<Map<String, dynamic>>(
         load: () => _load(api),
         builder: (context, data, reload) {

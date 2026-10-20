@@ -3761,5 +3761,9 @@
 "← Testlar": "← Тесты",
 "← To'lovlar": "← Платежи",
 "← Uy vazifalari": "← Домашние задания",
-"← Varaqalar": "← Бланки"
+"← Varaqalar": "← Бланки",
+"Yordam markazi": "Центр помощи",
+"Qo'llanmalar: qayerda nima bor va qanday qilinadi.": "Инструкции: где что находится и как это сделать.",
+"Sahifa yordami": "Помощь по странице",
+"Brauzerni ochib bo'lmadi: {0}": "Не удалось открыть браузер: {0}"
 }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../core/api.dart';
 import '../../core/format.dart';
+import '../../core/help_links.dart';
 import '../../core/i18n.dart';
 import '../../core/session.dart';
 import '../../core/theme.dart';
@@ -28,7 +29,7 @@ class ExamsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final api = AppScope.of(context).api;
     return Scaffold(
-      appBar: AppBar(title: Text(tr('Testlar'))),
+      appBar: AppBar(title: Text(tr('Testlar')), actions: const <Widget>[HelpButton(HelpLinks.examResults)]),
       body: AsyncView<List<Map<String, dynamic>>>(
         load: () async => asList(await api.get('exams')),
         builder: (context, exams, reload) {

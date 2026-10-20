@@ -3761,5 +3761,9 @@
 "← Testlar": "← Tests",
 "← To'lovlar": "← Payments",
 "← Uy vazifalari": "← Homework",
-"← Varaqalar": "← Sheets"
+"← Varaqalar": "← Sheets",
+"Yordam markazi": "Help center",
+"Qo'llanmalar: qayerda nima bor va qanday qilinadi.": "Guides: where things are and how to do them.",
+"Sahifa yordami": "Page help",
+"Brauzerni ochib bo'lmadi: {0}": "Could not open the browser: {0}"
 }
