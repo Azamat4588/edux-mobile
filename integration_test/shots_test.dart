@@ -228,11 +228,15 @@ class Shooter {
 Future<void> seedNotifications(String role) async {
   final now = DateTime.now();
   final items = <Map<String, Object?>>[
-    if (role == 'student' || role == 'guardian') ...<Map<String, Object?>>[
+    if (role == 'student') ...<Map<String, Object?>>[
       <String, Object?>{'title': "To'lov qabul qilindi", 'body': "M-11 guruhi uchun 450 000 so'm to'lov qabul qilindi. Rahmat!", 'type': 'payment', 'm': 25},
-      <String, Object?>{'title': 'Test natijasi', 'body': 'Matematika: 2-chorak nazorat ishi — 8 / 10 ball (80%).', 'type': 'attempt', 'm': 140},
+      <String, Object?>{'title': 'Test natijasi', 'body': 'Matematika: 2-chorak nazorat ishi — 8 / 12 to\'g\'ri.', 'type': 'attempt', 'm': 140},
       <String, Object?>{'title': 'Yangi uy vazifasi', 'body': "«Kasrlarni qo'shish va ayirish» darsi bo'yicha vazifa berildi.", 'type': 'assignment', 'm': 60 * 26},
-      <String, Object?>{'title': 'Davomat', 'body': 'Ergasheva Mohinur bugun M-11 darsiga keldi (15:02).', 'type': 'arrival', 'm': 60 * 50, 'read': true},
+      <String, Object?>{'title': 'Davomat', 'body': 'Bugun M-11 darsiga keldingiz (15:02).', 'type': 'arrival', 'm': 60 * 50, 'read': true},
+    ] else if (role == 'guardian') ...<Map<String, Object?>>[
+      <String, Object?>{'title': 'Ergashev Timur keldi', 'body': 'M-11 darsiga 14:58 da keldi.', 'type': 'arrival', 'm': 35},
+      <String, Object?>{'title': "To'lov eslatmasi", 'body': "Oktabr oyi uchun M-11 guruhi to'lovi: 450 000 so'm.", 'type': 'payment', 'm': 60 * 7},
+      <String, Object?>{'title': 'Yangi test', 'body': 'Matematika: 2-chorak nazorat ishi — topshirish kerak.', 'type': 'attempt', 'm': 60 * 28, 'read': true},
     ] else ...<Map<String, Object?>>[
       <String, Object?>{'title': 'Yangi lid', 'body': 'Rahmonov Davron — Matematika, abituriyent (Telegram).', 'type': 'lead', 'm': 12},
       <String, Object?>{'title': "To'lov qabul qilindi", 'body': "Ergasheva Mohinur: 450 000 so'm (naqd), M-11.", 'type': 'payment', 'm': 95},
@@ -323,7 +327,9 @@ Future<void> staffFlow(Shooter s) async {
   }
   if (session.hasModule('testing') && <String>['director', 'admin', 'teacher'].contains(role)) {
     final exams = await s.list('exams');
-    final exam = exams.firstWhere((item) => asText(item['status']) != 'draft', orElse: () => exams.isEmpty ? <String, dynamic>{} : exams.first);
+    // The exam with the most results (its detail page shows the rating).
+    final ranked = [...exams]..sort((a, b) => asInt(b['finished_attempts_count']).compareTo(asInt(a['finished_attempts_count'])));
+    final exam = ranked.isEmpty ? <String, dynamic>{} : ranked.first;
     if (exam.isNotEmpty) await s.open('exam-detail', ExamDetailPage(exam: exam));
   }
   if (session.canSeeFinance) {
