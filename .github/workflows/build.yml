@@ -30,6 +30,17 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 45
     steps:
+      - name: Diskda joy bo'shatish
+        # Runner diski to'lib qolsa NDK arxivi buzuq yuklanadi va yig'ish «No space left on device» bilan yiqiladi.
+        # Bizga kerak bo'lmagan katta vositalar (.NET, Haskell, CodeQL, Swift, Boost, Docker tasvirlari) o'chiriladi.
+        run: |
+          df -h / | tail -1
+          sudo rm -rf /usr/share/dotnet /opt/ghc /usr/local/.ghcup /opt/hostedtoolcache/CodeQL /usr/share/swift \
+            /usr/local/share/boost /usr/local/share/powershell /usr/local/lib/node_modules /opt/microsoft /opt/google/chrome \
+            /usr/local/share/chromium /opt/az /usr/share/miniconda || true
+          docker image prune -af > /dev/null 2>&1 || true
+          echo "::notice::Disk: $(df -h / | tail -1 | awk '{print $4}') bo'sh"
+
       - uses: actions/checkout@v5
 
       - uses: actions/setup-java@v5
