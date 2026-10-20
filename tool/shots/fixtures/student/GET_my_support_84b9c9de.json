@@ -4,6 +4,15 @@
  "query": {},
  "status": 200,
  "body": {
-  "data": []
+  "data": [
+   {
+    "id": 8,
+    "subject": "Sertifikatni qanday yuklab olaman?",
+    "topic": "question",
+    "status": "open",
+    "token": "nTGJ4f3qGGkkaci7VK9cMsqRI5yATCror2FaQOnA",
+    "updated_at": "2026-10-20T06:40:21.000000Z"
+   }
+  ]
  }
 }

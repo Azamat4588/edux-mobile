@@ -22,14 +22,14 @@
     "user_id": 3,
     "name": "Islomova Shahnoza",
     "extension": "102",
-    "status": "available",
+    "status": "offline",
     "today": 0
    },
    {
     "user_id": 7,
     "name": "Rasulov Bekzod",
     "extension": "103",
-    "status": "break",
+    "status": "offline",
     "today": 0
    },
    {

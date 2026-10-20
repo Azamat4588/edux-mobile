@@ -1,0 +1,24 @@
+{
+ "method": "GET",
+ "path": "public/support/wbGJnN4xO9vFlrFNo5kh6z0hxuR3v3yGuXrE9L1X",
+ "query": {},
+ "status": 200,
+ "body": {
+  "id": 7,
+  "name": "Rustamov Akmal",
+  "contact": "+998900000001",
+  "topic": "payment",
+  "subject": "Click to'lovlari kechikib tushmoqda",
+  "status": "open",
+  "token": "wbGJnN4xO9vFlrFNo5kh6z0hxuR3v3yGuXrE9L1X",
+  "created_at": "2026-10-20T06:40:20.000000Z",
+  "messages": [
+   {
+    "id": 10,
+    "from_staff": false,
+    "body": "Kecha Click orqali qilingan 2 ta to'lov kabinetda hali ko'rinmayapti. Tekshirib bera olasizmi?",
+    "created_at": "2026-10-20T06:40:20.000000Z"
+   }
+  ]
+ }
+}

@@ -13,6 +13,9 @@ concurrency:
   group: shots-${{ github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: write
+
 jobs:
   android-shots:
     runs-on: ubuntu-latest
@@ -96,3 +99,17 @@ jobs:
           name: mobile-screenshots
           path: shots/
           if-no-files-found: warn
+
+      # The same zip as a *draft* release asset (no tag, not public): reachable where Actions artifact storage is not.
+      - name: Draft release (shots-<run>)
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          [ -n "$(ls shots/*.png 2>/dev/null)" ] || exit 0
+          (cd shots && zip -q -r ../mobile-screenshots.zip .)
+          for tag in $(gh api repos/${{ github.repository }}/releases --paginate --jq '.[] | select(.draft and (.tag_name|startswith("shots-"))) | .tag_name'); do
+            gh release delete "$tag" --yes --repo ${{ github.repository }} || true
+          done
+          gh release create "shots-${{ github.run_id }}" mobile-screenshots.zip --draft --target "${{ github.sha }}" \
+            --title "Mobile screenshots (run ${{ github.run_id }})" --notes "Shots workflow, commit ${{ github.sha }}" --repo ${{ github.repository }}

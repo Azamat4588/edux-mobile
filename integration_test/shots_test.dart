@@ -354,7 +354,7 @@ Future<void> staffFlow(Shooter s) async {
   if (session.canBuildTopicTests) await s.open('topic-tests', const TopicTestsPage());
   if (session.canUseStaffAi) await s.open('ai-assistant', const StaffAssistantPage());
   await s.open('notifications', const NotificationsPage());
-  await s.open('support', const SupportPage());
+  await supportFlow(s);
 }
 
 Future<void> studentFlow(Shooter s) async {
@@ -411,7 +411,7 @@ Future<void> studentFlow(Shooter s) async {
     await s.open('labs', const LabsPage());
   }
   await s.open('notifications', const NotificationsPage());
-  await s.open('support', const SupportPage());
+  await supportFlow(s);
 }
 
 Future<void> guardianFlow(Shooter s) async {
@@ -424,7 +424,13 @@ Future<void> guardianFlow(Shooter s) async {
   if (await s.tab("Ko'proq")) await s.shot('more');
   await s.tab('Farzandim');
   await s.open('notifications', const NotificationsPage());
+  await supportFlow(s);
+}
+
+Future<void> supportFlow(Shooter s) async {
   await s.open('support', const SupportPage());
+  final tickets = await s.list('my/support');
+  if (tickets.isNotEmpty) await s.open('support-ticket', TicketPage(token: asText(tickets.first['token'])));
 }
 
 Future<void> ownerFlow(Shooter s) async {

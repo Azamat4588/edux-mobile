@@ -4,6 +4,15 @@
  "query": {},
  "status": 200,
  "body": {
-  "data": []
+  "data": [
+   {
+    "id": 7,
+    "subject": "Click to'lovlari kechikib tushmoqda",
+    "topic": "payment",
+    "status": "open",
+    "token": "wbGJnN4xO9vFlrFNo5kh6z0hxuR3v3yGuXrE9L1X",
+    "updated_at": "2026-10-20T06:40:20.000000Z"
+   }
+  ]
  }
 }

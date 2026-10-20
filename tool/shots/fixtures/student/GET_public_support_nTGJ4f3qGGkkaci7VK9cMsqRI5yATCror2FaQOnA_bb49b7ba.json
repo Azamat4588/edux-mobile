@@ -1,0 +1,24 @@
+{
+ "method": "GET",
+ "path": "public/support/nTGJ4f3qGGkkaci7VK9cMsqRI5yATCror2FaQOnA",
+ "query": {},
+ "status": 200,
+ "body": {
+  "id": 8,
+  "name": "Ergasheva Mohinur",
+  "contact": "+998900000005",
+  "topic": "question",
+  "subject": "Sertifikatni qanday yuklab olaman?",
+  "status": "open",
+  "token": "nTGJ4f3qGGkkaci7VK9cMsqRI5yATCror2FaQOnA",
+  "created_at": "2026-10-20T06:40:21.000000Z",
+  "messages": [
+   {
+    "id": 11,
+    "from_staff": false,
+    "body": "IELTS Mock #2 sertifikatini PDF ko'rinishida yuklab olmoqchiman, tugma ishlamayapti.",
+    "created_at": "2026-10-20T06:40:21.000000Z"
+   }
+  ]
+ }
+}
