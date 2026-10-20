@@ -1,0 +1,403 @@
+{
+ "method": "GET",
+ "path": "crm/students",
+ "query": {
+  "page": "1"
+ },
+ "status": 200,
+ "body": {
+  "current_page": 1,
+  "data": [
+   {
+    "id": 11,
+    "full_name": "Ergashev Timur",
+    "code": "143793",
+    "phone": "+998935551201",
+    "archived": false,
+    "groups": [
+     {
+      "id": 1,
+      "name": "M-11"
+     }
+    ],
+    "enrollments": [
+     {
+      "id": 15,
+      "group": "M-11",
+      "group_id": 1,
+      "status": "active"
+     }
+    ],
+    "parent_phone": null,
+    "birth_date": null,
+    "tags": [],
+    "balance": 0,
+    "created_at": "2026-10-19T14:23:59.000000Z"
+   },
+   {
+    "id": 1,
+    "full_name": "Ergasheva Mohinur",
+    "code": "305619",
+    "phone": "+998905550101",
+    "archived": false,
+    "groups": [
+     {
+      "id": 1,
+      "name": "M-11"
+     },
+     {
+      "id": 2,
+      "name": "ING-5"
+     }
+    ],
+    "enrollments": [
+     {
+      "id": 1,
+      "group": "M-11",
+      "group_id": 1,
+      "status": "active"
+     },
+     {
+      "id": 11,
+      "group": "ING-5",
+      "group_id": 2,
+      "status": "frozen"
+     }
+    ],
+    "parent_phone": "+998935550010",
+    "birth_date": null,
+    "tags": [
+     {
+      "id": 1,
+      "name": "VIP",
+      "color": "purple"
+     }
+    ],
+    "balance": 0,
+    "created_at": "2026-10-19T14:23:57.000000Z"
+   },
+   {
+    "id": 4,
+    "full_name": "Hasanova Malika",
+    "code": "414548",
+    "phone": "+998905553452",
+    "archived": false,
+    "groups": [
+     {
+      "id": 1,
+      "name": "M-11"
+     },
+     {
+      "id": 2,
+      "name": "ING-5"
+     }
+    ],
+    "enrollments": [
+     {
+      "id": 4,
+      "group": "M-11",
+      "group_id": 1,
+      "status": "active"
+     },
+     {
+      "id": 14,
+      "group": "ING-5",
+      "group_id": 2,
+      "status": "active"
+     }
+    ],
+    "parent_phone": "+998935550013",
+    "birth_date": null,
+    "tags": [],
+    "balance": 0,
+    "created_at": "2026-10-19T14:23:57.000000Z"
+   },
+   {
+    "id": 3,
+    "full_name": "Karimov Sardor",
+    "code": "415271",
+    "phone": "+998905552335",
+    "archived": false,
+    "groups": [
+     {
+      "id": 1,
+      "name": "M-11"
+     },
+     {
+      "id": 2,
+      "name": "ING-5"
+     }
+    ],
+    "enrollments": [
+     {
+      "id": 3,
+      "group": "M-11",
+      "group_id": 1,
+      "status": "active"
+     },
+     {
+      "id": 13,
+      "group": "ING-5",
+      "group_id": 2,
+      "status": "active"
+     }
+    ],
+    "parent_phone": "+998935550012",
+    "birth_date": null,
+    "tags": [],
+    "balance": 0,
+    "created_at": "2026-10-19T14:23:57.000000Z"
+   },
+   {
+    "id": 10,
+    "full_name": "Nazarova Sevara",
+    "code": "735415",
+    "phone": "+998905560154",
+    "archived": false,
+    "groups": [
+     {
+      "id": 1,
+      "name": "M-11"
+     }
+    ],
+    "enrollments": [
+     {
+      "id": 10,
+      "group": "M-11",
+      "group_id": 1,
+      "status": "active"
+     }
+    ],
+    "parent_phone": null,
+    "birth_date": null,
+    "tags": [],
+    "balance": -450000,
+    "created_at": "2026-10-19T14:23:57.000000Z"
+   },
+   {
+    "id": 9,
+    "full_name": "Qodirov Sherzod",
+    "code": "603779",
+    "phone": "+998905559037",
+    "archived": false,
+    "groups": [
+     {
+      "id": 1,
+      "name": "M-11"
+     }
+    ],
+    "enrollments": [
+     {
+      "id": 9,
+      "group": "M-11",
+      "group_id": 1,
+      "status": "active"
+     }
+    ],
+    "parent_phone": null,
+    "birth_date": null,
+    "tags": [],
+    "balance": -900000,
+    "created_at": "2026-10-19T14:23:57.000000Z"
+   },
+   {
+    "id": 6,
+    "full_name": "Rahimova Nigora",
+    "code": "381107",
+    "phone": "+998905555686",
+    "archived": false,
+    "groups": [
+     {
+      "id": 1,
+      "name": "M-11"
+     }
+    ],
+    "enrollments": [
+     {
+      "id": 6,
+      "group": "M-11",
+      "group_id": 1,
+      "status": "active"
+     }
+    ],
+    "parent_phone": "+998935550015",
+    "birth_date": null,
+    "tags": [],
+    "balance": 0,
+    "created_at": "2026-10-19T14:23:57.000000Z"
+   },
+   {
+    "id": 8,
+    "full_name": "Saidova Zarina",
+    "code": "234003",
+    "phone": "+998905557920",
+    "archived": false,
+    "groups": [
+     {
+      "id": 1,
+      "name": "M-11"
+     }
+    ],
+    "enrollments": [
+     {
+      "id": 8,
+      "group": "M-11",
+      "group_id": 1,
+      "status": "active"
+     }
+    ],
+    "parent_phone": "+998935550017",
+    "birth_date": null,
+    "tags": [],
+    "balance": 0,
+    "created_at": "2026-10-19T14:23:57.000000Z"
+   },
+   {
+    "id": 12,
+    "full_name": "Sobirov Ulugbek",
+    "code": "604436",
+    "phone": "+998935551299",
+    "archived": false,
+    "groups": [
+     {
+      "id": 2,
+      "name": "ING-5"
+     }
+    ],
+    "enrollments": [
+     {
+      "id": 16,
+      "group": "ING-5",
+      "group_id": 2,
+      "status": "trial"
+     }
+    ],
+    "parent_phone": null,
+    "birth_date": null,
+    "tags": [],
+    "balance": 0,
+    "created_at": "2026-10-19T14:23:59.000000Z"
+   },
+   {
+    "id": 5,
+    "full_name": "Tursunov Jasur",
+    "code": "028030",
+    "phone": "+998905554569",
+    "archived": false,
+    "groups": [
+     {
+      "id": 1,
+      "name": "M-11"
+     }
+    ],
+    "enrollments": [
+     {
+      "id": 5,
+      "group": "M-11",
+      "group_id": 1,
+      "status": "active"
+     }
+    ],
+    "parent_phone": "+998935550014",
+    "birth_date": null,
+    "tags": [],
+    "balance": 0,
+    "created_at": "2026-10-19T14:23:57.000000Z"
+   },
+   {
+    "id": 2,
+    "full_name": "Valiyev Bobur",
+    "code": "950634",
+    "phone": "+998905551218",
+    "archived": false,
+    "groups": [
+     {
+      "id": 1,
+      "name": "M-11"
+     }
+    ],
+    "enrollments": [
+     {
+      "id": 2,
+      "group": "M-11",
+      "group_id": 1,
+      "status": "active"
+     }
+    ],
+    "parent_phone": "+998935550011",
+    "birth_date": null,
+    "tags": [],
+    "balance": 0,
+    "created_at": "2026-10-19T14:23:57.000000Z"
+   },
+   {
+    "id": 7,
+    "full_name": "Yusupov Aziz",
+    "code": "489151",
+    "phone": "+998905556803",
+    "archived": false,
+    "groups": [
+     {
+      "id": 1,
+      "name": "M-11"
+     }
+    ],
+    "enrollments": [
+     {
+      "id": 7,
+      "group": "M-11",
+      "group_id": 1,
+      "status": "active"
+     }
+    ],
+    "parent_phone": "+998935550016",
+    "birth_date": null,
+    "tags": [],
+    "balance": -250000,
+    "created_at": "2026-10-19T14:23:57.000000Z"
+   }
+  ],
+  "first_page_url": "__SERVER__/api/v1/crm/students?page=1",
+  "from": 1,
+  "last_page": 1,
+  "last_page_url": "__SERVER__/api/v1/crm/students?page=1",
+  "links": [
+   {
+    "url": null,
+    "label": "pagination.previous",
+    "page": null,
+    "active": false
+   },
+   {
+    "url": "__SERVER__/api/v1/crm/students?page=1",
+    "label": "1",
+    "page": 1,
+    "active": true
+   },
+   {
+    "url": null,
+    "label": "pagination.next",
+    "page": null,
+    "active": false
+   }
+  ],
+  "next_page_url": null,
+  "path": "__SERVER__/api/v1/crm/students",
+  "per_page": 50,
+  "prev_page_url": null,
+  "to": 12,
+  "total": 12,
+  "statuses": {
+   "trial": "Sinov darsida",
+   "active": "Faol",
+   "frozen": "Muzlatilgan",
+   "no_group": "Guruhsiz",
+   "left_after_trial": "Sinov darsidan keyin ketgan",
+   "left_active": "Faol guruhni tark etgan",
+   "added_this_month": "Shu oyda qo'shilgan",
+   "debtors": "Qarzdorlar",
+   "offer_signed": "Oferta imzolagan",
+   "archived": "Arxivlangan"
+  }
+ }
+}

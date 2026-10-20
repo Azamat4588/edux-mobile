@@ -1,0 +1,31 @@
+{
+ "method": "POST",
+ "path": "billing/quote",
+ "query": {},
+ "status": 200,
+ "body": {
+  "items": [
+   {
+    "type": "plan",
+    "code": "standart",
+    "description": "Paket: Standart",
+    "amount": 2970000
+   },
+   {
+    "type": "addon",
+    "code": "access",
+    "description": "Kirish nazorati",
+    "amount": 360000
+   },
+   {
+    "type": "discount",
+    "code": "quarterly",
+    "description": "3 oylik to'lov chegirmasi (5%)",
+    "amount": -166500
+   }
+  ],
+  "total": 3163500,
+  "cycle": "quarterly",
+  "students": 12
+ }
+}

@@ -1,0 +1,168 @@
+{
+ "method": "GET",
+ "path": "students",
+ "query": {
+  "page": "1",
+  "mine": "1"
+ },
+ "status": 200,
+ "body": {
+  "current_page": 1,
+  "data": [
+   {
+    "id": 1,
+    "organization_id": 1,
+    "user_id": 11,
+    "full_name": "Ergasheva Mohinur",
+    "code": "305619",
+    "phone": "+998905550101",
+    "created_at": "2026-10-19T14:23:57.000000Z",
+    "updated_at": "2026-10-19T14:24:02.000000Z",
+    "deleted_at": null,
+    "guest_exam_id": null,
+    "guest_source": null,
+    "guest_note": null,
+    "face_consent_at": null,
+    "groups": [
+     {
+      "id": 1,
+      "name": "M-11",
+      "pivot": {
+       "student_id": 1,
+       "study_group_id": 1
+      }
+     },
+     {
+      "id": 2,
+      "name": "ING-5",
+      "pivot": {
+       "student_id": 1,
+       "study_group_id": 2
+      }
+     }
+    ]
+   },
+   {
+    "id": 4,
+    "organization_id": 1,
+    "user_id": 14,
+    "full_name": "Hasanova Malika",
+    "code": "414548",
+    "phone": "+998905553452",
+    "created_at": "2026-10-19T14:23:57.000000Z",
+    "updated_at": "2026-10-19T14:24:03.000000Z",
+    "deleted_at": null,
+    "guest_exam_id": null,
+    "guest_source": null,
+    "guest_note": null,
+    "face_consent_at": null,
+    "groups": [
+     {
+      "id": 1,
+      "name": "M-11",
+      "pivot": {
+       "student_id": 4,
+       "study_group_id": 1
+      }
+     },
+     {
+      "id": 2,
+      "name": "ING-5",
+      "pivot": {
+       "student_id": 4,
+       "study_group_id": 2
+      }
+     }
+    ]
+   },
+   {
+    "id": 3,
+    "organization_id": 1,
+    "user_id": 12,
+    "full_name": "Karimov Sardor",
+    "code": "415271",
+    "phone": "+998905552335",
+    "created_at": "2026-10-19T14:23:57.000000Z",
+    "updated_at": "2026-10-19T14:24:02.000000Z",
+    "deleted_at": null,
+    "guest_exam_id": null,
+    "guest_source": null,
+    "guest_note": null,
+    "face_consent_at": null,
+    "groups": [
+     {
+      "id": 1,
+      "name": "M-11",
+      "pivot": {
+       "student_id": 3,
+       "study_group_id": 1
+      }
+     },
+     {
+      "id": 2,
+      "name": "ING-5",
+      "pivot": {
+       "student_id": 3,
+       "study_group_id": 2
+      }
+     }
+    ]
+   },
+   {
+    "id": 12,
+    "organization_id": 1,
+    "user_id": null,
+    "full_name": "Sobirov Ulugbek",
+    "code": "604436",
+    "phone": "+998935551299",
+    "created_at": "2026-10-19T14:23:59.000000Z",
+    "updated_at": "2026-10-19T14:23:59.000000Z",
+    "deleted_at": null,
+    "guest_exam_id": null,
+    "guest_source": null,
+    "guest_note": null,
+    "face_consent_at": null,
+    "groups": [
+     {
+      "id": 2,
+      "name": "ING-5",
+      "pivot": {
+       "student_id": 12,
+       "study_group_id": 2
+      }
+     }
+    ]
+   }
+  ],
+  "first_page_url": "__SERVER__/api/v1/students?page=1",
+  "from": 1,
+  "last_page": 1,
+  "last_page_url": "__SERVER__/api/v1/students?page=1",
+  "links": [
+   {
+    "url": null,
+    "label": "pagination.previous",
+    "page": null,
+    "active": false
+   },
+   {
+    "url": "__SERVER__/api/v1/students?page=1",
+    "label": "1",
+    "page": 1,
+    "active": true
+   },
+   {
+    "url": null,
+    "label": "pagination.next",
+    "page": null,
+    "active": false
+   }
+  ],
+  "next_page_url": null,
+  "path": "__SERVER__/api/v1/students",
+  "per_page": 100,
+  "prev_page_url": null,
+  "to": 4,
+  "total": 4
+ }
+}

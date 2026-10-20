@@ -19,6 +19,14 @@
    "email": "support@edux.uz",
    "address": null
   },
+  "apps": {
+   "android": "https://github.com/Azamat4588/edux-mobile/releases/download/latest/app-arm64-v8a-release.apk",
+   "ios": null
+  },
+  "legal": {
+   "company": "«Ilm Soft» MChJ",
+   "inn": "309876543"
+  },
   "password_min": 8
  }
 }

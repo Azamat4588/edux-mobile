@@ -1,0 +1,60 @@
+{
+ "method": "GET",
+ "path": "crm/groups",
+ "query": {
+  "active": "1"
+ },
+ "status": 200,
+ "body": {
+  "data": [
+   {
+    "id": 2,
+    "name": "ING-5",
+    "is_active": true,
+    "is_forming": false,
+    "teacher": {
+     "id": 4,
+     "name": "Usmonova Dildora"
+    },
+    "branch": null,
+    "students_count": 4,
+    "counts": {
+     "trial": 1,
+     "active": 2,
+     "frozen": 1
+    },
+    "free_seats": 6,
+    "configured": true,
+    "settings": {
+     "room": "4-xona",
+     "room_id": 2,
+     "capacity": 10,
+     "schedule": [
+      {
+       "end": "17:30",
+       "start": "16:00",
+       "weekday": 2
+      },
+      {
+       "end": "17:30",
+       "start": "16:00",
+       "weekday": 4
+      },
+      {
+       "end": "17:30",
+       "start": "16:00",
+       "weekday": 6
+      }
+     ],
+     "starts_on": null,
+     "ends_on": null,
+     "course": {
+      "id": 2,
+      "name": "Ingliz tili (General)"
+     }
+    },
+    "tags": []
+   }
+  ]
+ }
+}

@@ -89,17 +89,17 @@ class Recorder:
             status = status if status >= 400 else 500
         return status, parsed
 
-    def get(self, path, query=None, save=True):
-        status, body = self.request('GET', path, query)
+    def get(self, path, query=None, save=True, method='GET', body=None):
+        status, body = self.request(method, path, query, body)
         if save:
             key = canonical(path, query)
-            record = {'method': 'GET', 'path': path.strip('/'), 'query': {k: str(v) for k, v in (query or {}).items() if v not in (None, '')},
+            record = {'method': method, 'path': path.strip('/'), 'query': {k: str(v) for k, v in (query or {}).items() if v not in (None, '')},
                       'status': status, 'body': body}
-            with open(os.path.join(self.dir, file_name('GET', key)), 'w', encoding='utf-8') as fh:
+            with open(os.path.join(self.dir, file_name(method, key)), 'w', encoding='utf-8') as fh:
                 json.dump(record, fh, ensure_ascii=False, indent=1)
             self.count += 1
             flag = '' if status < 400 else '   <-- %d' % status
-            print(f'  GET {key}{flag}')
+            print(f'  {method} {key}{flag}')
         return status, body
 
 
@@ -118,6 +118,8 @@ def ids(body, key='data', limit=3, field='id'):
 def record_staff(r, role, today, month_start):
     r.get('overview')
     r.get('crm/timetable', {'from': today, 'to': today})
+    r.get('crm/timetable', {'date': today})
+    r.get('crm/groups', {'active': 1})
     s, groups = r.get('crm/groups')
     for gid in ids(groups, limit=4):
         r.get('crm/attendance', {'group_id': gid, 'date': today})
@@ -131,7 +133,12 @@ def record_staff(r, role, today, month_start):
         for sid in ids(scans, limit=2):
             r.get(f'scans/{sid}')
     s, crm_students = r.get('crm/students')
-    r.get('students')
+    r.get('crm/students', {'page': 1})
+    s, plain_students = r.get('students')
+    r.get('students', {'page': 1})
+    s, mine = r.get('students', {'page': 1, 'mine': 1})
+    if not ids(crm_students):
+        crm_students = mine if ids(mine) else plain_students
     for sid in ids(crm_students, limit=6):
         r.get(f'crm/students/{sid}')
         r.get(f'students/{sid}/insights')
@@ -170,7 +177,33 @@ def record_staff(r, role, today, month_start):
         for section in (tree.get('sections') or [])[:2]:
             for topic in (section.get('topics') or [])[:2]:
                 r.get(f"bank/topics/{topic.get('code')}/questions", {'language': tree.get('language')})
+    record_billing(r)
     record_common_tail(r, role)
+
+
+def record_billing(r):
+    """GET billing and the first POST billing/quote the page sends (same initial selection as billing_page.dart)."""
+    status, data = r.get('billing')
+    if status >= 400 or not isinstance(data, dict):
+        return
+    available = [str(m.get('module')) for m in items(data, 'available_modules')]
+    plan = [m for m in (data.get('plan_modules') or []) if m in available]
+    paid = [m for m in (data.get('paid_modules') or []) if m in available]
+    modules = plan or paid or available[:1]
+    cycles = data.get('cycles') or {}
+    cycle = data.get('cycle') if isinstance(cycles, dict) and data.get('cycle') in cycles else 'monthly'
+    plans = items(data, 'plans')
+    if data.get('pricing_mode') != 'modules' and plans:
+        current = str(data.get('plan_code') or '')
+        featured = next((p for p in plans if p.get('featured') is True), plans[0])
+        code = current if current and any(str(p.get('code')) == current for p in plans) else str(featured.get('code'))
+        plan_addons = {str(a.get('code')) for p in plans if str(p.get('code')) == code for a in (p.get('addons') or []) if isinstance(a, dict)}
+        paid_addons = {str(a.get('addon')) for a in items(data, 'addon_states') if a.get('mode') == 'paid' and str(a.get('addon')) not in plan_addons}
+        body = {'plan_code': code, 'addons': [a for a in (data.get('bought_addons') or []) if a in paid_addons], 'cycle': cycle}
+    else:
+        paid_addons = {str(a.get('addon')) for a in items(data, 'addon_states') if a.get('mode') == 'paid'}
+        body = {'modules': modules, 'addons': [a for a in (data.get('bought_addons') or []) if a in paid_addons], 'cycle': cycle}
+    r.get('billing/quote', method='POST', body=body)
 
 
 def record_common_tail(r, role):

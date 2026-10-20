@@ -13,6 +13,7 @@ import 'package:edux/core/notification_store.dart';
 import 'package:edux/core/session.dart';
 import 'package:edux/core/widgets.dart';
 import 'package:edux/features/auth/login_page.dart';
+import 'package:edux/features/billing/billing_page.dart';
 import 'package:edux/features/callcenter/callcenter_page.dart';
 import 'package:edux/features/crm/leads_page.dart';
 import 'package:edux/features/crm/tasks_page.dart';
@@ -309,7 +310,9 @@ Future<void> staffFlow(Shooter s) async {
   await s.tab('Bosh sahifa');
 
   if (session.canSeeStudents) {
-    final students = await s.list(session.hasModule('crm') ? 'crm/students' : 'students');
+    final students = session.usesCrmStudents
+        ? await s.list('crm/students', query: <String, Object?>{'page': 1})
+        : await s.list('students', query: <String, Object?>{'page': 1, 'mine': session.isTeacher ? 1 : null});
     if (students.isNotEmpty) {
       final student = students.firstWhere((item) => asText(item['full_name']).contains('Mohinur'), orElse: () => students.first);
       await s.open('student-card', StudentCardPage(studentId: asInt(student['id']), name: asText(student['full_name'])), then: () async {
@@ -336,15 +339,15 @@ Future<void> staffFlow(Shooter s) async {
       if (await s.innerTab('Skriptlar')) await s.shot('callcenter-scripts');
     });
   }
-  if (session.hasModule('crm') && <String>['director', 'admin', 'marketer'].contains(role)) {
+  if (session.canSeeLeads) {
     await s.open('leads', const LeadsPage());
     final leads = await s.list('crm/leads', query: <String, Object?>{'status': 'new', 'archived': 0});
     if (leads.isNotEmpty) await s.open('lead', LeadPage(leadId: asInt(leads.first['id'])));
   }
-  if (session.hasModule('crm')) await s.open('tasks', const TasksPage());
+  if (session.canSeeTasks) await s.open('tasks', const TasksPage());
   if (session.canMarkAttendance) {
     await s.open('attendance', const AttendancePage());
-    final groups = await s.list('crm/groups');
+    final groups = await s.list('crm/groups', query: <String, Object?>{'active': 1});
     if (groups.isNotEmpty) {
       final group = groups.firstWhere((item) => asText(item['name']) == 'M-11', orElse: () => groups.first);
       await s.open('attendance-sheet', AttendanceSheetPage(groupId: asInt(group['id']), groupName: asText(group['name'])));
@@ -353,6 +356,14 @@ Future<void> staffFlow(Shooter s) async {
   if (session.canScan) await s.open('scans', const ScansPage(initialTab: 1));
   if (session.canBuildTopicTests) await s.open('topic-tests', const TopicTestsPage());
   if (session.canUseStaffAi) await s.open('ai-assistant', const StaffAssistantPage());
+  if (session.canManageBilling) {
+    await s.open('billing', const BillingPage(), then: () async {
+      await s.scrollDown();
+      await s.shot('billing-more', wait: false);
+      await s.scrollDown();
+      await s.shot('billing-more-2', wait: false);
+    });
+  }
   await s.open('notifications', const NotificationsPage());
   await supportFlow(s);
 }
@@ -404,7 +415,7 @@ Future<void> studentFlow(Shooter s) async {
     await s.open('olympiads', const OlympiadsPage());
     await s.open('olympiad', const OlympiadPage(token: 'sklssskru2zd'));
   }
-  if (session.hasFeature('ai')) await s.open('ai-tutor', const TutorPage());
+  if (session.canUseTutor) await s.open('ai-tutor', const TutorPage());
   if (session.hasFeature('fun')) {
     await s.open('games', const GamesPage());
     await s.open('achievements', const AchievementsPage());
@@ -420,7 +431,7 @@ Future<void> guardianFlow(Shooter s) async {
   await s.shot('child-overview-more', wait: false);
   if (await s.innerTab('Kundalik')) await s.shot('child-diary');
   if (await s.innerTab('Testlar')) await s.shot('child-tests');
-  if (await s.innerTab("To'lov")) await s.shot('child-payments');
+  if (await s.innerTab("To'lov va davomat")) await s.shot('child-payments');
   if (await s.tab("Ko'proq")) await s.shot('more');
   await s.tab('Farzandim');
   await s.open('notifications', const NotificationsPage());

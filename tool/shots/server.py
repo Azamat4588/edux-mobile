@@ -8,7 +8,7 @@
   Authorization: Bearer shots-<role>.
 * GET: exact method+path+query match, otherwise the recorded variant of the same path whose query is
   closest (dates differ from run to run). Unknown GETs -> 404 JSON and a "MISS" log line.
-* Other POST/PUT/DELETE -> 200 {} (logged as "WRITE").
+* Other POST/PUT/DELETE -> the recorded response of that method+path if any (e.g. billing/quote), else 200 {}.
 * "__SERVER__" inside fixtures is replaced by this server's address as the client sees it (Host header).
 * POST /__shot/<name>: the test asks for a screenshot. With a PNG body the body is saved; otherwise
   `adb exec-out screencap -p` is run (real device frame incl. status bar). Files go to --shots/<name>.png.
@@ -164,7 +164,10 @@ class Handler(BaseHTTPRequestHandler):
             log(f'LOGIN {entry["role"]}')
             return self._send(200, entry['response'])
         if method != 'GET':
-            log(f'WRITE {method} {api_path} role={role}')
+            record, _ = self.store.find(role or '_public', method, api_path, query)
+            log(f'WRITE {method} {api_path} role={role}{" (recorded)" if record else ""}')
+            if record is not None:
+                return self._send(record.get('status', 200), record.get('body') if record.get('body') is not None else {})
             return self._send(200, {})
         record, how = self.store.find(role or '_public', 'GET', api_path, query)
         key = canonical(api_path, query)

@@ -1,0 +1,437 @@
+{
+ "method": "GET",
+ "path": "billing",
+ "query": {},
+ "status": 200,
+ "body": {
+  "status": "active",
+  "status_label": "Faol",
+  "can_write": true,
+  "cycle": "quarterly",
+  "trial_ends_at": "2026-11-02T14:23:57.000000Z",
+  "period_ends_at": "2026-12-28T18:52:34.000000Z",
+  "modules": [
+   "testing",
+   "crm",
+   "lms"
+  ],
+  "paid_modules": [
+   "testing",
+   "crm",
+   "lms"
+  ],
+  "plan_modules": [
+   "testing",
+   "crm",
+   "lms"
+  ],
+  "free_modules": [],
+  "module_states": [
+   {
+    "module": "testing",
+    "name": "Test tizimi",
+    "description": null,
+    "monthly_price": 300000,
+    "is_active": true,
+    "in_trial": true,
+    "enabled": true,
+    "source": "plan"
+   },
+   {
+    "module": "crm",
+    "name": "CRM",
+    "description": null,
+    "monthly_price": 400000,
+    "is_active": true,
+    "in_trial": true,
+    "enabled": true,
+    "source": "plan"
+   },
+   {
+    "module": "lms",
+    "name": "Ta'lim (kurslar)",
+    "description": null,
+    "monthly_price": 250000,
+    "is_active": true,
+    "in_trial": true,
+    "enabled": true,
+    "source": "plan"
+   },
+   {
+    "module": "school",
+    "name": "Maktab boshqaruvi",
+    "description": null,
+    "monthly_price": 500000,
+    "is_active": true,
+    "in_trial": true,
+    "enabled": false,
+    "source": "none"
+   }
+  ],
+  "can_choose_trial_modules": false,
+  "trial_scope": "type",
+  "student_limit": null,
+  "students_count": 12,
+  "discount_percent": 0,
+  "suspended": false,
+  "active_students": 12,
+  "student_tier": "50 gacha",
+  "tier_exceeded": false,
+  "organization": "Ilm yo'li o'quv markazi",
+  "available_modules": [
+   {
+    "module": "testing",
+    "name": "Test tizimi",
+    "description": null,
+    "monthly_price": 300000
+   },
+   {
+    "module": "crm",
+    "name": "CRM",
+    "description": null,
+    "monthly_price": 400000
+   },
+   {
+    "module": "lms",
+    "name": "Ta'lim (kurslar)",
+    "description": null,
+    "monthly_price": 250000
+   },
+   {
+    "module": "school",
+    "name": "Maktab boshqaruvi",
+    "description": null,
+    "monthly_price": 500000
+   }
+  ],
+  "yearly_discount_percent": 15,
+  "pricing_mode": "both",
+  "plan_code": "standart",
+  "plans": [
+   {
+    "code": "start",
+    "name": "Start",
+    "description": "Kichik o'quv markazlari uchun",
+    "monthly_price": 490000,
+    "featured": false,
+    "types": [
+     {
+      "code": "center",
+      "name": "O'quv markaz"
+     }
+    ],
+    "modules": [
+     {
+      "code": "testing",
+      "name": "Test tizimi"
+     },
+     {
+      "code": "crm",
+      "name": "CRM"
+     }
+    ],
+    "addons": [
+     {
+      "code": "olympiad",
+      "name": "Olimpiadalar"
+     },
+     {
+      "code": "fun",
+      "name": "O'yinlar va virtual laboratoriya"
+     },
+     {
+      "code": "telegram",
+      "name": "Markaz Telegram boti"
+     }
+    ],
+    "limits": {
+     "students": 100,
+     "extra_student_price": null,
+     "staff": 5,
+     "branches": 1,
+     "ai_monthly": 200,
+     "sms_monthly": 500
+    }
+   },
+   {
+    "code": "standart",
+    "name": "Standart",
+    "description": "O'sib borayotgan markazlar: call markazi va AI bilan",
+    "monthly_price": 990000,
+    "featured": true,
+    "types": [],
+    "modules": [
+     {
+      "code": "testing",
+      "name": "Test tizimi"
+     },
+     {
+      "code": "crm",
+      "name": "CRM"
+     },
+     {
+      "code": "lms",
+      "name": "Ta'lim (kurslar)"
+     }
+    ],
+    "addons": [
+     {
+      "code": "ai",
+      "name": "AI yordamchi"
+     },
+     {
+      "code": "callcenter",
+      "name": "Call markazi"
+     },
+     {
+      "code": "sms",
+      "name": "SMS xabarlar"
+     },
+     {
+      "code": "olympiad",
+      "name": "Olimpiadalar"
+     },
+     {
+      "code": "fun",
+      "name": "O'yinlar va virtual laboratoriya"
+     },
+     {
+      "code": "telegram",
+      "name": "Markaz Telegram boti"
+     }
+    ],
+    "limits": {
+     "students": 400,
+     "extra_student_price": 2000,
+     "staff": 20,
+     "branches": 2,
+     "ai_monthly": 1500,
+     "sms_monthly": 3000
+    }
+   },
+   {
+    "code": "pro",
+    "name": "Pro",
+    "description": "Filiallar tarmog'i va xususiy maktablar",
+    "monthly_price": 2490000,
+    "featured": false,
+    "types": [],
+    "modules": [
+     {
+      "code": "testing",
+      "name": "Test tizimi"
+     },
+     {
+      "code": "crm",
+      "name": "CRM"
+     },
+     {
+      "code": "lms",
+      "name": "Ta'lim (kurslar)"
+     },
+     {
+      "code": "school",
+      "name": "Maktab boshqaruvi"
+     }
+    ],
+    "addons": [
+     {
+      "code": "ai",
+      "name": "AI yordamchi"
+     },
+     {
+      "code": "callcenter",
+      "name": "Call markazi"
+     },
+     {
+      "code": "sms",
+      "name": "SMS xabarlar"
+     },
+     {
+      "code": "olympiad",
+      "name": "Olimpiadalar"
+     },
+     {
+      "code": "access",
+      "name": "Kirish nazorati"
+     },
+     {
+      "code": "fun",
+      "name": "O'yinlar va virtual laboratoriya"
+     },
+     {
+      "code": "branches",
+      "name": "Filiallar"
+     },
+     {
+      "code": "telegram",
+      "name": "Markaz Telegram boti"
+     }
+    ],
+    "limits": {
+     "students": null,
+     "extra_student_price": null,
+     "staff": null,
+     "branches": 10,
+     "ai_monthly": 5000,
+     "sms_monthly": 10000
+    }
+   }
+  ],
+  "addon_states": [
+   {
+    "addon": "ai",
+    "name": "AI yordamchi",
+    "description": "Xodim yordamchisi, AI ustoz, lidlarga javob, AI bilan savol yaratish.",
+    "monthly_price": 150000,
+    "mode": "paid",
+    "in_trial": true,
+    "quota": 1000,
+    "quota_key": "ai_monthly",
+    "requires": [],
+    "enabled": true,
+    "source": "plan"
+   },
+   {
+    "addon": "callcenter",
+    "name": "Call markazi",
+    "description": "Operator paneli, qo'ng'iroqda mijoz kartasi, AI ovozli operator, yozuvni matnga o'girish.",
+    "monthly_price": 200000,
+    "mode": "paid",
+    "in_trial": true,
+    "quota": null,
+    "quota_key": null,
+    "requires": [
+     "crm"
+    ],
+    "enabled": true,
+    "source": "plan"
+   },
+   {
+    "addon": "sms",
+    "name": "SMS xabarlar",
+    "description": "Ota-onalarga va lidlarga SMS: eslatmalar, qarzdorlik, davomat.",
+    "monthly_price": 60000,
+    "mode": "paid",
+    "in_trial": false,
+    "quota": 2000,
+    "quota_key": "sms_monthly",
+    "requires": [],
+    "enabled": true,
+    "source": "plan"
+   },
+   {
+    "addon": "olympiad",
+    "name": "Olimpiadalar",
+    "description": "Ro'yxatdan o'tish havolasi, pullik ishtirok, jonli kuzatuv, sertifikatlar.",
+    "monthly_price": 0,
+    "mode": "included",
+    "in_trial": true,
+    "quota": null,
+    "quota_key": null,
+    "requires": [
+     "testing"
+    ],
+    "enabled": true,
+    "source": "included"
+   },
+   {
+    "addon": "access",
+    "name": "Kirish nazorati",
+    "description": "QR karta va beyjik, kiosk, Face ID, ota-onaga kirish-chiqish xabari.",
+    "monthly_price": 120000,
+    "mode": "paid",
+    "in_trial": true,
+    "quota": null,
+    "quota_key": null,
+    "requires": [
+     "crm",
+     "school"
+    ],
+    "enabled": true,
+    "source": "bought"
+   },
+   {
+    "addon": "fun",
+    "name": "O'yinlar va virtual laboratoriya",
+    "description": "XP, nishonlar, reyting, o'quv o'yinlari va virtual laboratoriya.",
+    "monthly_price": 0,
+    "mode": "included",
+    "in_trial": true,
+    "quota": null,
+    "quota_key": null,
+    "requires": [
+     "testing",
+     "lms"
+    ],
+    "enabled": true,
+    "source": "included"
+   },
+   {
+    "addon": "branches",
+    "name": "Filiallar",
+    "description": "Bir nechta filial: filiallar kesimida hisobot va kassa.",
+    "monthly_price": 100000,
+    "mode": "paid",
+    "in_trial": false,
+    "quota": 5,
+    "quota_key": "branches",
+    "requires": [],
+    "enabled": false,
+    "source": "none"
+   },
+   {
+    "addon": "telegram",
+    "name": "Markaz Telegram boti",
+    "description": "Markaz nomidan Telegram bot: lidlarni qabul qilish, AI bilan javob, ro'yxatdan o'tkazish.",
+    "monthly_price": 0,
+    "mode": "included",
+    "in_trial": true,
+    "quota": null,
+    "quota_key": null,
+    "requires": [],
+    "enabled": true,
+    "source": "included"
+   }
+  ],
+  "bought_addons": [
+   "access"
+  ],
+  "cycles": {
+   "monthly": 0,
+   "quarterly": 5,
+   "semiannual": 10,
+   "yearly": 15
+  },
+  "usage": {
+   "students": {
+    "used": 12,
+    "limit": null
+   },
+   "staff": {
+    "used": 7,
+    "limit": 20
+   },
+   "branches": {
+    "used": 0,
+    "limit": 2
+   },
+   "ai_monthly": {
+    "used": 0,
+    "limit": 1500
+   },
+   "sms_monthly": {
+    "used": 0,
+    "limit": 3000
+   },
+   "warning_percent": 80
+  },
+  "invoices": [],
+  "providers": {
+   "click": false,
+   "payme": false,
+   "manual": true
+  },
+  "bank_details": ""
+ }
+}

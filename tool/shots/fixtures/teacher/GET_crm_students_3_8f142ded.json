@@ -1,0 +1,323 @@
+{
+ "method": "GET",
+ "path": "crm/students/3",
+ "query": {},
+ "status": 403,
+ "body": {
+  "message": "Bu amal uchun ruxsatingiz yo'q.",
+  "exception": "Symfony\\Component\\HttpKernel\\Exception\\HttpException",
+  "file": "/home/claude/work/edux/vendor/laravel/framework/src/Illuminate/Foundation/Application.php",
+  "line": 1448,
+  "trace": [
+   {
+    "file": "/home/claude/work/edux/vendor/laravel/framework/src/Illuminate/Foundation/helpers.php",
+    "line": 67,
+    "function": "abort",
+    "class": "Illuminate\\Foundation\\Application",
+    "type": "->"
+   },
+   {
+    "file": "/home/claude/work/edux/vendor/laravel/framework/src/Illuminate/Foundation/helpers.php",
+    "line": 85,
+    "function": "abort"
+   },
+   {
+    "file": "/home/claude/work/edux/app/Http/Middleware/EnsureOrganization.php",
+    "line": 26,
+    "function": "abort_if"
+   },
+   {
+    "file": "/home/claude/work/edux/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
+    "line": 219,
+    "function": "handle",
+    "class": "App\\Http\\Middleware\\EnsureOrganization",
+    "type": "->"
+   },
+   {
+    "file": "/home/claude/work/edux/app/Http/Middleware/EnsureModule.php",
+    "line": 28,
+    "function": "Illuminate\\Pipeline\\{closure}",
+    "class": "Illuminate\\Pipeline\\Pipeline",
+    "type": "->"
+   },
+   {
+    "file": "/home/claude/work/edux/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
+    "line": 219,
+    "function": "handle",
+    "class": "App\\Http\\Middleware\\EnsureModule",
+    "type": "->"
+   },
+   {
+    "file": "/home/claude/work/edux/app/Http/Middleware/EnsureSubscriptionWritable.php",
+    "line": 31,
+    "function": "Illuminate\\Pipeline\\{closure}",
+    "class": "Illuminate\\Pipeline\\Pipeline",
+    "type": "->"
+   },
+   {
+    "file": "/home/claude/work/edux/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
+    "line": 219,
+    "function": "handle",
+    "class": "App\\Http\\Middleware\\EnsureSubscriptionWritable",
+    "type": "->"
+   },
+   {
+    "file": "/home/claude/work/edux/vendor/laravel/framework/src/Illuminate/Routing/Middleware/SubstituteBindings.php",
+    "line": 52,
+    "function": "Illuminate\\Pipeline\\{closure}",
+    "class": "Illuminate\\Pipeline\\Pipeline",
+    "type": "->"
+   },
+   {
+    "file": "/home/claude/work/edux/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
+    "line": 219,
+    "function": "handle",
+    "class": "Illuminate\\Routing\\Middleware\\SubstituteBindings",
+    "type": "->"
+   },
+   {
+    "file": "/home/claude/work/edux/vendor/laravel/framework/src/Illuminate/Auth/Middleware/Authenticate.php",
+    "line": 63,
+    "function": "Illuminate\\Pipeline\\{closure}",
+    "class": "Illuminate\\Pipeline\\Pipeline",
+    "type": "->"
+   },
+   {
+    "file": "/home/claude/work/edux/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
+    "line": 219,
+    "function": "handle",
+    "class": "Illuminate\\Auth\\Middleware\\Authenticate",
+    "type": "->"
+   },
+   {
+    "file": "/home/claude/work/edux/app/Http/Middleware/SetLocale.php",
+    "line": 29,
+    "function": "Illuminate\\Pipeline\\{closure}",
+    "class": "Illuminate\\Pipeline\\Pipeline",
+    "type": "->"
+   },
+   {
+    "file": "/home/claude/work/edux/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
+    "line": 219,
+    "function": "handle",
+    "class": "App\\Http\\Middleware\\SetLocale",
+    "type": "->"
+   },
+   {
+    "file": "/home/claude/work/edux/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
+    "line": 137,
+    "function": "Illuminate\\Pipeline\\{closure}",
+    "class": "Illuminate\\Pipeline\\Pipeline",
+    "type": "->"
+   },
+   {
+    "file": "/home/claude/work/edux/vendor/laravel/framework/src/Illuminate/Routing/Router.php",
+    "line": 833,
+    "function": "then",
+    "class": "Illuminate\\Pipeline\\Pipeline",
+    "type": "->"
+   },
+   {
+    "file": "/home/claude/work/edux/vendor/laravel/framework/src/Illuminate/Routing/Router.php",
+    "line": 812,
+    "function": "runRouteWithinStack",
+    "class": "Illuminate\\Routing\\Router",
+    "type": "->"
+   },
+   {
+    "file": "/home/claude/work/edux/vendor/laravel/framework/src/Illuminate/Routing/Router.php",
+    "line": 776,
+    "function": "runRoute",
+    "class": "Illuminate\\Routing\\Router",
+    "type": "->"
+   },
+   {
+    "file": "/home/claude/work/edux/vendor/laravel/framework/src/Illuminate/Routing/Router.php",
+    "line": 765,
+    "function": "dispatchToRoute",
+    "class": "Illuminate\\Routing\\Router",
+    "type": "->"
+   },
+   {
+    "file": "/home/claude/work/edux/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php",
+    "line": 200,
+    "function": "dispatch",
+    "class": "Illuminate\\Routing\\Router",
+    "type": "->"
+   },
+   {
+    "file": "/home/claude/work/edux/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
+    "line": 180,
+    "function": "Illuminate\\Foundation\\Http\\{closure}",
+    "class": "Illuminate\\Foundation\\Http\\Kernel",
+    "type": "->"
+   },
+   {
+    "file": "/home/claude/work/edux/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php",
+    "line": 21,
+    "function": "Illuminate\\Pipeline\\{closure}",
+    "class": "Illuminate\\Pipeline\\Pipeline",
+    "type": "->"
+   },
+   {
+    "file": "/home/claude/work/edux/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/ConvertEmptyStringsToNull.php",
+    "line": 31,
+    "function": "handle",
+    "class": "Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest",
+    "type": "->"
+   },
+   {
+    "file": "/home/claude/work/edux/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
+    "line": 219,
+    "function": "handle",
+    "class": "Illuminate\\Foundation\\Http\\Middleware\\ConvertEmptyStringsToNull",
+    "type": "->"
+   },
+   {
+    "file": "/home/claude/work/edux/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php",
+    "line": 21,
+    "function": "Illuminate\\Pipeline\\{closure}",
+    "class": "Illuminate\\Pipeline\\Pipeline",
+    "type": "->"
+   },
+   {
+    "file": "/home/claude/work/edux/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TrimStrings.php",
+    "line": 51,
+    "function": "handle",
+    "class": "Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest",
+    "type": "->"
+   },
+   {
+    "file": "/home/claude/work/edux/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
+    "line": 219,
+    "function": "handle",
+    "class": "Illuminate\\Foundation\\Http\\Middleware\\TrimStrings",
+    "type": "->"
+   },
+   {
+    "file": "/home/claude/work/edux/vendor/laravel/framework/src/Illuminate/Http/Middleware/ValidatePostSize.php",
+    "line": 27,
+    "function": "Illuminate\\Pipeline\\{closure}",
+    "class": "Illuminate\\Pipeline\\Pipeline",
+    "type": "->"
+   },
+   {
+    "file": "/home/claude/work/edux/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
+    "line": 219,
+    "function": "handle",
+    "class": "Illuminate\\Http\\Middleware\\ValidatePostSize",
+    "type": "->"
+   },
+   {
+    "file": "/home/claude/work/edux/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/PreventRequestsDuringMaintenance.php",
+    "line": 110,
+    "function": "Illuminate\\Pipeline\\{closure}",
+    "class": "Illuminate\\Pipeline\\Pipeline",
+    "type": "->"
+   },
+   {
+    "file": "/home/claude/work/edux/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
+    "line": 219,
+    "function": "handle",
+    "class": "Illuminate\\Foundation\\Http\\Middleware\\PreventRequestsDuringMaintenance",
+    "type": "->"
+   },
+   {
+    "file": "/home/claude/work/edux/vendor/laravel/framework/src/Illuminate/Http/Middleware/HandleCors.php",
+    "line": 74,
+    "function": "Illuminate\\Pipeline\\{closure}",
+    "class": "Illuminate\\Pipeline\\Pipeline",
+    "type": "->"
+   },
+   {
+    "file": "/home/claude/work/edux/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
+    "line": 219,
+    "function": "handle",
+    "class": "Illuminate\\Http\\Middleware\\HandleCors",
+    "type": "->"
+   },
+   {
+    "file": "/home/claude/work/edux/vendor/laravel/framework/src/Illuminate/Http/Middleware/TrustProxies.php",
+    "line": 58,
+    "function": "Illuminate\\Pipeline\\{closure}",
+    "class": "Illuminate\\Pipeline\\Pipeline",
+    "type": "->"
+   },
+   {
+    "file": "/home/claude/work/edux/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
+    "line": 219,
+    "function": "handle",
+    "class": "Illuminate\\Http\\Middleware\\TrustProxies",
+    "type": "->"
+   },
+   {
+    "file": "/home/claude/work/edux/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/InvokeDeferredCallbacks.php",
+    "line": 22,
+    "function": "Illuminate\\Pipeline\\{closure}",
+    "class": "Illuminate\\Pipeline\\Pipeline",
+    "type": "->"
+   },
+   {
+    "file": "/home/claude/work/edux/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
+    "line": 219,
+    "function": "handle",
+    "class": "Illuminate\\Foundation\\Http\\Middleware\\InvokeDeferredCallbacks",
+    "type": "->"
+   },
+   {
+    "file": "/home/claude/work/edux/vendor/laravel/framework/src/Illuminate/Http/Middleware/ValidatePathEncoding.php",
+    "line": 28,
+    "function": "Illuminate\\Pipeline\\{closure}",
+    "class": "Illuminate\\Pipeline\\Pipeline",
+    "type": "->"
+   },
+   {
+    "file": "/home/claude/work/edux/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
+    "line": 219,
+    "function": "handle",
+    "class": "Illuminate\\Http\\Middleware\\ValidatePathEncoding",
+    "type": "->"
+   },
+   {
+    "file": "/home/claude/work/edux/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php",
+    "line": 137,
+    "function": "Illuminate\\Pipeline\\{closure}",
+    "class": "Illuminate\\Pipeline\\Pipeline",
+    "type": "->"
+   },
+   {
+    "file": "/home/claude/work/edux/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php",
+    "line": 175,
+    "function": "then",
+    "class": "Illuminate\\Pipeline\\Pipeline",
+    "type": "->"
+   },
+   {
+    "file": "/home/claude/work/edux/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php",
+    "line": 144,
+    "function": "sendRequestThroughRouter",
+    "class": "Illuminate\\Foundation\\Http\\Kernel",
+    "type": "->"
+   },
+   {
+    "file": "/home/claude/work/edux/vendor/laravel/framework/src/Illuminate/Foundation/Application.php",
+    "line": 1228,
+    "function": "handle",
+    "class": "Illuminate\\Foundation\\Http\\Kernel",
+    "type": "->"
+   },
+   {
+    "file": "/home/claude/work/edux/public/index.php",
+    "line": 43,
+    "function": "handleRequest",
+    "class": "Illuminate\\Foundation\\Application",
+    "type": "->"
+   },
+   {
+    "file": "/home/claude/work/edux/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php",
+    "line": 23,
+    "function": "require_once"
+   }
+  ]
+ }
+}

@@ -1,0 +1,70 @@
+{
+ "method": "GET",
+ "path": "students/12/insights",
+ "query": {},
+ "status": 200,
+ "body": {
+  "student": {
+   "id": 12,
+   "full_name": "Sobirov Ulugbek",
+   "code": "604436",
+   "phone": "+998935551299",
+   "groups": [
+    "ING-5"
+   ],
+   "guest": false
+  },
+  "modules": [
+   "testing",
+   "crm",
+   "lms"
+  ],
+  "testing": {
+   "count": 0,
+   "average_percent": null,
+   "attempts": [],
+   "pending": [
+    {
+     "id": 2,
+     "title": "IELTS Mock #1 — Sentyabr",
+     "ends_at": null,
+     "duration_minutes": 90
+    },
+    {
+     "id": 3,
+     "title": "IELTS Mock #2 — Oktyabr",
+     "ends_at": null,
+     "duration_minutes": 90
+    }
+   ]
+  },
+  "lms": {
+   "courses": [],
+   "assignments": {
+    "pending": [],
+    "graded": []
+   },
+   "average_grade_percent": null
+  },
+  "school": null,
+  "crm": {
+   "balance": 0,
+   "groups": [
+    {
+     "id": 2,
+     "name": "ING-5",
+     "status": "trial"
+    }
+   ],
+   "attendance_30d": {
+    "present": 0,
+    "absent": 0,
+    "late": 0,
+    "excused": 0
+   },
+   "average_score": null,
+   "coins": 0,
+   "exams": []
+  }
+ }
+}
