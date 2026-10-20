@@ -11,7 +11,7 @@ Actions sozlamalari (Settings → Secrets and variables → Actions):
 
 | Nomi | Turi | Nima uchun |
 |---|---|---|
-| `EDUX_SERVER` | Variable | Ilova ulanadigan server, masalan `https://app.edux.uz` |
+| `EDUX_SERVER` | Variable | Ilova ulanadigan server (bo'lmasa `https://edux.kuchkarov.uz`) |
 | `GOOGLE_SERVICES_JSON` | Secret | Firebase `google-services.json` matni — push-bildirishnomalar uchun |
 | `ANDROID_KEYSTORE_BASE64`, `ANDROID_KEYSTORE_PASSWORD`, `ANDROID_KEY_ALIAS`, `ANDROID_KEY_PASSWORD` | Secret | Play Market imzosi (bo'lmasa sinov kaliti) |
 
@@ -185,7 +185,7 @@ dart run tool/configure_platforms.dart
 dart run flutter_launcher_icons
 ```
 
-`EDUX_SERVER` — ilova sukut bo'yicha ulanadigan server. Kirish oynasida foydalanuvchi uni o'zgartirishi ham mumkin (taklif havolasi bilan kirganda server havoladan olinadi).
+`EDUX_SERVER` — ilova sukut bo'yicha ulanadigan server (berilmasa `https://edux.kuchkarov.uz`). Kirish oynasida server manzili ko'rinmaydi: o'z serveri bo'lgan tashkilot uchun logotipni uzoq bosish «Tizim manzili» oynasini ochadi. Standartdan farqli server tanlangan bo'lsa, kirish oynasi pastida uning manzili tugma sifatida ko'rinadi (bosilsa — o'sha oyna). Taklif havolasi bilan kirganda server havoladan olinadi.
 
 ### Android
 

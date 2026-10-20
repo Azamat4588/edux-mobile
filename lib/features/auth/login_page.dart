@@ -131,7 +131,7 @@ class _LoginPageState extends State<LoginPage> {
             controller: controller,
             keyboardType: TextInputType.url,
             autocorrect: false,
-            decoration: const InputDecoration(hintText: 'https://app.edux.uz'),
+            decoration: const InputDecoration(hintText: 'https://edux.kuchkarov.uz'),
           ),
         ]),
         actions: <Widget>[
@@ -263,7 +263,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
             // Server manzili so'ralmaydi: ilova standart serverga ulanadi. O'z serveri bo'lgan tashkilot uchun —
             // logotipni uzoq bosib manzilni o'zgartirish mumkin; standartdan farqli bo'lsa, manzil shu yerda ko'rinadi.
-            if (session.server != defaultServer) ...<Widget>[
+            if (!session.usesDefaultServer) ...<Widget>[
               const SizedBox(height: 28),
               Center(
                 child: TextButton.icon(

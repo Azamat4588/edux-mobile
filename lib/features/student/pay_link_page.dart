@@ -11,7 +11,7 @@ import '../../core/session.dart';
 import '../../core/theme.dart';
 import '../../core/widgets.dart';
 
-/// Havoladan token: "https://app.edux.uz/p/AbC..." yoki tokenning o'zi.
+/// Havoladan token: "https://edux.kuchkarov.uz/p/AbC..." yoki tokenning o'zi.
 String? payLinkToken(String value) {
   final text = value.trim();
   final match = RegExp(r'/p/([A-Za-z0-9]{20,40})').firstMatch(text);

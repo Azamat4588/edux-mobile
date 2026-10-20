@@ -3,7 +3,7 @@
 # iOS: alohida job (macos-latest) imzosiz `.app` yig'adi va Artifacts ga qo'yadi; u Android job'iga bog'liq emas
 # va xato bersa ham Android yig'ilishi/Releases to'xtamaydi.
 # Sozlamalar (repo → Settings → Secrets and variables → Actions):
-#   vars.EDUX_SERVER             — ilova sukut bo'yicha ulanadigan server (masalan https://app.edux.uz)
+#   vars.EDUX_SERVER             — ilova sukut bo'yicha ulanadigan server (bo'lmasa https://edux.kuchkarov.uz)
 #   secrets.GOOGLE_SERVICES_JSON — Firebase google-services.json matni (push uchun; bo'lmasa push o'chiq)
 #   secrets.ANDROID_KEYSTORE_BASE64, ANDROID_KEYSTORE_PASSWORD, ANDROID_KEY_ALIAS, ANDROID_KEY_PASSWORD — Play Market imzosi (ixtiyoriy;
 #     bo'lsa har yig'ishda imzolangan .aab ham chiqadi va «latest» relizga qo'shiladi)
@@ -23,7 +23,7 @@ permissions:
   contents: write
 
 env:
-  EDUX_SERVER: ${{ vars.EDUX_SERVER || 'https://app.edux.uz' }}
+  EDUX_SERVER: ${{ vars.EDUX_SERVER || 'https://edux.kuchkarov.uz' }}
 
 jobs:
   android:
@@ -153,7 +153,7 @@ jobs:
             done
           done
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: edux-android
           path: |
@@ -167,7 +167,6 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           version=$(grep '^version:' pubspec.yaml | sed -E 's/version: *([^+]+).*/\1/')
-          gh release delete latest --yes --cleanup-tag || true
           files=(build/app/outputs/flutter-apk/*.apk)
           notes="Avtomatik yig'ish: ${{ github.sha }}. Ko'pchilik telefonlar uchun: app-arm64-v8a-release.apk. Eski telefonlar: app-armeabi-v7a-release.apk. Server: $EDUX_SERVER"
           # Imzolangan App Bundle — Google Play Console'ga yuklash uchun.
@@ -176,9 +175,23 @@ jobs:
             files+=("edux-$version-${{ github.run_number }}.aab")
             notes="$notes. Google Play: edux-$version-${{ github.run_number }}.aab (versionCode ${{ github.run_number }})."
           fi
-          gh release create latest "${files[@]}" \
-            --prerelease --title "EduX $version (yig'ish ${{ github.run_number }})" \
-            --notes "$notes"
+          title="EduX $version (yig'ish ${{ github.run_number }})"
+          # Reliz o'chirilmaydi: yig'ish to'xtab qolsa ham eski fayllar joyida qoladi. Avval yangi fayllar yuklanadi,
+          # so'ng yangi ro'yxatda yo'q eski fayllar (masalan oldingi .aab) o'chiriladi.
+          if gh release view latest > /dev/null 2>&1; then
+            # «latest» tegi joriy commit'ga suriladi (tag — CI'niki, tarix o'zgarmaydi).
+            gh api -X PATCH "repos/$GITHUB_REPOSITORY/git/refs/tags/latest" -f sha="$GITHUB_SHA" -F force=true > /dev/null \
+              || echo "::warning::latest tegini surib bo'lmadi"
+            gh release edit latest --prerelease --title "$title" --notes "$notes"
+            gh release upload latest "${files[@]}" --clobber
+            keep=" "; for f in "${files[@]}"; do keep="$keep$(basename "$f") "; done
+            gh release view latest --json assets --jq '.assets[].name' | while IFS= read -r asset; do
+              case "$keep" in *" $asset "*) ;; *) echo "Eski fayl o'chiriladi: $asset"; gh release delete-asset latest "$asset" --yes ;; esac
+            done
+          else
+            gh release create latest "${files[@]}" --target "$GITHUB_SHA" \
+              --prerelease --title "$title" --notes "$notes"
+          fi
 
   ios:
     # Imzosiz iOS yig'ish: loyiha sozlamalari, plaginlar (CocoaPods) va Dart kodi iOS da yig'ilishini tekshiradi.
@@ -233,7 +246,7 @@ jobs:
             done
           done
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: edux-ios-unsigned
           path: edux-ios-unsigned.app.zip

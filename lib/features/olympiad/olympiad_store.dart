@@ -11,7 +11,7 @@ class OlympiadStore {
   /// Olimpiada tokeni: 12 ta kichik harf/raqam (havoladagi /o/<token>).
   static final RegExp _token = RegExp(r'^[a-z0-9]{12}$');
 
-  /// "https://app.edux.uz/o/abc123def456", "/o/abc..." yoki tokenning o'zi → token.
+  /// "https://edux.kuchkarov.uz/o/abc123def456", "/o/abc..." yoki tokenning o'zi → token.
   static String? parse(String value) {
     final text = value.trim();
     final match = RegExp(r'/o/([a-z0-9]{12})(?:[/?#]|$)').firstMatch(text);

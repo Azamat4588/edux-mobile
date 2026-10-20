@@ -606,11 +606,10 @@ class CallerCardView extends StatelessWidget {
 }
 
 class _CallRow extends StatelessWidget {
-  const _CallRow({required this.call, this.onTap, this.trailing});
+  const _CallRow({required this.call, this.onTap});
 
   final Map<String, dynamic> call;
   final VoidCallback? onTap;
-  final Widget? trailing;
 
   @override
   Widget build(BuildContext context) {
@@ -635,7 +634,7 @@ class _CallRow extends StatelessWidget {
           Text(asText(call['note']).isNotEmpty ? asText(call['note']) : asText(call['summary']),
               maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(color: AppColors.ink, fontSize: 13)),
       ]),
-      trailing: trailing ?? (outcome.isEmpty ? null : Pill(tr(callOutcomeLabels[outcome] ?? outcome), color: _outcomeColor(outcome))),
+      trailing: outcome.isEmpty ? null : Pill(tr(callOutcomeLabels[outcome] ?? outcome), color: _outcomeColor(outcome)),
     );
   }
 }

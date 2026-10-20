@@ -14,8 +14,17 @@ import 'offline_cache.dart';
 import 'push.dart';
 import 'theme.dart';
 
-/// Ilova yig'ilganda beriladi: flutter build ... --dart-define=EDUX_SERVER=https://app.edux.uz
-const String defaultServer = String.fromEnvironment('EDUX_SERVER', defaultValue: 'https://app.edux.uz');
+/// Ilova yig'ilganda beriladi: flutter build ... --dart-define=EDUX_SERVER=https://edux.kuchkarov.uz
+const String defaultServer = String.fromEnvironment('EDUX_SERVER', defaultValue: 'https://edux.kuchkarov.uz');
+
+/// Server manzilini bir xil ko'rinishga keltiradi: bo'shliqlar olinadi, sxema bo'lmasa https:// qo'shiladi,
+/// oxiridagi "/" belgilar olib tashlanadi. Bo'sh qiymat — standart server.
+String normalizeServer(String value) {
+  var clean = value.trim();
+  if (clean.isEmpty) clean = defaultServer.trim();
+  if (!clean.startsWith('http://') && !clean.startsWith('https://')) clean = 'https://$clean';
+  return clean.replaceAll(RegExp(r'/+$'), '');
+}
 
 class Membership {
   Membership(this.organizationId, this.organization, this.role);
@@ -54,6 +63,9 @@ class Session extends ChangeNotifier implements ApiCredentials {
 
   @override
   String get server => _server;
+
+  /// Joriy server standart serverning o'zi (oxiridagi "/" va h.k. farqlari hisobga olinmaydi).
+  bool get usesDefaultServer => normalizeServer(_server) == normalizeServer(defaultServer);
 
   @override
   String? get token => _token;
@@ -255,10 +267,7 @@ class Session extends ChangeNotifier implements ApiCredentials {
   }
 
   Future<void> setServer(String value) async {
-    var clean = value.trim();
-    if (clean.isEmpty) clean = defaultServer;
-    if (!clean.startsWith('http://') && !clean.startsWith('https://')) clean = 'https://$clean';
-    _server = clean.replaceAll(RegExp(r'/+$'), '');
+    _server = normalizeServer(value);
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('server', _server);
     notifyListeners();
