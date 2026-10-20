@@ -25,10 +25,26 @@ void main() {
       expect(data['attempt_id'], '5');
     });
 
+    test('route (veb route nomi) — avval; id lar link dan', () {
+      final guardian = PushService.normalize(<String, dynamic>{
+        'type': 'attempt',
+        'route': 'child.tests',
+        'link': '/child/tests?student=7',
+        'student_id': '7',
+      });
+      expect(guardian['type'], 'attempt');
+      expect(guardian['student_id'], '7');
+      expect(PushService.normalize(<String, dynamic>{'type': 'attendance', 'route': 'child.diary'})['type'], 'diary');
+      expect(PushService.normalize(<String, dynamic>{'type': 'arrival', 'route': 'child', 'link': '/child?student=3'})['type'], 'child');
+      expect(PushService.normalize(<String, dynamic>{'type': 'attempt', 'route': 'my.attempt', 'link': '/my/attempts/15'})['attempt_id'], '15');
+      expect(PushService.normalize(<String, dynamic>{'route': 'crm.leads', 'link': '/crm/leads?lead=9'})['lead_id'], '9');
+      expect(PushService.normalize(<String, dynamic>{'route': 'my.payments', 'link': '/home/payments'})['type'], 'payment');
+    });
+
     test('route/url dan tur va id', () {
       expect(PushService.normalize(<String, dynamic>{'url': 'https://app.edux.uz/my/attempts/15'})['attempt_id'], '15');
-      expect(PushService.normalize(<String, dynamic>{'route': '/child/payments?student=7'})['type'], 'payment');
-      expect(PushService.normalize(<String, dynamic>{'route': '/child/payments?student=7'})['student_id'], '7');
+      expect(PushService.normalize(<String, dynamic>{'link': '/child/payments?student=7'})['type'], 'payment');
+      expect(PushService.normalize(<String, dynamic>{'link': '/child/payments?student=7'})['student_id'], '7');
       expect(PushService.normalize(<String, dynamic>{'route': '/child/tests'})['type'], 'attempt');
       expect(PushService.normalize(<String, dynamic>{'route': '/child/diary'})['type'], 'diary');
       expect(PushService.normalize(<String, dynamic>{'url': '/crm/leads?lead=9'})['lead_id'], '9');

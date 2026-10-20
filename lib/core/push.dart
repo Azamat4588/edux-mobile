@@ -4,8 +4,9 @@
 // Oqim: kirgandan keyin token olinadi → POST /devices; token yangilansa — qayta; chiqishda DELETE /devices.
 // Xabar bosilganda: kerak bo'lsa tashkilot almashtiriladi va tegishli sahifa ochiladi (PushRouter).
 // 3.1: har bir xabar bildirishnomalar markaziga yoziladi (NotificationStore) — ilova yopiq bo'lganda ham (fon handler).
-// 3.2: server data.type (payment, attendance, arrival, attempt, assignment, certificate, lead, task, sms_gateway) yoki
-// veb manzili (data.route / data.url, masalan /child/tests) bo'yicha sahifa tanlanadi; noma'lum bo'lsa — bosh sahifa.
+// 3.2: sahifa data.route (veb route nomi: my.attempt, child.tests, crm.leads ...) bo'yicha, eski serverda data.type
+// (payment, attendance, arrival, attempt, ...) yoki havola (data.link) bo'yicha tanlanadi; noma'lum bo'lsa — bosh sahifa.
+// Ota-onaga child.* — «Farzandim»da shu farzand (student_id) va yorliq.
 import 'dart:async';
 import 'dart:io';
 
@@ -80,19 +81,51 @@ class PushService {
   /// Bu turdagi xabar uchun alohida sahifa bormi.
   bool hasRoute(String type) => routes.containsKey(type);
 
-  /// Xabar ma'lumoti: `type` bo'lmasa (yoki notanish bo'lsa) veb manzilidan (`route` / `url`) turi va id lari olinadi.
-  /// Masalan /my/attempts/15 → attempt (attempt_id 15), /child/payments → payment, /crm/leads?lead=7 → lead.
+  /// Server 1.29.x: `route` — veb route nomi (App\Support\AppLinks::ROUTES), `link` — veb manzili. Ilova ichidagi tur.
+  static const Map<String, String> routeTypes = <String, String>{
+    'my.payments': 'payment',
+    'child.payments': 'payment',
+    'child.diary': 'diary',
+    'child': 'child',
+    'my.attempt': 'attempt',
+    'child.tests': 'attempt',
+    'lms.my.assignments': 'assignment',
+    'my.certificates': 'certificate',
+    'public.certificate': 'certificate',
+    'crm.leads': 'lead',
+    'crm.tasks': 'task',
+  };
+
+  /// Xabar ma'lumoti → ilova ichidagi tur: avval `route` (yangi server), keyin `type` (eski server), oxiri veb manzili
+  /// (`link` / `url`) — masalan /my/attempts/15 → attempt (attempt_id 15), /child/payments?student=7 → payment.
   static Map<String, dynamic> normalize(Map<String, dynamic> data) {
+    final route = asText(data['route']);
+    final mapped = routeTypes[route];
+    if (mapped != null) {
+      final result = <String, dynamic>{...data, 'type': mapped};
+      // Havoladan id lar (attempt_id, lead_id, student_id) — server alohida bermagan bo'lsa.
+      final fromLink = _fromLink(asText(data['link'], asText(data['url'])));
+      fromLink.forEach((key, value) {
+        if (key != 'type' && result[key] == null) result[key] = value;
+      });
+      return result;
+    }
     final type = asText(data['type']);
-    const known = <String>['payment', 'attendance', 'arrival', 'attempt', 'assignment', 'certificate', 'lead', 'task', 'diary', 'sms_gateway'];
+    const known = <String>['payment', 'attendance', 'arrival', 'attempt', 'assignment', 'certificate', 'lead', 'task', 'diary', 'child', 'sms_gateway'];
     if (known.contains(type)) return data;
-    final link = asText(data['route'], asText(data['url'], asText(data['link'])));
+    final link = route.contains('/') ? route : asText(data['link'], asText(data['url']));
     if (link.isEmpty) return data;
+    return <String, dynamic>{...data, ..._fromLink(link)};
+  }
+
+  /// Veb manzili → {type, attempt_id, lead_id, student_id} (topilganlari).
+  static Map<String, dynamic> _fromLink(String link) {
+    final result = <String, dynamic>{};
+    if (link.isEmpty) return result;
     final uri = Uri.tryParse(link);
-    if (uri == null) return data;
+    if (uri == null) return result;
     final segments = uri.pathSegments.where((item) => item.isNotEmpty).toList();
     final path = '/${segments.join('/')}';
-    final result = <String, dynamic>{...data};
     String? id(int index) => segments.length > index && int.tryParse(segments[index]) != null ? segments[index] : null;
     if (path.startsWith('/my/attempts/') && id(2) != null) {
       result['type'] = 'attempt';
@@ -103,7 +136,9 @@ class PushService {
       result['type'] = 'payment';
     } else if (path == '/child/diary' || path == '/school/diary') {
       result['type'] = 'diary';
-    } else if (path == '/my/certificates' || path == '/certificates') {
+    } else if (path == '/child') {
+      result['type'] = 'child';
+    } else if (path == '/my/certificates' || path == '/certificates' || path.startsWith('/c/')) {
       result['type'] = 'certificate';
     } else if (path.startsWith('/learn/assignments') || path.startsWith('/lms/my/assignments')) {
       result['type'] = 'assignment';
@@ -115,7 +150,7 @@ class PushService {
       result['type'] = 'task';
     }
     final student = uri.queryParameters['student'] ?? uri.queryParameters['student_id'];
-    if (student != null && result['student_id'] == null) result['student_id'] = student;
+    if (student != null) result['student_id'] = student;
     return result;
   }
 

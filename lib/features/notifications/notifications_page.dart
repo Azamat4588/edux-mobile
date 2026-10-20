@@ -31,6 +31,8 @@ IconData notificationIcon(String type) {
       return Icons.task_alt;
     case 'diary':
       return Icons.event_note_outlined;
+    case 'child':
+      return Icons.family_restroom_outlined;
     default:
       return Icons.notifications_none_rounded;
   }

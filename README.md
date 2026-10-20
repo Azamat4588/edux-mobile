@@ -42,8 +42,10 @@ hisoblar (Click, Payme — tashqi sahifa, ilovaga qaytilganda holat yangilanadi;
 → `POST billing/quote` → `POST billing/invoices`. Obuna «faqat o'qish» bo'lsa, tepadagi sariq yozuv rahbarni shu sahifaga olib boradi;
 platforma to'xtatgan obuna (`subscription.suspended`) uchun alohida matn.
 
-**Push**: `data.type` (payment, attendance, arrival, attempt, assignment, certificate, lead, task) yoki veb manzili
-(`data.route` / `data.url`, masalan `/child/tests`, `/my/attempts/15`) bo'yicha sahifa. Rol uchun yopiq sahifa ochilmaydi
+**Push**: avval `data.route` (veb route nomi: my.payments, my.attempt, my.certificates, lms.my.assignments, child,
+child.payments, child.diary, child.tests, public.certificate, crm.leads, crm.tasks; id lar `data.link` dan), eski serverda
+`data.type` (payment, attendance, arrival, attempt, assignment, certificate, lead, task) yoki havola bo'yicha sahifa.
+Ota-onaga `child.*` — «Farzandim»da shu farzand (`student_id`) va tegishli yorliq. Rol uchun yopiq sahifa ochilmaydi
 (masalan, ota-onaga test natijasi — «Farzandim»da shu farzandning «Testlar» yorlig'i). Noma'lum xabar — bosh sahifa.
 
 **Optimallashtirish**: pastki menyu tablari birinchi ochilganda quriladi (ilova ochilganda bir xil so'rovlar parallel ketmaydi);
