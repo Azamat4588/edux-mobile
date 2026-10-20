@@ -385,8 +385,11 @@ Future<void> studentFlow(Shooter s) async {
 
   final exams = await s.list('my/exams', key: 'exams');
   final done = exams.where((item) => asInt(asMap(item['attempt'])['id']) > 0).toList();
-  if (done.isNotEmpty) {
-    await s.open('test-result', AttemptResultPage(attemptId: asInt(asMap(done.first['attempt'])['id'])), then: () async {
+  // A school test first (scrolling the IELTS result builds its listening audio players, which took the emulator down).
+  final school = done.where((item) => !asText(item['title']).contains('IELTS')).toList();
+  final ielts = done.where((item) => asText(item['title']).contains('IELTS')).toList();
+  if (school.isNotEmpty) {
+    await s.open('test-result', AttemptResultPage(attemptId: asInt(asMap(school.first['attempt'])['id'])), then: () async {
       await s.scrollDown();
       await s.shot('test-result-more', wait: false);
     });
@@ -423,6 +426,7 @@ Future<void> studentFlow(Shooter s) async {
   }
   await s.open('notifications', const NotificationsPage());
   await supportFlow(s);
+  if (ielts.isNotEmpty) await s.open('ielts-result', AttemptResultPage(attemptId: asInt(asMap(ielts.first['attempt'])['id'])));
 }
 
 Future<void> guardianFlow(Shooter s) async {
@@ -452,7 +456,9 @@ void main() {
   binding = IntegrationTestWidgetsFlutterBinding.ensureInitialized();
   binding.framePolicy = LiveTestWidgetsFlutterBindingFramePolicy.fullyLive;
 
-  for (final spec in roles) {
+  // Student last: its pages are the heaviest for the emulator; file numbers keep the role order above.
+  final order = <RoleSpec>[...roles.where((r) => r.role != 'student'), ...roles.where((r) => r.role == 'student')];
+  for (final spec in order) {
     testWidgets('screenshots: ${spec.prefix}', (tester) async {
       final original = FlutterError.onError;
       final errors = <String>[];
