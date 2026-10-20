@@ -52,6 +52,22 @@ jobs:
           dart run tool/configure_platforms.dart 2>&1 | tee -a ci.log
           dart run flutter_launcher_icons 2>&1 | tee -a ci.log
 
+      - name: Android NDK (qayta urinish bilan)
+        # Gradle NDK ni yig'ish paytida yuklaydi va tarmoq uzilsa («ZipFile unknown archive») yoki osilib qolsa butun yig'ish
+        # yiqiladi. Oldindan, vaqt chegarasi va 3 urinish bilan o'rnatamiz.
+        timeout-minutes: 15
+        run: |
+          NDK=$(grep -rhoE 'ndkVersion[^"]*"[0-9.]+"' "$FLUTTER_ROOT/packages/flutter_tools/gradle" | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | head -1)
+          echo "NDK: ${NDK:-topilmadi}"
+          [ -n "$NDK" ] || exit 0
+          SDKM="$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager"
+          for i in 1 2 3; do
+            rm -rf "$ANDROID_HOME/ndk/$NDK.tmp" 2>/dev/null || true
+            if yes | timeout 300 "$SDKM" "ndk;$NDK" > /dev/null && [ -f "$ANDROID_HOME/ndk/$NDK/source.properties" ]; then echo "NDK $NDK o'rnatildi"; exit 0; fi
+            echo "::warning::NDK yuklash $i-urinishda muvaffaqiyatsiz"; rm -rf "$ANDROID_HOME/ndk/$NDK"; sleep 20
+          done
+          exit 1
+
       - name: Firebase va imzo
         env:
           GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
