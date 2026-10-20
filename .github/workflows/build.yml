@@ -53,20 +53,28 @@ jobs:
           dart run flutter_launcher_icons 2>&1 | tee -a ci.log
 
       - name: Android NDK (qayta urinish bilan)
-        # Gradle NDK ni yig'ish paytida yuklaydi va tarmoq uzilsa («ZipFile unknown archive») yoki osilib qolsa butun yig'ish
-        # yiqiladi. Oldindan, vaqt chegarasi va 3 urinish bilan o'rnatamiz.
+        # Gradle NDK ni yig'ish paytida yuklaydi; Google serveridagi arxiv buzuq kelsa («ZipFile unknown archive») yig'ish
+        # yiqiladi. Kerakli NDK ni oldindan 3 urinish bilan o'rnatamiz; bo'lmasa runner'da oldindan o'rnatilgan eng yangi NDK ishlatiladi.
         timeout-minutes: 15
         run: |
-          NDK=$(grep -rhoE 'ndkVersion[^"]*"[0-9.]+"' "$FLUTTER_ROOT/packages/flutter_tools/gradle" | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | head -1)
-          echo "NDK: ${NDK:-topilmadi}"
-          [ -n "$NDK" ] || exit 0
+          GRADLE_APP=$(ls android/app/build.gradle.kts android/app/build.gradle 2>/dev/null | head -1)
+          NDK=$(grep -rhoE 'ndkVersion[^0-9"]*"?[0-9]+\.[0-9]+\.[0-9]+' "$FLUTTER_ROOT/packages/flutter_tools/gradle" 2>/dev/null | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | sort -V | tail -1)
+          echo "::notice::Flutter NDK: ${NDK:-aniqlanmadi}; o'rnatilganlar: $(ls "$ANDROID_HOME/ndk" 2>/dev/null | tr '\n' ' ')"
+          if [ -n "$NDK" ] && [ -f "$ANDROID_HOME/ndk/$NDK/source.properties" ]; then exit 0; fi
           SDKM="$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager"
-          for i in 1 2 3; do
-            rm -rf "$ANDROID_HOME/ndk/$NDK.tmp" 2>/dev/null || true
-            if yes | timeout 300 "$SDKM" "ndk;$NDK" > /dev/null && [ -f "$ANDROID_HOME/ndk/$NDK/source.properties" ]; then echo "NDK $NDK o'rnatildi"; exit 0; fi
-            echo "::warning::NDK yuklash $i-urinishda muvaffaqiyatsiz"; rm -rf "$ANDROID_HOME/ndk/$NDK"; sleep 20
-          done
-          exit 1
+          if [ -n "$NDK" ]; then
+            for i in 1 2 3; do
+              yes | timeout 300 "$SDKM" "ndk;$NDK" > ndk.log 2>&1 || true
+              if [ -f "$ANDROID_HOME/ndk/$NDK/source.properties" ]; then echo "::notice::NDK $NDK o'rnatildi"; exit 0; fi
+              echo "::warning::NDK $NDK yuklash $i-urinishda muvaffaqiyatsiz: $(grep -iE 'error|warning' ndk.log | tail -1)"
+              rm -rf "$ANDROID_HOME/ndk/$NDK"; sleep 20
+            done
+          fi
+          LOCAL=$(ls "$ANDROID_HOME/ndk" 2>/dev/null | grep -E '^[0-9]+\.[0-9]+\.[0-9]+$' | sort -V | tail -1)
+          [ -n "$LOCAL" ] || { echo "::error::NDK yo'q"; exit 1; }
+          sed -i -E "s/ndkVersion *= *flutter\.ndkVersion/ndkVersion = \"$LOCAL\"/; s/ndkVersion +flutter\.ndkVersion/ndkVersion \"$LOCAL\"/" "$GRADLE_APP"
+          grep -n ndkVersion "$GRADLE_APP" || sed -i -E "0,/^android *\{/s//android {\n    ndkVersion = \"$LOCAL\"/" "$GRADLE_APP"
+          echo "::warning::NDK $NDK yuklanmadi — runner'dagi $LOCAL ishlatiladi ($(grep -n ndkVersion "$GRADLE_APP"))"
 
       - name: Firebase va imzo
         env:
