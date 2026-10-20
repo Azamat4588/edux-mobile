@@ -46,8 +46,11 @@ class AttendancePage extends StatelessWidget {
                 SectionTitle(tr('Bugungi darslar')),
                 for (final group in today) _GroupTile(group: group, highlight: true),
               ],
-              SectionTitle(today.isEmpty ? session.term('groups', 'Guruhlar') : tr('Boshqa guruhlar')),
-              for (final group in others) _GroupTile(group: group),
+              // Hamma guruhda bugun dars bo'lsa — bo'sh «Boshqa guruhlar» sarlavhasi chiqmaydi.
+              if (others.isNotEmpty) ...<Widget>[
+                SectionTitle(today.isEmpty ? session.term('groups', 'Guruhlar') : tr('Boshqa guruhlar')),
+                for (final group in others) _GroupTile(group: group),
+              ],
             ],
           );
         },
