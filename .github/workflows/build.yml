@@ -11,7 +11,8 @@ name: Build
 
 on:
   push:
-    branches: [main]
+    # main — to'liq yig'ish va reliz; boshqa branch'lar — faqat tahlil va testlar (`check` job, relizsiz).
+    branches: ['**']
   pull_request:
   workflow_dispatch:
 
@@ -26,7 +27,57 @@ env:
   EDUX_SERVER: ${{ vars.EDUX_SERVER || 'https://edux.kuchkarov.uz' }}
 
 jobs:
+  # Ish branch'lari (main emas): tez tekshiruv — flutter analyze va flutter test. APK, reliz va iOS yo'q.
+  check:
+    if: github.event_name == 'push' && github.ref != 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Paketlar
+        run: |
+          set -o pipefail
+          flutter --version
+          flutter pub get 2>&1 | tee ci.log
+
+      - name: Tahlil
+        run: |
+          status=0
+          flutter analyze --no-fatal-infos --no-fatal-warnings > analyze.log 2>&1 || status=$?
+          cat analyze.log
+          grep -E "^\s*error •" analyze.log | head -40 | while IFS= read -r line; do
+            file=$(echo "$line" | sed -E 's/.* • ([^ ]+):([0-9]+):([0-9]+) • .*/\1/'); row=$(echo "$line" | sed -E 's/.* • [^ ]+:([0-9]+):[0-9]+ • .*/\1/')
+            echo "::error file=$file,line=$row::$line"
+          done
+          grep -E "^\s*warning •" analyze.log | head -30 | while IFS= read -r line; do echo "::warning::$line"; done
+          grep -E "^\s*info •" analyze.log | head -30 | while IFS= read -r line; do echo "::notice::$line"; done
+          echo "::notice::Tahlil: $(grep -cE '^\s*error •' analyze.log) xato, $(grep -cE '^\s*warning •' analyze.log) ogohlantirish, $(grep -cE '^\s*info •' analyze.log) maslahat"
+          exit $status
+
+      - name: Testlar
+        if: always()
+        run: |
+          set -o pipefail
+          flutter test 2>&1 | tee test.log
+
+      - name: Xato tafsilotlari
+        if: failure()
+        run: |
+          for file in ci.log test.log; do
+            [ -f "$file" ] || continue
+            grep -nE "(Error|error:|FAILED|Expected|Actual|Exception|\.dart:[0-9]+:[0-9]+|Some tests failed)" "$file" | head -30 | while IFS= read -r line; do
+              echo "::error title=$file::$(echo "$line" | cut -c1-900)"
+            done
+          done
+
   android:
+    if: github.event_name != 'push' || github.ref == 'refs/heads/main'
     runs-on: ubuntu-24.04
     timeout-minutes: 45
     steps:
@@ -196,6 +247,7 @@ jobs:
   ios:
     # Imzosiz iOS yig'ish: loyiha sozlamalari, plaginlar (CocoaPods) va Dart kodi iOS da yig'ilishini tekshiradi.
     # App Store / TestFlight uchun imzo va GoogleService-Info.plist alohida (README → iPhone).
+    if: github.event_name != 'push' || github.ref == 'refs/heads/main'
     runs-on: macos-latest
     timeout-minutes: 60
     continue-on-error: true
