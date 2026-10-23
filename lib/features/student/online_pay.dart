@@ -1,5 +1,6 @@
-// Onlayn to'lov (Click / Payme): o'quvchi o'zi uchun, ota-ona farzandi uchun. To'lov sahifasi brauzerda ochiladi,
-// ilovaga qaytilganda buyurtma holati (GET /pay/orders/{id}) tekshiriladi.
+// Onlayn to'lov: o'quvchi o'zi uchun, ota-ona farzandi uchun. Usullar (Click, Payme, Uzum, Paynet, Oson, Alif, kartaga
+// o'tkazma) server bergan ro'yxat va tartibda (GET pay/options → methods). To'lov sahifasi brauzerda ochiladi, ilovaga
+// qaytilganda buyurtma holati (GET /pay/orders/{id}) tekshiriladi; kartaga o'tkazmada — P2pTransferPage.
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -8,6 +9,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../core/api.dart';
 import '../../core/format.dart';
+import '../../core/payments.dart';
 import '../../core/i18n.dart';
 import '../../core/session.dart';
 import '../../core/theme.dart';
@@ -16,7 +18,8 @@ import '../../core/widgets.dart';
 /// To'lov tugagach (yoki bekor qilinganda) chaqiriladi — masalan, balansni yangilash uchun.
 typedef PaymentDone = void Function(bool paid);
 
-Future<void> startOnlinePayment(BuildContext context, {int? studentId, int suggested = 0, PaymentDone? onDone}) async {
+/// Onlayn to'lov: o'qish to'lovi (summa kiritiladi) yoki pullik kurs ([courseId], summa server hisoblaydi).
+Future<void> startOnlinePayment(BuildContext context, {int? studentId, int suggested = 0, int? courseId, int months = 1, int coursePrice = 0, PaymentDone? onDone}) async {
   final api = AppScope.read(context).api;
   Map<String, dynamic> options;
   try {
@@ -25,27 +28,49 @@ Future<void> startOnlinePayment(BuildContext context, {int? studentId, int sugge
     if (context.mounted) showMessage(context, error.message, error: true);
     return;
   }
-  final providers = asMap(options['providers']);
-  if (providers['click'] != true && providers['payme'] != true) {
+  final methods = payMethods(options);
+  if (methods.isEmpty) {
     if (context.mounted) {
       showMessage(context, tr("Tashkilotda onlayn to'lov yoqilmagan. To'lovni markaz ma'muriyatiga topshiring."), error: true);
     }
     return;
   }
   if (!context.mounted) return;
-  final orderId = await showModalBottomSheet<int>(
+  final result = await showModalBottomSheet<_PayStart>(
     context: context,
     isScrollControlled: true,
     useSafeArea: true,
     shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(22))),
     builder: (context) => Padding(
       padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-      child: _PayForm(studentId: studentId, providers: providers, suggested: suggested, minAmount: asInt(options['min_amount'], 1000)),
+      child: _PayForm(
+        studentId: studentId,
+        methods: methods,
+        suggested: suggested,
+        minAmount: asInt(options['min_amount'], 1000),
+        courseId: courseId,
+        months: months,
+        coursePrice: coursePrice,
+      ),
     ),
   );
-  if (orderId == null || !context.mounted) return;
-  final paid = await showOrderStatus(context, orderId);
+  if (result == null || !context.mounted) return;
+  bool paid;
+  if (result.p2p != null) {
+    paid = await Navigator.of(context).push<bool>(MaterialPageRoute<bool>(builder: (_) => P2pTransferPage(orderId: result.orderId, initial: result.p2p!))) ?? false;
+  } else {
+    paid = await showOrderStatus(context, result.orderId);
+  }
   onDone?.call(paid);
+}
+
+class _PayStart {
+  const _PayStart(this.orderId, [this.p2p]);
+
+  final int orderId;
+
+  /// Kartaga o'tkazma tanlangan bo'lsa — buyurtma (noyob summa va karta bilan).
+  final Map<String, dynamic>? p2p;
 }
 
 /// To'lov sahifasidan qaytgach: buyurtma holati. true — to'landi.
@@ -180,12 +205,23 @@ class _OrderStatusState extends State<_OrderStatus> with WidgetsBindingObserver 
 }
 
 class _PayForm extends StatefulWidget {
-  const _PayForm({required this.studentId, required this.providers, required this.suggested, required this.minAmount});
+  const _PayForm({
+    required this.studentId,
+    required this.methods,
+    required this.suggested,
+    required this.minAmount,
+    this.courseId,
+    this.months = 1,
+    this.coursePrice = 0,
+  });
 
   final int? studentId;
-  final Map<String, dynamic> providers;
+  final List<PayMethod> methods;
   final int suggested;
   final int minAmount;
+  final int? courseId;
+  final int months;
+  final int coursePrice;
 
   @override
   State<_PayForm> createState() => _PayFormState();
@@ -197,16 +233,24 @@ class _PayFormState extends State<_PayForm> {
   bool _busy = false;
   String? _error;
 
+  bool get _course => widget.courseId != null;
+
   @override
   void dispose() {
     _amount.dispose();
     super.dispose();
   }
 
-  Future<void> _pay(String provider) async {
-    final amount = int.tryParse(_amount.text.replaceAll(RegExp(r'\D'), ''));
-    if (amount == null || amount < widget.minAmount) {
+  int? get _value => _course ? widget.coursePrice * widget.months : int.tryParse(digitsOnly(_amount.text));
+
+  Future<void> _pay(PayMethod method) async {
+    final amount = _value;
+    if (!_course && (amount == null || amount < widget.minAmount)) {
       setState(() => _error = tr('Summani kiriting.'));
+      return;
+    }
+    if (amount != null && amount > 0 && !methodAllows(method, amount)) {
+      setState(() => _error = tr("{0} orqali eng kam summa: {1}", <Object?>[method.name, money(method.min)]));
       return;
     }
     setState(() {
@@ -216,16 +260,25 @@ class _PayFormState extends State<_PayForm> {
     try {
       final api = AppScope.read(context).api;
       final order = asMap(await api.post('pay/orders', <String, Object?>{
-        'purpose': 'tuition',
-        'amount': amount,
+        'purpose': _course ? 'course' : 'tuition',
+        if (!_course) 'amount': amount,
+        if (_course) 'course_id': widget.courseId,
+        if (_course) 'months': widget.months,
         'student_id': widget.studentId,
       }));
-      final checkout = asMap(await api.post('pay/orders/${asInt(order['id'])}/checkout', <String, Object?>{'provider': provider}));
+      final id = asInt(order['id']);
+      if (method.isP2p) {
+        // Kartaga o'tkazma: noyob summa va karta rekvizitlari — alohida sahifada.
+        final reserved = asMap(await api.post('pay/orders/$id/p2p'));
+        if (mounted) Navigator.pop(context, _PayStart(id, reserved));
+        return;
+      }
+      final checkout = asMap(await api.post('pay/orders/$id/checkout', <String, Object?>{'provider': method.key}));
       final url = Uri.tryParse(asText(checkout['url']));
       if (url == null) throw ApiException(500, tr("To'lov sahifasini ochib bo'lmadi. Qayta urinib ko'ring."));
       await launchUrl(url, mode: LaunchMode.externalApplication);
       // Varaq yopiladi va buyurtma holati ko'rsatiladi (startOnlinePayment davomi).
-      if (mounted) Navigator.pop(context, asInt(order['id']));
+      if (mounted) Navigator.pop(context, _PayStart(id));
     } on ApiException catch (error) {
       if (mounted) setState(() => _error = error.message);
     } finally {
@@ -237,39 +290,254 @@ class _PayFormState extends State<_PayForm> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
-      child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
-        Text(tr('Onlayn to\'lov'), style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w800)),
-        const SizedBox(height: 14),
-        if (_error != null) ...<Widget>[
-          Text(_error!, style: const TextStyle(color: AppColors.danger)),
+      child: SingleChildScrollView(
+        child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
+          Text(tr('Onlayn to\'lov'), style: AppTheme.title(size: 20)),
+          const SizedBox(height: 14),
+          if (_error != null) ...<Widget>[
+            Text(_error!, style: const TextStyle(color: AppColors.danger)),
+            const SizedBox(height: 8),
+          ],
+          if (_course)
+            KeyValue(tr('Summa'), money(widget.coursePrice * widget.months))
+          else
+            TextField(
+              controller: _amount,
+              keyboardType: TextInputType.number,
+              inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+              style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w700),
+              decoration: InputDecoration(labelText: tr("To'lanadigan summa (so'm)"), suffixText: tr("so'm")),
+            ),
+          if (!_course && widget.suggested > 0) ...<Widget>[
+            const SizedBox(height: 6),
+            Text('${tr('Hozirgi qarz:')} ${money(widget.suggested)}', style: TextStyle(color: AppColors.muted)),
+          ],
+          const SizedBox(height: 14),
+          Text(tr("To'lov usulini tanlang"), style: TextStyle(color: AppColors.muted, fontWeight: FontWeight.w600)),
           const SizedBox(height: 8),
-        ],
-        TextField(
-          controller: _amount,
-          keyboardType: TextInputType.number,
-          inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
-          style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w700),
-          decoration: InputDecoration(labelText: tr("To'lanadigan summa (so'm)"), suffixText: tr("so'm")),
-        ),
-        if (widget.suggested > 0) ...<Widget>[
-          const SizedBox(height: 6),
-          Text('${tr('Hozirgi qarz:')} ${money(widget.suggested)}', style: TextStyle(color: AppColors.muted)),
-        ],
-        const SizedBox(height: 18),
-        if (widget.providers['click'] == true)
-          FilledButton(
-            onPressed: _busy ? null : () => _pay('click'),
-            style: FilledButton.styleFrom(backgroundColor: const Color(0xFF0B6CF2)),
-            child: Text(tr('Click orqali to\'lash')),
-          ),
-        if (widget.providers['click'] == true && widget.providers['payme'] == true) const SizedBox(height: 10),
-        if (widget.providers['payme'] == true)
-          FilledButton(
-            onPressed: _busy ? null : () => _pay('payme'),
-            style: FilledButton.styleFrom(backgroundColor: const Color(0xFF00BAC6)),
-            child: Text(tr('Payme orqali to\'lash')),
-          ),
-      ]),
+          // Usullar server bergan tartibda (direktor «Sozlamalar → Onlayn to'lov» da tartiblaydi).
+          for (final method in widget.methods) ...<Widget>[
+            FilledButton(
+              onPressed: _busy ? null : () => _pay(method),
+              style: FilledButton.styleFrom(backgroundColor: Color(providerColor(method.key))),
+              child: Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
+                if (method.isP2p) ...<Widget>[const Icon(Icons.credit_card, size: 20), const SizedBox(width: 8)],
+                Flexible(
+                  child: Text(
+                    method.isP2p ? tr("Kartaga o'tkazma") : tr('{0} orqali to\'lash', <Object?>[method.name]),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+                if (method.fee > 0) Text('  +${number(method.fee)}%', style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w500)),
+              ]),
+            ),
+            const SizedBox(height: 10),
+          ],
+          if (widget.methods.any((method) => method.fee > 0))
+            Text(tr("Foiz — to'lov tizimi komissiyasi (ma'lumot uchun)."), style: TextStyle(color: AppColors.muted, fontSize: 12)),
+        ]),
+      ),
     );
+  }
+}
+
+/// Kartaga o'tkazma (P2P): karta raqami, egasi, noyob summa (aynan shu summa yoziladi), muddat taymeri va holat.
+/// Bank xabari kelib server buyurtmani tasdiqlaganda muvaffaqiyat ekrani chiqadi (GET pay/orders/{id} har 5 soniyada).
+class P2pTransferPage extends StatefulWidget {
+  const P2pTransferPage({super.key, required this.orderId, required this.initial});
+
+  final int orderId;
+  final Map<String, dynamic> initial;
+
+  @override
+  State<P2pTransferPage> createState() => _P2pTransferPageState();
+}
+
+class _P2pTransferPageState extends State<P2pTransferPage> with WidgetsBindingObserver {
+  late Map<String, dynamic> _order = widget.initial;
+  Timer? _tick;
+  Timer? _poll;
+  bool _foreground = true;
+  bool _renewing = false;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    _tick = Timer.periodic(const Duration(seconds: 1), (_) {
+      if (mounted) setState(() {});
+    });
+    _poll = Timer.periodic(const Duration(seconds: 5), (_) => _check());
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    _tick?.cancel();
+    _poll?.cancel();
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    _foreground = state == AppLifecycleState.resumed;
+    if (_foreground) _check();
+  }
+
+  String get _state => p2pState(_order, DateTime.now());
+
+  Future<void> _check() async {
+    if (!mounted || !_foreground || _state == 'paid' || _state == 'void') return;
+    try {
+      final order = asMap(await AppScope.read(context).api.get('pay/orders/${widget.orderId}'));
+      if (!mounted) return;
+      // Tasdiqlangandan keyin javobda `p2p` bo'lmaydi — oxirgi rekvizitlar saqlanadi.
+      setState(() => _order = <String, dynamic>{...order, if (order['p2p'] == null) 'p2p': _order['p2p']});
+      if (_state == 'paid' || _state == 'void') _poll?.cancel();
+    } catch (_) {
+      // internet yo'q — keyingi urinishda
+    }
+  }
+
+  Future<void> _renew() async {
+    setState(() => _renewing = true);
+    try {
+      final order = asMap(await AppScope.read(context).api.post('pay/orders/${widget.orderId}/p2p'));
+      if (mounted) setState(() => _order = order);
+    } on ApiException catch (error) {
+      if (mounted) showMessage(context, error.message, error: true);
+    } finally {
+      if (mounted) setState(() => _renewing = false);
+    }
+  }
+
+  void _copy(String text, String what) {
+    Clipboard.setData(ClipboardData(text: text));
+    showMessage(context, tr('{0} nusxalandi', <Object?>[what]));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final state = _state;
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(tr("Kartaga o'tkazma")),
+        leading: IconButton(icon: const Icon(Icons.close), onPressed: () => Navigator.pop(context, state == 'paid')),
+      ),
+      body: state == 'paid' ? _success() : _details(state),
+    );
+  }
+
+  Widget _success() {
+    return ListView(padding: const EdgeInsets.all(24), children: <Widget>[
+      const SizedBox(height: 32),
+      Center(
+        child: Container(
+          width: 96,
+          height: 96,
+          decoration: BoxDecoration(color: AppColors.soft(AppColors.success), shape: BoxShape.circle),
+          child: const Icon(Icons.check_rounded, size: 60, color: AppColors.success),
+        ),
+      ),
+      const SizedBox(height: 18),
+      Text(tr("To'lov qabul qilindi"), textAlign: TextAlign.center, style: AppTheme.title(size: 24)),
+      const SizedBox(height: 8),
+      Text(tr("O'tkazmangiz tasdiqlandi. Rahmat!"), textAlign: TextAlign.center, style: TextStyle(color: AppColors.muted)),
+      const SizedBox(height: 20),
+      AppCard(
+        child: Column(children: <Widget>[
+          KeyValue(tr('Summa'), money(asInt(_order['amount']))),
+          if (asMap(_order['student'])['full_name'] != null) KeyValue(tr("O'quvchi"), asText(asMap(_order['student'])['full_name'])),
+          if (asMap(_order['course'])['title'] != null) KeyValue(tr('Kurs'), asText(asMap(_order['course'])['title'])),
+          if (_order['receipt'] != null) KeyValue(tr('Kvitansiya'), asText(_order['receipt'])),
+          if (_order['paid_at'] != null) KeyValue(tr('Sana'), dateTime(_order['paid_at'])),
+        ]),
+      ),
+      const SizedBox(height: 20),
+      FilledButton(onPressed: () => Navigator.pop(context, true), child: Text(tr('Tayyor'))),
+    ]);
+  }
+
+  Widget _details(String state) {
+    final p2p = asMap(_order['p2p']);
+    final card = cardGroups(asText(p2p['card']));
+    final amount = asInt(p2p['amount']);
+    final base = asInt(p2p['base_amount'], asInt(_order['amount']));
+    final expires = DateTime.tryParse(asText(p2p['expires_at']))?.toLocal();
+    final left = p2pRemaining(expires, DateTime.now());
+    final expired = state == 'expired';
+    final voided = state == 'void';
+    final bank = asText(p2p['bank']) == 'humo' ? 'Humo' : 'Uzcard';
+    return ListView(padding: const EdgeInsets.fromLTRB(16, 16, 16, 32), children: <Widget>[
+      if (voided)
+        AppCard(color: AppColors.soft(AppColors.danger), child: Text(tr("Buyurtma bekor qilindi. Yangi to'lov boshlang yoki kassaga murojaat qiling.")))
+      else
+        AppCard(
+          color: AppColors.soft(expired ? AppColors.danger : AppColors.warning),
+          child: Row(children: <Widget>[
+            Icon(expired ? Icons.timer_off_outlined : Icons.timer_outlined, color: expired ? AppColors.danger : AppColors.warning),
+            const SizedBox(width: 10),
+            Expanded(
+              child: Text(expired
+                  ? tr("Muddat tugadi. Agar pulni o'tkazgan bo'lsangiz, kuting — kassir tekshiradi. Aks holda yangi summa oling.")
+                  : tr("Shu vaqt ichida o'tkazing: {0}", <Object?>[countdown(left)])),
+            ),
+          ]),
+        ),
+      const SizedBox(height: 14),
+      Text(tr("Quyidagi kartaga aynan shu summani o'tkazing"), style: TextStyle(color: AppColors.muted, fontWeight: FontWeight.w600)),
+      const SizedBox(height: 8),
+      AppCard(
+        onTap: amount > 0 ? () => _copy('$amount', tr('Summa')) : null,
+        child: Column(children: <Widget>[
+          Text(tr("O'tkaziladigan summa"), style: TextStyle(color: AppColors.muted)),
+          const SizedBox(height: 4),
+          FittedBox(
+            child: Text('${p2pAmountText(amount)} ${tr("so'm")}', style: TextStyle(fontSize: 36, fontWeight: FontWeight.w800, color: AppColors.ink, letterSpacing: 0.5)),
+          ),
+          if (amount != base && base > 0)
+            Text(tr("Summa {0} dan biroz farq qiladi — shu farq to'lovingizni aniqlaydi. Yaxlitlamang.", <Object?>[money(base)]),
+                textAlign: TextAlign.center, style: TextStyle(color: AppColors.muted, fontSize: 12.5)),
+          const SizedBox(height: 8),
+          TextButton.icon(onPressed: amount > 0 ? () => _copy('$amount', tr('Summa')) : null, icon: const Icon(Icons.copy, size: 18), label: Text(tr('Summani nusxalash'))),
+        ]),
+      ),
+      const SizedBox(height: 10),
+      AppCard(
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
+          Row(children: <Widget>[
+            Text(tr('Karta raqami'), style: TextStyle(color: AppColors.muted)),
+            const Spacer(),
+            Pill(bank, color: AppColors.brand),
+          ]),
+          const SizedBox(height: 4),
+          Row(children: <Widget>[
+            Expanded(child: SelectableText(card, style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w700, letterSpacing: 1.2))),
+            IconButton(tooltip: tr('Nusxalash'), onPressed: card.isEmpty ? null : () => _copy(digitsOnly(card), tr('Karta raqami')), icon: const Icon(Icons.copy)),
+          ]),
+          if (asText(p2p['holder']).isNotEmpty) KeyValue(tr('Karta egasi'), asText(p2p['holder'])),
+        ]),
+      ),
+      const SizedBox(height: 14),
+      Row(children: <Widget>[
+        if (!expired && !voided) const SizedBox(width: 18, height: 18, child: CircularProgressIndicator(strokeWidth: 2)),
+        if (!expired && !voided) const SizedBox(width: 10),
+        Expanded(
+          child: Text(
+            tr("Pul kelgach to'lov o'zi tasdiqlanadi (odatda 1–3 daqiqa). Bu sahifani yopsangiz ham to'lov hisobga olinadi."),
+            style: TextStyle(color: AppColors.muted, fontSize: 13),
+          ),
+        ),
+      ]),
+      const SizedBox(height: 16),
+      if (expired)
+        FilledButton.icon(
+          onPressed: _renewing ? null : _renew,
+          icon: const Icon(Icons.refresh),
+          label: Text(_renewing ? tr('Yuklanmoqda...') : tr('Yangi summa olish')),
+        )
+      else if (!voided)
+        OutlinedButton.icon(onPressed: _check, icon: const Icon(Icons.refresh), label: Text(tr('Holatni tekshirish'))),
+    ]);
   }
 }

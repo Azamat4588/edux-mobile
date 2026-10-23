@@ -1,8 +1,10 @@
 // Shaxsiy telefon orqali SMS (1.18): markaz telefoni EduX serveridagi navbatdan SMS'larni olib,
 // o'z SIM kartasidan yuboradi va natijani qaytaradi. Faqat Android (iOS ilovaga SMS yuborishga ruxsat bermaydi).
 //
-// Oqim: POST crm/sms/gateway/register → har 20 soniyada (yoki serverdan jim push kelganda) GET crm/sms/gateway/next
-// → har bir SMS native SmsManager orqali → POST crm/sms/gateway/report.
+// Oqim: POST <prefix>/register → har 20 soniyada (yoki serverdan jim push kelganda) GET <prefix>/next
+// → har bir SMS native SmsManager orqali → POST <prefix>/report.
+// 3.4: ikki navbat — tashkilot (`crm/sms/gateway/*`, direktor/administrator) va platforma (`platform/sms/gateway/*`,
+// platforma egasi: kirish va parol tiklash kodlari). Push `type=sms_gateway, scope=platform` — platforma navbati.
 import 'dart:async';
 import 'dart:io';
 
@@ -11,12 +13,30 @@ import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'api.dart';
+import 'push.dart';
 import 'session.dart';
 
-class SmsGatewayService extends ChangeNotifier {
-  SmsGatewayService._();
+/// Navbat yo'llari: tashkilot — crm/sms/gateway, platforma — platform/sms/gateway.
+String gatewayPrefix(String scope) => scope == 'platform' ? 'platform/sms/gateway' : 'crm/sms/gateway';
 
-  static final SmsGatewayService instance = SmsGatewayService._();
+class SmsGatewayService extends ChangeNotifier {
+  SmsGatewayService._(this.scope);
+
+  /// Tashkilot navbati (markaz SMS'lari).
+  static final SmsGatewayService organization = SmsGatewayService._('organization');
+
+  /// Platforma navbati (kirish/tiklash kodlari) — platforma egasi hisobi bilan.
+  static final SmsGatewayService platform = SmsGatewayService._('platform');
+
+  /// Eski nom (3.3 gacha) — tashkilot navbati.
+  static SmsGatewayService get instance => organization;
+
+  final String scope;
+
+  bool get isPlatform => scope == 'platform';
+
+  /// API yo'llari prefiksi.
+  String get prefix => gatewayPrefix(scope);
 
   static const MethodChannel _channel = MethodChannel('edux/sms');
   static const Duration interval = Duration(seconds: 20);
@@ -35,13 +55,16 @@ class SmsGatewayService extends ChangeNotifier {
 
   bool get supported => Platform.isAndroid;
 
-  String get _prefKey => 'sms_gateway_${_session?.organizationId ?? 0}';
+  String get _prefKey => isPlatform ? 'sms_gateway_platform_${asInt(_session?.user['id'])}' : 'sms_gateway_${_session?.organizationId ?? 0}';
+
+  /// Shu navbatni ishlatishga ruxsat (platforma — egasi; tashkilot — SMS qo'shimchasi va yozish holati).
+  bool allowed(Session session) => isPlatform ? session.isPlatformAdmin : session.canUseSmsGateway && !session.readOnly;
 
   /// Ilova ochilganda: bu telefon avval shlyuz qilib yoqilgan bo'lsa — ishni davom ettiradi.
   Future<void> resume(Session session) async {
     _session = session;
     // SMS qo'shimchasi o'chirilgan yoki obuna «faqat o'qish»da — navbatdan SMS olinmaydi (hisobot 402 bo'lardi).
-    if (!supported || !session.canUseSmsGateway || session.readOnly) {
+    if (!supported || !allowed(session)) {
       _stop();
       return;
     }
@@ -69,7 +92,9 @@ class SmsGatewayService extends ChangeNotifier {
   Future<void> enable(Session session) async {
     _session = session;
     final model = await deviceModel();
-    await session.api.post('crm/sms/gateway/register', <String, Object?>{'name': session.userName, 'device_model': model});
+    await session.api.post('$prefix/register', <String, Object?>{'name': session.userName, 'device_model': model});
+    // Platforma telefoni: tashkilotsiz hisobda ham jim push kelsin (qurilma ro'yxatdan o'tadi).
+    if (isPlatform) unawaited(PushService.instance.attach(session));
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool(_prefKey, true);
     enabled = true;
@@ -86,7 +111,7 @@ class SmsGatewayService extends ChangeNotifier {
     notifyListeners();
     if (session != null) {
       try {
-        await session.api.post('crm/sms/gateway/unregister');
+        await session.api.post('$prefix/unregister');
       } catch (_) {}
     }
   }
@@ -119,7 +144,7 @@ class SmsGatewayService extends ChangeNotifier {
     try {
       do {
         _again = false;
-        final data = asMap(await session.api.get('crm/sms/gateway/next', query: <String, Object?>{'limit': 10}));
+        final data = asMap(await session.api.get('$prefix/next', query: <String, Object?>{'limit': 10}));
         lastPoll = DateTime.now();
         leftToday = asInt(data['left_today']);
         final messages = asList(data['messages'], 'messages');
@@ -147,7 +172,7 @@ class SmsGatewayService extends ChangeNotifier {
           // Operator spam deb bloklamasligi uchun SMS'lar orasida qisqa tanaffus.
           await Future<void>.delayed(const Duration(milliseconds: 1500));
         }
-        await session.api.post('crm/sms/gateway/report', <String, Object?>{'results': results});
+        await session.api.post('$prefix/report', <String, Object?>{'results': results});
         if (messages.length >= 10) _again = true;
       } while (_again && enabled);
     } on ApiException catch (e) {

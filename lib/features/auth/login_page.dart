@@ -5,8 +5,10 @@ import 'package:flutter/material.dart';
 import '../../core/api.dart';
 import '../../core/i18n.dart';
 import '../../core/session.dart';
+import '../../core/sms_gateway.dart';
 import '../../core/theme.dart';
 import '../../core/widgets.dart';
+import '../access/sms_gateway_page.dart';
 import '../settings/language_button.dart';
 import '../student/pay_link_page.dart';
 import 'passwordless.dart';
@@ -294,9 +296,23 @@ class NoOrganizationPage extends StatelessWidget {
           child: EmptyState(
             icon: Icons.domain_disabled_outlined,
             text: owner
-                ? tr('Platforma egasi paneli veb-versiyada ishlaydi. Ilovada tashkilot xodimi, o\'quvchi yoki ota-ona sifatida kiring.')
+                ? tr("Platforma egasi paneli veb-versiyada ishlaydi. Ilovada — platforma SMS shlyuzi; tashkilot bo'limlari uchun xodim, o'quvchi yoki ota-ona sifatida kiring.")
                 : tr("Hisobingiz hali hech qaysi tashkilotga bog'lanmagan. O'quvchi yoki ota-ona bo'lsangiz, o'qituvchi bergan shaxsiy havolani oching. Xodim bo'lsangiz, direktordan sizni qo'shishni so'rang."),
-            action: OutlinedButton(onPressed: session.signOut, child: Text(tr('Chiqish'))),
+            action: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+              // Platforma egasi: ilovada — platforma SMS shlyuzi (kirish va tiklash kodlari shu telefondan).
+              if (session.can('platform_sms')) ...<Widget>[
+                FilledButton.icon(
+                  onPressed: () {
+                    SmsGatewayService.platform.resume(session);
+                    Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const SmsGatewayPage(platform: true)));
+                  },
+                  icon: const Icon(Icons.sms_outlined),
+                  label: Text(tr('SMS shlyuz (platforma)')),
+                ),
+                const SizedBox(height: 10),
+              ],
+              OutlinedButton(onPressed: session.signOut, child: Text(tr('Chiqish'))),
+            ]),
           ),
         ),
       ),

@@ -1,51 +1,70 @@
-// Xodimning bosh sahifasi: tezkor amallar, kun ko'rsatkichlari va bugungi darslar.
+// Xodimning bosh sahifasi (3.4, veb 1.35 «Bugun»): direktor, administrator, o'qituvchi, kassir va marketolog uchun
+// bir xil tartib — salomlashish, «Bugun» kartalari (3–4 ta raqam oddiy so'zlar bilan), katta tezkor tugmalar, keyin ro'yxatlar.
 import 'package:flutter/material.dart';
 
 import '../../core/api.dart';
 import '../../core/format.dart';
+import '../../core/home_today.dart';
+import '../../core/home_widgets.dart';
 import '../../core/i18n.dart';
 import '../../core/session.dart';
 import '../../core/theme.dart';
 import '../../core/widgets.dart';
-import '../access/checkin_page.dart';
-import '../callcenter/callcenter_page.dart';
-import '../crm/leads_page.dart';
-import '../crm/tasks_page.dart';
-import '../finance/finance_page.dart';
 import '../notifications/notifications_page.dart';
-import '../scanner/scanner_page.dart';
-import '../scanner/scans_page.dart';
-import '../testing/topic_tests_page.dart';
-import '../tutor/tutor_page.dart';
-import 'attendance_page.dart';
-import 'students_page.dart';
 
 class StaffHomePage extends StatelessWidget {
-  const StaffHomePage({super.key, required this.onOpenTab});
+  const StaffHomePage({super.key, required this.onOpen});
 
-  /// Pastki menyudagi bo'limga o'tish: 'exams', 'scanner', 'students'.
-  final void Function(String key) onOpenTab;
+  /// Bo'lim yoki yorliqni ochish (nav kaliti: `crm.debtors`, `attendance`, `payment.take` ...).
+  final void Function(String key) onOpen;
 
-  /// overview — direktor, administrator, o'qituvchi (kassir va marketologga yopiq: ularda faqat bo'limlar).
-  /// crm/timetable — xuddi shu rollar; `date` (bugun, standart) va `days` qabul qiladi.
+  String get _today => isoDay(DateTime.now());
+
+  /// Veb bosh sahifalari bilan bir xil manbalar (docs/design.md «Bosh sahifalar»).
   Future<Map<String, dynamic>> _load(Session session) async {
     final api = session.api;
-    if (!session.canSeeOverview) return <String, dynamic>{'overview': <String, dynamic>{}, 'timetable': <String, dynamic>{}};
+    final crm = session.hasModule('crm');
+    Future<dynamic> soft(Future<dynamic> request) => request.catchError((Object _) => null);
+    switch (session.role) {
+      case 'cashier':
+        if (!crm) return <String, dynamic>{};
+        final results = await Future.wait<dynamic>(<Future<dynamic>>[
+          api.get('crm/payments', query: <String, Object?>{'from': _today, 'to': _today, 'state': 'active'}),
+          api.get('crm/debtors'),
+        ]);
+        return <String, dynamic>{'payments': asMap(results[0]), 'debtors': asMap(results[1])};
+      case 'marketer':
+        if (!crm) return <String, dynamic>{};
+        return <String, dynamic>{'leads': asMap(await api.get('crm/leads', query: <String, Object?>{'status': 'new', 'archived': 0}))};
+    }
+    if (!session.canSeeOverview) return <String, dynamic>{};
     final results = await Future.wait<dynamic>(<Future<dynamic>>[
       api.get('overview'),
-      if (session.hasModule('crm'))
-        api.get('crm/timetable', query: <String, Object?>{'date': isoDay(DateTime.now())}).catchError((_) => null),
+      if (crm) soft(api.get('crm/timetable', query: <String, Object?>{'date': _today})),
+      if (crm && session.isManager) soft(api.get('crm/dashboard')),
     ]);
     return <String, dynamic>{
       'overview': asMap(results[0]),
       'timetable': results.length > 1 ? asMap(results[1]) : <String, dynamic>{},
+      'dashboard': results.length > 2 ? asMap(results[2]) : <String, dynamic>{},
     };
+  }
+
+  String _lead(Session session) {
+    switch (session.role) {
+      case 'teacher':
+        return tr("Bugungi darslaringiz va tekshirilishi kerak bo'lgan ishlar.");
+      case 'cashier':
+        return tr("Bugungi to'lovlar va qarzdorlar. To'lov qabul qilish — pastdagi katta tugma.");
+      case 'marketer':
+        return tr("Yangi murojaatlarga tezroq javob bering — har bir qo'ng'iroq yangi o'quvchi bo'lishi mumkin.");
+    }
+    return tr("Bugun nima qilish kerak — birinchi: qarzdorlar, tushum, darslar va murojaatlar.");
   }
 
   @override
   Widget build(BuildContext context) {
     final session = AppScope.of(context);
-    final firstName = session.userName.split(' ').length > 1 ? session.userName.split(' ')[1] : session.userName;
     return Scaffold(
       appBar: AppBar(
         titleSpacing: 16,
@@ -58,104 +77,43 @@ class StaffHomePage extends StatelessWidget {
       ),
       body: AsyncView<Map<String, dynamic>>(
         load: () => _load(session),
-        cacheKey: 'staff_home_${session.role}',
+        cacheKey: 'staff_home_v2_${session.role}',
         decode: asMap,
         skeleton: const SkeletonList(header: true, count: 3),
         builder: (context, data, reload) {
-          final overview = asMap(data['overview']);
-          final testing = asMap(overview['testing']);
-          final crm = asMap(overview['crm']);
-          final lms = asMap(overview['lms']);
-          final school = asMap(overview['school']);
           final lessons = asList(asMap(data['timetable'])['items'], 'items');
-          final cards = <Widget>[
-            if (testing.isNotEmpty) ...<Widget>[
-              StatCard(
-                label: tr("Ko'rib chiqish kerak"),
-                value: '${asInt(testing['needs_review'])}',
-                icon: Icons.rate_review_outlined,
-                color: asInt(testing['needs_review']) > 0 ? AppColors.warning : AppColors.success,
-                onTap: session.canScan
-                    ? () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const ScansPage(initialTab: 1)))
-                    : null,
-              ),
-              StatCard(
-                label: tr('Ochiq testlar'),
-                value: '${asInt(testing['open_exams'])}',
-                icon: Icons.assignment_outlined,
-                hint: testing['finished_week'] != null ? tr('{0} ta natija (7 kun)', <Object?>[asInt(testing['finished_week'])]) : null,
-                onTap: () => onOpenTab('exams'),
-              ),
-            ],
-            if (crm.isNotEmpty) ...<Widget>[
-              StatCard(
-                label: tr("Faol o'quvchilar"),
-                value: '${asInt(crm['active_students'])}',
-                icon: Icons.school_outlined,
-                hint: asInt(crm['trial']) > 0 ? tr('{0} ta sinov darsida', <Object?>[asInt(crm['trial'])]) : null,
-                onTap: session.canSeeStudents ? () => onOpenTab('students') : null,
-              ),
-              if (crm['tasks_today'] != null && session.canSeeTasks)
-                StatCard(
-                  label: tr('Bugungi topshiriqlar'),
-                  value: '${asInt(crm['tasks_today'])}',
-                  icon: Icons.task_alt,
-                  color: asInt(crm['tasks_today']) > 0 ? AppColors.warning : AppColors.success,
-                  onTap: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const TasksPage())),
-                ),
-              // Qarzdorlar, tushum va lidlar faqat rahbarga keladi (o'qituvchida — yo'q).
-              if (crm['debtors'] != null)
-              StatCard(
-                label: tr('Qarzdorlar'),
-                value: '${asInt(crm['debtors'])}',
-                icon: Icons.warning_amber_rounded,
-                color: AppColors.danger,
-                hint: asInt(crm['debt_total']) > 0 ? money(asInt(crm['debt_total'])) : null,
-                onTap: session.canSeeFinance
-                    ? () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const FinancePage(initialTab: 1)))
-                    : null,
-              ),
-              if (crm['income_today'] != null)
-                StatCard(
-                  label: tr('Bugungi tushum'),
-                  value: groupDigits(asInt(crm['income_today'])),
-                  icon: Icons.payments_outlined,
-                  color: AppColors.success,
-                  onTap: session.canSeeFinance
-                      ? () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const FinancePage()))
-                      : null,
-                ),
-              if (crm['new_leads_today'] != null)
-                StatCard(
-                  label: tr('Yangi lidlar (bugun)'),
-                  value: '${asInt(crm['new_leads_today'])}',
-                  icon: Icons.person_add_alt,
-                  hint: crm['open_leads'] != null ? tr('{0} ta faol lid', <Object?>[asInt(crm['open_leads'])]) : null,
-                ),
-            ],
-            if (lms.isNotEmpty && lms['to_grade'] != null)
-              StatCard(label: tr('Tekshirilmagan vazifalar'), value: '${asInt(lms['to_grade'])}', icon: Icons.task_outlined),
-            if (school.isNotEmpty && school['lessons_today'] != null)
-              StatCard(
-                label: tr('Bugungi darslar (maktab)'),
-                value: '${asInt(school['lessons_today'])}',
-                icon: Icons.event_note_outlined,
-                hint: school['year'] != null ? asText(school['year']) : null,
-              ),
-          ];
+          final overview = asMap(data['overview']);
+          List<TodayItem> cards;
+          switch (session.role) {
+            case 'cashier':
+              cards = data.isEmpty ? <TodayItem>[] : cashierToday(asMap(data['payments']), asMap(data['debtors']));
+            case 'marketer':
+              cards = data.isEmpty ? <TodayItem>[] : marketerToday(asMap(asMap(data['leads'])['counts']));
+            case 'teacher':
+              cards = teacherToday(overview, lessons: lessons);
+            default:
+              cards = managerToday(overview, dashboard: asMap(data['dashboard']), lessons: lessons);
+          }
+          final actions = quickActions(session.role, session.can);
+          final payments = asList(asMap(data['payments'])['data']);
+          final leads = asList(asMap(data['leads'])['data']);
+          final crmMissing = (session.role == 'cashier' || session.role == 'marketer') && !session.hasModule('crm');
           return ListView(
             padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
             children: <Widget>[
-              Text(tr('Assalomu alaykum, {0}', <Object?>[firstName]),
-                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.w800, color: AppColors.ink)),
-              const SizedBox(height: 4),
-              Text(dayTitle(DateTime.now()), style: TextStyle(color: AppColors.muted)),
-              const SizedBox(height: 16),
-              _QuickActions(session: session, onOpenTab: onOpenTab),
-              _SectionTiles(session: session),
+              HomeHeader(name: session.userName, lead: _lead(session)),
+              if (crmMissing)
+                EmptyState(
+                  icon: Icons.lock_outline,
+                  text: tr("Bu sahifalar CRM moduli bilan ishlaydi. Tashkilot rahbaridan modulni yoqishni so'rang."),
+                ),
               if (cards.isNotEmpty) ...<Widget>[
-                SectionTitle(tr('Bugun')),
-                StatGrid(children: cards),
+                SectionTitle(session.role == 'marketer' ? tr('Murojaatlar') : tr('Bugun')),
+                TodayGrid(items: cards, onOpen: onOpen),
+              ],
+              if (actions.isNotEmpty) ...<Widget>[
+                SectionTitle(tr('Tezkor harakatlar')),
+                ActionGrid(actions: actions, onTap: (action) => onOpen(action.key)),
               ],
               if (lessons.isNotEmpty) ...<Widget>[
                 SectionTitle(tr('Bugungi darslar')),
@@ -169,155 +127,50 @@ class StaffHomePage extends StatelessWidget {
                   ]),
                 ),
               ],
+              if (session.role == 'cashier' && data.isNotEmpty) ...<Widget>[
+                SectionTitle(tr("Bugungi to'lovlar"), trailing: TextButton(onPressed: () => onOpen('crm.payments'), child: Text(tr('Hammasi')))),
+                if (payments.isEmpty)
+                  AppCard(child: Text(tr("Bugun hali to'lov yo'q"), style: TextStyle(color: AppColors.muted)))
+                else
+                  AppCard(
+                    padding: EdgeInsets.zero,
+                    child: Column(children: <Widget>[
+                      for (var i = 0; i < payments.length && i < 8; i++) ...<Widget>[
+                        if (i > 0) const Divider(),
+                        ListTile(
+                          dense: true,
+                          title: Text(asText(asMap(payments[i]['student'])['full_name']), style: const TextStyle(fontWeight: FontWeight.w600)),
+                          subtitle: Text(dateTime(payments[i]['paid_at'])),
+                          trailing: Text(money(asInt(payments[i]['amount'])), style: const TextStyle(fontWeight: FontWeight.w700, color: AppColors.success)),
+                        ),
+                      ],
+                    ]),
+                  ),
+              ],
+              if (session.role == 'marketer' && data.isNotEmpty) ...<Widget>[
+                SectionTitle(tr('Javob kutayotganlar'), trailing: TextButton(onPressed: () => onOpen('crm.leads'), child: Text(tr('Hammasi')))),
+                if (leads.isEmpty)
+                  AppCard(child: Text(tr("Yangi murojaat yo'q"), style: TextStyle(color: AppColors.muted)))
+                else
+                  AppCard(
+                    padding: EdgeInsets.zero,
+                    child: Column(children: <Widget>[
+                      for (var i = 0; i < leads.length && i < 8; i++) ...<Widget>[
+                        if (i > 0) const Divider(),
+                        ListTile(
+                          dense: true,
+                          title: Text(asText(leads[i]['name'], asText(leads[i]['full_name'])), style: const TextStyle(fontWeight: FontWeight.w600)),
+                          subtitle: Text(<String>[asText(leads[i]['phone']), dateTime(leads[i]['created_at'])].where((item) => item.isNotEmpty).join(' · ')),
+                          onTap: () => onOpen('crm.leads'),
+                        ),
+                      ],
+                    ]),
+                  ),
+              ],
             ],
           );
         },
       ),
-    );
-  }
-}
-
-class _QuickActions extends StatelessWidget {
-  const _QuickActions({required this.session, required this.onOpenTab});
-
-  final Session session;
-  final void Function(String key) onOpenTab;
-
-  @override
-  Widget build(BuildContext context) {
-    final actions = <Widget>[
-      if (session.canScan)
-        _Action(
-          icon: Icons.document_scanner,
-          label: tr('Skaner'),
-          color: AppColors.brand,
-          onTap: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const ScannerPage())),
-        ),
-      if (session.canMarkAttendance)
-        _Action(
-          icon: Icons.fact_check,
-          label: tr('Davomat'),
-          color: AppColors.success,
-          onTap: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const AttendancePage())),
-        ),
-      if (session.canTakePayments && !session.readOnly)
-        _Action(
-          icon: Icons.payments,
-          label: tr("To'lov"),
-          color: const Color(0xFF7C3AED),
-          onTap: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const StudentsPage(forPayment: true))),
-        ),
-      if (session.canSeeStudents)
-        _Action(icon: Icons.search, label: tr('Qidirish'), color: AppColors.warning, onTap: () => onOpenTab('students')),
-    ];
-    if (session.canCheckIn && actions.length < 4) {
-      actions.add(_Action(
-        icon: Icons.qr_code_scanner,
-        label: tr('Keldi-ketdi'),
-        color: const Color(0xFF0891B2),
-        onTap: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const CheckinPage())),
-      ));
-    }
-    if (actions.isEmpty) return const SizedBox();
-    return Row(
-      children: actions
-          .map((action) => Expanded(child: Padding(padding: const EdgeInsets.symmetric(horizontal: 4), child: action)))
-          .toList(),
-    );
-  }
-}
-
-/// Bo'limlar (3.1): call markazi, moliya, mavzular bo'yicha test, AI yordamchi, lidlar, vazifalar —
-/// modul, imkoniyat va rolga qarab.
-class _SectionTiles extends StatelessWidget {
-  const _SectionTiles({required this.session});
-
-  final Session session;
-
-  @override
-  Widget build(BuildContext context) {
-    final tiles = <Widget>[
-      if (session.canCallCenter)
-        _SectionTile(icon: Icons.headset_mic_outlined, label: tr('Call markazi'), color: const Color(0xFF0891B2), page: const CallCenterPage()),
-      if (session.canSeeFinance)
-        _SectionTile(icon: Icons.account_balance_wallet_outlined, label: tr('Moliya'), color: AppColors.success, page: const FinancePage()),
-      if (session.canBuildTopicTests)
-        _SectionTile(icon: Icons.account_tree_outlined, label: tr("Mavzular bo'yicha test"), color: const Color(0xFF7C3AED), page: const TopicTestsPage()),
-      if (session.canUseStaffAi)
-        _SectionTile(icon: Icons.auto_awesome_outlined, label: tr('AI yordamchi'), color: AppColors.warning, page: const StaffAssistantPage()),
-      if (session.canSeeLeads)
-        _SectionTile(icon: Icons.person_search_outlined, label: tr('Lidlar'), color: AppColors.brand, page: const LeadsPage()),
-      if (session.canSeeTasks) _SectionTile(icon: Icons.task_alt, label: tr('Topshiriqlar'), color: AppColors.danger, page: const TasksPage()),
-    ];
-    if (tiles.isEmpty) return const SizedBox();
-    return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
-      SectionTitle(tr("Bo'limlar")),
-      GridView.count(
-        crossAxisCount: 2,
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        padding: EdgeInsets.zero,
-        mainAxisSpacing: AppSpacing.s,
-        crossAxisSpacing: AppSpacing.s,
-        childAspectRatio: 2.6,
-        children: tiles,
-      ),
-    ]);
-  }
-}
-
-class _SectionTile extends StatelessWidget {
-  const _SectionTile({required this.icon, required this.label, required this.color, required this.page});
-
-  final IconData icon;
-  final String label;
-  final Color color;
-  final Widget page;
-
-  @override
-  Widget build(BuildContext context) {
-    return AppCard(
-      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.m),
-      onTap: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => page)),
-      child: Row(children: <Widget>[
-        Container(
-          width: 38,
-          height: 38,
-          decoration: BoxDecoration(color: AppColors.soft(color), borderRadius: BorderRadius.circular(AppRadius.control)),
-          child: Icon(icon, size: 21, color: color),
-        ),
-        const SizedBox(width: AppSpacing.s),
-        Expanded(
-          child: Text(label, maxLines: 2, overflow: TextOverflow.ellipsis, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 13.5)),
-        ),
-      ]),
-    );
-  }
-}
-
-class _Action extends StatelessWidget {
-  const _Action({required this.icon, required this.label, required this.color, required this.onTap});
-
-  final IconData icon;
-  final String label;
-  final Color color;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return AppCard(
-      onTap: onTap,
-      padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 6),
-      child: Column(children: <Widget>[
-        Container(
-          width: 46,
-          height: 46,
-          decoration: BoxDecoration(color: color, borderRadius: BorderRadius.circular(14)),
-          child: Icon(icon, color: Colors.white),
-        ),
-        const SizedBox(height: 8),
-        Text(label, maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
-      ]),
     );
   }
 }

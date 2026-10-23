@@ -1,7 +1,11 @@
-// Virtual laboratoriya (o'quvchi): topshiriq tasodifiy qiymatlar bilan, javob serverda tekshiriladi (3 ta urinish),
-// to'g'ri javob uchun XP. API: GET /my/labs, POST /my/labs/{code}, POST /my/labs/runs/{run}.
+// Virtual laboratoriya (o'quvchi): 38 ta lab katalogi fan bo'yicha filtr bilan (GET /my/labs). Lab bosilganda interaktiv
+// tajriba ilova ichidagi WebView'da ochiladi (veb /labs/{code} sahifasi, shu foydalanuvchi tokeni bilan); «Topshiriq» —
+// tasodifiy qiymatli masala, javob serverda tekshiriladi (3 ta urinish), XP. API: POST /my/labs/{code}, /my/labs/runs/{run}.
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../core/api.dart';
 import '../../core/format.dart';
@@ -52,8 +56,25 @@ const Map<String, String> labParamLabels = <String, String>{
   'p2': '2-ota-ona',
 };
 
-class LabsPage extends StatelessWidget {
+/// Lablar katalogidagi fanlar (server tartibida, takrorsiz).
+List<String> labSubjects(List<Map<String, dynamic>> labs) {
+  final result = <String>[];
+  for (final lab in labs) {
+    final subject = asText(lab['subject']);
+    if (subject.isNotEmpty && !result.contains(subject)) result.add(subject);
+  }
+  return result;
+}
+
+class LabsPage extends StatefulWidget {
   const LabsPage({super.key});
+
+  @override
+  State<LabsPage> createState() => _LabsPageState();
+}
+
+class _LabsPageState extends State<LabsPage> {
+  String? _subject;
 
   @override
   Widget build(BuildContext context) {
@@ -61,52 +82,165 @@ class LabsPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text(tr('Laboratoriya'))),
       body: AsyncView<List<Map<String, dynamic>>>(
+        cacheKey: 'my_labs',
+        decode: (raw) => asList(raw),
         load: () async => asList(asMap(await api.get('my/labs'))['labs'], 'labs'),
         builder: (context, labs, reload) {
           if (labs.isEmpty) {
             return ListView(children: <Widget>[EmptyState(icon: Icons.science_outlined, text: tr("Laboratoriya ishlari hali yo'q."))]);
           }
-          return ListView.separated(
-            padding: const EdgeInsets.all(16),
-            itemCount: labs.length,
-            separatorBuilder: (_, __) => const SizedBox(height: 10),
-            itemBuilder: (context, index) {
-              final lab = labs[index];
-              final subject = asText(lab['subject']);
-              final color = _labColor(subject);
-              final passed = asInt(lab['passed']);
-              return AppCard(
-                onTap: () async {
-                  await Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => LabPage(lab: lab)));
-                  await reload();
-                },
-                child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
-                  Container(
-                    width: 46,
-                    height: 46,
-                    decoration: BoxDecoration(color: color.withAlpha(30), borderRadius: BorderRadius.circular(12)),
-                    child: Icon(_labIcon(subject), color: color),
+          final subjects = labSubjects(labs);
+          final shown = _subject == null ? labs : labs.where((lab) => asText(lab['subject']) == _subject).toList();
+          return ListView(
+            padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
+            children: <Widget>[
+              SizedBox(
+                height: 48,
+                child: ListView(scrollDirection: Axis.horizontal, children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(right: 8),
+                    child: ChoiceChip(
+                      label: Text(tr('Hammasi ({0})', <Object?>[labs.length])),
+                      selected: _subject == null,
+                      onSelected: (_) => setState(() => _subject = null),
+                    ),
                   ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
-                      Text(tr(asText(lab['name'])), style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 16)),
-                      Text('${tr(subject)} · ${tr('{0}-sinf', <Object?>[asText(lab['grades'])])}',
-                          style: TextStyle(color: color, fontWeight: FontWeight.w600, fontSize: 13)),
-                      const SizedBox(height: 4),
-                      Text(tr(asText(lab['description'])), style: TextStyle(color: AppColors.muted, fontSize: 13)),
-                      if (passed > 0) ...<Widget>[
-                        const SizedBox(height: 6),
-                        Pill(tr('{0} ta topshiriq bajarildi', <Object?>[passed]), color: AppColors.success),
-                      ],
-                    ]),
-                  ),
+                  for (final subject in subjects)
+                    Padding(
+                      padding: const EdgeInsets.only(right: 8),
+                      child: ChoiceChip(
+                        avatar: Icon(_labIcon(subject), size: 16, color: _labColor(subject)),
+                        label: Text(tr(subject)),
+                        selected: _subject == subject,
+                        onSelected: (_) => setState(() => _subject = subject),
+                      ),
+                    ),
                 ]),
-              );
-            },
+              ),
+              const SizedBox(height: 6),
+              for (final lab in shown) ...<Widget>[
+                _LabCard(lab: lab, onChanged: reload),
+                const SizedBox(height: 10),
+              ],
+            ],
           );
         },
       ),
+    );
+  }
+}
+
+class _LabCard extends StatelessWidget {
+  const _LabCard({required this.lab, required this.onChanged});
+
+  final Map<String, dynamic> lab;
+  final Future<void> Function() onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    final subject = asText(lab['subject']);
+    final color = _labColor(subject);
+    final passed = asInt(lab['passed']);
+    return AppCard(
+      onTap: () async {
+        await Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => LabWebPage(code: asText(lab['code']), title: tr(asText(lab['name'])))));
+        await onChanged();
+      },
+      child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
+        Container(
+          width: 46,
+          height: 46,
+          decoration: BoxDecoration(color: color.withAlpha(30), borderRadius: BorderRadius.circular(AppRadius.control)),
+          child: Icon(_labIcon(subject), color: color),
+        ),
+        const SizedBox(width: 12),
+        Expanded(
+          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
+            Text(tr(asText(lab['name'])), style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 16)),
+            Text('${tr(subject)} · ${tr('{0}-sinf', <Object?>[asText(lab['grades'])])}',
+                style: TextStyle(color: color, fontWeight: FontWeight.w600, fontSize: 13)),
+            const SizedBox(height: 4),
+            Text(tr(asText(lab['description'])), style: TextStyle(color: AppColors.muted, fontSize: 13)),
+            const SizedBox(height: 6),
+            Wrap(spacing: 8, runSpacing: 4, crossAxisAlignment: WrapCrossAlignment.center, children: <Widget>[
+              if (passed > 0) Pill(tr('{0} ta topshiriq bajarildi', <Object?>[passed]), color: AppColors.success),
+              TextButton.icon(
+                style: TextButton.styleFrom(minimumSize: const Size(0, 36), padding: const EdgeInsets.symmetric(horizontal: 8)),
+                onPressed: () async {
+                  await Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => LabPage(lab: lab)));
+                  await onChanged();
+                },
+                icon: const Icon(Icons.calculate_outlined, size: 18),
+                label: Text(tr('Topshiriq')),
+              ),
+            ]),
+          ]),
+        ),
+      ]),
+    );
+  }
+}
+
+/// Labning interaktiv sahifasi (veb /labs/{code}) ilova ichida. Kirish — shu ilovadagi token (veb `edu.token`).
+class LabWebPage extends StatefulWidget {
+  const LabWebPage({super.key, required this.code, required this.title});
+
+  final String code;
+  final String title;
+
+  @override
+  State<LabWebPage> createState() => _LabWebPageState();
+}
+
+class _LabWebPageState extends State<LabWebPage> {
+  WebViewController? _controller;
+  int _progress = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => _open());
+  }
+
+  void _open() {
+    final session = AppScope.read(context);
+    final server = session.server.replaceAll(RegExp(r'/+$'), '');
+    // Tokenni veb-ilova xotirasiga yozib, lab sahifasiga o'tadigan kichik sahifa (shu server manzilida).
+    final html = '<!doctype html><html><head><meta name="viewport" content="width=device-width"></head><body><script>'
+        'try{localStorage.setItem("edu.token",${jsonEncode(session.token ?? '')});'
+        'localStorage.setItem("edu.organization",${jsonEncode('${session.organizationId ?? ''}')});'
+        'localStorage.setItem("edu.locale",${jsonEncode(I18n.locale)});}catch(e){}'
+        'location.replace(${jsonEncode('/labs/${Uri.encodeComponent(widget.code)}')});'
+        '</script></body></html>';
+    final controller = WebViewController()
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..setBackgroundColor(Colors.white)
+      ..setNavigationDelegate(NavigationDelegate(
+        onProgress: (value) {
+          if (mounted) setState(() => _progress = value);
+        },
+        // Boshqa saytga havola — tashqi brauzerda emas, shu yerda ochilmaydi.
+        onNavigationRequest: (request) =>
+            request.url.startsWith(server) || request.url.startsWith('about:') || request.url.startsWith('data:') ? NavigationDecision.navigate : NavigationDecision.prevent,
+      ))
+      ..loadHtmlString(html, baseUrl: '$server/');
+    setState(() => _controller = controller);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final controller = _controller;
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.title, maxLines: 1, overflow: TextOverflow.ellipsis),
+        actions: <Widget>[
+          if (controller != null) IconButton(tooltip: tr('Yangilash'), onPressed: controller.reload, icon: const Icon(Icons.refresh)),
+        ],
+        bottom: _progress > 0 && _progress < 100
+            ? PreferredSize(preferredSize: const Size.fromHeight(3), child: LinearProgressIndicator(value: _progress / 100, minHeight: 3))
+            : null,
+      ),
+      body: controller == null ? const Center(child: CircularProgressIndicator()) : WebViewWidget(controller: controller),
     );
   }
 }

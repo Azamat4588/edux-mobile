@@ -16,6 +16,9 @@ import '../../core/widgets.dart';
 import '../staff/students_page.dart';
 import '../notifications/notifications_page.dart';
 import '../student/diary_page.dart';
+import '../../core/home_today.dart';
+import '../../core/home_widgets.dart';
+import '../lms/child_courses_view.dart';
 import 'guardian_repository.dart';
 
 /// Push xabari bosilganda (ota-ona): qaysi farzand (`student_id`) va yorliq (xabar turi) ochilsin — shell yozadi.
@@ -26,7 +29,11 @@ class GuardianFocus {
 }
 
 class GuardianHomePage extends StatefulWidget {
-  const GuardianHomePage({super.key});
+  const GuardianHomePage({super.key, this.tab});
+
+  /// 3.4: pastki navigatsiya yorliqlari (veb bottomNav — bitta bo'lim): tanlangan yorliq kaliti (`child`, `child.diary`,
+  /// `child.tests`, `child.payments`, `child.courses`). Berilsa, sahifa ichidagi yorliqlar paneli ko'rsatilmaydi.
+  final ValueNotifier<String>? tab;
 
   @override
   State<GuardianHomePage> createState() => _GuardianHomePageState();
@@ -47,6 +54,7 @@ class _GuardianHomePageState extends State<GuardianHomePage> {
   @override
   void initState() {
     super.initState();
+    widget.tab?.addListener(_onTab);
     GuardianFocus.request.addListener(_onFocus);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _load();
@@ -56,8 +64,31 @@ class _GuardianHomePageState extends State<GuardianHomePage> {
 
   @override
   void dispose() {
+    widget.tab?.removeListener(_onTab);
     GuardianFocus.request.removeListener(_onFocus);
     super.dispose();
+  }
+
+  void _onTab() {
+    if (mounted) setState(() {});
+  }
+
+  /// Bosh sahifa kartasi / tezkor tugma: yorliqqa o'tish yoki to'lov.
+  void _open(String key, GuardianChild child) {
+    if (key == 'pay') {
+      unawaited(_repository.pay(context, child.id, onDone: () => setState(() => _focusSeq++)));
+      return;
+    }
+    final tab = widget.tab;
+    if (tab != null) {
+      tab.value = key;
+      return;
+    }
+    const local = <String, String>{'child': 'overview', 'child.diary': 'diary', 'child.tests': 'tests', 'child.payments': 'payments', 'child.courses': 'courses'};
+    setState(() {
+      _focusTab = local[key] ?? 'overview';
+      _focusSeq++;
+    });
   }
 
   /// Xabar turi → yorliq: davomat va to'lov — «To'lov va davomat», test — «Testlar», kundalik — «Kundalik».
@@ -73,6 +104,8 @@ class _GuardianHomePageState extends State<GuardianHomePage> {
       _focusTab = tabs[type] ?? 'overview';
       _focusSeq++;
     });
+    const navKeys = <String, String>{'overview': 'child', 'diary': 'child.diary', 'tests': 'child.tests', 'payments': 'child.payments'};
+    widget.tab?.value = navKeys[_focusTab] ?? 'child';
     if (student > 0 && _children != null && _children!.any((child) => child.id == student)) unawaited(_select(student));
   }
 
@@ -146,14 +179,32 @@ class _GuardianHomePageState extends State<GuardianHomePage> {
     final child = children.firstWhere((item) => item.id == _selected, orElse: () => children.first);
     // Veb «Farzandim» bilan bir xil yorliqlar (1.29): Umumiy · Kundalik (maktab) · Testlar (test) · To'lov va davomat (CRM).
     final tabs = <_ChildTab>[
-      _ChildTab('overview', tr('Umumiy'), Icons.dashboard_outlined, (_) => _OverviewTab(repository: _repository, child: child)),
+      _ChildTab('overview', tr('Umumiy'), Icons.dashboard_outlined,
+          (_) => _OverviewTab(repository: _repository, child: child, onOpen: (key) => _open(key, child))),
       if (session.hasModule('school'))
         _ChildTab('diary', tr('Kundalik'), Icons.event_note_outlined, (_) => DiaryWeekView(key: ValueKey<int>(child.id), studentId: child.id)),
       if (session.hasModule('testing'))
         _ChildTab('tests', tr('Testlar'), Icons.quiz_outlined, (_) => _TestsTab(repository: _repository, child: child)),
       if (session.hasModule('crm'))
         _ChildTab('payments', tr("To'lov va davomat"), Icons.account_balance_wallet_outlined, (_) => _PaymentsTab(repository: _repository, child: child)),
+      // 1.35: «Kurslar» — farzandning kurslar bo'yicha o'zlashtirishi (lms/child/courses).
+      if (session.hasModule('lms'))
+        _ChildTab('courses', tr('Kurslar'), Icons.menu_book_outlined, (_) => ChildCoursesView(key: ValueKey<int>(child.id), studentId: child.id)),
     ];
+    final external = widget.tab;
+    if (external != null) {
+      const local = <String, String>{'child': 'overview', 'child.diary': 'diary', 'child.tests': 'tests', 'child.payments': 'payments', 'child.courses': 'courses'};
+      final key = local[external.value] ?? 'overview';
+      final current = tabs.firstWhere((tab) => tab.key == key, orElse: () => tabs.first);
+      return Scaffold(
+        appBar: AppBar(
+          title: Text(current.key == 'overview' ? tr('Farzandim') : current.label),
+          actions: const <Widget>[HelpButton(HelpLinks.guardian), NotificationBell()],
+          bottom: children.length < 2 ? null : PreferredSize(preferredSize: const Size.fromHeight(58), child: _switcher(children, child)),
+        ),
+        body: KeyedSubtree(key: ValueKey<String>('${current.key}-${child.id}-$_focusSeq'), child: current.builder(context)),
+      );
+    }
     final focus = tabs.indexWhere((tab) => tab.key == _focusTab);
     return DefaultTabController(
       key: ValueKey<String>('tabs-${tabs.length}-$_focusSeq'),
@@ -168,27 +219,7 @@ class _GuardianHomePageState extends State<GuardianHomePage> {
               : PreferredSize(
             preferredSize: Size.fromHeight((children.length > 1 ? 58.0 : 0.0) + (tabs.length > 1 ? 48.0 : 0.0)),
             child: Column(children: <Widget>[
-              if (children.length > 1)
-                SizedBox(
-                  height: 58,
-                  child: ListView(
-                    scrollDirection: Axis.horizontal,
-                    padding: const EdgeInsets.fromLTRB(12, 6, 12, 8),
-                    children: <Widget>[
-                      for (final item in children)
-                        Padding(
-                          padding: const EdgeInsets.only(right: 8),
-                          child: ChoiceChip(
-                            avatar: Avatar(item.name, size: 24),
-                            label: Text(item.firstName),
-                            selected: item.id == child.id,
-                            showCheckmark: false,
-                            onSelected: (_) => _select(item.id),
-                          ),
-                        ),
-                    ],
-                  ),
-                ),
+              if (children.length > 1) _switcher(children, child),
               if (tabs.length > 1)
                 TabBar(
                   // 3 ta yorliqda ham «To'lov va davomat» kesilmasin — sig'masa suriladi.
@@ -203,6 +234,32 @@ class _GuardianHomePageState extends State<GuardianHomePage> {
           key: ValueKey<int>(child.id),
           children: tabs.map((tab) => tab.builder(context)).toList(),
         ),
+      ),
+    );
+  }
+}
+
+extension on _GuardianHomePageState {
+  /// Bir nechta farzand: tepada almashtirgich.
+  Widget _switcher(List<GuardianChild> children, GuardianChild child) {
+    return SizedBox(
+      height: 58,
+      child: ListView(
+        scrollDirection: Axis.horizontal,
+        padding: const EdgeInsets.fromLTRB(12, 6, 12, 8),
+        children: <Widget>[
+          for (final item in children)
+            Padding(
+              padding: const EdgeInsets.only(right: 8),
+              child: ChoiceChip(
+                avatar: Avatar(item.name, size: 24),
+                label: Text(item.firstName),
+                selected: item.id == child.id,
+                showCheckmark: false,
+                onSelected: (_) => _select(item.id),
+              ),
+            ),
+        ],
       ),
     );
   }
@@ -248,10 +305,13 @@ class _BalanceCard extends StatelessWidget {
 // ---------------- Umumiy ----------------
 
 class _OverviewTab extends StatelessWidget {
-  const _OverviewTab({required this.repository, required this.child});
+  const _OverviewTab({required this.repository, required this.child, this.onOpen});
 
   final GuardianRepository repository;
   final GuardianChild child;
+
+  /// «Bugun» kartasi / tezkor tugma bosilganda (nav kaliti yoki `pay`).
+  final void Function(String key)? onOpen;
 
   Future<Map<String, dynamic>> _load() async {
     final results = await Future.wait<dynamic>(<Future<dynamic>>[
@@ -303,7 +363,20 @@ class _OverviewTab extends StatelessWidget {
                 ]),
               ),
             ]),
-            const SizedBox(height: 14),
+            const SizedBox(height: 4),
+            // 3.4 (veb 1.35 StudentToday, ota-ona): «Bugun» kartalari va tezkor harakatlar.
+            if (studentToday(insights, guardian: true).isNotEmpty) ...<Widget>[
+              SectionTitle(tr('Bugun')),
+              TodayGrid(items: studentToday(insights, guardian: true), onOpen: onOpen),
+            ],
+            if (onOpen != null && quickActions('guardian', AppScope.of(context).can, debt: (balance ?? 0) < 0).isNotEmpty) ...<Widget>[
+              SectionTitle(tr('Tezkor harakatlar')),
+              ActionGrid(
+                actions: quickActions('guardian', AppScope.of(context).can, debt: (balance ?? 0) < 0),
+                onTap: (action) => onOpen!(action.key),
+              ),
+            ],
+            const SizedBox(height: 10),
             if (balance != null) ...<Widget>[
               _BalanceCard(
                 balance: balance,

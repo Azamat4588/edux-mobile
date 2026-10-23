@@ -148,6 +148,74 @@ class Session extends ChangeNotifier implements ApiCredentials {
   bool get canSeeFinance => <String>['director', 'admin', 'cashier'].contains(role) && hasModule('crm');
   bool get canBuildTopicTests => isAcademicStaff && hasModule('testing');
 
+  /// Kartaga o'tkazmalar (1.35): direktor, administrator, kassir; CRM yoki LMS moduli (server: pay/p2p).
+  bool get canSeeP2p => <String>['director', 'admin', 'cashier'].contains(role) && (hasModule('crm') || hasModule('lms'));
+
+  /// Ta'lim (LMS) xodim sahifalari: savol-javob, kurs e'lonlari (server: organization:director,admin,teacher + module:lms).
+  bool get canTeachLms => isAcademicStaff && hasModule('lms');
+
+  /// Menyu va bosh sahifa ruxsatlari bir joyda (lib/core/nav.dart, home_today.dart).
+  bool can(String permission) {
+    final full = isStudent && !isGuest;
+    switch (permission) {
+      case 'crm':
+        return hasModule('crm');
+      case 'school':
+        return hasModule('school') && !isGuest;
+      case 'lms':
+        return (isStudent ? full : true) && hasModule('lms');
+      case 'testing':
+        return hasModule('testing') && (isStudent || isGuardian || isAcademicStaff);
+      case 'guest':
+        return isGuest;
+      case 'students':
+        return canSeeStudents;
+      case 'leads':
+        return canSeeLeads;
+      case 'attendance':
+        return canMarkAttendance;
+      case 'checkin':
+        return canCheckIn;
+      case 'kiosk':
+        return canUseKiosk;
+      case 'scan':
+        return canScan;
+      case 'topic_tests':
+        return canBuildTopicTests;
+      case 'finance':
+        return canSeeFinance;
+      case 'take_payments':
+        return canTakePayments && !readOnly;
+      case 'p2p':
+        return canSeeP2p;
+      case 'callcenter':
+        return canCallCenter;
+      case 'tasks':
+        return canSeeTasks;
+      case 'sms_gateway':
+        return canUseSmsGateway && defaultTargetPlatform == TargetPlatform.android;
+      case 'platform_sms':
+        return isPlatformAdmin && defaultTargetPlatform == TargetPlatform.android;
+      case 'billing':
+        return canManageBilling;
+      case 'staff_ai':
+        return canUseStaffAi;
+      case 'lms_staff':
+        return canTeachLms;
+      case 'fun':
+        return full && hasFeature('fun');
+      case 'olympiad':
+        return full && hasModule('testing') && hasFeature('olympiad');
+      case 'tutor':
+        return canUseTutor;
+      case 'rewards':
+        return full && hasRewards;
+      case 'certificates':
+        return full && (hasModule('testing') || hasModule('lms'));
+    }
+    return false;
+  }
+
   /// AI holati (GET ai/status: staff, tutor, remaining) — kontekstdan keyin bir marta olinadi; null — hali noma'lum.
   Map<String, dynamic>? aiStatus;
   bool get canUseStaffAi => isStaff && hasFeature('ai') && aiStatus?['staff'] != false;

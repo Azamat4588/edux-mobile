@@ -297,3 +297,53 @@ Map<String, dynamic>? _firstLesson(List<Map<String, dynamic>> lessons, {bool pla
   }
   return plannedOnly || lessons.isEmpty ? null : lessons.first;
 }
+
+/// Tezkor harakatlar (veb bosh sahifalari bilan bir xil tartib), ko'pi bilan 6 ta. Kalit — nav yorlig'i yoki maxsus amal
+/// (`payment.take` — to'lov qabul qilish, `pay` — onlayn to'lash).
+List<QuickAction> quickActions(String role, bool Function(String permission) can, {bool debt = false, int pendingTests = 0}) {
+  final list = <QuickAction>[];
+  switch (role) {
+    case 'director':
+    case 'admin':
+      if (can('crm')) {
+        if (can('take_payments')) list.add(QuickAction(key: 'payment.take', label: tr("To'lov qabul qilish"), hint: tr('Naqd, karta yoki Click/Payme'), icon: 'banknote', primary: true));
+        if (can('students')) list.add(QuickAction(key: 'students', label: tr("O'quvchilar"), hint: tr('Qidirish va karta'), icon: 'academic-cap'));
+        if (can('attendance')) list.add(QuickAction(key: 'attendance', label: tr('Davomat qilish'), hint: tr("Bugungi darslar bo'yicha"), icon: 'check-circle'));
+        if (can('leads')) list.add(QuickAction(key: 'crm.leads', label: tr('Murojaatlar'), hint: tr('Yangi lidlarga javob berish'), icon: 'columns'));
+      } else if (can('students')) {
+        list.add(QuickAction(key: 'students', label: tr("O'quvchilar"), icon: 'academic-cap', primary: true));
+      }
+      if (can('testing')) list.add(QuickAction(key: 'exams', label: tr('Test yaratish'), hint: tr("Onlayn yoki qog'oz"), icon: 'clipboard-list'));
+      if (can('scan')) list.add(QuickAction(key: 'scanner', label: tr('Varaqa tekshirish'), hint: tr('Kamera bilan'), icon: 'camera'));
+      if (can('lms_staff')) list.add(QuickAction(key: 'lms.questions', label: tr("O'quvchi savollari"), icon: 'question'));
+    case 'teacher':
+      if (can('attendance')) list.add(QuickAction(key: 'attendance', label: tr('Davomat qilish'), hint: tr('Kim keldi, kim kelmadi'), icon: 'check-circle', primary: true));
+      if (can('lms_staff')) list.add(QuickAction(key: 'lms.questions', label: tr('Savollarga javob berish'), icon: 'question'));
+      if (can('lms_staff')) list.add(QuickAction(key: 'lms.announcements', label: tr("E'lon yozish"), hint: tr("Kurs o'quvchilariga"), icon: 'megaphone'));
+      if (can('testing')) list.add(QuickAction(key: 'exams', label: tr('Test yaratish'), hint: tr("Onlayn yoki qog'oz"), icon: 'clipboard-list'));
+      if (can('scan')) list.add(QuickAction(key: 'scanner', label: tr('Varaqa tekshirish'), icon: 'camera'));
+      if (list.isEmpty && can('students')) list.add(QuickAction(key: 'students', label: tr("O'quvchilarim"), icon: 'academic-cap', primary: true));
+    case 'cashier':
+      list.add(QuickAction(key: 'payment.take', label: tr("To'lov qabul qilish"), hint: tr("O'quvchini toping va summani yozing"), icon: 'banknote', primary: true));
+      list.add(QuickAction(key: 'crm.debtors', label: tr('Qarzdorlar'), hint: tr('Eslatma yuborish'), icon: 'warning'));
+      if (can('p2p')) list.add(QuickAction(key: 'pay.p2p', label: tr("Kartaga o'tkazmalar"), hint: tr('Tasdiqlash va biriktirish'), icon: 'card'));
+      list.add(QuickAction(key: 'crm.payments', label: tr('Kassa'), hint: tr("Bugungi to'lovlar"), icon: 'wallet'));
+    case 'marketer':
+      list.add(QuickAction(key: 'crm.leads', label: tr('Murojaatlarga javob berish'), hint: tr("Yangi lidlar ro'yxati"), icon: 'columns', primary: true));
+      if (can('callcenter')) list.add(QuickAction(key: 'crm.callcenter', label: tr('Call markazi'), icon: 'headphones'));
+      if (can('tasks')) list.add(QuickAction(key: 'crm.tasks', label: tr('Topshiriqlar'), icon: 'list-checks'));
+    case 'student':
+      if (can('testing')) list.add(QuickAction(key: 'my', label: pendingTests > 0 ? tr('Testni boshlash') : tr('Testlarim'), icon: 'clipboard-list', primary: pendingTests > 0));
+      if (can('lms')) list.add(QuickAction(key: 'lms.my.courses', label: tr('Kurslarim'), hint: tr('Darslarni davom ettirish'), icon: 'book'));
+      if (can('lms')) list.add(QuickAction(key: 'lms.my.assignments', label: tr('Uy vazifalari'), icon: 'pencil'));
+      if (can('school')) list.add(QuickAction(key: 'school.diary', label: tr('Kundalik'), hint: tr('Baholar va dars jadvali'), icon: 'pen-line'));
+      if (can('crm')) list.add(QuickAction(key: 'pay', label: debt ? tr("To'lash") : tr("Onlayn to'lov"), icon: 'wallet', primary: debt && !list.any((item) => item.primary)));
+      if (can('fun')) list.add(QuickAction(key: 'fun.labs', label: tr('Laboratoriya'), hint: tr('Virtual tajribalar'), icon: 'science'));
+    case 'guardian':
+      if (can('crm')) list.add(QuickAction(key: 'pay', label: debt ? tr("To'lov qilish") : tr("To'lov va davomat"), hint: debt ? tr("Onlayn to'lov") : '', icon: 'wallet', primary: debt));
+      if (can('school')) list.add(QuickAction(key: 'child.diary', label: tr('Kundalik'), hint: tr('Baholar va uy vazifasi'), icon: 'pen-line'));
+      if (can('testing')) list.add(QuickAction(key: 'child.tests', label: tr('Test natijalari'), icon: 'clipboard-list'));
+      if (can('lms')) list.add(QuickAction(key: 'child.courses', label: tr('Kurslar'), hint: tr("O'zlashtirish"), icon: 'book'));
+  }
+  return list.take(6).toList();
+}

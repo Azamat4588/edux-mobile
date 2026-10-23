@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 
 import '../../core/api.dart';
 import '../../core/format.dart';
+import '../../core/home_today.dart';
+import '../../core/home_widgets.dart';
 import '../../core/i18n.dart';
 import '../../core/session.dart';
 import '../../core/theme.dart';
@@ -14,7 +16,10 @@ import '../tutor/tutor_page.dart';
 import 'online_pay.dart';
 
 class StudentHomePage extends StatelessWidget {
-  const StudentHomePage({super.key});
+  const StudentHomePage({super.key, this.onOpen});
+
+  /// Bo'lim ochish (nav kaliti: `my`, `lms.my.courses`, `pay` ...). Berilmasa — tezkor tugmalar yashiriladi.
+  final void Function(String key)? onOpen;
 
   Future<Map<String, dynamic>> _load(Session session) async {
     final results = await Future.wait<dynamic>(<Future<dynamic>>[
@@ -34,10 +39,35 @@ class StudentHomePage extends StatelessWidget {
         cacheKey: 'student_home',
         decode: asMap,
         skeleton: const SkeletonList(header: true, count: 3),
-        builder: (context, data, reload) => ListView(children: <Widget>[
-          StudentOverviewBody(insights: asMap(data['insights']), crm: asMap(data['crm']), onPaid: reload),
-          const _QuickActions(),
-        ]),
+        builder: (context, data, reload) {
+          // 3.4 (veb 1.35 StudentToday): «Bugun» kartalari va tezkor harakatlar — birinchi.
+          final insights = asMap(data['insights']);
+          final crm = asMap(data['crm']);
+          final upcoming = asList(crm['upcoming'], 'upcoming');
+          final cards = session.isGuest ? <TodayItem>[] : studentToday(insights, upcoming: upcoming);
+          final balance = asInt(crm['balance'] ?? asMap(insights['crm'])['balance']);
+          final actions = session.isGuest || onOpen == null
+              ? <QuickAction>[]
+              : quickActions('student', session.can, debt: balance < 0, pendingTests: asList(asMap(insights['testing'])['pending'], 'pending').length);
+          return ListView(children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
+              child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
+                HomeHeader(name: asText(asMap(insights['student'])['full_name'], session.userName), lead: tr('Bugun nima qilish kerak: testlar, uy vazifalari va to\'lov.')),
+                if (cards.isNotEmpty) ...<Widget>[
+                  SectionTitle(tr('Bugun')),
+                  TodayGrid(items: cards, onOpen: onOpen),
+                ],
+                if (actions.isNotEmpty) ...<Widget>[
+                  SectionTitle(tr('Tezkor harakatlar')),
+                  ActionGrid(actions: actions, onTap: (action) => onOpen!(action.key)),
+                ],
+              ]),
+            ),
+            StudentOverviewBody(insights: insights, crm: crm, onPaid: reload, showGreeting: false, showIdentity: false),
+            const _QuickActions(),
+          ]);
+        },
       ),
     );
   }
@@ -45,7 +75,10 @@ class StudentHomePage extends StatelessWidget {
 
 /// O'quvchi haqida umumiy ko'rinish (o'quvchi va ota-ona sahifalarida) — ro'yxat ichiga qo'yiladi.
 class StudentOverviewBody extends StatelessWidget {
-  const StudentOverviewBody({super.key, required this.insights, required this.crm, this.studentId, this.showGreeting = true, this.onPaid});
+  const StudentOverviewBody({super.key, required this.insights, required this.crm, this.studentId, this.showGreeting = true, this.showIdentity = true, this.onPaid});
+
+  /// Ism va kod bloki (ota-ona sahifasida); bosh sahifada sarlavha alohida (HomeHeader).
+  final bool showIdentity;
 
   final Map<String, dynamic> insights;
   final Map<String, dynamic> crm;
@@ -73,7 +106,7 @@ class StudentOverviewBody extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
       child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
-        if (!showGreeting && name.isNotEmpty) ...<Widget>[
+        if (!showGreeting && showIdentity && name.isNotEmpty) ...<Widget>[
           Row(children: <Widget>[
             Avatar(name, size: 44),
             const SizedBox(width: 12),

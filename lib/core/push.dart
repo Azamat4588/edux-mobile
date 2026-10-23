@@ -113,9 +113,23 @@ class PushService {
     final type = asText(data['type']);
     const known = <String>['payment', 'attendance', 'arrival', 'attempt', 'assignment', 'certificate', 'lead', 'task', 'diary', 'child', 'sms_gateway'];
     if (known.contains(type)) return data;
+    // 1.35: dars savoli/javobi va kurs e'loni — id lar havolada (/learn/courses/{kurs}/lessons/{dars}).
+    if (type == 'lesson_question' || type == 'lesson_answer' || type == 'course_announcement') {
+      return <String, dynamic>{...data, ...lmsIds(asText(data['link'], asText(data['url'])))};
+    }
     final link = route.contains('/') ? route : asText(data['link'], asText(data['url']));
     if (link.isEmpty) return data;
     return <String, dynamic>{...data, ..._fromLink(link)};
+  }
+
+  /// LMS havolasidan kurs va dars: /learn/courses/5/lessons/9 → {course_id: 5, lesson_id: 9}.
+  static Map<String, dynamic> lmsIds(String link) {
+    final match = RegExp(r'/(?:learn|lms)/courses/(\d+)(?:/lessons/(\d+))?').firstMatch(link);
+    if (match == null) return <String, dynamic>{};
+    return <String, dynamic>{
+      'course_id': int.parse(match.group(1)!),
+      if (match.group(2) != null) 'lesson_id': int.parse(match.group(2)!),
+    };
   }
 
   /// Veb manzili → {type, attempt_id, lead_id, student_id} (topilganlari).

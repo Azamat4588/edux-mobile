@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../core/design.dart';
 import '../../core/help_links.dart';
 import '../../core/i18n.dart';
 import '../../core/push.dart';
@@ -44,6 +45,56 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
+  /// Ko'rinish tanlovi (veb: Profil → Ko'rinish): darhol qo'llanadi va hisobga saqlanadi.
+  Widget _choice(Session session, String field, String title, IconData icon, Map<String, String> labels) {
+    final current = session.themeChoice.toJson()[field];
+    return ListTile(
+      leading: Icon(icon),
+      title: Text(title),
+      trailing: DropdownButton<String>(
+        value: labels.containsKey(current) ? current : labels.keys.first,
+        underline: const SizedBox(),
+        items: labels.entries.map((entry) => DropdownMenuItem<String>(value: entry.key, child: Text(tr(entry.value)))).toList(),
+        onChanged: (value) {
+          if (value != null) session.setAppearance(<String, String?>{field: value});
+        },
+      ),
+    );
+  }
+
+  Widget _accentTile(Session session) {
+    final current = session.themeChoice.accent;
+    return ListTile(
+      leading: const Icon(Icons.color_lens_outlined),
+      title: Text(tr('Asosiy rang')),
+      subtitle: Padding(
+        padding: const EdgeInsets.only(top: 8),
+        child: Wrap(spacing: 10, runSpacing: 8, children: <Widget>[
+          for (final accent in accents)
+            Semantics(
+              label: tr(accent.label),
+              selected: accent.key == current,
+              button: true,
+              child: InkWell(
+                customBorder: const CircleBorder(),
+                onTap: () => session.setAppearance(<String, String?>{'accent': accent.key}),
+                child: Container(
+                  width: 32,
+                  height: 32,
+                  decoration: BoxDecoration(
+                    color: accent.from,
+                    shape: BoxShape.circle,
+                    border: Border.all(color: accent.key == current ? AppColors.ink : Colors.transparent, width: 2.5),
+                  ),
+                  child: accent.key == current ? const Icon(Icons.check, size: 18, color: Colors.white) : null,
+                ),
+              ),
+            ),
+        ]),
+      ),
+    );
+  }
+
   @override
   void initState() {
     super.initState();
@@ -57,7 +108,7 @@ class _SettingsPageState extends State<SettingsPage> {
     final session = AppScope.of(context);
     final membership = session.membership;
     return Scaffold(
-      appBar: AppBar(title: Text(tr("Ko'proq"))),
+      appBar: AppBar(title: Text(tr('Yana'))),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: <Widget>[
@@ -118,6 +169,20 @@ class _SettingsPageState extends State<SettingsPage> {
                   },
                 ),
               ),
+              const Divider(),
+              _choice(session, 'size', tr("Shrift o'lchami"), Icons.format_size, sizeLabels),
+              if (session.canCustomizeTheme) ...<Widget>[
+                const Divider(),
+                _accentTile(session),
+                const Divider(),
+                _choice(session, 'template', tr('Shablon'), Icons.dashboard_customize_outlined, templateLabels),
+                const Divider(),
+                _choice(session, 'font', tr('Shrift'), Icons.font_download_outlined, fontLabels),
+                const Divider(),
+                _choice(session, 'radius', tr('Burchaklar'), Icons.rounded_corner, radiusLabels),
+                const Divider(),
+                _choice(session, 'icons', tr('Menyu ikonalari'), Icons.palette_outlined, iconsLabels),
+              ],
               if (session.memberships.length > 1) ...<Widget>[
                 const Divider(),
                 ListTile(
