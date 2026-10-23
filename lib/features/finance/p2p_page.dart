@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 
 import '../../core/api.dart';
 import '../../core/format.dart';
+import '../../core/help_links.dart';
 import '../../core/i18n.dart';
 import '../../core/payments.dart';
 import '../../core/session.dart';
@@ -92,6 +93,7 @@ class _P2pPageState extends State<P2pPage> {
       child: Scaffold(
         appBar: AppBar(
           title: Text(tr("Kartaga o'tkazmalar")),
+          actions: const <Widget>[HelpButton(HelpLinks.p2p)],
           bottom: TabBar(tabs: <Widget>[Tab(text: tr('Kutilmoqda')), Tab(text: tr("Noma'lum")), Tab(text: tr("So'nggi"))]),
         ),
         body: AsyncView<Map<String, dynamic>>(

@@ -193,7 +193,7 @@ class GuardianRepository {
   Future<Map<String, dynamic>> schoolProgress(int childId) async =>
       asMap(await _api.get('school/my/progress', query: <String, Object?>{'student_id': childId}));
 
-  /// Onlayn to'lov (Click/Payme) shu farzand uchun. Tugagach CRM keshi tozalanadi.
+  /// Onlayn to'lov (tashkilot ulagan to'lov tizimlari yoki kartaga o'tkazma) shu farzand uchun. Tugagach CRM keshi tozalanadi.
   Future<void> pay(BuildContext context, int childId, {int suggested = 0, VoidCallback? onDone}) {
     return startOnlinePayment(context, studentId: childId, suggested: suggested, onDone: (paid) {
       invalidate();

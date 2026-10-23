@@ -1,0 +1,6 @@
+{
+  "topics": {"question": "Savol", "bug": "Xatolik", "payment": "To'lov va hisob", "feature": "Taklif", "other": "Boshqa"},
+  "statuses": {"open": "Yangi", "answered": "Javob berilgan", "closed": "Yopilgan"},
+  "contacts": {"phone": "+998 71 200 45 45", "email": "support@edux.uz", "telegram": "edux_support", "hours": "Du–Sha, 9:00–18:00"},
+  "attachments": {"enabled": true, "max_files": 3, "max_kb": 5120, "types": ["jpg", "png", "webp"]}
+}

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import '../../core/api.dart';
 import '../../core/format.dart';
+import '../../core/help_links.dart';
 import '../../core/i18n.dart';
 import '../../core/school_journal.dart';
 import '../../core/session.dart';
@@ -18,7 +19,7 @@ class JournalPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final api = AppScope.of(context).api;
     return Scaffold(
-      appBar: AppBar(title: Text(tr('Jurnal'))),
+      appBar: AppBar(title: Text(tr('Jurnal')), actions: const <Widget>[HelpButton(HelpLinks.journal)]),
       body: AsyncView<Map<String, dynamic>>(
         cacheKey: 'school_journal_options',
         decode: asMap,

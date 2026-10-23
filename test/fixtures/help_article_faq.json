@@ -1,0 +1,81 @@
+{
+    "slug": "kop-beriladigan-savollar",
+    "locale": "uz",
+    "title": "Ko'p beriladigan savollar",
+    "summary": "Direktor, kassir, o'qituvchi, ota-ona, o'quvchi va platforma egasi eng ko'p so'raydigan savollarga qisqa javoblar — kirish, parol, to'lov, SMS, davomat, jurnal, testlar, mobil ilova va yangilash.",
+    "html": "<p>Bu yerda eng ko'p beriladigan savollar rolingiz bo'yicha guruhlangan. Javob qisqa — batafsil yo'riqnoma havolada. Biror narsa ishlamayotgan bo'lsa, <a href=\"/help/muammolar-va-yechimlar\">Muammolar va yechimlar</a> sahifasini oching.</p>\n<h2 id=\"hamma-uchun\">Hamma uchun</h2>\n<p><strong>Parolimni unutdim. Nima qilaman?</strong>\nKirish sahifasida «Parolni unutdingizmi?» ni bosing — telefoningizga kod keladi. Bu tugma yo'q bo'lsa, «Telefonga kod» bilan kiring va «Profil» da yangi parol qo'ying. Ikkalasi ham bo'lmasa, direktorga murojaat qiling — <a href=\"/help/tizimga-kirish\">Tizimga kirish</a>.</p>\n<p><img loading=\"lazy\" src=\"/media/help/img/kop-beriladigan-savollar-1.jpg\" alt=\"Kirish sahifasi\" /></p>\n<p><strong>Kod kelmayapti.</strong>\nTelegram'ingiz tizimga bog'langan bo'lsa, kod SMS emas, Telegramdagi bot chatiga keladi. Aks holda bir daqiqa kuting va «Kodni qayta so'rash» ni bosing.</p>\n<p><strong>Tilni, tungi rejimni va harf o'lchamini qanday o'zgartiraman?</strong>\nTil — yuqori paneldagi UZ / RU / EN tugmasi. Tungi rejim — oy belgisi (telefonda «Yana» ichida). Harf o'lchami va rang — «Profil» → «Ko'rinish» — <a href=\"/help/dizayn-va-shablonlar\">Dizayn, shablonlar va tungi rejim</a>.</p>\n<p><strong>Telefonda menyu qayerda?</strong>\nEkran pastida: birinchi 4 bo'lim va «Yana». «Yana» da to'liq menyu, profil va «Chiqish» — <a href=\"/help/menyu-va-qidiruv\">Menyu va qidiruv</a>.</p>\n<p><strong>Mobil ilova bormi? iPhone'da-chi? Kompyuterda-chi?</strong>\nAndroid ilovasi bor — <a href=\"/help/mobil-ilova-ornatish\">Mobil ilovani o'rnatish</a>. iPhone'da tizim brauzerda va Telegram'da to'liq ishlaydi. Kompyuter uchun Windows, macOS va Linux ilovasi bor — <a href=\"/help/kompyuter-ilovasi\">Kompyuter ilovasi</a>.</p>\n<p><strong>Javob topilmasa, kimga yozaman?</strong>\nTashkilot ichidagi masala (baho, to'lov summasi, guruh) — o'z administratoringizga. Tizim xatosi yoki taklif — <a href=\"/help/qollab-quvvatlash\">Qo'llab-quvvatlash</a>. Mobil ilovada — «Yana → Murojaatlar».</p>\n<h2 id=\"direktor-va-administrator\">Direktor va administrator</h2>\n<p><strong>Qayerdan boshlayman?</strong>\nTashkilot, fanlar, xodimlar, guruhlar va o'quvchilar — tartib bilan: <a href=\"/help/ilk-qadamlar-direktor\">Ilk qadamlar</a>.</p>\n<p><strong>Menyuda kerakli bo'lim yo'q yoki «Modul yoqilmagan» chiqdi.</strong>\nBo'limlar rol va yoqilgan modullarga qarab chiqadi. «Sozlamalar → Modullar va obuna» da yoqing. Ba'zi qo'shimchalar modulga bog'liq: «Call markazi» — CRM, «Kirish nazorati» — CRM yoki maktab — <a href=\"/help/modullar-va-obuna\">Modullar va obuna</a>.</p>\n<p><strong>Xodim parolini unutdi.</strong>\n«Sozlamalar → Xodimlar» → xodim qatorida «Parolni yangilash» — <a href=\"/help/xodim-qoshish\">Xodim qo'shish</a>.</p>\n<p><strong>Ota-onaning parolini kim tiklaydi?</strong>\nO'quvchi kartasi → «Kabinet va ota-onalar» → ota-ona qatoridagi «Parol» tugmasi — <a href=\"/help/ota-onani-boglash\">Ota-onani bog'lash</a>.</p>\n<p><strong>Ota-onalar onlayn to'lay oladimi?</strong>\nHa: Click, Payme, Uzum Bank, Paynet, Oson, Alif Pay (kalitlarini platforma egasi kiritadi) yoki kartaga o'tkazma (o'zingiz yoqasiz). Holat va yoqish — «Sozlamalar → Onlayn to'lov» — <a href=\"/help/onlayn-tolov-holati\">Onlayn to'lov holati</a>, <a href=\"/help/kartaga-otkazma\">Kartaga o'tkazma</a>.</p>\n<p><strong>SMS xizmati bilan shartnomamiz yo'q. SMS yubora olamizmi?</strong>\nHa — «O'z telefonimdan» usuli: tizim matnni tayyorlaydi, telefoningizdan yuborasiz — <a href=\"/help/sms-oz-telefonimdan\">SMS'ni o'z telefonimdan yuborish</a>.</p>\n<p><strong>Butun yil bo'yicha tushum va xarajatni qayerda ko'raman?</strong>\n«Hisobotlar» → «12 oy» — so'nggi 12 oy bo'yicha hisoblangan, tushum, xarajat va foyda — <a href=\"/help/hisobotlar\">Hisobotlar</a>.</p>\n<p><strong>Kim nimani o'zgartirganini qayerda ko'raman?</strong>\n«Sozlamalar → Harakatlar jurnali» (faqat direktor) — <a href=\"/help/harakatlar-jurnali\">Harakatlar jurnali</a>.</p>\n<p><strong>Sinov muddati tugasa, ma'lumotlar o'chadimi?</strong>\nYo'q. Obuna to'lanmasa tizim «faqat o'qish» rejimiga o'tadi: hamma narsa ko'rinadi, yangi yozuv kiritilmaydi. To'lovdan keyin ish davom etadi.</p>\n<h2 id=\"kassir\">Kassir</h2>\n<p><strong>To'lovni qanday qabul qilaman va chek beraman?</strong>\n«To'lovlar» → «To'lov qabul qilish», o'quvchini tanlang, summa va usulni kiriting, saqlang — kvitansiya chop etiladi — <a href=\"/help/tolov-qabul-qilish\">To'lov qabul qilish</a>, <a href=\"/help/chek-va-kvitansiya\">Chek va kvitansiya</a>.</p>\n<p><strong>Ota-ona kartaga pul o'tkazdi. Qanday tasdiqlayman?</strong>\n«To'lovlar» → «Kartaga o'tkazmalar» yorlig'ida buyurtmani topib «Tasdiqlash» ni bosing. Tizim ko'pincha o'zi tasdiqlaydi — <a href=\"/help/kartaga-otkazma\">Kartaga o'tkazma</a>.</p>\n<p><strong>Onlayn to'lov qilindi, lekin balansda ko'rinmayapti.</strong>\n«To'lovlar» → «Onlayn» yorlig'ida buyurtma holatini ko'ring. «Kutilmoqda» bo'lsa — to'lov tizimi hali tasdiqlamagan; bir necha daqiqadan keyin yangilanmasa, direktorga ayting — <a href=\"/help/muammolar-va-yechimlar#tolov-va-pul\">Muammolar va yechimlar</a>.</p>\n<p><strong>Qarzdorlarga eslatma qanday yuboraman?</strong>\n«Qarzdorlar» sahifasida «Ota-onalarga eslatma» — Telegram, ilova yoki SMS bilan ketadi — <a href=\"/help/crm-qarzdorlar\">Qarzdorlar</a>.</p>\n<p><strong>Kun oxirida kassani qanday yopaman?</strong>\n«Kassa» → «Smenani yopish» — <a href=\"/help/kassir-ish-kuni\">Kassir ish kuni</a>, <a href=\"/help/kassa\">Kassa</a>.</p>\n<h2 id=\"oqituvchi\">O'qituvchi</h2>\n<p><strong>Davomatni telefonda qilsa bo'ladimi?</strong>\nHa: mobil ilovada «Davomat qilish». Maktabda jurnal ham telefonda: «Sinflarim → Jurnal» — <a href=\"/help/oqituvchi-telefonda\">O'qituvchi telefonda</a>.</p>\n<p><strong>Boshqa guruhlarni ko'ramanmi?</strong>\nYo'q, faqat o'z guruhlaringiz (sinflaringiz) va o'quvchilaringizni.</p>\n<p><strong>O'quvchilar dars bo'yicha savol beryapti. Qayerda javob beraman?</strong>\n«Ta'lim → Savol-javob» — hamma savollar bitta ro'yxatda — <a href=\"/help/kurs-elonlari-va-savol-javob\">Savol-javob, kurs e'lonlari va jonli dars</a>.</p>\n<p><strong>Qog'oz testni qanday tekshiraman?</strong>\nJavob varaqasini chop eting va telefon bilan skanerlang — <a href=\"/help/javob-varaqasi-chop-etish\">Javob varaqasini chop etish</a>, <a href=\"/help/varaqani-skanerlash\">Varaqani skanerlash</a>.</p>\n<p><strong>Maoshimni qayerda ko'raman?</strong>\n«Maoshim» — hisoblangan, berilgan va qoldiq — <a href=\"/help/oqituvchi-maoshi\">O'qituvchi maoshi</a>.</p>\n<h2 id=\"ota-ona\">Ota-ona</h2>\n<p><strong>Farzandimning baho, davomat va to'lovini qayerda ko'raman?</strong>\n«Farzandim» sahifasida: «Umumiy», «Kundalik», «Testlar», «To'lov va davomat», «Kurslar» — <a href=\"/help/farzandim\">Farzandim</a>.</p>\n<p><strong>Ikki farzandim bor. Ikkalasini qanday ko'raman?</strong>\nHar farzandning havolasini bitta hisob (bitta telefon raqam) bilan oching. «Farzandim» sahifasining tepasida farzandni tanlaysiz.</p>\n<p><strong>Onlayn qanday to'layman?</strong>\n«Farzandim» → «To'lov va davomat» → summani yozing → to'lov usulini tanlang (Click, Payme, Uzum Bank va boshqalar yoki «Kartaga o'tkazma»). Tizimga kirmasdan — markaz yuborgan to'lov havolasi orqali — <a href=\"/help/onlayn-tolov-ota-ona\">Onlayn to'lov</a>.</p>\n<p><strong>Xabarlar qanday keladi?</strong>\nTelegram bot, mobil ilova va (markaz yoqqan bo'lsa) SMS orqali — <a href=\"/help/ota-ona-xabarlari\">Ota-onaga keladigan xabarlar</a>.</p>\n<h2 id=\"oquvchi\">O'quvchi</h2>\n<p><strong>Testni qanday ishlayman?</strong>\n«Testlarim» → testni tanlang → «Boshlash» — <a href=\"/help/onlayn-test-topshirish\">Onlayn test topshirish</a>.</p>\n<p><strong>Darsda tushunmagan joyimni qanday so'rayman?</strong>\nDars sahifasining pastidagi «Savol-javob» ga yozing — o'qituvchi javob beradi — <a href=\"/help/darsda-savol-va-jonli-dars\">Darsda savol berish va jonli darsga qo'shilish</a>.</p>\n<p><strong>Jonli dars havolasi qayerda?</strong>\nDars sahifasidagi «Jonli dars» kartasida. «Darsga qo'shilish» tugmasi boshlanishiga 15 daqiqa qolganda ochiladi.</p>\n<p><strong>XP va coin nima uchun beriladi?</strong>\nTest, uy vazifasi, darsga kelish va laboratoriya uchun — <a href=\"/help/xp-va-darajalar\">XP va darajalar</a>, <a href=\"/help/coin-va-dokon\">Coin va do'kon</a>.</p>\n<h2 id=\"platforma-egasi\">Platforma egasi</h2>\n<p><strong>To'lov tizimini tashkilotga qanday ulayman?</strong>\n«Tashkilotlar» → «Boshqarish» → «Texnik integratsiyalar» → «Onlayn to'lov» — <a href=\"/help/tolov-tizimlarini-ulash\">To'lov tizimlarini ulash</a>.</p>\n<p><strong>Kirish kodi va parol tiklash SMS'lari uchun nima kerak?</strong>\n«Sozlamalar» → «SMS» da xizmatni tanlang yoki Telegram botni ulang — <a href=\"/help/sms-xizmatini-ulash\">SMS xizmatini ulash</a>, <a href=\"/help/kirish-usullarini-sozlash\">Kirish usullarini sozlash</a>.</p>\n<p><strong>.env faylini tahrirlashim kerakmi?</strong>\nYo'q. Deyarli hamma qiymat «Sozlamalar» sahifasida — <a href=\"/help/platforma-sozlamalari\">Platforma sozlamalari</a>.</p>\n<p><strong>Yangi versiyani qanday o'rnataman?</strong>\n«Server» → «Tizimni yangilash» → arxivni yuklang → «O'rnatish». Oldin zaxira oling — <a href=\"/help/serverni-yangilash-va-zaxira\">Tizimni yangilash va zaxira nusxa</a>.</p>\n<p><strong>Yordam maqolasini o'zgartirsa bo'ladimi?</strong>\nHa: «Yordam markazi» bo'limida har maqolani tahrirlash, yashirish yoki video qo'shish mumkin. Yangilanishda sizning tahriringiz saqlanadi.</p>\n",
+    "toc": [
+        {
+            "id": "hamma-uchun",
+            "text": "Hamma uchun",
+            "level": 2
+        },
+        {
+            "id": "direktor-va-administrator",
+            "text": "Direktor va administrator",
+            "level": 2
+        },
+        {
+            "id": "kassir",
+            "text": "Kassir",
+            "level": 2
+        },
+        {
+            "id": "oqituvchi",
+            "text": "O'qituvchi",
+            "level": 2
+        },
+        {
+            "id": "ota-ona",
+            "text": "Ota-ona",
+            "level": 2
+        },
+        {
+            "id": "oquvchi",
+            "text": "O'quvchi",
+            "level": 2
+        },
+        {
+            "id": "platforma-egasi",
+            "text": "Platforma egasi",
+            "level": 2
+        }
+    ],
+    "reading_minutes": 5,
+    "section": {
+        "id": "faq",
+        "title": "Savol-javob va muammolar"
+    },
+    "routes": [],
+    "video": null,
+    "related": [
+        {
+            "slug": "muammolar-va-yechimlar",
+            "title": "Muammolar va yechimlar",
+            "summary": "Tez-tez uchraydigan muammolar — kod kelmadi, to'lov tasdiqlanmadi, SMS ketmadi, Telegram bot javob bermaydi, mobil ilovaga kira olmayapman, yangilashdan keyin eski sahifa — sababi va nima qilish kerak.",
+            "section": "faq",
+            "order": 20,
+            "routes": [],
+            "reading_minutes": 6,
+            "locale": "uz",
+            "video": false
+        },
+        {
+            "slug": "qollab-quvvatlash",
+            "title": "Yordam so'rovi yuborish (qo'llab-quvvatlash)",
+            "summary": "Savol, xatolik yoki taklifni qo'llab-quvvatlash xizmatiga yozish va javobni kuzatish.",
+            "section": "faq",
+            "order": 30,
+            "routes": [
+                "info.support",
+                "info.support.ticket"
+            ],
+            "reading_minutes": 2,
+            "locale": "uz",
+            "video": false
+        }
+    ],
+    "updated_at": "2026-10-23T08:40:48+00:00",
+    "requested_locale": "uz",
+    "fallback": false
+}

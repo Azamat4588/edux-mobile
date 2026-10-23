@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 
 import '../../core/api.dart';
 import '../../core/format.dart';
+import '../../core/help_links.dart';
 import '../../core/i18n.dart';
 import '../../core/session.dart';
 import '../../core/theme.dart';
@@ -37,7 +38,7 @@ class MyTestsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final api = AppScope.of(context).api;
     return Scaffold(
-      appBar: AppBar(title: Text(tr('Testlar'))),
+      appBar: AppBar(title: Text(tr('Testlar')), actions: const <Widget>[HelpButton(HelpLinks.myTests)]),
       body: AsyncView<List<Map<String, dynamic>>>(
         load: () async => asList(asMap(await api.get('my/exams'))['exams'], 'exams'),
         cacheKey: 'my_tests',

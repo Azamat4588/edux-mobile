@@ -28,6 +28,22 @@ class PayMethod {
 
 const Map<String, String> _legacyNames = <String, String>{'click': 'Click', 'payme': 'Payme'};
 
+/// To'lov tizimlari nomlari (veb: resources/js/lib/payMethods.js → PROVIDER_NAMES).
+const Map<String, String> providerNames = <String, String>{
+  'click': 'Click',
+  'payme': 'Payme',
+  'uzum': 'Uzum Bank',
+  'paynet': 'Paynet',
+  'oson': 'Oson',
+  'alif': 'Alif Pay',
+  'p2p': "Kartaga o'tkazma",
+};
+
+/// `providers` xaritasidan ({click: true, payme: false, uzum: true, p2p: true}) tayyor usullar — server bergan tartibda.
+/// [withP2p] false — faqat to'lov sahifasiga yo'naltiradiganlar (olimpiada, test badali).
+List<String> readyProviders(Map<String, dynamic> providers, {bool withP2p = true}) =>
+    providers.keys.where((key) => providers[key] == true && (withP2p || key != 'p2p')).toList();
+
 /// Usullar ro'yxati: yangi server — `methods` (tartib bilan); eski server (1.35 gacha) — `providers` {click: true, payme: true}.
 List<PayMethod> payMethods(Map<String, dynamic> options) {
   final raw = options['methods'];

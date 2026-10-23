@@ -7,6 +7,7 @@ import 'package:wakelock_plus/wakelock_plus.dart';
 import '../../core/bank_sms.dart';
 import '../../core/format.dart';
 
+import '../../core/help_links.dart';
 import '../../core/i18n.dart';
 import '../../core/session.dart';
 import '../../core/sms_gateway.dart';
@@ -203,7 +204,10 @@ class _SmsGatewayPageState extends State<SmsGatewayPage> {
   Widget build(BuildContext context) {
     final session = AppScope.of(context);
     return Scaffold(
-      appBar: AppBar(title: Text(widget.platform ? tr('SMS shlyuz (platforma)') : tr('SMS shlyuz'))),
+      appBar: AppBar(
+        title: Text(widget.platform ? tr('SMS shlyuz (platforma)') : tr('SMS shlyuz')),
+        actions: <Widget>[HelpButton(widget.platform ? HelpLinks.platformSms : HelpLinks.deviceSms)],
+      ),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: <Widget>[

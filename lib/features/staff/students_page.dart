@@ -282,6 +282,11 @@ const Map<String, String> paymentMethods = <String, String>{
   'click': 'Click',
   'payme': 'Payme',
   'transfer': "Bank o'tkazmasi",
+  'uzum': 'Uzum Bank',
+  'paynet': 'Paynet',
+  'oson': 'Oson',
+  'alif': 'Alif Pay',
+  'p2p': "Kartaga o'tkazma",
 };
 
 class StudentCardPage extends StatefulWidget {

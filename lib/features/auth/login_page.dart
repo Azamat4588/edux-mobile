@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 
 import '../../core/api.dart';
+import '../../core/help_links.dart';
 import '../../core/i18n.dart';
 import '../../core/session.dart';
 import '../../core/sms_gateway.dart';
@@ -255,7 +256,13 @@ class _LoginPageState extends State<LoginPage> {
                     : tr("Parolni unutgan bo'lsangiz, tashkilot direktoriga murojaat qiling."),
                 textAlign: TextAlign.center,
                 style: TextStyle(color: AppColors.muted, fontSize: 13)),
-            const SizedBox(height: 8),
+            Center(
+              child: TextButton.icon(
+                onPressed: () => HelpLinks.show(context, HelpLinks.login),
+                icon: const Icon(Icons.help_outline, size: 18),
+                label: Text(tr('Kira olmayapman?')),
+              ),
+            ),
             Center(
               child: TextButton.icon(
                 onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const PayLinkPage())),

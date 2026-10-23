@@ -6,7 +6,7 @@
 //   POST billing/quote                        — {plan_code | modules, addons, cycle} → {items, total}
 //   POST billing/invoices                     — keyingi davr hisobi
 //   POST billing/addons                       — to'langan davr o'rtasida qo'shimcha (qolgan kunlar uchun hisob)
-//   POST billing/invoices/{id}/pay/{provider} — click | payme → {redirect_url}; manual → {message, bank_details}
+//   POST billing/invoices/{id}/pay/{provider} — click | payme | uzum | paynet | oson | alif → {redirect_url}; manual → {message, bank_details}
 // Sinov davrida modullarni tanlash va hisobni chop etish — veb-versiyada.
 import 'dart:async';
 
@@ -16,6 +16,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../core/api.dart';
 import '../../core/format.dart';
 import '../../core/i18n.dart';
+import '../../core/payments.dart';
 import '../../core/session.dart';
 import '../../core/theme.dart';
 import '../../core/widgets.dart';
@@ -157,7 +158,7 @@ class _BillingPageState extends State<BillingPage> with WidgetsBindingObserver {
   String? _busy;
   Map<String, dynamic>? _bankNote;
 
-  /// Click/Payme sahifasi ochilgan: ilovaga qaytilganda holat yangilanadi.
+  /// To'lov tizimi sahifasi ochilgan: ilovaga qaytilganda holat yangilanadi.
   bool _awaitingPayment = false;
 
   @override
@@ -335,7 +336,7 @@ class _BillingPageState extends State<BillingPage> with WidgetsBindingObserver {
     }
   }
 
-  /// Click va Payme — tashqi to'lov sahifasi (brauzer); bank o'tkazmasi — rekvizitlar shu sahifada.
+  /// To'lov tizimlari (Click, Payme, Uzum Bank ...) — tashqi to'lov sahifasi (brauzer); bank o'tkazmasi — rekvizitlar shu sahifada.
   Future<void> _pay(Map<String, dynamic> invoice, String provider) async {
     final id = asInt(invoice['id']);
     setState(() => _busy = '$id:$provider');
@@ -844,8 +845,8 @@ class _OpenInvoice extends StatelessWidget {
         ),
         const SizedBox(height: 10),
         Wrap(spacing: 8, runSpacing: 8, children: <Widget>[
-          if (providers['click'] == true) button('click', tr("Click orqali to'lash")),
-          if (providers['payme'] == true) button('payme', tr("Payme orqali to'lash")),
+          for (final provider in readyProviders(providers, withP2p: false).where((key) => key != 'manual'))
+            button(provider, tr("{0} orqali to'lash", <Object?>[providerNames[provider] ?? provider])),
           button('manual', tr("Bank o'tkazmasi"), primary: false),
         ]),
         if (bankNote != null) ...<Widget>[

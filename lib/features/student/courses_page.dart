@@ -12,11 +12,12 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../core/api.dart';
 import '../../core/format.dart';
+import '../../core/help_links.dart';
 import '../../core/i18n.dart';
+import '../../core/lms.dart';
 import '../../core/session.dart';
 import '../../core/theme.dart';
 import '../../core/widgets.dart';
-import '../../core/lms.dart';
 import '../fun/games_page.dart';
 import '../fun/labs_page.dart';
 import '../lms/board_view.dart';
@@ -409,7 +410,7 @@ class _LessonPageState extends State<LessonPage> {
   Widget build(BuildContext context) {
     final api = AppScope.of(context).api;
     return Scaffold(
-      appBar: AppBar(title: Text(tr('Dars'))),
+      appBar: AppBar(title: Text(tr('Dars')), actions: const <Widget>[HelpButton(HelpLinks.lesson)]),
       body: AsyncView<Map<String, dynamic>>(
         key: _view,
         load: () async => asMap(await api.get('lms/my/lessons/${widget.lessonId}')),

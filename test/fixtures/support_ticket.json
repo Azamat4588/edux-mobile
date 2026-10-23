@@ -1,0 +1,10 @@
+{
+  "id": 12, "name": "Ergasheva Mohinur", "contact": "+998900000005", "topic": "bug", "subject": "Test natijasi ochilmayapti",
+  "status": "closed", "token": "AbCdEfGhIjKlMnOpQrStUvWxYz0123456789AbCd", "created_at": "2026-10-23T08:00:00.000000Z",
+  "updated_at": "2026-10-23T09:00:00.000000Z", "helpful": null, "rated_at": null,
+  "messages": [
+    {"id": 31, "from_staff": false, "body": "«Testlarim» → natija bosilsa oq ekran", "created_at": "2026-10-23T08:00:00.000000Z",
+     "attachments": [{"name": "ekran.png", "mime": "image/png", "size": 48211, "url": "https://edux.uz/api/v1/public/support/AbCdEfGhIjKlMnOpQrStUvWxYz0123456789AbCd/files/31/0"}]},
+    {"id": 32, "from_staff": true, "body": "Tuzatildi, ilovani yangilang.", "created_at": "2026-10-23T09:00:00.000000Z", "attachments": []}
+  ]
+}

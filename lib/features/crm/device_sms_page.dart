@@ -9,6 +9,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../core/api.dart';
 import '../../core/device_sms.dart';
 import '../../core/format.dart';
+import '../../core/help_links.dart';
 import '../../core/i18n.dart';
 import '../../core/session.dart';
 import '../../core/theme.dart';
@@ -90,7 +91,7 @@ class _DeviceSmsPageState extends State<DeviceSmsPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(tr("O'z telefonimdan SMS")),
-        actions: <Widget>[IconButton(tooltip: tr('Yangilash'), onPressed: _load, icon: const Icon(Icons.refresh))],
+        actions: <Widget>[IconButton(tooltip: tr('Yangilash'), onPressed: _load, icon: const Icon(Icons.refresh)), const HelpButton(HelpLinks.deviceSms)],
       ),
       body: _error != null
           ? ErrorState(message: _error!, onRetry: _load)

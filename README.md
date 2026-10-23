@@ -38,6 +38,22 @@ Windows, macOS va Linux uchun EduX ilovasi alohida repozitoriyda: [Azamat4588/ed
 `…/edux-desktop/releases/download/desktop-latest/EduX-Setup-x64.exe`, `EduX-x64.msi`, `EduX-macOS-universal.dmg`,
 `EduX-linux-x86_64.AppImage`, `EduX-linux-amd64.deb`.
 
+## 3.5 da yangi (server 1.38: yordam markazi va qo'llab-quvvatlash)
+
+- **«Yana» → «Yordam»**: yordam markazidan qidirish (`help/search`), «Ko'p beriladigan savollar» va «Muammolar va yechimlar»
+  ilova ichida, «Murojaat yuborish», «Mening murojaatlarim», aloqa kanallari va ish vaqti. Brauzerda ochish ham qoldi.
+- **Maqola ilova ichida** (`help/articles/{slug}`, kirmagan bo'lsa `public/help/...`): sarlavhalar, ro'yxatlar,
+  «Eslatma/Diqqat» bloklari, rasmlar, jadvallar; boshqa maqolaga havola ilova ichida ochiladi; oxirida «Yordam berdimi?»
+  (Ha / Yo'q → `feedback`), «Yo'q» bo'lsa — murojaat. HTML o'quvchi yangi paketsiz: `lib/core/help_html.dart`.
+- **Har ekranda «?»** — o'z maqolasi (`lib/core/help_links.dart`, 20 slug; serverda borligi testda tekshiriladi):
+  jurnal, kirish nazorati, kiosk, savol-javob va e'lonlar, dars, to'lovlarim, testlarim, kartaga o'tkazmalar, SMS shlyuz,
+  murojaatlar, o'qituvchi bosh sahifasi. Kirish ekranida «Kira olmayapman?», xato/«aloqa yo'q» holatida «Muammolar va yechimlar».
+- **Murojaat (server 1.38)**: rasm biriktirish (server cheklovi bo'yicha, 3 tagacha), ilova versiyasi, platforma
+  (android/ios), OS va ekran o'lchami avtomatik `context` ga; yozishmada rasmlar, «Muammo hal bo'ldi» (yopish) va
+  👍/👎 baho; javob haqidagi push (`type=support`) shu yozishmani ochadi. Eski server bilan ham ishlaydi.
+- To'lov tizimlari: olimpiada badali, to'lov havolasi va obuna hisobida faqat Click/Payme emas — server bergan barcha
+  tayyor tizimlar (Uzum Bank, Paynet, Oson, Alif Pay); to'lov usullari nomlari vebdagi bilan bir xil.
+
 ## 3.4.1 da yangi (audit: server 1.36 bilan to'liq moslik)
 
 - **Maktab jurnali** (o'qituvchi — «Sinflarim → Jurnal», rahbar — «Ta'lim → Jurnal»): sinf + fan + chorak, darslar

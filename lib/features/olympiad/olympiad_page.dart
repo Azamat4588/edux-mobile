@@ -6,6 +6,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../core/api.dart';
 import '../../core/format.dart';
 import '../../core/i18n.dart';
+import '../../core/payments.dart';
 import '../../core/session.dart';
 import '../../core/theme.dart';
 import '../../core/widgets.dart';
@@ -344,20 +345,14 @@ class _MeCard extends StatelessWidget {
           Text(tr("Olimpiadada qatnashish uchun badalni to'lang: {0}", <Object?>[money(asInt(olympiad['price']))]),
               style: TextStyle(color: AppColors.muted)),
           const SizedBox(height: 10),
-          if (providers['click'] == true)
+          for (final provider in readyProviders(providers, withP2p: false)) ...<Widget>[
             FilledButton(
-              onPressed: busy ? null : () => onPay(asText(me['token']), 'click'),
-              style: FilledButton.styleFrom(backgroundColor: const Color(0xFF0B6CF2)),
-              child: Text(tr('Click orqali to\'lash')),
+              onPressed: busy ? null : () => onPay(asText(me['token']), provider),
+              child: Text(tr("{0} orqali to'lash", <Object?>[providerNames[provider] ?? provider])),
             ),
-          if (providers['click'] == true && providers['payme'] == true) const SizedBox(height: 8),
-          if (providers['payme'] == true)
-            FilledButton(
-              onPressed: busy ? null : () => onPay(asText(me['token']), 'payme'),
-              style: FilledButton.styleFrom(backgroundColor: const Color(0xFF00BAC6)),
-              child: Text(tr('Payme orqali to\'lash')),
-            ),
-          if (providers['click'] != true && providers['payme'] != true)
+            const SizedBox(height: 8),
+          ],
+          if (readyProviders(providers, withP2p: false).isEmpty)
             Text(tr("Onlayn to'lov yoqilmagan. Badalni markaz ma'muriyatiga topshiring."), style: TextStyle(color: AppColors.danger)),
         ] else if (result.isEmpty) ...<Widget>[
           const SizedBox(height: 12),

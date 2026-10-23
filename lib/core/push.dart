@@ -59,7 +59,7 @@ class PushService {
 
   static final PushService instance = PushService._();
 
-  static const String appVersion = '3.4.1';
+  static const String appVersion = '3.5.0';
 
   bool _ready = false;
   bool _initTried = false;
@@ -94,6 +94,7 @@ class PushService {
     'public.certificate': 'certificate',
     'crm.leads': 'lead',
     'crm.tasks': 'task',
+    'info.support.ticket': 'support',
   };
 
   /// Xabar ma'lumoti → ilova ichidagi tur: avval `route` (yangi server), keyin `type` (eski server), oxiri veb manzili
@@ -111,7 +112,7 @@ class PushService {
       return result;
     }
     final type = asText(data['type']);
-    const known = <String>['payment', 'attendance', 'arrival', 'attempt', 'assignment', 'certificate', 'lead', 'task', 'diary', 'child', 'sms_gateway'];
+    const known = <String>['payment', 'attendance', 'arrival', 'attempt', 'assignment', 'certificate', 'lead', 'task', 'diary', 'child', 'sms_gateway', 'support'];
     if (known.contains(type)) return data;
     // 1.35: dars savoli/javobi va kurs e'loni — id lar havolada (/learn/courses/{kurs}/lessons/{dars}).
     if (type == 'lesson_question' || type == 'lesson_answer' || type == 'course_announcement') {
@@ -162,6 +163,9 @@ class PushService {
       if (lead != null) result['lead_id'] = lead;
     } else if (path.startsWith('/crm/tasks')) {
       result['type'] = 'task';
+    } else if (path.startsWith('/support/t/') && segments.length == 3) {
+      result['type'] = 'support';
+      result['token'] = segments[2];
     }
     final student = uri.queryParameters['student'] ?? uri.queryParameters['student_id'];
     if (student != null) result['student_id'] = student;

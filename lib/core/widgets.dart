@@ -6,6 +6,7 @@ import 'package:flutter_math_fork/flutter_math.dart';
 
 import 'api.dart';
 import 'format.dart';
+import 'help_links.dart';
 import 'i18n.dart';
 import 'offline_cache.dart';
 import 'theme.dart';
@@ -306,10 +307,13 @@ Future<bool> confirm(BuildContext context, String text, {String? action, bool da
 }
 
 class ErrorState extends StatelessWidget {
-  const ErrorState({super.key, required this.message, this.onRetry});
+  const ErrorState({super.key, required this.message, this.onRetry, this.showHelp = true});
 
   final String message;
   final VoidCallback? onRetry;
+
+  /// «Muammolar va yechimlar» maqolasi havolasi (3.5).
+  final bool showHelp;
 
   @override
   Widget build(BuildContext context) {
@@ -323,6 +327,10 @@ class ErrorState extends StatelessWidget {
           if (onRetry != null) ...<Widget>[
             const SizedBox(height: 16),
             OutlinedButton.icon(onPressed: onRetry, icon: const Icon(Icons.refresh), label: Text(tr('Qayta urinish'))),
+          ],
+          if (showHelp) ...<Widget>[
+            const SizedBox(height: 8),
+            const ProblemsLink(),
           ],
         ]),
       ),

@@ -9,6 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 
 import '../../core/api.dart';
+import '../../core/help_links.dart';
 import '../../core/i18n.dart';
 import '../../core/scan_keys.dart';
 import '../../core/session.dart';
@@ -154,6 +155,7 @@ class _CheckinPageState extends State<CheckinPage> {
             ),
           IconButton(tooltip: tr('Chiroq'), icon: const Icon(Icons.flashlight_on_outlined), onPressed: () => _scanner.toggleTorch()),
           IconButton(tooltip: tr('Kamerani almashtirish'), icon: const Icon(Icons.cameraswitch_outlined), onPressed: () => _scanner.switchCamera()),
+          const HelpButton(HelpLinks.checkin, color: Colors.white),
         ],
       ),
       body: Stack(children: <Widget>[

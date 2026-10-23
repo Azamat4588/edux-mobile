@@ -28,6 +28,7 @@ import '../fun/achievements_page.dart';
 import '../fun/games_page.dart';
 import '../fun/labs_page.dart';
 import '../guardian/guardian_home_page.dart';
+import '../help/help_pages.dart';
 import '../lms/lms_staff_pages.dart';
 import '../notifications/notifications_page.dart';
 import '../olympiad/olympiads_page.dart';
@@ -112,6 +113,11 @@ class _HomeShellState extends State<HomeShell> with WidgetsBindingObserver {
       final s = session();
       final id = asInt(data['attempt_id']);
       return s.isStudent && s.hasModule('testing') && id > 0 ? AttemptResultPage(attemptId: id) : null;
+    };
+    // 3.5: murojaatga javob (server 1.38: type=support, route=info.support.ticket, token).
+    routes['support'] = (data) {
+      final token = asText(data['token']);
+      return RegExp(r'^[A-Za-z0-9]{40}$').hasMatch(token) ? TicketPage(token: token) : const SupportPage();
     };
     routes['certificate'] = (_) {
       final s = session();
@@ -292,7 +298,7 @@ class _HomeShellState extends State<HomeShell> with WidgetsBindingObserver {
     return SectionTabsPage(key: ValueKey<String>('section-${section.key}'), pages: pages, request: _request(section.key));
   }
 
-  /// «Yana»: pastki menyuga sig'magan bo'limlar, bildirishnomalar, murojaatlar, keyin sozlamalar.
+  /// «Yana»: pastki menyuga sig'magan bo'limlar, bildirishnomalar, murojaatlar, «Yordam», keyin sozlamalar.
   Widget _more(Session session, List<NavSection> overflow) {
     final colored = AppColors.choice.coloredIcons;
     final extra = <Widget>[
@@ -314,6 +320,7 @@ class _HomeShellState extends State<HomeShell> with WidgetsBindingObserver {
               page: _page(session, tab.key)!,
             ),
       _MenuTile(icon: Icons.support_agent_outlined, label: tr('Murojaatlar'), page: const SupportPage()),
+      _MenuTile(icon: Icons.help_outline, label: tr('Yordam'), page: const HelpPage()),
     ];
     return SettingsPage(extra: extra);
   }

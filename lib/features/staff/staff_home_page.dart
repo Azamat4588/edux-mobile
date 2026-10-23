@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../../core/api.dart';
 import '../../core/format.dart';
+import '../../core/help_links.dart';
 import '../../core/home_today.dart';
 import '../../core/home_widgets.dart';
 import '../../core/i18n.dart';
@@ -73,7 +74,7 @@ class StaffHomePage extends StatelessWidget {
           const SizedBox(width: 10),
           Expanded(child: Text(session.organizationName, maxLines: 1, overflow: TextOverflow.ellipsis)),
         ]),
-        actions: const <Widget>[NotificationBell()],
+        actions: <Widget>[if (session.isTeacher) const HelpButton(HelpLinks.teacherHome), const NotificationBell()],
       ),
       body: AsyncView<Map<String, dynamic>>(
         load: () => _load(session),

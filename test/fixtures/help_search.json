@@ -1,0 +1,79 @@
+{
+    "query": "davomat",
+    "results": [
+        {
+            "slug": "davomat-belgilash",
+            "title": "Davomat belgilash",
+            "summary": "Dars bo'yicha kim keldi, kim kelmadi — belgilash, dars bahosi va oylik davomat jadvali.",
+            "section": "schedule",
+            "order": 20,
+            "routes": [
+                "attendance"
+            ],
+            "reading_minutes": 2,
+            "locale": "uz",
+            "video": false,
+            "score": 64,
+            "snippet": "<mark>Davomat</mark> har dars uchun belgilanadi. Belgilar o&#039;quvchi kartasida, ota-ona kabinetida va hisobotlarda ko&#039;rinadi, «Kelmadi» bo&#039;lsa esa ota-onaga xabar ketadi. Qadamlar Menyuni oching: …"
+        },
+        {
+            "slug": "oqituvchi-telefonda",
+            "title": "O'qituvchi telefonda: skaner, davomat va kirish",
+            "summary": "Mobil ilovada (3.4) o'qituvchi javob varaqalarini skanerlaydi, guruh davomatini va maktab jurnalini yuritadi, savollarga javob beradi, kirishda QR kartani o'qiydi va bildirishnomalarni oladi.",
+            "section": "teacher",
+            "order": 20,
+            "routes": [],
+            "reading_minutes": 3,
+            "locale": "uz",
+            "video": false,
+            "score": 54,
+            "snippet": "… vazifalari, tekshirishni kutayotgan varaqalar, ochiq testlar) va katta tezkor tugmalar: <mark>«Davomat</mark> qilish», «Jurnal» (maktabda), «Savollarga javob berish» (kurslar bo&#039;lsa), «Test yaratish», «Varaqa tekshirish». Ekran pastidagi menyu veb-versiya bilan bir xil: Bosh sahifa, …"
+        },
+        {
+            "slug": "qr-karta-bilan-davomat",
+            "title": "QR karta va skaner bilan davomat",
+            "summary": "Darsda davomatni QR karta bilan tez belgilash — guruh varaqasida skaner qurilmasi, telefon kamerasi yoki kirishdagi kiosk; qaysi skaner mos keladi va nima qilish kerak, agar karta o'qilmasa.",
+            "section": "access",
+            "order": 20,
+            "routes": [],
+            "reading_minutes": 2,
+            "locale": "uz",
+            "video": false,
+            "score": 52,
+            "snippet": "… Qayerda Kimga qulay Skaner qurilmasi (USB yoki Bluetooth) Kompyuterda: guruh <mark>davomati,</mark> «Kelganlar», «Kirish nazorati» Qabulxona, sinf kompyuteri Telefon kamerasi Mobil ilova: «Kirish nazorati» O&#039;qituvchi, qo&#039;riqchi Kiosk Kirishdagi planshet yoki kompyuter O&#039;quvchining o&#039;zi …"
+        },
+        {
+            "slug": "farzandim",
+            "title": "«Farzandim» — ota-ona kabineti",
+            "summary": "Ota-ona farzandining umumiy holati, kundaligi, test natijalari, to'lovlari va davomatini bitta sahifada ko'radi.",
+            "section": "parent",
+            "order": 10,
+            "routes": [
+                "child",
+                "child.tests",
+                "child.courses"
+            ],
+            "reading_minutes": 2,
+            "locale": "uz",
+            "video": false,
+            "score": 39,
+            "snippet": "… Unda farzandingizning o&#039;qishi bo&#039;yicha barcha ma&#039;lumot to&#039;plangan: baholar, testlar, kurslar, <mark>davomat</mark> va to&#039;lovlar. Yorliqlar tashkilotda yoqilgan imkoniyatlarga qarab chiqadi. Qanday ulanish mumkin O&#039;quv markazi yoki maktab administratori sizga ota-onalar uchun taklif havolasini …"
+        },
+        {
+            "slug": "kop-beriladigan-savollar",
+            "title": "Ko'p beriladigan savollar",
+            "summary": "Direktor, kassir, o'qituvchi, ota-ona, o'quvchi va platforma egasi eng ko'p so'raydigan savollarga qisqa javoblar — kirish, parol, to'lov, SMS, davomat, jurnal, testlar, mobil ilova va yangilash.",
+            "section": "faq",
+            "order": 10,
+            "routes": [],
+            "reading_minutes": 5,
+            "locale": "uz",
+            "video": false,
+            "score": 39,
+            "snippet": "… «Kassa» → «Smenani yopish» — Kassir ish kuni, Kassa. O&#039;qituvchi <mark>Davomatni</mark> telefonda qilsa bo&#039;ladimi? Ha: mobil ilovada <mark>«Davomat</mark> qilish». Maktabda jurnal ham telefonda: «Sinflarim → Jurnal» — O&#039;qituvchi telefonda. Boshqa guruhlarni ko&#039;ramanmi? …"
+        }
+    ],
+    "locale": "uz",
+    "requested_locale": "uz",
+    "fallback": false
+}

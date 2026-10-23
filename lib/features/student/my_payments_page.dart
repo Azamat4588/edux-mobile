@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../../core/api.dart';
 import '../../core/format.dart';
+import '../../core/help_links.dart';
 import '../../core/i18n.dart';
 import '../../core/session.dart';
 import '../../core/theme.dart';
@@ -26,7 +27,7 @@ class MyPaymentsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final session = AppScope.of(context);
     return Scaffold(
-      appBar: AppBar(title: Text(tr("To'lovlarim"))),
+      appBar: AppBar(title: Text(tr("To'lovlarim")), actions: const <Widget>[HelpButton(HelpLinks.myPayments)]),
       body: AsyncView<Map<String, dynamic>>(
         cacheKey: 'crm_me',
         decode: asMap,

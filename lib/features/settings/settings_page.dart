@@ -1,15 +1,15 @@
-// Ko'proq: profil, tashkilotni almashtirish, til, skaner sozlamalari, yordam markazi, chiqish.
+// «Yana»: profil, tashkilotni almashtirish, til, skaner sozlamalari, «Yordam», chiqish.
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../core/design.dart';
-import '../../core/help_links.dart';
 import '../../core/i18n.dart';
 import '../../core/push.dart';
 import '../../core/session.dart';
 import '../../core/theme.dart';
 import '../../core/widgets.dart';
 import '../auth/organization_picker.dart';
+import '../help/help_pages.dart';
 
 /// Skaner sozlamalari (qurilmada saqlanadi).
 class ScannerPrefs {
@@ -223,10 +223,10 @@ class _SettingsPageState extends State<SettingsPage> {
             child: Column(children: <Widget>[
               ListTile(
                 leading: const Icon(Icons.help_outline),
-                title: Text(tr('Yordam markazi')),
-                subtitle: Text(tr("Qo'llanmalar: qayerda nima bor va qanday qilinadi.")),
-                trailing: const Icon(Icons.open_in_new, size: 18),
-                onTap: () => HelpLinks.open(context),
+                title: Text(tr('Yordam')),
+                subtitle: Text(tr("Yordam markazi, ko'p beriladigan savollar va murojaat.")),
+                trailing: const Icon(Icons.chevron_right),
+                onTap: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const HelpPage())),
               ),
               const Divider(),
               ListTile(

@@ -7,6 +7,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../core/api.dart';
 import '../../core/format.dart';
 import '../../core/i18n.dart';
+import '../../core/payments.dart';
 import '../../core/session.dart';
 import '../../core/theme.dart';
 import '../../core/widgets.dart';
@@ -179,7 +180,9 @@ class _PayLinkBody extends StatelessWidget {
     final student = asMap(info['student']);
     final providers = asMap(info['providers']);
     final balance = asInt(info['balance']);
-    final any = providers['click'] == true || providers['payme'] == true;
+    // Kartaga o'tkazma (P2P) bu sahifada yo'q — to'lov tizimlari (Click, Payme, Uzum Bank, Paynet, Oson, Alif Pay).
+    final ready = readyProviders(providers, withP2p: false);
+    final any = ready.isNotEmpty;
     return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
       AppCard(
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
@@ -207,19 +210,13 @@ class _PayLinkBody extends StatelessWidget {
           decoration: InputDecoration(labelText: tr("To'lanadigan summa (so'm)"), suffixText: tr("so'm")),
         ),
         const SizedBox(height: 18),
-        if (providers['click'] == true)
+        for (var i = 0; i < ready.length; i++) ...<Widget>[
+          if (i > 0) const SizedBox(height: 10),
           FilledButton(
-            onPressed: busy ? null : () => onPay('click'),
-            style: FilledButton.styleFrom(backgroundColor: const Color(0xFF0B6CF2)),
-            child: Text(tr('Click orqali to\'lash')),
+            onPressed: busy ? null : () => onPay(ready[i]),
+            child: Text(tr("{0} orqali to'lash", <Object?>[providerNames[ready[i]] ?? ready[i]])),
           ),
-        if (providers['click'] == true && providers['payme'] == true) const SizedBox(height: 10),
-        if (providers['payme'] == true)
-          FilledButton(
-            onPressed: busy ? null : () => onPay('payme'),
-            style: FilledButton.styleFrom(backgroundColor: const Color(0xFF00BAC6)),
-            child: Text(tr('Payme orqali to\'lash')),
-          ),
+        ],
       ],
     ]);
   }
