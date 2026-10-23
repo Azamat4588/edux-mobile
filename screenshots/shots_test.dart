@@ -260,6 +260,8 @@ void main() {
   setUpAll(() async {
     SharedPreferences.setMockInitialValues(<String, Object>{});
     await loadFonts();
+    // Telefondagidek: klaviatura fokus ramkasi chizilmaydi.
+    FocusManager.instance.highlightStrategy = FocusHighlightStrategy.alwaysTouch;
   });
 
   setUp(() {
