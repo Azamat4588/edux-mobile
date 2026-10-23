@@ -164,7 +164,7 @@ class _HelpPageState extends State<HelpPage> {
             AppCard(
               padding: EdgeInsets.zero,
               child: Column(children: <Widget>[
-                _tile(Icons.edit_outlined, tr('Murojaat yuborish'), tr("Savol, xatolik yoki taklif — EduX jamoasi javob beradi."),
+                _tile(Icons.edit_outlined, tr('Murojaat yuborish'), tr('Savol, xatolik yoki taklif — EduX jamoasi javob beradi.'),
                     () => openNewTicket(context, page: 'help')),
                 if (session.signedIn) ...<Widget>[
                   const Divider(height: 1),
@@ -363,7 +363,7 @@ class _FeedbackCard extends StatelessWidget {
               Text(tr('Rahmat! Fikringiz maqolani yaxshilashga yordam beradi.'), style: const TextStyle(fontWeight: FontWeight.w600)),
               if (!answered) ...<Widget>[
                 const SizedBox(height: 8),
-                Text(tr("Javob topilmadimi? Murojaat yuboring — EduX jamoasi yordam beradi."), style: TextStyle(color: AppColors.muted)),
+                Text(tr('Javob topilmadimi? Murojaat yuboring — EduX jamoasi yordam beradi.'), style: TextStyle(color: AppColors.muted)),
                 const SizedBox(height: 8),
                 FilledButton.icon(onPressed: onSupport, icon: const Icon(Icons.edit_outlined), label: Text(tr('Murojaat yuborish'))),
               ],

@@ -77,7 +77,7 @@ void main() {
   });
 
   test('qidiruv natijasi: <mark> ajratiladi', () {
-    final spans = parseHelpInline("<mark>Davomat</mark> har dars uchun o&#039;quvchi");
+    final spans = parseHelpInline('<mark>Davomat</mark> har dars uchun o&#039;quvchi');
     expect(spans.first.text, 'Davomat');
     expect(spans.first.mark, isTrue);
     expect(spans.map((span) => span.text).join(), "Davomat har dars uchun o'quvchi");
