@@ -2,6 +2,8 @@
 ::group::✅ Passing tests
 ✅ 01 kirish
 ✅ 02 oqituvchi bosh sahifa
+✅ 02b yana menyusi
+✅ 02c bildirishnomalar
 ✅ 03 jurnal
 ✅ 04 davomat
 ✅ 05 skaner
@@ -15,4 +17,4 @@
 ✅ 13 murojaat
 ::endgroup::
 
-🎉 13 tests passed.
+🎉 15 tests passed.
