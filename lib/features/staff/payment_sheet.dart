@@ -127,7 +127,8 @@ class _PaymentFormState extends State<_PaymentForm> {
         if (widget.groups.length > 1) ...<Widget>[
           const SizedBox(height: 14),
           DropdownButtonFormField<int?>(
-            value: _groupId,
+            key: ValueKey<int?>(_groupId),
+            initialValue: _groupId,
             decoration: InputDecoration(labelText: tr('Qaysi guruh uchun')),
             items: <DropdownMenuItem<int?>>[
               DropdownMenuItem<int?>(value: null, child: Text(tr('Tanlang'))),

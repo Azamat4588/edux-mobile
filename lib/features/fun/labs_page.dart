@@ -13,6 +13,7 @@ import '../../core/format.dart';
 import '../../core/i18n.dart';
 import '../../core/session.dart';
 import '../../core/theme.dart';
+import '../../core/webview_guard.dart';
 import '../../core/widgets.dart';
 
 IconData _labIcon(String subject) {
@@ -227,13 +228,21 @@ class _LabWebPageState extends State<LabWebPage> {
             openSystemLink(request.url);
             return NavigationDecision.prevent;
           }
-          return request.url.startsWith(server) || request.url.startsWith('about:') || request.url.startsWith('data:')
+          // Faqat shu server (aynan origin): token yozilgan localStorage boshqa saytga ochilmasin.
+          return sameOrigin(request.url, server) || request.url.startsWith('about:')
               ? NavigationDecision.navigate
               : NavigationDecision.prevent;
         },
       ))
       ..loadHtmlString(html, baseUrl: '$server/');
     setState(() => _controller = controller);
+  }
+
+  @override
+  void dispose() {
+    // Lab yopildi — token WebView xotirasida qolmasin (keyingi ochilishda qayta yoziladi).
+    clearWebViewData();
+    super.dispose();
   }
 
   @override

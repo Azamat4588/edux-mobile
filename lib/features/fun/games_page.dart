@@ -65,7 +65,7 @@ class _GamesPageState extends State<GamesPage> {
                   AppCard(
                     onTap: () => _play('quiz', asInt(subject['id']), asText(subject['name'])),
                     child: Row(children: <Widget>[
-                      _GameIcon(game: 'quiz'),
+                      const _GameIcon(game: 'quiz'),
                       const SizedBox(width: 12),
                       Expanded(
                         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[

@@ -373,7 +373,7 @@ class _Card extends StatelessWidget {
                 Text(asText(student['full_name']), style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w800)),
                 const SizedBox(height: 2),
                 Text('${tr("O'quvchi kodi")}: ${asText(student['code'])}', style: TextStyle(color: AppColors.muted)),
-                if (student['archived'] == true) ...<Widget>[SizedBox(height: 4), Pill(tr('Arxivda'), color: AppColors.muted)],
+                if (student['archived'] == true) ...<Widget>[const SizedBox(height: 4), Pill(tr('Arxivda'), color: AppColors.muted)],
               ]),
             ),
             if (phone.isNotEmpty)

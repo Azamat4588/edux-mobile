@@ -121,7 +121,7 @@ class _DeviceSmsPageState extends State<DeviceSmsPage> {
         if (_sent > 0) Pill(tr('Yuborildi: {0}', <Object?>[_sent]), color: AppColors.success),
       ]),
       const SizedBox(height: 4),
-      Text(tr("SMS ilovasi ochiladi — «Yuborish» ni bosing, keyin shu yerga qaytib «Yuborildi» ni belgilang."), style: TextStyle(color: AppColors.muted)),
+      Text(tr('SMS ilovasi ochiladi — «Yuborish» ni bosing, keyin shu yerga qaytib «Yuborildi» ni belgilang.'), style: TextStyle(color: AppColors.muted)),
       const SizedBox(height: 14),
       AppCard(
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[

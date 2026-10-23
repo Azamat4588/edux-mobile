@@ -39,7 +39,7 @@ class _P2pPageState extends State<P2pPage> {
   }
 
   Future<void> _reject(Map<String, dynamic> order) async {
-    if (!await confirm(context, tr("Buyurtma rad etilsinmi?"), action: tr('Rad etish'), danger: true)) return;
+    if (!await confirm(context, tr('Buyurtma rad etilsinmi?'), action: tr('Rad etish'), danger: true)) return;
     await _run((api) => api.post('pay/p2p/orders/${asInt(order['id'])}/reject'), tr('Rad etildi.'));
   }
 
@@ -260,7 +260,8 @@ class _AttachSheetState extends State<_AttachSheet> {
     setState(() => _loading = true);
     try {
       final session = AppScope.read(context);
-      final data = await session.api.get(session.hasModule('crm') ? 'crm/students' : 'students', query: <String, Object?>{'search': query});
+      // O'quvchiga biriktirish faqat CRM bilan (server: P2pController::attach); qidiruv ham CRM ro'yxatidan.
+      final data = await session.api.get('crm/students', query: <String, Object?>{'search': query});
       if (mounted) setState(() => _students = asList(data));
     } on ApiException catch (error) {
       if (mounted) showMessage(context, error.message, error: true);
@@ -291,6 +292,10 @@ class _AttachSheetState extends State<_AttachSheet> {
             ),
         ],
         SectionTitle(tr("O'quvchiga (o'qish to'lovi)")),
+        if (!AppScope.read(context).hasModule('crm'))
+          Text(tr("O'quvchiga to'g'ridan-to'g'ri biriktirish CRM moduli bilan ishlaydi. Hozircha kutilayotgan buyurtmani tanlang."),
+              style: TextStyle(color: AppColors.muted))
+        else ...<Widget>[
         TextField(
           controller: _search,
           textInputAction: TextInputAction.search,
@@ -308,6 +313,7 @@ class _AttachSheetState extends State<_AttachSheet> {
             trailing: const Icon(Icons.person_add_alt),
             onTap: () => Navigator.pop(context, <String, Object?>{'student_id': asInt(student['id'])}),
           ),
+        ],
       ]),
     );
   }

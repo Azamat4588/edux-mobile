@@ -300,7 +300,7 @@ class _ScanDetails extends StatelessWidget {
             if (item.localCorrect != null)
               KeyValue(tr('Telefonda hisoblangan'), '${item.localCorrect} / ${item.localTotal} · ${number(item.localScore)} ${tr('ball')}'),
             if (item.serverCorrect == null && item.localCorrect == null)
-              KeyValue(tr("Belgilangan javoblar"), '${answers.where((row) => row.isNotEmpty).length} / ${answers.length}'),
+              KeyValue(tr('Belgilangan javoblar'), '${answers.where((row) => row.isNotEmpty).length} / ${answers.length}'),
           ]),
         ),
         if (flags.isNotEmpty) ...<Widget>[

@@ -138,7 +138,7 @@ class _TaskCard extends StatelessWidget {
         if (phone.isNotEmpty)
           IconButton(
             onPressed: () => launchUrl(Uri.parse('tel:${phone.replaceAll(RegExp(r'[^+\d]'), '')}')),
-            icon: Icon(Icons.call, color: AppColors.success),
+            icon: const Icon(Icons.call, color: AppColors.success),
             tooltip: tr("Qo'ng'iroq qilish"),
           ),
       ]),

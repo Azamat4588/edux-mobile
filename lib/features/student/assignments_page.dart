@@ -162,12 +162,13 @@ class _SubmissionFormState extends State<_SubmissionForm> {
       _sending = true;
       _error = null;
     });
+    final api = AppScope.read(context).api;
     try {
       final files = <http.MultipartFile>[];
       if (_photo != null) {
         files.add(http.MultipartFile.fromBytes('file', await _photo!.readAsBytes(), filename: 'javob.jpg'));
       }
-      await AppScope.read(context).api.multipart(
+      await api.multipart(
         'lms/my/assignments/${asInt(widget.assignment['id'])}/submission',
         fields: <String, String>{'content': _content.text.trim()},
         files: files,

@@ -59,7 +59,7 @@ class StaffHomePage extends StatelessWidget {
       case 'marketer':
         return tr("Yangi murojaatlarga tezroq javob bering — har bir qo'ng'iroq yangi o'quvchi bo'lishi mumkin.");
     }
-    return tr("Bugun nima qilish kerak — birinchi: qarzdorlar, tushum, darslar va murojaatlar.");
+    return tr('Bugun nima qilish kerak — birinchi: qarzdorlar, tushum, darslar va murojaatlar.');
   }
 
   @override

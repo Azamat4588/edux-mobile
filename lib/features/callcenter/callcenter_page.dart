@@ -65,6 +65,8 @@ class _CallCenterPageState extends State<CallCenterPage> with WidgetsBindingObse
 
   void _tick() {
     if (!mounted || !_foreground) return;
+    // Pastki menyuda boshqa bo'lim tanlangan (IndexedStack'da yashirin) — so'ramaymiz.
+    if (!TabVisibility.of(context)) return;
     // Ustida boshqa sahifa (lid, o'quvchi kartasi) ochiq bo'lsa — so'ramaymiz.
     final route = ModalRoute.of(context);
     if (route != null && !route.isCurrent) return;
@@ -415,7 +417,7 @@ class _LookupCardState extends State<_LookupCard> {
               keyboardType: TextInputType.phone,
               textInputAction: TextInputAction.search,
               onSubmitted: (_) => _search(),
-              decoration: InputDecoration(hintText: '+998 90 123 45 67', isDense: true, prefixIcon: const Icon(Icons.phone_outlined)),
+              decoration: const InputDecoration(hintText: '+998 90 123 45 67', isDense: true, prefixIcon: Icon(Icons.phone_outlined)),
             ),
           ),
           const SizedBox(width: AppSpacing.s),
@@ -507,7 +509,7 @@ class CallerCardView extends StatelessWidget {
           const Icon(Icons.person_outline, color: AppColors.warning),
           const SizedBox(width: AppSpacing.m),
           Expanded(
-            child: Text(tr("Notanish raqam. Natijani «Qiziqdi» yoki «Sinov darsiga yozildi» deb belgilasangiz, yangi lid yaratiladi."),
+            child: Text(tr('Notanish raqam. Natijani «Qiziqdi» yoki «Sinov darsiga yozildi» deb belgilasangiz, yangi lid yaratiladi.'),
                 style: TextStyle(color: AppColors.muted)),
           ),
         ]),

@@ -3,7 +3,6 @@
 // Ketma-ket rejim: varaqani almashtirish kifoya — tugma bosish shart emas.
 import 'dart:async';
 import 'dart:math' as math;
-import 'dart:typed_data';
 
 import 'package:camera/camera.dart';
 import 'package:edux_omr/edux_omr.dart';
@@ -15,6 +14,7 @@ import 'package:wakelock_plus/wakelock_plus.dart';
 import '../../core/i18n.dart';
 import '../../core/session.dart';
 import '../../core/theme.dart';
+import '../../core/webview_guard.dart';
 import '../../core/widgets.dart';
 import '../settings/settings_page.dart';
 import 'exam_kit.dart';
@@ -151,7 +151,7 @@ class _ScannerPageState extends State<ScannerPage> with WidgetsBindingObserver {
     } on CameraException catch (error) {
       if (!mounted) return;
       setState(() => _cameraError = error.code == 'CameraAccessDenied' || error.code == 'CameraAccessDeniedWithoutPrompt'
-          ? tr("Kameraga ruxsat berilmagan. Telefon sozlamalarida EduX ga kamera ruxsatini bering.")
+          ? tr('Kameraga ruxsat berilmagan. Telefon sozlamalarida EduX ga kamera ruxsatini bering.')
           : tr('Kamera ochilmadi'));
     }
   }
@@ -334,7 +334,7 @@ class _ScannerPageState extends State<ScannerPage> with WidgetsBindingObserver {
     } else if (code == 'bad_image') {
       text = tr("Rasm o'qilmadi. JPG yoki PNG fayl yuboring.");
     } else {
-      text = tr("Varaqani qayta suratga oling.");
+      text = tr('Varaqani qayta suratga oling.');
     }
     _cooldownUntil = DateTime.now().add(const Duration(milliseconds: 1800));
     setState(() {
@@ -493,6 +493,22 @@ class _ScannerPageState extends State<ScannerPage> with WidgetsBindingObserver {
                         icon: const Icon(Icons.photo_library_outlined),
                         label: Text(tr('Galereyadan rasm tanlash')),
                       ),
+                      // Ruxsat rad etilgan: sozlamalardan yoqib, shu yerga qaytib qayta urinadi.
+                      const SizedBox(height: 8),
+                      Wrap(alignment: WrapAlignment.center, spacing: 8, children: <Widget>[
+                        TextButton.icon(
+                          style: TextButton.styleFrom(foregroundColor: Colors.white70),
+                          onPressed: openAppSettings,
+                          icon: const Icon(Icons.settings_outlined),
+                          label: Text(tr('Sozlamalar')),
+                        ),
+                        TextButton.icon(
+                          style: TextButton.styleFrom(foregroundColor: Colors.white70),
+                          onPressed: _startCamera,
+                          icon: const Icon(Icons.refresh),
+                          label: Text(tr('Qayta urinish')),
+                        ),
+                      ]),
                     ]),
                   ),
                 )

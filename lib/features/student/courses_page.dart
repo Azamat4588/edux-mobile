@@ -316,7 +316,7 @@ class _LessonPageState extends State<LessonPage> {
       await file.writeAsBytes(bytes, flush: true);
       final result = await OpenFilex.open(file.path);
       if (result.type != ResultType.done && mounted) {
-        showMessage(context, tr("Bu turdagi fayl ilova ichida ochilmaydi."), error: true);
+        showMessage(context, tr('Bu turdagi fayl ilova ichida ochilmaydi.'), error: true);
       }
     } on ApiException catch (error) {
       if (mounted) showMessage(context, error.message, error: true);
@@ -557,7 +557,7 @@ class _LiveLessonCardState extends State<LiveLessonCard> {
             child: FilledButton.icon(
               onPressed: state == 'open' && url.isNotEmpty ? () => launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication) : null,
               icon: const Icon(Icons.login),
-              label: Text(state == 'open' ? tr("Darsga qo'shilish") : tr("Havola dars boshlanishiga 15 daqiqa qolganda ochiladi")),
+              label: Text(state == 'open' ? tr("Darsga qo'shilish") : tr('Havola dars boshlanishiga 15 daqiqa qolganda ochiladi')),
             ),
           ),
         ],

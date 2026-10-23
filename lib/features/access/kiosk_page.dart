@@ -13,6 +13,7 @@ import '../../core/external_links.dart';
 import '../../core/i18n.dart';
 import '../../core/session.dart';
 import '../../core/theme.dart';
+import '../../core/webview_guard.dart';
 import '../../core/widgets.dart';
 
 class KioskPage extends StatefulWidget {
@@ -105,7 +106,10 @@ class _KioskPageState extends State<KioskPage> {
     final url = _url;
     if (url == null) return;
     if (!await _cameraPermission()) {
-      if (mounted) showMessage(context, tr("Kamerani ochib bo'lmadi. Ilovaga kamera ruxsatini bering."), error: true);
+      if (mounted) {
+        showMessage(context, tr("Kamerani ochib bo'lmadi. Ilovaga kamera ruxsatini bering."),
+            error: true, actionLabel: tr('Sozlamalar'), onAction: openAppSettings);
+      }
       return;
     }
     if (!mounted) return;
@@ -165,7 +169,7 @@ class _KioskPageState extends State<KioskPage> {
                 TextField(
                   controller: _link,
                   keyboardType: TextInputType.url,
-                  decoration: InputDecoration(hintText: 'https://…/kiosk/…', border: const OutlineInputBorder()),
+                  decoration: const InputDecoration(hintText: 'https://…/kiosk/…', border: OutlineInputBorder()),
                 ),
                 const SizedBox(height: 8),
                 OutlinedButton(onPressed: _useLink, child: Text(tr('Havola bilan ochish'))),
@@ -199,7 +203,11 @@ class _KioskViewState extends State<_KioskView> {
           openSystemLink(request.url);
           return NavigationDecision.prevent;
         }
-        return NavigationDecision.navigate;
+        // Kiosk faqat o'z serverida (xost bir xil; http→https yo'naltirish mumkin): begona havola ochilmaydi.
+        final host = Uri.tryParse(request.url)?.host.toLowerCase();
+        return (host != null && host.isNotEmpty && host == Uri.tryParse(widget.url)?.host.toLowerCase()) || request.url.startsWith('about:')
+            ? NavigationDecision.navigate
+            : NavigationDecision.prevent;
       }))
       ..loadRequest(Uri.parse(widget.url));
     final platform = _controller.platform;

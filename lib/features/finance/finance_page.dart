@@ -292,7 +292,7 @@ class _DebtorsTabState extends State<_DebtorsTab> with AutomaticKeepAliveClientM
       } else if (asInt(result['recently_reminded']) > 0) {
         showMessage(context, tr('Bu ota-onaga yaqinda eslatma yuborilgan.'), error: true);
       } else {
-        showMessage(context, tr("Eslatma yuborilmadi: ota-ona Telegram botga ulanmagan va SMS shabloni yoqilmagan."), error: true);
+        showMessage(context, tr('Eslatma yuborilmadi: ota-ona Telegram botga ulanmagan va SMS shabloni yoqilmagan.'), error: true);
       }
     } on ApiException catch (error) {
       if (mounted) showMessage(context, error.message, error: true);
@@ -538,7 +538,7 @@ class _Bars extends StatelessWidget {
           const SizedBox(width: AppSpacing.xs),
           Text(tr('Tushum'), style: TextStyle(fontSize: 12, color: AppColors.muted)),
           const SizedBox(width: AppSpacing.m),
-          _Dot(color: AppColors.warning),
+          const _Dot(color: AppColors.warning),
           const SizedBox(width: AppSpacing.xs),
           Text(tr('Xarajat'), style: TextStyle(fontSize: 12, color: AppColors.muted)),
         ]),

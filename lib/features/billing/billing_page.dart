@@ -410,7 +410,7 @@ class _BillingPageState extends State<BillingPage> with WidgetsBindingObserver {
           if (billing['can_choose_trial_modules'] == true)
             Padding(
               padding: const EdgeInsets.only(top: 8),
-              child: Text(tr("Sinov davrida modullarni veb-versiyadagi «Modullar va obuna» sahifasida yoqasiz."),
+              child: Text(tr('Sinov davrida modullarni veb-versiyadagi «Modullar va obuna» sahifasida yoqasiz.'),
                   style: TextStyle(color: AppColors.muted, fontSize: 12.5)),
             ),
         ],
@@ -608,7 +608,7 @@ class _StatusCard extends StatelessWidget {
     String text = '';
     if (!suspended) {
       if (status == 'trial') {
-        text = tr("Sinov muddati {0} gacha, {1} kun qoldi.", <Object?>[date(billing['trial_ends_at']), daysLeft(billing['trial_ends_at'])]);
+        text = tr('Sinov muddati {0} gacha, {1} kun qoldi.', <Object?>[date(billing['trial_ends_at']), daysLeft(billing['trial_ends_at'])]);
       } else if (status == 'active') {
         text = tr("To'langan davr {0} gacha, {1} kun qoldi.", <Object?>[date(billing['period_ends_at']), daysLeft(billing['period_ends_at'])]);
       } else if (status == 'past_due') {
@@ -707,7 +707,7 @@ class _ModuleTile extends StatelessWidget {
       label = 'Sinov davrida ochiq';
       color = AppColors.brand;
     } else if (enabled) {
-      label = "Ochiq — obuna rejasida";
+      label = 'Ochiq — obuna rejasida';
       color = AppColors.success;
     } else {
       label = 'Yoqilmagan';
@@ -715,7 +715,7 @@ class _ModuleTile extends StatelessWidget {
     }
     String hint = '';
     if (!enabled && status == 'trial' && state['in_trial'] == false) hint = 'Sinovga kirmaydi';
-    if (!enabled && hint.isEmpty && source == 'plan') hint = "Obuna rejasida bor, lekin hozir ochiq emas";
+    if (!enabled && hint.isEmpty && source == 'plan') hint = 'Obuna rejasida bor, lekin hozir ochiq emas';
     return ListTile(
       title: Text(asText(state['name']), style: const TextStyle(fontWeight: FontWeight.w600)),
       subtitle: hint.isEmpty ? null : Text(tr(hint), style: const TextStyle(color: AppColors.warning, fontSize: 12)),

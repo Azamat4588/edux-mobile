@@ -14,6 +14,7 @@ import 'notification_store.dart';
 import 'offline_cache.dart';
 import 'push.dart';
 import 'theme.dart';
+import 'webview_guard.dart';
 
 /// Ilova yig'ilganda beriladi: flutter build ... --dart-define=EDUX_SERVER=https://edux.kuchkarov.uz
 const String defaultServer = String.fromEnvironment('EDUX_SERVER', defaultValue: 'https://edux.kuchkarov.uz');
@@ -558,6 +559,8 @@ class Session extends ChangeNotifier implements ApiCredentials {
     try {
       await _secure.delete(key: 'token');
     } catch (_) {}
+    // Lab sahifalari tokenni WebView localStorage'iga yozadi — chiqishda u ham o'chiriladi.
+    await clearWebViewData();
   }
 }
 

@@ -124,7 +124,7 @@ class _OlympiadPageState extends State<OlympiadPage> {
       final attemptId = asInt(asMap(exam['attempt'])['id']);
       if (!mounted) return;
       if (attemptId == 0) {
-        showMessage(context, tr("Natija tahlili hozircha ochiq emas."), error: true);
+        showMessage(context, tr('Natija tahlili hozircha ochiq emas.'), error: true);
         return;
       }
       await Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => AttemptResultPage(attemptId: attemptId)));
@@ -388,7 +388,7 @@ class _MeCard extends StatelessWidget {
           OutlinedButton.icon(
             onPressed: () => launchUrl(Uri.parse(telegram), mode: LaunchMode.externalApplication),
             icon: const Icon(Icons.send_rounded, color: Color(0xFF229ED9)),
-            label: Text(tr("Telegramda xabarlarni olish")),
+            label: Text(tr('Telegramda xabarlarni olish')),
           ),
         ],
       ]),

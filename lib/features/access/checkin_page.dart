@@ -13,6 +13,7 @@ import '../../core/i18n.dart';
 import '../../core/scan_keys.dart';
 import '../../core/session.dart';
 import '../../core/theme.dart';
+import '../../core/webview_guard.dart';
 import '../../core/widgets.dart';
 import 'kiosk_page.dart';
 
@@ -120,7 +121,7 @@ class _CheckinPageState extends State<CheckinPage> {
           keyboardType: TextInputType.number,
           maxLength: 14,
           inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
-          decoration: InputDecoration(hintText: tr("Kartadagi 6 xonali kod yoki 14 raqamli shtrix-kod")),
+          decoration: InputDecoration(hintText: tr('Kartadagi 6 xonali kod yoki 14 raqamli shtrix-kod')),
         ),
         actions: <Widget>[
           TextButton(onPressed: () => Navigator.pop(context), child: Text(tr('Bekor qilish'))),
@@ -171,8 +172,18 @@ class _CheckinPageState extends State<CheckinPage> {
             errorBuilder: (context, error) => Center(
               child: Padding(
                 padding: const EdgeInsets.all(24),
-                child: Text(tr("Kamerani ochib bo'lmadi. Ilovaga kamera ruxsatini bering."),
-                    textAlign: TextAlign.center, style: const TextStyle(color: Colors.white)),
+                child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+                  Text(tr("Kamerani ochib bo'lmadi. Ilovaga kamera ruxsatini bering."),
+                      textAlign: TextAlign.center, style: const TextStyle(color: Colors.white)),
+                  const SizedBox(height: 12),
+                  // Kod yoki skaner qurilmasi bilan ishlash davom etadi; ruxsat — sozlamalardan.
+                  TextButton.icon(
+                    style: TextButton.styleFrom(foregroundColor: Colors.white70),
+                    onPressed: openAppSettings,
+                    icon: const Icon(Icons.settings_outlined),
+                    label: Text(tr('Sozlamalar')),
+                  ),
+                ]),
               ),
             ),
           ),

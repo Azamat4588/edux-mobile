@@ -250,7 +250,7 @@ class _PayFormState extends State<_PayForm> {
       return;
     }
     if (amount != null && amount > 0 && !methodAllows(method, amount)) {
-      setState(() => _error = tr("{0} orqali eng kam summa: {1}", <Object?>[method.name, money(method.min)]));
+      setState(() => _error = tr('{0} orqali eng kam summa: {1}', <Object?>[method.name, money(method.min)]));
       return;
     }
     setState(() {
@@ -359,15 +359,26 @@ class _P2pTransferPageState extends State<P2pTransferPage> with WidgetsBindingOb
   Timer? _poll;
   bool _foreground = true;
   bool _renewing = false;
+  bool _checking = false;
+  int _expiredChecks = 0;
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     _tick = Timer.periodic(const Duration(seconds: 1), (_) {
-      if (mounted) setState(() {});
+      // Ekran fonda yoki yakuniy holatda — har soniyada qayta chizish shart emas.
+      if (mounted && _foreground && !_final) setState(() {});
     });
     _poll = Timer.periodic(const Duration(seconds: 5), (_) => _check());
+  }
+
+  bool get _final => _state == 'paid' || _state == 'void';
+
+  /// Yakuniy holatda (to'langan/bekor) ikkala taymer ham to'xtaydi.
+  void _stopTimers() {
+    _tick?.cancel();
+    _poll?.cancel();
   }
 
   @override
@@ -387,15 +398,31 @@ class _P2pTransferPageState extends State<P2pTransferPage> with WidgetsBindingOb
   String get _state => p2pState(_order, DateTime.now());
 
   Future<void> _check() async {
-    if (!mounted || !_foreground || _state == 'paid' || _state == 'void') return;
+    // Oldingi so'rov tugamagan bo'lsa (sekin internet) — ustma-ust so'ramaymiz.
+    if (!mounted || !_foreground || _checking || _final) return;
+    // Muddati o'tgan: kechikkan o'tkazma tasdiqlanishi mumkin — 30 soniyada bir, 10 daqiqagacha tekshiriladi.
+    if (_state == 'expired') {
+      _expiredChecks++;
+      if (_expiredChecks % 6 != 1) return;
+      if (_expiredChecks > 120) {
+        _poll?.cancel();
+        return;
+      }
+    } else {
+      _expiredChecks = 0;
+    }
+    _checking = true;
+    final api = AppScope.read(context).api;
     try {
-      final order = asMap(await AppScope.read(context).api.get('pay/orders/${widget.orderId}'));
+      final order = asMap(await api.get('pay/orders/${widget.orderId}'));
       if (!mounted) return;
       // Tasdiqlangandan keyin javobda `p2p` bo'lmaydi — oxirgi rekvizitlar saqlanadi.
       setState(() => _order = <String, dynamic>{...order, if (order['p2p'] == null) 'p2p': _order['p2p']});
-      if (_state == 'paid' || _state == 'void') _poll?.cancel();
+      if (_final) _stopTimers();
     } catch (_) {
       // internet yo'q — keyingi urinishda
+    } finally {
+      _checking = false;
     }
   }
 
@@ -403,7 +430,11 @@ class _P2pTransferPageState extends State<P2pTransferPage> with WidgetsBindingOb
     setState(() => _renewing = true);
     try {
       final order = asMap(await AppScope.read(context).api.post('pay/orders/${widget.orderId}/p2p'));
-      if (mounted) setState(() => _order = order);
+      if (!mounted) return;
+      setState(() => _order = order);
+      // Yangi muddat: kuzatish qaytadan boshlanadi (to'xtagan bo'lsa).
+      _expiredChecks = 0;
+      if (!(_poll?.isActive ?? false)) _poll = Timer.periodic(const Duration(seconds: 5), (_) => _check());
     } on ApiException catch (error) {
       if (mounted) showMessage(context, error.message, error: true);
     } finally {

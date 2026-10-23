@@ -1,7 +1,6 @@
 // O'yin oynasi: viktorina-blits (javob serverda tekshiriladi), «Juftini top» (xotira kartalari), «So'z yig'ish».
 // POST /my/games → sessiya; quiz: POST /my/games/{id}/answer; oxirida POST /my/games/{id}/finish → ball, rekord, reyting.
 import 'dart:async';
-import 'dart:ui' show FontFeature;
 
 import 'package:flutter/material.dart';
 
@@ -277,7 +276,7 @@ class _PlayPageState extends State<PlayPage> {
 
   Widget _quiz() {
     final questions = asList(_session['questions'], 'questions');
-    if (questions.isEmpty) return EmptyState(text: tr("Savollar topilmadi."));
+    if (questions.isEmpty) return EmptyState(text: tr('Savollar topilmadi.'));
     final question = questions[_index.clamp(0, questions.length - 1)];
     final api = AppScope.read(context).api;
     final options = asList(question['options'], 'options');

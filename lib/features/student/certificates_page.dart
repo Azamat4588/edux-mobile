@@ -74,7 +74,7 @@ class MockProgressPage extends StatelessWidget {
         load: () async => asList(asMap(await api.get('my/mock'))['items'], 'items'),
         builder: (context, items, reload) {
           if (items.isEmpty) {
-            return ListView(children: <Widget>[EmptyState(text: tr("Hali mock imtihon topshirilmagan."), icon: Icons.emoji_events_outlined)]);
+            return ListView(children: <Widget>[EmptyState(text: tr('Hali mock imtihon topshirilmagan.'), icon: Icons.emoji_events_outlined)]);
           }
           final list = items.reversed.toList();
           return ListView.separated(
@@ -139,7 +139,7 @@ class MockResultSummary extends StatelessWidget {
       ]),
       if (result['pending'] == true) ...<Widget>[
         const SizedBox(height: 8),
-        Text(tr("Ba'zi bo'limlarni o'qituvchi hali baholamagan — natija keyin yangilanadi."), style: TextStyle(color: AppColors.warning, fontSize: 13)),
+        Text(tr("Ba'zi bo'limlarni o'qituvchi hali baholamagan — natija keyin yangilanadi."), style: const TextStyle(color: AppColors.warning, fontSize: 13)),
       ],
       if (sections.isNotEmpty) ...<Widget>[
         const SizedBox(height: 10),

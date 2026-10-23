@@ -73,7 +73,7 @@ void _android() {
     </queries>
 ''';
     if (text.contains('<queries>')) {
-      text = text.replaceFirst('<queries>', queries.trim().replaceFirst('</queries>', '').trimRight() + '\n');
+      text = text.replaceFirst('<queries>', '${queries.trim().replaceFirst('</queries>', '').trimRight()}\n');
     } else {
       text = text.replaceFirst('</manifest>', '$queries</manifest>');
     }
@@ -128,7 +128,9 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
+import android.provider.Settings
 import android.os.Handler
 import android.os.Looper
 import android.telephony.SmsManager
@@ -183,6 +185,15 @@ class MainActivity : FlutterActivity() {
                     }
                 }
                 "deviceModel" -> result.success("${Build.MANUFACTURER} ${Build.MODEL}".trim())
+                "openAppSettings" -> {
+                    // Ruxsat butunlay rad etilgan bo'lsa — foydalanuvchi uni faqat shu sahifadan yoqadi.
+                    try {
+                        startActivity(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.fromParts("package", packageName, null)).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+                        result.success(true)
+                    } catch (e: Exception) {
+                        result.success(false)
+                    }
+                }
                 "send" -> {
                     val phone = call.argument<String>("phone")
                     val body = call.argument<String>("body")
@@ -408,12 +419,12 @@ void _ios() {
     if (!pods.contains('EDUX_DEPLOYMENT_TARGET')) {
       pods = pods.replaceFirst(
         'flutter_additional_ios_build_settings(target)',
-        "flutter_additional_ios_build_settings(target)\n"
-            "    target.build_configurations.each do |config| # EDUX_DEPLOYMENT_TARGET\n"
+        'flutter_additional_ios_build_settings(target)\n'
+            '    target.build_configurations.each do |config| # EDUX_DEPLOYMENT_TARGET\n'
             "      if config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'].to_f < $iosMinimum\n"
             "        config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '$iosMinimum'\n"
-            "      end\n"
-            "    end",
+            '      end\n'
+            '    end',
       );
     }
     podfile.writeAsStringSync(pods);

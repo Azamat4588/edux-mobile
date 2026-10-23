@@ -13,6 +13,7 @@ import '../../core/push.dart';
 import '../../core/session.dart';
 import '../../core/sms_gateway.dart';
 import '../../core/theme.dart';
+import '../../core/widgets.dart';
 import '../access/checkin_page.dart';
 import '../access/kiosk_page.dart';
 import '../access/sms_gateway_page.dart';
@@ -360,7 +361,8 @@ class _HomeShellState extends State<HomeShell> with WidgetsBindingObserver {
                 context: context,
                 removeTop: session.readOnly,
                 child: IndexedStack(index: stackIndex, children: <Widget>[
-                  for (var i = 0; i < pages.length; i++) _visited.contains(i) || i == stackIndex ? pages[i] : const SizedBox.shrink(),
+                  for (var i = 0; i < pages.length; i++)
+                    _visited.contains(i) || i == stackIndex ? TabVisibility(visible: i == stackIndex, child: pages[i]) : const SizedBox.shrink(),
                 ]),
               ),
             ),
@@ -431,6 +433,8 @@ class _SectionTabsPageState extends State<SectionTabsPage> {
 
   @override
   Widget build(BuildContext context) {
+    // Bo'lim o'zi yashirin bo'lsa (tashqi IndexedStack) — ichidagi yorliqlar ham yashirin.
+    final outerVisible = TabVisibility.of(context);
     final tabs = widget.pages.keys.toList();
     final pages = widget.pages.values.toList();
     return Column(children: <Widget>[
@@ -468,7 +472,7 @@ class _SectionTabsPageState extends State<SectionTabsPage> {
           context: context,
           removeTop: true,
           child: IndexedStack(index: _index, children: <Widget>[
-            for (var i = 0; i < pages.length; i++) _visited.contains(i) ? pages[i] : const SizedBox.shrink(),
+            for (var i = 0; i < pages.length; i++) _visited.contains(i) ? TabVisibility(visible: i == _index && outerVisible, child: pages[i]) : const SizedBox.shrink(),
           ]),
         ),
       ),

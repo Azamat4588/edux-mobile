@@ -297,7 +297,7 @@ class _TopicTestsPageState extends State<TopicTestsPage> {
             ]),
             const SizedBox(height: AppSpacing.s),
           ],
-          Text(tr("Mavzularni belgilang va har biridan nechta savol olinishini tanlang. Savollar tasodifiy tanlanadi."),
+          Text(tr('Mavzularni belgilang va har biridan nechta savol olinishini tanlang. Savollar tasodifiy tanlanadi.'),
               style: TextStyle(color: AppColors.muted, fontSize: 13)),
           const SizedBox(height: AppSpacing.m),
           for (final section in sections) ...<Widget>[

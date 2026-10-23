@@ -19,9 +19,9 @@ const List<String> _suggestions = <String>[
 ];
 
 const List<String> _staffSuggestions = <String>[
-  "Qarzdor ota-onaga muloyim eslatma matnini yozib ber",
-  "7-sinf uchun kasrlar mavzusida 10 ta test savoli tuz",
-  "Ota-onalar majlisi uchun qisqa reja tuz",
+  'Qarzdor ota-onaga muloyim eslatma matnini yozib ber',
+  '7-sinf uchun kasrlar mavzusida 10 ta test savoli tuz',
+  'Ota-onalar majlisi uchun qisqa reja tuz',
   "Yangi guruh ochilishi haqida Telegram e'loni yoz",
 ];
 
@@ -86,7 +86,7 @@ class _TutorPageState extends State<TutorPage> {
         child: EmptyState(
           icon: Icons.auto_awesome_outlined,
           text: widget.staff
-              ? tr("AI yordamchi tashkilotingizda yoqilmagan yoki oylik limit tugagan. Direktor uni sozlamalarda yoqishi mumkin.")
+              ? tr('AI yordamchi tashkilotingizda yoqilmagan yoki oylik limit tugagan. Direktor uni sozlamalarda yoqishi mumkin.')
               : tr("AI ustoz tashkilotingizda yoqilmagan. O'qituvchingiz yoki markaz ma'muriyatidan so'rang."),
           action: OutlinedButton.icon(onPressed: _load, icon: const Icon(Icons.refresh), label: Text(tr('Qayta urinish'))),
         ),
@@ -155,7 +155,7 @@ class _TutorChatState extends State<_TutorChat> {
     final text = (preset ?? _input.text).trim();
     if (text.isEmpty || _sending) return;
     if (_locked(activeTestPages.value) > 0) {
-      showMessage(context, tr("Test davomida AI ustoz ishlamaydi. Testni yakunlagach savol bering."), error: true);
+      showMessage(context, tr('Test davomida AI ustoz ishlamaydi. Testni yakunlagach savol bering.'), error: true);
       return;
     }
     setState(() {
@@ -258,7 +258,7 @@ class _TutorChatState extends State<_TutorChat> {
                 child: Row(children: <Widget>[
                   const Icon(Icons.timer_outlined, color: AppColors.warning),
                   const SizedBox(width: 10),
-                  Expanded(child: Text(tr("Test davomida AI ustoz ishlamaydi. Testni yakunlagach savol bering."))),
+                  Expanded(child: Text(tr('Test davomida AI ustoz ishlamaydi. Testni yakunlagach savol bering.'))),
                 ]),
               ),
             ),

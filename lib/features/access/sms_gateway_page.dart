@@ -11,6 +11,7 @@ import '../../core/i18n.dart';
 import '../../core/session.dart';
 import '../../core/sms_gateway.dart';
 import '../../core/theme.dart';
+import '../../core/webview_guard.dart';
 import '../../core/widgets.dart';
 
 class SmsGatewayPage extends StatefulWidget {
@@ -53,7 +54,10 @@ class _SmsGatewayPageState extends State<SmsGatewayPage> {
     setState(() => _working = true);
     try {
       if (!await gateway.hasPermission() && !await gateway.requestPermission()) {
-        if (mounted) showMessage(context, tr("SMS yuborishga ruxsat berilmadi. Telefon sozlamalaridan EduX ilovasiga SMS ruxsatini bering."), error: true);
+        if (mounted) {
+          showMessage(context, tr('SMS yuborishga ruxsat berilmadi. Telefon sozlamalaridan EduX ilovasiga SMS ruxsatini bering.'),
+              error: true, actionLabel: tr('Sozlamalar'), onAction: openAppSettings);
+        }
         return;
       }
       await gateway.enable(session);
@@ -74,7 +78,10 @@ class _SmsGatewayPageState extends State<SmsGatewayPage> {
     setState(() => _bankWorking = true);
     try {
       if (!await bank.hasPermission() && !await bank.requestPermission()) {
-        if (mounted) showMessage(context, tr("SMS qabul qilishga ruxsat berilmadi. Telefon sozlamalaridan EduX ilovasiga SMS ruxsatini bering."), error: true);
+        if (mounted) {
+          showMessage(context, tr('SMS qabul qilishga ruxsat berilmadi. Telefon sozlamalaridan EduX ilovasiga SMS ruxsatini bering.'),
+              error: true, actionLabel: tr('Sozlamalar'), onAction: openAppSettings);
+        }
         return;
       }
       await bank.enable(session, deviceModel: await gateway.deviceModel());
@@ -201,7 +208,7 @@ class _SmsGatewayPageState extends State<SmsGatewayPage> {
         padding: const EdgeInsets.all(16),
         children: <Widget>[
           if (!gateway.supported)
-            AppCard(child: Text(tr("SMS shlyuz faqat Android telefonda ishlaydi: iPhone ilovalarga SMS yuborishga ruxsat bermaydi.")))
+            AppCard(child: Text(tr('SMS shlyuz faqat Android telefonda ishlaydi: iPhone ilovalarga SMS yuborishga ruxsat bermaydi.')))
           else ...<Widget>[
             AppCard(
               child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
@@ -254,7 +261,7 @@ class _SmsGatewayPageState extends State<SmsGatewayPage> {
                   ListTile(title: Text(tr('Bugun yana yuborish mumkin')), trailing: Text('${gateway.leftToday}')),
                   const Divider(),
                   ListTile(
-                    title: Text(tr("Oxirgi tekshiruv")),
+                    title: Text(tr('Oxirgi tekshiruv')),
                     trailing: Text(_time(gateway.lastPoll)),
                     onTap: () => gateway.poll(),
                   ),

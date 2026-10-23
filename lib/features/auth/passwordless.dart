@@ -293,7 +293,7 @@ class _TelegramWaitDialogState extends State<_TelegramWaitDialog> with WidgetsBi
     if (_status == 'need_phone') {
       text = tr("Bot telefon raqamingizni so'radi: Telegramda «Telefon raqamni yuborish» tugmasini bosing. Raqam tizimdagi hisobingizniki bo'lishi kerak.");
     } else if (expired) {
-      text = tr("Kirish havolasi eskirdi. Qaytadan «Telegram orqali kirish» tugmasini bosing.");
+      text = tr('Kirish havolasi eskirdi. Qaytadan «Telegram orqali kirish» tugmasini bosing.');
     } else {
       text = tr("Telegramda EduX botida «Start» tugmasini bosing. Tasdiqlangach, ilova o'zi ochiladi.");
     }

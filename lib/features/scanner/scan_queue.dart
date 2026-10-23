@@ -3,7 +3,6 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:edux_omr/edux_omr.dart';
 import 'package:flutter/foundation.dart';
@@ -258,7 +257,7 @@ class ScanQueue extends ChangeNotifier {
     final file = imageFile(item);
     if (!file.existsSync()) {
       item.status = ScanStatus.failed;
-      item.message = "Rasm topilmadi.";
+      item.message = 'Rasm topilmadi.';
       notifyListeners();
       return true;
     }

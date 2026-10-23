@@ -13,3 +13,12 @@ Uri systemLinkUri(String url) {
 }
 
 Future<bool> openSystemLink(String url) => launchUrl(systemLinkUri(url), mode: LaunchMode.externalApplication);
+
+/// WebView faqat shu server manzilida yursin: sxema, xost va port aynan bir xil bo'lishi shart
+/// (`startsWith` yetmaydi — `https://edux.uz.boshqa.sayt` ham mos kelib qolardi).
+bool sameOrigin(String url, String base) {
+  final a = Uri.tryParse(url.trim());
+  final b = Uri.tryParse(base.trim());
+  if (a == null || b == null || !a.hasScheme || a.host.isEmpty || b.host.isEmpty) return false;
+  return a.scheme.toLowerCase() == b.scheme.toLowerCase() && a.host.toLowerCase() == b.host.toLowerCase() && a.port == b.port;
+}

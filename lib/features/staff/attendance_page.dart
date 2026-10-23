@@ -169,8 +169,8 @@ class _AttendanceSheetPageState extends State<AttendanceSheetPage> {
       firstDate: DateTime.now().subtract(const Duration(days: 120)),
       lastDate: DateTime.now(),
     );
-    if (picked == null) return;
-    if (_dirty && !await confirm(context, tr("Saqlanmagan davomat belgilari bor. Ular saqlanmasdan tashlab yuborilsinmi?"))) return;
+    if (picked == null || !mounted) return;
+    if (_dirty && !await confirm(context, tr('Saqlanmagan davomat belgilari bor. Ular saqlanmasdan tashlab yuborilsinmi?'))) return;
     setState(() => _day = picked);
     await _load();
   }

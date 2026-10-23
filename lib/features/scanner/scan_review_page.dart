@@ -220,7 +220,9 @@ class _ScanReviewPageState extends State<ScanReviewPage> {
         AppCard(
           child: Column(children: <Widget>[
             DropdownButtonFormField<int>(
-              value: _exams.any((exam) => asInt(exam['id']) == _examId) ? _examId : null,
+              // initialValue faqat birinchi qiymat: test tashqaridan o'zgarsa (kalit) maydon qayta quriladi.
+              key: ValueKey<int?>(_examId),
+              initialValue: _exams.any((exam) => asInt(exam['id']) == _examId) ? _examId : null,
               isExpanded: true,
               decoration: InputDecoration(labelText: tr('Test')),
               items: _exams

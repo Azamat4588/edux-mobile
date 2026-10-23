@@ -116,7 +116,7 @@ class _LeadsPageState extends State<LeadsPage> {
                     ]),
                   ),
                   const SizedBox(height: 10),
-                  if (leads.isEmpty) EmptyState(text: tr("Lid topilmadi."), icon: Icons.person_search_outlined),
+                  if (leads.isEmpty) EmptyState(text: tr('Lid topilmadi.'), icon: Icons.person_search_outlined),
                   for (final lead in leads) ...<Widget>[
                     AppCard(
                       onTap: () => _open(lead),

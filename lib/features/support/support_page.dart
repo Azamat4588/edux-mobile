@@ -105,7 +105,7 @@ class _SupportPageState extends State<SupportPage> {
               ],
               const SizedBox(height: 12),
               if (tickets.isEmpty)
-                EmptyState(icon: Icons.support_agent_outlined, text: tr("Hali murojaat yubormagansiz."))
+                EmptyState(icon: Icons.support_agent_outlined, text: tr('Hali murojaat yubormagansiz.'))
               else
                 for (final ticket in tickets) ...<Widget>[
                   AppCard(
@@ -225,7 +225,8 @@ class _NewTicketPageState extends State<_NewTicketPage> {
             const SizedBox(height: 12),
           ],
           DropdownButtonFormField<String>(
-            value: topics.containsKey(_topic) ? _topic : topics.keys.first,
+            key: ValueKey<String>(_topic),
+            initialValue: topics.containsKey(_topic) ? _topic : topics.keys.first,
             decoration: InputDecoration(labelText: tr('Mavzu turi')),
             items: topics.entries
                 .map((entry) => DropdownMenuItem<String>(value: entry.key, child: Text(tr(entry.value))))
@@ -332,7 +333,7 @@ class _TicketPageState extends State<TicketPage> {
                   if (status == 'closed')
                     Padding(
                       padding: const EdgeInsets.only(top: 8),
-                      child: Text(tr("Murojaat yopilgan. Yangi xabar yozsangiz, u qayta ochiladi."),
+                      child: Text(tr('Murojaat yopilgan. Yangi xabar yozsangiz, u qayta ochiladi.'),
                           textAlign: TextAlign.center, style: TextStyle(color: AppColors.muted, fontSize: 13)),
                     ),
                 ],

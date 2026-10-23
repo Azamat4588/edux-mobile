@@ -69,7 +69,7 @@ class _ChildCourseCard extends StatelessWidget {
           child: LinearProgressIndicator(value: (asDouble(progress['percent']) / 100).clamp(0, 1).toDouble(), minHeight: 8),
         ),
         const SizedBox(height: 4),
-        Text(tr("{0} / {1} dars · {2}%", <Object?>[asInt(progress['done']), asInt(progress['total']), number(asDouble(progress['percent']))]),
+        Text(tr('{0} / {1} dars · {2}%', <Object?>[asInt(progress['done']), asInt(progress['total']), number(asDouble(progress['percent']))]),
             style: TextStyle(color: AppColors.muted, fontSize: 12)),
         if (last.isNotEmpty) KeyValue(tr('Oxirgi dars'), '${asText(last['title'])} · ${date(last['completed_at'])}'),
         if (average != null) KeyValue(tr("O'rtacha baho"), '${number(asDouble(average))}%'),

@@ -409,7 +409,7 @@ class _TakeTestPageState extends State<TakeTestPage> {
       canPop: _loading || _error != null,
       onPopInvokedWithResult: (didPop, _) async {
         if (didPop) return;
-        if (await confirm(context, tr("Testdan chiqilsinmi? Javoblaringiz saqlangan, keyin davom ettirishingiz mumkin."), action: tr('Chiqish'))) {
+        if (await confirm(context, tr('Testdan chiqilsinmi? Javoblaringiz saqlangan, keyin davom ettirishingiz mumkin.'), action: tr('Chiqish'))) {
           if (context.mounted) Navigator.of(context).pop();
         }
       },
@@ -695,7 +695,7 @@ class AttemptResultPage extends StatelessWidget {
               ] else if (asInt(data['pending']) > 0) ...<Widget>[
                 const SizedBox(height: 12),
                 Text(tr("{0} ta ochiq javobni o'qituvchi baholaydi — ball keyin yangilanadi.", <Object?>[asInt(data['pending'])]),
-                    textAlign: TextAlign.center, style: TextStyle(color: AppColors.warning)),
+                    textAlign: TextAlign.center, style: const TextStyle(color: AppColors.warning)),
               ],
               if (data['review_later'] == true) ...<Widget>[
                 const SizedBox(height: 12),

@@ -59,7 +59,7 @@ class PushService {
 
   static final PushService instance = PushService._();
 
-  static const String appVersion = '3.4.0';
+  static const String appVersion = '3.4.1';
 
   bool _ready = false;
   bool _initTried = false;
@@ -200,9 +200,14 @@ class PushService {
     try {
       final messaging = FirebaseMessaging.instance;
       await messaging.requestPermission(alert: true, badge: true, sound: true);
+      // firebase_messaging 17: getToken/onTokenRefresh eskirgan, o'rniga register()/onRegistered — lekin u FCM tokeni emas,
+      // Firebase Installation ID (FID) beradi. Server (devices, FCM HTTP v1) registration token'ga yuboradi — FID ga
+      // o'tish server tomonda alohida ish; shu sababli hozircha token usuli saqlanadi.
+      // ignore: deprecated_member_use
       final token = await messaging.getToken();
       if (token != null) await _register(token);
       await _refresh?.cancel();
+      // ignore: deprecated_member_use
       _refresh = messaging.onTokenRefresh.listen(_register);
     } catch (_) {
       // ruxsat berilmagan yoki tarmoq yo'q — keyingi ochilishda qayta urinadi

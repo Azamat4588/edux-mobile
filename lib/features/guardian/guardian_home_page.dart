@@ -505,7 +505,7 @@ class _TestsTab extends StatelessWidget {
                     if (i > 0) const Divider(),
                     ListTile(
                       dense: true,
-                      leading: Icon(Icons.pending_actions_outlined, color: AppColors.warning),
+                      leading: const Icon(Icons.pending_actions_outlined, color: AppColors.warning),
                       title: Text(asText(pending[i]['title'])),
                       subtitle: pending[i]['ends_at'] != null ? Text(tr('{0} gacha', <Object?>[dateTime(pending[i]['ends_at'])])) : null,
                     ),
@@ -515,7 +515,7 @@ class _TestsTab extends StatelessWidget {
             ],
             SectionTitle(tr('Natijalar')),
             if (attempts.isEmpty)
-              EmptyState(icon: Icons.quiz_outlined, text: tr("Hali test topshirilmagan."))
+              EmptyState(icon: Icons.quiz_outlined, text: tr('Hali test topshirilmagan.'))
             else
               for (final attempt in attempts) ...<Widget>[
                 _AttemptCard(attempt: attempt),

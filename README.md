@@ -194,7 +194,7 @@ Uzluksiz rejimda varaqani almashtirish kifoya — bir varaqa ikki marta olinmayd
 
 ## Yig'ish
 
-Talablar: Flutter 3.24 yoki yangiroq, Android Studio (Android SDK + NDK), iPhone uchun macOS + Xcode 15+ va CocoaPods.
+Talablar: Flutter 3.35 yoki yangiroq, Android Studio (Android SDK + NDK), iPhone uchun macOS + Xcode 15+ va CocoaPods.
 
 ```bash
 bash setup.sh          # android/ va ios/ papkalarini yaratadi, ruxsatlar va ikonkani sozlaydi

@@ -57,7 +57,7 @@ class _QueueTab extends StatelessWidget {
         final session = AppScope.of(context);
         final items = queue.items.where((item) => item.organizationId == session.organizationId).toList();
         if (items.isEmpty) {
-          return EmptyState(icon: Icons.document_scanner_outlined, text: tr("Hali varaqa tekshirilmagan."));
+          return EmptyState(icon: Icons.document_scanner_outlined, text: tr('Hali varaqa tekshirilmagan.'));
         }
         final waiting = items.where((item) => item.pending).length;
         return ListView(
@@ -66,7 +66,7 @@ class _QueueTab extends StatelessWidget {
             Row(children: <Widget>[
               Expanded(
                 child: Text(
-                  waiting > 0 ? tr('Yuborilishi kutilmoqda: {0}', <Object?>[waiting]) : tr("Hammasi serverga yuborilgan."),
+                  waiting > 0 ? tr('Yuborilishi kutilmoqda: {0}', <Object?>[waiting]) : tr('Hammasi serverga yuborilgan.'),
                   style: TextStyle(color: AppColors.muted),
                 ),
               ),
@@ -118,7 +118,7 @@ class _ServerTab extends StatelessWidget {
           return ListView(children: <Widget>[
             EmptyState(
               icon: status == null ? Icons.inbox_outlined : Icons.task_alt,
-              text: status == null ? tr("Hali varaqa tekshirilmagan.") : tr("Ko'rib chiqiladigan varaqa yo'q."),
+              text: status == null ? tr('Hali varaqa tekshirilmagan.') : tr("Ko'rib chiqiladigan varaqa yo'q."),
             ),
           ]);
         }

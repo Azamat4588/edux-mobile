@@ -65,7 +65,7 @@ const List<String> funServerLabels = <String>[
   "Boshlang'ich tezlik va burchakka qarab uchish uzoqligi.",
   'Kuchlanish, qarshilik va tok kuchi: ampermetr va voltmetr bilan.',
   'Buyum, linza va tasvir: fokus masofasini aniqlash.',
-  "Byuretkadan ishqor tomizib, neytrallanish nuqtasini topish.",
+  'Byuretkadan ishqor tomizib, neytrallanish nuqtasini topish.',
   "a, b, c koeffitsiyentlari parabolani qanday o'zgartiradi.",
   "Punnet katagi: belgining avlodda namoyon bo'lish ehtimoli.",
 ];

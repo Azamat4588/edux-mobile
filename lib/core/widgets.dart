@@ -260,7 +260,7 @@ String errorText(Object? error) {
   return tr("Ma'lumotni yuklab bo'lmadi.");
 }
 
-void showMessage(BuildContext context, String text, {bool error = false}) {
+void showMessage(BuildContext context, String text, {bool error = false, String? actionLabel, VoidCallback? onAction}) {
   final messenger = ScaffoldMessenger.maybeOf(context);
   if (messenger == null) return;
   messenger
@@ -269,7 +269,22 @@ void showMessage(BuildContext context, String text, {bool error = false}) {
       content: Text(text),
       behavior: SnackBarBehavior.floating,
       backgroundColor: error ? AppColors.danger : AppColors.ink,
+      duration: onAction == null ? const Duration(seconds: 4) : const Duration(seconds: 8),
+      action: onAction == null ? null : SnackBarAction(label: actionLabel ?? tr('Ochish'), textColor: Colors.white, onPressed: onAction),
     ));
+}
+
+/// Pastki menyu bo'limi ko'rinib turibdimi (IndexedStack ochilgan bo'limlarni tirik saqlaydi — yashirin bo'limdagi
+/// davriy so'rovlar to'xtab tursin). Ustida bo'lmasa — ko'rinadi deb olinadi.
+class TabVisibility extends InheritedWidget {
+  const TabVisibility({super.key, required this.visible, required super.child});
+
+  final bool visible;
+
+  static bool of(BuildContext context) => context.dependOnInheritedWidgetOfExactType<TabVisibility>()?.visible ?? true;
+
+  @override
+  bool updateShouldNotify(TabVisibility oldWidget) => oldWidget.visible != visible;
 }
 
 Future<bool> confirm(BuildContext context, String text, {String? action, bool danger = false}) async {
@@ -302,7 +317,7 @@ class ErrorState extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(32),
         child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-          _StateIcon(icon: Icons.cloud_off_rounded, color: AppColors.danger),
+          const _StateIcon(icon: Icons.cloud_off_rounded, color: AppColors.danger),
           const SizedBox(height: 14),
           Text(message, textAlign: TextAlign.center, style: TextStyle(color: AppColors.ink, fontSize: 15)),
           if (onRetry != null) ...<Widget>[
