@@ -1,0 +1,1215 @@
+{
+ "term": {
+  "id": 1,
+  "organization_id": 1,
+  "school_year_id": 1,
+  "name": "1-chorak",
+  "starts_on": "2026-09-02",
+  "ends_on": "2026-11-04",
+  "position": 1,
+  "created_at": "2026-10-19T14:24:00.000000Z",
+  "updated_at": "2026-10-19T14:24:00.000000Z"
+ },
+ "year": {
+  "id": 1,
+  "name": "2026–2027",
+  "is_current": true
+ },
+ "class_name": "11-A",
+ "subject": "Matematika",
+ "teacher": "Karimova Nodira",
+ "can_write": true,
+ "students": [
+  {
+   "id": 11,
+   "full_name": "Ergashev Timur"
+  },
+  {
+   "id": 1,
+   "full_name": "Ergasheva Mohinur"
+  },
+  {
+   "id": 4,
+   "full_name": "Hasanova Malika"
+  },
+  {
+   "id": 3,
+   "full_name": "Karimov Sardor"
+  },
+  {
+   "id": 10,
+   "full_name": "Nazarova Sevara"
+  },
+  {
+   "id": 9,
+   "full_name": "Qodirov Sherzod"
+  },
+  {
+   "id": 6,
+   "full_name": "Rahimova Nigora"
+  },
+  {
+   "id": 8,
+   "full_name": "Saidova Zarina"
+  },
+  {
+   "id": 5,
+   "full_name": "Tursunov Jasur"
+  },
+  {
+   "id": 2,
+   "full_name": "Valiyev Bobur"
+  },
+  {
+   "id": 7,
+   "full_name": "Yusupov Aziz"
+  }
+ ],
+ "lessons": [
+  {
+   "id": 2,
+   "date": "2026-09-02",
+   "period_number": 2,
+   "topic": "Kvadrat tenglamalar",
+   "homework": "13–16-mashqlar",
+   "term_id": 1
+  },
+  {
+   "id": 4,
+   "date": "2026-09-03",
+   "period_number": 1,
+   "topic": "Viyet teoremasi",
+   "homework": "16–19-mashqlar",
+   "term_id": 1
+  },
+  {
+   "id": 8,
+   "date": "2026-09-04",
+   "period_number": 2,
+   "topic": "Kvadrat tengsizliklar",
+   "homework": "19–22-mashqlar",
+   "term_id": 1
+  },
+  {
+   "id": 12,
+   "date": "2026-09-07",
+   "period_number": 1,
+   "topic": "Funksiya va uning grafigi",
+   "homework": "22–25-mashqlar",
+   "term_id": 1
+  },
+  {
+   "id": 16,
+   "date": "2026-09-08",
+   "period_number": 2,
+   "topic": "Arifmetik progressiya",
+   "homework": "25–28-mashqlar",
+   "term_id": 1
+  },
+  {
+   "id": 19,
+   "date": "2026-09-09",
+   "period_number": 2,
+   "topic": "Geometrik progressiya",
+   "homework": "28–31-mashqlar",
+   "term_id": 1
+  },
+  {
+   "id": 21,
+   "date": "2026-09-10",
+   "period_number": 1,
+   "topic": "Trigonometrik funksiyalar",
+   "homework": "31–34-mashqlar",
+   "term_id": 1
+  },
+  {
+   "id": 25,
+   "date": "2026-09-11",
+   "period_number": 2,
+   "topic": "Logarifmlar",
+   "homework": "34–37-mashqlar",
+   "term_id": 1
+  },
+  {
+   "id": 29,
+   "date": "2026-09-14",
+   "period_number": 1,
+   "topic": "Hosila tushunchasi",
+   "homework": "37–40-mashqlar",
+   "term_id": 1
+  },
+  {
+   "id": 33,
+   "date": "2026-09-15",
+   "period_number": 2,
+   "topic": "Nazorat ishi",
+   "homework": null,
+   "term_id": 1
+  },
+  {
+   "id": 36,
+   "date": "2026-09-16",
+   "period_number": 2,
+   "topic": "Kvadrat tenglamalar",
+   "homework": "43–46-mashqlar",
+   "term_id": 1
+  },
+  {
+   "id": 38,
+   "date": "2026-09-17",
+   "period_number": 1,
+   "topic": "Viyet teoremasi",
+   "homework": "46–49-mashqlar",
+   "term_id": 1
+  },
+  {
+   "id": 42,
+   "date": "2026-09-18",
+   "period_number": 2,
+   "topic": "Kvadrat tengsizliklar",
+   "homework": "49–52-mashqlar",
+   "term_id": 1
+  },
+  {
+   "id": 46,
+   "date": "2026-09-21",
+   "period_number": 1,
+   "topic": "Funksiya va uning grafigi",
+   "homework": "52–55-mashqlar",
+   "term_id": 1
+  },
+  {
+   "id": 50,
+   "date": "2026-09-22",
+   "period_number": 2,
+   "topic": "Arifmetik progressiya",
+   "homework": "55–58-mashqlar",
+   "term_id": 1
+  },
+  {
+   "id": 53,
+   "date": "2026-09-23",
+   "period_number": 2,
+   "topic": "Geometrik progressiya",
+   "homework": "58–61-mashqlar",
+   "term_id": 1
+  },
+  {
+   "id": 55,
+   "date": "2026-09-24",
+   "period_number": 1,
+   "topic": "Trigonometrik funksiyalar",
+   "homework": "61–64-mashqlar",
+   "term_id": 1
+  },
+  {
+   "id": 59,
+   "date": "2026-09-25",
+   "period_number": 2,
+   "topic": "Logarifmlar",
+   "homework": "64–67-mashqlar",
+   "term_id": 1
+  },
+  {
+   "id": 63,
+   "date": "2026-09-28",
+   "period_number": 1,
+   "topic": "Hosila tushunchasi",
+   "homework": "67–70-mashqlar",
+   "term_id": 1
+  },
+  {
+   "id": 67,
+   "date": "2026-09-29",
+   "period_number": 2,
+   "topic": "Nazorat ishi",
+   "homework": null,
+   "term_id": 1
+  },
+  {
+   "id": 70,
+   "date": "2026-09-30",
+   "period_number": 2,
+   "topic": "Kvadrat tenglamalar",
+   "homework": "73–76-mashqlar",
+   "term_id": 1
+  },
+  {
+   "id": 72,
+   "date": "2026-10-01",
+   "period_number": 1,
+   "topic": "Viyet teoremasi",
+   "homework": "76–79-mashqlar",
+   "term_id": 1
+  },
+  {
+   "id": 76,
+   "date": "2026-10-02",
+   "period_number": 2,
+   "topic": "Kvadrat tengsizliklar",
+   "homework": "79–82-mashqlar",
+   "term_id": 1
+  },
+  {
+   "id": 80,
+   "date": "2026-10-05",
+   "period_number": 1,
+   "topic": "Funksiya va uning grafigi",
+   "homework": "82–85-mashqlar",
+   "term_id": 1
+  },
+  {
+   "id": 84,
+   "date": "2026-10-06",
+   "period_number": 2,
+   "topic": "Arifmetik progressiya",
+   "homework": "85–88-mashqlar",
+   "term_id": 1
+  },
+  {
+   "id": 87,
+   "date": "2026-10-07",
+   "period_number": 2,
+   "topic": "Geometrik progressiya",
+   "homework": "88–91-mashqlar",
+   "term_id": 1
+  },
+  {
+   "id": 89,
+   "date": "2026-10-08",
+   "period_number": 1,
+   "topic": "Trigonometrik funksiyalar",
+   "homework": "91–94-mashqlar",
+   "term_id": 1
+  },
+  {
+   "id": 93,
+   "date": "2026-10-09",
+   "period_number": 2,
+   "topic": "Logarifmlar",
+   "homework": "94–97-mashqlar",
+   "term_id": 1
+  },
+  {
+   "id": 97,
+   "date": "2026-10-12",
+   "period_number": 1,
+   "topic": "Hosila tushunchasi",
+   "homework": "97–100-mashqlar",
+   "term_id": 1
+  },
+  {
+   "id": 101,
+   "date": "2026-10-13",
+   "period_number": 2,
+   "topic": "Nazorat ishi",
+   "homework": null,
+   "term_id": 1
+  },
+  {
+   "id": 104,
+   "date": "2026-10-14",
+   "period_number": 2,
+   "topic": "Kvadrat tenglamalar",
+   "homework": "103–106-mashqlar",
+   "term_id": 1
+  },
+  {
+   "id": 106,
+   "date": "2026-10-15",
+   "period_number": 1,
+   "topic": "Viyet teoremasi",
+   "homework": "106–109-mashqlar",
+   "term_id": 1
+  },
+  {
+   "id": 110,
+   "date": "2026-10-16",
+   "period_number": 2,
+   "topic": "Kvadrat tengsizliklar",
+   "homework": "109–112-mashqlar",
+   "term_id": 1
+  }
+ ],
+ "entries": {
+  "2": {
+   "10": {
+    "mark": 3,
+    "attendance": "present",
+    "note": null
+   },
+   "6": {
+    "mark": 3,
+    "attendance": "present",
+    "note": null
+   },
+   "8": {
+    "mark": 5,
+    "attendance": "present",
+    "note": null
+   },
+   "5": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   }
+  },
+  "4": {
+   "4": {
+    "mark": 3,
+    "attendance": "present",
+    "note": null
+   },
+   "10": {
+    "mark": null,
+    "attendance": "absent",
+    "note": null
+   },
+   "6": {
+    "mark": null,
+    "attendance": "excused",
+    "note": "Shifokor ma'lumotnomasi"
+   },
+   "5": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   }
+  },
+  "8": {
+   "11": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   },
+   "6": {
+    "mark": 3,
+    "attendance": "present",
+    "note": null
+   },
+   "8": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   },
+   "7": {
+    "mark": 5,
+    "attendance": "present",
+    "note": null
+   }
+  },
+  "12": {
+   "11": {
+    "mark": null,
+    "attendance": "absent",
+    "note": null
+   },
+   "4": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   },
+   "8": {
+    "mark": null,
+    "attendance": "excused",
+    "note": "Shifokor ma'lumotnomasi"
+   },
+   "5": {
+    "mark": 3,
+    "attendance": "present",
+    "note": null
+   },
+   "2": {
+    "mark": 5,
+    "attendance": "present",
+    "note": null
+   }
+  },
+  "16": {
+   "6": {
+    "mark": 5,
+    "attendance": "present",
+    "note": null
+   },
+   "2": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   }
+  },
+  "19": {
+   "1": {
+    "mark": 3,
+    "attendance": "present",
+    "note": null
+   },
+   "3": {
+    "mark": null,
+    "attendance": "absent",
+    "note": null
+   },
+   "6": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   },
+   "8": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   },
+   "2": {
+    "mark": 5,
+    "attendance": "present",
+    "note": null
+   }
+  },
+  "21": {
+   "4": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   },
+   "10": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   },
+   "9": {
+    "mark": null,
+    "attendance": "late",
+    "note": null
+   },
+   "6": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   },
+   "8": {
+    "mark": 5,
+    "attendance": "present",
+    "note": null
+   },
+   "7": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   }
+  },
+  "25": {
+   "3": {
+    "mark": 5,
+    "attendance": "present",
+    "note": null
+   },
+   "10": {
+    "mark": 3,
+    "attendance": "present",
+    "note": null
+   },
+   "8": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   }
+  },
+  "29": {
+   "4": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   },
+   "3": {
+    "mark": 5,
+    "attendance": "present",
+    "note": null
+   },
+   "10": {
+    "mark": 2,
+    "attendance": "present",
+    "note": "Uy vazifasini bajarmagan"
+   },
+   "6": {
+    "mark": 5,
+    "attendance": "present",
+    "note": null
+   },
+   "8": {
+    "mark": null,
+    "attendance": "absent",
+    "note": null
+   },
+   "2": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   }
+  },
+  "33": {
+   "11": {
+    "mark": 5,
+    "attendance": "present",
+    "note": null
+   },
+   "1": {
+    "mark": 3,
+    "attendance": "present",
+    "note": null
+   },
+   "4": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   },
+   "3": {
+    "mark": 5,
+    "attendance": "present",
+    "note": null
+   },
+   "10": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   },
+   "9": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   },
+   "6": {
+    "mark": 3,
+    "attendance": "present",
+    "note": null
+   },
+   "8": {
+    "mark": 5,
+    "attendance": "present",
+    "note": null
+   },
+   "5": {
+    "mark": 3,
+    "attendance": "present",
+    "note": null
+   },
+   "2": {
+    "mark": 5,
+    "attendance": "present",
+    "note": null
+   },
+   "7": {
+    "mark": 5,
+    "attendance": "present",
+    "note": null
+   }
+  },
+  "36": {
+   "11": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   },
+   "3": {
+    "mark": 5,
+    "attendance": "present",
+    "note": null
+   },
+   "9": {
+    "mark": 5,
+    "attendance": "present",
+    "note": null
+   },
+   "6": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   }
+  },
+  "38": {
+   "4": {
+    "mark": null,
+    "attendance": "excused",
+    "note": "Shifokor ma'lumotnomasi"
+   }
+  },
+  "42": {
+   "1": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   },
+   "4": {
+    "mark": 3,
+    "attendance": "present",
+    "note": null
+   },
+   "6": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   },
+   "5": {
+    "mark": 4,
+    "attendance": "late",
+    "note": null
+   },
+   "7": {
+    "mark": 5,
+    "attendance": "present",
+    "note": null
+   }
+  },
+  "46": {
+   "11": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   },
+   "6": {
+    "mark": 3,
+    "attendance": "present",
+    "note": null
+   },
+   "5": {
+    "mark": null,
+    "attendance": "late",
+    "note": null
+   },
+   "7": {
+    "mark": null,
+    "attendance": "excused",
+    "note": "Shifokor ma'lumotnomasi"
+   }
+  },
+  "50": {
+   "11": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   },
+   "1": {
+    "mark": 3,
+    "attendance": "present",
+    "note": null
+   },
+   "4": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   },
+   "3": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   },
+   "10": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   },
+   "9": {
+    "mark": null,
+    "attendance": "absent",
+    "note": null
+   },
+   "6": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   },
+   "7": {
+    "mark": null,
+    "attendance": "absent",
+    "note": null
+   }
+  },
+  "53": {
+   "9": {
+    "mark": 5,
+    "attendance": "present",
+    "note": null
+   },
+   "6": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   },
+   "8": {
+    "mark": null,
+    "attendance": "absent",
+    "note": null
+   },
+   "2": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   },
+   "7": {
+    "mark": 5,
+    "attendance": "present",
+    "note": null
+   }
+  },
+  "55": {
+   "4": {
+    "mark": 5,
+    "attendance": "present",
+    "note": null
+   },
+   "10": {
+    "mark": 2,
+    "attendance": "present",
+    "note": "Uy vazifasini bajarmagan"
+   },
+   "6": {
+    "mark": null,
+    "attendance": "absent",
+    "note": null
+   },
+   "5": {
+    "mark": 3,
+    "attendance": "present",
+    "note": null
+   }
+  },
+  "59": {
+   "11": {
+    "mark": 5,
+    "attendance": "present",
+    "note": null
+   },
+   "1": {
+    "mark": 2,
+    "attendance": "present",
+    "note": "Uy vazifasini bajarmagan"
+   },
+   "9": {
+    "mark": 5,
+    "attendance": "present",
+    "note": null
+   },
+   "2": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   }
+  },
+  "63": {
+   "4": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   },
+   "10": {
+    "mark": null,
+    "attendance": "absent",
+    "note": null
+   },
+   "5": {
+    "mark": 3,
+    "attendance": "present",
+    "note": null
+   },
+   "2": {
+    "mark": 5,
+    "attendance": "present",
+    "note": null
+   }
+  },
+  "67": {
+   "11": {
+    "mark": 5,
+    "attendance": "present",
+    "note": null
+   },
+   "1": {
+    "mark": 3,
+    "attendance": "present",
+    "note": null
+   },
+   "4": {
+    "mark": 5,
+    "attendance": "present",
+    "note": null
+   },
+   "3": {
+    "mark": null,
+    "attendance": "absent",
+    "note": null
+   },
+   "10": {
+    "mark": 3,
+    "attendance": "present",
+    "note": null
+   },
+   "9": {
+    "mark": 5,
+    "attendance": "present",
+    "note": null
+   },
+   "6": {
+    "mark": null,
+    "attendance": "absent",
+    "note": null
+   },
+   "8": {
+    "mark": 5,
+    "attendance": "present",
+    "note": null
+   },
+   "5": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   },
+   "2": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   },
+   "7": {
+    "mark": 5,
+    "attendance": "present",
+    "note": null
+   }
+  },
+  "70": {
+   "1": {
+    "mark": 3,
+    "attendance": "present",
+    "note": null
+   },
+   "6": {
+    "mark": 4,
+    "attendance": "late",
+    "note": null
+   },
+   "8": {
+    "mark": null,
+    "attendance": "excused",
+    "note": "Shifokor ma'lumotnomasi"
+   },
+   "5": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   },
+   "2": {
+    "mark": 5,
+    "attendance": "late",
+    "note": null
+   },
+   "7": {
+    "mark": null,
+    "attendance": "excused",
+    "note": "Shifokor ma'lumotnomasi"
+   }
+  },
+  "72": {
+   "8": {
+    "mark": 5,
+    "attendance": "present",
+    "note": null
+   },
+   "5": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   },
+   "2": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   }
+  },
+  "76": {
+   "1": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   },
+   "4": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   },
+   "3": {
+    "mark": 5,
+    "attendance": "present",
+    "note": null
+   },
+   "2": {
+    "mark": 5,
+    "attendance": "present",
+    "note": null
+   }
+  },
+  "80": {
+   "11": {
+    "mark": 5,
+    "attendance": "present",
+    "note": null
+   },
+   "1": {
+    "mark": null,
+    "attendance": "absent",
+    "note": null
+   },
+   "4": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   },
+   "3": {
+    "mark": 5,
+    "attendance": "present",
+    "note": null
+   },
+   "10": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   },
+   "9": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   },
+   "2": {
+    "mark": 5,
+    "attendance": "present",
+    "note": null
+   },
+   "7": {
+    "mark": null,
+    "attendance": "excused",
+    "note": "Shifokor ma'lumotnomasi"
+   }
+  },
+  "84": {
+   "1": {
+    "mark": 3,
+    "attendance": "present",
+    "note": null
+   },
+   "4": {
+    "mark": 3,
+    "attendance": "present",
+    "note": null
+   }
+  },
+  "87": {
+   "11": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   },
+   "4": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   },
+   "3": {
+    "mark": 5,
+    "attendance": "present",
+    "note": null
+   },
+   "10": {
+    "mark": 3,
+    "attendance": "present",
+    "note": null
+   },
+   "9": {
+    "mark": 5,
+    "attendance": "present",
+    "note": null
+   },
+   "6": {
+    "mark": null,
+    "attendance": "absent",
+    "note": null
+   },
+   "5": {
+    "mark": 3,
+    "attendance": "present",
+    "note": null
+   },
+   "2": {
+    "mark": 5,
+    "attendance": "present",
+    "note": null
+   }
+  },
+  "89": {
+   "11": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   },
+   "1": {
+    "mark": 3,
+    "attendance": "present",
+    "note": null
+   },
+   "3": {
+    "mark": 5,
+    "attendance": "present",
+    "note": null
+   },
+   "5": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   },
+   "2": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   }
+  },
+  "93": {
+   "1": {
+    "mark": null,
+    "attendance": "absent",
+    "note": null
+   },
+   "3": {
+    "mark": 5,
+    "attendance": "present",
+    "note": null
+   },
+   "9": {
+    "mark": 5,
+    "attendance": "present",
+    "note": null
+   }
+  },
+  "101": {
+   "11": {
+    "mark": 5,
+    "attendance": "present",
+    "note": null
+   },
+   "1": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   },
+   "4": {
+    "mark": 5,
+    "attendance": "present",
+    "note": null
+   },
+   "3": {
+    "mark": 5,
+    "attendance": "present",
+    "note": null
+   },
+   "10": {
+    "mark": 3,
+    "attendance": "present",
+    "note": null
+   },
+   "9": {
+    "mark": 5,
+    "attendance": "present",
+    "note": null
+   },
+   "6": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   },
+   "8": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   },
+   "5": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   },
+   "2": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   },
+   "7": {
+    "mark": 5,
+    "attendance": "present",
+    "note": null
+   }
+  },
+  "104": {
+   "11": {
+    "mark": 5,
+    "attendance": "present",
+    "note": null
+   },
+   "4": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   },
+   "10": {
+    "mark": 3,
+    "attendance": "present",
+    "note": null
+   },
+   "6": {
+    "mark": 3,
+    "attendance": "present",
+    "note": null
+   }
+  },
+  "106": {
+   "11": {
+    "mark": null,
+    "attendance": "absent",
+    "note": null
+   },
+   "10": {
+    "mark": 2,
+    "attendance": "present",
+    "note": "Uy vazifasini bajarmagan"
+   },
+   "8": {
+    "mark": 5,
+    "attendance": "present",
+    "note": null
+   },
+   "2": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   }
+  },
+  "110": {
+   "9": {
+    "mark": 5,
+    "attendance": "present",
+    "note": null
+   },
+   "6": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   },
+   "8": {
+    "mark": 5,
+    "attendance": "present",
+    "note": null
+   },
+   "2": {
+    "mark": null,
+    "attendance": "absent",
+    "note": null
+   },
+   "7": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   }
+  }
+ }
+}

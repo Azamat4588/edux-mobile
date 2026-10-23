@@ -19,6 +19,8 @@ class CertificatesPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text(tr('Sertifikatlar'))),
       body: AsyncView<List<Map<String, dynamic>>>(
+        cacheKey: 'my_certificates',
+        decode: (raw) => asList(raw),
         load: () async => asList(await session.api.get('my/certificates')),
         builder: (context, items, reload) {
           if (items.isEmpty) {
@@ -71,6 +73,8 @@ class MockProgressPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text(tr('Mock natijalari'))),
       body: AsyncView<List<Map<String, dynamic>>>(
+        cacheKey: 'my_mock',
+        decode: (raw) => asList(raw),
         load: () async => asList(asMap(await api.get('my/mock'))['items'], 'items'),
         builder: (context, items, reload) {
           if (items.isEmpty) {

@@ -31,6 +31,8 @@ class ExamsPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text(tr('Testlar')), actions: const <Widget>[HelpButton(HelpLinks.examResults)]),
       body: AsyncView<List<Map<String, dynamic>>>(
+        cacheKey: 'exams',
+        decode: (raw) => asList(raw),
         load: () async => asList(await api.get('exams')),
         builder: (context, exams, reload) {
           if (exams.isEmpty) {
@@ -101,6 +103,8 @@ class ExamDetailPage extends StatelessWidget {
             )
           : null,
       body: AsyncView<Map<String, dynamic>>(
+        cacheKey: 'exam_results_$id',
+        decode: asMap,
         load: () async => asMap(await session.api.get('exams/$id/results')),
         builder: (context, data, reload) {
           final table = examResultsTable(data);

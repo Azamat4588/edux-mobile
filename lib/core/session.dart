@@ -215,6 +215,12 @@ class Session extends ChangeNotifier implements ApiCredentials {
         return full && hasRewards;
       case 'certificates':
         return full && (hasModule('testing') || hasModule('lms'));
+      case 'journal':
+        // Maktab jurnali (server: school/journal — direktor, administrator, o'qituvchi + module:school).
+        return isAcademicStaff && hasModule('school');
+      case 'my_payments':
+        // O'quvchi CRM kabineti (crm/me): balans, hisoblar, to'lovlar.
+        return full && hasModule('crm');
     }
     return false;
   }

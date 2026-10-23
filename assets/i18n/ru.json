@@ -4010,5 +4010,22 @@
 "Yuborildi: {0}": "Отправлено: {0}",
 "{0} qism": "{0} част.",
 "Kelgan o'tkazmalarni buyurtmalar bilan tasdiqlang.": "Подтверждайте поступившие переводы по заказам.",
-"O'quvchiga to'g'ridan-to'g'ri biriktirish CRM moduli bilan ishlaydi. Hozircha kutilayotgan buyurtmani tanlang.": "Прямая привязка к ученику работает с модулем CRM. Пока выберите ожидающий заказ."
+"O'quvchiga to'g'ridan-to'g'ri biriktirish CRM moduli bilan ishlaydi. Hozircha kutilayotgan buyurtmani tanlang.": "Прямая привязка к ученику работает с модулем CRM. Пока выберите ожидающий заказ.",
+"Baho va davomat": "Оценки и посещаемость",
+"Bu jurnalni faqat ko'rasiz: baho qo'yish — fan o'qituvchisi va rahbarda.": "Этот журнал только для просмотра: оценки ставят учитель предмета и руководство.",
+"Mavzu yozilmagan": "Тема не указана",
+"O'quv yili belgilanmagan. Rahbar «Maktab yili» sahifasida yil va choraklarni kiritadi.": "Учебный год не задан. Руководитель указывает год и четверти на странице «Учебный год».",
+"O'rtacha: {0}": "Средний: {0}",
+"Oldindan to'langan": "Оплачено вперёд",
+"Onlayn to'lash": "Оплатить онлайн",
+"Saqlanmagan baholar bor. Ular saqlanmasdan chiqilsinmi?": "Есть несохранённые оценки. Выйти без сохранения?",
+"Saqlash ({0})": "Сохранить ({0})",
+"Sizga biriktirilgan jurnal yo'q (yuklama rahbar tomonidan beriladi).": "Вам не назначены журналы (нагрузку назначает руководство).",
+"To'lash kerak": "Нужно оплатить",
+"To'lovlarim": "Мои платежи",
+"Uy vazifasi (ixtiyoriy)": "Домашнее задание (необязательно)",
+"muddat: {0}": "срок: {0}",
+"{0} baho": "{0} оценок",
+"{0} kelmagan": "{0} отсутств.",
+"{0}-soat": "{0}-й урок"
 }

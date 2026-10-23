@@ -613,3 +613,20 @@ Yuborildi: {0}	Отправлено: {0}	Sent: {0}
 {0} qism	{0} частей	{0} parts
 Kelgan o'tkazmalarni buyurtmalar bilan tasdiqlang.	Подтверждайте поступившие переводы по заказам.	Confirm incoming transfers against orders.
 O'quvchiga to'g'ridan-to'g'ri biriktirish CRM moduli bilan ishlaydi. Hozircha kutilayotgan buyurtmani tanlang.	Прямая привязка к ученику работает с модулем CRM. Пока выберите ожидающий заказ.	Linking directly to a student requires the CRM module. For now, choose a pending order.
+Baho va davomat	Оценки и посещаемость	Grades and attendance
+Bu jurnalni faqat ko'rasiz: baho qo'yish — fan o'qituvchisi va rahbarda.	Этот журнал только для просмотра: оценки ставят учитель предмета и руководство.	View only: grades are entered by the subject teacher and management.
+Mavzu yozilmagan	Тема не указана	No topic
+O'quv yili belgilanmagan. Rahbar «Maktab yili» sahifasida yil va choraklarni kiritadi.	Учебный год не задан. Руководитель указывает год и четверти на странице «Учебный год».	The school year is not set. Management sets the year and terms on the “School year” page.
+O'rtacha: {0}	Средний: {0}	Average: {0}
+Oldindan to'langan	Оплачено вперёд	Paid in advance
+Onlayn to'lash	Оплатить онлайн	Pay online
+Saqlanmagan baholar bor. Ular saqlanmasdan chiqilsinmi?	Есть несохранённые оценки. Выйти без сохранения?	There are unsaved grades. Leave without saving?
+Saqlash ({0})	Сохранить ({0})	Save ({0})
+Sizga biriktirilgan jurnal yo'q (yuklama rahbar tomonidan beriladi).	Вам не назначены журналы (нагрузку назначает руководство).	No journals are assigned to you (management assigns teaching loads).
+To'lash kerak	Нужно оплатить	Amount due
+To'lovlarim	Мои платежи	My payments
+Uy vazifasi (ixtiyoriy)	Домашнее задание (необязательно)	Homework (optional)
+muddat: {0}	срок: {0}	due: {0}
+{0} baho	{0} оценок	{0} grades
+{0} kelmagan	{0} отсутств.	{0} absent
+{0}-soat	{0}-й урок	Period {0}

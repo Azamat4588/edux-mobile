@@ -4010,5 +4010,22 @@
 "Yuborildi: {0}": "Sent: {0}",
 "{0} qism": "{0} parts",
 "Kelgan o'tkazmalarni buyurtmalar bilan tasdiqlang.": "Confirm incoming transfers against orders.",
-"O'quvchiga to'g'ridan-to'g'ri biriktirish CRM moduli bilan ishlaydi. Hozircha kutilayotgan buyurtmani tanlang.": "Linking directly to a student requires the CRM module. For now, choose a pending order."
+"O'quvchiga to'g'ridan-to'g'ri biriktirish CRM moduli bilan ishlaydi. Hozircha kutilayotgan buyurtmani tanlang.": "Linking directly to a student requires the CRM module. For now, choose a pending order.",
+"Baho va davomat": "Grades and attendance",
+"Bu jurnalni faqat ko'rasiz: baho qo'yish — fan o'qituvchisi va rahbarda.": "View only: grades are entered by the subject teacher and management.",
+"Mavzu yozilmagan": "No topic",
+"O'quv yili belgilanmagan. Rahbar «Maktab yili» sahifasida yil va choraklarni kiritadi.": "The school year is not set. Management sets the year and terms on the “School year” page.",
+"O'rtacha: {0}": "Average: {0}",
+"Oldindan to'langan": "Paid in advance",
+"Onlayn to'lash": "Pay online",
+"Saqlanmagan baholar bor. Ular saqlanmasdan chiqilsinmi?": "There are unsaved grades. Leave without saving?",
+"Saqlash ({0})": "Save ({0})",
+"Sizga biriktirilgan jurnal yo'q (yuklama rahbar tomonidan beriladi).": "No journals are assigned to you (management assigns teaching loads).",
+"To'lash kerak": "Amount due",
+"To'lovlarim": "My payments",
+"Uy vazifasi (ixtiyoriy)": "Homework (optional)",
+"muddat: {0}": "due: {0}",
+"{0} baho": "{0} grades",
+"{0} kelmagan": "{0} absent",
+"{0}-soat": "Period {0}"
 }

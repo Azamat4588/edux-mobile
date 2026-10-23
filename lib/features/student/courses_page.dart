@@ -34,6 +34,8 @@ class CoursesPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text(tr('Kurslarim'))),
       body: AsyncView<List<Map<String, dynamic>>>(
+        cacheKey: 'lms_my_courses',
+        decode: (raw) => asList(raw),
         load: () async => asList(asMap(await api.get('lms/my/courses'))['courses'], 'courses'),
         builder: (context, courses, reload) {
           if (courses.isEmpty) {
@@ -93,6 +95,8 @@ class CoursePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text(title, maxLines: 1, overflow: TextOverflow.ellipsis)),
       body: AsyncView<Map<String, dynamic>>(
+        cacheKey: 'lms_my_course_$courseId',
+        decode: asMap,
         load: () async => asMap(await api.get('lms/my/courses/$courseId')),
         builder: (context, data, reload) {
           final course = asMap(data['course']);

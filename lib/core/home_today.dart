@@ -318,16 +318,20 @@ List<QuickAction> quickActions(String role, bool Function(String permission) can
       if (can('lms_staff')) list.add(QuickAction(key: 'lms.questions', label: tr("O'quvchi savollari"), icon: 'question'));
     case 'teacher':
       if (can('attendance')) list.add(QuickAction(key: 'attendance', label: tr('Davomat qilish'), hint: tr('Kim keldi, kim kelmadi'), icon: 'check-circle', primary: true));
+      if (can('journal')) list.add(QuickAction(key: 'school.journal', label: tr('Jurnal'), hint: tr('Baho va davomat'), icon: 'pen-line', primary: !list.any((item) => item.primary)));
       if (can('lms_staff')) list.add(QuickAction(key: 'lms.questions', label: tr('Savollarga javob berish'), icon: 'question'));
       if (can('lms_staff')) list.add(QuickAction(key: 'lms.announcements', label: tr("E'lon yozish"), hint: tr("Kurs o'quvchilariga"), icon: 'megaphone'));
       if (can('testing')) list.add(QuickAction(key: 'exams', label: tr('Test yaratish'), hint: tr("Onlayn yoki qog'oz"), icon: 'clipboard-list'));
       if (can('scan')) list.add(QuickAction(key: 'scanner', label: tr('Varaqa tekshirish'), icon: 'camera'));
       if (list.isEmpty && can('students')) list.add(QuickAction(key: 'students', label: tr("O'quvchilarim"), icon: 'academic-cap', primary: true));
     case 'cashier':
-      list.add(QuickAction(key: 'payment.take', label: tr("To'lov qabul qilish"), hint: tr("O'quvchini toping va summani yozing"), icon: 'banknote', primary: true));
-      list.add(QuickAction(key: 'crm.debtors', label: tr('Qarzdorlar'), hint: tr('Eslatma yuborish'), icon: 'warning'));
-      if (can('p2p')) list.add(QuickAction(key: 'pay.p2p', label: tr("Kartaga o'tkazmalar"), hint: tr('Tasdiqlash va biriktirish'), icon: 'card'));
-      list.add(QuickAction(key: 'crm.payments', label: tr('Kassa'), hint: tr("Bugungi to'lovlar"), icon: 'wallet'));
+      // CRMsiz (maktab + LMS) — faqat kartaga o'tkazmalar: to'lov qabul qilish va qarzdorlar CRM sahifalari.
+      if (can('crm')) {
+        list.add(QuickAction(key: 'payment.take', label: tr("To'lov qabul qilish"), hint: tr("O'quvchini toping va summani yozing"), icon: 'banknote', primary: true));
+        list.add(QuickAction(key: 'crm.debtors', label: tr('Qarzdorlar'), hint: tr('Eslatma yuborish'), icon: 'warning'));
+      }
+      if (can('p2p')) list.add(QuickAction(key: 'pay.p2p', label: tr("Kartaga o'tkazmalar"), hint: tr('Tasdiqlash va biriktirish'), icon: 'card', primary: !can('crm')));
+      if (can('crm')) list.add(QuickAction(key: 'crm.payments', label: tr('Kassa'), hint: tr("Bugungi to'lovlar"), icon: 'wallet'));
     case 'marketer':
       list.add(QuickAction(key: 'crm.leads', label: tr('Murojaatlarga javob berish'), hint: tr("Yangi lidlar ro'yxati"), icon: 'columns', primary: true));
       if (can('callcenter')) list.add(QuickAction(key: 'crm.callcenter', label: tr('Call markazi'), icon: 'headphones'));

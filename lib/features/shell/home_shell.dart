@@ -37,12 +37,14 @@ import '../scanner/scans_page.dart';
 import '../settings/settings_page.dart';
 import '../staff/attendance_page.dart';
 import '../staff/exams_page.dart';
+import '../staff/journal_page.dart';
 import '../staff/staff_home_page.dart';
 import '../staff/students_page.dart';
 import '../student/assignments_page.dart';
 import '../student/certificates_page.dart';
 import '../student/courses_page.dart';
 import '../student/diary_page.dart';
+import '../student/my_payments_page.dart';
 import '../student/my_tests_page.dart';
 import '../student/online_pay.dart';
 import '../student/student_home_page.dart';
@@ -243,6 +245,10 @@ class _HomeShellState extends State<HomeShell> with WidgetsBindingObserver {
         return const CertificatesPage();
       case 'my.tutor':
         return const TutorPage();
+      case 'school.journal':
+        return const JournalPage();
+      case 'my.payments':
+        return const MyPaymentsPage();
     }
     return null;
   }

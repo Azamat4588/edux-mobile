@@ -19,6 +19,8 @@ class AssignmentsPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text(tr('Uy vazifalari'))),
       body: AsyncView<List<Map<String, dynamic>>>(
+        cacheKey: 'lms_my_assignments',
+        decode: (raw) => asList(raw),
         load: () async => asList(asMap(await api.get('lms/my/assignments'))['assignments'], 'assignments'),
         builder: (context, items, reload) {
           if (items.isEmpty) {

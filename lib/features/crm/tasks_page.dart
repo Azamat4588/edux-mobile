@@ -61,6 +61,8 @@ class _TasksPageState extends State<TasksPage> {
       ),
       body: AsyncView<Map<String, dynamic>>(
         key: _view,
+        cacheKey: 'crm_tasks_$_tab',
+        decode: asMap,
         load: () async => asMap(await api.get('crm/tasks', query: <String, Object?>{'tab': _tab})),
         builder: (context, data, reload) {
           final counts = asMap(data['counts']);

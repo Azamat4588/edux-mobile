@@ -97,6 +97,7 @@ List<NavSection> buildNav(NavContext ctx) {
       _section('groups', school ? tr('Sinflarim') : tr('Guruhlarim'), 'users', <NavTab?>[
         _when(can('students'), NavTab('students', ctx.studentsLabel)),
         _when(can('attendance'), NavTab('attendance', tr('Davomat'))),
+        _when(can('journal'), NavTab('school.journal', tr('Jurnal'))),
         _when(can('checkin'), NavTab('access.checkin', tr('Kirish nazorati'))),
       ]),
       _education(ctx),
@@ -155,6 +156,7 @@ List<NavSection> buildNav(NavContext ctx) {
           _when(can('rewards'), NavTab('fun.achievements', can('fun') ? tr('XP va coin') : tr('Coin'))),
           _when(can('certificates'), NavTab('my.certificates', tr('Sertifikatlar'))),
         ]),
+        _section('payments', tr("To'lovlarim"), 'wallet', <NavTab?>[_when(can('my_payments'), NavTab('my.payments', tr("To'lovlarim")))]),
         _section('tutor', tr('AI ustoz'), 'sparkle', <NavTab?>[_when(can('tutor'), NavTab('my.tutor', tr('AI ustoz')))]),
       ]);
     }
@@ -177,7 +179,10 @@ List<NavSection> buildNav(NavContext ctx) {
 
 NavSection? _education(NavContext ctx) {
   final can = ctx.can;
+  final manager = _managers.contains(ctx.role);
   return _section('education', tr("Ta'lim"), 'book', <NavTab?>[
+    // Rahbarda jurnal «Ta'lim» bo'limida (veb bilan bir xil); o'qituvchida — «Sinflarim» ichida.
+    _when(manager && can('journal'), NavTab('school.journal', tr('Jurnal'))),
     _when(can('lms_staff'), NavTab('lms.questions', tr('Savol-javob'))),
     _when(can('lms_staff'), NavTab('lms.announcements', tr("E'lonlar"))),
   ]);
