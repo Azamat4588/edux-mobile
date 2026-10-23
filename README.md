@@ -38,6 +38,32 @@ Windows, macOS va Linux uchun EduX ilovasi alohida repozitoriyda: [Azamat4588/ed
 `…/edux-desktop/releases/download/desktop-latest/EduX-Setup-x64.exe`, `EduX-x64.msi`, `EduX-macOS-universal.dmg`,
 `EduX-linux-x86_64.AppImage`, `EduX-linux-amd64.deb`.
 
+## 3.4 da yangi (server 1.35 / 1.36 bilan moslik)
+
+- **Dizayn tizimi (veb 1.35 «Daftar», `docs/design.md`)**: 5 shablon — Klassik, Yumshoq, Qorong'i panel, Ixcham, Maktab
+  (eski `vivid` → `school`, `midnight` → `night`), shrift (Onest, Manrope, Nunito — `assets/fonts`, OFL), shrift o'lchami
+  va burchaklar. Ko'rinish uch qatlamdan: platforma standarti (`GET /site → theme`) → tashkilot brendi (`context.theme`) →
+  shaxsiy (`user.appearance`, «Yana → Ko'rinish», `PUT profile/appearance`). Mantiq: `lib/core/design.dart`, `theme.dart`.
+- **Bosh sahifalar** (direktor, o'qituvchi, kassir, marketolog, o'quvchi, ota-ona): «Bugun» kartalari (3–4 raqam, chap chetda
+  ohang chizig'i) + katta tezkor harakatlar, keyin ro'yxatlar — `lib/core/home_today.dart`, `home_widgets.dart`.
+- **Pastki navigatsiya** vebdagi `bottomNav()` bo'yicha: menyuning birinchi 4 bo'limi + «Yana»; bo'lim ichida yorliqlar;
+  ota-onada «Farzandim» yorliqlari (Umumiy, Kundalik, Testlar, To'lov), «Kurslar» — «Yana»da. `lib/core/nav.dart`.
+- **To'lovlar**: usullar server ro'yxati va tartibida (Click, Payme, Uzum, Paynet, Oson, Alif, komissiya, minimal summa);
+  **kartaga o'tkazma (P2P)** — karta raqami va noyob summa (nusxalash), muddat taymeri, holatni so'rash, muvaffaqiyat
+  ekrani; pullik kursni sotib olish/uzaytirish. Kassir: «Kartaga o'tkazmalar» (kutilayotgan, noma'lum kirimlar,
+  tasdiqlash/biriktirish/rad etish, bank xabari matni).
+- **SMS shlyuz**: platforma egasi hisobida `platform/sms/gateway/*` (push `scope=platform`); **bank SMS'larini serverga
+  yuborish** (`RECEIVE_SMS`, jo'natuvchilar ro'yxati, internetsiz navbat, `enabled=false` — to'xtash, oxirgi yuborilganlar)
+  — `lib/core/bank_sms.dart`, native `BankSmsReceiver` (`tool/configure_platforms.dart`); **«O'z telefonimdan»** (1.36)
+  — kutilayotgan SMS'lar navbat rejimida, `sms:` havolasi bilan telefonning SMS ilovasi.
+- **LMS**: dars bloklari konstruktor tartibida (matn, video, fayl, doska, test, uy vazifasi, interaktiv blok), virtual
+  doskani ko'rish (CustomPainter, jonli rejimda 2,5 s, kattalashtirish), jonli dars kartasi («Darsga qo'shilish»), savol-javob,
+  «tushundim» so'rovi, kurs e'lonlari; ota-onada «Kurslar»; o'qituvchiga — savollarga javob va e'lon yozish.
+- **Laboratoriya**: 38 ta lab katalogi fan bo'yicha filtr bilan, interaktiv sahifa ilova ichidagi WebView'da.
+- **Kirish nazorati**: Bluetooth / USB-OTG skaner (klaviatura rejimi, `lib/core/scan_keys.dart` — veb `scanner.js` mantiqi),
+  kamerada QR bilan birga Code 128 shtrix-kod, qo'lda 6 xonali kod yoki 14 raqamli shtrix-kod.
+- CI: `main` dan boshqa branch'larda faqat `flutter analyze` va `flutter test` (`check` job, relizsiz).
+
 ## 3.3 da yangi (server: yordam markazi)
 
 - «Ko'proq» → «Yordam markazi»: veb-tizimdagi qo'llanmalar (`<server>/help`; brauzerda kirilmagan bo'lsa ochiq `/yordam`)
@@ -208,7 +234,7 @@ Tayyor `.ipa` ni Transporter yoki Xcode Organizer orqali App Store Connect / Tes
 
 ### GitHub Actions
 
-`.github/workflows/build.yml` har push'da testlarni ishga tushiradi, Android APK yig'adi (Artifacts bo'limida) va alohida `ios` job'ida (macos-latest) iOS'ni imzosiz yig'adi: `flutter build ios --release --no-codesign`, natija — `edux-ios-unsigned` artefaktidagi `Runner.app` arxivi. iOS job xato bersa ham Android yig'ilishi va Releases davom etadi. Server manzilini repozitoriy o'zgaruvchisi `EDUX_SERVER` orqali bering.
+`.github/workflows/build.yml`: boshqa branch'larda faqat tahlil va testlar (`check` job); `main` ga push'da testlarni ishga tushiradi, Android APK yig'adi (Artifacts bo'limida) va alohida `ios` job'ida (macos-latest) iOS'ni imzosiz yig'adi: `flutter build ios --release --no-codesign`, natija — `edux-ios-unsigned` artefaktidagi `Runner.app` arxivi. iOS job xato bersa ham Android yig'ilishi va Releases davom etadi. Server manzilini repozitoriy o'zgaruvchisi `EDUX_SERVER` orqali bering.
 
 iOS'da push uchun Firebase'ning `GoogleService-Info.plist` faylini Xcode'da Runner'ga qo'shing va Signing & Capabilities'da «Push Notifications» va «Background Modes → Remote notifications» ni yoqing (CI dagi imzosiz yig'ishda push o'chiq).
 
@@ -238,7 +264,9 @@ lib/
     scanner/         skaner, navbat, test kaliti, natija, tekshiruv
     staff/           bosh sahifa, o'quvchilar, to'lov, davomat, testlar
     callcenter/      call markazi va CallCenterRepository (barcha call-markaz so'rovlari)
-    finance/         moliya (bugun, qarzdorlar, hisobot) va FinanceRepository
+    finance/         moliya (bugun, qarzdorlar, hisobot), FinanceRepository, kartaga o'tkazmalar (P2P)
+    lms/             doska ko'rish, savol-javob va e'lonlar (o'qituvchi), farzand kurslari
+    crm/             lidlar, topshiriqlar, «O'z telefonimdan» SMS navbati
     testing/         mavzular bo'yicha test (bank/topics)
     notifications/   bildirishnomalar markazi va qo'ng'iroqcha
     student/         bosh sahifa, onlayn testlar, kurslar, uy vazifasi, kundalik, to'lov, to'lov havolasi
@@ -256,7 +284,9 @@ tool/                platforma sozlash, tarjima tekshiruvi
 ## Cheklovlar
 
 - Olimpiadalar ro'yxati: serverda o'quvchi uchun «mening olimpiadalarim» endpointi yo'q — ochilgan/ro'yxatdan o'tilgan olimpiada havolalari telefonda saqlanadi. `/o/…`, `/p/…` havolalarini ilovaga to'g'ridan-to'g'ri ochish (App Links / Universal Links) hali sozlanmagan: havola nusxalanib ilovaga qo'yiladi.
-- Virtual laboratoriyada vebdagi interaktiv tajriba (mayatnik, linza animatsiyasi) yo'q — topshiriq matni, qiymatlar va javob.
+- Virtual laboratoriyaning interaktiv tajribasi veb sahifasi (WebView) orqali ochiladi; ilovaning o'zida — topshiriq matni, qiymatlar va javob.
+- Bank SMS'lari ilova yopiq bo'lsa ham telefonda yig'iladi, lekin serverga ilova ochilganda (yoki fonda ishlab turganda) yuboriladi.
+- Doskani chizish — faqat vebda (ilovada ko'rish).
 - Tashqi (boshqa markazdagi) ishtirokchi olimpiada testini brauzerdagi shaxsiy havola orqali ishlaydi.
 
 - Push-bildirishnomalar Firebase sozlangan yig'ilishdagina ishlaydi (`GOOGLE_SERVICES_JSON`; iOS'da `GoogleService-Info.plist` va imzo). Bildirishnomalar markazi faqat shu telefonga kelgan xabarlarni ko'rsatadi — serverda xabarlar tarixi endpointi yo'q; ilova o'chirilsa yoki chiqilsa ro'yxat tozalanadi.

@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../core/api.dart';
+import '../../core/external_links.dart';
 import '../../core/format.dart';
 import '../../core/i18n.dart';
 import '../../core/session.dart';
@@ -220,8 +221,16 @@ class _LabWebPageState extends State<LabWebPage> {
           if (mounted) setState(() => _progress = value);
         },
         // Boshqa saytga havola — tashqi brauzerda emas, shu yerda ochilmaydi.
-        onNavigationRequest: (request) =>
-            request.url.startsWith(server) || request.url.startsWith('about:') || request.url.startsWith('data:') ? NavigationDecision.navigate : NavigationDecision.prevent,
+        onNavigationRequest: (request) {
+          // sms:, SMSTO:, tel: ... — telefonning o'z ilovasida.
+          if (isSystemLink(request.url)) {
+            openSystemLink(request.url);
+            return NavigationDecision.prevent;
+          }
+          return request.url.startsWith(server) || request.url.startsWith('about:') || request.url.startsWith('data:')
+              ? NavigationDecision.navigate
+              : NavigationDecision.prevent;
+        },
       ))
       ..loadHtmlString(html, baseUrl: '$server/');
     setState(() => _controller = controller);

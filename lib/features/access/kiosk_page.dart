@@ -9,6 +9,7 @@ import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_flutter_android/webview_flutter_android.dart';
 
 import '../../core/api.dart';
+import '../../core/external_links.dart';
 import '../../core/i18n.dart';
 import '../../core/session.dart';
 import '../../core/theme.dart';
@@ -192,6 +193,14 @@ class _KioskViewState extends State<_KioskView> {
     _controller = WebViewController(onPermissionRequest: (request) => request.grant())
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setBackgroundColor(Colors.black)
+      // sms:, SMSTO:, tel: havolalari — telefonning o'z ilovasida.
+      ..setNavigationDelegate(NavigationDelegate(onNavigationRequest: (request) {
+        if (isSystemLink(request.url)) {
+          openSystemLink(request.url);
+          return NavigationDecision.prevent;
+        }
+        return NavigationDecision.navigate;
+      }))
       ..loadRequest(Uri.parse(widget.url));
     final platform = _controller.platform;
     if (platform is AndroidWebViewController) {
