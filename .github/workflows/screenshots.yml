@@ -23,6 +23,9 @@ jobs:
     timeout-minutes: 25
     steps:
       - uses: actions/checkout@v5
+        with:
+          # To'liq tarix: «screenshots» branch'iga yangi commit qo'shish uchun (sayoz klondan push rad etiladi).
+          fetch-depth: 0
 
       - uses: subosito/flutter-action@v2
         with:
@@ -55,7 +58,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           # Tarix saqlanadi (force-push yo'q): branch bo'lsa — uning ustiga yangi commit, bo'lmasa — yangi (orphan) branch.
-          if git fetch -q origin screenshots 2>/dev/null; then
+          if git fetch -q --unshallow origin screenshots 2>/dev/null || git fetch -q origin screenshots 2>/dev/null; then
             git checkout -q -B screenshots FETCH_HEAD
           else
             git checkout -q --orphan screenshots

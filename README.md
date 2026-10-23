@@ -38,6 +38,42 @@ Windows, macOS va Linux uchun EduX ilovasi alohida repozitoriyda: [Azamat4588/ed
 `…/edux-desktop/releases/download/desktop-latest/EduX-Setup-x64.exe`, `EduX-x64.msi`, `EduX-macOS-universal.dmg`,
 `EduX-linux-x86_64.AppImage`, `EduX-linux-amd64.deb`.
 
+## Skrinshotlar
+
+| | | | |
+|---|---|---|---|
+| ![Kirish](docs/screenshots/01-kirish.png) | ![O'qituvchi bosh sahifasi](docs/screenshots/02-oqituvchi-bosh.png) | ![Davomat](docs/screenshots/04-davomat.png) | ![Maktab jurnali](docs/screenshots/03-jurnal-baholar.png) |
+| ![O'quvchi bosh sahifasi](docs/screenshots/06-oquvchi-bosh.png) | ![O'yinlar](docs/screenshots/08-oyinlar.png) | ![Millioner](docs/screenshots/09-oyin-millioner.png) | ![Ota-ona](docs/screenshots/10-ota-ona.png) |
+
+Hammasi `docs/screenshots/` da (390×844 @3x, 1170×2532 PNG; tungi rejim — `*-tungi.png`). Yangilash:
+`screenshots/shots_test.dart` (demo ma'lumot `screenshots/fixtures/`, haqiqiy shriftlar) — commit xabarida `[skrinshot]`
+bo'lsa yoki Actions → Screenshots → «Run workflow»; rasmlar `screenshots` branch'iga yoziladi
+(`git fetch origin screenshots && git checkout FETCH_HEAD -- '*.png'`).
+
+## 3.6 da yangi (server 1.38: o'yinlar, to'lov havolasi, yangilanish)
+
+- **16 ta o'yin, ilovada nativ** (`lib/core/games.dart`, `lib/features/fun/games/`): savollar bankidan — Viktorina-blits,
+  To'g'ri yoki noto'g'ri, Millioner (50/50, almashtirish, to'xtash), Omon qol (3 jon), Duel (guruhdosh yoki bot);
+  so'z to'plamlaridan — Juftini top, Xotira kartalari, So'z yig'ish, Dor, Krossvord, Tez yozish, Flesh-kartalar, Guruhlash;
+  matematika — Matematik sprint, Ketma-ketlik, Sonlarni guruhlash. Protokol `v: 2`: har yurish `POST my/games/{id}/answer`
+  da serverda tekshiriladi (javob kaliti ilovaga kelmaydi), vaqt server soatida; «Juftini top» va «So'z yig'ish» ham shu
+  protokolga o'tdi. Katalog manba bo'yicha guruhlangan, manba (fan / to'plam / daraja) rekordlar bilan tanlanadi, manba
+  yo'q bo'lsa sababi («So'z to'plami kerak — o'qituvchidan so'rang»). Natija: ball, to'g'ri/jami, vaqt, XP (kunlik chegara
+  izohi bilan), rekord, tahlil (to'g'ri javoblar, qoida), reyting, «Yana o'ynash». Darsga biriktirilgan o'yin (`lesson_id`)
+  dars ichidan ochiladi, tugagach dars o'tilgan deb belgilanadi. Telefon klaviaturasi, raqam paneli, jismoniy klaviatura (Dor),
+  tungi rejim va 5 shablon, uz/ru/en. Testlar: `test/games_test.dart` (demo serverdan olingan haqiqiy javoblar
+  `test/fixtures/games/`), `test/games_widget_test.dart` (har o'yin ekrani).
+- **To'lov havolasi → «Kartaga o'tkazma»** (vebdagi `/p/<token>` kabi): karta raqami, noyob summa, muddat taymeri, holat
+  kuzatuvi va «Yangi summa olish» — kirmasdan (`public/pay/{token}?order=`); to'lov usullari server tartibida, komissiya bilan.
+- **Yangilanish tekshiruvi**: `GET public/apps` → `mobile.android.version` ilova versiyasidan yangi bo'lsa, kuniga bir marta
+  «Yangi versiya» taklifi (Google Play yoki APK havolasi); «Yana» sahifasida «Ilova versiyasi» qatori — qo'lda tekshirish.
+  Versiyani platforma egasi «Platforma → Sayt → Ilovalar» da kiritadi.
+- **Veb sozlamalar yorliqlari** (`?tab=`): ilovada yo'q sozlamalarga «Brauzerda ochish» — kartaga o'tkazma
+  (`/settings/payments?tab=p2p`), modullar, ta'lim sozlamalari (`lib/core/web_links.dart`).
+- Laboratoriyalar ro'yxati serverdan (yangi lablar ilovani yangilamasdan chiqadi), yangi fanlar ikonkasi; topshiriqda faqat
+  nomi ma'lum parametrlar.
+- Davomat holatlari tor telefonda ham bitta qatorda; tugma matnlari ilova shriftida; ota-ona pastki menyusida qisqa nom.
+
 ## 3.5 da yangi (server 1.38: yordam markazi va qo'llab-quvvatlash)
 
 - **«Yana» → «Yordam»**: yordam markazidan qidirish (`help/search`), «Ko'p beriladigan savollar» va «Muammolar va yechimlar»
