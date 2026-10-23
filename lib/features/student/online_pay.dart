@@ -344,10 +344,16 @@ class _PayFormState extends State<_PayForm> {
 /// Kartaga o'tkazma (P2P): karta raqami, egasi, noyob summa (aynan shu summa yoziladi), muddat taymeri va holat.
 /// Bank xabari kelib server buyurtmani tasdiqlaganda muvaffaqiyat ekrani chiqadi (GET pay/orders/{id} har 5 soniyada).
 class P2pTransferPage extends StatefulWidget {
-  const P2pTransferPage({super.key, required this.orderId, required this.initial});
+  const P2pTransferPage({super.key, required this.orderId, required this.initial, this.load, this.renew});
 
   final int orderId;
   final Map<String, dynamic> initial;
+
+  /// Holatni o'qish; standart — GET pay/orders/{id} (kirgan foydalanuvchi). To'lov havolasida — ochiq API.
+  final Future<Map<String, dynamic>> Function(int orderId)? load;
+
+  /// Muddat tugaganda yangi summa; standart — POST pay/orders/{id}/p2p. Javobda yangi `id` bo'lsa — kuzatish shunga o'tadi.
+  final Future<Map<String, dynamic>> Function(int orderId)? renew;
 
   @override
   State<P2pTransferPage> createState() => _P2pTransferPageState();
@@ -355,6 +361,7 @@ class P2pTransferPage extends StatefulWidget {
 
 class _P2pTransferPageState extends State<P2pTransferPage> with WidgetsBindingObserver {
   late Map<String, dynamic> _order = widget.initial;
+  late int _orderId = widget.orderId;
   Timer? _tick;
   Timer? _poll;
   bool _foreground = true;
@@ -414,7 +421,7 @@ class _P2pTransferPageState extends State<P2pTransferPage> with WidgetsBindingOb
     _checking = true;
     final api = AppScope.read(context).api;
     try {
-      final order = asMap(await api.get('pay/orders/${widget.orderId}'));
+      final order = widget.load != null ? await widget.load!(_orderId) : asMap(await api.get('pay/orders/$_orderId'));
       if (!mounted) return;
       // Tasdiqlangandan keyin javobda `p2p` bo'lmaydi — oxirgi rekvizitlar saqlanadi.
       setState(() => _order = <String, dynamic>{...order, if (order['p2p'] == null) 'p2p': _order['p2p']});
@@ -429,9 +436,13 @@ class _P2pTransferPageState extends State<P2pTransferPage> with WidgetsBindingOb
   Future<void> _renew() async {
     setState(() => _renewing = true);
     try {
-      final order = asMap(await AppScope.read(context).api.post('pay/orders/${widget.orderId}/p2p'));
+      final api = AppScope.read(context).api;
+      final order = widget.renew != null ? await widget.renew!(_orderId) : asMap(await api.post('pay/orders/$_orderId/p2p'));
       if (!mounted) return;
-      setState(() => _order = order);
+      setState(() {
+        _order = order;
+        if (order['id'] != null) _orderId = asInt(order['id'], _orderId);
+      });
       // Yangi muddat: kuzatish qaytadan boshlanadi (to'xtagan bo'lsa).
       _expiredChecks = 0;
       if (!(_poll?.isActive ?? false)) _poll = Timer.periodic(const Duration(seconds: 5), (_) => _check());

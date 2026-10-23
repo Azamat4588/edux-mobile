@@ -1,5 +1,6 @@
 // To'lov havolasi (/p/<token>): ota-ona hisobsiz, markaz yuborgan havola orqali o'quvchi balansini to'ldiradi.
-// GET /public/pay/{token} — o'quvchi, balans, to'lov turlari; POST /public/pay/{token}/checkout — to'lov sahifasi.
+// GET /public/pay/{token} — o'quvchi, balans, to'lov usullari; POST /public/pay/{token}/checkout — to'lov sahifasi yoki
+// kartaga o'tkazma (P2P: noyob summa, karta, muddat; holat GET /public/pay/{token}?order=<id> bilan kuzatiladi).
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -11,6 +12,7 @@ import '../../core/payments.dart';
 import '../../core/session.dart';
 import '../../core/theme.dart';
 import '../../core/widgets.dart';
+import 'online_pay.dart';
 
 /// Havoladan token: "https://edux.kuchkarov.uz/p/AbC..." yoki tokenning o'zi.
 String? payLinkToken(String value) {
@@ -86,8 +88,10 @@ class _PayLinkPageState extends State<PayLinkPage> {
     final info = _info!;
     final min = asInt(info['min'], 1000);
     final amount = int.tryParse(_amount.text.replaceAll(RegExp(r'\D'), ''));
-    if (amount == null || amount < min) {
-      setState(() => _error = tr('Eng kam summa: {0}', <Object?>[money(min)]));
+    final method = payLinkMethods(info).where((item) => item.key == provider).firstOrNull;
+    final least = method != null && method.min > min ? method.min : min;
+    if (amount == null || amount < least) {
+      setState(() => _error = tr('Eng kam summa: {0}', <Object?>[money(least)]));
       return;
     }
     setState(() {
@@ -95,10 +99,15 @@ class _PayLinkPageState extends State<PayLinkPage> {
       _error = null;
     });
     try {
-      final data = asMap(await AppScope.read(context).api.post('public/pay/$_token/checkout', <String, Object?>{
+      final api = AppScope.read(context).api;
+      final data = asMap(await api.post('public/pay/$_token/checkout', <String, Object?>{
         'provider': provider,
         'amount': amount,
       }));
+      if (provider == 'p2p') {
+        await _transfer(asMap(data['order']), amount);
+        return;
+      }
       final url = Uri.tryParse(asText(data['url']));
       if (url == null) throw ApiException(500, tr("To'lov sahifasini ochib bo'lmadi. Qayta urinib ko'ring."));
       await launchUrl(url, mode: LaunchMode.externalApplication);
@@ -108,6 +117,23 @@ class _PayLinkPageState extends State<PayLinkPage> {
     } finally {
       if (mounted) setState(() => _busy = false);
     }
+  }
+
+  /// Kartaga o'tkazma: rekvizitlar va holat (ochiq API orqali, kirmasdan).
+  Future<void> _transfer(Map<String, dynamic> order, int amount) async {
+    final token = _token!;
+    final api = AppScope.read(context).api;
+    if (order.isEmpty) throw ApiException(500, tr("To'lov sahifasini ochib bo'lmadi. Qayta urinib ko'ring."));
+    await Navigator.of(context).push<bool>(MaterialPageRoute<bool>(
+      builder: (_) => P2pTransferPage(
+        orderId: asInt(order['id']),
+        initial: order,
+        load: (id) async => asMap(asMap(await api.get('public/pay/$token', query: <String, Object?>{'order': id}))['order']),
+        renew: (_) async => asMap(asMap(await api.post('public/pay/$token/checkout', <String, Object?>{'provider': 'p2p', 'amount': amount}))['order']),
+      ),
+    ));
+    // Qaytganda balans yangilanadi (to'lov tasdiqlangan bo'lishi mumkin).
+    if (mounted) await _open();
   }
 
   @override
@@ -166,6 +192,14 @@ class _PayLinkPageState extends State<PayLinkPage> {
   }
 }
 
+/// To'lov havolasidagi usullar: yangi server — `methods` (P2P bilan), eski — `providers` (faqat to'lov tizimlari).
+List<PayMethod> payLinkMethods(Map<String, dynamic> info) {
+  if (info['methods'] is List) return payMethods(info);
+  return readyProviders(asMap(info['providers']), withP2p: false)
+      .map((key) => PayMethod(key: key, name: providerNames[key] ?? key))
+      .toList();
+}
+
 class _PayLinkBody extends StatelessWidget {
   const _PayLinkBody({required this.info, required this.amount, required this.busy, required this.onPay});
 
@@ -178,10 +212,9 @@ class _PayLinkBody extends StatelessWidget {
   Widget build(BuildContext context) {
     final organization = asMap(info['organization']);
     final student = asMap(info['student']);
-    final providers = asMap(info['providers']);
     final balance = asInt(info['balance']);
-    // Kartaga o'tkazma (P2P) bu sahifada yo'q — to'lov tizimlari (Click, Payme, Uzum Bank, Paynet, Oson, Alif Pay).
-    final ready = readyProviders(providers, withP2p: false);
+    // Server tartibidagi tayyor usullar: to'lov tizimlari va «Kartaga o'tkazma» (P2P) — vebdagi /p/<token> kabi.
+    final ready = payLinkMethods(info);
     final any = ready.isNotEmpty;
     return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
       AppCard(
@@ -212,10 +245,26 @@ class _PayLinkBody extends StatelessWidget {
         const SizedBox(height: 18),
         for (var i = 0; i < ready.length; i++) ...<Widget>[
           if (i > 0) const SizedBox(height: 10),
-          FilledButton(
-            onPressed: busy ? null : () => onPay(ready[i]),
-            child: Text(tr("{0} orqali to'lash", <Object?>[providerNames[ready[i]] ?? ready[i]])),
-          ),
+          if (ready[i].isP2p)
+            OutlinedButton.icon(
+              onPressed: busy ? null : () => onPay(ready[i].key),
+              icon: const Icon(Icons.credit_card, size: 20),
+              label: Text(tr("Kartaga o'tkazma")),
+            )
+          else
+            FilledButton(
+              onPressed: busy ? null : () => onPay(ready[i].key),
+              child: Text(tr("{0} orqali to'lash", <Object?>[providerNames[ready[i].key] ?? ready[i].name])),
+            ),
+          if (ready[i].fee > 0)
+            Padding(
+              padding: const EdgeInsets.only(top: 4),
+              child: Text('+${number(ready[i].fee)}%', textAlign: TextAlign.center, style: TextStyle(color: AppColors.muted, fontSize: 12)),
+            ),
+        ],
+        if (ready.any((method) => method.fee > 0)) ...<Widget>[
+          const SizedBox(height: 8),
+          Text(tr("Foiz — to'lov tizimi komissiyasi (ma'lumot uchun)."), textAlign: TextAlign.center, style: TextStyle(color: AppColors.muted, fontSize: 12)),
         ],
       ],
     ]);

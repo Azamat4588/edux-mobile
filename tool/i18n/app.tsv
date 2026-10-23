@@ -736,3 +736,6 @@ siz: {0}	вы: {0}	you: {0}
 {0}: {1} ball	{0}: {1} баллов	{0}: {1} points
 «Bilmayman» kartalari navbat oxiriga qaytadi.	Карточки «Не знаю» возвращаются в конец очереди.	“Don't know” cards go back to the end of the queue.
 «{0}» o'yinini boshlash	Начать игру «{0}»	Start “{0}”
+Astronomiya	Астрономия	Astronomy
+Geografiya	География	Geography
+Informatika	Информатика	Computer science

@@ -1,6 +1,7 @@
 // O'yin ekranlari uchun umumiy qism: qobiq (PlayPage) bilan aloqa, savol kartasi, javob tugmalari, raqam klaviaturasi.
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/games.dart';

@@ -1,4 +1,5 @@
-// Virtual laboratoriya (o'quvchi): 38 ta lab katalogi fan bo'yicha filtr bilan (GET /my/labs). Lab bosilganda interaktiv
+// Virtual laboratoriya (o'quvchi): lablar ro'yxati serverdan (GET /my/labs — yangi lablar ilovani yangilamasdan chiqadi),
+// fan bo'yicha filtr bilan. Lab bosilganda interaktiv
 // tajriba ilova ichidagi WebView'da ochiladi (veb /labs/{code} sahifasi, shu foydalanuvchi tokeni bilan); «Topshiriq» —
 // tasodifiy qiymatli masala, javob serverda tekshiriladi (3 ta urinish), XP. API: POST /my/labs/{code}, /my/labs/runs/{run}.
 import 'dart:convert';
@@ -24,6 +25,12 @@ IconData _labIcon(String subject) {
       return Icons.eco_rounded;
     case 'Matematika':
       return Icons.functions_rounded;
+    case 'Informatika':
+      return Icons.memory_rounded;
+    case 'Geografiya':
+      return Icons.public_rounded;
+    case 'Astronomiya':
+      return Icons.nightlight_round;
     default:
       return Icons.bolt_rounded;
   }
@@ -37,6 +44,12 @@ Color _labColor(String subject) {
       return AppColors.success;
     case 'Matematika':
       return AppColors.warning;
+    case 'Informatika':
+      return const Color(0xFF0E7490);
+    case 'Geografiya':
+      return const Color(0xFF15803D);
+    case 'Astronomiya':
+      return const Color(0xFF4338CA);
     default:
       return AppColors.brand;
   }
@@ -338,7 +351,8 @@ class _LabPageState extends State<LabPage> {
     final feedback = _feedback;
     final passed = feedback?['passed'] == true;
     final over = feedback != null && !passed && asInt(feedback['tries_left']) == 0;
-    final params = asMap(task?['params']);
+    // Qiymatlar topshiriq matnida bor; chiplar faqat nomi ma'lum parametrlar uchun (yangi lablar kalitlari xom ko'rinmasin).
+    final params = Map<String, dynamic>.fromEntries(asMap(task?['params']).entries.where((entry) => labParamLabels.containsKey(entry.key)));
     final unit = asText(task?['unit']);
     return Scaffold(
       appBar: AppBar(title: Text(tr(asText(lab['name'])))),
