@@ -194,6 +194,8 @@ class Session extends ChangeNotifier implements ApiCredentials {
         return canSeeTasks;
       case 'sms_gateway':
         return canUseSmsGateway && defaultTargetPlatform == TargetPlatform.android;
+      case 'device_sms':
+        return isManager && hasModule('crm') && hasFeature('sms');
       case 'platform_sms':
         return isPlatformAdmin && defaultTargetPlatform == TargetPlatform.android;
       case 'billing':

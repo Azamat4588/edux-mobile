@@ -81,6 +81,7 @@ List<NavSection> buildNav(NavContext ctx) {
       _section('comms', tr('Aloqa'), 'chat', <NavTab?>[
         _when(can('callcenter'), NavTab('crm.callcenter', tr('Call markazi'))),
         _when(can('sms_gateway'), NavTab('sms.gateway', tr('SMS shlyuz'))),
+        _when(can('device_sms'), NavTab('sms.device', tr("Kutilayotgan SMS'lar"))),
         _when(can('tasks'), NavTab('crm.tasks', tr('Topshiriqlar'))),
       ]),
       _section('settings', tr('Sozlamalar'), 'cog', <NavTab?>[

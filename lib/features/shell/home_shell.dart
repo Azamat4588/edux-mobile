@@ -18,6 +18,7 @@ import '../access/kiosk_page.dart';
 import '../access/sms_gateway_page.dart';
 import '../billing/billing_page.dart';
 import '../callcenter/callcenter_page.dart';
+import '../crm/device_sms_page.dart';
 import '../crm/leads_page.dart';
 import '../crm/tasks_page.dart';
 import '../finance/finance_page.dart';
@@ -209,6 +210,8 @@ class _HomeShellState extends State<HomeShell> with WidgetsBindingObserver {
         return const CallCenterPage();
       case 'sms.gateway':
         return const SmsGatewayPage();
+      case 'sms.device':
+        return const DeviceSmsPage();
       case 'platform.sms':
         return const SmsGatewayPage(platform: true);
       case 'crm.tasks':

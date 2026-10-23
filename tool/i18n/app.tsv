@@ -497,3 +497,117 @@ Qo'llanmalar: qayerda nima bor va qanday qilinadi.	Инструкции: где 
 Sahifa yordami	Помощь по странице	Page help
 Brauzerni ochib bo'lmadi: {0}	Не удалось открыть браузер: {0}	Could not open the browser: {0}
 Keldi-ketdi	Отметка входа	Check-in
+Baholangan: {0}	Оценено: {0}	Graded: {0}
+Bank SMS yoki bot xabari matnini to'liq qo'ying	Вставьте полный текст SMS банка или сообщения бота	Paste the full text of the bank SMS or bot message
+Bank SMS'lari (kartaga o'tkazma)	SMS банка (перевод на карту)	Bank SMS (card transfer)
+Bank SMS'lari serverga yuboriladi.	SMS банка будут отправляться на сервер.	Bank SMS will be sent to the server.
+Bank SMS'larini yuborish	Отправлять SMS банка	Forward bank SMS
+Bank jo'natuvchilari	Отправители банка	Bank senders
+Bank xabari	Сообщение банка	Bank message
+Bank xabarini qo'shish	Добавить сообщение банка	Add bank message
+Barcha e'lonlar ({0})	Все объявления ({0})	All announcements ({0})
+Barcha javoblar to'g'ri! Dars o'tilgan deb belgilandi.	Все ответы верны! Урок отмечен как пройденный.	All answers are correct! The lesson is marked as completed.
+Bluetooth yoki USB skaner ulansa — kartani skanerlang, kod o'zi yuboriladi	Если подключён Bluetooth или USB сканер — сканируйте карту, код отправится сам	If a Bluetooth or USB scanner is connected, scan the card and the code is sent automatically
+Boshlanishi: {0} · {1} daqiqa	Начало: {0} · {1} мин	Starts: {0} · {1} min
+Bu kurs pullik. Darslarni ochish uchun kursni sotib oling.	Этот курс платный. Чтобы открыть уроки, купите курс.	This course is paid. Buy the course to unlock the lessons.
+Bu kursda hali e'lon yo'q. Yangi dars, uchrashuv yoki eslatma haqida yozing — o'quvchilarga xabar boradi.	В этом курсе пока нет объявлений. Напишите о новом уроке, встрече или напоминание — ученики получат уведомление.	No announcements in this course yet. Write about a new lesson, meeting or reminder — students will be notified.
+Bu sahifalar CRM moduli bilan ishlaydi. Tashkilot rahbaridan modulni yoqishni so'rang.	Эти страницы работают с модулем CRM. Попросите руководителя организации включить модуль.	These pages work with the CRM module. Ask the organization manager to enable it.
+Bugun nima qilish kerak — birinchi: qarzdorlar, tushum, darslar va murojaatlar.	Что нужно сделать сегодня — в первую очередь: должники, поступления, уроки и обращения.	What to do today comes first: debtors, income, lessons and leads.
+Bugun nima qilish kerak: testlar, uy vazifalari va to'lov.	Что нужно сделать сегодня: тесты, домашние задания и оплата.	What to do today: tests, homework and payment.
+Buyurtma bekor qilindi. Yangi to'lov boshlang yoki kassaga murojaat qiling.	Заказ отменён. Начните новую оплату или обратитесь в кассу.	The order was cancelled. Start a new payment or contact the cashier.
+Buyurtma rad etilsinmi?	Отклонить заказ?	Reject the order?
+E'lon o'chirilsinmi?	Удалить объявление?	Delete the announcement?
+E'lon sarlavhasini yozing.	Введите заголовок объявления.	Enter the announcement title.
+E'lon yozish	Написать объявление	Write an announcement
+E'tiborsiz qoldirish	Игнорировать	Ignore
+Farzandingizga hali kurs ochilmagan. O'qituvchi kurs e'lon qilganda shu yerda ko'rinadi.	Вашему ребёнку пока не открыт ни один курс. Когда учитель опубликует курс, он появится здесь.	No courses are open for your child yet. When the teacher publishes a course, it will appear here.
+Foiz — to'lov tizimi komissiyasi (ma'lumot uchun).	Процент — комиссия платёжной системы (для информации).	The percentage is the payment system fee (for information).
+Hal qilingan	Решённые	Resolved
+Hali kirim yo'q.	Поступлений пока нет.	No incoming transfers yet.
+Havola dars boshlanishiga 15 daqiqa qolganda ochiladi	Ссылка откроется за 15 минут до начала урока	The link opens 15 minutes before the lesson
+Hozir yuborish	Отправить сейчас	Send now
+Ism, telefon yoki kod	Имя, телефон или код	Name, phone or code
+Javob kutayotgan savol yo'q. O'quvchilar dars sahifasida savol yozsa, shu yerda ko'rinadi.	Нет вопросов без ответа. Когда ученики зададут вопрос на странице урока, он появится здесь.	No unanswered questions. When students ask on a lesson page, the question appears here.
+Javob kutmoqda	Ждёт ответа	Awaiting answer
+Javob matnini yozing.	Введите текст ответа.	Enter the answer text.
+Jitsi	Jitsi	Jitsi
+Jonli dars hozir	Онлайн-урок сейчас	Live lesson now
+Jonli dars tugadi	Онлайн-урок завершён	Live lesson has ended
+Jonli dars: {0} · {1}	Онлайн-урок: {0} · {1}	Live lesson: {0} · {1}
+Kamera bilan	Камерой	With the camera
+Kartadagi 6 xonali kod yoki 14 raqamli shtrix-kod	6-значный код с карты или 14-значный штрихкод	6-digit card code or 14-digit barcode
+Kartaga o'tkazma kelganda bank yuborgan SMS serverga jo'natiladi va to'lov avtomatik tasdiqlanadi. Faqat bank jo'natuvchilarining SMS'lari yuboriladi.	Когда приходит перевод на карту, SMS банка отправляется на сервер и оплата подтверждается автоматически. Отправляются только SMS от банков.	When a card transfer arrives, the bank SMS is sent to the server and the payment is confirmed automatically. Only SMS from bank senders are forwarded.
+Kartaga o'tkazma sozlamada o'chirilgan (Sozlamalar → Onlayn to'lov).	Перевод на карту отключён в настройках (Настройки → Онлайн-оплата).	Card transfer is turned off in settings (Settings → Online payment).
+Kirim biriktirildi.	Поступление привязано.	Incoming transfer attached.
+Kirim e'tiborsiz qoldirilsinmi? (masalan, boshqa maqsaddagi o'tkazma)	Игнорировать поступление? (например, перевод с другой целью)	Ignore this incoming transfer? (e.g. a transfer for another purpose)
+Kurs o'quvchilariga	Ученикам курса	To the course students
+Kurslar hali yo'q. Kursni veb-versiyada yarating.	Курсов пока нет. Создайте курс в веб-версии.	No courses yet. Create a course in the web version.
+Kutilayotgan buyurtmalar	Ожидающие заказы	Pending orders
+Kutilayotgan o'tkazma yo'q.	Ожидающих переводов нет.	No pending transfers.
+Muddat tugadi. Agar pulni o'tkazgan bo'lsangiz, kuting — kassir tekshiradi. Aks holda yangi summa oling.	Срок истёк. Если вы уже перевели деньги, подождите — кассир проверит. Иначе получите новую сумму.	Time is up. If you have already transferred the money, please wait — the cashier will check. Otherwise get a new amount.
+Natija: {0} / {1}	Результат: {0} / {1}	Result: {0} / {1}
+Noma'lum	Неизвестные	Unknown
+Noma'lum kirim yo'q: hamma o'tkazmalar buyurtmaga mos keldi.	Неизвестных поступлений нет: все переводы совпали с заказами.	No unknown transfers: all of them matched orders.
+O'quvchi savollari	Вопросы учеников	Student questions
+O'quvchiga (o'qish to'lovi)	Ученику (оплата обучения)	To a student (tuition)
+O'quvchilarga xabar yuborilsin	Отправить уведомление ученикам	Notify students
+O'tkazmangiz tasdiqlandi. Rahmat!	Ваш перевод подтверждён. Спасибо!	Your transfer is confirmed. Thank you!
+Obuna tugashiga {0} kun qoldi.	До окончания подписки осталось {0} дн.	{0} days left until the subscription ends.
+Oxirgi dars	Последний урок	Last lesson
+Oxirgi yuborilganlar	Последние отправленные	Recently sent
+Platforma egasi paneli veb-versiyada ishlaydi. Ilovada — platforma SMS shlyuzi; tashkilot bo'limlari uchun xodim, o'quvchi yoki ota-ona sifatida kiring.	Панель владельца платформы работает в веб-версии. В приложении — SMS-шлюз платформы; для разделов организации войдите как сотрудник, ученик или родитель.	The platform owner panel works in the web version. The app offers the platform SMS gateway; for organization sections sign in as staff, student or parent.
+Platforma kodlari	Коды платформы	Platform codes
+Platformaning kirish va parol tiklash kodlari shu telefondagi SIM kartadan yuboriladi. Kod 15 daqiqada yuborilmasa bekor bo'ladi.	Коды входа и восстановления пароля платформы отправляются с SIM-карты этого телефона. Если код не отправлен за 15 минут, он отменяется.	Platform sign-in and password reset codes are sent from this phone's SIM card. A code not sent within 15 minutes is cancelled.
+Pul kelgach to'lov o'zi tasdiqlanadi (odatda 1–3 daqiqa). Bu sahifani yopsangiz ham to'lov hisobga olinadi.	Когда деньги поступят, оплата подтвердится сама (обычно 1–3 минуты). Даже если закрыть эту страницу, оплата будет учтена.	Once the money arrives the payment is confirmed automatically (usually 1–3 minutes). The payment counts even if you close this page.
+Push va Telegram (sozlama ruxsat bersa)	Push и Telegram (если разрешено настройками)	Push and Telegram (if allowed in settings)
+QR yoki shtrix-kodni ramka ichiga, 15–25 sm masofada tuting	Держите QR или штрихкод в рамке на расстоянии 15–25 см	Hold the QR or barcode inside the frame at 15–25 cm
+Qabul qilindi.	Принято.	Accepted.
+Qidirish va karta	Поиск и карточка	Search and profile
+Qo'lda tasdiqlash sozlamada o'chirilgan — faqat ko'rish.	Ручное подтверждение отключено в настройках — только просмотр.	Manual confirmation is off in settings — view only.
+Qo'shimcha savol	Дополнительный вопрос	Follow-up question
+Quyidagi kartaga aynan shu summani o'tkazing	Переведите на эту карту ровно эту сумму	Transfer exactly this amount to the card below
+Rahmat! Javobingiz o'qituvchiga yetkaziladi.	Спасибо! Ваш ответ получит учитель.	Thank you! Your answer will reach the teacher.
+SMS qabul qilishga ruxsat berilmadi. Telefon sozlamalaridan EduX ilovasiga SMS ruxsatini bering.	Нет разрешения на приём SMS. Разрешите EduX доступ к SMS в настройках телефона.	Permission to receive SMS was denied. Allow EduX to access SMS in your phone settings.
+SMS shlyuz (platforma)	SMS-шлюз (платформа)	SMS gateway (platform)
+SMS «kimdan» maydonidagi nomlar, vergul bilan. Faqat shu jo'natuvchilarning SMS'lari serverga yuboriladi.	Имена из поля «от кого» SMS через запятую. На сервер отправляются только SMS этих отправителей.	Names from the SMS "from" field, comma-separated. Only SMS from these senders are sent to the server.
+Savol hal qilindi deb belgilansin	Отметить вопрос как решённый	Mark the question as resolved
+Savolingiz o'qituvchiga yuborildi.	Ваш вопрос отправлен учителю.	Your question was sent to the teacher.
+Savollar yo'q.	Вопросов нет.	No questions.
+Savollarga javob berish	Ответить на вопросы	Answer questions
+Savollaringizni faqat siz va o'qituvchi ko'radi.	Ваши вопросы видите только вы и учитель.	Only you and the teacher see your questions.
+Shu vaqt ichida o'tkazing: {0}	Переведите в течение: {0}	Transfer within: {0}
+So'nggi	Последние	Recent
+Sozlamada SMS manbasi o'chirilgan (Sozlamalar → Onlayn to'lov).	Источник SMS отключён в настройках (Настройки → Онлайн-оплата).	The SMS source is turned off in settings (Settings → Online payment).
+Summa {0} dan biroz farq qiladi — shu farq to'lovingizni aniqlaydi. Yaxlitlamang.	Сумма немного отличается от {0} — по этой разнице определяется ваш платёж. Не округляйте.	The amount differs slightly from {0} — this difference identifies your payment. Do not round it.
+Summani nusxalash	Скопировать сумму	Copy amount
+Tasdiqlash va biriktirish	Подтверждение и привязка	Confirm and attach
+Tashqi skaner ishlayapti	Внешний сканер работает	External scanner is working
+Tekshirilmoqda: {0}	На проверке: {0}	Under review: {0}
+To'lov usulini tanlang	Выберите способ оплаты	Choose a payment method
+Topshirilmagan: {0}	Не сдано: {0}	Not submitted: {0}
+Tushunmagan joyingiz bo'yicha savol yozing	Задайте вопрос о том, что непонятно	Ask about anything you did not understand
+Uzaytirish — {0}	Продлить — {0}	Extend — {0}
+Virtual laboratoriya ishini bajarish	Выполнить виртуальную лабораторную работу	Do the virtual lab work
+Virtual tajribalar	Виртуальные опыты	Virtual experiments
+Yangi summa olish	Получить новую сумму	Get a new amount
+Yuborilmagan: {0} (internet kelganda ketadi)	Не отправлено: {0} (уйдёт при появлении интернета)	Not sent: {0} (will be sent when online)
+{0} / {1} dars · {2}%	{0} / {1} урок. · {2}%	{0} / {1} lessons · {2}%
+{0} kimga tegishli?	Кому принадлежит {0}?	Who does {0} belong to?
+{0} kishiga xabar	Уведомлено: {0}	{0} people notified
+{0} nusxalandi	{0}: скопировано	{0} copied
+{0} orqali eng kam summa: {1}	Минимальная сумма через {0}: {1}	Minimum amount via {0}: {1}
+{0} sahifa	{0} стр.	{0} pages
+{0} — {1} kelganini tekshirdingizmi? To'lov tasdiqlanadi.	{0} — вы проверили, что пришло {1}? Оплата будет подтверждена.	{0} — did you check that {1} arrived? The payment will be confirmed.
+«Tushunmadim» deb belgilangan darslar	Уроки, отмеченные «Не понял»	Lessons marked "Did not understand"
+Avtomatik	Автоматическое	Automatic
+Hammasi yuborildi: {0} ta SMS.	Всё отправлено: {0} SMS.	All sent: {0} SMS.
+Kutilayotgan SMS yo'q. Vebda «SMS yuborish» oynasida «O'z telefonimdan» tanlansa, xabarlar shu yerga tushadi.	Нет ожидающих SMS. Если в веб-версии в окне «Отправить SMS» выбрать «Со своего телефона», сообщения появятся здесь.	No pending SMS. When "From my phone" is chosen in the web "Send SMS" window, messages appear here.
+Kutilayotgan SMS'lar	Ожидающие SMS	Pending SMS
+Kutilmoqda: {0}	Ожидает: {0}	Pending: {0}
+Navbatdagilar	Следующие в очереди	Next in queue
+O'z telefonimdan SMS	SMS со своего телефона	SMS from my phone
+SMS ilovasi ochiladi — «Yuborish» ni bosing, keyin shu yerga qaytib «Yuborildi» ni belgilang.	Откроется приложение SMS — нажмите «Отправить», затем вернитесь сюда и отметьте «Отправлено».	The SMS app opens — tap "Send", then come back here and mark "Sent".
+SMS ilovasini ochib bo'lmadi.	Не удалось открыть приложение SMS.	Could not open the SMS app.
+SMS ilovasini ochish	Открыть приложение SMS	Open the SMS app
+Yuborildi: {0}	Отправлено: {0}	Sent: {0}
+{0} qism	{0} частей	{0} parts

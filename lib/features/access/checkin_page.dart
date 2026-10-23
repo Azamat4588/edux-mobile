@@ -1,5 +1,7 @@
 // Kirish nazorati (1.18): o'quvchi yoki xodim kartasidagi QR kodni telefon kamerasi bilan o'qib, kelganini qayd etadi.
 // Server: POST checkins/scan {payload} — o'quvchi bugungi darsiga «keldi», ota-onasiga xabar.
+// 3.4: Bluetooth / USB-OTG skaner (klaviatura rejimi) — tez ketma-ketlik + Enter = kod (lib/core/scan_keys.dart, veb
+// scanner.js bilan bir xil); kamerada QR bilan birga kartadagi shtrix-kod (Code 128, 14 raqam) ham o'qiladi.
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -8,6 +10,7 @@ import 'package:mobile_scanner/mobile_scanner.dart';
 
 import '../../core/api.dart';
 import '../../core/i18n.dart';
+import '../../core/scan_keys.dart';
 import '../../core/session.dart';
 import '../../core/theme.dart';
 import '../../core/widgets.dart';
@@ -22,7 +25,7 @@ class CheckinPage extends StatefulWidget {
 
 class _CheckinPageState extends State<CheckinPage> {
   final MobileScannerController _scanner = MobileScannerController(
-    formats: const <BarcodeFormat>[BarcodeFormat.qrCode],
+    formats: const <BarcodeFormat>[BarcodeFormat.qrCode, BarcodeFormat.code128],
     detectionSpeed: DetectionSpeed.normal,
   );
   final Map<String, DateTime> _recent = <String, DateTime>{};
@@ -31,12 +34,47 @@ class _CheckinPageState extends State<CheckinPage> {
   String? _error;
   Timer? _hide;
   int _count = 0;
+  final ScanDetector _detector = ScanDetector();
+  final Stopwatch _clock = Stopwatch()..start();
+
+  /// Oxirgi marta tashqi skanerdan kod kelgan vaqt (ekranda «Skaner ulangan» belgisi).
+  DateTime? _keyboardSeen;
+
+  @override
+  void initState() {
+    super.initState();
+    HardwareKeyboard.instance.addHandler(_onKey);
+  }
 
   @override
   void dispose() {
+    HardwareKeyboard.instance.removeHandler(_onKey);
     _hide?.cancel();
     _scanner.dispose();
     super.dispose();
+  }
+
+  /// Tashqi skaner (klaviatura) tugmalari. Oyna (masalan, «Kod bilan») ochiq bo'lsa — aralashmaydi.
+  bool _onKey(KeyEvent event) {
+    if (!mounted || ModalRoute.of(context)?.isCurrent != true) return false;
+    if (event is! KeyDownEvent) return false;
+    final keyboard = HardwareKeyboard.instance;
+    final code = _detector.feed(
+      ScanKey(
+        key: event.logicalKey.keyLabel,
+        character: event.character,
+        control: keyboard.isControlPressed,
+        alt: keyboard.isAltPressed,
+        meta: keyboard.isMetaPressed,
+      ),
+      _clock.elapsedMilliseconds,
+    );
+    if (code != null) {
+      _keyboardSeen = DateTime.now();
+      _submit(normalizeScanPayload(code));
+      return true;
+    }
+    return _detector.pending;
   }
 
   Future<void> _submit(String payload) async {
@@ -75,14 +113,14 @@ class _CheckinPageState extends State<CheckinPage> {
     final code = await showDialog<String>(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(tr('6 xonali kod')),
+        title: Text(tr('Kod bilan')),
         content: TextField(
           controller: controller,
           autofocus: true,
           keyboardType: TextInputType.number,
-          maxLength: 6,
+          maxLength: 14,
           inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
-          decoration: InputDecoration(hintText: tr("O'quvchi kartasidagi kod")),
+          decoration: InputDecoration(hintText: tr("Kartadagi 6 xonali kod yoki 14 raqamli shtrix-kod")),
         ),
         actions: <Widget>[
           TextButton(onPressed: () => Navigator.pop(context), child: Text(tr('Bekor qilish'))),
@@ -90,7 +128,7 @@ class _CheckinPageState extends State<CheckinPage> {
         ],
       ),
     );
-    if (code != null && code.length == 6) await _submit(code);
+    if (code != null && isManualCode(code)) await _submit(code);
   }
 
   @override
@@ -150,8 +188,16 @@ class _CheckinPageState extends State<CheckinPage> {
           left: 16,
           right: 16,
           top: 16,
-          child: Text(tr('QR kodni ramka ichiga, 15–25 sm masofada tuting'),
-              textAlign: TextAlign.center, style: const TextStyle(color: Colors.white, fontSize: 15, shadows: <Shadow>[Shadow(blurRadius: 6)])),
+          child: Column(children: <Widget>[
+            Text(tr('QR yoki shtrix-kodni ramka ichiga, 15–25 sm masofada tuting'),
+                textAlign: TextAlign.center, style: const TextStyle(color: Colors.white, fontSize: 15, shadows: <Shadow>[Shadow(blurRadius: 6)])),
+            const SizedBox(height: 6),
+            Text(
+              _keyboardSeen != null ? tr('Tashqi skaner ishlayapti') : tr('Bluetooth yoki USB skaner ulansa — kartani skanerlang, kod o\'zi yuboriladi'),
+              textAlign: TextAlign.center,
+              style: TextStyle(color: _keyboardSeen != null ? const Color(0xFF86EFAC) : Colors.white70, fontSize: 12.5),
+            ),
+          ]),
         ),
         if (_sending) const Center(child: CircularProgressIndicator(color: Colors.white)),
         if (result != null || _error != null)

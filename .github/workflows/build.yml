@@ -56,7 +56,9 @@ jobs:
             echo "::error file=$file,line=$row::$line"
           done
           grep -E "^\s*warning •" analyze.log | head -30 | while IFS= read -r line; do echo "::warning::$line"; done
-          grep -E "^\s*info •" analyze.log | head -30 | while IFS= read -r line; do echo "::notice::$line"; done
+          # Maslahatlar bitta annotatsiyada (Actions bir qadamda 10 tadan ortiq annotatsiyani ko'rsatmaydi).
+          infos=$(grep -E "^\s*info •" analyze.log | sed -E 's/^\s*info • //' | head -80 | sed ':a;N;$!ba;s/\n/%0A/g')
+          [ -n "$infos" ] && echo "::notice title=Maslahatlar::$infos"
           echo "::notice::Tahlil: $(grep -cE '^\s*error •' analyze.log) xato, $(grep -cE '^\s*warning •' analyze.log) ogohlantirish, $(grep -cE '^\s*info •' analyze.log) maslahat"
           exit $status
 
