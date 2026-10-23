@@ -160,7 +160,7 @@ class _JournalGridPageState extends State<JournalGridPage> {
                     if (!grid.canWrite)
                       AppCard(child: Text(tr("Bu jurnalni faqat ko'rasiz: baho qo'yish — fan o'qituvchisi va rahbarda."), style: TextStyle(color: AppColors.muted))),
                     if (lessons.isEmpty)
-                      EmptyState(icon: Icons.event_note_outlined, text: tr("Bu chorakda hali dars yozilmagan."))
+                      EmptyState(icon: Icons.event_note_outlined, text: tr('Bu chorakda hali dars yozilmagan.'))
                     else
                       AppCard(
                         padding: EdgeInsets.zero,

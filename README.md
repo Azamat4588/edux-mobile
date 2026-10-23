@@ -38,6 +38,23 @@ Windows, macOS va Linux uchun EduX ilovasi alohida repozitoriyda: [Azamat4588/ed
 `…/edux-desktop/releases/download/desktop-latest/EduX-Setup-x64.exe`, `EduX-x64.msi`, `EduX-macOS-universal.dmg`,
 `EduX-linux-x86_64.AppImage`, `EduX-linux-amd64.deb`.
 
+## 3.4.1 da yangi (audit: server 1.36 bilan to'liq moslik)
+
+- **Maktab jurnali** (o'qituvchi — «Sinflarim → Jurnal», rahbar — «Ta'lim → Jurnal»): sinf + fan + chorak, darslar
+  ro'yxati, har o'quvchiga baho (2–5) va davomat (qatnashdi / kechikdi / kelmadi / sababli), «Hammasi keldi», yangi dars
+  (sana, soat, mavzu, uy vazifasi). Yozish huquqi server bo'yicha (`can_write`), saqlashda faqat o'zgargan kataklar yuboriladi.
+- **«To'lovlarim»** (o'quvchi, CRM): balans, hisoblangan oylik to'lovlar, to'langanlar va «Onlayn to'lash».
+- **CRMsiz kassir** (maktab + LMS): menyu bo'sh qolmaydi — «Kartaga o'tkazmalar»; «To'lov qabul qilish» chiqmaydi.
+- **Tungi rejim va 5 shablon:** ma'no ranglari (yashil/sariq/qizil) rejimga qarab, asosiy rang kartada kamida 4.5:1,
+  tugma matni o'qiladigan rangda — har rang × shablon × rejim `test/theme_contrast_test.dart` da tekshiriladi.
+- **Xavfsizlik:** lab WebView faqat aynan shu serverda (origin), token WebView xotirasidan lab yopilganda va chiqishda
+  o'chiriladi; kiosk WebView begona saytga o'tmaydi. Kamera/SMS ruxsati rad etilsa — «Sozlamalar» tugmasi.
+- **Barqarorlik:** JSON'dagi qattiq `as` cast'lar xavfsiz o'qishga almashtirildi (`asRawList`, `asNumOrNull`);
+  yashirin bo'limdagi call-markaz so'rovlari to'xtaydi; kartaga o'tkazma kuzatuvi ustma-ust so'rovsiz va muddatdan
+  keyin siyraklashadi; asosiy ro'yxatlar (kurslar, vazifalar, testlar, natijalar, topshiriqlar) internetsiz ham ko'rinadi.
+- **Server javoblari testlari:** `test/fixtures/*.json` — demo serverdan har rol bilan olingan haqiqiy javoblar;
+  `test/api_fixtures_test.dart`, `test/school_journal_test.dart` ularni mobil parse mantiqiga beradi.
+
 ## 3.4 da yangi (server 1.35 / 1.36 bilan moslik)
 
 - **Dizayn tizimi (veb 1.35 «Daftar», `docs/design.md`)**: 5 shablon — Klassik, Yumshoq, Qorong'i panel, Ixcham, Maktab
