@@ -2,6 +2,8 @@
 // 390×844 @3x (1170×2532 PNG). Tarmoq — soxta: screenshots/fixtures/<tashkilot>/<rol>/<yo'l>.json (demo serverdan olingan).
 // Ishga tushirish: `flutter test screenshots/shots_test.dart` → screenshots/out/*.png
 // CI: .github/workflows/screenshots.yml (qo'lda) rasmlarni `screenshots` branch'iga yozadi.
+// Bu papka test/ emas (oddiy `flutter test` da ishlamaydi) — test uchun ochiq a'zolar shu yerda ham ishlatiladi.
+// ignore_for_file: invalid_use_of_visible_for_testing_member
 import 'dart:convert';
 import 'dart:io';
 import 'dart:ui' as ui;
@@ -13,6 +15,7 @@ import 'package:edux/core/nav.dart';
 import 'package:edux/core/session.dart';
 import 'package:edux/core/theme.dart';
 import 'package:edux/features/auth/login_page.dart';
+import 'package:edux/features/fun/games/bank_games.dart';
 import 'package:edux/features/fun/games/game_host.dart';
 import 'package:edux/features/fun/games_page.dart';
 import 'package:edux/features/fun/play_page.dart';
