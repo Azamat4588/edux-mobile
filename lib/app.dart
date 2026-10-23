@@ -44,10 +44,11 @@ class _EduxAppState extends State<EduxApp> with WidgetsBindingObserver {
     final platformDark = WidgetsBinding.instance.platformDispatcher.platformBrightness == Brightness.dark;
     final dark = mode == 'dark' || (mode == 'system' && platformDark);
     final accent = session.accent;
-    AppTheme.apply(dark: dark, accent: accent);
+    final choice = session.themeChoice;
+    AppTheme.apply(dark: dark, accent: accent, choice: choice);
     return MaterialApp(
-      // Til yoki ko'rinish almashganda butun daraxt yangi ranglarda qayta quriladi
-      key: ValueKey<String>('${I18n.locale}-$dark-${accent.key}'),
+      // Til yoki ko'rinish (rang, shablon, shrift, o'lcham) almashganda butun daraxt yangi ko'rinishda qayta quriladi
+      key: ValueKey<String>('${I18n.locale}-$dark-${choice.key}'),
       navigatorKey: rootNavigator,
       title: 'EduX',
       debugShowCheckedModeBanner: false,
@@ -59,6 +60,16 @@ class _EduxAppState extends State<EduxApp> with WidgetsBindingObserver {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
+      // Shrift o'lchami (Kichik … Juda katta): butun interfeys mutanosib kattalashadi, telefon sozlamasi ham hisobga olinadi.
+      builder: (context, child) {
+        final media = MediaQuery.of(context);
+        final scale = choice.textScale;
+        if (scale == 1) return child ?? const SizedBox();
+        return MediaQuery(
+          data: media.copyWith(textScaler: TextScaler.linear(media.textScaler.scale(16) / 16 * scale)),
+          child: child ?? const SizedBox(),
+        );
+      },
       home: _Gate(session: session),
     );
   }

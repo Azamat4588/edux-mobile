@@ -221,9 +221,9 @@ class SkeletonList extends StatelessWidget {
             const SizedBox(height: AppSpacing.s),
             const SkeletonBox(width: 120),
             const SizedBox(height: AppSpacing.l),
-            Row(children: const <Widget>[
+            Row(children: <Widget>[
               Expanded(child: SkeletonBox(height: 96, radius: AppRadius.card)),
-              SizedBox(width: AppSpacing.m),
+              const SizedBox(width: AppSpacing.m),
               Expanded(child: SkeletonBox(height: 96, radius: AppRadius.card)),
             ]),
             const SizedBox(height: AppSpacing.m),
@@ -404,12 +404,16 @@ class AppCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
+    final radius = BorderRadius.circular(AppRadius.card);
+    final card = Material(
       color: color ?? AppColors.card,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppRadius.card), side: BorderSide(color: AppColors.line)),
+      shape: RoundedRectangleBorder(borderRadius: radius, side: BorderSide(color: AppColors.cardBorder)),
       clipBehavior: Clip.antiAlias,
       child: InkWell(onTap: onTap, child: Padding(padding: padding, child: child)),
     );
+    // Shablon soyasi (Klassik — juda yengil, Yumshoq — rangli yumshoq, Ixcham — yo'q).
+    if (AppColors.cardShadow.isEmpty) return card;
+    return DecoratedBox(decoration: BoxDecoration(borderRadius: radius, boxShadow: AppColors.cardShadow), child: card);
   }
 }
 
@@ -424,7 +428,7 @@ class SectionTitle extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.fromLTRB(4, 20, 4, 10),
       child: Row(children: <Widget>[
-        Expanded(child: Text(title, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: AppColors.ink))),
+        Expanded(child: Text(title, style: AppTheme.title(size: AppColors.choice.dense ? 15 : 16))),
         if (trailing != null) trailing!,
       ]),
     );

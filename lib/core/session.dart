@@ -8,6 +8,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'api.dart';
+import 'design.dart';
 import 'i18n.dart';
 import 'notification_store.dart';
 import 'offline_cache.dart';
@@ -59,7 +60,10 @@ class Session extends ChangeNotifier implements ApiCredentials {
 
   /// Platforma dizayn standarti (GET /site → theme.defaults) va oxirgi tanlangan rejim (internetsiz ochilganda ham).
   Map<String, dynamic> siteTheme = <String, dynamic>{};
-  String _cachedMode = 'system';
+
+  /// Platforma ruxsatlari (GET /site → theme): allow_user — foydalanuvchi rang/shablonni o'zi uchun o'zgartira oladi.
+  Map<String, dynamic> siteDesign = <String, dynamic>{};
+  String _cachedMode = '';
 
   @override
   String get server => _server;
@@ -156,19 +160,49 @@ class Session extends ChangeNotifier implements ApiCredentials {
     return logo == null ? null : api.absolute(logo.toString());
   }
 
-  /// Ko'rinish: shaxsiy tanlov → tashkilot brendi → platforma standarti (veb bilan bir xil qoida).
+  /// Ko'rinish: shaxsiy tanlov → tashkilot brendi → platforma standarti (veb bilan bir xil qoida, docs/design.md).
   Map<String, dynamic> get appearance => asMap(user['appearance']);
-  String get themeMode {
-    final mode = asText(appearance['mode']);
-    return mode.isNotEmpty ? mode : (_cachedMode.isNotEmpty ? _cachedMode : asText(siteTheme['mode'], 'system'));
+
+  /// 3.4: birlashtirilgan ko'rinish — rejim, rang, shablon (eski vivid/midnight → school/night), shrift, o'lcham, burchak.
+  ThemeChoice get themeChoice =>
+      ThemeChoice.resolve(<Map<String, dynamic>>[siteTheme, asMap(context['theme']), appearance], cachedMode: _cachedMode);
+
+  String get themeMode => themeChoice.mode;
+
+  Accent get accent => accentOf(themeChoice.accent);
+
+  /// Rang, shablon, shrift va burchakni foydalanuvchi o'zi tanlay oladimi (platforma ruxsati). Rejim va o'lcham — har doim.
+  bool get canCustomizeTheme => siteDesign['allow_user'] == true;
+
+  /// Shaxsiy ko'rinish maydonlari (size, accent, template ...): darhol qo'llanadi va hisobga saqlanadi (null — standart).
+  Future<void> setAppearance(Map<String, String?> values) async {
+    final next = <String, dynamic>{...appearance};
+    for (final entry in values.entries) {
+      if (entry.value == null) {
+        next.remove(entry.key);
+      } else {
+        next[entry.key] = entry.value;
+      }
+    }
+    user = <String, dynamic>{...user, 'appearance': next};
+    notifyListeners();
+    try {
+      final data = asMap(await api.put('profile/appearance', values));
+      user = <String, dynamic>{...user, 'appearance': asMap(data['appearance'])};
+      final prefs = await SharedPreferences.getInstance();
+      unawaited(prefs.setString('offline.me', jsonEncode(<String, Object?>{'user': user, 'memberships': _membershipsJson()})));
+      notifyListeners();
+    } catch (_) {
+      // internet yo'q: shu ochilishda qo'llangan, keyingi safar server bilan tenglashadi
+    }
   }
 
-  Accent get accent {
-    for (final candidate in <Object?>[appearance['accent'], asMap(context['theme'])['accent'], siteTheme['accent']]) {
-      if (candidate != null && '$candidate'.isNotEmpty) return accentOf('$candidate');
-    }
-    return accents.first;
-  }
+  List<Map<String, Object?>> _membershipsJson() => memberships
+      .map((item) => <String, Object?>{'organization_id': item.organizationId, 'organization': item.organization, 'role': item.role})
+      .toList();
+
+  /// Platforma egasi (sotuv paneli vebda; ilovada — platforma SMS shlyuzi).
+  bool get isPlatformAdmin => user['is_platform_admin'] == true;
 
   /// Kunduzgi/tungi/qurilmaga qarab: darhol qo'llanadi, hisobga saqlanadi (veb bilan umumiy).
   Future<void> setThemeMode(String mode) async {
@@ -212,7 +246,12 @@ class Session extends ChangeNotifier implements ApiCredentials {
     await I18n.load(prefs.getString('locale') ?? I18n.fromDevice(languageCode));
     _server = prefs.getString('server') ?? defaultServer;
     _organizationId = prefs.getInt('organization');
-    _cachedMode = prefs.getString('theme.mode') ?? 'system';
+    _cachedMode = prefs.getString('theme.mode') ?? '';
+    // Platforma dizayni oxirgi nusxadan — ilova internetsiz ham o'z shabloni va shriftida ochilsin.
+    try {
+      final site = prefs.getString('site.theme');
+      if (site != null) _applySite(asMap(jsonDecode(site)));
+    } catch (_) {}
     unawaited(_loadSite());
     try {
       _token = await _secure.read(key: 'token');
@@ -261,9 +300,17 @@ class Session extends ChangeNotifier implements ApiCredentials {
 
   Future<void> _loadSite() async {
     try {
-      siteTheme = asMap(asMap(asMap(await api.get('site'))['theme'])['defaults']);
+      final theme = asMap(asMap(await api.get('site'))['theme']);
+      _applySite(theme);
+      final prefs = await SharedPreferences.getInstance();
+      unawaited(prefs.setString('site.theme', jsonEncode(theme)));
       notifyListeners();
     } catch (_) {}
+  }
+
+  void _applySite(Map<String, dynamic> theme) {
+    siteDesign = theme;
+    siteTheme = asMap(theme['defaults']);
   }
 
   Future<void> setServer(String value) async {
