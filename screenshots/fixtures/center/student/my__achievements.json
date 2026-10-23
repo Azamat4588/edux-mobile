@@ -1,0 +1,257 @@
+{
+ "xp": 116,
+ "week_xp": 76,
+ "level": {
+  "level": 3,
+  "title": "Qiziquvchan",
+  "current": 100,
+  "next": 225,
+  "progress": 12
+ },
+ "streak": 1,
+ "badges": [
+  {
+   "code": "first_test",
+   "name": "Birinchi qadam",
+   "description": "Birinchi testni topshirdi",
+   "icon": "clipboard-list",
+   "earned_at": "2026-10-19T14:47:50.000000Z"
+  },
+  {
+   "code": "perfect",
+   "name": "A'lochi",
+   "description": "Testda 100% natija",
+   "icon": "star",
+   "earned_at": null
+  },
+  {
+   "code": "tests_10",
+   "name": "Test ustasi",
+   "description": "10 ta test topshirdi",
+   "icon": "award",
+   "earned_at": null
+  },
+  {
+   "code": "lessons_10",
+   "name": "Kitobxon",
+   "description": "10 ta onlayn dars o'tdi",
+   "icon": "book",
+   "earned_at": null
+  },
+  {
+   "code": "streak_3",
+   "name": "Uch kun ketma-ket",
+   "description": "3 kun uzluksiz shug'ullandi",
+   "icon": "zap",
+   "earned_at": null
+  },
+  {
+   "code": "streak_7",
+   "name": "Bir hafta uzluksiz",
+   "description": "7 kun uzluksiz shug'ullandi",
+   "icon": "zap",
+   "earned_at": null
+  },
+  {
+   "code": "games_10",
+   "name": "O'yinchi",
+   "description": "10 ta o'yin o'ynadi",
+   "icon": "sparkle",
+   "earned_at": "2026-10-23T10:44:48.000000Z"
+  },
+  {
+   "code": "quiz_ace",
+   "name": "Tezkor aql",
+   "description": "Viktorina-blitsda 10 ta to'g'ri javob",
+   "icon": "timer",
+   "earned_at": null
+  },
+  {
+   "code": "lab_first",
+   "name": "Yosh olim",
+   "description": "Birinchi laboratoriya topshirig'ini bajardi",
+   "icon": "rocket",
+   "earned_at": null
+  },
+  {
+   "code": "labs_5",
+   "name": "Laborant",
+   "description": "5 ta laboratoriya topshirig'i",
+   "icon": "rocket",
+   "earned_at": null
+  },
+  {
+   "code": "regular",
+   "name": "Intizomli",
+   "description": "Darsga 20 marta vaqtida keldi",
+   "icon": "check-circle",
+   "earned_at": null
+  },
+  {
+   "code": "xp_500",
+   "name": "500 XP",
+   "description": "500 tajriba bali to'pladi",
+   "icon": "trophy",
+   "earned_at": null
+  },
+  {
+   "code": "xp_2000",
+   "name": "2000 XP",
+   "description": "2000 tajriba bali to'pladi",
+   "icon": "trophy",
+   "earned_at": null
+  }
+ ],
+ "recent": [
+  {
+   "kind": "game",
+   "label": "O'yin",
+   "points": 4,
+   "note": "Sonlarni guruhlash",
+   "at": "2026-10-23T10:44:51.000000Z"
+  },
+  {
+   "kind": "game",
+   "label": "O'yin",
+   "points": 3,
+   "note": "Ketma-ketlik",
+   "at": "2026-10-23T10:44:50.000000Z"
+  },
+  {
+   "kind": "game",
+   "label": "O'yin",
+   "points": 3,
+   "note": "Matematik sprint",
+   "at": "2026-10-23T10:44:49.000000Z"
+  },
+  {
+   "kind": "game",
+   "label": "O'yin",
+   "points": 4,
+   "note": "Guruhlash",
+   "at": "2026-10-23T10:44:49.000000Z"
+  },
+  {
+   "kind": "game",
+   "label": "O'yin",
+   "points": 2,
+   "note": "Flesh-kartalar",
+   "at": "2026-10-23T10:44:49.000000Z"
+  },
+  {
+   "kind": "game",
+   "label": "O'yin",
+   "points": 3,
+   "note": "Tez yozish",
+   "at": "2026-10-23T10:44:48.000000Z"
+  },
+  {
+   "kind": "game",
+   "label": "O'yin",
+   "points": 6,
+   "note": "Krossvord",
+   "at": "2026-10-23T10:44:48.000000Z"
+  },
+  {
+   "kind": "game",
+   "label": "O'yin",
+   "points": 3,
+   "note": "Dor",
+   "at": "2026-10-23T10:44:47.000000Z"
+  },
+  {
+   "kind": "game",
+   "label": "O'yin",
+   "points": 3,
+   "note": "So'z yig'ish",
+   "at": "2026-10-23T10:44:46.000000Z"
+  },
+  {
+   "kind": "game",
+   "label": "O'yin",
+   "points": 5,
+   "note": "Xotira kartalari",
+   "at": "2026-10-23T10:44:46.000000Z"
+  },
+  {
+   "kind": "game",
+   "label": "O'yin",
+   "points": 10,
+   "note": "Juftini top",
+   "at": "2026-10-23T10:44:45.000000Z"
+  },
+  {
+   "kind": "game",
+   "label": "O'yin",
+   "points": 5,
+   "note": "Duel",
+   "at": "2026-10-23T10:44:43.000000Z"
+  }
+ ],
+ "leaderboard": [
+  {
+   "rank": 1,
+   "student_id": 1,
+   "name": "Ergasheva Mohinur",
+   "xp": 76,
+   "level": 3,
+   "me": true
+  },
+  {
+   "rank": 2,
+   "student_id": 4,
+   "name": "Hasanova Malika",
+   "xp": 22,
+   "level": 2,
+   "me": false
+  },
+  {
+   "rank": 3,
+   "student_id": 11,
+   "name": "Ergashev Timur",
+   "xp": 15,
+   "level": 2,
+   "me": false
+  },
+  {
+   "rank": 4,
+   "student_id": 6,
+   "name": "Rahimova Nigora",
+   "xp": 2,
+   "level": 1,
+   "me": false
+  },
+  {
+   "rank": 5,
+   "student_id": 7,
+   "name": "Yusupov Aziz",
+   "xp": 2,
+   "level": 1,
+   "me": false
+  },
+  {
+   "rank": 6,
+   "student_id": 8,
+   "name": "Saidova Zarina",
+   "xp": 2,
+   "level": 1,
+   "me": false
+  },
+  {
+   "rank": 7,
+   "student_id": 9,
+   "name": "Qodirov Sherzod",
+   "xp": 2,
+   "level": 1,
+   "me": false
+  },
+  {
+   "rank": 8,
+   "student_id": 10,
+   "name": "Nazarova Sevara",
+   "xp": 2,
+   "level": 1,
+   "me": false
+  }
+ ]
+}

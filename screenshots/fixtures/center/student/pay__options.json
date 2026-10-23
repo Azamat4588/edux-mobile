@@ -1,0 +1,9 @@
+{
+ "providers": {
+  "click": false,
+  "payme": false
+ },
+ "methods": [],
+ "min_amount": 1000,
+ "max_amount": 500000000
+}

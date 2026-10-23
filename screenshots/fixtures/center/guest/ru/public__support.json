@@ -1,0 +1,30 @@
+{
+ "topics": {
+  "question": "Вопрос",
+  "bug": "Ошибка",
+  "payment": "Оплата и счета",
+  "feature": "Предложение",
+  "other": "Другое"
+ },
+ "statuses": {
+  "open": "Новый",
+  "answered": "Есть ответ",
+  "closed": "Закрыт"
+ },
+ "contacts": {
+  "phone": "+998 71 200 45 45",
+  "email": "support@edux.uz",
+  "telegram": "edux_support",
+  "hours": null
+ },
+ "attachments": {
+  "enabled": true,
+  "max_files": 3,
+  "max_kb": 5120,
+  "types": [
+   "jpg",
+   "png",
+   "webp"
+  ]
+ }
+}

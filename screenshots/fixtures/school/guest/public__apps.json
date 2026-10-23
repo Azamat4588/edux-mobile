@@ -1,0 +1,71 @@
+{
+ "platforms": {
+  "android": {
+   "apk_url": "https://github.com/Azamat4588/edux-mobile/releases/download/latest/app-arm64-v8a-release.apk",
+   "play_url": null,
+   "version": null,
+   "notes": null
+  },
+  "ios": {
+   "app_store_url": null,
+   "testflight_url": null,
+   "notes": null
+  },
+  "windows": {
+   "exe_url": "https://github.com/Azamat4588/edux-desktop/releases/download/desktop-latest/EduX-Setup-x64.exe",
+   "msi_url": "https://github.com/Azamat4588/edux-desktop/releases/download/desktop-latest/EduX-x64.msi",
+   "version": null,
+   "size": null,
+   "min_os": "Windows 10 yoki 11 (64-bit)",
+   "notes": null
+  },
+  "macos": {
+   "universal_url": "https://github.com/Azamat4588/edux-desktop/releases/download/desktop-latest/EduX-macOS-universal.dmg",
+   "arm_url": null,
+   "intel_url": null,
+   "version": null,
+   "size": null,
+   "min_os": "macOS 10.15 yoki yangiroq",
+   "notes": null
+  },
+  "linux": {
+   "appimage_url": "https://github.com/Azamat4588/edux-desktop/releases/download/desktop-latest/EduX-linux-x86_64.AppImage",
+   "deb_url": "https://github.com/Azamat4588/edux-desktop/releases/download/desktop-latest/EduX-linux-amd64.deb",
+   "version": null,
+   "size": null,
+   "min_os": "Ubuntu 20.04+, Debian 11+ (64-bit)",
+   "notes": null
+  }
+ },
+ "desktop": {
+  "windows": {
+   "version": null,
+   "url": "https://github.com/Azamat4588/edux-desktop/releases/download/desktop-latest/EduX-Setup-x64.exe",
+   "msi_url": "https://github.com/Azamat4588/edux-desktop/releases/download/desktop-latest/EduX-x64.msi",
+   "notes": null
+  },
+  "macos": {
+   "version": null,
+   "url": "https://github.com/Azamat4588/edux-desktop/releases/download/desktop-latest/EduX-macOS-universal.dmg",
+   "arm_url": null,
+   "intel_url": null,
+   "notes": null
+  },
+  "linux": {
+   "version": null,
+   "url": "https://github.com/Azamat4588/edux-desktop/releases/download/desktop-latest/EduX-linux-x86_64.AppImage",
+   "deb_url": "https://github.com/Azamat4588/edux-desktop/releases/download/desktop-latest/EduX-linux-amd64.deb",
+   "notes": null
+  }
+ },
+ "mobile": {
+  "android": {
+   "apk_url": "https://github.com/Azamat4588/edux-mobile/releases/download/latest/app-arm64-v8a-release.apk",
+   "play_url": null,
+   "version": null
+  },
+  "ios": {
+   "app_store_url": null
+  }
+ }
+}

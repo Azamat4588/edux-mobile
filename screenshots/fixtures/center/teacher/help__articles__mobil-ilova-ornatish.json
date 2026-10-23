@@ -1,0 +1,86 @@
+{
+ "slug": "mobil-ilova-ornatish",
+ "locale": "uz",
+ "title": "Mobil ilovani o'rnatish va unga kirish",
+ "summary": "EduX Android ilovasini o'rnatish, kirish usullari, ilovadagi imkoniyatlar, iPhone'da brauzer va Telegram orqali ishlash; kira olmasangiz nima qilish kerak.",
+ "html": "<p>EduX'ning Android uchun mobil ilovasi bor: o'qituvchi unda varaqa skanerlaydi va davomat qiladi, o'quvchi test va kurslarni ochadi, ota-ona farzandini kuzatadi, rahbar moliya va call markazini ko'radi. Ilova o'zbek, rus va ingliz tillarida ishlaydi.</p>\n<h2 id=\"qadamlar-android\">Qadamlar: Android</h2>\n<ol>\n<li>Ilova faylini (APK) oling: sotuv sahifasining yuqori panelidagi «Yuklab olish» tugmasi (telefonda — menyudagi «Ilovani yuklab olish»), kirish sahifasidagi «Ilovani yuklab oling» havolasi yoki tashkilotingiz bergan havola orqali. Tugma telefoningiz turini o'zi aniqlaydi va Android uchun to'g'ridan-to'g'ri faylni beradi. Havolani bilmasangiz, tashkilot administratoridan so'rang.</li>\n<li>Faylni oching va o'rnating. Telefon «noma'lum manbadan o'rnatish»ga ruxsat so'rasa, shu fayl uchun ruxsat bering.</li>\n<li>Ilovani oching. Kerak bo'lsa, o'ng tepada tilni tanlang.</li>\n<li>Ilova tizimga o'zi ulanadi — manzil so'ramaydi, darhol kirish sahifasi ochiladi. Tashkilotingiz o'z serverida ishlasa, kirish sahifasidagi logotipni uzoq bosib turing, «Tizim manzili» oynasiga tashkilot bergan manzilni yozing va «Saqlash»ni bosing.</li>\n<li>Kiring:\n<ul>\n<li>«Parol» — telefon raqami (yoki email) va parol;</li>\n<li>«Kod bilan» — raqamingizga bir martalik kod Telegramga yoki SMS bilan keladi (yoqilgan bo'lsa);</li>\n<li>«Telegram orqali kirish» — bot ochiladi, «Start»ni bosgach ilova o'zi kiradi (yoqilgan bo'lsa);</li>\n<li>«Havola orqali kirish» — o'quvchi va ota-ona o'qituvchi bergan shaxsiy havola bilan kiradi.</li>\n</ul>\n</li>\n</ol>\n<p><img loading=\"lazy\" src=\"/media/help/img/mobil-ilova-ornatish-1.jpg\" alt=\"Mobil ilova: kirish sahifasi\" /></p>\n<blockquote class=\"help-note\"><p><strong>Eslatma:</strong> Kirish sahifasidagi «To'lov havolasi orqali to'lash» — hisobsiz ham farzand to'lovini onlayn to'lash uchun (<a href=\"/help/onlayn-tolov-ota-ona\">Onlayn to'lov</a>).</p>\n</blockquote>\n<h2 id=\"kompyuter-ilovasi-windows-macos-linux\">Kompyuter ilovasi (Windows, macOS, Linux)</h2>\n<p>Kompyuterda tizimni alohida oynada ishlatish mumkin: chap menyu pastidagi «Ilovalar» (yoki «Profil» → «Ilovalar») sahifasi kompyuteringiz turini o'zi aniqlab, kerakli faylni taklif qiladi. Batafsil: <a href=\"/help/kompyuter-ilovasi\">Kompyuter ilovasi</a>.</p>\n<h2 id=\"iphone\">iPhone</h2>\n<p>iPhone uchun alohida ilova bo'lmasa, tizim <strong>brauzerda</strong> (Safari, Chrome) to'liq ishlaydi: tashkilotingiz manzilini oching va o'sha login bilan kiring. Uni bosh ekranga qo'yib, ilova kabi ochish mumkin. Telegram'da ham ishlaydi — <a href=\"/help/telegram-mini-ilova\">Telegram mini-ilova</a>.</p>\n<h2 id=\"ilovada-nimalar-bor-34\">Ilovada nimalar bor (3.4)</h2>\n<ul>\n<li><strong>O'qituvchi va rahbar:</strong> varaqa skaneri, davomat, maktab jurnali (2–5 baho, davomat, dars qo'shish), «Kirish nazorati» (QR karta), lidlar va topshiriqlar.</li>\n<li><strong>O'quvchi:</strong> testlar, kurslar, «To'lovlarim» (balans, hisoblar, to'lovlar, onlayn to'lash).</li>\n<li><strong>Ota-ona:</strong> «Farzandim» — kundalik, testlar, to'lov va davomat.</li>\n<li>Asosiy ro'yxatlar internet bo'lmasa ham oxirgi saqlangan holida ko'rinadi.</li>\n</ul>\n<h2 id=\"maslahatlar\">Maslahatlar</h2>\n<ul>\n<li>Ilova oxirgi ochilgan ma'lumotlarni telefonda saqlaydi: internet bo'lmasa ham bosh sahifa, kundalik va «Farzandim» saqlangan nusxadan ko'rinadi. Pastga tortib yangilang.</li>\n<li>Ilovaga kirgach bildirishnomalar telefonga keladi — <a href=\"/help/push-bildirishnomalar\">Push-bildirishnomalar</a>.</li>\n<li>Parolni unutsangiz: «Kod bilan» kiring yoki tashkilot direktoriga murojaat qiling.</li>\n<li><strong>Yordam ilova ichida:</strong> «Yana → Yordam» — maqolalardan qidiruv, ko'p beriladigan savollar, murojaat yuborish va «Mening murojaatlarim» (javoblar shu yerda). Murojaatlar ro'yxati «Yana → Murojaatlar» da ham bor — <a href=\"/help/qollab-quvvatlash\">Qo'llab-quvvatlash</a>.</li>\n<li><strong>SMS shlyuz (faqat Android):</strong> «Aloqa → SMS shlyuz» (platforma egasida — «Platforma → SMS shlyuz (platforma)») yoqilsa, telefon tizim SMS'larini o'z SIM kartasidan yuboradi — markaz SMS'lari (direktor yoki administrator hisobi bilan) yoki platforma kodlari (platforma egasi hisobi bilan). Ilova ochiq va internetda tursin. Batafsil: <a href=\"/help/sms-yuborish\">SMS yuborish</a>.</li>\n<li>Ilovada qaysi bo'limlar chiqishi rolingiz va tashkilotda yoqilgan modullarga bog'liq. O'qituvchi uchun — <a href=\"/help/oqituvchi-telefonda\">O'qituvchi telefonda</a>.</li>\n</ul>\n<h2 id=\"agar-ishlamasa\">Agar ishlamasa</h2>\n<ul>\n<li><strong>Ilovaga kira olmayapman («parol noto'g'ri»).</strong> Saytda shu raqam va parol bilan kirib ko'ring. Saytda ham kirmasa — «Kod bilan» kiring yoki direktordan parolni yangilashni so'rang.</li>\n<li><strong>«Server bilan aloqa yo'q».</strong> Internetni tekshiring. Tashkilotingiz o'z serverida bo'lsa, logotipni uzoq bosib «Tizim manzili» to'g'ri yozilganini tekshiring.</li>\n<li><strong>Kod kelmayapti.</strong> Telegram bog'langan bo'lsa, kod Telegramdagi bot chatiga keladi. Aks holda SMS'ni kuting va «Kodni qayta so'rash» ni bosing.</li>\n<li><strong>Ilova o'rnatilmayapti.</strong> Telefonda «noma'lum manbadan o'rnatish» ruxsatini bering va eski versiyani o'chirib, yangisini o'rnating.</li>\n<li><strong>Ilovada bo'lim yo'q.</strong> Bo'limlar rolingiz va tashkilot modullariga bog'liq. Ilovani yangilang — yangi bo'limlar yangi versiyada chiqadi.</li>\n</ul>\n<p>Batafsil: <a href=\"/help/muammolar-va-yechimlar#mobil-ilova\">Muammolar va yechimlar</a>.</p>\n",
+ "toc": [
+  {
+   "id": "qadamlar-android",
+   "text": "Qadamlar: Android",
+   "level": 2
+  },
+  {
+   "id": "kompyuter-ilovasi-windows-macos-linux",
+   "text": "Kompyuter ilovasi (Windows, macOS, Linux)",
+   "level": 2
+  },
+  {
+   "id": "iphone",
+   "text": "iPhone",
+   "level": 2
+  },
+  {
+   "id": "ilovada-nimalar-bor-34",
+   "text": "Ilovada nimalar bor (3.4)",
+   "level": 2
+  },
+  {
+   "id": "maslahatlar",
+   "text": "Maslahatlar",
+   "level": 2
+  },
+  {
+   "id": "agar-ishlamasa",
+   "text": "Agar ishlamasa",
+   "level": 2
+  }
+ ],
+ "reading_minutes": 4,
+ "section": {
+  "id": "mobile",
+  "title": "Mobil ilova va Telegram"
+ },
+ "routes": [
+  "apps"
+ ],
+ "video": null,
+ "related": [
+  {
+   "slug": "kompyuter-ilovasi",
+   "title": "Kompyuter ilovasi (Windows, macOS, Linux)",
+   "summary": "EduX'ni kompyuterga alohida ilova qilib o'rnatish — yuklab olish, birinchi ishga tushirish, chop etish va fayllarni saqlash, skaner qurilmasi, yangi versiya xabari va internet uzilganda nima bo'ladi.",
+   "section": "mobile",
+   "order": 15,
+   "routes": [],
+   "reading_minutes": 3,
+   "locale": "uz",
+   "video": false
+  },
+  {
+   "slug": "telegram-mini-ilova",
+   "title": "Telegram mini-ilova va EduX boti",
+   "summary": "EduX'ni Telegram ichida parolsiz ochish, Telegram hisobini bog'lash va botdan foydalanish (xabarlar, varaqa rasmini tekshirish).",
+   "section": "mobile",
+   "order": 20,
+   "routes": [],
+   "reading_minutes": 2,
+   "locale": "uz",
+   "video": false
+  },
+  {
+   "slug": "push-bildirishnomalar",
+   "title": "Mobil ilovadagi bildirishnomalar (push)",
+   "summary": "Mobil ilovaga qanday bildirishnomalar keladi, ular qayerda saqlanadi va bosilganda qaysi sahifa ochiladi.",
+   "section": "mobile",
+   "order": 30,
+   "routes": [],
+   "reading_minutes": 2,
+   "locale": "uz",
+   "video": false
+  }
+ ],
+ "updated_at": "2026-10-23T10:22:18+00:00",
+ "requested_locale": "uz",
+ "fallback": false
+}

@@ -1,0 +1,55 @@
+{
+ "slug": "oqituvchi-telefonda",
+ "locale": "uz",
+ "title": "O'qituvchi telefonda: skaner, davomat va kirish",
+ "summary": "Mobil ilovada (3.4) o'qituvchi javob varaqalarini skanerlaydi, guruh davomatini va maktab jurnalini yuritadi, savollarga javob beradi, kirishda QR kartani o'qiydi va bildirishnomalarni oladi.",
+ "html": "<p>Bu maqola o'qituvchiga EduX mobil ilovasida (Android, 3.4 versiya) eng ko'p kerak bo'ladigan ishlarni ko'rsatadi. Ilovani o'rnatish — <a href=\"/help/mobil-ilova-ornatish\">Mobil ilovani o'rnatish</a>. Ilovaga veb-versiyadagi telefon raqami va parol bilan kirasiz.</p>\n<blockquote class=\"help-note\"><p><strong>Maslahat:</strong> Ilova o'zbek, rus va ingliz tillarida ishlaydi. Til <strong>Yana → Til</strong> da almashtiriladi.</p>\n</blockquote>\n<h2 id=\"bosh-sahifa-va-menyu\">Bosh sahifa va menyu</h2>\n<p>Bosh sahifada <strong>Bugun</strong> kartalari (bugungi darslaringiz, baholanmagan uy vazifalari, tekshirishni kutayotgan varaqalar, ochiq testlar) va katta tezkor tugmalar: «Davomat qilish», «Jurnal» (maktabda), «Savollarga javob berish» (kurslar bo'lsa), «Test yaratish», «Varaqa tekshirish».</p>\n<p>Ekran pastidagi menyu veb-versiya bilan bir xil: <strong>Bosh sahifa</strong>, <strong>Guruhlarim</strong> (maktabda — <strong>Sinflarim</strong>), <strong>Ta'lim</strong>, <strong>Testlar</strong> va <strong>Yana</strong>. Bandlar tashkilotda yoqilgan modullarga qarab chiqadi.</p>\n<p><img loading=\"lazy\" src=\"/media/help/img/oqituvchi-telefonda-1.jpg\" alt=\"Mobil ilova: o'qituvchining bosh sahifasi\" /></p>\n<h2 id=\"qadamlar-davomat-belgilash\">Qadamlar: davomat belgilash</h2>\n<ol>\n<li>Bosh sahifada «Davomat qilish» ni bosing (yoki <strong>Guruhlarim → Davomat</strong>) va guruhni tanlang. Sana o'ng tepada ko'rinadi.</li>\n<li>Kerak bo'lsa «Mavzu (ixtiyoriy)» ni yozing.</li>\n<li>Har o'quvchi uchun «Keldi», «Kelmadi», «Kechikdi» yoki «Sababli» ni bosing. Hamma kelgan bo'lsa — «Hammasi keldi».</li>\n<li>«Saqlash» ni bosing.</li>\n</ol>\n<p><img loading=\"lazy\" src=\"/media/help/img/oqituvchi-telefonda-2.jpg\" alt=\"Mobil ilova: davomat\" /></p>\n<h2 id=\"qadamlar-maktab-jurnali\">Qadamlar: maktab jurnali</h2>\n<ol>\n<li><strong>Sinflarim → Jurnal</strong> ni oching (yoki bosh sahifadagi «Jurnal»). Sizga biriktirilgan sinf va fan chiqadi.</li>\n<li>Darsni tanlang. Yangi dars kerak bo'lsa — «Dars qo'shish»: «Mavzu» va «Uy vazifasi (ixtiyoriy)».</li>\n<li>O'quvchilarga 2–5 baho qo'ying va davomatni belgilang («Hammasi keldi» ham bor).</li>\n<li>«Saqlash» ni bosing. Saqlanmagan baho bilan chiqmoqchi bo'lsangiz, ilova ogohlantiradi.</li>\n</ol>\n<p>Batafsil: <a href=\"/help/elektron-jurnal\">Elektron jurnal</a>.</p>\n<h2 id=\"qadamlar-javob-varaqasini-skanerlash\">Qadamlar: javob varaqasini skanerlash</h2>\n<ol>\n<li><strong>Testlar → Skaner</strong> ni oching (yoki bosh sahifadagi «Varaqa tekshirish»).</li>\n<li>«Skanerlashni boshlash» ni bosing: test va o'quvchi varaqadagi QR kod va kod doirachalaridan o'zi aniqlanadi. Yoki <strong>Tanlangan test uchun</strong> ro'yxatidan testni tanlang — uning kaliti telefonga oldindan yuklanadi va natija internetsiz ham darhol chiqadi.</li>\n<li>Kamerani to'ldirilgan varaqaga tuting. Yuborilmagan natijalar «Yuborilishi kutilmoqda» kartasida turadi va internet paydo bo'lganda yuboriladi; tekshirish kerak bo'lganlari — «Ko'rib chiqish kerak» da. Batafsil: <a href=\"/help/varaqani-skanerlash\">Varaqani skanerlash</a>.</li>\n</ol>\n<h2 id=\"yana-menyusi\">«Yana» menyusi</h2>\n<p><strong>Yana</strong> da: «Bildirishnomalar», pastki menyuga sig'magan bo'limlar (masalan, «Topshiriqlar», «AI yordamchi»), «Murojaatlar», so'ng sozlamalar — til, kunduzgi/tungi rejim, rang va shablon, «Yordam markazi» va «Chiqish».</p>\n<p><img loading=\"lazy\" src=\"/media/help/img/oqituvchi-telefonda-3.jpg\" alt=\"Mobil ilova: Yana menyusi\" /></p>\n<h2 id=\"maslahatlar\">Maslahatlar</h2>\n<ul>\n<li><strong>Guruhlarim → Kirish nazorati</strong> telefon kamerasi bilan o'quvchining QR kartasini o'qiydi va kelganini qayd etadi — <a href=\"/help/qr-karta-bilan-davomat\">QR karta va skaner bilan davomat</a>.</li>\n<li><strong>Ta'lim → Savol-javob</strong> — o'quvchilar dars bo'yicha bergan savollarga javob — <a href=\"/help/kurs-elonlari-va-savol-javob\">Savol-javob, kurs e'lonlari va jonli dars</a>.</li>\n<li>Bildirishnomalar (yangi topshiriq, yangi savol va boshqalar) telefonga keladi — <a href=\"/help/push-bildirishnomalar\">Push-bildirishnomalar</a>.</li>\n<li>Asosiy ro'yxatlar internet bo'lmasa ham oxirgi saqlangan holida ko'rinadi.</li>\n<li>Muammo bo'lsa, <strong>Yana → Murojaatlar</strong> orqali yozing — <a href=\"/help/qollab-quvvatlash\">Qo'llab-quvvatlash</a>.</li>\n</ul>\n<h2 id=\"agar-ishlamasa\">Agar ishlamasa</h2>\n<ul>\n<li><strong>Jurnalda «Sizga biriktirilgan jurnal yo'q».</strong> Rahbar sizga yuklama (sinf va fan) bermagan — <a href=\"/help/sinflar-va-yuklama\">Sinflar va yuklama</a>.</li>\n<li><strong>«O'quv yili belgilanmagan».</strong> Rahbar «Maktab yili» sahifasida yil va choraklarni kiritishi kerak — <a href=\"/help/oquv-yili-va-choraklar\">O'quv yili va choraklar</a>.</li>\n<li><strong>Davomatda guruh yo'q.</strong> Siz guruhga o'qituvchi qilib biriktirilmagansiz — administratorga ayting.</li>\n<li><strong>Skaner varaqani tanimayapti.</strong> Yorug' joyda, to'rt burchak ko'rinadigan qilib tuting yoki testni «Tanlangan test uchun» dan tanlang.</li>\n<li><strong>Ilovada yangi bo'limlar yo'q.</strong> Ilovani yangilang — <a href=\"/help/mobil-ilova-ornatish\">Mobil ilovani o'rnatish</a>.</li>\n</ul>\n",
+ "toc": [
+  {
+   "id": "bosh-sahifa-va-menyu",
+   "text": "Bosh sahifa va menyu",
+   "level": 2
+  },
+  {
+   "id": "qadamlar-davomat-belgilash",
+   "text": "Qadamlar: davomat belgilash",
+   "level": 2
+  },
+  {
+   "id": "qadamlar-maktab-jurnali",
+   "text": "Qadamlar: maktab jurnali",
+   "level": 2
+  },
+  {
+   "id": "qadamlar-javob-varaqasini-skanerlash",
+   "text": "Qadamlar: javob varaqasini skanerlash",
+   "level": 2
+  },
+  {
+   "id": "yana-menyusi",
+   "text": "«Yana» menyusi",
+   "level": 2
+  },
+  {
+   "id": "maslahatlar",
+   "text": "Maslahatlar",
+   "level": 2
+  },
+  {
+   "id": "agar-ishlamasa",
+   "text": "Agar ishlamasa",
+   "level": 2
+  }
+ ],
+ "reading_minutes": 3,
+ "section": {
+  "id": "teacher",
+  "title": "O'qituvchi uchun"
+ },
+ "routes": [],
+ "video": null,
+ "related": [],
+ "updated_at": "2026-10-23T08:40:48+00:00",
+ "requested_locale": "uz",
+ "fallback": false
+}

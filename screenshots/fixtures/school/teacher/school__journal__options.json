@@ -1,0 +1,147 @@
+{
+ "year": {
+  "id": 1,
+  "name": "2026–2027",
+  "is_current": true
+ },
+ "terms": [
+  {
+   "id": 1,
+   "organization_id": 1,
+   "school_year_id": 1,
+   "name": "1-chorak",
+   "starts_on": "2026-09-02",
+   "ends_on": "2026-11-04",
+   "position": 1,
+   "created_at": "2026-10-19T14:24:00.000000Z",
+   "updated_at": "2026-10-19T14:24:00.000000Z"
+  },
+  {
+   "id": 2,
+   "organization_id": 1,
+   "school_year_id": 1,
+   "name": "2-chorak",
+   "starts_on": "2026-11-10",
+   "ends_on": "2026-12-27",
+   "position": 2,
+   "created_at": "2026-10-19T14:24:00.000000Z",
+   "updated_at": "2026-10-19T14:24:00.000000Z"
+  },
+  {
+   "id": 3,
+   "organization_id": 1,
+   "school_year_id": 1,
+   "name": "3-chorak",
+   "starts_on": "2027-01-12",
+   "ends_on": "2027-03-20",
+   "position": 3,
+   "created_at": "2026-10-19T14:24:00.000000Z",
+   "updated_at": "2026-10-19T14:24:00.000000Z"
+  },
+  {
+   "id": 4,
+   "organization_id": 1,
+   "school_year_id": 1,
+   "name": "4-chorak",
+   "starts_on": "2027-04-01",
+   "ends_on": "2027-05-25",
+   "position": 4,
+   "created_at": "2026-10-19T14:24:00.000000Z",
+   "updated_at": "2026-10-19T14:24:00.000000Z"
+  }
+ ],
+ "current_term_id": 1,
+ "journals": [
+  {
+   "group_id": 1,
+   "class_name": "11-A",
+   "subject_id": 9,
+   "subject": "Biologiya",
+   "teacher_id": 15,
+   "teacher": "Qodirova Gulshan",
+   "can_write": false
+  },
+  {
+   "group_id": 1,
+   "class_name": "11-A",
+   "subject_id": 2,
+   "subject": "Fizika",
+   "teacher_id": 8,
+   "teacher": "Karimova Nodira",
+   "can_write": true
+  },
+  {
+   "group_id": 1,
+   "class_name": "11-A",
+   "subject_id": 10,
+   "subject": "Geografiya",
+   "teacher_id": 16,
+   "teacher": "Nazarov Jamshid",
+   "can_write": false
+  },
+  {
+   "group_id": 1,
+   "class_name": "11-A",
+   "subject_id": 11,
+   "subject": "Informatika",
+   "teacher_id": 16,
+   "teacher": "Nazarov Jamshid",
+   "can_write": false
+  },
+  {
+   "group_id": 1,
+   "class_name": "11-A",
+   "subject_id": 4,
+   "subject": "Ingliz tili",
+   "teacher_id": 1,
+   "teacher": "Rustamov Akmal",
+   "can_write": false
+  },
+  {
+   "group_id": 1,
+   "class_name": "11-A",
+   "subject_id": 12,
+   "subject": "Jismoniy tarbiya",
+   "teacher_id": 16,
+   "teacher": "Nazarov Jamshid",
+   "can_write": false
+  },
+  {
+   "group_id": 1,
+   "class_name": "11-A",
+   "subject_id": 8,
+   "subject": "Kimyo",
+   "teacher_id": 15,
+   "teacher": "Qodirova Gulshan",
+   "can_write": false
+  },
+  {
+   "group_id": 1,
+   "class_name": "11-A",
+   "subject_id": 1,
+   "subject": "Matematika",
+   "teacher_id": 8,
+   "teacher": "Karimova Nodira",
+   "can_write": true
+  },
+  {
+   "group_id": 1,
+   "class_name": "11-A",
+   "subject_id": 3,
+   "subject": "Ona tili va adabiyot",
+   "teacher_id": 9,
+   "teacher": "Toshev Anvar",
+   "can_write": false
+  },
+  {
+   "group_id": 1,
+   "class_name": "11-A",
+   "subject_id": 5,
+   "subject": "Tarix",
+   "teacher_id": 9,
+   "teacher": "Toshev Anvar",
+   "can_write": false
+  }
+ ],
+ "today": "2026-10-23"
+}

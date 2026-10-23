@@ -1,0 +1,29 @@
+{
+ "id": 9,
+ "name": "Ergasheva Mohinur",
+ "contact": "+998900000005",
+ "topic": "question",
+ "subject": "Krossvord o'yinida harf yozilmayapti",
+ "status": "answered",
+ "token": "***",
+ "created_at": "2026-10-23T12:13:45.000000Z",
+ "updated_at": "2026-10-23T12:13:47.000000Z",
+ "helpful": null,
+ "rated_at": null,
+ "messages": [
+  {
+   "id": 12,
+   "from_staff": false,
+   "body": "Telefonda krossvordni ochdim, katakni bossam klaviatura chiqmadi. Qanday yozaman?",
+   "created_at": "2026-10-23T12:13:45.000000Z",
+   "attachments": []
+  },
+  {
+   "id": 13,
+   "from_staff": true,
+   "body": "Assalomu alaykum! Katakni bir marta bosing — klaviatura ochiladi. Ikkinchi bosish yo'nalishni (eniga/bo'yiga) almashtiradi. Ilovani 3.6.0 ga yangilang.",
+   "created_at": "2026-10-23T12:13:47.000000Z",
+   "attachments": []
+  }
+ ]
+}

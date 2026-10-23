@@ -1,0 +1,27 @@
+{
+ "modules": [
+  "testing",
+  "crm",
+  "lms"
+ ],
+ "manager": true,
+ "testing": {
+  "open_exams": 7,
+  "needs_review": 0,
+  "finished_week": 31
+ },
+ "crm": {
+  "active_students": 26,
+  "trial": 1,
+  "tasks_today": 1,
+  "income_today": 1200000,
+  "debtors": 6,
+  "debt_total": 3500000,
+  "new_leads_today": 2,
+  "open_leads": 12
+ },
+ "lms": {
+  "courses": 2,
+  "to_grade": 2
+ }
+}

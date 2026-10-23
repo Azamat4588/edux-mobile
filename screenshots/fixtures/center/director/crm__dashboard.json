@@ -1,0 +1,99 @@
+{
+ "counters": {
+  "active_leads": 12,
+  "active_students": 26,
+  "groups": 4,
+  "debtors": 6,
+  "debt_total": 3500000,
+  "trial": 1,
+  "frozen": 1,
+  "paid_this_month": 21,
+  "left_active_this_month": 1,
+  "left_after_trial_this_month": 0
+ },
+ "month": {
+  "income": 10944000,
+  "expected": 13544000,
+  "expenses": 2870000
+ },
+ "series": [
+  {
+   "period": "2026-05",
+   "label": "May 2026",
+   "income": 0,
+   "expenses": 0,
+   "profit": 0,
+   "charged": 0
+  },
+  {
+   "period": "2026-06",
+   "label": "Iyun 2026",
+   "income": 0,
+   "expenses": 0,
+   "profit": 0,
+   "charged": 0
+  },
+  {
+   "period": "2026-07",
+   "label": "Iyul 2026",
+   "income": 0,
+   "expenses": 0,
+   "profit": 0,
+   "charged": 0
+  },
+  {
+   "period": "2026-08",
+   "label": "Avgust 2026",
+   "income": 0,
+   "expenses": 0,
+   "profit": 0,
+   "charged": 0
+  },
+  {
+   "period": "2026-09",
+   "label": "Sentabr 2026",
+   "income": 11102080,
+   "expenses": 1530000,
+   "profit": 9572080,
+   "charged": 12002080
+  },
+  {
+   "period": "2026-10",
+   "label": "Oktabr 2026",
+   "income": 10944000,
+   "expenses": 2870000,
+   "profit": 8074000,
+   "charged": 13544000
+  }
+ ],
+ "birthdays": [
+  {
+   "id": 95,
+   "full_name": "Mahmudova Kamola",
+   "phone": "+998900002104"
+  }
+ ],
+ "tasks": [
+  {
+   "id": 3,
+   "organization_id": 1,
+   "title": "Oylik hisobotni tayyorlash",
+   "note": null,
+   "due_at": "2026-10-23T14:23:59.000000Z",
+   "assigned_to": 1,
+   "created_by": 1,
+   "subject_type": null,
+   "subject_id": null,
+   "completed_at": null,
+   "completed_by": null,
+   "result": null,
+   "created_at": "2026-10-19T14:23:59.000000Z",
+   "updated_at": "2026-10-19T14:23:59.000000Z",
+   "assignee": {
+    "id": 1,
+    "name": "Rustamov Akmal"
+   }
+  }
+ ],
+ "tasks_overdue": 0
+}

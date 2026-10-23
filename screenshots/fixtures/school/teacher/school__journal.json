@@ -1,0 +1,527 @@
+{
+ "term": {
+  "id": 1,
+  "organization_id": 1,
+  "school_year_id": 1,
+  "name": "1-chorak",
+  "starts_on": "2026-09-02",
+  "ends_on": "2026-11-04",
+  "position": 1,
+  "created_at": "2026-10-19T14:24:00.000000Z",
+  "updated_at": "2026-10-19T14:24:00.000000Z"
+ },
+ "year": {
+  "id": 1,
+  "name": "2026–2027",
+  "is_current": true
+ },
+ "class_name": "11-A",
+ "subject": "Biologiya",
+ "teacher": "Qodirova Gulshan",
+ "can_write": false,
+ "students": [
+  {
+   "id": 11,
+   "full_name": "Ergashev Timur"
+  },
+  {
+   "id": 1,
+   "full_name": "Ergasheva Mohinur"
+  },
+  {
+   "id": 4,
+   "full_name": "Hasanova Malika"
+  },
+  {
+   "id": 3,
+   "full_name": "Karimov Sardor"
+  },
+  {
+   "id": 10,
+   "full_name": "Nazarova Sevara"
+  },
+  {
+   "id": 9,
+   "full_name": "Qodirov Sherzod"
+  },
+  {
+   "id": 6,
+   "full_name": "Rahimova Nigora"
+  },
+  {
+   "id": 8,
+   "full_name": "Saidova Zarina"
+  },
+  {
+   "id": 5,
+   "full_name": "Tursunov Jasur"
+  },
+  {
+   "id": 2,
+   "full_name": "Valiyev Bobur"
+  },
+  {
+   "id": 7,
+   "full_name": "Yusupov Aziz"
+  }
+ ],
+ "lessons": [
+  {
+   "id": 1004,
+   "date": "2026-09-30",
+   "period_number": 5,
+   "topic": "Hujayra tuzilishi",
+   "homework": null,
+   "term_id": 1
+  },
+  {
+   "id": 1009,
+   "date": "2026-10-03",
+   "period_number": 4,
+   "topic": "Fotosintez",
+   "homework": null,
+   "term_id": 1
+  },
+  {
+   "id": 1014,
+   "date": "2026-10-07",
+   "period_number": 5,
+   "topic": "Nafas olish",
+   "homework": null,
+   "term_id": 1
+  },
+  {
+   "id": 1019,
+   "date": "2026-10-10",
+   "period_number": 4,
+   "topic": "Genetika asoslari",
+   "homework": null,
+   "term_id": 1
+  },
+  {
+   "id": 1024,
+   "date": "2026-10-14",
+   "period_number": 5,
+   "topic": "Mendel qonunlari",
+   "homework": null,
+   "term_id": 1
+  },
+  {
+   "id": 1029,
+   "date": "2026-10-17",
+   "period_number": 4,
+   "topic": "Evolyutsiya",
+   "homework": null,
+   "term_id": 1
+  },
+  {
+   "id": 1034,
+   "date": "2026-10-21",
+   "period_number": 5,
+   "topic": "Ekosistema",
+   "homework": null,
+   "term_id": 1
+  }
+ ],
+ "entries": {
+  "1004": {
+   "1": {
+    "mark": 5,
+    "attendance": "present",
+    "note": null
+   },
+   "2": {
+    "mark": null,
+    "attendance": "present",
+    "note": null
+   },
+   "3": {
+    "mark": 5,
+    "attendance": "present",
+    "note": null
+   },
+   "4": {
+    "mark": null,
+    "attendance": "present",
+    "note": null
+   },
+   "5": {
+    "mark": null,
+    "attendance": "absent",
+    "note": null
+   },
+   "6": {
+    "mark": 3,
+    "attendance": "present",
+    "note": null
+   },
+   "7": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   },
+   "8": {
+    "mark": 5,
+    "attendance": "present",
+    "note": null
+   },
+   "9": {
+    "mark": null,
+    "attendance": "present",
+    "note": null
+   },
+   "10": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   },
+   "11": {
+    "mark": null,
+    "attendance": "present",
+    "note": null
+   }
+  },
+  "1009": {
+   "1": {
+    "mark": 5,
+    "attendance": "present",
+    "note": null
+   },
+   "2": {
+    "mark": null,
+    "attendance": "present",
+    "note": null
+   },
+   "3": {
+    "mark": null,
+    "attendance": "absent",
+    "note": null
+   },
+   "4": {
+    "mark": 5,
+    "attendance": "present",
+    "note": null
+   },
+   "5": {
+    "mark": null,
+    "attendance": "late",
+    "note": null
+   },
+   "6": {
+    "mark": null,
+    "attendance": "present",
+    "note": null
+   },
+   "7": {
+    "mark": null,
+    "attendance": "present",
+    "note": null
+   },
+   "8": {
+    "mark": null,
+    "attendance": "present",
+    "note": null
+   },
+   "9": {
+    "mark": null,
+    "attendance": "present",
+    "note": null
+   },
+   "10": {
+    "mark": 5,
+    "attendance": "present",
+    "note": null
+   },
+   "11": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   }
+  },
+  "1014": {
+   "1": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   },
+   "2": {
+    "mark": null,
+    "attendance": "present",
+    "note": null
+   },
+   "3": {
+    "mark": null,
+    "attendance": "absent",
+    "note": null
+   },
+   "4": {
+    "mark": 3,
+    "attendance": "present",
+    "note": null
+   },
+   "5": {
+    "mark": null,
+    "attendance": "present",
+    "note": null
+   },
+   "6": {
+    "mark": null,
+    "attendance": "present",
+    "note": null
+   },
+   "7": {
+    "mark": null,
+    "attendance": "present",
+    "note": null
+   },
+   "8": {
+    "mark": null,
+    "attendance": "present",
+    "note": null
+   },
+   "9": {
+    "mark": 4,
+    "attendance": "late",
+    "note": null
+   },
+   "10": {
+    "mark": 5,
+    "attendance": "present",
+    "note": null
+   },
+   "11": {
+    "mark": null,
+    "attendance": "present",
+    "note": null
+   }
+  },
+  "1019": {
+   "1": {
+    "mark": null,
+    "attendance": "present",
+    "note": null
+   },
+   "2": {
+    "mark": null,
+    "attendance": "present",
+    "note": null
+   },
+   "3": {
+    "mark": null,
+    "attendance": "present",
+    "note": null
+   },
+   "4": {
+    "mark": null,
+    "attendance": "present",
+    "note": null
+   },
+   "5": {
+    "mark": null,
+    "attendance": "present",
+    "note": null
+   },
+   "6": {
+    "mark": null,
+    "attendance": "present",
+    "note": null
+   },
+   "7": {
+    "mark": null,
+    "attendance": "present",
+    "note": null
+   },
+   "8": {
+    "mark": 5,
+    "attendance": "present",
+    "note": null
+   },
+   "9": {
+    "mark": null,
+    "attendance": "present",
+    "note": null
+   },
+   "10": {
+    "mark": null,
+    "attendance": "present",
+    "note": null
+   },
+   "11": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   }
+  },
+  "1024": {
+   "1": {
+    "mark": 5,
+    "attendance": "present",
+    "note": null
+   },
+   "2": {
+    "mark": null,
+    "attendance": "present",
+    "note": null
+   },
+   "3": {
+    "mark": 5,
+    "attendance": "present",
+    "note": null
+   },
+   "4": {
+    "mark": null,
+    "attendance": "present",
+    "note": null
+   },
+   "5": {
+    "mark": 3,
+    "attendance": "present",
+    "note": null
+   },
+   "6": {
+    "mark": null,
+    "attendance": "present",
+    "note": null
+   },
+   "7": {
+    "mark": null,
+    "attendance": "present",
+    "note": null
+   },
+   "8": {
+    "mark": null,
+    "attendance": "present",
+    "note": null
+   },
+   "9": {
+    "mark": null,
+    "attendance": "absent",
+    "note": null
+   },
+   "10": {
+    "mark": null,
+    "attendance": "present",
+    "note": null
+   },
+   "11": {
+    "mark": null,
+    "attendance": "present",
+    "note": null
+   }
+  },
+  "1029": {
+   "1": {
+    "mark": null,
+    "attendance": "present",
+    "note": null
+   },
+   "2": {
+    "mark": 5,
+    "attendance": "late",
+    "note": null
+   },
+   "3": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   },
+   "4": {
+    "mark": null,
+    "attendance": "present",
+    "note": null
+   },
+   "5": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   },
+   "6": {
+    "mark": 5,
+    "attendance": "present",
+    "note": null
+   },
+   "7": {
+    "mark": null,
+    "attendance": "present",
+    "note": null
+   },
+   "8": {
+    "mark": null,
+    "attendance": "present",
+    "note": null
+   },
+   "9": {
+    "mark": null,
+    "attendance": "present",
+    "note": null
+   },
+   "10": {
+    "mark": null,
+    "attendance": "present",
+    "note": null
+   },
+   "11": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   }
+  },
+  "1034": {
+   "1": {
+    "mark": 3,
+    "attendance": "present",
+    "note": null
+   },
+   "2": {
+    "mark": null,
+    "attendance": "present",
+    "note": null
+   },
+   "3": {
+    "mark": 3,
+    "attendance": "present",
+    "note": null
+   },
+   "4": {
+    "mark": 3,
+    "attendance": "present",
+    "note": null
+   },
+   "5": {
+    "mark": 5,
+    "attendance": "present",
+    "note": null
+   },
+   "6": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   },
+   "7": {
+    "mark": null,
+    "attendance": "present",
+    "note": null
+   },
+   "8": {
+    "mark": null,
+    "attendance": "present",
+    "note": null
+   },
+   "9": {
+    "mark": null,
+    "attendance": "present",
+    "note": null
+   },
+   "10": {
+    "mark": null,
+    "attendance": "present",
+    "note": null
+   },
+   "11": {
+    "mark": null,
+    "attendance": "present",
+    "note": null
+   }
+  }
+ }
+}

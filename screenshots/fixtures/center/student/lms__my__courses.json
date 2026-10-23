@@ -1,0 +1,29 @@
+{
+ "student": {
+  "id": 1,
+  "full_name": "Ergasheva Mohinur",
+  "code": "305619"
+ },
+ "courses": [
+  {
+   "id": 1,
+   "title": "Kasrlar va ular ustida amallar",
+   "description": "Oddiy kasr tushunchasidan boshlab, kasrlarni taqqoslash, qo'shish va ayirishgacha. Har darsda qisqa konspekt, oxirida test.",
+   "subject": {
+    "id": 1,
+    "name": "Matematika"
+   },
+   "cover": null,
+   "price": 0,
+   "billing": "once",
+   "progress": {
+    "total": 5,
+    "done": 3,
+    "percent": 60
+   },
+   "has_access": true,
+   "subscription": null,
+   "next_lesson_id": 4
+  }
+ ]
+}

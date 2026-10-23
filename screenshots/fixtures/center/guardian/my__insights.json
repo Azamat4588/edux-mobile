@@ -1,0 +1,114 @@
+{
+ "student": {
+  "id": 1,
+  "full_name": "Ergasheva Mohinur",
+  "code": "305619",
+  "phone": "+998900001147",
+  "groups": [
+   "M-11",
+   "ING-5"
+  ],
+  "guest": false
+ },
+ "modules": [
+  "testing",
+  "crm",
+  "lms"
+ ],
+ "testing": {
+  "count": 3,
+  "average_percent": 67.8,
+  "attempts": [
+   {
+    "id": 59,
+    "exam_id": 1,
+    "exam": "Matematika: 2-chorak nazorat ishi",
+    "correct": 8,
+    "total": 12,
+    "score": 8,
+    "max_score": 12,
+    "percent": 66.7,
+    "finished_at": "2026-10-19T16:27:06.000000Z"
+   },
+   {
+    "id": 6,
+    "exam_id": 3,
+    "exam": "IELTS Mock #2 — Oktyabr",
+    "correct": 13,
+    "total": 15,
+    "score": 23.5,
+    "max_score": 30,
+    "percent": 78.3,
+    "finished_at": "2026-10-12T11:00:00.000000Z"
+   },
+   {
+    "id": 1,
+    "exam_id": 2,
+    "exam": "IELTS Mock #1 — Sentyabr",
+    "correct": 9,
+    "total": 15,
+    "score": 17.5,
+    "max_score": 30,
+    "percent": 58.3,
+    "finished_at": "2026-09-14T11:00:00.000000Z"
+   }
+  ],
+  "pending": [
+   {
+    "id": 4,
+    "title": "Milliy sertifikat — matematika sinovi",
+    "ends_at": null,
+    "duration_minutes": 150
+   }
+  ]
+ },
+ "lms": {
+  "courses": [
+   {
+    "id": 1,
+    "title": "Kasrlar va ular ustida amallar",
+    "unlocked": true,
+    "total": 5,
+    "done": 3,
+    "percent": 60
+   }
+  ],
+  "assignments": {
+   "pending": [],
+   "graded": []
+  },
+  "average_grade_percent": null
+ },
+ "school": null,
+ "crm": {
+  "balance": 0,
+  "groups": [
+   {
+    "id": 1,
+    "name": "M-11",
+    "status": "active"
+   },
+   {
+    "id": 2,
+    "name": "ING-5",
+    "status": "frozen"
+   }
+  ],
+  "attendance_30d": {
+   "present": 5,
+   "absent": 1,
+   "late": 1,
+   "excused": 1
+  },
+  "average_score": 4.33,
+  "coins": 30,
+  "exams": []
+ },
+ "children": [
+  {
+   "id": 1,
+   "full_name": "Ergasheva Mohinur",
+   "code": "305619"
+  }
+ ]
+}

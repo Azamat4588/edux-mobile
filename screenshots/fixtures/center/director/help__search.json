@@ -1,0 +1,221 @@
+{
+ "query": "davomat",
+ "results": [
+  {
+   "slug": "davomat-belgilash",
+   "title": "Davomat belgilash",
+   "summary": "Dars bo'yicha kim keldi, kim kelmadi — belgilash, dars bahosi va oylik davomat jadvali.",
+   "section": "schedule",
+   "order": 20,
+   "routes": [
+    "attendance"
+   ],
+   "reading_minutes": 2,
+   "locale": "uz",
+   "video": false,
+   "score": 64,
+   "snippet": "<mark>Davomat</mark> har dars uchun belgilanadi. Belgilar o&#039;quvchi kartasida, ota-ona kabinetida va hisobotlarda ko&#039;rinadi, «Kelmadi» bo&#039;lsa esa ota-onaga xabar ketadi. Qadamlar Menyuni oching: …"
+  },
+  {
+   "slug": "qr-karta-bilan-davomat",
+   "title": "QR karta va skaner bilan davomat",
+   "summary": "Darsda davomatni QR karta bilan tez belgilash — guruh varaqasida skaner qurilmasi, telefon kamerasi yoki kirishdagi kiosk; qaysi skaner mos keladi va nima qilish kerak, agar karta o'qilmasa.",
+   "section": "access",
+   "order": 20,
+   "routes": [],
+   "reading_minutes": 2,
+   "locale": "uz",
+   "video": false,
+   "score": 52,
+   "snippet": "… Qayerda Kimga qulay Skaner qurilmasi (USB yoki Bluetooth) Kompyuterda: guruh <mark>davomati,</mark> «Kelganlar», «Kirish nazorati» Qabulxona, sinf kompyuteri Telefon kamerasi Mobil ilova: «Kirish nazorati» O&#039;qituvchi, qo&#039;riqchi Kiosk Kirishdagi planshet yoki kompyuter O&#039;quvchining o&#039;zi …"
+  },
+  {
+   "slug": "kop-beriladigan-savollar",
+   "title": "Ko'p beriladigan savollar",
+   "summary": "Direktor, kassir, o'qituvchi, ota-ona, o'quvchi va platforma egasi eng ko'p so'raydigan savollarga qisqa javoblar — kirish, parol, to'lov, SMS, davomat, jurnal, testlar, mobil ilova va yangilash.",
+   "section": "faq",
+   "order": 10,
+   "routes": [],
+   "reading_minutes": 5,
+   "locale": "uz",
+   "video": false,
+   "score": 39,
+   "snippet": "… «Kassa» → «Smenani yopish» — Kassir ish kuni, Kassa. O&#039;qituvchi <mark>Davomatni</mark> telefonda qilsa bo&#039;ladimi? Ha: mobil ilovada <mark>«Davomat</mark> qilish». Maktabda jurnal ham telefonda: «Sinflarim → Jurnal» — O&#039;qituvchi telefonda. Boshqa guruhlarni ko&#039;ramanmi? …"
+  },
+  {
+   "slug": "hisobotlar",
+   "title": "Hisobotlar bo'limi",
+   "summary": "Moliya, lidlar konversiyasi, davomat, ketgan o'quvchilar, o'qituvchilar, filiallar va menejerlar KPI — oy yoki sanalar oralig'i bo'yicha.",
+   "section": "comms",
+   "order": 60,
+   "routes": [
+    "crm.reports"
+   ],
+   "reading_minutes": 2,
+   "locale": "uz",
+   "video": false,
+   "score": 37,
+   "snippet": "… «Xodim bo&#039;yicha» jadvallari: «Lidlar», «O&#039;quvchi bo&#039;ldi», «To&#039;lov qildi», «Yo&#039;qotildi», «Konversiya». <mark>«Davomat»</mark> — guruhlar bo&#039;yicha darslar soni va «Keldi», «Kechikdi», «Kelmadi», «Belgilanmagan» ulushi, pastda — «Ko&#039;p dars qoldirganlar». «Ketgan o&#039;quvchilar» — jami ketganlar, …"
+  },
+  {
+   "slug": "oquvchi-kartasi",
+   "title": "O'quvchi kartasi",
+   "summary": "Bir o'quvchi haqidagi hamma narsa bitta sahifada — guruhlar, balans, to'lovlar, davomat, tarix va topshiriqlar.",
+   "section": "students",
+   "order": 30,
+   "routes": [
+    "students.show"
+   ],
+   "reading_minutes": 2,
+   "locale": "uz",
+   "video": false,
+   "score": 29,
+   "snippet": "… o&#039;quvchi uchun. Yorliqlar: «Umumiy» — balans (qarz yoki oldindan to&#039;lov), <mark>davomat</mark> foizi, profil va guruhlar ro&#039;yxati. Har guruh yonida holatni o&#039;zgartirish tugmalari bor: «Faollashtirish», «Muzlatish», «Boshqa guruhga o&#039;tkazish», «Guruhdan chiqarish» (Guruh sahifasi …"
+  },
+  {
+   "slug": "kirish-nazorati",
+   "title": "Kirish nazorati: QR karta, skaner, Face ID va kiosk",
+   "summary": "O'quvchi kelganini QR karta, USB/Bluetooth skaner yoki yuz orqali qayd etish, kartalarni chop etish, kirishga kiosk qo'yish va ota-onaga «keldi» xabari.",
+   "section": "access",
+   "order": 10,
+   "routes": [
+    "access",
+    "access.print",
+    "public.kiosk"
+   ],
+   "reading_minutes": 4,
+   "locale": "uz",
+   "video": false,
+   "score": 27,
+   "snippet": "… (telefonda «Yana» ichida) telefonning o&#039;zini kiosk qiladi. Skaner qurilmasi bilan <mark>davomat</mark> Do&#039;kon kassasidagi kabi QR/shtrix-kod skaneri kompyuterga klaviatura bo&#039;lib ulanadi: kartani o&#039;qiydi, kodni bir zumda «yozadi» va Enter bosadi. Kamera kerak emas. …"
+  },
+  {
+   "slug": "mobil-ilova-ornatish",
+   "title": "Mobil ilovani o'rnatish va unga kirish",
+   "summary": "EduX Android ilovasini o'rnatish, kirish usullari, ilovadagi imkoniyatlar, iPhone'da brauzer va Telegram orqali ishlash; kira olmasangiz nima qilish kerak.",
+   "section": "mobile",
+   "order": 10,
+   "routes": [
+    "apps"
+   ],
+   "reading_minutes": 4,
+   "locale": "uz",
+   "video": false,
+   "score": 27,
+   "snippet": "… Android uchun mobil ilovasi bor: o&#039;qituvchi unda varaqa skanerlaydi va <mark>davomat</mark> qiladi, o&#039;quvchi test va kurslarni ochadi, ota-ona farzandini kuzatadi, rahbar moliya va call markazini ko&#039;radi. Ilova o&#039;zbek, rus va ingliz tillarida …"
+  },
+  {
+   "slug": "rollar-va-huquqlar",
+   "title": "Rollar va huquqlar — kim nimani ko'radi",
+   "summary": "Direktor, administrator, kassir, marketolog, o'qituvchi, o'quvchi va ota-onaning menyusi va imkoniyatlari bir jadvalda.",
+   "section": "start",
+   "order": 40,
+   "routes": [],
+   "reading_minutes": 2,
+   "locale": "uz",
+   "video": false,
+   "score": 27,
+   "snippet": "… va «Harakatlar jurnali»dan tashqari Kundalik ish: o&#039;quvchilar, guruhlar, lidlar, jadval, <mark>davomat,</mark> to&#039;lov, xarajat, narxlar, SMS, sozlamalar. Tashkilot sahifasini faqat ko&#039;radi Kassir (CRM) «To&#039;lovlar» (va «Chegirmalar»), «Kassa», «Qarzdorlar», «O&#039;quvchilar», «Xarajatlar», «Hisobotlar», «Topshiriqlar»; yoqilgan …"
+  },
+  {
+   "slug": "guruh-sahifasi",
+   "title": "Guruh sahifasi — o'quvchi qo'shish, ko'chirish, muzlatish, chiqarish",
+   "summary": "Guruh tarkibini boshqarish, o'quvchi holatlari, dars kalendari, imtihonlar va coin.",
+   "section": "students",
+   "order": 60,
+   "routes": [
+    "groups.show"
+   ],
+   "reading_minutes": 2,
+   "locale": "uz",
+   "video": false,
+   "score": 25,
+   "snippet": "… yorliqlar «Darslar» — oy bo&#039;yicha dars kalendari. Har dars uchun <mark>«Davomat»,</mark> «Mavzu», «Ko&#039;chirish» va «Bekor qilish» tugmalari bor. Bekor qilishda «Balansni qayta hisoblash» belgilansa, har faol o&#039;quvchiga shu dars puli qaytariladi. Bekor …"
+  },
+  {
+   "slug": "menyu-va-qidiruv",
+   "title": "Menyu, qidiruv, til va ko'rinish",
+   "summary": "Chap menyu va telefondagi pastki menyu, bosh sahifa, Ctrl K qidiruvi, «?» yordam tugmasi, til, tungi rejim va shaxsiy profil.",
+   "section": "start",
+   "order": 30,
+   "routes": [
+    "profile"
+   ],
+   "reading_minutes": 3,
+   "locale": "uz",
+   "video": false,
+   "score": 25,
+   "snippet": "… pastki menyuda farzand sahifasining yorliqlari: «Umumiy», «Kundalik», «Testlar», «To&#039;lov va <mark>davomat».</mark> Oynalar (masalan, «Yangi o&#039;quvchi») pastdan chiqadi; yopish — o&#039;ng yuqoridagi belgi yoki oyna tashqarisini bosish. Jadvallar telefonda kartochka ko&#039;rinishida: har qator …"
+  },
+  {
+   "slug": "moliya-hisobotlari",
+   "title": "Moliya hisobotlari — tushum, xarajat, foyda va qarz",
+   "summary": "Oy yoki sanalar oralig'i bo'yicha tushum, xarajat, foyda va qarzni ko'rish, to'lovlar va qarzdorlarni Excel'ga yuklash.",
+   "section": "finance",
+   "order": 80,
+   "routes": [],
+   "reading_minutes": 2,
+   "locale": "uz",
+   "video": false,
+   "score": 25,
+   "snippet": "… Telegram: har kuni kun yakuni hisoboti (tushum, xarajat, qarzdorlar, lidlar, <mark>davomat)</mark> Telegram&#039;i bog&#039;langan rahbarlarga keladi. Vaqti va kimga yuborilishi «Sozlamalar → CRM ro&#039;yxatlari → Umumiy va chek» da sozlanadi: CRM ro&#039;yxatlari. Maslahatlar …"
+  },
+  {
+   "slug": "muammolar-va-yechimlar",
+   "title": "Muammolar va yechimlar",
+   "summary": "Tez-tez uchraydigan muammolar — kod kelmadi, to'lov tasdiqlanmadi, SMS ketmadi, Telegram bot javob bermaydi, mobil ilovaga kira olmayapman, yangilashdan keyin eski sahifa — sababi va nima qilish kerak.",
+   "section": "faq",
+   "order": 20,
+   "routes": [],
+   "reading_minutes": 6,
+   "locale": "uz",
+   "video": false,
+   "score": 25,
+   "snippet": "… «kelmadi» yoki «sababli» o&#039;quvchiga baho qo&#039;yilmaydi. Nima qilish kerak: avval <mark>davomatni</mark> o&#039;zgartiring — <mark>Davomat</mark> belgilash. «Dars hali o&#039;tilmagan». Nega: dars kelgusi sanaga yozilgan. Baho dars kuni qo&#039;yiladi. Testlar, AI va boshqalar Test …"
+  },
+  {
+   "slug": "ota-onani-boglash",
+   "title": "Ota-onani o'quvchiga bog'lash",
+   "summary": "Ota-onaga taklif havolasini yuborish, u ro'yxatdan o'tgach farzandini ko'rishi, parolni tiklash va uzish.",
+   "section": "students",
+   "order": 40,
+   "routes": [],
+   "reading_minutes": 2,
+   "locale": "uz",
+   "video": false,
+   "score": 25,
+   "snippet": "Ota-ona farzandining baholari, <mark>davomati,</mark> test natijalari va to&#039;lovlarini o&#039;z kabinetida ko&#039;radi. Buning uchun uni o&#039;quvchiga bog&#039;lash kerak — bu taklif havolasi orqali bo&#039;ladi. Qadamlar O&#039;quvchi …"
+  },
+  {
+   "slug": "dars-jadvali",
+   "title": "Dars jadvali",
+   "summary": "Kunlik va haftalik jadvalni ko'rish, avtomatik jadval tuzish va bitta darsni ko'chirish yoki bekor qilish.",
+   "section": "schedule",
+   "order": 10,
+   "routes": [
+    "timetable"
+   ],
+   "reading_minutes": 2,
+   "locale": "uz",
+   "video": false,
+   "score": 24,
+   "snippet": "… puli qaytariladi. «Qaytarish» — bekor qilingan yoki ko&#039;chirilgan darsni tiklash. <mark>Davomati</mark> belgilangan darsni ko&#039;chirib yoki bekor qilib bo&#039;lmaydi. Avtomatik tuzish Ko&#039;p guruhga birdaniga jadval kerak bo&#039;lsa (masalan, yangi o&#039;quv yili): «Avtomatik tuzish» …"
+  },
+  {
+   "slug": "dizayn-va-shablonlar",
+   "title": "Dizayn, shablonlar va tungi rejim",
+   "summary": "Tizim ko'rinishini o'zgartirish — kunduzgi va tungi rejim, asosiy rang, 5 ta shablon, shrift va uning o'lchami; kim nimani o'zgartiradi (platforma, tashkilot, har kim o'zi uchun) va telefondagi pastki menyu.",
+   "section": "settings",
+   "order": 15,
+   "routes": [],
+   "reading_minutes": 3,
+   "locale": "uz",
+   "video": false,
+   "score": 24,
+   "snippet": "… Ota-onada pastki menyuda farzand yorliqlari: «Umumiy», «Kundalik», «Testlar», «To&#039;lov va <mark>davomat».</mark> Batafsil: Menyu va qidiruv. Agar ishlamasa Tanlagan rangim saqlanmayapti. «Saqlash» bosilmagan yoki platforma egasi foydalanuvchiga rang tanlashni o&#039;chirgan. Yangilanishdan keyin eski …"
+  }
+ ],
+ "locale": "uz",
+ "requested_locale": "uz",
+ "fallback": false
+}

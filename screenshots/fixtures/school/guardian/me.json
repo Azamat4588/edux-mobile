@@ -1,0 +1,21 @@
+{
+ "user": {
+  "id": 5,
+  "name": "Ergashev Rustam",
+  "phone": "+998901110003",
+  "is_platform_admin": false,
+  "has_password": true,
+  "telegram_linked": false,
+  "appearance": {}
+ },
+ "memberships": [
+  {
+   "organization_id": 1,
+   "organization": "3-son umumta'lim maktabi",
+   "role": "guardian"
+  }
+ ],
+ "mode": "platform",
+ "new_requests": 0,
+ "new_support": 0
+}

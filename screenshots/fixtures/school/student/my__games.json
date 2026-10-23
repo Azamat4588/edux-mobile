@@ -1,0 +1,150 @@
+{
+ "sets": [
+  {
+   "id": 1,
+   "title": "Ingliz tili: kundalik so'zlar",
+   "description": "5-sinf, 1-chorak",
+   "count": 10,
+   "subject": null,
+   "subject_id": null,
+   "best": {
+    "match": null,
+    "memory": null,
+    "scramble": null,
+    "hangman": null,
+    "crossword": null,
+    "typing": null,
+    "flashcards": null,
+    "sorting": null
+   }
+  }
+ ],
+ "subjects": [
+  {
+   "id": 2,
+   "name": "Fizika",
+   "count": 110,
+   "best": null,
+   "records": {
+    "quiz": null,
+    "truefalse": null,
+    "millionaire": null,
+    "survival": null,
+    "duel": null
+   }
+  },
+  {
+   "id": 6,
+   "name": "Ingliz tili (IELTS)",
+   "count": 14,
+   "best": null,
+   "records": {
+    "quiz": null,
+    "truefalse": null,
+    "millionaire": null,
+    "survival": null,
+    "duel": null
+   }
+  },
+  {
+   "id": 1,
+   "name": "Matematika",
+   "count": 15,
+   "best": null,
+   "records": {
+    "quiz": null,
+    "truefalse": null,
+    "millionaire": null,
+    "survival": null,
+    "duel": null
+   }
+  },
+  {
+   "id": 7,
+   "name": "Nemis tili",
+   "count": 25,
+   "best": null,
+   "records": {
+    "quiz": null,
+    "truefalse": null,
+    "millionaire": null,
+    "survival": null,
+    "duel": null
+   }
+  }
+ ],
+ "levels": [
+  {
+   "id": 1,
+   "name": "1–4-sinf",
+   "records": {
+    "mathsprint": null,
+    "sequence": null,
+    "numsort": null
+   }
+  },
+  {
+   "id": 2,
+   "name": "5–6-sinf",
+   "records": {
+    "mathsprint": null,
+    "sequence": null,
+    "numsort": null
+   }
+  },
+  {
+   "id": 3,
+   "name": "7–9-sinf",
+   "records": {
+    "mathsprint": null,
+    "sequence": null,
+    "numsort": null
+   }
+  },
+  {
+   "id": 4,
+   "name": "10–11-sinf",
+   "records": {
+    "mathsprint": null,
+    "sequence": null,
+    "numsort": null
+   }
+  }
+ ],
+ "games": {
+  "quiz": "Viktorina-blits",
+  "truefalse": "To'g'ri yoki noto'g'ri",
+  "millionaire": "Millioner",
+  "survival": "Omon qol",
+  "duel": "Duel",
+  "match": "Juftini top",
+  "memory": "Xotira kartalari",
+  "scramble": "So'z yig'ish",
+  "hangman": "Dor",
+  "crossword": "Krossvord",
+  "typing": "Tez yozish",
+  "flashcards": "Flesh-kartalar",
+  "sorting": "Guruhlash",
+  "mathsprint": "Matematik sprint",
+  "sequence": "Ketma-ketlik",
+  "numsort": "Sonlarni guruhlash"
+ },
+ "sources": {
+  "quiz": "bank",
+  "truefalse": "bank",
+  "millionaire": "bank",
+  "survival": "bank",
+  "duel": "bank",
+  "match": "words",
+  "memory": "words",
+  "scramble": "words",
+  "hangman": "words",
+  "crossword": "words",
+  "typing": "words",
+  "flashcards": "words",
+  "sorting": "words",
+  "mathsprint": "math",
+  "sequence": "math",
+  "numsort": "math"
+ }
+}

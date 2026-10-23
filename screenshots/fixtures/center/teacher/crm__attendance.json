@@ -1,0 +1,83 @@
+{
+ "group": {
+  "id": 4,
+  "name": "M-9"
+ },
+ "date": "2026-10-23",
+ "lesson": null,
+ "score_max": 5,
+ "students": [
+  {
+   "id": 102,
+   "full_name": "Aliyeva Munisa",
+   "code": "149737",
+   "enrollment": "active",
+   "status": null,
+   "score": null,
+   "comment": null
+  },
+  {
+   "id": 103,
+   "full_name": "Ergashev Samandar",
+   "code": "904237",
+   "enrollment": "active",
+   "status": null,
+   "score": null,
+   "comment": null
+  },
+  {
+   "id": 104,
+   "full_name": "Hamroyeva Zilola",
+   "code": "612353",
+   "enrollment": "active",
+   "status": null,
+   "score": null,
+   "comment": null
+  },
+  {
+   "id": 106,
+   "full_name": "Komilova Shahzoda",
+   "code": "586731",
+   "enrollment": "active",
+   "status": null,
+   "score": null,
+   "comment": null
+  },
+  {
+   "id": 100,
+   "full_name": "Qosimova Sabina",
+   "code": "517192",
+   "enrollment": "active",
+   "status": null,
+   "score": null,
+   "comment": null
+  },
+  {
+   "id": 101,
+   "full_name": "Tojiboyev Diyorbek",
+   "code": "317356",
+   "enrollment": "active",
+   "status": null,
+   "score": null,
+   "comment": null
+  },
+  {
+   "id": 105,
+   "full_name": "Usmonov Abbos",
+   "code": "431848",
+   "enrollment": "active",
+   "status": null,
+   "score": null,
+   "comment": null
+  },
+  {
+   "id": 99,
+   "full_name": "Yo'ldoshev Asadbek",
+   "code": "985756",
+   "enrollment": "active",
+   "status": null,
+   "score": null,
+   "comment": null
+  }
+ ]
+}

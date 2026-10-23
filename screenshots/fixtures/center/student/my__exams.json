@@ -1,0 +1,122 @@
+{
+ "student": {
+  "id": 1,
+  "full_name": "Ergasheva Mohinur",
+  "code": "305619"
+ },
+ "exams": [
+  {
+   "id": 9,
+   "title": "Ingliz tili olimpiadasi — 1-tur",
+   "format": null,
+   "duration_minutes": 45,
+   "price": 0,
+   "starts_at": "2026-10-22T10:00:00.000000Z",
+   "ends_at": "2026-10-22T11:00:00.000000Z",
+   "state": "closed",
+   "attempt": null
+  },
+  {
+   "id": 8,
+   "title": "Matematika olimpiadasi — saralash bosqichi",
+   "format": null,
+   "duration_minutes": 60,
+   "price": 0,
+   "starts_at": "2026-10-19T15:42:55.000000Z",
+   "ends_at": "2026-10-19T17:42:55.000000Z",
+   "state": "closed",
+   "attempt": null
+  },
+  {
+   "id": 7,
+   "title": "Nemis tili — kuzgi olimpiada",
+   "format": null,
+   "duration_minutes": 40,
+   "price": 0,
+   "starts_at": "2026-10-19T15:08:45.000000Z",
+   "ends_at": "2026-10-19T19:08:45.000000Z",
+   "state": "closed",
+   "attempt": null
+  },
+  {
+   "id": 4,
+   "title": "Milliy sertifikat — matematika sinovi",
+   "format": "milliy",
+   "duration_minutes": 150,
+   "price": 0,
+   "starts_at": null,
+   "ends_at": null,
+   "state": "open",
+   "attempt": null
+  },
+  {
+   "id": 3,
+   "title": "IELTS Mock #2 — Oktyabr",
+   "format": "ielts",
+   "duration_minutes": 90,
+   "price": 0,
+   "starts_at": null,
+   "ends_at": null,
+   "state": "finished",
+   "attempt": {
+    "id": 6,
+    "source": "online",
+    "correct": 13,
+    "wrong": 2,
+    "blank": 0,
+    "score": 23.5,
+    "max_score": 30,
+    "finished_at": "2026-10-12T11:00:00.000000Z",
+    "pending": 0,
+    "overall": "Band 7.0",
+    "level": "C1"
+   }
+  },
+  {
+   "id": 2,
+   "title": "IELTS Mock #1 — Sentyabr",
+   "format": "ielts",
+   "duration_minutes": 90,
+   "price": 0,
+   "starts_at": null,
+   "ends_at": null,
+   "state": "finished",
+   "attempt": {
+    "id": 1,
+    "source": "online",
+    "correct": 9,
+    "wrong": 6,
+    "blank": 0,
+    "score": 17.5,
+    "max_score": 30,
+    "finished_at": "2026-09-14T11:00:00.000000Z",
+    "pending": 0,
+    "overall": "Band 5.5",
+    "level": "B2"
+   }
+  },
+  {
+   "id": 1,
+   "title": "Matematika: 2-chorak nazorat ishi",
+   "format": null,
+   "duration_minutes": 30,
+   "price": 25000,
+   "starts_at": null,
+   "ends_at": null,
+   "state": "finished",
+   "attempt": {
+    "id": 59,
+    "source": "online",
+    "correct": 8,
+    "wrong": 4,
+    "blank": 0,
+    "score": 8,
+    "max_score": 12,
+    "finished_at": "2026-10-19T16:27:06.000000Z",
+    "pending": 0,
+    "overall": null,
+    "level": null
+   }
+  }
+ ]
+}

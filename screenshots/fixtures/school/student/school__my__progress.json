@@ -1,0 +1,645 @@
+{
+ "student": {
+  "id": 1,
+  "full_name": "Ergasheva Mohinur"
+ },
+ "year": {
+  "id": 1,
+  "name": "2026–2027"
+ },
+ "current_term": {
+  "id": 1,
+  "name": "1-chorak"
+ },
+ "marks": [
+  {
+   "date": "2026-10-21",
+   "period_number": 5,
+   "subject": "Biologiya",
+   "topic": "Ekosistema",
+   "mark": 3,
+   "attendance": "present",
+   "note": null
+  },
+  {
+   "date": "2026-10-19",
+   "period_number": 5,
+   "subject": "Kimyo",
+   "topic": "Tuzlar gidrolizi",
+   "mark": 5,
+   "attendance": "present",
+   "note": null
+  },
+  {
+   "date": "2026-10-17",
+   "period_number": 1,
+   "subject": "Fizika",
+   "topic": "Mexanik tebranishlar",
+   "mark": 4,
+   "attendance": "present",
+   "note": null
+  },
+  {
+   "date": "2026-10-15",
+   "period_number": 5,
+   "subject": "Kimyo",
+   "topic": "Elektroliz",
+   "mark": 4,
+   "attendance": "present",
+   "note": null
+  },
+  {
+   "date": "2026-10-15",
+   "period_number": 4,
+   "subject": "Informatika",
+   "topic": "Ro'yxatlar",
+   "mark": 5,
+   "attendance": "present",
+   "note": null
+  },
+  {
+   "date": "2026-10-14",
+   "period_number": 5,
+   "subject": "Biologiya",
+   "topic": "Mendel qonunlari",
+   "mark": 5,
+   "attendance": "present",
+   "note": null
+  },
+  {
+   "date": "2026-10-14",
+   "period_number": 4,
+   "subject": "Geografiya",
+   "topic": "Sanoat geografiyasi",
+   "mark": 5,
+   "attendance": "present",
+   "note": null
+  },
+  {
+   "date": "2026-10-14",
+   "period_number": 1,
+   "subject": "Ona tili va adabiyot",
+   "topic": "Gap bo'laklari",
+   "mark": 4,
+   "attendance": "present",
+   "note": null
+  },
+  {
+   "date": "2026-10-13",
+   "period_number": 4,
+   "subject": "Informatika",
+   "topic": "Funksiyalar",
+   "mark": 5,
+   "attendance": "present",
+   "note": null
+  },
+  {
+   "date": "2026-10-13",
+   "period_number": 3,
+   "subject": "Tarix",
+   "topic": "Temuriylar davri madaniyati",
+   "mark": 3,
+   "attendance": "present",
+   "note": null
+  },
+  {
+   "date": "2026-10-13",
+   "period_number": 2,
+   "subject": "Matematika",
+   "topic": "Nazorat ishi",
+   "mark": 4,
+   "attendance": "present",
+   "note": null
+  },
+  {
+   "date": "2026-10-12",
+   "period_number": 2,
+   "subject": "Ona tili va adabiyot",
+   "topic": "Diktant",
+   "mark": 4,
+   "attendance": "present",
+   "note": null
+  },
+  {
+   "date": "2026-10-09",
+   "period_number": 4,
+   "subject": "Jismoniy tarbiya",
+   "topic": "Voleybol",
+   "mark": 4,
+   "attendance": "present",
+   "note": null
+  },
+  {
+   "date": "2026-10-08",
+   "period_number": 5,
+   "subject": "Kimyo",
+   "topic": "Oksidlanish-qaytarilish",
+   "mark": 4,
+   "attendance": "present",
+   "note": null
+  },
+  {
+   "date": "2026-10-08",
+   "period_number": 2,
+   "subject": "Fizika",
+   "topic": "Laboratoriya ishi",
+   "mark": 2,
+   "attendance": "present",
+   "note": "Uy vazifasini bajarmagan"
+  },
+  {
+   "date": "2026-10-08",
+   "period_number": 1,
+   "subject": "Matematika",
+   "topic": "Trigonometrik funksiyalar",
+   "mark": 3,
+   "attendance": "present",
+   "note": null
+  },
+  {
+   "date": "2026-10-07",
+   "period_number": 5,
+   "subject": "Biologiya",
+   "topic": "Nafas olish",
+   "mark": 4,
+   "attendance": "present",
+   "note": null
+  },
+  {
+   "date": "2026-10-07",
+   "period_number": 4,
+   "subject": "Geografiya",
+   "topic": "O'zbekiston relyefi",
+   "mark": 5,
+   "attendance": "present",
+   "note": null
+  },
+  {
+   "date": "2026-10-07",
+   "period_number": 3,
+   "subject": "Ingliz tili",
+   "topic": "Conditionals",
+   "mark": 4,
+   "attendance": "present",
+   "note": null
+  },
+  {
+   "date": "2026-10-06",
+   "period_number": 2,
+   "subject": "Matematika",
+   "topic": "Arifmetik progressiya",
+   "mark": 3,
+   "attendance": "present",
+   "note": null
+  },
+  {
+   "date": "2026-10-05",
+   "period_number": 5,
+   "subject": "Kimyo",
+   "topic": "Kimyoviy bog'lanish",
+   "mark": 5,
+   "attendance": "present",
+   "note": null
+  },
+  {
+   "date": "2026-10-03",
+   "period_number": 4,
+   "subject": "Biologiya",
+   "topic": "Fotosintez",
+   "mark": 5,
+   "attendance": "present",
+   "note": null
+  },
+  {
+   "date": "2026-10-03",
+   "period_number": 3,
+   "subject": "Jismoniy tarbiya",
+   "topic": "Basketbol: uzatish",
+   "mark": 4,
+   "attendance": "present",
+   "note": null
+  },
+  {
+   "date": "2026-10-02",
+   "period_number": 4,
+   "subject": "Jismoniy tarbiya",
+   "topic": "Yengil atletika",
+   "mark": 4,
+   "attendance": "present",
+   "note": null
+  },
+  {
+   "date": "2026-10-02",
+   "period_number": 3,
+   "subject": "Tarix",
+   "topic": "Jadidchilik harakati",
+   "mark": 4,
+   "attendance": "present",
+   "note": null
+  },
+  {
+   "date": "2026-10-02",
+   "period_number": 2,
+   "subject": "Matematika",
+   "topic": "Kvadrat tengsizliklar",
+   "mark": 4,
+   "attendance": "present",
+   "note": null
+  },
+  {
+   "date": "2026-10-02",
+   "period_number": 1,
+   "subject": "Ingliz tili",
+   "topic": "Vocabulary test",
+   "mark": 4,
+   "attendance": "late",
+   "note": null
+  },
+  {
+   "date": "2026-09-30",
+   "period_number": 5,
+   "subject": "Biologiya",
+   "topic": "Hujayra tuzilishi",
+   "mark": 5,
+   "attendance": "present",
+   "note": null
+  },
+  {
+   "date": "2026-09-30",
+   "period_number": 4,
+   "subject": "Geografiya",
+   "topic": "Iqlim mintaqalari",
+   "mark": 5,
+   "attendance": "present",
+   "note": null
+  },
+  {
+   "date": "2026-09-30",
+   "period_number": 3,
+   "subject": "Ingliz tili",
+   "topic": "Reported Speech",
+   "mark": 3,
+   "attendance": "present",
+   "note": null
+  },
+  {
+   "date": "2026-09-30",
+   "period_number": 2,
+   "subject": "Matematika",
+   "topic": "Kvadrat tenglamalar",
+   "mark": 3,
+   "attendance": "present",
+   "note": null
+  },
+  {
+   "date": "2026-09-30",
+   "period_number": 1,
+   "subject": "Ona tili va adabiyot",
+   "topic": "Gap bo'laklari",
+   "mark": 4,
+   "attendance": "late",
+   "note": null
+  },
+  {
+   "date": "2026-09-29",
+   "period_number": 3,
+   "subject": "Tarix",
+   "topic": "Buxoro xonligi",
+   "mark": 3,
+   "attendance": "present",
+   "note": null
+  },
+  {
+   "date": "2026-09-29",
+   "period_number": 2,
+   "subject": "Matematika",
+   "topic": "Nazorat ishi",
+   "mark": 3,
+   "attendance": "present",
+   "note": null
+  },
+  {
+   "date": "2026-09-28",
+   "period_number": 5,
+   "subject": "Kimyo",
+   "topic": "Atom tuzilishi",
+   "mark": 5,
+   "attendance": "present",
+   "note": null
+  },
+  {
+   "date": "2026-09-28",
+   "period_number": 4,
+   "subject": "Geografiya",
+   "topic": "Litosfera",
+   "mark": 4,
+   "attendance": "present",
+   "note": null
+  },
+  {
+   "date": "2026-09-28",
+   "period_number": 3,
+   "subject": "Ingliz tili",
+   "topic": "Speaking: Travelling",
+   "mark": 4,
+   "attendance": "present",
+   "note": null
+  },
+  {
+   "date": "2026-09-26",
+   "period_number": 2,
+   "subject": "Ona tili va adabiyot",
+   "topic": "Abdulla Qodiriy. «O'tkan kunlar»",
+   "mark": 3,
+   "attendance": "present",
+   "note": null
+  },
+  {
+   "date": "2026-09-25",
+   "period_number": 3,
+   "subject": "Tarix",
+   "topic": "Temuriylar davri madaniyati",
+   "mark": 4,
+   "attendance": "present",
+   "note": null
+  },
+  {
+   "date": "2026-09-25",
+   "period_number": 2,
+   "subject": "Matematika",
+   "topic": "Logarifmlar",
+   "mark": 2,
+   "attendance": "present",
+   "note": "Uy vazifasini bajarmagan"
+  }
+ ],
+ "absences": [
+  {
+   "date": "2026-10-20",
+   "period_number": 4,
+   "subject": "Informatika",
+   "topic": "Fayllar bilan ishlash",
+   "mark": null,
+   "attendance": "absent",
+   "note": null
+  },
+  {
+   "date": "2026-10-16",
+   "period_number": 4,
+   "subject": "Jismoniy tarbiya",
+   "topic": "Futbol",
+   "mark": null,
+   "attendance": "absent",
+   "note": null
+  },
+  {
+   "date": "2026-10-09",
+   "period_number": 2,
+   "subject": "Matematika",
+   "topic": "Logarifmlar",
+   "mark": null,
+   "attendance": "absent",
+   "note": null
+  },
+  {
+   "date": "2026-10-05",
+   "period_number": 1,
+   "subject": "Matematika",
+   "topic": "Funksiya va uning grafigi",
+   "mark": null,
+   "attendance": "absent",
+   "note": null
+  },
+  {
+   "date": "2026-10-02",
+   "period_number": 1,
+   "subject": "Ingliz tili",
+   "topic": "Vocabulary test",
+   "mark": 4,
+   "attendance": "late",
+   "note": null
+  },
+  {
+   "date": "2026-09-30",
+   "period_number": 1,
+   "subject": "Ona tili va adabiyot",
+   "topic": "Gap bo'laklari",
+   "mark": 4,
+   "attendance": "late",
+   "note": null
+  },
+  {
+   "date": "2026-09-28",
+   "period_number": 2,
+   "subject": "Ona tili va adabiyot",
+   "topic": "Diktant",
+   "mark": null,
+   "attendance": "absent",
+   "note": null
+  },
+  {
+   "date": "2026-09-16",
+   "period_number": 1,
+   "subject": "Ona tili va adabiyot",
+   "topic": "Gap bo'laklari",
+   "mark": null,
+   "attendance": "excused",
+   "note": "Shifokor ma'lumotnomasi"
+  },
+  {
+   "date": "2026-09-14",
+   "period_number": 3,
+   "subject": "Ingliz tili",
+   "topic": "Reported Speech",
+   "mark": null,
+   "attendance": "late",
+   "note": null
+  },
+  {
+   "date": "2026-09-08",
+   "period_number": 1,
+   "subject": "Fizika",
+   "topic": "Ish va energiya",
+   "mark": null,
+   "attendance": "excused",
+   "note": "Shifokor ma'lumotnomasi"
+  },
+  {
+   "date": "2026-09-07",
+   "period_number": 2,
+   "subject": "Ona tili va adabiyot",
+   "topic": "Bobur ruboiylari",
+   "mark": null,
+   "attendance": "absent",
+   "note": null
+  },
+  {
+   "date": "2026-09-05",
+   "period_number": 2,
+   "subject": "Ona tili va adabiyot",
+   "topic": "Alisher Navoiy ijodi",
+   "mark": null,
+   "attendance": "excused",
+   "note": "Shifokor ma'lumotnomasi"
+  }
+ ],
+ "absence_totals": {
+  "absent": 6,
+  "excused": 3,
+  "late": 3
+ },
+ "terms": [
+  {
+   "id": 1,
+   "name": "1-chorak",
+   "position": 1
+  },
+  {
+   "id": 2,
+   "name": "2-chorak",
+   "position": 2
+  },
+  {
+   "id": 3,
+   "name": "3-chorak",
+   "position": 3
+  },
+  {
+   "id": 4,
+   "name": "4-chorak",
+   "position": 4
+  }
+ ],
+ "subjects": [
+  {
+   "id": 9,
+   "name": "Biologiya",
+   "terms": {
+    "1": null,
+    "2": null,
+    "3": null,
+    "4": null
+   },
+   "year": null,
+   "current_average": 4.4,
+   "current_marks": 5
+  },
+  {
+   "id": 2,
+   "name": "Fizika",
+   "terms": {
+    "1": null,
+    "2": null,
+    "3": null,
+    "4": null
+   },
+   "year": null,
+   "current_average": 3.2,
+   "current_marks": 5
+  },
+  {
+   "id": 10,
+   "name": "Geografiya",
+   "terms": {
+    "1": null,
+    "2": null,
+    "3": null,
+    "4": null
+   },
+   "year": null,
+   "current_average": 4.75,
+   "current_marks": 4
+  },
+  {
+   "id": 11,
+   "name": "Informatika",
+   "terms": {
+    "1": null,
+    "2": null,
+    "3": null,
+    "4": null
+   },
+   "year": null,
+   "current_average": 5,
+   "current_marks": 2
+  },
+  {
+   "id": 4,
+   "name": "Ingliz tili",
+   "terms": {
+    "1": null,
+    "2": null,
+    "3": null,
+    "4": null
+   },
+   "year": null,
+   "current_average": 3.33,
+   "current_marks": 9
+  },
+  {
+   "id": 12,
+   "name": "Jismoniy tarbiya",
+   "terms": {
+    "1": null,
+    "2": null,
+    "3": null,
+    "4": null
+   },
+   "year": null,
+   "current_average": 4,
+   "current_marks": 3
+  },
+  {
+   "id": 8,
+   "name": "Kimyo",
+   "terms": {
+    "1": null,
+    "2": null,
+    "3": null,
+    "4": null
+   },
+   "year": null,
+   "current_average": 4.6,
+   "current_marks": 5
+  },
+  {
+   "id": 1,
+   "name": "Matematika",
+   "terms": {
+    "1": null,
+    "2": null,
+    "3": null,
+    "4": null
+   },
+   "year": null,
+   "current_average": 3.18,
+   "current_marks": 11
+  },
+  {
+   "id": 3,
+   "name": "Ona tili va adabiyot",
+   "terms": {
+    "1": null,
+    "2": null,
+    "3": null,
+    "4": null
+   },
+   "year": null,
+   "current_average": 3.5,
+   "current_marks": 8
+  },
+  {
+   "id": 5,
+   "name": "Tarix",
+   "terms": {
+    "1": null,
+    "2": null,
+    "3": null,
+    "4": null
+   },
+   "year": null,
+   "current_average": 3.4,
+   "current_marks": 5
+  }
+ ]
+}

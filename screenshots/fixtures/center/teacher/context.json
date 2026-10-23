@@ -1,0 +1,45 @@
+{
+ "organization": {
+  "id": 1,
+  "name": "Ilm yo'li o'quv markazi",
+  "type": "center",
+  "subdomain": null,
+  "type_label": "O'quv markaz",
+  "logo_url": null,
+  "url": null
+ },
+ "theme": [],
+ "terms": {
+  "group": "Guruh",
+  "groups": "Guruhlar",
+  "student": "O'quvchi",
+  "students": "O'quvchilar"
+ },
+ "mode": "platform",
+ "guest": false,
+ "role": "teacher",
+ "modules": [
+  "testing",
+  "crm",
+  "lms"
+ ],
+ "features": [
+  "ai",
+  "callcenter",
+  "sms",
+  "olympiad",
+  "access",
+  "fun",
+  "telegram"
+ ],
+ "coins_enabled": true,
+ "subscription": {
+  "status": "active",
+  "can_write": true,
+  "suspended": false,
+  "ends_at": "2026-12-28T18:52:34.000000Z",
+  "read_only_at": "2027-01-02T18:52:34.000000Z"
+ },
+ "timezone": "Asia/Tashkent",
+ "telegram_bot": "edux_demo_bot"
+}

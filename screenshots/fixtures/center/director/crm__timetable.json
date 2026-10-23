@@ -1,0 +1,53 @@
+{
+ "from": "2026-10-23",
+ "to": "2026-10-23",
+ "rooms": [
+  {
+   "id": 1,
+   "name": "2-xona",
+   "capacity": 12
+  },
+  {
+   "id": 2,
+   "name": "4-xona",
+   "capacity": 10
+  },
+  {
+   "id": 3,
+   "name": "Katta zal",
+   "capacity": 30
+  }
+ ],
+ "items": [
+  {
+   "kind": "crm",
+   "date": "2026-10-23",
+   "start": "15:00",
+   "end": "16:30",
+   "group": {
+    "id": 1,
+    "name": "M-11"
+   },
+   "teacher": "Rustamov Akmal",
+   "course": "Matematika (abituriyent)",
+   "room_id": 1,
+   "room": "2-xona",
+   "status": "planned"
+  },
+  {
+   "kind": "crm",
+   "date": "2026-10-23",
+   "start": "17:00",
+   "end": "18:30",
+   "group": {
+    "id": 4,
+    "name": "M-9"
+   },
+   "teacher": "Karimova Nodira",
+   "course": "Matematika (abituriyent)",
+   "room_id": 2,
+   "room": "4-xona",
+   "status": "planned"
+  }
+ ]
+}

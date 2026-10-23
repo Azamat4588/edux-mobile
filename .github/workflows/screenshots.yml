@@ -1,0 +1,70 @@
+# Ilova skrinshotlari (README, do'konlar, yordam maqolalari): screenshots/shots_test.dart demo ma'lumot bilan
+# 390×844 @3x PNG chizadi va ularni `screenshots` branch'iga yozadi (artifact o'rniga — git orqali olish oson:
+# `git fetch origin screenshots && git checkout origin/screenshots -- .`). Faqat qo'lda ishga tushiriladi.
+name: Screenshots
+
+on:
+  workflow_dispatch:
+  # workflow_dispatch faqat asosiy branch'dagi faylda ishlaydi — ish branch'ida commit xabarida «[skrinshot]» bo'lsa ham.
+  push:
+    branches-ignore: [screenshots]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: screenshots
+  cancel-in-progress: true
+
+jobs:
+  shots:
+    if: github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[skrinshot]')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Paketlar
+        run: flutter pub get
+
+      - name: Skrinshotlar
+        run: |
+          set -o pipefail
+          flutter test screenshots/shots_test.dart 2>&1 | tee shots.log
+          ls -la screenshots/out
+
+      - name: Xato tafsilotlari
+        if: failure()
+        run: |
+          grep -nE "(Error|error:|FAILED|Expected|Actual|Exception|\.dart:[0-9]+:[0-9]+|Some tests failed|Fixture topilmadi|^[a-z]+/[a-z]+ (GET|POST))" shots.log | head -40 | while IFS= read -r line; do
+            echo "::error title=shots::$(echo "$line" | cut -c1-900)"
+          done
+
+      - name: screenshots branch'iga yozish
+        if: always()
+        run: |
+          set -e
+          [ -d screenshots/out ] && [ -n "$(ls screenshots/out)" ] || { echo "::warning::rasm yo'q"; exit 0; }
+          src="$GITHUB_SHA"
+          mkdir -p /tmp/shots && cp screenshots/out/*.png /tmp/shots/ && cp shots.log /tmp/shots/ || true
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # Tarix saqlanadi (force-push yo'q): branch bo'lsa — uning ustiga yangi commit, bo'lmasa — yangi (orphan) branch.
+          if git fetch -q origin screenshots 2>/dev/null; then
+            git checkout -q -B screenshots FETCH_HEAD
+          else
+            git checkout -q --orphan screenshots
+          fi
+          git rm -rfq . > /dev/null 2>&1 || true
+          rm -rf screenshots
+          cp /tmp/shots/* .
+          printf '# EduX mobil skrinshotlari\n\nManba: %s (%s)\n' "$src" "$(date -u +%Y-%m-%dT%H:%MZ)" > README.md
+          git add -A
+          git commit -qm "Skrinshotlar: $src" || echo "o'zgarish yo'q"
+          git push origin screenshots
+          echo "::notice::$(ls /tmp/shots/*.png | wc -l) ta rasm screenshots branch'ida"

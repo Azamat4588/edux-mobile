@@ -1,0 +1,308 @@
+{
+ "labs": [
+  {
+   "code": "pendulum",
+   "name": "Matematik mayatnik",
+   "subject": "Fizika",
+   "grades": "7–9",
+   "description": "Ip uzunligi va tebranish davri orasidagi bog'lanish.",
+   "passed": 0
+  },
+  {
+   "code": "projectile",
+   "name": "Gorizontga burchak ostida otish",
+   "subject": "Fizika",
+   "grades": "9–10",
+   "description": "Boshlang'ich tezlik va burchakka qarab uchish uzoqligi.",
+   "passed": 0
+  },
+  {
+   "code": "ohm",
+   "name": "Om qonuni",
+   "subject": "Fizika",
+   "grades": "8",
+   "description": "Kuchlanish, qarshilik va tok kuchi: ampermetr va voltmetr bilan.",
+   "passed": 0
+  },
+  {
+   "code": "lens",
+   "name": "Yupqa linza",
+   "subject": "Fizika",
+   "grades": "8–9",
+   "description": "Buyum, linza va tasvir: fokus masofasini aniqlash.",
+   "passed": 0
+  },
+  {
+   "code": "titration",
+   "name": "Kislota-ishqor titrlash",
+   "subject": "Kimyo",
+   "grades": "9–11",
+   "description": "Byuretkadan ishqor tomizib, neytrallanish nuqtasini topish.",
+   "passed": 0
+  },
+  {
+   "code": "parabola",
+   "name": "Kvadrat funksiya grafigi",
+   "subject": "Matematika",
+   "grades": "8–9",
+   "description": "a, b, c koeffitsiyentlari parabolani qanday o'zgartiradi.",
+   "passed": 0
+  },
+  {
+   "code": "genetics",
+   "name": "Mendel qonunlari",
+   "subject": "Biologiya",
+   "grades": "9–10",
+   "description": "Punnet katagi: belgining avlodda namoyon bo'lish ehtimoli.",
+   "passed": 0
+  },
+  {
+   "code": "binary",
+   "name": "Ikkilik sanoq sistemasi",
+   "subject": "Informatika",
+   "grades": "5–7",
+   "description": "Bitlarni yoqib-o'chirib, ikkilik sonni o'nlik songa o'tkazish.",
+   "passed": 0
+  },
+  {
+   "code": "logic",
+   "name": "Mantiqiy elementlar",
+   "subject": "Informatika",
+   "grades": "7–9",
+   "description": "AND, OR, NOT va XOR elementlaridan tuzilgan sxemaning chiqishini aniqlash.",
+   "passed": 0
+  },
+  {
+   "code": "sorting",
+   "name": "Saralash algoritmi",
+   "subject": "Informatika",
+   "grades": "8–10",
+   "description": "Pufakcha usulida saralash: taqqoslash va almashtirishlarni qadamma-qadam kuzatish.",
+   "passed": 0
+  },
+  {
+   "code": "loop",
+   "name": "Tsikl va o'zgaruvchi",
+   "subject": "Informatika",
+   "grades": "7–9",
+   "description": "Dastur bajarilishini qadamma-qadam kuzatib, o'zgaruvchi qiymatini topish.",
+   "passed": 0
+  },
+  {
+   "code": "mapscale",
+   "name": "Xarita masshtabi",
+   "subject": "Geografiya",
+   "grades": "5–6",
+   "description": "Xaritadagi masofani masshtab yordamida haqiqiy masofaga aylantirish.",
+   "passed": 0
+  },
+  {
+   "code": "linear",
+   "name": "Chiziqli funksiya",
+   "subject": "Matematika",
+   "grades": "7–8",
+   "description": "y = kx + b: k va b to'g'ri chiziqning qiyaligi va o'rnini qanday o'zgartiradi.",
+   "passed": 0
+  },
+  {
+   "code": "pythagoras",
+   "name": "Pifagor teoremasi",
+   "subject": "Matematika",
+   "grades": "8",
+   "description": "To'g'ri burchakli uchburchak tomonlari ustidagi kvadratlar yuzasi.",
+   "passed": 0
+  },
+  {
+   "code": "probability",
+   "name": "Ehtimollik: ikki kubik",
+   "subject": "Matematika",
+   "grades": "9–10",
+   "description": "Kubiklarni ko'p marta tashlab, tajriba va nazariy ehtimollikni solishtirish.",
+   "passed": 0
+  },
+  {
+   "code": "ecopyramid",
+   "name": "Ekologik piramida",
+   "subject": "Biologiya",
+   "grades": "9–11",
+   "description": "Oziq zanjirida energiya: har bir pog'onaga taxminan 10% o'tadi.",
+   "passed": 0
+  },
+  {
+   "code": "pulse",
+   "name": "Yurak urishi",
+   "subject": "Biologiya",
+   "grades": "8",
+   "description": "Pulsni sanash va jismoniy yuklama uning tezligiga ta'siri.",
+   "passed": 0
+  },
+  {
+   "code": "buoyancy",
+   "name": "Arximed kuchi",
+   "subject": "Fizika",
+   "grades": "7",
+   "description": "Dinamometr bilan suyuqlikka botirilgan jismga ta'sir qiluvchi itaruvchi kuchni o'lchash.",
+   "passed": 0
+  },
+  {
+   "code": "newton2",
+   "name": "Nyutonning ikkinchi qonuni",
+   "subject": "Fizika",
+   "grades": "7–9",
+   "description": "Kuch, massa va ishqalanish aravachaning tezlanishini qanday o'zgartiradi.",
+   "passed": 0
+  },
+  {
+   "code": "freefall",
+   "name": "Erkin tushish",
+   "subject": "Fizika",
+   "grades": "7–9",
+   "description": "Balandlik, tushish vaqti va yerga urilish tezligi: sekundomer bilan.",
+   "passed": 0
+  },
+  {
+   "code": "molar",
+   "name": "Modda miqdori va molyar massa",
+   "subject": "Kimyo",
+   "grades": "7–8",
+   "description": "Tarozida tortib, molyar massa orqali modda miqdorini (mol) topish.",
+   "passed": 0
+  },
+  {
+   "code": "gas",
+   "name": "Gaz qonunlari",
+   "subject": "Kimyo",
+   "grades": "8–10",
+   "description": "Porshenli silindrda gaz bosimi, hajmi va harorati: pV = nRT.",
+   "passed": 0
+  },
+  {
+   "code": "circuit_series",
+   "name": "Ketma-ket va parallel ulanish",
+   "subject": "Fizika",
+   "grades": "8",
+   "description": "Ikki rezistor: umumiy qarshilik va tok kuchini ampermetr bilan o'lchash.",
+   "passed": 0
+  },
+  {
+   "code": "heat",
+   "name": "Issiqlik miqdori",
+   "subject": "Fizika",
+   "grades": "8",
+   "description": "Kalorimetrda isitish: Q = cmΔt, termometr va energiya hisoblagichi bilan.",
+   "passed": 0
+  },
+  {
+   "code": "reflection",
+   "name": "Yorug'lik qaytishi va sinishi",
+   "subject": "Fizika",
+   "grades": "8–9",
+   "description": "Nur ikki muhit chegarasida: Snell qonuni va to'liq ichki qaytish.",
+   "passed": 0
+  },
+  {
+   "code": "wave",
+   "name": "To'lqin uzunligi va chastota",
+   "subject": "Fizika",
+   "grades": "9",
+   "description": "Shnurdagi to'lqin: v = λν, to'lqin uzunligini chizg'ich bilan o'lchash.",
+   "passed": 0
+  },
+  {
+   "code": "pressure",
+   "name": "Suyuqlik bosimi",
+   "subject": "Fizika",
+   "grades": "7",
+   "description": "Manometr bilan chuqurlikdagi gidrostatik bosimni o'lchash: p = ρgh.",
+   "passed": 0
+  },
+  {
+   "code": "ph",
+   "name": "pH va indikatorlar",
+   "subject": "Kimyo",
+   "grades": "8–9",
+   "description": "Kislota va ishqor eritmalari: konsentratsiya, suyultirish va pH-metr.",
+   "passed": 0
+  },
+  {
+   "code": "solution",
+   "name": "Eritma konsentratsiyasi",
+   "subject": "Kimyo",
+   "grades": "8",
+   "description": "Tuz va suvdan eritma tayyorlash: massa ulushi, aralashtirish va suyultirish.",
+   "passed": 0
+  },
+  {
+   "code": "reaction_rate",
+   "name": "Reaksiya tezligi",
+   "subject": "Kimyo",
+   "grades": "9",
+   "description": "Rux va xlorid kislota: harorat va konsentratsiya gaz ajralish tezligiga ta'siri.",
+   "passed": 0
+  },
+  {
+   "code": "trig",
+   "name": "Birlik aylana va trigonometriya",
+   "subject": "Matematika",
+   "grades": "9–10",
+   "description": "Aylanadagi nuqta koordinatalari: sin α va cos α qiymatlari.",
+   "passed": 0
+  },
+  {
+   "code": "stats",
+   "name": "O'rtacha, mediana, moda",
+   "subject": "Matematika",
+   "grades": "6–7",
+   "description": "Nuqtali diagramma va muvozanat richagi: ma'lumotlar markazini topish.",
+   "passed": 0
+  },
+  {
+   "code": "percent",
+   "name": "Foiz va chegirma",
+   "subject": "Matematika",
+   "grades": "5–7",
+   "description": "Do'kon simulyatsiyasi: chegirmadan keyingi narx va chegirma foizi.",
+   "passed": 0
+  },
+  {
+   "code": "photosynthesis",
+   "name": "Fotosintez",
+   "subject": "Biologiya",
+   "grades": "6–7",
+   "description": "Elodeya: yorug'lik va CO₂ kislorod pufakchalari ajralish tezligiga ta'siri.",
+   "passed": 0
+  },
+  {
+   "code": "cell",
+   "name": "Hujayra va mikroskop",
+   "subject": "Biologiya",
+   "grades": "6",
+   "description": "Mikroskop kattalashtirishi va okulyar shkala bilan hujayra o'lchamini topish.",
+   "passed": 0
+  },
+  {
+   "code": "network",
+   "name": "IP manzil va tarmoq niqobi",
+   "subject": "Informatika",
+   "grades": "9–10",
+   "description": "IP manzil va niqob bitlari: tarmoq manzili va hostlar soni.",
+   "passed": 0
+  },
+  {
+   "code": "flowchart",
+   "name": "Algoritm blok-sxemasi",
+   "subject": "Informatika",
+   "grades": "7–8",
+   "description": "Blok-sxemani qadamma-qadam bajarib, natijani aniqlash.",
+   "passed": 0
+  },
+  {
+   "code": "climate",
+   "name": "Iqlim diagrammasi",
+   "subject": "Geografiya",
+   "grades": "7",
+   "description": "Oylik harorat va yog'in grafigi: o'rtacha harorat, amplituda, yog'in yig'indisi.",
+   "passed": 0
+  }
+ ]
+}

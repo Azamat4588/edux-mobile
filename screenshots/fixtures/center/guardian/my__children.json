@@ -1,0 +1,63 @@
+{
+ "children": [
+  {
+   "id": 1,
+   "full_name": "Ergasheva Mohinur",
+   "code": "305619",
+   "groups": [
+    "M-11",
+    "ING-5"
+   ],
+   "attempts": [
+    {
+     "id": 59,
+     "source": "online",
+     "correct": 8,
+     "wrong": 4,
+     "blank": 0,
+     "score": 8,
+     "max_score": 12,
+     "finished_at": "2026-10-19T16:27:06.000000Z",
+     "pending": 0,
+     "overall": null,
+     "level": null,
+     "exam": "Matematika: 2-chorak nazorat ishi"
+    },
+    {
+     "id": 6,
+     "source": "online",
+     "correct": 13,
+     "wrong": 2,
+     "blank": 0,
+     "score": 23.5,
+     "max_score": 30,
+     "finished_at": "2026-10-12T11:00:00.000000Z",
+     "pending": 0,
+     "overall": "Band 7.0",
+     "level": "C1",
+     "exam": "IELTS Mock #2 — Oktyabr"
+    },
+    {
+     "id": 1,
+     "source": "online",
+     "correct": 9,
+     "wrong": 6,
+     "blank": 0,
+     "score": 17.5,
+     "max_score": 30,
+     "finished_at": "2026-09-14T11:00:00.000000Z",
+     "pending": 0,
+     "overall": "Band 5.5",
+     "level": "B2",
+     "exam": "IELTS Mock #1 — Sentyabr"
+    }
+   ],
+   "balance": 0
+  }
+ ],
+ "modules": [
+  "testing",
+  "crm",
+  "lms"
+ ]
+}

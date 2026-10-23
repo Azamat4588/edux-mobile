@@ -1,0 +1,136 @@
+{
+ "query": "davomat",
+ "results": [
+  {
+   "slug": "farzandim",
+   "title": "«Farzandim» — ota-ona kabineti",
+   "summary": "Ota-ona farzandining umumiy holati, kundaligi, test natijalari, to'lovlari va davomatini bitta sahifada ko'radi.",
+   "section": "parent",
+   "order": 10,
+   "routes": [
+    "child",
+    "child.tests",
+    "child.courses"
+   ],
+   "reading_minutes": 2,
+   "locale": "uz",
+   "video": false,
+   "score": 39,
+   "snippet": "… Unda farzandingizning o&#039;qishi bo&#039;yicha barcha ma&#039;lumot to&#039;plangan: baholar, testlar, kurslar, <mark>davomat</mark> va to&#039;lovlar. Yorliqlar tashkilotda yoqilgan imkoniyatlarga qarab chiqadi. Qanday ulanish mumkin O&#039;quv markazi yoki maktab administratori sizga ota-onalar uchun taklif havolasini …"
+  },
+  {
+   "slug": "kop-beriladigan-savollar",
+   "title": "Ko'p beriladigan savollar",
+   "summary": "Direktor, kassir, o'qituvchi, ota-ona, o'quvchi va platforma egasi eng ko'p so'raydigan savollarga qisqa javoblar — kirish, parol, to'lov, SMS, davomat, jurnal, testlar, mobil ilova va yangilash.",
+   "section": "faq",
+   "order": 10,
+   "routes": [],
+   "reading_minutes": 5,
+   "locale": "uz",
+   "video": false,
+   "score": 39,
+   "snippet": "… «Kassa» → «Smenani yopish» — Kassir ish kuni, Kassa. O&#039;qituvchi <mark>Davomatni</mark> telefonda qilsa bo&#039;ladimi? Ha: mobil ilovada <mark>«Davomat</mark> qilish». Maktabda jurnal ham telefonda: «Sinflarim → Jurnal» — O&#039;qituvchi telefonda. Boshqa guruhlarni ko&#039;ramanmi? …"
+  },
+  {
+   "slug": "mobil-ilova-ornatish",
+   "title": "Mobil ilovani o'rnatish va unga kirish",
+   "summary": "EduX Android ilovasini o'rnatish, kirish usullari, ilovadagi imkoniyatlar, iPhone'da brauzer va Telegram orqali ishlash; kira olmasangiz nima qilish kerak.",
+   "section": "mobile",
+   "order": 10,
+   "routes": [
+    "apps"
+   ],
+   "reading_minutes": 4,
+   "locale": "uz",
+   "video": false,
+   "score": 27,
+   "snippet": "… Android uchun mobil ilovasi bor: o&#039;qituvchi unda varaqa skanerlaydi va <mark>davomat</mark> qiladi, o&#039;quvchi test va kurslarni ochadi, ota-ona farzandini kuzatadi, rahbar moliya va call markazini ko&#039;radi. Ilova o&#039;zbek, rus va ingliz tillarida …"
+  },
+  {
+   "slug": "kundalik",
+   "title": "Elektron kundalik: jadval, uy vazifasi va baholar",
+   "summary": "O'quvchi va ota-ona haftalik dars jadvali, mavzu, uy vazifasi, baholar va qoldirilgan darslarni kundalikda ko'radi.",
+   "section": "school",
+   "order": 60,
+   "routes": [
+    "school.diary",
+    "child.diary"
+   ],
+   "reading_minutes": 2,
+   "locale": "uz",
+   "video": false,
+   "score": 25,
+   "snippet": "… vaqti, fan, o&#039;qituvchi va xona, mavzu, «Uy vazifasi», baho va <mark>davomat</mark> belgisi. Bugungi kun «Bugun» belgisi bilan ajratiladi. Boshqa haftaga o&#039;tish uchun «← Oldingi» va «Keyingi →» tugmalarini bosing; qaytish uchun — …"
+  },
+  {
+   "slug": "menyu-va-qidiruv",
+   "title": "Menyu, qidiruv, til va ko'rinish",
+   "summary": "Chap menyu va telefondagi pastki menyu, bosh sahifa, Ctrl K qidiruvi, «?» yordam tugmasi, til, tungi rejim va shaxsiy profil.",
+   "section": "start",
+   "order": 30,
+   "routes": [
+    "profile"
+   ],
+   "reading_minutes": 3,
+   "locale": "uz",
+   "video": false,
+   "score": 25,
+   "snippet": "… pastki menyuda farzand sahifasining yorliqlari: «Umumiy», «Kundalik», «Testlar», «To&#039;lov va <mark>davomat».</mark> Oynalar (masalan, «Yangi o&#039;quvchi») pastdan chiqadi; yopish — o&#039;ng yuqoridagi belgi yoki oyna tashqarisini bosish. Jadvallar telefonda kartochka ko&#039;rinishida: har qator …"
+  },
+  {
+   "slug": "muammolar-va-yechimlar",
+   "title": "Muammolar va yechimlar",
+   "summary": "Tez-tez uchraydigan muammolar — kod kelmadi, to'lov tasdiqlanmadi, SMS ketmadi, Telegram bot javob bermaydi, mobil ilovaga kira olmayapman, yangilashdan keyin eski sahifa — sababi va nima qilish kerak.",
+   "section": "faq",
+   "order": 20,
+   "routes": [],
+   "reading_minutes": 6,
+   "locale": "uz",
+   "video": false,
+   "score": 25,
+   "snippet": "… «kelmadi» yoki «sababli» o&#039;quvchiga baho qo&#039;yilmaydi. Nima qilish kerak: avval <mark>davomatni</mark> o&#039;zgartiring — <mark>Davomat</mark> belgilash. «Dars hali o&#039;tilmagan». Nega: dars kelgusi sanaga yozilgan. Baho dars kuni qo&#039;yiladi. Testlar, AI va boshqalar Test …"
+  },
+  {
+   "slug": "dizayn-va-shablonlar",
+   "title": "Dizayn, shablonlar va tungi rejim",
+   "summary": "Tizim ko'rinishini o'zgartirish — kunduzgi va tungi rejim, asosiy rang, 5 ta shablon, shrift va uning o'lchami; kim nimani o'zgartiradi (platforma, tashkilot, har kim o'zi uchun) va telefondagi pastki menyu.",
+   "section": "settings",
+   "order": 15,
+   "routes": [],
+   "reading_minutes": 3,
+   "locale": "uz",
+   "video": false,
+   "score": 24,
+   "snippet": "… Ota-onada pastki menyuda farzand yorliqlari: «Umumiy», «Kundalik», «Testlar», «To&#039;lov va <mark>davomat».</mark> Batafsil: Menyu va qidiruv. Agar ishlamasa Tanlagan rangim saqlanmayapti. «Saqlash» bosilmagan yoki platforma egasi foydalanuvchiga rang tanlashni o&#039;chirgan. Yangilanishdan keyin eski …"
+  },
+  {
+   "slug": "kompyuter-ilovasi",
+   "title": "Kompyuter ilovasi (Windows, macOS, Linux)",
+   "summary": "EduX'ni kompyuterga alohida ilova qilib o'rnatish — yuklab olish, birinchi ishga tushirish, chop etish va fayllarni saqlash, skaner qurilmasi, yangi versiya xabari va internet uzilganda nima bo'ladi.",
+   "section": "mobile",
+   "order": 15,
+   "routes": [],
+   "reading_minutes": 3,
+   "locale": "uz",
+   "video": false,
+   "score": 24,
+   "snippet": "… QR/shtrix-kod skaneri) — brauzerdagidek ishlaydi: QR karta va skaner bilan <mark>davomat.</mark> Kamera va mikrofon — Face ID kiosk va call-markaz uchun. macOS birinchi marta ruxsat so&#039;raydi. Menyu: «Qayta yuklash» (Ctrl+R), kattalashtirish (Ctrl …"
+  },
+  {
+   "slug": "push-bildirishnomalar",
+   "title": "Mobil ilovadagi bildirishnomalar (push)",
+   "summary": "Mobil ilovaga qanday bildirishnomalar keladi, ular qayerda saqlanadi va bosilganda qaysi sahifa ochiladi.",
+   "section": "mobile",
+   "order": 30,
+   "routes": [],
+   "reading_minutes": 2,
+   "locale": "uz",
+   "video": false,
+   "score": 24,
+   "snippet": "… ochiladi: masalan, ota-onaga to&#039;lov xabari — «Farzandim → To&#039;lov va <mark>davomat»,</mark> test natijasi — «Farzandim → Testlar». Barcha xabarlar Yana → Bildirishnomalar bo&#039;limida saqlanadi (bosh sahifadagi qo&#039;ng&#039;iroqcha belgisida o&#039;qilmaganlar soni). O&#039;qilmaganlari ko&#039;k …"
+  }
+ ],
+ "locale": "uz",
+ "requested_locale": "uz",
+ "fallback": false
+}
