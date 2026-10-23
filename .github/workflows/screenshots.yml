@@ -58,8 +58,10 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           # Tarix saqlanadi (force-push yo'q): branch bo'lsa — uning ustiga yangi commit, bo'lmasa — yangi (orphan) branch.
-          if git fetch -q --unshallow origin screenshots 2>/dev/null || git fetch -q origin screenshots 2>/dev/null; then
-            git checkout -q -B screenshots FETCH_HEAD
+          # Yig'ish qoldiqlari (build/, .dart_tool) branch almashtirishga xalaqit bermasin.
+          git reset -q --hard && git clean -fdxq
+          if git fetch -q origin screenshots 2>/dev/null; then
+            git checkout -q -f -B screenshots FETCH_HEAD || { echo "::error::screenshots branch'iga o'tib bo'lmadi"; exit 1; }
           else
             git checkout -q --orphan screenshots
           fi
@@ -69,5 +71,5 @@ jobs:
           printf '# EduX mobil skrinshotlari\n\nManba: %s (%s)\n' "$src" "$(date -u +%Y-%m-%dT%H:%MZ)" > README.md
           git add -A
           git commit -qm "Skrinshotlar: $src" || echo "o'zgarish yo'q"
-          git push origin screenshots
+          git push origin screenshots || { echo "::error::push rad etildi"; exit 1; }
           echo "::notice::$(ls /tmp/shots/*.png | wc -l) ta rasm screenshots branch'ida"
