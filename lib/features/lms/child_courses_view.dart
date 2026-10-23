@@ -104,7 +104,7 @@ class _ChildCourseCard extends StatelessWidget {
         if (live.isNotEmpty) ...<Widget>[
           const SizedBox(height: 8),
           Row(children: <Widget>[
-            const Icon(Icons.videocam_outlined, size: 18, color: AppColors.danger),
+            Icon(Icons.videocam_outlined, size: 18, color: AppColors.danger),
             const SizedBox(width: 6),
             Expanded(child: Text(tr('Jonli dars: {0} · {1}', <Object?>[asText(live['title']), dateTime(live['starts_at'])]))),
           ]),

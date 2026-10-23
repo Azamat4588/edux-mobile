@@ -272,7 +272,7 @@ class _AttendanceSheetPageState extends State<AttendanceSheetPage> {
                   // Obuna «faqat o'qish»da saqlash 402 bilan rad etiladi — tugma o'chiq, sabab yozilgan.
                   child: AppScope.of(context).readOnly
                       ? Text(tr("Obuna muddati tugagan: ma'lumotlar ko'rinadi, lekin yangi yozuv kiritib bo'lmaydi."),
-                          textAlign: TextAlign.center, style: const TextStyle(color: AppColors.warning))
+                          textAlign: TextAlign.center, style: TextStyle(color: AppColors.warning))
                       : FilledButton(
                     onPressed: _saving ? null : _save,
                     child: _saving

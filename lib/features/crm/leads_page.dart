@@ -376,7 +376,7 @@ class _LeadFormState extends State<_LeadForm> {
           TextField(controller: _interest, decoration: InputDecoration(labelText: tr('Qiziqishi / izoh'))),
           if (_error != null && _error!.errors.isEmpty) ...<Widget>[
             const SizedBox(height: 8),
-            Text(_error!.message, style: const TextStyle(color: AppColors.danger)),
+            Text(_error!.message, style: TextStyle(color: AppColors.danger)),
           ],
           const SizedBox(height: 14),
           FilledButton(onPressed: _saving ? null : _save, child: Text(_saving ? tr('Saqlanmoqda...') : tr('Saqlash'))),

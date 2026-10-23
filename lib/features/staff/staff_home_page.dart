@@ -152,7 +152,7 @@ class StaffHomePage extends StatelessWidget {
                           dense: true,
                           title: Text(asText(asMap(payments[i]['student'])['full_name']), style: const TextStyle(fontWeight: FontWeight.w600)),
                           subtitle: Text(dateTime(payments[i]['paid_at'])),
-                          trailing: Text(money(asInt(payments[i]['amount'])), style: const TextStyle(fontWeight: FontWeight.w700, color: AppColors.success)),
+                          trailing: Text(money(asInt(payments[i]['amount'])), style: TextStyle(fontWeight: FontWeight.w700, color: AppColors.success)),
                         ),
                       ],
                     ]),

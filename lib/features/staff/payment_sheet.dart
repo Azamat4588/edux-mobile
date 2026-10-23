@@ -101,7 +101,7 @@ class _PaymentFormState extends State<_PaymentForm> {
         Text(widget.studentName, style: TextStyle(color: AppColors.muted)),
         const SizedBox(height: 18),
         if (_error != null) ...<Widget>[
-          Text(_error!, style: const TextStyle(color: AppColors.danger)),
+          Text(_error!, style: TextStyle(color: AppColors.danger)),
           const SizedBox(height: 10),
         ],
         TextField(

@@ -101,7 +101,7 @@ class AchievementsPage extends StatelessWidget {
                           dateTime(recent[i]['at']),
                         ].join(' · ')),
                         trailing: Text('+${asInt(recent[i]['points'])}',
-                            style: const TextStyle(fontWeight: FontWeight.w800, color: AppColors.success, fontSize: 16)),
+                            style: TextStyle(fontWeight: FontWeight.w800, color: AppColors.success, fontSize: 16)),
                       ),
                     ],
                   ]),
@@ -138,7 +138,7 @@ class _WalletCard extends StatelessWidget {
           const Icon(Icons.stars_rounded, color: AppColors.sun, size: 32),
           const SizedBox(width: 12),
           Expanded(child: Text(tr('Coin'), style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 16))),
-          Text('$coins', style: const TextStyle(fontSize: 26, fontWeight: FontWeight.w800, color: AppColors.warning)),
+          Text('$coins', style: TextStyle(fontSize: 26, fontWeight: FontWeight.w800, color: AppColors.warning)),
         ]),
         for (final item in history)
           Padding(

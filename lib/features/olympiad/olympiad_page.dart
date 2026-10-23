@@ -358,7 +358,7 @@ class _MeCard extends StatelessWidget {
               child: Text(tr('Payme orqali to\'lash')),
             ),
           if (providers['click'] != true && providers['payme'] != true)
-            Text(tr("Onlayn to'lov yoqilmagan. Badalni markaz ma'muriyatiga topshiring."), style: const TextStyle(color: AppColors.danger)),
+            Text(tr("Onlayn to'lov yoqilmagan. Badalni markaz ma'muriyatiga topshiring."), style: TextStyle(color: AppColors.danger)),
         ] else if (result.isEmpty) ...<Widget>[
           const SizedBox(height: 12),
           if (examStatus == 'finished') ...<Widget>[
@@ -485,7 +485,7 @@ class _RegisterFormState extends State<_RegisterForm> {
         Text(tr("Ro'yxatdan o'tish"), style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w800)),
         const SizedBox(height: 14),
         if (_error != null) ...<Widget>[
-          Text(_error!, style: const TextStyle(color: AppColors.danger)),
+          Text(_error!, style: TextStyle(color: AppColors.danger)),
           const SizedBox(height: 8),
         ],
         TextField(controller: _name, decoration: InputDecoration(labelText: tr('Ism-familiya'))),

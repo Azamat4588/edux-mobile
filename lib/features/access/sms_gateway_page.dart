@@ -151,7 +151,7 @@ class _SmsGatewayPageState extends State<SmsGatewayPage> {
             contentPadding: EdgeInsets.zero,
             value: bank.enabled,
             title: Text(tr("Bank SMS'larini yuborish")),
-            subtitle: bank.serverDisabled ? Text(tr("Sozlamada SMS manbasi o'chirilgan (Sozlamalar → Onlayn to'lov)."), style: const TextStyle(color: AppColors.warning)) : null,
+            subtitle: bank.serverDisabled ? Text(tr("Sozlamada SMS manbasi o'chirilgan (Sozlamalar → Onlayn to'lov)."), style: TextStyle(color: AppColors.warning)) : null,
             onChanged: _bankWorking ? null : (value) => value ? _bankOn(session) : bank.disable(),
           ),
           ListTile(
@@ -163,8 +163,8 @@ class _SmsGatewayPageState extends State<SmsGatewayPage> {
             onTap: _editSenders,
           ),
           if (bank.pending.isNotEmpty)
-            Text(tr('Yuborilmagan: {0} (internet kelganda ketadi)', <Object?>[bank.pending.length]), style: const TextStyle(color: AppColors.warning)),
-          if (bank.lastError != null) Text(bank.lastError!, style: const TextStyle(color: AppColors.danger)),
+            Text(tr('Yuborilmagan: {0} (internet kelganda ketadi)', <Object?>[bank.pending.length]), style: TextStyle(color: AppColors.warning)),
+          if (bank.lastError != null) Text(bank.lastError!, style: TextStyle(color: AppColors.danger)),
           if (bank.enabled)
             Align(
               alignment: Alignment.centerLeft,
@@ -267,7 +267,7 @@ class _SmsGatewayPageState extends State<SmsGatewayPage> {
                   ),
                   if (gateway.lastError != null) ...<Widget>[
                     const Divider(),
-                    ListTile(title: Text(tr('Oxirgi xato')), subtitle: Text(gateway.lastError!, style: const TextStyle(color: AppColors.danger))),
+                    ListTile(title: Text(tr('Oxirgi xato')), subtitle: Text(gateway.lastError!, style: TextStyle(color: AppColors.danger))),
                   ],
                 ]),
               ),

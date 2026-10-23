@@ -174,7 +174,7 @@ class _TopicTestsPageState extends State<TopicTestsPage> {
     await showDialog<void>(
       context: context,
       builder: (dialogContext) => AlertDialog(
-        icon: const Icon(Icons.check_circle_rounded, color: AppColors.success, size: 40),
+        icon: Icon(Icons.check_circle_rounded, color: AppColors.success, size: 40),
         title: Text(tr('Qoralama test yaratildi')),
         content: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
           if (asText(exam['title']).isNotEmpty) Text(asText(exam['title']), style: const TextStyle(fontWeight: FontWeight.w700)),
@@ -488,7 +488,7 @@ class _CreateFormState extends State<_CreateForm> {
         Text(tr('{0} ta mavzudan {1} ta savol', <Object?>[widget.selection.length, widget.total]), style: TextStyle(color: AppColors.muted)),
         const SizedBox(height: AppSpacing.l),
         if (_error != null) ...<Widget>[
-          Text(_error!, style: const TextStyle(color: AppColors.danger)),
+          Text(_error!, style: TextStyle(color: AppColors.danger)),
           const SizedBox(height: AppSpacing.m),
         ],
         TextField(

@@ -147,7 +147,7 @@ class _PayLinkPageState extends State<PayLinkPage> {
           ],
           if (_error != null) ...<Widget>[
             const SizedBox(height: 12),
-            Text(_error!, style: const TextStyle(color: AppColors.danger)),
+            Text(_error!, style: TextStyle(color: AppColors.danger)),
           ],
           if (info == null) ...<Widget>[
             const SizedBox(height: 16),

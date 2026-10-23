@@ -214,7 +214,7 @@ class _ScanReviewPageState extends State<ScanReviewPage> {
           ),
         if (_scan['error'] != null) ...<Widget>[
           const SizedBox(height: 8),
-          Text(tr(asText(_scan['error'])), style: const TextStyle(color: AppColors.danger)),
+          Text(tr(asText(_scan['error'])), style: TextStyle(color: AppColors.danger)),
         ],
         const SizedBox(height: 12),
         AppCard(

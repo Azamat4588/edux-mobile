@@ -256,7 +256,7 @@ class _TutorChatState extends State<_TutorChat> {
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
                 child: Row(children: <Widget>[
-                  const Icon(Icons.timer_outlined, color: AppColors.warning),
+                  Icon(Icons.timer_outlined, color: AppColors.warning),
                   const SizedBox(width: 10),
                   Expanded(child: Text(tr('Test davomida AI ustoz ishlamaydi. Testni yakunlagach savol bering.'))),
                 ]),

@@ -140,7 +140,7 @@ class OfflineBanner extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.fromLTRB(16, 6, 4, 6),
         child: Row(children: <Widget>[
-          const Icon(Icons.cloud_off_rounded, size: 18, color: AppColors.warning),
+          Icon(Icons.cloud_off_rounded, size: 18, color: AppColors.warning),
           const SizedBox(width: 10),
           Expanded(
             child: Text(
@@ -268,7 +268,7 @@ void showMessage(BuildContext context, String text, {bool error = false, String?
     ..showSnackBar(SnackBar(
       content: Text(text),
       behavior: SnackBarBehavior.floating,
-      backgroundColor: error ? AppColors.danger : AppColors.ink,
+      backgroundColor: error ? AppColors.dangerFill : AppColors.ink,
       duration: onAction == null ? const Duration(seconds: 4) : const Duration(seconds: 8),
       action: onAction == null ? null : SnackBarAction(label: actionLabel ?? tr('Ochish'), textColor: Colors.white, onPressed: onAction),
     ));
@@ -295,7 +295,7 @@ Future<bool> confirm(BuildContext context, String text, {String? action, bool da
       actions: <Widget>[
         TextButton(onPressed: () => Navigator.pop(context, false), child: Text(tr('Bekor qilish'))),
         FilledButton(
-          style: danger ? FilledButton.styleFrom(backgroundColor: AppColors.danger) : null,
+          style: danger ? FilledButton.styleFrom(backgroundColor: AppColors.dangerFill, foregroundColor: Colors.white) : null,
           onPressed: () => Navigator.pop(context, true),
           child: Text(action ?? tr('Tasdiqlash')),
         ),
@@ -317,7 +317,7 @@ class ErrorState extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(32),
         child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-          const _StateIcon(icon: Icons.cloud_off_rounded, color: AppColors.danger),
+          _StateIcon(icon: Icons.cloud_off_rounded, color: AppColors.danger),
           const SizedBox(height: 14),
           Text(message, textAlign: TextAlign.center, style: TextStyle(color: AppColors.ink, fontSize: 15)),
           if (onRetry != null) ...<Widget>[
@@ -347,7 +347,7 @@ class ForbiddenState extends StatelessWidget {
             width: 64,
             height: 64,
             decoration: BoxDecoration(color: AppColors.soft(AppColors.warning), shape: BoxShape.circle),
-            child: const Icon(Icons.lock_outline_rounded, size: 32, color: AppColors.warning),
+            child: Icon(Icons.lock_outline_rounded, size: 32, color: AppColors.warning),
           ),
           const SizedBox(height: 14),
           Text(tr("Bu bo'lim hozircha mavjud emas"),

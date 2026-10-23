@@ -68,7 +68,7 @@ class NotificationBell extends StatelessWidget {
           onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const NotificationsPage())),
           icon: Badge(
             isLabelVisible: unread > 0,
-            backgroundColor: AppColors.danger,
+            backgroundColor: AppColors.dangerFill,
             label: Text(unread > 99 ? '99+' : '$unread'),
             child: Icon(unread > 0 ? Icons.notifications_active_outlined : Icons.notifications_none_rounded),
           ),
@@ -147,7 +147,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
                           alignment: Alignment.centerRight,
                           padding: const EdgeInsets.only(right: AppSpacing.xl),
                           color: AppColors.soft(AppColors.danger),
-                          child: const Icon(Icons.delete_outline, color: AppColors.danger),
+                          child: Icon(Icons.delete_outline, color: AppColors.danger),
                         ),
                         onDismissed: (_) => _store.remove(item.id),
                         child: _NotificationTile(item: item, onTap: () => _open(item)),

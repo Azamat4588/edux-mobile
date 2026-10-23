@@ -236,8 +236,8 @@ class _SettingsPageState extends State<SettingsPage> {
               ),
               const Divider(),
               ListTile(
-                leading: const Icon(Icons.logout, color: AppColors.danger),
-                title: Text(tr('Chiqish'), style: const TextStyle(color: AppColors.danger)),
+                leading: Icon(Icons.logout, color: AppColors.danger),
+                title: Text(tr('Chiqish'), style: TextStyle(color: AppColors.danger)),
                 onTap: () async {
                   if (await confirm(context, tr('Hisobdan chiqilsinmi?'), action: tr('Chiqish'), danger: true)) {
                     await session.signOut();

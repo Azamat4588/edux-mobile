@@ -186,7 +186,7 @@ class _OrderStatusState extends State<_OrderStatus> with WidgetsBindingObserver 
         if (_error != null)
           Padding(
             padding: const EdgeInsets.only(top: 8),
-            child: Text(_error!, textAlign: TextAlign.center, style: const TextStyle(color: AppColors.danger)),
+            child: Text(_error!, textAlign: TextAlign.center, style: TextStyle(color: AppColors.danger)),
           ),
         const SizedBox(height: 18),
         if (!paid && !voided)
@@ -295,7 +295,7 @@ class _PayFormState extends State<_PayForm> {
           Text(tr('Onlayn to\'lov'), style: AppTheme.title(size: 20)),
           const SizedBox(height: 14),
           if (_error != null) ...<Widget>[
-            Text(_error!, style: const TextStyle(color: AppColors.danger)),
+            Text(_error!, style: TextStyle(color: AppColors.danger)),
             const SizedBox(height: 8),
           ],
           if (_course)
@@ -467,7 +467,7 @@ class _P2pTransferPageState extends State<P2pTransferPage> with WidgetsBindingOb
           width: 96,
           height: 96,
           decoration: BoxDecoration(color: AppColors.soft(AppColors.success), shape: BoxShape.circle),
-          child: const Icon(Icons.check_rounded, size: 60, color: AppColors.success),
+          child: Icon(Icons.check_rounded, size: 60, color: AppColors.success),
         ),
       ),
       const SizedBox(height: 18),

@@ -559,7 +559,7 @@ class _BillingPageState extends State<BillingPage> with WidgetsBindingObserver {
         ]),
         const SizedBox(height: 12),
         if (_quoteError != null)
-          Text(_quoteError!, style: const TextStyle(color: AppColors.warning))
+          Text(_quoteError!, style: TextStyle(color: AppColors.warning))
         else if (!_canPick)
           Text(_mode == 'plan' ? tr('Paketni tanlang.') : tr('Kamida bitta modul tanlang.'), style: TextStyle(color: AppColors.muted))
         else if (quote != null)
@@ -637,7 +637,7 @@ class _StatusCard extends StatelessWidget {
           const SizedBox(height: 10),
           Text(
             tr("Obuna to'xtatilgan. Platforma ma'muriyati obunangizni vaqtincha to'xtatdi: ma'lumotlar ko'rinadi, lekin yangi yozuv kiritib bo'lmaydi."),
-            style: const TextStyle(color: AppColors.danger, fontWeight: FontWeight.w600),
+            style: TextStyle(color: AppColors.danger, fontWeight: FontWeight.w600),
           ),
         ],
         if (text.isNotEmpty) ...<Widget>[const SizedBox(height: 10), Text(text)],
@@ -650,7 +650,7 @@ class _StatusCard extends StatelessWidget {
             child: Text(
               tr("Faol o'quvchilar soni to'langan pog'onadan oshdi. Joriy davrda hech narsa cheklanmaydi; keyingi davr hisobi yangi pog'ona ({0}) narxida chiqadi.",
                   <Object?>[billingTier(asText(billing['student_tier']))]),
-              style: const TextStyle(color: AppColors.warning, fontSize: 13),
+              style: TextStyle(color: AppColors.warning, fontSize: 13),
             ),
           ),
       ]),
@@ -718,7 +718,7 @@ class _ModuleTile extends StatelessWidget {
     if (!enabled && hint.isEmpty && source == 'plan') hint = 'Obuna rejasida bor, lekin hozir ochiq emas';
     return ListTile(
       title: Text(asText(state['name']), style: const TextStyle(fontWeight: FontWeight.w600)),
-      subtitle: hint.isEmpty ? null : Text(tr(hint), style: const TextStyle(color: AppColors.warning, fontSize: 12)),
+      subtitle: hint.isEmpty ? null : Text(tr(hint), style: TextStyle(color: AppColors.warning, fontSize: 12)),
       trailing: Pill(tr(label), color: color),
     );
   }

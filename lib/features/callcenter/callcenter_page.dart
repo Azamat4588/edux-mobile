@@ -165,7 +165,7 @@ class _CallCenterPageState extends State<CallCenterPage> with WidgetsBindingObse
                   Text(tr('Navbat')),
                   if (queue > 0) ...<Widget>[
                     const SizedBox(width: 6),
-                    Badge(label: Text('$queue'), backgroundColor: AppColors.danger),
+                    Badge(label: Text('$queue'), backgroundColor: AppColors.dangerFill),
                   ],
                 ]),
               ),
@@ -236,7 +236,7 @@ class _LiveTab extends StatelessWidget {
           if (error != null)
             Padding(
               padding: const EdgeInsets.only(bottom: AppSpacing.m),
-              child: Text(errorText(error), style: const TextStyle(color: AppColors.danger, fontSize: 13)),
+              child: Text(errorText(error), style: TextStyle(color: AppColors.danger, fontSize: 13)),
             ),
           AppCard(
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
@@ -264,7 +264,7 @@ class _LiveTab extends StatelessWidget {
                   width: 44,
                   height: 44,
                   decoration: BoxDecoration(color: AppColors.soft(AppColors.success), shape: BoxShape.circle),
-                  child: const Icon(Icons.phone_in_talk_outlined, color: AppColors.success),
+                  child: Icon(Icons.phone_in_talk_outlined, color: AppColors.success),
                 ),
                 const SizedBox(width: AppSpacing.m),
                 Expanded(
@@ -506,7 +506,7 @@ class CallerCardView extends StatelessWidget {
     if (students.isEmpty && leads.isEmpty && calls.isEmpty) {
       return AppCard(
         child: Row(children: <Widget>[
-          const Icon(Icons.person_outline, color: AppColors.warning),
+          Icon(Icons.person_outline, color: AppColors.warning),
           const SizedBox(width: AppSpacing.m),
           Expanded(
             child: Text(tr('Notanish raqam. Natijani «Qiziqdi» yoki «Sinov darsiga yozildi» deb belgilasangiz, yangi lid yaratiladi.'),
@@ -770,7 +770,7 @@ class _OutcomeFormState extends State<_OutcomeForm> {
         Text(asText(widget.call['phone']), style: TextStyle(color: AppColors.muted)),
         const SizedBox(height: AppSpacing.l),
         if (_error != null) ...<Widget>[
-          Text(_error!, style: const TextStyle(color: AppColors.danger)),
+          Text(_error!, style: TextStyle(color: AppColors.danger)),
           const SizedBox(height: AppSpacing.m),
         ],
         Wrap(spacing: AppSpacing.s, runSpacing: AppSpacing.s, children: <Widget>[
@@ -870,7 +870,7 @@ class _LogCallFormState extends State<_LogCallForm> {
         Text(tr("Qo'ng'iroqni qayd etish"), style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w800)),
         const SizedBox(height: AppSpacing.l),
         if (_error != null) ...<Widget>[
-          Text(_error!, style: const TextStyle(color: AppColors.danger)),
+          Text(_error!, style: TextStyle(color: AppColors.danger)),
           const SizedBox(height: AppSpacing.m),
         ],
         TextField(
@@ -969,7 +969,7 @@ class _QueueTab extends StatelessWidget {
               onTap: () => showCallerSheet(context, repository, phone, call: call),
               child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
                 Row(children: <Widget>[
-                  const Icon(Icons.call_missed_rounded, color: AppColors.danger),
+                  Icon(Icons.call_missed_rounded, color: AppColors.danger),
                   const SizedBox(width: AppSpacing.s),
                   Expanded(
                     child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[

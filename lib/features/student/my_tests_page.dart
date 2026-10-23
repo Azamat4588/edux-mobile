@@ -695,7 +695,7 @@ class AttemptResultPage extends StatelessWidget {
               ] else if (asInt(data['pending']) > 0) ...<Widget>[
                 const SizedBox(height: 12),
                 Text(tr("{0} ta ochiq javobni o'qituvchi baholaydi — ball keyin yangilanadi.", <Object?>[asInt(data['pending'])]),
-                    textAlign: TextAlign.center, style: const TextStyle(color: AppColors.warning)),
+                    textAlign: TextAlign.center, style: TextStyle(color: AppColors.warning)),
               ],
               if (data['review_later'] == true) ...<Widget>[
                 const SizedBox(height: 12),
@@ -750,7 +750,7 @@ class _ReviewCard extends StatelessWidget {
           ),
           if (item['accepted_answers'] is List && (item['accepted_answers'] as List).isNotEmpty) ...<Widget>[
             const SizedBox(height: 6),
-            Text('${tr("To'g'ri javob")}: ${(item['accepted_answers'] as List).join(' / ')}', style: const TextStyle(color: AppColors.success)),
+            Text('${tr("To'g'ri javob")}: ${(item['accepted_answers'] as List).join(' / ')}', style: TextStyle(color: AppColors.success)),
           ],
           if (item['type'] == 'essay')
             Padding(

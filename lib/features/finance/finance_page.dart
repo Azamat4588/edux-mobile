@@ -377,7 +377,7 @@ class _DebtorCard extends StatelessWidget {
               ),
             ]),
           ),
-          Text(money(-asInt(debtor['debt'])), style: const TextStyle(fontWeight: FontWeight.w800, color: AppColors.danger)),
+          Text(money(-asInt(debtor['debt'])), style: TextStyle(fontWeight: FontWeight.w800, color: AppColors.danger)),
         ]),
         const SizedBox(height: AppSpacing.m),
         Row(children: <Widget>[
@@ -538,7 +538,7 @@ class _Bars extends StatelessWidget {
           const SizedBox(width: AppSpacing.xs),
           Text(tr('Tushum'), style: TextStyle(fontSize: 12, color: AppColors.muted)),
           const SizedBox(width: AppSpacing.m),
-          const _Dot(color: AppColors.warning),
+          _Dot(color: AppColors.warning),
           const SizedBox(width: AppSpacing.xs),
           Text(tr('Xarajat'), style: TextStyle(fontSize: 12, color: AppColors.muted)),
         ]),

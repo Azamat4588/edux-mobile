@@ -519,7 +519,7 @@ class _ReadOnlyBanner extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
             child: Row(children: <Widget>[
-              const Icon(Icons.lock_clock_outlined, color: AppColors.warning, size: 20),
+              Icon(Icons.lock_clock_outlined, color: AppColors.warning, size: 20),
               const SizedBox(width: 8),
               Expanded(
                 child: Text(
@@ -529,7 +529,7 @@ class _ReadOnlyBanner extends StatelessWidget {
                   style: const TextStyle(fontSize: 13),
                 ),
               ),
-              if (onTap != null) const Icon(Icons.chevron_right, color: AppColors.warning),
+              if (onTap != null) Icon(Icons.chevron_right, color: AppColors.warning),
             ]),
           ),
         ),

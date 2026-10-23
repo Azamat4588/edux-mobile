@@ -4,6 +4,8 @@
 // AppColors dagi «sirt» ranglari (brand, ink, muted, line, surface, card ...) joriy mavzuga qarab o'zgaradi:
 // AppTheme.apply() ularni MaterialApp qurilishidan oldin yangilaydi, ilova esa yangi kalit bilan to'liq qayta chiziladi.
 // Rang faqat ma'no uchun (docs/design.md): asosiy rang — harakat, qizil — qarz/xato, sariq — kutilmoqda, yashil — bajarildi.
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 
 import 'design.dart';
@@ -36,11 +38,21 @@ Accent accentOf(String? key) => accents.firstWhere((item) => item.key == key, or
 class AppColors {
   AppColors._();
 
-  // Ma'no ranglari: ikkala rejimda bir xil.
   static const Color sun = Color(0xFFFFC233);
-  static const Color success = Color(0xFF059669);
-  static const Color warning = Color(0xFFD97706);
-  static const Color danger = Color(0xFFE11D48);
+
+  // Ma'no ranglari (matn, ikonka, yumshoq fon): rejimga qarab (AppTheme.apply). Yorug'da — 700 ton (oq fonda AA ≥ 4.5),
+  // tungi rejimda — 400 ton (to'q kartada o'qiladi). Avval bir xil o'rta ton edi: oq fonda ogohlantirish matni 3.2:1.
+  static Color success = const Color(0xFF047857);
+  static Color warning = const Color(0xFFB45309);
+  static Color danger = const Color(0xFFBE123C);
+
+  /// Oq matnli to'liq fon (nishon, xato xabari, «Jonli» belgisi, xavfli tugma) — ikkala rejimda bir xil, oq bilan ≥ 4.5.
+  static const Color successFill = Color(0xFF047857);
+  static const Color warningFill = Color(0xFFB45309);
+  static const Color dangerFill = Color(0xFFBE123C);
+
+  /// Asosiy rang ustidagi matn (tugma): odatda oq; och asosiy rangda (tungi «Grafit») — to'q.
+  static Color onBrand = Colors.white;
 
   // Mavzuga bog'liq ranglar (AppTheme.apply yangilaydi).
   static Color brand = const Color(0xFF1F63F5);
@@ -99,6 +111,9 @@ class AppTheme {
     AppColors.dark = dark;
     AppColors.choice = choice;
     AppColors.brand = dark && accent.key == 'slate' ? const Color(0xFF94A3B8) : accent.from;
+    AppColors.success = dark ? const Color(0xFF34D399) : const Color(0xFF047857);
+    AppColors.warning = dark ? const Color(0xFFFBBF24) : const Color(0xFFB45309);
+    AppColors.danger = dark ? const Color(0xFFFB7185) : const Color(0xFFBE123C);
     AppColors.brandDark = Color.lerp(accent.from, Colors.black, 0.18)!;
     AppColors.gradient = accent.gradient;
     final k = choice.radiusFactor;
@@ -166,6 +181,10 @@ class AppTheme {
       }
     }
     AppColors.cardBorder = choice.borderlessCards ? Colors.transparent : (choice.notebook && !dark ? const Color(0xFFEBE3D6) : AppColors.line);
+    // Asosiy rang matn va havola sifatida ham ishlatiladi: kartada kamida 4.5:1 bo'lsin (masalan, tungi rejimda «Anor»
+    // 2.8:1 edi). Tugma matni — oq yoki to'q, qaysi biri o'qilsa.
+    AppColors.brand = readableOn(AppColors.brand, AppColors.card);
+    AppColors.onBrand = contrastRatio(Colors.white, AppColors.brand) >= 4.5 ? Colors.white : const Color(0xFF0B1222);
   }
 
   /// Sarlavha uslubi (veb: --font-title, --title-weight).
@@ -227,7 +246,7 @@ ThemeData buildTheme() {
     filledButtonTheme: FilledButtonThemeData(
       style: FilledButton.styleFrom(
         backgroundColor: AppColors.brand,
-        foregroundColor: Colors.white,
+        foregroundColor: AppColors.onBrand,
         minimumSize: Size(48, control + 2),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppRadius.control)),
         textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
@@ -276,4 +295,23 @@ ThemeData buildTheme() {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppRadius.control)),
     ),
   );
+}
+
+/// WCAG kontrast nisbati (1–21).
+double contrastRatio(Color a, Color b) {
+  final la = a.computeLuminance();
+  final lb = b.computeLuminance();
+  return (math.max(la, lb) + 0.05) / (math.min(la, lb) + 0.05);
+}
+
+/// [color] ni [background] ustida o'qiladigan qiladi: kontrast [min] dan past bo'lsa — to'q fonda oqartiriladi,
+/// och fonda to'qlashtiriladi (rang tusi saqlanadi). Toza mantiq — test/design_test.dart.
+Color readableOn(Color color, Color background, {double min = 4.5}) {
+  if (contrastRatio(color, background) >= min) return color;
+  final target = background.computeLuminance() < 0.5 ? Colors.white : Colors.black;
+  for (var step = 1; step <= 20; step++) {
+    final candidate = Color.lerp(color, target, step / 20)!;
+    if (contrastRatio(candidate, background) >= min) return candidate;
+  }
+  return target;
 }

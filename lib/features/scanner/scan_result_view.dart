@@ -314,7 +314,7 @@ class _ScanDetails extends StatelessWidget {
                   .map((flag) => Padding(
                         padding: const EdgeInsets.symmetric(vertical: 3),
                         child: Row(children: <Widget>[
-                          const Icon(Icons.warning_amber_rounded, size: 18, color: AppColors.warning),
+                          Icon(Icons.warning_amber_rounded, size: 18, color: AppColors.warning),
                           const SizedBox(width: 8),
                           Expanded(child: Text(flagText(flag))),
                         ]),

@@ -611,3 +611,5 @@ SMS ilovasini ochib bo'lmadi.	Не удалось открыть приложе�
 SMS ilovasini ochish	Открыть приложение SMS	Open the SMS app
 Yuborildi: {0}	Отправлено: {0}	Sent: {0}
 {0} qism	{0} частей	{0} parts
+Kelgan o'tkazmalarni buyurtmalar bilan tasdiqlang.	Подтверждайте поступившие переводы по заказам.	Confirm incoming transfers against orders.
+O'quvchiga to'g'ridan-to'g'ri biriktirish CRM moduli bilan ishlaydi. Hozircha kutilayotgan buyurtmani tanlang.	Прямая привязка к ученику работает с модулем CRM. Пока выберите ожидающий заказ.	Linking directly to a student requires the CRM module. For now, choose a pending order.

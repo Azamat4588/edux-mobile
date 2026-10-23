@@ -505,7 +505,7 @@ class _TestsTab extends StatelessWidget {
                     if (i > 0) const Divider(),
                     ListTile(
                       dense: true,
-                      leading: const Icon(Icons.pending_actions_outlined, color: AppColors.warning),
+                      leading: Icon(Icons.pending_actions_outlined, color: AppColors.warning),
                       title: Text(asText(pending[i]['title'])),
                       subtitle: pending[i]['ends_at'] != null ? Text(tr('{0} gacha', <Object?>[dateTime(pending[i]['ends_at'])])) : null,
                     ),
@@ -644,7 +644,7 @@ class _PaymentsTab extends StatelessWidget {
                     if (i > 0) const Divider(),
                     ListTile(
                       dense: true,
-                      leading: const Icon(Icons.check_circle_outline, color: AppColors.success),
+                      leading: Icon(Icons.check_circle_outline, color: AppColors.success),
                       title: Text(money(asInt(payments[i]['amount'])), style: const TextStyle(fontWeight: FontWeight.w700)),
                       subtitle: Text(<String>[
                         dateTime(payments[i]['paid_at']),

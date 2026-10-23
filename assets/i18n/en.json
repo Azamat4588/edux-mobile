@@ -4008,5 +4008,7 @@
 "SMS ilovasini ochib bo'lmadi.": "Could not open the SMS app.",
 "SMS ilovasini ochish": "Open SMS app",
 "Yuborildi: {0}": "Sent: {0}",
-"{0} qism": "{0} parts"
+"{0} qism": "{0} parts",
+"Kelgan o'tkazmalarni buyurtmalar bilan tasdiqlang.": "Confirm incoming transfers against orders.",
+"O'quvchiga to'g'ridan-to'g'ri biriktirish CRM moduli bilan ishlaydi. Hozircha kutilayotgan buyurtmani tanlang.": "Linking directly to a student requires the CRM module. For now, choose a pending order."
 }

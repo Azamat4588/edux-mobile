@@ -187,7 +187,7 @@ class _LiveBadge extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-      decoration: BoxDecoration(color: AppColors.danger, borderRadius: BorderRadius.circular(99)),
+      decoration: BoxDecoration(color: AppColors.dangerFill, borderRadius: BorderRadius.circular(99)),
       child: Text(tr('Jonli'), style: const TextStyle(color: Colors.white, fontSize: 11.5, fontWeight: FontWeight.w700)),
     );
   }

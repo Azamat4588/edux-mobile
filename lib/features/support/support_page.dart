@@ -221,7 +221,7 @@ class _NewTicketPageState extends State<_NewTicketPage> {
         padding: const EdgeInsets.all(16),
         children: <Widget>[
           if (_error != null && _errors.isEmpty) ...<Widget>[
-            Text(_error!, style: const TextStyle(color: AppColors.danger)),
+            Text(_error!, style: TextStyle(color: AppColors.danger)),
             const SizedBox(height: 12),
           ],
           DropdownButtonFormField<String>(

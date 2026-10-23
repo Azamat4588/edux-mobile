@@ -191,7 +191,7 @@ class _SubmissionFormState extends State<_SubmissionForm> {
         Text(asText(widget.assignment['title']), style: const TextStyle(fontSize: 19, fontWeight: FontWeight.w800)),
         const SizedBox(height: 14),
         if (_error != null) ...<Widget>[
-          Text(_error!, style: const TextStyle(color: AppColors.danger)),
+          Text(_error!, style: TextStyle(color: AppColors.danger)),
           const SizedBox(height: 8),
         ],
         TextField(
@@ -221,7 +221,7 @@ class _SubmissionFormState extends State<_SubmissionForm> {
         if (_photo != null) ...<Widget>[
           const SizedBox(height: 8),
           Row(children: <Widget>[
-            const Icon(Icons.image_outlined, color: AppColors.success),
+            Icon(Icons.image_outlined, color: AppColors.success),
             const SizedBox(width: 8),
             Expanded(child: Text(_photo!.name, overflow: TextOverflow.ellipsis)),
             IconButton(onPressed: () => setState(() => _photo = null), icon: const Icon(Icons.close)),

@@ -312,7 +312,7 @@ class _TelegramWaitDialogState extends State<_TelegramWaitDialog> with WidgetsBi
         Text(text, textAlign: TextAlign.center, style: TextStyle(color: AppColors.ink)),
         if (_error != null) ...<Widget>[
           const SizedBox(height: 10),
-          Text(_error!, textAlign: TextAlign.center, style: const TextStyle(color: AppColors.danger, fontSize: 13)),
+          Text(_error!, textAlign: TextAlign.center, style: TextStyle(color: AppColors.danger, fontSize: 13)),
         ],
       ]),
       actions: <Widget>[

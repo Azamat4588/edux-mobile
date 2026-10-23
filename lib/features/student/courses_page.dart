@@ -170,7 +170,7 @@ class CoursePage extends StatelessWidget {
                           if (asInt(lesson['assignments_count']) > 0) tr('uy vazifasi'),
                           if (lesson['has_exam'] == true) tr('test'),
                         ].join(' · ')),
-                        trailing: lesson['live_at'] != null ? const Icon(Icons.videocam_outlined, color: AppColors.danger) : const Icon(Icons.chevron_right),
+                        trailing: lesson['live_at'] != null ? Icon(Icons.videocam_outlined, color: AppColors.danger) : const Icon(Icons.chevron_right),
                         onTap: () async {
                           await Navigator.of(context).push(MaterialPageRoute<void>(
                             builder: (_) => LessonPage(lessonId: asInt(lesson['id'])),
@@ -332,7 +332,7 @@ class _LessonPageState extends State<LessonPage> {
         return AppCard(
           onTap: () => launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication),
           child: Row(children: <Widget>[
-            const Icon(Icons.play_circle_fill, color: AppColors.danger, size: 40),
+            Icon(Icons.play_circle_fill, color: AppColors.danger, size: 40),
             const SizedBox(width: 12),
             Expanded(child: Text(tr('Videoni ochish'), style: const TextStyle(fontWeight: FontWeight.w700))),
             Icon(Icons.open_in_new, color: AppColors.muted),
@@ -434,7 +434,7 @@ class _LessonPageState extends State<LessonPage> {
               const SizedBox(height: 4),
               FilledButton.icon(
                 onPressed: () => _toggleComplete(lesson),
-                style: done ? FilledButton.styleFrom(backgroundColor: AppColors.success) : null,
+                style: done ? FilledButton.styleFrom(backgroundColor: AppColors.successFill, foregroundColor: Colors.white) : null,
                 icon: Icon(done ? Icons.check_circle : Icons.check),
                 label: Text(done ? tr('Dars tugatilgan') : tr('Darsni tugatdim')),
               ),
@@ -728,7 +728,7 @@ class _ActivityBlockState extends State<_ActivityBlock> {
       return AppCard(
         onTap: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const GamesPage())),
         child: Row(children: <Widget>[
-          const Icon(Icons.sports_esports_outlined, color: AppColors.success, size: 30),
+          Icon(Icons.sports_esports_outlined, color: AppColors.success, size: 30),
           const SizedBox(width: 12),
           Expanded(child: Text(tr("So'z o'yini"), style: const TextStyle(fontWeight: FontWeight.w700))),
           Icon(Icons.chevron_right, color: AppColors.muted),
