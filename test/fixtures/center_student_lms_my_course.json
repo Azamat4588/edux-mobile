@@ -1,0 +1,87 @@
+{
+ "course": {
+  "id": 1,
+  "title": "Kasrlar va ular ustida amallar",
+  "description": "Oddiy kasr tushunchasidan boshlab, kasrlarni taqqoslash, qo'shish va ayirishgacha. Har darsda qisqa konspekt, oxirida test.",
+  "subject": {
+   "id": 1,
+   "name": "Matematika"
+  },
+  "cover": null,
+  "price": 0,
+  "billing": "once"
+ },
+ "progress": {
+  "total": 5,
+  "done": 3,
+  "percent": 60
+ },
+ "has_access": true,
+ "subscription": null,
+ "next_lesson_id": 4,
+ "sections": [
+  {
+   "id": 1,
+   "title": "Kasr tushunchasi",
+   "lessons": [
+    {
+     "id": 1,
+     "title": "Kasr nima?",
+     "completed": true,
+     "has_video": false,
+     "has_exam": false,
+     "materials_count": 1,
+     "assignments_count": 0,
+     "live_at": null
+    },
+    {
+     "id": 2,
+     "title": "Kasrlarni taqqoslash",
+     "completed": true,
+     "has_video": true,
+     "has_exam": false,
+     "materials_count": 0,
+     "assignments_count": 0,
+     "live_at": null
+    },
+    {
+     "id": 3,
+     "title": "Kasrlarni qo'shish va ayirish",
+     "completed": true,
+     "has_video": false,
+     "has_exam": false,
+     "materials_count": 1,
+     "assignments_count": 1,
+     "live_at": null
+    }
+   ]
+  },
+  {
+   "id": 2,
+   "title": "Amallar va mustahkamlash",
+   "lessons": [
+    {
+     "id": 4,
+     "title": "Aralash sonlar",
+     "completed": false,
+     "has_video": false,
+     "has_exam": false,
+     "materials_count": 0,
+     "assignments_count": 0,
+     "live_at": null
+    },
+    {
+     "id": 5,
+     "title": "Yakuniy test",
+     "completed": false,
+     "has_video": false,
+     "has_exam": true,
+     "materials_count": 0,
+     "assignments_count": 0,
+     "live_at": null
+    }
+   ]
+  }
+ ],
+ "announcements": []
+}

@@ -181,7 +181,7 @@ class _TopicTestsPageState extends State<TopicTestsPage> {
           const SizedBox(height: AppSpacing.xs),
           Text(tr('Test raqami: #{0}', <Object?>[created]), style: TextStyle(color: AppColors.muted)),
           if (exam['questions'] is List)
-            Text(tr('{0} ta savol', <Object?>[(exam['questions'] as List).length]), style: TextStyle(color: AppColors.muted)),
+            Text(tr('{0} ta savol', <Object?>[asRawList(exam['questions']).length]), style: TextStyle(color: AppColors.muted)),
           const SizedBox(height: AppSpacing.m),
           Text(tr("Testni veb-versiyada (Testlar bo'limi) ko'rib chiqing, guruhlarni belgilang va e'lon qiling — shundan keyin o'quvchilarga ochiladi.")),
         ]),
@@ -561,7 +561,7 @@ class _QuestionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final options = (question['options'] as List?) ?? const <dynamic>[];
+    final options = asRawList(question['options']);
     final answer = question['answer'] == null ? -1 : asInt(question['answer'], -1);
     final difficulty = asInt(question['difficulty']);
     return AppCard(

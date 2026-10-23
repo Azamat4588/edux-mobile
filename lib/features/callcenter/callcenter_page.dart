@@ -532,19 +532,19 @@ class CallerCardView extends StatelessWidget {
                   Pill(student['parent'] == true ? tr('Ota-ona') : session.term('student', "O'quvchi"),
                       color: student['parent'] == true ? AppColors.warning : AppColors.brand),
                 ]),
-                if (((student['groups'] as List?) ?? const <dynamic>[]).isNotEmpty)
-                  Text(((student['groups'] as List?) ?? const <dynamic>[]).join(', '),
+                if (asRawList(student['groups']).isNotEmpty)
+                  Text(asRawList(student['groups']).join(', '),
                       style: TextStyle(color: AppColors.muted, fontSize: 13)),
                 if (student['parent'] == true && asText(student['parent_name']).isNotEmpty)
                   Text(asText(student['parent_name']), style: TextStyle(color: AppColors.muted, fontSize: 13)),
               ]),
             ),
             if (student['balance'] is num)
-              Text(money(student['balance'] as num),
+              Text(money(asDouble(student['balance'])),
                   style: TextStyle(
                     fontWeight: FontWeight.w700,
                     fontSize: 13,
-                    color: (student['balance'] as num) < 0 ? AppColors.danger : AppColors.success,
+                    color: asDouble(student['balance']) < 0 ? AppColors.danger : AppColors.success,
                   )),
           ]),
         ),

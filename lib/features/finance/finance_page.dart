@@ -353,7 +353,7 @@ class _DebtorCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final phone = asText(debtor['phone']).replaceAll(RegExp(r'[^+\d]'), '');
-    final groups = ((debtor['groups'] as List?) ?? const <dynamic>[]).join(', ');
+    final groups = asRawList(debtor['groups']).join(', ');
     final session = AppScope.of(context);
     return AppCard(
       onTap: session.canSeeStudents

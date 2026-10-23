@@ -149,7 +149,7 @@ class _AttendanceSheetPageState extends State<AttendanceSheetPage> {
         _students = students;
         _status
           ..clear()
-          ..addEntries(students.map((s) => MapEntry<int, String?>(asInt(s['id']), s['status'] as String?)));
+          ..addEntries(students.map((s) => MapEntry<int, String?>(asInt(s['id']), s['status']?.toString())));
         _topic.text = asText(asMap(sheet['lesson'])['topic']);
         _loading = false;
         _dirty = false;

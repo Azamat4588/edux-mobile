@@ -1,0 +1,17 @@
+{
+ "providers": {
+  "click": false,
+  "payme": false,
+  "p2p": true
+ },
+ "methods": [
+  {
+   "key": "p2p",
+   "name": "Kartaga o'tkazma",
+   "fee": 0,
+   "min": 0
+  }
+ ],
+ "min_amount": 1000,
+ "max_amount": 500000000
+}

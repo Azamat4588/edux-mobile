@@ -1,0 +1,22 @@
+{
+ "modules": [
+  "testing",
+  "crm",
+  "lms"
+ ],
+ "manager": false,
+ "testing": {
+  "open_exams": 0,
+  "needs_review": 0,
+  "finished_week": 0
+ },
+ "crm": {
+  "active_students": 2,
+  "trial": 1,
+  "tasks_today": 0
+ },
+ "lms": {
+  "courses": 0,
+  "to_grade": 0
+ }
+}

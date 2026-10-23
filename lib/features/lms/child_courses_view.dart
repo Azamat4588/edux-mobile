@@ -54,7 +54,7 @@ class _ChildCourseCard extends StatelessWidget {
     final graded = asList(assignments['graded'], 'graded');
     final last = asMap(course['last_lesson']);
     final live = asMap(course['next_live']);
-    final confused = ((course['not_understood'] as List?) ?? const <dynamic>[]).map((item) => '$item').toList();
+    final confused = asRawList(course['not_understood']).map((item) => '$item').toList();
     final average = course['average_grade_percent'];
     final overdue = todo.where((item) => item['overdue'] == true).length;
     return AppCard(

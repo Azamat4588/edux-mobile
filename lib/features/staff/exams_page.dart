@@ -103,9 +103,9 @@ class ExamDetailPage extends StatelessWidget {
       body: AsyncView<Map<String, dynamic>>(
         load: () async => asMap(await session.api.get('exams/$id/results')),
         builder: (context, data, reload) {
-          final rows = (data['Natijalar'] as List?) ?? const <dynamic>[];
-          final header = rows.isNotEmpty ? (rows.first as List).map((cell) => '$cell').toList() : <String>[];
-          final body = rows.length > 1 ? rows.sublist(1).map((row) => (row as List).map((cell) => '${cell ?? ''}').toList()).toList() : <List<String>>[];
+          final table = examResultsTable(data);
+          final header = table.header;
+          final body = table.rows;
           // Ustunlar tartibi server eksportida o'zgarmas: O'rin, Kod, F.I.Sh., Guruh, Variant, Turi, To'g'ri,
           // Noto'g'ri, Bo'sh, Ball, Maks. ball, Foiz (sarlavhalar tanlangan tilda kelishi mumkin).
           final nameIndex = header.length > 2 ? 2 : 0;
@@ -169,4 +169,13 @@ class ExamDetailPage extends StatelessWidget {
       ),
     );
   }
+}
+
+/// GET exams/{id}/results (server ResultsReport, eksport bilan bir xil): `Natijalar` varag'i — birinchi qator sarlavha.
+/// Varaq kaliti har tilda `Natijalar`, sarlavhalar esa tanlangan tilda keladi. Toza mantiq — test/api_fixtures_test.dart.
+({List<String> header, List<List<String>> rows}) examResultsTable(Map<String, dynamic> data) {
+  final sheet = asRawList(data['Natijalar']).map(asRawList).toList();
+  final header = sheet.isEmpty ? <String>[] : sheet.first.map((cell) => '${cell ?? ''}').toList();
+  final rows = sheet.length < 2 ? <List<String>>[] : sheet.sublist(1).map((row) => row.map((cell) => '${cell ?? ''}').toList()).toList();
+  return (header: header, rows: rows);
 }

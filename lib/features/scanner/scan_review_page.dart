@@ -69,13 +69,13 @@ class _ScanReviewPageState extends State<ScanReviewPage> {
         image = await api.bytes('scans/${widget.scanId}/image');
       } catch (_) {}
       final questions = asInt(result['questions'], 0);
-      final rows = ((result['answers'] as List?) ?? const <dynamic>[])
-          .map((row) => ((row as List?) ?? const <dynamic>[]).map((v) => asInt(v)).toSet())
+      final rows = asRawList(result['answers'])
+          .map((row) => asRawList(row).map((v) => asInt(v)).toSet())
           .toList();
       while (rows.length < questions) {
         rows.add(<int>{});
       }
-      final flags = ((result['flags'] as List?) ?? const <dynamic>[]).map((f) => Map<String, dynamic>.from(f as Map)).toList();
+      final flags = asRawList(result['flags']).whereType<Map>().map((f) => Map<String, dynamic>.from(f)).toList();
       _flagged
         ..clear()
         ..addAll(flags.where((f) => f['question'] is num).map((f) => (f['question'] as num).toInt() - 1));
@@ -192,7 +192,7 @@ class _ScanReviewPageState extends State<ScanReviewPage> {
 
   Widget _body() {
     final result = asMap(_scan['result']);
-    final flags = ((result['flags'] as List?) ?? const <dynamic>[]).map((f) => Map<String, dynamic>.from(f as Map)).toList();
+    final flags = asRawList(result['flags']).whereType<Map>().map((f) => Map<String, dynamic>.from(f)).toList();
     final variant = int.tryParse(_variant.text);
     final key = _kit?.keyFor(variant);
     final studentName = _kit?.studentName(_code.text.trim());

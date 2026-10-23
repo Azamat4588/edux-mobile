@@ -1,0 +1,37 @@
+{
+ "id": 1,
+ "purpose": "tuition",
+ "student": {
+  "id": 1,
+  "full_name": "Ergasheva Mohinur"
+ },
+ "course": null,
+ "amount": 450000,
+ "months": 1,
+ "status": "open",
+ "paid_at": null,
+ "receipt": null,
+ "providers": {
+  "click": false,
+  "payme": false,
+  "p2p": true
+ },
+ "methods": [
+  {
+   "key": "p2p",
+   "name": "Kartaga o'tkazma",
+   "fee": 0,
+   "min": 0
+  }
+ ],
+ "p2p": {
+  "card": "8600 1234 5678 9012",
+  "holder": "TEST KASSA",
+  "bank": "uzcard",
+  "amount": 450798,
+  "base_amount": 450000,
+  "expires_at": "2026-10-23T05:49:22.000000Z",
+  "expired": false,
+  "id_mode": "add"
+ }
+}

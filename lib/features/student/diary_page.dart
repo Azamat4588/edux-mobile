@@ -109,7 +109,7 @@ class _DiaryWeekViewState extends State<DiaryWeekView> {
           padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
           children: <Widget>[
             Row(children: <Widget>[
-              IconButton(onPressed: () => _go(data['previous'] as String?), icon: const Icon(Icons.chevron_left)),
+              IconButton(onPressed: () => _go(data['previous']?.toString()), icon: const Icon(Icons.chevron_left)),
               Expanded(
                 child: Column(children: <Widget>[
                   Text('${date(data['week_start'])} – ${date(data['week_end'])}',
@@ -118,7 +118,7 @@ class _DiaryWeekViewState extends State<DiaryWeekView> {
                     Text(asText(asMap(data['student'])['full_name']), style: TextStyle(color: AppColors.muted, fontSize: 13)),
                 ]),
               ),
-              IconButton(onPressed: () => _go(data['next'] as String?), icon: const Icon(Icons.chevron_right)),
+              IconButton(onPressed: () => _go(data['next']?.toString()), icon: const Icon(Icons.chevron_right)),
             ]),
             if (days.isEmpty) EmptyState(text: tr('Dars yo\'q')),
             for (final day in days) ...<Widget>[

@@ -1,0 +1,120 @@
+{
+ "children": [
+  {
+   "id": 1,
+   "full_name": "Ergasheva Mohinur",
+   "archived": false,
+   "groups": [
+    "M-11",
+    "ING-5"
+   ],
+   "balance": 0,
+   "payments": [
+    {
+     "id": 10,
+     "receipt": "K-000010",
+     "amount": 830000,
+     "method": "payme",
+     "paid_at": "2026-10-02T05:51:00.000000Z"
+    },
+    {
+     "id": 1,
+     "receipt": "K-000001",
+     "amount": 830000,
+     "method": "cash",
+     "paid_at": "2026-09-03T05:00:00.000000Z"
+    }
+   ],
+   "charges": [
+    {
+     "id": 19,
+     "period": "2026-10",
+     "amount": 450000,
+     "title": "M-11"
+    },
+    {
+     "id": 15,
+     "period": "2026-10",
+     "amount": 380000,
+     "title": "ING-5"
+    },
+    {
+     "id": 5,
+     "period": "2026-09",
+     "amount": 450000,
+     "title": "M-11"
+    },
+    {
+     "id": 1,
+     "period": "2026-09",
+     "amount": 380000,
+     "title": "ING-5"
+    }
+   ],
+   "attendance": {
+    "period": "2026-10",
+    "counts": {
+     "present": 5,
+     "absent": 1,
+     "late": 1,
+     "excused": 1
+    },
+    "lessons": [
+     {
+      "date": "2026-10-19",
+      "topic": "Nazorat ishi tahlili",
+      "group": "M-11",
+      "status": "present"
+     },
+     {
+      "date": "2026-10-16",
+      "topic": "Takrorlash",
+      "group": "M-11",
+      "status": "excused"
+     },
+     {
+      "date": "2026-10-14",
+      "topic": "Logarifmlar",
+      "group": "M-11",
+      "status": "late"
+     },
+     {
+      "date": "2026-10-12",
+      "topic": "Progressiyalar",
+      "group": "M-11",
+      "status": "present"
+     },
+     {
+      "date": "2026-10-09",
+      "topic": "Funksiya grafigi",
+      "group": "M-11",
+      "status": "present"
+     },
+     {
+      "date": "2026-10-07",
+      "topic": "Tengsizliklar",
+      "group": "M-11",
+      "status": "present"
+     },
+     {
+      "date": "2026-10-05",
+      "topic": "Viyet teoremasi",
+      "group": "M-11",
+      "status": "absent"
+     },
+     {
+      "date": "2026-10-02",
+      "topic": "Kvadrat tenglamalar",
+      "group": "M-11",
+      "status": "present"
+     }
+    ]
+   },
+   "offer": {
+    "version": 1,
+    "accepted": false
+   }
+  }
+ ],
+ "offer_text": "1. O'quv markazi dars jadvaliga muvofiq ta'lim xizmatini ko'rsatadi.\n2. To'lov har oy boshida amalga oshiriladi.\n3. Uzrli sababsiz qoldirilgan darslar uchun to'lov qaytarilmaydi."
+}

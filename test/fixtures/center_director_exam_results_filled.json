@@ -1,0 +1,99 @@
+{
+ "Natijalar": [
+  [
+   "O'rin",
+   "Kod",
+   "F.I.Sh.",
+   "Guruh",
+   "Variant",
+   "Turi",
+   "To'g'ri",
+   "Noto'g'ri",
+   "Bo'sh",
+   "Ball",
+   "Maks. ball",
+   "Foiz"
+  ],
+  [
+   1,
+   "305619",
+   "Ergasheva Mohinur",
+   "M-11, ING-5",
+   2,
+   "Onlayn",
+   8,
+   4,
+   0,
+   8,
+   12,
+   66.7
+  ]
+ ],
+ "Javoblar": [
+  [
+   "Kod",
+   "F.I.Sh.",
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12
+  ],
+  [
+   "305619",
+   "Ergasheva Mohinur",
+   "-",
+   "+",
+   "+",
+   "-",
+   "+",
+   "+",
+   "-",
+   "+",
+   "+",
+   "+",
+   "+",
+   "-"
+  ],
+  [
+   "",
+   "To'g'ri, %",
+   0,
+   100,
+   100,
+   0,
+   100,
+   100,
+   0,
+   100,
+   100,
+   100,
+   100,
+   0
+  ]
+ ],
+ "Mavzular": [
+  [
+   "Mavzu",
+   "Savollar soni",
+   "O'rtacha to'g'ri, %"
+  ],
+  [
+   "Ko'paytirish",
+   6,
+   66.7
+  ],
+  [
+   "Qo'shish",
+   6,
+   66.7
+  ]
+ ]
+}

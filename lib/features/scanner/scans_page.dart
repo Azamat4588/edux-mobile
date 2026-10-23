@@ -147,7 +147,7 @@ class _ServerScanTile extends StatelessWidget {
     final student = asMap(attempt['student']);
     final exam = asMap(scan['exam']);
     final result = asMap(scan['result']);
-    final flags = ((result['flags'] as List?) ?? const <dynamic>[]).length;
+    final flags = asRawList(result['flags']).length;
     final name = student['full_name'] != null
         ? asText(student['full_name'])
         : (result['student_code'] != null ? '#${result['student_code']}' : tr("O'quvchi aniqlanmagan"));

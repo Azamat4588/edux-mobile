@@ -54,22 +54,22 @@ class QueuedScan {
         createdAt: DateTime.tryParse(asText(json['created_at'])) ?? DateTime.now(),
         device: asMap(json['device']),
         examId: json['exam_id'] == null ? null : asInt(json['exam_id']),
-        examTitle: json['exam_title'] as String?,
+        examTitle: json['exam_title']?.toString(),
         variant: json['variant'] == null ? null : asInt(json['variant']),
-        studentCode: json['student_code'] as String?,
-        studentName: json['student_name'] as String?,
+        studentCode: json['student_code']?.toString(),
+        studentName: json['student_name']?.toString(),
         localCorrect: json['local_correct'] == null ? null : asInt(json['local_correct']),
         localTotal: json['local_total'] == null ? null : asInt(json['local_total']),
         localScore: json['local_score'] == null ? null : asDouble(json['local_score']),
         localMax: json['local_max'] == null ? null : asDouble(json['local_max']),
         status: asText(json['status'], ScanStatus.waiting),
-        message: json['message'] as String?,
+        message: json['message']?.toString(),
         scanId: json['scan_id'] == null ? null : asInt(json['scan_id']),
         serverCorrect: json['server_correct'] == null ? null : asInt(json['server_correct']),
         serverTotal: json['server_total'] == null ? null : asInt(json['server_total']),
         serverScore: json['server_score'] == null ? null : asDouble(json['server_score']),
         serverMax: json['server_max'] == null ? null : asDouble(json['server_max']),
-        serverStudent: json['server_student'] as String?,
+        serverStudent: json['server_student']?.toString(),
         attempts: asInt(json['attempts']),
       );
 
@@ -291,7 +291,7 @@ class ScanQueue extends ChangeNotifier {
     item.scanId = asInt(scan['id']);
     final status = asText(scan['status']);
     final attempt = asMap(scan['attempt']);
-    item.message = scan['error'] as String?;
+    item.message = scan['error']?.toString();
     if (attempt.isNotEmpty) {
       final correct = asInt(attempt['correct_count']);
       item.serverCorrect = correct;

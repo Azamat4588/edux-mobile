@@ -37,10 +37,10 @@ class ExamKit {
     final points = <int, List<int>>{};
     for (final variant in asList(json['variants'])) {
       final number = asInt(variant['number']);
-      keys[number] = ((variant['key'] as List?) ?? const <dynamic>[])
-          .map((row) => ((row as List?) ?? const <dynamic>[]).map((value) => asInt(value)).toList())
+      keys[number] = asRawList(variant['key'])
+          .map((row) => asRawList(row).map((value) => asInt(value)).toList())
           .toList();
-      points[number] = ((variant['points_x100'] as List?) ?? const <dynamic>[]).map((value) => asInt(value, 100)).toList();
+      points[number] = asRawList(variant['points_x100']).map((value) => asInt(value, 100)).toList();
     }
     final students = <String, String>{};
     for (final student in asList(json['students'])) {

@@ -1,0 +1,93 @@
+{
+ "counters": {
+  "active_leads": 4,
+  "active_students": 11,
+  "groups": 2,
+  "debtors": 3,
+  "debt_total": 1600000,
+  "trial": 1,
+  "frozen": 1,
+  "paid_this_month": 8,
+  "left_active_this_month": 1,
+  "left_after_trial_this_month": 0
+ },
+ "month": {
+  "income": 4544000,
+  "expected": 5694000,
+  "expenses": 2530000
+ },
+ "series": [
+  {
+   "period": "2026-05",
+   "label": "May 2026",
+   "income": 0,
+   "expenses": 0,
+   "profit": 0,
+   "charged": 0
+  },
+  {
+   "period": "2026-06",
+   "label": "Iyun 2026",
+   "income": 0,
+   "expenses": 0,
+   "profit": 0,
+   "charged": 0
+  },
+  {
+   "period": "2026-07",
+   "label": "Iyul 2026",
+   "income": 0,
+   "expenses": 0,
+   "profit": 0,
+   "charged": 0
+  },
+  {
+   "period": "2026-08",
+   "label": "Avgust 2026",
+   "income": 0,
+   "expenses": 0,
+   "profit": 0,
+   "charged": 0
+  },
+  {
+   "period": "2026-09",
+   "label": "Sentabr 2026",
+   "income": 5179000,
+   "expenses": 1530000,
+   "profit": 3649000,
+   "charged": 5629000
+  },
+  {
+   "period": "2026-10",
+   "label": "Oktabr 2026",
+   "income": 4544000,
+   "expenses": 2530000,
+   "profit": 2014000,
+   "charged": 5694000
+  }
+ ],
+ "birthdays": [],
+ "tasks": [
+  {
+   "id": 3,
+   "organization_id": 1,
+   "title": "Oylik hisobotni tayyorlash",
+   "note": null,
+   "due_at": "2026-10-23T14:23:59.000000Z",
+   "assigned_to": 1,
+   "created_by": 1,
+   "subject_type": null,
+   "subject_id": null,
+   "completed_at": null,
+   "completed_by": null,
+   "result": null,
+   "created_at": "2026-10-19T14:23:59.000000Z",
+   "updated_at": "2026-10-19T14:23:59.000000Z",
+   "assignee": {
+    "id": 1,
+    "name": "Rustamov Akmal"
+   }
+  }
+ ],
+ "tasks_overdue": 0
+}

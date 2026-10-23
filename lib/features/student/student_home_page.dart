@@ -176,7 +176,7 @@ class StudentOverviewBody extends StatelessWidget {
             StatCard(label: tr('Topshirilgan testlar'), value: '${asInt(testing['count'])}', icon: Icons.quiz_outlined),
             StatCard(
               label: tr("O'rtacha natija"),
-              value: percent(testing['average_percent'] as num?),
+              value: percent(asNumOrNull(testing['average_percent'])),
               icon: Icons.insights_outlined,
               color: AppColors.success,
             ),
@@ -206,7 +206,7 @@ class StudentOverviewBody extends StatelessWidget {
                 ListTile(
                   title: Text(asText(subjects[i]['name'])),
                   subtitle: Text(tr('{0} ta baho', <Object?>[asInt(subjects[i]['current_marks'])])),
-                  trailing: _MarkBadge(value: subjects[i]['current_average'] as num?),
+                  trailing: _MarkBadge(value: asNumOrNull(subjects[i]['current_average'])),
                 ),
               ],
             ]),

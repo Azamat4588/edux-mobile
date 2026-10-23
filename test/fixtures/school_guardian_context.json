@@ -1,0 +1,42 @@
+{
+ "organization": {
+  "id": 1,
+  "name": "3-son umumta'lim maktabi",
+  "type": "school",
+  "subdomain": null,
+  "type_label": "Maktab",
+  "logo_url": null,
+  "url": null
+ },
+ "theme": [],
+ "terms": {
+  "group": "Sinf",
+  "groups": "Sinflar",
+  "student": "O'quvchi",
+  "students": "O'quvchilar"
+ },
+ "mode": "platform",
+ "guest": false,
+ "role": "guardian",
+ "modules": [
+  "testing",
+  "lms",
+  "school"
+ ],
+ "features": [
+  "ai",
+  "sms",
+  "olympiad",
+  "access",
+  "fun",
+  "telegram"
+ ],
+ "coins_enabled": false,
+ "subscription": {
+  "status": "active",
+  "can_write": true,
+  "suspended": false
+ },
+ "timezone": "Asia/Tashkent",
+ "telegram_bot": "edux_demo_bot"
+}

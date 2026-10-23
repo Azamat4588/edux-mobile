@@ -1,0 +1,21 @@
+{
+ "modules": [
+  "testing",
+  "lms",
+  "school"
+ ],
+ "manager": false,
+ "testing": {
+  "open_exams": 0,
+  "needs_review": 0,
+  "finished_week": 0
+ },
+ "lms": {
+  "courses": 0,
+  "to_grade": 0
+ },
+ "school": {
+  "year": "2026–2027",
+  "lessons_today": 0
+ }
+}

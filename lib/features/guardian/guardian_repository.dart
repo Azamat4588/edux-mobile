@@ -19,7 +19,7 @@ class GuardianChild {
         id: asInt(json['id']),
         name: asText(json['name']),
         code: json['code']?.toString(),
-        groups: ((json['groups'] as List?) ?? const <dynamic>[]).map((value) => '$value').toList(),
+        groups: asRawList(json['groups']).map((value) => '$value').toList(),
       );
 
   final int id;
@@ -102,7 +102,7 @@ class GuardianRepository {
             .map((item) => GuardianChild(
                   id: asInt(item['id']),
                   name: asText(item['full_name']),
-                  groups: ((item['classes'] as List?) ?? const <dynamic>[]).map((value) => '$value').toList(),
+                  groups: asRawList(item['classes']).map((value) => '$value').toList(),
                 ))
             .toList();
       } on ApiException catch (error) {
@@ -115,7 +115,7 @@ class GuardianRepository {
           .map((item) => GuardianChild(
                 id: asInt(item['id']),
                 name: asText(item['full_name']),
-                groups: ((item['groups'] as List?) ?? const <dynamic>[]).map((value) => '$value').toList(),
+                groups: asRawList(item['groups']).map((value) => '$value').toList(),
               ))
           .toList();
     }
@@ -124,7 +124,7 @@ class GuardianRepository {
         final crm = await _crmChildren();
         list = list.map((child) {
           final row = crm.firstWhere((item) => asInt(item['id']) == child.id, orElse: () => <String, dynamic>{});
-          final groups = ((row['groups'] as List?) ?? const <dynamic>[]).map((value) => '$value').toList();
+          final groups = asRawList(row['groups']).map((value) => '$value').toList();
           return groups.isEmpty ? child : GuardianChild(id: child.id, name: child.name, code: child.code, groups: groups);
         }).toList();
       } catch (_) {

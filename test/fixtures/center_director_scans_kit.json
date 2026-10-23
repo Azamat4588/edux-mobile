@@ -1,0 +1,74 @@
+{
+ "exam": {
+  "id": 13,
+  "title": "Fizika — 11 ta mavzu",
+  "status": "draft",
+  "kind": "bank",
+  "questions": 0,
+  "options": 4
+ },
+ "variants": [],
+ "students": [
+  {
+   "id": 11,
+   "code": "143793",
+   "name": "Ergashev Timur"
+  },
+  {
+   "id": 1,
+   "code": "305619",
+   "name": "Ergasheva Mohinur"
+  },
+  {
+   "id": 4,
+   "code": "414548",
+   "name": "Hasanova Malika"
+  },
+  {
+   "id": 3,
+   "code": "415271",
+   "name": "Karimov Sardor"
+  },
+  {
+   "id": 10,
+   "code": "735415",
+   "name": "Nazarova Sevara"
+  },
+  {
+   "id": 9,
+   "code": "603779",
+   "name": "Qodirov Sherzod"
+  },
+  {
+   "id": 6,
+   "code": "381107",
+   "name": "Rahimova Nigora"
+  },
+  {
+   "id": 8,
+   "code": "234003",
+   "name": "Saidova Zarina"
+  },
+  {
+   "id": 12,
+   "code": "604436",
+   "name": "Sobirov Ulugbek"
+  },
+  {
+   "id": 5,
+   "code": "028030",
+   "name": "Tursunov Jasur"
+  },
+  {
+   "id": 2,
+   "code": "950634",
+   "name": "Valiyev Bobur"
+  },
+  {
+   "id": 7,
+   "code": "489151",
+   "name": "Yusupov Aziz"
+  }
+ ],
+ "generated_at": "2026-10-23T03:49:23+00:00"
+}

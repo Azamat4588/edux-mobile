@@ -1,0 +1,42 @@
+{
+ "kind": "combined",
+ "mode": "platform",
+ "domain": null,
+ "landing_url": "http://localhost",
+ "app_url": "http://localhost",
+ "brand": {
+  "name": "EduX",
+  "logo_url": null,
+  "icon_url": null
+ },
+ "theme": {
+  "defaults": {
+   "mode": "light",
+   "accent": "blue",
+   "template": "classic",
+   "font": "onest",
+   "size": "md",
+   "radius": "rounded",
+   "icons": "color"
+  },
+  "allow_organization": true,
+  "allow_user": true,
+  "organization": []
+ },
+ "seo": {
+  "title": "",
+  "description": "",
+  "yandex_metrika": null,
+  "google_analytics": null
+ },
+ "landing": {
+  "content": {
+   "uz": {},
+   "ru": {},
+   "en": {}
+  },
+  "hidden": [],
+  "trial_days": 14
+ },
+ "organization": null
+}

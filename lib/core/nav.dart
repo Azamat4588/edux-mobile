@@ -117,6 +117,12 @@ List<NavSection> buildNav(NavContext ctx) {
         _section('callcenter', tr('Call markazi'), 'headphones', <NavTab?>[_when(can('callcenter'), NavTab('crm.callcenter', tr('Call markazi')))]),
         _section('tasks', tr('Topshiriqlar'), 'list-checks', <NavTab?>[_when(can('tasks'), NavTab('crm.tasks', tr('Topshiriqlar')))]),
       ]);
+    } else if (can('p2p')) {
+      // CRMsiz (masalan, maktab + LMS): kassir kartaga o'tkazmalarni tasdiqlaydi (server: pay/p2p — crm|lms).
+      sections.addAll(<NavSection?>[
+        _section('home', tr('Bosh sahifa'), 'home', <NavTab?>[NavTab('home', tr('Bosh sahifa'))]),
+        _section('payments', tr("To'lovlar"), 'banknote', <NavTab?>[NavTab('pay.p2p', tr("Kartaga o'tkazmalar"))]),
+      ]);
     }
   } else if (role == 'marketer') {
     if (can('crm')) {

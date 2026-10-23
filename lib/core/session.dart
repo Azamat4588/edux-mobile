@@ -85,11 +85,11 @@ class Session extends ChangeNotifier implements ApiCredentials {
   bool get hasContext => context.isNotEmpty;
 
   String get role => asText(context['role']);
-  List<String> get modules => ((context['modules'] as List?) ?? const <dynamic>[]).map((item) => '$item').toList();
+  List<String> get modules => asRawList(context['modules']).map((item) => '$item').toList();
   bool hasModule(String module) => modules.contains(module);
 
   /// Qo'shimcha imkoniyatlar (server 1.28+): ai, callcenter, sms, olympiad, access, fun, branches, telegram.
-  List<String> get features => ((context['features'] as List?) ?? const <dynamic>[]).map((item) => '$item').toList();
+  List<String> get features => asRawList(context['features']).map((item) => '$item').toList();
 
   /// Eski server `features` qaytarmaydi — unda qo'shimchalar alohida cheklanmagan deb hisoblanadi.
   bool hasFeature(String feature) => context['features'] is! List || features.contains(feature);

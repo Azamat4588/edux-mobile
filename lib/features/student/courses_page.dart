@@ -696,7 +696,7 @@ class _ActivityBlockState extends State<_ActivityBlock> {
       final data = asMap(await AppScope.read(context).api.post('lms/my/lessons/${widget.lessonId}/check', <String, Object?>{
         'answers': <int?>[for (var i = 0; i < count; i++) _answers[i]],
       }));
-      final results = ((data['results'] as List?) ?? const <dynamic>[]).map((item) => item == true).toList();
+      final results = asRawList(data['results']).map((item) => item == true).toList();
       setState(() => _results = results);
       if (data['all'] == true) {
         if (mounted) showMessage(context, tr("Barcha javoblar to'g'ri! Dars o'tilgan deb belgilandi."));
@@ -751,14 +751,14 @@ class _ActivityBlockState extends State<_ActivityBlock> {
             if (_results != null && i < _results!.length)
               Icon(_results![i] ? Icons.check_circle : Icons.cancel, color: _results![i] ? AppColors.success : AppColors.danger, size: 20),
           ]),
-          for (var j = 0; j < ((questions[i]['options'] as List?)?.length ?? 0); j++)
+          for (var j = 0; j < asRawList(questions[i]['options']).length; j++)
             RadioListTile<int>(
               dense: true,
               contentPadding: EdgeInsets.zero,
               value: j,
               // ignore: deprecated_member_use
               groupValue: _answers[i],
-              title: MathText('${(questions[i]['options'] as List)[j]}'),
+              title: MathText('${asRawList(questions[i]['options'])[j]}'),
               // ignore: deprecated_member_use
               onChanged: (value) => setState(() {
                 if (value != null) _answers[i] = value;

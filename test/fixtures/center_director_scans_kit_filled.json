@@ -1,0 +1,180 @@
+{
+ "exam": {
+  "id": 1,
+  "title": "Matematika: 2-chorak nazorat ishi",
+  "status": "published",
+  "kind": "bank",
+  "questions": 12,
+  "options": 4
+ },
+ "variants": [
+  {
+   "number": 1,
+   "key": [
+    [
+     0
+    ],
+    [
+     2
+    ],
+    [
+     2
+    ],
+    [
+     3
+    ],
+    [
+     2
+    ],
+    [
+     0
+    ],
+    [
+     3
+    ],
+    [
+     3
+    ],
+    [
+     0
+    ],
+    [
+     3
+    ],
+    [
+     0
+    ],
+    [
+     0
+    ]
+   ],
+   "points_x100": [
+    100,
+    100,
+    100,
+    100,
+    100,
+    100,
+    100,
+    100,
+    100,
+    100,
+    100,
+    100
+   ]
+  },
+  {
+   "number": 2,
+   "key": [
+    [
+     1
+    ],
+    [
+     3
+    ],
+    [
+     0
+    ],
+    [
+     0
+    ],
+    [
+     2
+    ],
+    [
+     1
+    ],
+    [
+     3
+    ],
+    [
+     2
+    ],
+    [
+     3
+    ],
+    [
+     2
+    ],
+    [
+     1
+    ],
+    [
+     1
+    ]
+   ],
+   "points_x100": [
+    100,
+    100,
+    100,
+    100,
+    100,
+    100,
+    100,
+    100,
+    100,
+    100,
+    100,
+    100
+   ]
+  }
+ ],
+ "students": [
+  {
+   "id": 11,
+   "code": "143793",
+   "name": "Ergashev Timur"
+  },
+  {
+   "id": 1,
+   "code": "305619",
+   "name": "Ergasheva Mohinur"
+  },
+  {
+   "id": 4,
+   "code": "414548",
+   "name": "Hasanova Malika"
+  },
+  {
+   "id": 3,
+   "code": "415271",
+   "name": "Karimov Sardor"
+  },
+  {
+   "id": 10,
+   "code": "735415",
+   "name": "Nazarova Sevara"
+  },
+  {
+   "id": 9,
+   "code": "603779",
+   "name": "Qodirov Sherzod"
+  },
+  {
+   "id": 6,
+   "code": "381107",
+   "name": "Rahimova Nigora"
+  },
+  {
+   "id": 8,
+   "code": "234003",
+   "name": "Saidova Zarina"
+  },
+  {
+   "id": 5,
+   "code": "028030",
+   "name": "Tursunov Jasur"
+  },
+  {
+   "id": 2,
+   "code": "950634",
+   "name": "Valiyev Bobur"
+  },
+  {
+   "id": 7,
+   "code": "489151",
+   "name": "Yusupov Aziz"
+  }
+ ],
+ "generated_at": "2026-10-23T03:49:22+00:00"
+}

@@ -1,0 +1,12 @@
+{
+ "students": [
+  {
+   "id": 1,
+   "full_name": "Ergasheva Mohinur",
+   "classes": [
+    "11-A",
+    "ING-5"
+   ]
+  }
+ ]
+}

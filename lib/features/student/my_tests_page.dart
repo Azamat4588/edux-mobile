@@ -192,7 +192,7 @@ class _TakeTestPageState extends State<TakeTestPage> {
     final questions = asList(data['questions'], 'questions');
     for (final question in questions) {
       final id = asInt(question['question_id']);
-      _selected[id] = ((question['selected_option_ids'] as List?) ?? const <dynamic>[]).map((v) => asInt(v)).toSet();
+      _selected[id] = asRawList(question['selected_option_ids']).map((v) => asInt(v)).toSet();
       if (question['text_answer'] != null) _texts[id] = asText(question['text_answer']);
     }
     _attemptId = asInt(data['attempt_id']);

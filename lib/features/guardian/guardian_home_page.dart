@@ -491,7 +491,7 @@ class _TestsTab extends StatelessWidget {
                 StatCard(label: tr('Topshirilgan testlar'), value: '${asInt(testing['count'])}', icon: Icons.quiz_outlined),
                 StatCard(
                   label: tr("O'rtacha natija"),
-                  value: percent(testing['average_percent'] as num?),
+                  value: percent(asNumOrNull(testing['average_percent'])),
                   icon: Icons.insights_outlined,
                   color: AppColors.success,
                 ),

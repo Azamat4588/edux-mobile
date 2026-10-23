@@ -102,7 +102,18 @@ class StaffHomePage extends StatelessWidget {
             padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
             children: <Widget>[
               HomeHeader(name: session.userName, lead: _lead(session)),
-              if (crmMissing)
+              if (crmMissing && session.role == 'cashier' && session.can('p2p'))
+                AppCard(
+                  child: ListTile(
+                    contentPadding: EdgeInsets.zero,
+                    leading: const Icon(Icons.credit_card),
+                    title: Text(tr("Kartaga o'tkazmalar")),
+                    subtitle: Text(tr("Kelgan o'tkazmalarni buyurtmalar bilan tasdiqlang.")),
+                    trailing: const Icon(Icons.chevron_right),
+                    onTap: () => onOpen('pay.p2p'),
+                  ),
+                )
+              else if (crmMissing)
                 EmptyState(
                   icon: Icons.lock_outline,
                   text: tr("Bu sahifalar CRM moduli bilan ishlaydi. Tashkilot rahbaridan modulni yoqishni so'rang."),

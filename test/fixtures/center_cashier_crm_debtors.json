@@ -1,0 +1,48 @@
+{
+ "data": [
+  {
+   "id": 9,
+   "full_name": "Qodirov Sherzod",
+   "code": "603779",
+   "phone": "+998905559037",
+   "archived": false,
+   "groups": [
+    "M-11"
+   ],
+   "debt": 900000,
+   "last_paid_at": null,
+   "guardians_on_telegram": 0
+  },
+  {
+   "id": 10,
+   "full_name": "Nazarova Sevara",
+   "code": "735415",
+   "phone": "+998905560154",
+   "archived": false,
+   "groups": [
+    "M-11"
+   ],
+   "debt": 450000,
+   "last_paid_at": "2026-09-06T07:33:00.000000Z",
+   "guardians_on_telegram": 0
+  },
+  {
+   "id": 7,
+   "full_name": "Yusupov Aziz",
+   "code": "489151",
+   "phone": "+998905556803",
+   "archived": false,
+   "groups": [
+    "M-11"
+   ],
+   "debt": 250000,
+   "last_paid_at": "2026-10-08T07:33:00.000000Z",
+   "guardians_on_telegram": 0
+  }
+ ],
+ "total_debt": 1600000,
+ "count": 3,
+ "current_page": 1,
+ "last_page": 1,
+ "per_page": 50
+}

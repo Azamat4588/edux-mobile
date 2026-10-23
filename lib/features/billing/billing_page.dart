@@ -230,7 +230,7 @@ class _BillingPageState extends State<BillingPage> with WidgetsBindingObserver {
       ..addAll(_strings(data['bought_addons']));
   }
 
-  static List<String> _strings(dynamic value) => ((value as List?) ?? const <dynamic>[]).map((item) => '$item').toList();
+  static List<String> _strings(dynamic value) => asRawList(value).map((item) => '$item').toList();
 
   Map<String, dynamic>? get _currentPlan {
     for (final plan in asList(_billing?['plans'])) {

@@ -1,0 +1,37 @@
+{
+ "p2p": {
+  "enabled": true,
+  "ready": true,
+  "card": "8600 1234 5678 9012",
+  "card_masked": "8600 **** **** 9012",
+  "last4": "9012",
+  "holder": "TEST KASSA",
+  "bank": "uzcard",
+  "sources": [
+   "sms",
+   "manual"
+  ],
+  "ttl": 120,
+  "id_mode": "add"
+ },
+ "manual": true,
+ "pending": [
+  {
+   "id": 1,
+   "student": {
+    "id": 1,
+    "full_name": "Ergasheva Mohinur",
+    "code": "305619"
+   },
+   "purpose": "tuition",
+   "course": null,
+   "amount": 450000,
+   "p2p_amount": 450798,
+   "expires_at": "2026-10-23T05:49:22.000000Z",
+   "expired": false,
+   "created_at": "2026-10-23T03:49:22.000000Z"
+  }
+ ],
+ "unknown": [],
+ "recent": []
+}

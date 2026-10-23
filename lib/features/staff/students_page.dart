@@ -309,7 +309,7 @@ class _StudentCardPageState extends State<StudentCardPage> {
     // insights: student.groups — nomlar ro'yxati; CRM bo'lsa guruh holati bilan.
     final groups = crm['groups'] is List
         ? asList(crm['groups'])
-        : ((student['groups'] as List?) ?? const <dynamic>[]).map((name) => <String, dynamic>{'name': '$name'}).toList();
+        : asRawList(student['groups']).map((name) => <String, dynamic>{'name': '$name'}).toList();
     return <String, dynamic>{
       'student': student,
       'groups': groups,

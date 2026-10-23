@@ -396,7 +396,7 @@ class _PlayPageState extends State<PlayPage> {
     final words = asList(_session['words'], 'words');
     if (words.isEmpty) return EmptyState(text: tr("So'zlar topilmadi."));
     final word = words[_word.clamp(0, words.length - 1)];
-    final letters = ((word['letters'] as List?) ?? const <dynamic>[]).map((item) => '$item').toList();
+    final letters = asRawList(word['letters']).map((item) => '$item').toList();
     return ListView(
       padding: const EdgeInsets.fromLTRB(16, 12, 16, 32),
       children: <Widget>[
@@ -530,7 +530,7 @@ class _ResultView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final board = asList(result['leaderboard'], 'leaderboard');
-    final solutions = ((result['solutions'] as List?) ?? const <dynamic>[]).map((item) => '$item').toList();
+    final solutions = asRawList(result['solutions']).map((item) => '$item').toList();
     final best = asInt(result['best']);
     final score = asInt(result['score']);
     return ListView(

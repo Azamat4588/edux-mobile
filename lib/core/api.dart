@@ -213,3 +213,13 @@ double asDouble(dynamic value, [double fallback = 0]) {
 }
 
 String asText(dynamic value, [String fallback = '']) => value == null ? fallback : value.toString();
+
+/// Javobdagi xom ro'yxat (elementlar istalgan turda); ro'yxat bo'lmasa — bo'sh (`as List` crash bermasin).
+List<dynamic> asRawList(dynamic value) => value is List ? value : const <dynamic>[];
+
+/// Son yoki null: server raqamni matn ("12.5") ko'rinishida yuborsa ham o'qiladi.
+num? asNumOrNull(dynamic value) {
+  if (value is num) return value;
+  if (value == null) return null;
+  return num.tryParse(value.toString());
+}

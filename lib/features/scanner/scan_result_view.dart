@@ -6,6 +6,7 @@ import 'dart:typed_data';
 import 'package:edux_omr/edux_omr.dart';
 import 'package:flutter/material.dart';
 
+import '../../core/api.dart';
 import '../../core/format.dart';
 import '../../core/i18n.dart';
 import '../../core/theme.dart';
@@ -145,7 +146,7 @@ Map<int, List<int>> doubtfulFromFlags(List<Map<String, dynamic>> flags) {
     if (flag['type'] != 'uncertain' && flag['type'] != 'device_mismatch') continue;
     final question = flag['question'];
     if (question is! num) continue;
-    result[question.toInt() - 1] = ((flag['options'] as List?) ?? const <dynamic>[]).map((v) => (v as num).toInt()).toList();
+    result[question.toInt() - 1] = asRawList(flag['options']).map((v) => asInt(v)).toList();
   }
   return result;
 }
@@ -245,10 +246,10 @@ class _ScanDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     final queue = ScanQueue.instance;
     final style = scanStatusStyle(item.status);
-    final answers = ((item.device['answers'] as List?) ?? const <dynamic>[])
-        .map((row) => (row as List).map((v) => (v as num).toInt()).toList())
+    final answers = asRawList(item.device['answers'])
+        .map((row) => asRawList(row).map((v) => asInt(v)).toList())
         .toList();
-    final flags = ((item.device['flags'] as List?) ?? const <dynamic>[]).map((f) => Map<String, dynamic>.from(f as Map)).toList();
+    final flags = asRawList(item.device['flags']).whereType<Map>().map((f) => Map<String, dynamic>.from(f)).toList();
     final previewFile = queue.previewFile(item);
     ImageProvider? image;
     if (preview != null) {
