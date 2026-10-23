@@ -326,7 +326,7 @@ class _MillionaireBoardState extends State<MillionaireBoard> with _QuestionTimer
   void _scrollLadder() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!_ladder.hasClients) return;
-      final target = (_level * 76.0 - 120).clamp(0.0, _ladder.position.maxScrollExtent);
+      final target = (_level * 82.0 - 120).clamp(0.0, _ladder.position.maxScrollExtent);
       _ladder.animateTo(target, duration: const Duration(milliseconds: 250), curve: Curves.easeOut);
     });
   }
@@ -389,22 +389,26 @@ class _MillionaireBoardState extends State<MillionaireBoard> with _QuestionTimer
               label: '${i + 1}: ${ladder[i]}${safe ? ' (${tr('kafolatlangan')})' : ''}',
               selected: current,
               child: Container(
-                width: 70,
+                width: 76,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                   color: current ? AppColors.brand : (passed ? AppColors.soft(AppColors.success) : AppColors.card),
                   borderRadius: BorderRadius.circular(10),
                   border: Border.all(color: current ? AppColors.brand : (safe ? AppColors.warning : AppColors.line)),
                 ),
-                child: Text(
-                  '${ladder[i]}${safe ? ' ★' : ''}',
-                  style: TextStyle(
-                    fontWeight: current || safe ? FontWeight.w800 : FontWeight.w600,
-                    fontSize: 13,
-                    fontFeatures: const <FontFeature>[FontFeature.tabularFigures()],
-                    color: current ? AppColors.onBrand : (passed ? AppColors.success : AppColors.ink),
+                child: Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
+                  Text(
+                    '${ladder[i]}',
+                    style: TextStyle(
+                      fontWeight: current || safe ? FontWeight.w800 : FontWeight.w600,
+                      fontSize: 13,
+                      fontFeatures: const <FontFeature>[FontFeature.tabularFigures()],
+                      color: current ? AppColors.onBrand : (passed ? AppColors.success : AppColors.ink),
+                    ),
                   ),
-                ),
+                  // Kafolatlangan bosqich belgisi (yulduzcha shriftga bog'liq emas — ikonka).
+                  if (safe) Icon(Icons.star_rounded, size: 13, color: current ? AppColors.onBrand : AppColors.warning),
+                ]),
               ),
             );
           },

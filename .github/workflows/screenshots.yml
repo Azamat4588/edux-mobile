@@ -61,7 +61,7 @@ jobs:
             git checkout -q --orphan screenshots
           fi
           git rm -rfq . > /dev/null 2>&1 || true
-          rm -rf screenshots
+          git clean -fdxq
           cp /tmp/shots/* .
           printf '# EduX mobil skrinshotlari\n\nManba: %s (%s)\n' "$src" "$(date -u +%Y-%m-%dT%H:%MZ)" > README.md
           git add -A

@@ -249,7 +249,8 @@ ThemeData buildTheme() {
         foregroundColor: AppColors.onBrand,
         minimumSize: Size(48, control + 2),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppRadius.control)),
-        textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+        // Shrift oilasi aniq: tugma matni aks holda tizim shriftiga (Roboto) tushib qoladi.
+        textStyle: TextStyle(fontFamily: choice.fontFamily, fontSize: 16, fontWeight: FontWeight.w600),
       ),
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(
@@ -264,7 +265,7 @@ ThemeData buildTheme() {
       height: dense ? 64 : 72,
       surfaceTintColor: Colors.transparent,
       indicatorColor: AppColors.brand.withAlpha(AppColors.dark ? 70 : 30),
-      labelTextStyle: WidgetStateProperty.all(const TextStyle(fontSize: 12, fontWeight: FontWeight.w600)),
+      labelTextStyle: WidgetStateProperty.all(TextStyle(fontFamily: choice.fontFamily, fontSize: 12, fontWeight: FontWeight.w600)),
     ),
     chipTheme: base.chipTheme.copyWith(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular((10 * choice.radiusFactor).clamp(4, 99).toDouble()))),
     tabBarTheme: TabBarThemeData(
@@ -272,7 +273,7 @@ ThemeData buildTheme() {
       labelColor: onDarkChrome ? Colors.white : AppColors.brand,
       unselectedLabelColor: onDarkChrome ? const Color(0xFFC9D1E0) : AppColors.muted,
       indicatorColor: onDarkChrome ? Colors.white : AppColors.brand,
-      labelStyle: const TextStyle(fontWeight: FontWeight.w700),
+      labelStyle: TextStyle(fontFamily: choice.fontFamily, fontWeight: FontWeight.w700),
       dividerColor: Colors.transparent,
     ),
     dividerTheme: DividerThemeData(color: AppColors.line, space: 1, thickness: 1),

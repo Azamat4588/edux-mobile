@@ -9,18 +9,22 @@ import 'dart:io';
 import 'dart:ui' as ui;
 
 import 'package:edux/core/api.dart';
+import 'package:edux/core/games.dart';
 import 'package:edux/core/home_widgets.dart';
 import 'package:edux/core/i18n.dart';
 import 'package:edux/core/nav.dart';
+import 'package:edux/core/notification_store.dart';
 import 'package:edux/core/session.dart';
 import 'package:edux/core/theme.dart';
 import 'package:edux/features/auth/login_page.dart';
-import 'package:edux/features/fun/games/bank_games.dart';
 import 'package:edux/features/fun/games/game_host.dart';
+import 'package:edux/features/fun/games/result_view.dart';
 import 'package:edux/features/fun/games_page.dart';
 import 'package:edux/features/fun/play_page.dart';
 import 'package:edux/features/guardian/guardian_home_page.dart';
 import 'package:edux/features/help/help_pages.dart';
+import 'package:edux/features/notifications/notifications_page.dart';
+import 'package:edux/features/settings/settings_page.dart';
 import 'package:edux/features/scanner/scanner_hub_page.dart';
 import 'package:edux/features/shell/home_shell.dart';
 import 'package:edux/features/staff/attendance_page.dart';
@@ -139,6 +143,21 @@ Widget? bottomBar(Session session, String? tab) {
   var index = bottom.indexWhere((item) => item.key == tab || (section != null && item.section == section.key));
   if (index < 0) index = destinations.length - 1;
   return NavigationBar(selectedIndex: index, destinations: destinations, onDestinationSelected: (_) {});
+}
+
+/// «Yana» sahifasi (HomeShell._more bilan bir xil tuzilma: bildirishnomalar, pastki menyuga sig'magan bo'limlar, murojaatlar, yordam).
+Widget morePage(Session session) {
+  final sections = buildNav(navContextOf(session));
+  final overflow = overflowSections(sections, bottomNav(sections));
+  ListTile tile(IconData icon, String label) =>
+      ListTile(leading: Icon(icon), title: Text(label), trailing: const Icon(Icons.chevron_right), onTap: () {});
+  return SettingsPage(extra: <Widget>[
+    tile(Icons.notifications_none_rounded, tr('Bildirishnomalar')),
+    for (final section in overflow)
+      for (final tab in section.tabs) tile(navIcon(section.icon), section.tabs.length > 1 ? '${section.label} · ${tab.label}' : tab.label),
+    tile(Icons.support_agent_outlined, tr('Murojaatlar')),
+    tile(Icons.help_outline, tr('Yordam')),
+  ]);
 }
 
 Widget appFor(Session session, Widget page, {String? tab, GlobalKey? boundary}) {
@@ -277,6 +296,28 @@ void main() {
     await shoot(tester, '02-oqituvchi-bosh-tungi', org: 'center', role: 'teacher', page: StaffHomePage(onOpen: (_) {}), tab: 'home', mode: 'dark');
   });
 
+  testWidgets('02b yana menyusi', (tester) async {
+    quietImages();
+    final session = sessionFor('center', 'teacher');
+    await shoot(tester, '02-oqituvchi-yana', org: 'center', role: 'teacher', page: morePage(session), tab: 'more');
+  });
+
+  testWidgets('02c bildirishnomalar', (tester) async {
+    quietImages();
+    final now = DateTime.now();
+    SharedPreferences.setMockInitialValues(<String, Object>{
+      'notifications.items': jsonEncode(<Map<String, Object?>>[
+        <String, Object?>{'id': '1', 'title': 'Ergasheva Mohinur keldi', 'body': 'M-9 darsiga 14:02 da keldi.', 'data': <String, Object?>{'type': 'arrival'}, 'received_at': now.subtract(const Duration(minutes: 12)).toIso8601String()},
+        <String, Object?>{'id': '2', 'title': "To'lov qabul qilindi", 'body': "Oktabr oyi uchun M-9 guruhi to'lovi: 450 000 so'm (Click).", 'data': <String, Object?>{'type': 'payment'}, 'received_at': now.subtract(const Duration(hours: 3)).toIso8601String()},
+        <String, Object?>{'id': '3', 'title': 'Yangi test', 'body': 'Matematika: 1-chorak nazorat ishi — topshirish kerak.', 'data': <String, Object?>{'type': 'attempt'}, 'received_at': now.subtract(const Duration(days: 1)).toIso8601String(), 'read': true},
+        <String, Object?>{'id': '4', 'title': 'Murojaatingizga javob', 'body': "Krossvord o'yinida harf yozilmayapti — javob berildi.", 'data': <String, Object?>{'type': 'support'}, 'received_at': now.subtract(const Duration(days: 1, hours: 2)).toIso8601String(), 'read': true},
+      ]),
+    });
+    await tester.runAsync(() => NotificationStore.instance.load());
+    await shoot(tester, '02-bildirishnomalar', org: 'center', role: 'teacher', page: const NotificationsPage());
+    SharedPreferences.setMockInitialValues(<String, Object>{});
+  });
+
   testWidgets('03 jurnal', (tester) async {
     quietImages();
     final options = asMap(readJson('screenshots/fixtures/school/teacher/school__journal__options.json'));
@@ -285,7 +326,7 @@ void main() {
     await shoot(tester, '03-jurnal', org: 'school', role: 'teacher', page: const JournalPage(), tab: 'school.journal');
     if (journals.isNotEmpty) {
       await shoot(tester, '03-jurnal-baholar',
-          org: 'school', role: 'teacher', page: JournalGridPage(journal: journals.first, terms: terms, termId: asInt(options['current_term_id'])));
+          org: 'school', role: 'teacher', page: JournalGridPage(journal: journals.firstWhere((j) => j['can_write'] == true, orElse: () => journals.first), terms: terms, termId: asInt(options['current_term_id'])));
     }
   });
 
@@ -293,7 +334,19 @@ void main() {
     quietImages();
     final sheet = asMap(readJson('screenshots/fixtures/center/teacher/crm__attendance.json'));
     final group = asMap(sheet['group']);
-    await shoot(tester, '04-davomat', org: 'center', role: 'teacher', page: AttendanceSheetPage(groupId: asInt(group['id']), groupName: asText(group['name'])));
+    await shoot(tester, '04-davomat', org: 'center', role: 'teacher', page: AttendanceSheetPage(groupId: asInt(group['id']), groupName: asText(group['name'])),
+        act: (tester) async {
+      // Bir nechta o'quvchi belgilangan holat
+      final came = find.text('Keldi');
+      for (var i = 0; i < 3 && i < came.evaluate().length; i++) {
+        await tester.tap(came.at(i));
+        await tester.pump();
+      }
+      if (find.text('Kechikdi').evaluate().length > 3) {
+        await tester.tap(find.text('Kechikdi').at(3));
+        await tester.pump();
+      }
+    });
     await shoot(tester, '04-davomat-guruhlar', org: 'center', role: 'teacher', page: const AttendancePage(), tab: 'attendance');
   });
 
@@ -316,7 +369,10 @@ void main() {
   testWidgets('08 oyinlar katalogi', (tester) async {
     quietImages();
     await shoot(tester, '08-oyinlar', org: 'center', role: 'student', page: const GamesPage(), tab: 'fun.games');
-    await shoot(tester, '08-oyinlar-tungi', org: 'center', role: 'student', page: const GamesPage(), tab: 'fun.games', mode: 'dark');
+    await shoot(tester, '08-oyinlar-tungi', org: 'center', role: 'student', page: const GamesPage(), tab: 'fun.games', mode: 'dark', act: (tester) async {
+      await tester.drag(find.byType(ListView).first, const Offset(0, -1450));
+      await settle(tester, 5);
+    });
   });
 
   testWidgets('09 oyinlar', (tester) async {
@@ -329,7 +385,7 @@ void main() {
       final right = asList(question['options'], 'options').firstWhere((option) => asInt(option['id']) == asInt(first['correct_option_id']));
       await tester.tap(find.widgetWithText(OptionButton, asText(right['body'])).first);
       await tester.pump();
-      await tester.pump(const Duration(milliseconds: 100));
+      await tester.pump(const Duration(milliseconds: 560));
     });
     await shoot(tester, '09-oyin-millioner', org: 'center', role: 'student', page: const PlayPage(game: 'millionaire', id: 2, title: 'Fizika'), act: (tester) async {
       await tester.tap(find.text('50/50'));
@@ -337,13 +393,9 @@ void main() {
     });
     await shoot(tester, '09-oyin-krossvord', org: 'center', role: 'student', page: const PlayPage(game: 'crossword', id: 2, title: 'Ingliz tili: hayvonlar'),
         act: (tester) async {
-      final start = asMap(asMap(readJson('test/fixtures/games/crossword.json'))['start']);
-      final answers = asList(asMap(readJson('test/fixtures/games/crossword.json'))['finish']['review'], 'review');
-      // Birinchi so'zning javobi (demo): kataklarga yoziladi
-      final word = asText(answers.first['answer']);
-      await tester.enterText(find.byType(TextField), '​${word.substring(0, word.length - 1)}');
+      // Katak tanlangan holat (javoblar yozilmaydi — demo to'plam savollari serverdagi tuzatishdan keyin to'g'ri chiqadi).
+      await tester.tap(find.text('1').first);
       await tester.pump();
-      expect(start['entries'], isNotEmpty);
     });
     await shoot(tester, '09-oyin-dor', org: 'center', role: 'student', page: const PlayPage(game: 'hangman', id: 6, title: 'Informatika: atamalar'), act: (tester) async {
       final start = asMap(asMap(readJson('test/fixtures/games/hangman.json'))['start']);
@@ -354,11 +406,26 @@ void main() {
         await settle(tester, 3);
       }
     });
-    await shoot(tester, '09-oyin-natija', org: 'center', role: 'student', page: const PlayPage(game: 'truefalse', id: 2, title: 'Fizika'), act: (tester) async {
-      final host = tester.widget<TrueFalseBoard>(find.byType(TrueFalseBoard)).host;
-      await host.finish();
-      await settle(tester, 5);
-    });
+    // Natija ekrani: demo natija (viktorina, 12 / 15).
+    final finish = asMap(asMap(readJson('test/fixtures/games/quiz.json'))['finish']);
+    final review = asList(finish['review'], 'review');
+    for (var i = 0; i < review.length; i++) {
+      review[i]['ok'] = i != 3 && i != 8 && i != 12;
+    }
+    finish
+      ..['score'] = 1236
+      ..['correct'] = 12
+      ..['duration_ms'] = 72400
+      ..['xp'] = 14
+      ..['best'] = 1236
+      ..['review'] = review
+      ..['leaderboard'] = <Map<String, Object?>>[
+        <String, Object?>{'name': 'Ergasheva Mohinur', 'score': 1236, 'me': true},
+        <String, Object?>{'name': 'Karimov Sardor', 'score': 1180, 'me': false},
+        <String, Object?>{'name': 'Hasanova Malika', 'score': 960, 'me': false},
+      ];
+    await shoot(tester, '09-oyin-natija', org: 'center', role: 'student',
+        page: Scaffold(appBar: AppBar(title: Text(tr('Viktorina-blits'))), body: GameResultView(result: GameResult.fromJson(finish), onAgain: () {})));
   });
 
   testWidgets('10 ota-ona farzandim', (tester) async {

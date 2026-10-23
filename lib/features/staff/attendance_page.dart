@@ -306,22 +306,56 @@ class _StudentMark extends StatelessWidget {
           if (trial) Pill(tr('Sinov darsida'), color: AppColors.brand),
         ]),
         const SizedBox(height: 8),
-        Wrap(
-          spacing: 6,
-          runSpacing: 6,
-          children: attendanceLabels.entries.map((entry) {
-            final selected = value == entry.key;
-            final color = attendanceColors[entry.key] ?? AppColors.brand;
-            return ChoiceChip(
-              label: Text(tr(entry.value)),
-              selected: selected,
-              selectedColor: color.withAlpha(40),
-              labelStyle: TextStyle(color: selected ? color : AppColors.ink, fontWeight: selected ? FontWeight.w700 : FontWeight.w500),
-              onSelected: (on) => onChanged(on ? entry.key : null),
-            );
-          }).toList(),
-        ),
+        // 4 holat bitta qatorda (tor telefonda ham ikki qatorga tushmaydi).
+        Row(children: <Widget>[
+          for (final entry in attendanceLabels.entries) ...<Widget>[
+            if (entry.key != attendanceLabels.keys.first) const SizedBox(width: 6),
+            Expanded(child: _StatusChoice(
+              label: tr(entry.value),
+              selected: value == entry.key,
+              color: attendanceColors[entry.key] ?? AppColors.brand,
+              onTap: () => onChanged(value == entry.key ? null : entry.key),
+            )),
+          ],
+        ]),
       ]),
+    );
+  }
+}
+
+class _StatusChoice extends StatelessWidget {
+  const _StatusChoice({required this.label, required this.selected, required this.color, required this.onTap});
+
+  final String label;
+  final bool selected;
+  final Color color;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      button: true,
+      selected: selected,
+      child: Material(
+        color: selected ? AppColors.soft(color) : AppColors.card,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppRadius.control),
+          side: BorderSide(color: selected ? color : AppColors.line, width: selected ? 1.6 : 1),
+        ),
+        clipBehavior: Clip.antiAlias,
+        child: InkWell(
+          onTap: onTap,
+          child: Container(
+            height: 42,
+            alignment: Alignment.center,
+            padding: const EdgeInsets.symmetric(horizontal: 2),
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(label, maxLines: 1, style: TextStyle(color: selected ? color : AppColors.ink, fontWeight: selected ? FontWeight.w700 : FontWeight.w500, fontSize: 14)),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

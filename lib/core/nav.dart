@@ -7,11 +7,14 @@ import 'i18n.dart';
 
 /// Ikkinchi daraja: bo'lim ichidagi yorliq (ilova sahifasi).
 class NavTab {
-  const NavTab(this.key, this.label, {this.icon = ''});
+  const NavTab(this.key, this.label, {this.icon = '', this.short});
 
   final String key;
   final String label;
   final String icon;
+
+  /// Pastki menyu uchun qisqa nom (uzun nom tor telefonda ikki qatorga tushib, ikonkani siljitmasin).
+  final String? short;
 }
 
 /// Yuqori daraja: bo'lim (pastki navigatsiya yoki «Yana» menyusi).
@@ -165,7 +168,7 @@ List<NavSection> buildNav(NavContext ctx) {
       NavTab('child', tr('Umumiy'), icon: 'home'),
       _when(can('school'), NavTab('child.diary', tr('Kundalik'), icon: 'pen-line')),
       _when(can('testing'), NavTab('child.tests', tr('Testlar'), icon: 'clipboard-list')),
-      _when(can('crm'), NavTab('child.payments', tr("To'lov va davomat"), icon: 'wallet')),
+      _when(can('crm'), NavTab('child.payments', tr("To'lov va davomat"), icon: 'wallet', short: tr("To'lovlar"))),
       // Kurslar (1.35) oxirida: pastki menyuga 4 ta sig'adi — to'lov ota-ona uchun muhimroq.
       _when(can('lms'), NavTab('child.courses', tr('Kurslar'), icon: 'book')),
     ]));
@@ -205,7 +208,7 @@ List<NavItem> bottomNav(List<NavSection> sections, {int limit = 4}) {
     final only = sections.first;
     return only.tabs
         .take(limit)
-        .map((tab) => NavItem(key: tab.key, label: tab.label, icon: tab.icon.isEmpty ? only.icon : tab.icon, kind: 'tab', section: only.key))
+        .map((tab) => NavItem(key: tab.key, label: tab.short ?? tab.label, icon: tab.icon.isEmpty ? only.icon : tab.icon, kind: 'tab', section: only.key))
         .toList();
   }
   return sections

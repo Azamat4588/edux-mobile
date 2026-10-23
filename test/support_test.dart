@@ -16,7 +16,7 @@ void main() {
     final context = supportContext(app: 'android', version: '3.5.0', os: 'Android 14', page: 'help', screen: '390x844', device: '');
     expect(context, <String, String>{'app': 'android', 'app_version': '3.5.0', 'os': 'Android 14', 'page': 'help', 'screen': '390x844'});
     expect(supportContext(app: 'ios', version: '3.5.0', os: 'x' * 100)['os']!.length, 60);
-    expect(PushService.appVersion, '3.5.0');
+    expect(PushService.appVersion, '3.6.0');
   });
 
   test('multipart maydonlari: context[...] tekislanadi', () {
