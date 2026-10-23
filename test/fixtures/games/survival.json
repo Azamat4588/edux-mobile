@@ -1,0 +1,310 @@
+{
+ "start": {
+  "session_id": 13,
+  "game": "survival",
+  "total": 60,
+  "lives": 3,
+  "seconds_per_question": 20,
+  "question": {
+   "id": 179,
+   "body": "Jismning tezligi 3 marta oshirilsa, uning kinetik energiyasi qanday o'zgaradi?",
+   "image_url": null,
+   "options": [
+    {
+     "id": 637,
+     "body": "6 marta ortadi",
+     "image_url": null
+    },
+    {
+     "id": 636,
+     "body": "9 marta ortadi",
+     "image_url": null
+    },
+    {
+     "id": 635,
+     "body": "3 marta ortadi",
+     "image_url": null
+    },
+    {
+     "id": 638,
+     "body": "√3 marta ortadi",
+     "image_url": null
+    }
+   ]
+  }
+ },
+ "answers": [
+  {
+   "request": {
+    "question_id": 179,
+    "option_id": 636
+   },
+   "status": 200,
+   "response": {
+    "correct": true,
+    "correct_option_id": 636,
+    "late": false,
+    "lives": 3,
+    "over": false,
+    "question": {
+     "id": 82,
+     "body": "Jism gorizontga $30^\\circ$ burchak ostida $v_0=20$ m/s tezlik bilan otildi. Uning uchish uzoqligini toping. ($g=10$ m/s², havo qarshiligi hisobga olinmasin)",
+     "image_url": null,
+     "options": [
+      {
+       "id": 250,
+       "body": "≈17,3 m",
+       "image_url": null
+      },
+      {
+       "id": 248,
+       "body": "40 m",
+       "image_url": null
+      },
+      {
+       "id": 247,
+       "body": "20 m",
+       "image_url": null
+      },
+      {
+       "id": 249,
+       "body": "≈34,6 m",
+       "image_url": null
+      }
+     ]
+    }
+   }
+  },
+  {
+   "request": {
+    "question_id": 82,
+    "option_id": null
+   },
+   "status": 200,
+   "response": {
+    "correct": false,
+    "correct_option_id": 249,
+    "late": false,
+    "lives": 2,
+    "over": false,
+    "question": {
+     "id": 124,
+     "body": "Kilovatt-soat (kW·soat) qaysi fizik kattalikning birligi?",
+     "image_url": null,
+     "options": [
+      {
+       "id": 415,
+       "body": "Quvvat",
+       "image_url": null
+      },
+      {
+       "id": 418,
+       "body": "Ish (energiya)",
+       "image_url": null
+      },
+      {
+       "id": 416,
+       "body": "Kuch",
+       "image_url": null
+      },
+      {
+       "id": 417,
+       "body": "Bosim",
+       "image_url": null
+      }
+     ]
+    }
+   }
+  },
+  {
+   "request": {
+    "question_id": 124,
+    "option_id": 418
+   },
+   "status": 200,
+   "response": {
+    "correct": true,
+    "correct_option_id": 418,
+    "late": false,
+    "lives": 2,
+    "over": false,
+    "question": {
+     "id": 136,
+     "body": "Тело свободно падает без начальной скорости с высоты $45$ м. Сколько времени длится падение? Ускорение свободного падения $g=10$ м/с².",
+     "image_url": null,
+     "options": [
+      {
+       "id": 464,
+       "body": "9 с",
+       "image_url": null
+      },
+      {
+       "id": 465,
+       "body": "2 с",
+       "image_url": null
+      },
+      {
+       "id": 463,
+       "body": "4,5 с",
+       "image_url": null
+      },
+      {
+       "id": 466,
+       "body": "3 с",
+       "image_url": null
+      }
+     ]
+    }
+   }
+  },
+  {
+   "request": {
+    "question_id": 136,
+    "option_id": null
+   },
+   "status": 200,
+   "response": {
+    "correct": false,
+    "correct_option_id": 466,
+    "late": false,
+    "lives": 1,
+    "over": false,
+    "question": {
+     "id": 72,
+     "body": "Jism 45 m balandlikdan boshlang'ich tezliksiz tushmoqda. U yerga necha sekundda yetib keladi? ($g=10$ m/s²)",
+     "image_url": null,
+     "options": [
+      {
+       "id": 208,
+       "body": "4,5 s",
+       "image_url": null
+      },
+      {
+       "id": 209,
+       "body": "9 s",
+       "image_url": null
+      },
+      {
+       "id": 210,
+       "body": "3 s",
+       "image_url": null
+      },
+      {
+       "id": 207,
+       "body": "2 s",
+       "image_url": null
+      }
+     ]
+    }
+   }
+  },
+  {
+   "request": {
+    "question_id": 72,
+    "option_id": 210
+   },
+   "status": 200,
+   "response": {
+    "correct": true,
+    "correct_option_id": 210,
+    "late": false,
+    "lives": 1,
+    "over": false,
+    "question": {
+     "id": 93,
+     "body": "Jism vertikal yuqoriga 10 m/s tezlik bilan otildi. Qanday balandlikda uning kinetik energiyasi potensial energiyasiga teng bo'ladi? ($g=10$ m/s², havo qarshiligi yo'q)",
+     "image_url": null,
+     "options": [
+      {
+       "id": 294,
+       "body": "5 m",
+       "image_url": null
+      },
+      {
+       "id": 292,
+       "body": "3,75 m",
+       "image_url": null
+      },
+      {
+       "id": 291,
+       "body": "1,25 m",
+       "image_url": null
+      },
+      {
+       "id": 293,
+       "body": "2,5 m",
+       "image_url": null
+      }
+     ]
+    }
+   }
+  },
+  {
+   "request": {
+    "question_id": 93,
+    "option_id": null
+   },
+   "status": 200,
+   "response": {
+    "correct": false,
+    "correct_option_id": 293,
+    "late": false,
+    "lives": 0,
+    "over": true,
+    "question": null
+   }
+  }
+ ],
+ "finish": {
+  "score": 300,
+  "correct": 3,
+  "total": 6,
+  "duration_ms": 2136,
+  "xp": 5,
+  "xp_daily_limit": 100,
+  "solutions": null,
+  "review": [
+   {
+    "body": "Jism 45 m balandlikdan boshlang'ich tezliksiz tushmoqda. U yerga necha sekundda yetib keladi? ($g=10$ m/s²)",
+    "answer": "3 s",
+    "ok": true
+   },
+   {
+    "body": "Jism gorizontga $30^\\circ$ burchak ostida $v_0=20$ m/s tezlik bilan otildi. Uning uchish uzoqligini toping. ($g=10$ m/s², havo qarshiligi hisobga olinmasin)",
+    "answer": "≈34,6 m",
+    "ok": false
+   },
+   {
+    "body": "Jism vertikal yuqoriga 10 m/s tezlik bilan otildi. Qanday balandlikda uning kinetik energiyasi potensial energiyasiga teng bo'ladi? ($g=10$ m/s², havo qarshiligi yo'q)",
+    "answer": "2,5 m",
+    "ok": false
+   },
+   {
+    "body": "Kilovatt-soat (kW·soat) qaysi fizik kattalikning birligi?",
+    "answer": "Ish (energiya)",
+    "ok": true
+   },
+   {
+    "body": "Тело свободно падает без начальной скорости с высоты $45$ м. Сколько времени длится падение? Ускорение свободного падения $g=10$ м/с².",
+    "answer": "3 с",
+    "ok": false
+   },
+   {
+    "body": "Jismning tezligi 3 marta oshirilsa, uning kinetik energiyasi qanday o'zgaradi?",
+    "answer": "9 marta ortadi",
+    "ok": true
+   }
+  ],
+  "details": {
+   "lives": 0
+  },
+  "best": 300,
+  "leaderboard": [
+   {
+    "name": "Ergasheva Mohinur",
+    "score": 300,
+    "me": true
+   }
+  ]
+ }
+}

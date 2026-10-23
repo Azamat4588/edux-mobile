@@ -1,0 +1,156 @@
+{
+ "start": {
+  "session_id": 20,
+  "game": "typing",
+  "total": 10,
+  "seconds": 120,
+  "items": [
+   {
+    "id": 0,
+    "text": "veb-sahifalarni ochadigan dastur",
+    "length": 7
+   },
+   {
+    "id": 1,
+    "text": "o'zaro bog'langan kompyuterlar",
+    "length": 6
+   },
+   {
+    "id": 2,
+    "text": "buyruqlarni bajaradigan qurilma",
+    "length": 10
+   },
+   {
+    "id": 3,
+    "text": "sakkiz bitdan iborat birlik",
+    "length": 4
+   },
+   {
+    "id": 4,
+    "text": "vazifani bajarish uchun qadamlar ketma-ketligi",
+    "length": 8
+   },
+   {
+    "id": 5,
+    "text": "ma'lumot saqlanadigan joy",
+    "length": 6
+   },
+   {
+    "id": 6,
+    "text": "matn kiritish qurilmasi",
+    "length": 10
+   },
+   {
+    "id": 7,
+    "text": "nomlangan ma'lumot to'plami",
+    "length": 4
+   },
+   {
+    "id": 8,
+    "text": "tasvir chiqaradigan qurilma",
+    "length": 7
+   },
+   {
+    "id": 9,
+    "text": "kompyuter bajaradigan buyruqlar to'plami",
+    "length": 6
+   }
+  ]
+ },
+ "answers": [
+  {
+   "request": {
+    "index": 0,
+    "value": "brauzer"
+   },
+   "status": 200,
+   "response": {
+    "correct": true,
+    "answer": "brauzer",
+    "late": false
+   }
+  },
+  {
+   "request": {
+    "index": 1,
+    "value": "nimadir"
+   },
+   "status": 200,
+   "response": {
+    "correct": false,
+    "answer": "tarmoq",
+    "late": false
+   }
+  }
+ ],
+ "finish": {
+  "score": 100,
+  "correct": 1,
+  "total": 10,
+  "duration_ms": 215,
+  "xp": 3,
+  "xp_daily_limit": 100,
+  "solutions": null,
+  "review": [
+   {
+    "body": "veb-sahifalarni ochadigan dastur",
+    "answer": "brauzer",
+    "ok": true
+   },
+   {
+    "body": "o'zaro bog'langan kompyuterlar",
+    "answer": "tarmoq",
+    "ok": false
+   },
+   {
+    "body": "buyruqlarni bajaradigan qurilma",
+    "answer": "protsessor",
+    "ok": null
+   },
+   {
+    "body": "sakkiz bitdan iborat birlik",
+    "answer": "bayt",
+    "ok": null
+   },
+   {
+    "body": "vazifani bajarish uchun qadamlar ketma-ketligi",
+    "answer": "algoritm",
+    "ok": null
+   },
+   {
+    "body": "ma'lumot saqlanadigan joy",
+    "answer": "xotira",
+    "ok": null
+   },
+   {
+    "body": "matn kiritish qurilmasi",
+    "answer": "klaviatura",
+    "ok": null
+   },
+   {
+    "body": "nomlangan ma'lumot to'plami",
+    "answer": "fayl",
+    "ok": null
+   },
+   {
+    "body": "tasvir chiqaradigan qurilma",
+    "answer": "monitor",
+    "ok": null
+   },
+   {
+    "body": "kompyuter bajaradigan buyruqlar to'plami",
+    "answer": "dastur",
+    "ok": null
+   }
+  ],
+  "details": [],
+  "best": 100,
+  "leaderboard": [
+   {
+    "name": "Ergasheva Mohinur",
+    "score": 100,
+    "me": true
+   }
+  ]
+ }
+}

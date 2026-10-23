@@ -72,18 +72,69 @@ const List<String> funServerLabels = <String>[
 
 const Map<String, String> gameTitleLabels = <String, String>{
   'quiz': 'Viktorina-blits',
+  'truefalse': "To'g'ri yoki noto'g'ri",
+  'millionaire': 'Millioner',
+  'survival': 'Omon qol',
+  'duel': 'Duel',
   'match': 'Juftini top',
+  'memory': 'Xotira kartalari',
   'scramble': "So'z yig'ish",
+  'hangman': 'Dor',
+  'crossword': 'Krossvord',
+  'typing': 'Tez yozish',
+  'flashcards': 'Flesh-kartalar',
+  'sorting': 'Guruhlash',
+  'mathsprint': 'Matematik sprint',
+  'sequence': 'Ketma-ketlik',
+  'numsort': 'Sonlarni guruhlash',
 };
 
 IconData gameIcon(String game) {
   switch (game) {
     case 'quiz':
       return Icons.bolt_rounded;
+    case 'truefalse':
+      return Icons.rule_rounded;
+    case 'millionaire':
+      return Icons.emoji_events_rounded;
+    case 'survival':
+      return Icons.favorite_rounded;
+    case 'duel':
+      return Icons.people_alt_rounded;
     case 'match':
       return Icons.grid_view_rounded;
+    case 'memory':
+      return Icons.view_column_rounded;
+    case 'hangman':
+      return Icons.spellcheck_rounded;
+    case 'crossword':
+      return Icons.grid_on_rounded;
+    case 'typing':
+      return Icons.keyboard_rounded;
+    case 'flashcards':
+      return Icons.style_rounded;
+    case 'sorting':
+      return Icons.category_rounded;
+    case 'mathsprint':
+      return Icons.calculate_rounded;
+    case 'sequence':
+      return Icons.trending_up_rounded;
+    case 'numsort':
+      return Icons.format_list_numbered_rounded;
     default:
       return Icons.abc_rounded;
+  }
+}
+
+/// Manba ikonkasi: savollar, so'zlar, matematika.
+IconData gameSourceIcon(String source) {
+  switch (source) {
+    case 'bank':
+      return Icons.quiz_outlined;
+    case 'math':
+      return Icons.functions_rounded;
+    default:
+      return Icons.menu_book_outlined;
   }
 }
 

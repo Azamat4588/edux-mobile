@@ -18,7 +18,9 @@ import '../../core/lms.dart';
 import '../../core/session.dart';
 import '../../core/theme.dart';
 import '../../core/widgets.dart';
-import '../fun/games_page.dart';
+import '../../core/games.dart';
+import '../fun/fun_labels.dart';
+import '../fun/play_page.dart';
 import '../fun/labs_page.dart';
 import '../lms/board_view.dart';
 import '../lms/lms_staff_pages.dart';
@@ -714,6 +716,16 @@ class _ActivityBlockState extends State<_ActivityBlock> {
     }
   }
 
+  /// Darsdagi o'yin tugadi: dars o'tilgan deb belgilanadi (veb kabi).
+  Future<void> _gameDone() async {
+    try {
+      await AppScope.read(context).api.post('lms/my/lessons/${widget.lessonId}/complete');
+    } on ApiException {
+      // Dars allaqachon belgilangan yoki aloqa yo'q — o'yin natijasi baribir saqlangan.
+    }
+    await widget.onDone();
+  }
+
   @override
   Widget build(BuildContext context) {
     final activity = widget.activity;
@@ -730,13 +742,29 @@ class _ActivityBlockState extends State<_ActivityBlock> {
       );
     }
     if (type == 'game') {
+      final game = asText(activity['game'], 'match');
       return AppCard(
-        onTap: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const GamesPage())),
-        child: Row(children: <Widget>[
-          Icon(Icons.sports_esports_outlined, color: AppColors.success, size: 30),
-          const SizedBox(width: 12),
-          Expanded(child: Text(tr("So'z o'yini"), style: const TextStyle(fontWeight: FontWeight.w700))),
-          Icon(Icons.chevron_right, color: AppColors.muted),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
+          Row(children: <Widget>[
+            Icon(gameIcon(game), color: AppColors.success, size: 28),
+            const SizedBox(width: 10),
+            Expanded(child: Text(tr(gameTitleLabels[game] ?? "O'yin"), style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 16))),
+          ]),
+          if (gameDescriptionLabels[game] != null) ...<Widget>[
+            const SizedBox(height: 6),
+            Text(tr(gameDescriptionLabels[game]!), style: TextStyle(color: AppColors.muted, fontSize: 13)),
+          ],
+          const SizedBox(height: 12),
+          SizedBox(
+            width: double.infinity,
+            child: FilledButton.icon(
+              icon: const Icon(Icons.play_arrow_rounded),
+              label: Text(tr("«{0}» o'yinini boshlash", <Object?>[tr(gameTitleLabels[game] ?? game)])),
+              onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(
+                builder: (_) => PlayPage(game: game, lessonId: widget.lessonId, title: tr('Dars'), onFinished: (_) => _gameDone()),
+              )),
+            ),
+          ),
         ]),
       );
     }

@@ -1,0 +1,328 @@
+{
+ "start": {
+  "session_id": 18,
+  "game": "hangman",
+  "total": 6,
+  "misses": 6,
+  "alphabet": [
+   "A",
+   "B",
+   "C",
+   "D",
+   "E",
+   "F",
+   "G",
+   "H",
+   "I",
+   "J",
+   "K",
+   "L",
+   "M",
+   "N",
+   "O",
+   "P",
+   "Q",
+   "R",
+   "S",
+   "T",
+   "U",
+   "V",
+   "W",
+   "X",
+   "Y",
+   "Z"
+  ],
+  "words": [
+   {
+    "text": "ma'lumot saqlanadigan joy",
+    "mask": [
+     "",
+     "",
+     "",
+     "",
+     "",
+     ""
+    ]
+   },
+   {
+    "text": "o'zaro bog'langan kompyuterlar",
+    "mask": [
+     "",
+     "",
+     "",
+     "",
+     "",
+     ""
+    ]
+   },
+   {
+    "text": "buyruqlarni bajaradigan qurilma",
+    "mask": [
+     "",
+     "",
+     "",
+     "",
+     "",
+     "",
+     "",
+     "",
+     "",
+     ""
+    ]
+   },
+   {
+    "text": "vazifani bajarish uchun qadamlar ketma-ketligi",
+    "mask": [
+     "",
+     "",
+     "",
+     "",
+     "",
+     "",
+     "",
+     ""
+    ]
+   },
+   {
+    "text": "sakkiz bitdan iborat birlik",
+    "mask": [
+     "",
+     "",
+     "",
+     ""
+    ]
+   },
+   {
+    "text": "kompyuter bajaradigan buyruqlar to'plami",
+    "mask": [
+     "",
+     "",
+     "",
+     "",
+     "",
+     ""
+    ]
+   }
+  ]
+ },
+ "answers": [
+  {
+   "request": {
+    "index": 0,
+    "letter": "Q"
+   },
+   "status": 200,
+   "response": {
+    "hit": false,
+    "mask": [
+     "",
+     "",
+     "",
+     "",
+     "",
+     ""
+    ],
+    "misses": 1,
+    "status": "play",
+    "answer": null
+   }
+  },
+  {
+   "request": {
+    "index": 0,
+    "letter": "X"
+   },
+   "status": 200,
+   "response": {
+    "hit": true,
+    "mask": [
+     "X",
+     "",
+     "",
+     "",
+     "",
+     ""
+    ],
+    "misses": 1,
+    "status": "play",
+    "answer": null
+   }
+  },
+  {
+   "request": {
+    "index": 0,
+    "letter": "O"
+   },
+   "status": 200,
+   "response": {
+    "hit": true,
+    "mask": [
+     "X",
+     "O",
+     "",
+     "",
+     "",
+     ""
+    ],
+    "misses": 1,
+    "status": "play",
+    "answer": null
+   }
+  },
+  {
+   "request": {
+    "index": 0,
+    "letter": "T"
+   },
+   "status": 200,
+   "response": {
+    "hit": true,
+    "mask": [
+     "X",
+     "O",
+     "T",
+     "",
+     "",
+     ""
+    ],
+    "misses": 1,
+    "status": "play",
+    "answer": null
+   }
+  },
+  {
+   "request": {
+    "index": 0,
+    "letter": "I"
+   },
+   "status": 200,
+   "response": {
+    "hit": true,
+    "mask": [
+     "X",
+     "O",
+     "T",
+     "I",
+     "",
+     ""
+    ],
+    "misses": 1,
+    "status": "play",
+    "answer": null
+   }
+  },
+  {
+   "request": {
+    "index": 0,
+    "letter": "R"
+   },
+   "status": 200,
+   "response": {
+    "hit": true,
+    "mask": [
+     "X",
+     "O",
+     "T",
+     "I",
+     "R",
+     ""
+    ],
+    "misses": 1,
+    "status": "play",
+    "answer": null
+   }
+  },
+  {
+   "request": {
+    "index": 0,
+    "letter": "A"
+   },
+   "status": 200,
+   "response": {
+    "hit": true,
+    "mask": [
+     "X",
+     "O",
+     "T",
+     "I",
+     "R",
+     "A"
+    ],
+    "misses": 1,
+    "status": "solved",
+    "answer": "XOTIRA"
+   }
+  },
+  {
+   "request": {
+    "index": 1,
+    "give_up": true
+   },
+   "status": 200,
+   "response": {
+    "hit": false,
+    "mask": [
+     "",
+     "",
+     "",
+     "",
+     "",
+     ""
+    ],
+    "misses": 0,
+    "status": "failed",
+    "answer": "TARMOQ"
+   }
+  }
+ ],
+ "finish": {
+  "score": 90,
+  "correct": 1,
+  "total": 6,
+  "duration_ms": 676,
+  "xp": 3,
+  "xp_daily_limit": 100,
+  "solutions": null,
+  "review": [
+   {
+    "body": "ma'lumot saqlanadigan joy",
+    "answer": "XOTIRA",
+    "ok": true
+   },
+   {
+    "body": "o'zaro bog'langan kompyuterlar",
+    "answer": "TARMOQ",
+    "ok": false
+   },
+   {
+    "body": "buyruqlarni bajaradigan qurilma",
+    "answer": "PROTSESSOR",
+    "ok": null
+   },
+   {
+    "body": "vazifani bajarish uchun qadamlar ketma-ketligi",
+    "answer": "ALGORITM",
+    "ok": null
+   },
+   {
+    "body": "sakkiz bitdan iborat birlik",
+    "answer": "BAYT",
+    "ok": null
+   },
+   {
+    "body": "kompyuter bajaradigan buyruqlar to'plami",
+    "answer": "DASTUR",
+    "ok": null
+   }
+  ],
+  "details": [],
+  "best": 90,
+  "leaderboard": [
+   {
+    "name": "Ergasheva Mohinur",
+    "score": 90,
+    "me": true
+   }
+  ]
+ }
+}

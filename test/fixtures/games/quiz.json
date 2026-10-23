@@ -1,0 +1,560 @@
+{
+ "start": {
+  "session_id": 10,
+  "game": "quiz",
+  "total": 15,
+  "seconds": 90,
+  "questions": [
+   {
+    "id": 157,
+    "body": "6 m/s tezlik bilan harakatlanayotgan 2 kg massali sharcha tinch turgan 4 kg massali sharchaga urilib, unga yopishib qoldi. Urilishdan keyingi umumiy tezlik qancha?",
+    "image_url": null,
+    "options": [
+     {
+      "id": 549,
+      "body": "4 m/s",
+      "image_url": null
+     },
+     {
+      "id": 550,
+      "body": "1,5 m/s",
+      "image_url": null
+     },
+     {
+      "id": 547,
+      "body": "2 m/s",
+      "image_url": null
+     },
+     {
+      "id": 548,
+      "body": "3 m/s",
+      "image_url": null
+     }
+    ]
+   },
+   {
+    "id": 125,
+    "body": "Massasi 0,1 kg bo'lgan sharcha 0,8 m uzunlikdagi ipga osilgan. Ip gorizontal holatgacha og'dirilib, sharcha qo'yib yuborildi. Eng pastki nuqtada ipning taranglik kuchi qancha? ($g=10$ m/s²)",
+    "image_url": null,
+    "options": [
+     {
+      "id": 421,
+      "body": "2 N",
+      "image_url": null
+     },
+     {
+      "id": 422,
+      "body": "4 N",
+      "image_url": null
+     },
+     {
+      "id": 419,
+      "body": "1 N",
+      "image_url": null
+     },
+     {
+      "id": 420,
+      "body": "3 N",
+      "image_url": null
+     }
+    ]
+   },
+   {
+    "id": 138,
+    "body": "Брусок массой $3$ кг равномерно тянут по горизонтальной поверхности. Коэффициент трения $\\mu=0{,}2$. Найдите силу тяги, направленную горизонтально. Ускорение свободного падения $g=10$ м/с².",
+    "image_url": null,
+    "options": [
+     {
+      "id": 474,
+      "body": "60 Н",
+      "image_url": null
+     },
+     {
+      "id": 471,
+      "body": "6 Н",
+      "image_url": null
+     },
+     {
+      "id": 473,
+      "body": "15 Н",
+      "image_url": null
+     },
+     {
+      "id": 472,
+      "body": "0,6 Н",
+      "image_url": null
+     }
+    ]
+   },
+   {
+    "id": 159,
+    "body": "20 m/s tezlik bilan ketayotgan avtomobil tormozlana boshlab, 40 m yo'l bosib to'xtadi. Tormozlanish tezlanishining moduli qancha?",
+    "image_url": null,
+    "options": [
+     {
+      "id": 558,
+      "body": "5 m/s²",
+      "image_url": null
+     },
+     {
+      "id": 555,
+      "body": "10 m/s²",
+      "image_url": null
+     },
+     {
+      "id": 557,
+      "body": "0,5 m/s²",
+      "image_url": null
+     },
+     {
+      "id": 556,
+      "body": "2,5 m/s²",
+      "image_url": null
+     }
+    ]
+   },
+   {
+    "id": 94,
+    "body": "Massasi 0,5 kg bo'lgan to'p 4 m/s tezlik bilan uchmoqda. To'pning impulsi qancha?",
+    "image_url": null,
+    "options": [
+     {
+      "id": 298,
+      "body": "8 kg·m/s",
+      "image_url": null
+     },
+     {
+      "id": 295,
+      "body": "2 kg·m/s",
+      "image_url": null
+     },
+     {
+      "id": 297,
+      "body": "4 kg·m/s",
+      "image_url": null
+     },
+     {
+      "id": 296,
+      "body": "0,125 kg·m/s",
+      "image_url": null
+     }
+    ]
+   },
+   {
+    "id": 153,
+    "body": "Aylana bo'ylab tekis harakatlanayotgan jism haqida qaysi fikr to'g'ri?",
+    "image_url": null,
+    "options": [
+     {
+      "id": 533,
+      "body": "Jismning tezlanishi nolga teng",
+      "image_url": null
+     },
+     {
+      "id": 532,
+      "body": "Teng ta'sir etuvchi kuch tezlik bo'ylab yo'nalgan",
+      "image_url": null
+     },
+     {
+      "id": 534,
+      "body": "Jismga ta'sir etuvchi kuchlarning teng ta'sir etuvchisi aylana markaziga yo'nalgan",
+      "image_url": null
+     },
+     {
+      "id": 531,
+      "body": "Jismga ta'sir etuvchi kuchlarning teng ta'sir etuvchisi nolga teng",
+      "image_url": null
+     }
+    ]
+   },
+   {
+    "id": 118,
+    "body": "Gorizontal stolda turgan 2 kg massali brusok stol chetidagi blok orqali o'tkazilgan ip bilan 2 kg massali osilgan yukka bog'langan. Brusok va stol orasidagi ishqalanish koeffitsiyenti 0,25. Ipning taranglik kuchi qancha? ($g=10$ m/s², ip va blok vaznsiz)",
+    "image_url": null,
+    "options": [
+     {
+      "id": 392,
+      "body": "12,5 N",
+      "image_url": null
+     },
+     {
+      "id": 391,
+      "body": "20 N",
+      "image_url": null
+     },
+     {
+      "id": 394,
+      "body": "15 N",
+      "image_url": null
+     },
+     {
+      "id": 393,
+      "body": "10 N",
+      "image_url": null
+     }
+    ]
+   },
+   {
+    "id": 140,
+    "body": "Шар массой $0{,}5$ кг, движущийся со скоростью $4$ м/с перпендикулярно стене, упруго отскакивает от неё с той же по модулю скоростью. Найдите модуль изменения импульса шара.",
+    "image_url": null,
+    "options": [
+     {
+      "id": 479,
+      "body": "2 кг·м/с",
+      "image_url": null
+     },
+     {
+      "id": 482,
+      "body": "4 кг·м/с",
+      "image_url": null
+     },
+     {
+      "id": 480,
+      "body": "0",
+      "image_url": null
+     },
+     {
+      "id": 481,
+      "body": "8 кг·м/с",
+      "image_url": null
+     }
+    ]
+   },
+   {
+    "id": 156,
+    "body": "Massasi 2 kg bo'lgan jism tinch holatdan vertikal yuqoriga 2 m/s² tezlanish bilan 10 m balandlikka ko'tarildi. Ko'taruvchi kuchning bajargan ishi qancha? ($g=10$ m/s²)",
+    "image_url": null,
+    "options": [
+     {
+      "id": 546,
+      "body": "160 J",
+      "image_url": null
+     },
+     {
+      "id": 543,
+      "body": "240 J",
+      "image_url": null
+     },
+     {
+      "id": 545,
+      "body": "40 J",
+      "image_url": null
+     },
+     {
+      "id": 544,
+      "body": "200 J",
+      "image_url": null
+     }
+    ]
+   },
+   {
+    "id": 124,
+    "body": "Kilovatt-soat (kW·soat) qaysi fizik kattalikning birligi?",
+    "image_url": null,
+    "options": [
+     {
+      "id": 418,
+      "body": "Ish (energiya)",
+      "image_url": null
+     },
+     {
+      "id": 417,
+      "body": "Bosim",
+      "image_url": null
+     },
+     {
+      "id": 416,
+      "body": "Kuch",
+      "image_url": null
+     },
+     {
+      "id": 415,
+      "body": "Quvvat",
+      "image_url": null
+     }
+    ]
+   },
+   {
+    "id": 143,
+    "body": "Тело соскальзывает без трения с горки высотой $5$ м и далее движется по горизонтальной поверхности с коэффициентом трения $0{,}25$. Какой путь пройдёт тело по горизонтали до остановки? Ускорение свободного падения $g=10$ м/с².",
+    "image_url": null,
+    "options": [
+     {
+      "id": 491,
+      "body": "20 м",
+      "image_url": null
+     },
+     {
+      "id": 494,
+      "body": "10 м",
+      "image_url": null
+     },
+     {
+      "id": 492,
+      "body": "5 м",
+      "image_url": null
+     },
+     {
+      "id": 493,
+      "body": "1,25 м",
+      "image_url": null
+     }
+    ]
+   },
+   {
+    "id": 151,
+    "body": "Gorizontal yo'lda burilayotgan avtomobilga markazga intilma tezlanishni qaysi kuch beradi?",
+    "image_url": null,
+    "options": [
+     {
+      "id": 525,
+      "body": "Yo'lning normal reaksiya kuchi",
+      "image_url": null
+     },
+     {
+      "id": 526,
+      "body": "Dvigatelning tortish kuchi",
+      "image_url": null
+     },
+     {
+      "id": 524,
+      "body": "Shinalar va yo'l orasidagi ishqalanish kuchi",
+      "image_url": null
+     },
+     {
+      "id": 523,
+      "body": "Og'irlik kuchi",
+      "image_url": null
+     }
+    ]
+   },
+   {
+    "id": 147,
+    "body": "Quyidagi hollardan qaysi birida jism vaznsizlik holatida bo'ladi?",
+    "image_url": null,
+    "options": [
+     {
+      "id": 507,
+      "body": "Jism Yer sirtida tinch turganda",
+      "image_url": null
+     },
+     {
+      "id": 509,
+      "body": "Lift o'zgarmas tezlik bilan tushayotganda",
+      "image_url": null
+     },
+     {
+      "id": 510,
+      "body": "Jism faqat og'irlik kuchi ta'sirida erkin tushayotganda",
+      "image_url": null
+     },
+     {
+      "id": 508,
+      "body": "Lift yuqoriga tezlanish bilan ko'tarilayotganda",
+      "image_url": null
+     }
+    ]
+   },
+   {
+    "id": 105,
+    "body": "Лифт движется вверх с ускорением $2$ м/с², направленным вверх. Найдите вес человека массой $60$ кг в этом лифте. Ускорение свободного падения $g=10$ м/с².",
+    "image_url": null,
+    "options": [
+     {
+      "id": 341,
+      "body": "480 Н",
+      "image_url": null
+     },
+     {
+      "id": 340,
+      "body": "600 Н",
+      "image_url": null
+     },
+     {
+      "id": 339,
+      "body": "720 Н",
+      "image_url": null
+     },
+     {
+      "id": 342,
+      "body": "120 Н",
+      "image_url": null
+     }
+    ]
+   },
+   {
+    "id": 85,
+    "body": "Massasi 10 g bo'lgan o'q 400 m/s tezlik bilan ipga osilgan 1,99 kg massali yog'och bo'lagiga kirib qoldi. Bo'lak qanday balandlikka ko'tariladi? ($g=10$ m/s²)",
+    "image_url": null,
+    "options": [
+     {
+      "id": 259,
+      "body": "40 sm",
+      "image_url": null
+     },
+     {
+      "id": 262,
+      "body": "80 sm",
+      "image_url": null
+     },
+     {
+      "id": 261,
+      "body": "2 sm",
+      "image_url": null
+     },
+     {
+      "id": 260,
+      "body": "20 sm",
+      "image_url": null
+     }
+    ]
+   }
+  ]
+ },
+ "answers": [
+  {
+   "request": {
+    "question_id": 157,
+    "option_id": 547
+   },
+   "status": 200,
+   "response": {
+    "correct": true,
+    "correct_option_id": 547,
+    "late": false
+   }
+  },
+  {
+   "request": {
+    "question_id": 125,
+    "option_id": 421
+   },
+   "status": 200,
+   "response": {
+    "correct": false,
+    "correct_option_id": 420,
+    "late": false
+   }
+  },
+  {
+   "request": {
+    "question_id": 138,
+    "option_id": 471
+   },
+   "status": 200,
+   "response": {
+    "correct": true,
+    "correct_option_id": 471,
+    "late": false
+   }
+  },
+  {
+   "request": {
+    "question_id": 159,
+    "option_id": 558
+   },
+   "status": 200,
+   "response": {
+    "correct": true,
+    "correct_option_id": 558,
+    "late": false
+   }
+  }
+ ],
+ "finish": {
+  "score": 300,
+  "correct": 3,
+  "total": 15,
+  "duration_ms": 872,
+  "xp": 5,
+  "xp_daily_limit": 100,
+  "solutions": null,
+  "review": [
+   {
+    "body": "6 m/s tezlik bilan harakatlanayotgan 2 kg massali sharcha tinch turgan 4 kg massali sharchaga urilib, unga yopishib qoldi. Urilishdan keyingi umumiy tezlik qancha?",
+    "answer": "2 m/s",
+    "ok": true
+   },
+   {
+    "body": "Massasi 0,1 kg bo'lgan sharcha 0,8 m uzunlikdagi ipga osilgan. Ip gorizontal holatgacha og'dirilib, sharcha qo'yib yuborildi. Eng pastki nuqtada ipning taranglik kuchi qancha? ($g=10$ m/s²)",
+    "answer": "3 N",
+    "ok": false
+   },
+   {
+    "body": "Брусок массой $3$ кг равномерно тянут по горизонтальной поверхности. Коэффициент трения $\\mu=0{,}2$. Найдите силу тяги, направленную горизонтально. Ускорение свободного падения $g=10$ м/с².",
+    "answer": "6 Н",
+    "ok": true
+   },
+   {
+    "body": "20 m/s tezlik bilan ketayotgan avtomobil tormozlana boshlab, 40 m yo'l bosib to'xtadi. Tormozlanish tezlanishining moduli qancha?",
+    "answer": "5 m/s²",
+    "ok": true
+   },
+   {
+    "body": "Massasi 0,5 kg bo'lgan to'p 4 m/s tezlik bilan uchmoqda. To'pning impulsi qancha?",
+    "answer": "2 kg·m/s",
+    "ok": null
+   },
+   {
+    "body": "Aylana bo'ylab tekis harakatlanayotgan jism haqida qaysi fikr to'g'ri?",
+    "answer": "Jismga ta'sir etuvchi kuchlarning teng ta'sir etuvchisi aylana markaziga yo'nalgan",
+    "ok": null
+   },
+   {
+    "body": "Gorizontal stolda turgan 2 kg massali brusok stol chetidagi blok orqali o'tkazilgan ip bilan 2 kg massali osilgan yukka bog'langan. Brusok va stol orasidagi ishqalanish koeffitsiyenti 0,25. Ipning taranglik kuchi qancha? ($g=10$ m/s², ip va blok vaznsiz)",
+    "answer": "12,5 N",
+    "ok": null
+   },
+   {
+    "body": "Шар массой $0{,}5$ кг, движущийся со скоростью $4$ м/с перпендикулярно стене, упруго отскакивает от неё с той же по модулю скоростью. Найдите модуль изменения импульса шара.",
+    "answer": "4 кг·м/с",
+    "ok": null
+   },
+   {
+    "body": "Massasi 2 kg bo'lgan jism tinch holatdan vertikal yuqoriga 2 m/s² tezlanish bilan 10 m balandlikka ko'tarildi. Ko'taruvchi kuchning bajargan ishi qancha? ($g=10$ m/s²)",
+    "answer": "240 J",
+    "ok": null
+   },
+   {
+    "body": "Kilovatt-soat (kW·soat) qaysi fizik kattalikning birligi?",
+    "answer": "Ish (energiya)",
+    "ok": null
+   },
+   {
+    "body": "Тело соскальзывает без трения с горки высотой $5$ м и далее движется по горизонтальной поверхности с коэффициентом трения $0{,}25$. Какой путь пройдёт тело по горизонтали до остановки? Ускорение свободного падения $g=10$ м/с².",
+    "answer": "20 м",
+    "ok": null
+   },
+   {
+    "body": "Gorizontal yo'lda burilayotgan avtomobilga markazga intilma tezlanishni qaysi kuch beradi?",
+    "answer": "Shinalar va yo'l orasidagi ishqalanish kuchi",
+    "ok": null
+   },
+   {
+    "body": "Quyidagi hollardan qaysi birida jism vaznsizlik holatida bo'ladi?",
+    "answer": "Jism faqat og'irlik kuchi ta'sirida erkin tushayotganda",
+    "ok": null
+   },
+   {
+    "body": "Лифт движется вверх с ускорением $2$ м/с², направленным вверх. Найдите вес человека массой $60$ кг в этом лифте. Ускорение свободного падения $g=10$ м/с².",
+    "answer": "720 Н",
+    "ok": null
+   },
+   {
+    "body": "Massasi 10 g bo'lgan o'q 400 m/s tezlik bilan ipga osilgan 1,99 kg massali yog'och bo'lagiga kirib qoldi. Bo'lak qanday balandlikka ko'tariladi? ($g=10$ m/s²)",
+    "answer": "20 sm",
+    "ok": null
+   }
+  ],
+  "details": [],
+  "best": 300,
+  "leaderboard": [
+   {
+    "name": "Ergasheva Mohinur",
+    "score": 300,
+    "me": true
+   }
+  ]
+ }
+}

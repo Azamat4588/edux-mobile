@@ -1,0 +1,167 @@
+{
+ "start": {
+  "session_id": 21,
+  "game": "flashcards",
+  "total": 10,
+  "cards": [
+   {
+    "id": 0,
+    "text": "fayl",
+    "body": "nomlangan ma'lumot to'plami"
+   },
+   {
+    "id": 1,
+    "text": "bayt",
+    "body": "sakkiz bitdan iborat birlik"
+   },
+   {
+    "id": 2,
+    "text": "algoritm",
+    "body": "vazifani bajarish uchun qadamlar ketma-ketligi"
+   },
+   {
+    "id": 3,
+    "text": "tarmoq",
+    "body": "o'zaro bog'langan kompyuterlar"
+   },
+   {
+    "id": 4,
+    "text": "protsessor",
+    "body": "buyruqlarni bajaradigan qurilma"
+   },
+   {
+    "id": 5,
+    "text": "brauzer",
+    "body": "veb-sahifalarni ochadigan dastur"
+   },
+   {
+    "id": 6,
+    "text": "monitor",
+    "body": "tasvir chiqaradigan qurilma"
+   },
+   {
+    "id": 7,
+    "text": "klaviatura",
+    "body": "matn kiritish qurilmasi"
+   },
+   {
+    "id": 8,
+    "text": "dastur",
+    "body": "kompyuter bajaradigan buyruqlar to'plami"
+   },
+   {
+    "id": 9,
+    "text": "xotira",
+    "body": "ma'lumot saqlanadigan joy"
+   }
+  ]
+ },
+ "answers": [
+  {
+   "request": {
+    "id": 0,
+    "known": true
+   },
+   "status": 200,
+   "response": {
+    "known": 1,
+    "left": 9
+   }
+  },
+  {
+   "request": {
+    "id": 1,
+    "known": false
+   },
+   "status": 200,
+   "response": {
+    "known": 1,
+    "left": 9
+   }
+  },
+  {
+   "request": {
+    "id": 1,
+    "known": true
+   },
+   "status": 200,
+   "response": {
+    "known": 2,
+    "left": 8
+   }
+  }
+ ],
+ "finish": {
+  "score": 20,
+  "correct": 2,
+  "total": 10,
+  "duration_ms": 360,
+  "xp": 2,
+  "xp_daily_limit": 100,
+  "solutions": null,
+  "review": [
+   {
+    "body": "fayl",
+    "answer": "nomlangan ma'lumot to'plami",
+    "ok": true
+   },
+   {
+    "body": "bayt",
+    "answer": "sakkiz bitdan iborat birlik",
+    "ok": false
+   },
+   {
+    "body": "algoritm",
+    "answer": "vazifani bajarish uchun qadamlar ketma-ketligi",
+    "ok": null
+   },
+   {
+    "body": "tarmoq",
+    "answer": "o'zaro bog'langan kompyuterlar",
+    "ok": null
+   },
+   {
+    "body": "protsessor",
+    "answer": "buyruqlarni bajaradigan qurilma",
+    "ok": null
+   },
+   {
+    "body": "brauzer",
+    "answer": "veb-sahifalarni ochadigan dastur",
+    "ok": null
+   },
+   {
+    "body": "monitor",
+    "answer": "tasvir chiqaradigan qurilma",
+    "ok": null
+   },
+   {
+    "body": "klaviatura",
+    "answer": "matn kiritish qurilmasi",
+    "ok": null
+   },
+   {
+    "body": "dastur",
+    "answer": "kompyuter bajaradigan buyruqlar to'plami",
+    "ok": null
+   },
+   {
+    "body": "xotira",
+    "answer": "ma'lumot saqlanadigan joy",
+    "ok": null
+   }
+  ],
+  "details": {
+   "known_first": 1,
+   "reviews": 3
+  },
+  "best": 20,
+  "leaderboard": [
+   {
+    "name": "Ergasheva Mohinur",
+    "score": 20,
+    "me": true
+   }
+  ]
+ }
+}

@@ -1,0 +1,58 @@
+{
+ "games": {
+  "quiz": "Блиц-викторина",
+  "truefalse": "Верно или неверно",
+  "millionaire": "Миллионер",
+  "survival": "Выживание",
+  "duel": "Дуэль",
+  "match": "Найди пару",
+  "memory": "Карточки памяти",
+  "scramble": "Собери слово",
+  "hangman": "Виселица",
+  "crossword": "Кроссворд",
+  "typing": "Быстрый набор",
+  "flashcards": "Флеш-карточки",
+  "sorting": "Группировка",
+  "mathsprint": "Математический спринт",
+  "sequence": "Последовательность",
+  "numsort": "Группировка чисел"
+ },
+ "levels": [
+  {
+   "id": 1,
+   "name": "1–4-sinf",
+   "records": {
+    "mathsprint": null,
+    "sequence": null,
+    "numsort": null
+   }
+  },
+  {
+   "id": 2,
+   "name": "5–6-sinf",
+   "records": {
+    "mathsprint": 210,
+    "sequence": 100,
+    "numsort": 175
+   }
+  },
+  {
+   "id": 3,
+   "name": "7–9-sinf",
+   "records": {
+    "mathsprint": null,
+    "sequence": null,
+    "numsort": null
+   }
+  },
+  {
+   "id": 4,
+   "name": "10–11-sinf",
+   "records": {
+    "mathsprint": null,
+    "sequence": null,
+    "numsort": null
+   }
+  }
+ ]
+}

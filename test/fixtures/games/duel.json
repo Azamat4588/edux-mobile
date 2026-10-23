@@ -1,0 +1,431 @@
+{
+ "start": {
+  "session_id": 14,
+  "game": "duel",
+  "total": 10,
+  "seconds_per_question": 20,
+  "opponent": {
+   "name": "EduBot",
+   "kind": "bot"
+  },
+  "questions": [
+   {
+    "id": 97,
+    "body": "Yer radiusi 6400 km, $g=10$ m/s² deb olib, Yer uchun birinchi kosmik tezlikni hisoblang.",
+    "image_url": null,
+    "options": [
+     {
+      "id": 307,
+      "body": "0,8 km/s",
+      "image_url": null
+     },
+     {
+      "id": 309,
+      "body": "6,4 km/s",
+      "image_url": null
+     },
+     {
+      "id": 310,
+      "body": "11,2 km/s",
+      "image_url": null
+     },
+     {
+      "id": 308,
+      "body": "8 km/s",
+      "image_url": null
+     }
+    ]
+   },
+   {
+    "id": 139,
+    "body": "Пружина жёсткостью $200$ Н/м растянута на $5$ см. Найдите потенциальную энергию деформированной пружины.",
+    "image_url": null,
+    "options": [
+     {
+      "id": 477,
+      "body": "5 Дж",
+      "image_url": null
+     },
+     {
+      "id": 476,
+      "body": "10 Дж",
+      "image_url": null
+     },
+     {
+      "id": 478,
+      "body": "0,25 Дж",
+      "image_url": null
+     },
+     {
+      "id": 475,
+      "body": "0,5 Дж",
+      "image_url": null
+     }
+    ]
+   },
+   {
+    "id": 120,
+    "body": "Karuselning ipga osilgan o'rindig'i radiusi 5 m bo'lgan gorizontal aylana bo'ylab tekis aylanmoqda, bunda ip vertikal bilan $45^\\circ$ burchak hosil qiladi. O'rindiqning tezligi qancha? ($g=10$ m/s²)",
+    "image_url": null,
+    "options": [
+     {
+      "id": 399,
+      "body": "5 m/s",
+      "image_url": null
+     },
+     {
+      "id": 402,
+      "body": "10 m/s",
+      "image_url": null
+     },
+     {
+      "id": 400,
+      "body": "≈7,1 m/s",
+      "image_url": null
+     },
+     {
+      "id": 401,
+      "body": "≈3,5 m/s",
+      "image_url": null
+     }
+    ]
+   },
+   {
+    "id": 98,
+    "body": "Ikki shahar orasidagi masofa 200 km. Ulardan bir vaqtda bir-biriga qarab 60 km/soat va 40 km/soat tezlikli avtomobillar yo'lga chiqdi. Ular qancha vaqtdan keyin uchrashadi?",
+    "image_url": null,
+    "options": [
+     {
+      "id": 312,
+      "body": "1 soat",
+      "image_url": null
+     },
+     {
+      "id": 313,
+      "body": "5 soat",
+      "image_url": null
+     },
+     {
+      "id": 314,
+      "body": "10 soat",
+      "image_url": null
+     },
+     {
+      "id": 311,
+      "body": "2 soat",
+      "image_url": null
+     }
+    ]
+   },
+   {
+    "id": 140,
+    "body": "Шар массой $0{,}5$ кг, движущийся со скоростью $4$ м/с перпендикулярно стене, упруго отскакивает от неё с той же по модулю скоростью. Найдите модуль изменения импульса шара.",
+    "image_url": null,
+    "options": [
+     {
+      "id": 482,
+      "body": "4 кг·м/с",
+      "image_url": null
+     },
+     {
+      "id": 481,
+      "body": "8 кг·м/с",
+      "image_url": null
+     },
+     {
+      "id": 479,
+      "body": "2 кг·м/с",
+      "image_url": null
+     },
+     {
+      "id": 480,
+      "body": "0",
+      "image_url": null
+     }
+    ]
+   },
+   {
+    "id": 106,
+    "body": "Tekis tezlanuvchan harakatlanayotgan jismning tezligi 4 m/s dan 12 m/s gacha ortdi va bu vaqtda u 32 m yo'l bosdi. Jismning tezlanishi qancha?",
+    "image_url": null,
+    "options": [
+     {
+      "id": 344,
+      "body": "1 m/s²",
+      "image_url": null
+     },
+     {
+      "id": 346,
+      "body": "0,5 m/s²",
+      "image_url": null
+     },
+     {
+      "id": 345,
+      "body": "2 m/s²",
+      "image_url": null
+     },
+     {
+      "id": 343,
+      "body": "4 m/s²",
+      "image_url": null
+     }
+    ]
+   },
+   {
+    "id": 128,
+    "body": "Jism 5 m balandlikdan erkin tushmoqda. Havo qarshiligi hisobga olinmasa, yerga urilish paytidagi tezligi qancha bo'ladi? ($g=10$ m/s²)",
+    "image_url": null,
+    "options": [
+     {
+      "id": 434,
+      "body": "100 m/s",
+      "image_url": null
+     },
+     {
+      "id": 432,
+      "body": "10 m/s",
+      "image_url": null
+     },
+     {
+      "id": 431,
+      "body": "5 m/s",
+      "image_url": null
+     },
+     {
+      "id": 433,
+      "body": "50 m/s",
+      "image_url": null
+     }
+    ]
+   },
+   {
+    "id": 93,
+    "body": "Jism vertikal yuqoriga 10 m/s tezlik bilan otildi. Qanday balandlikda uning kinetik energiyasi potensial energiyasiga teng bo'ladi? ($g=10$ m/s², havo qarshiligi yo'q)",
+    "image_url": null,
+    "options": [
+     {
+      "id": 292,
+      "body": "3,75 m",
+      "image_url": null
+     },
+     {
+      "id": 293,
+      "body": "2,5 m",
+      "image_url": null
+     },
+     {
+      "id": 291,
+      "body": "1,25 m",
+      "image_url": null
+     },
+     {
+      "id": 294,
+      "body": "5 m",
+      "image_url": null
+     }
+    ]
+   },
+   {
+    "id": 141,
+    "body": "Камень брошен горизонтально с высоты $20$ м со скоростью $15$ м/с. На каком расстоянии по горизонтали от точки броска он упадёт? Сопротивлением воздуха пренебречь. Ускорение свободного падения $g=10$ м/с².",
+    "image_url": null,
+    "options": [
+     {
+      "id": 485,
+      "body": "20 м",
+      "image_url": null
+     },
+     {
+      "id": 486,
+      "body": "45 м",
+      "image_url": null
+     },
+     {
+      "id": 483,
+      "body": "30 м",
+      "image_url": null
+     },
+     {
+      "id": 484,
+      "body": "15 м",
+      "image_url": null
+     }
+    ]
+   },
+   {
+    "id": 178,
+    "body": "Massasi 1000 kg bo'lgan avtomobil 72 km/soat tezlik bilan harakatlanib, tekis tormozlanib 5 s da to'xtadi. Tormozlovchi kuchning moduli qancha?",
+    "image_url": null,
+    "options": [
+     {
+      "id": 632,
+      "body": "14 400 N",
+      "image_url": null
+     },
+     {
+      "id": 633,
+      "body": "2000 N",
+      "image_url": null
+     },
+     {
+      "id": 631,
+      "body": "4000 N",
+      "image_url": null
+     },
+     {
+      "id": 634,
+      "body": "20 000 N",
+      "image_url": null
+     }
+    ]
+   }
+  ]
+ },
+ "answers": [
+  {
+   "request": {
+    "question_id": 97,
+    "option_id": 308
+   },
+   "status": 200,
+   "response": {
+    "correct": true,
+    "correct_option_id": 308,
+    "late": false,
+    "points": 198,
+    "opponent": {
+     "correct": true,
+     "points": 166
+    }
+   }
+  },
+  {
+   "request": {
+    "question_id": 139,
+    "option_id": 478
+   },
+   "status": 200,
+   "response": {
+    "correct": true,
+    "correct_option_id": 478,
+    "late": false,
+    "points": 199,
+    "opponent": {
+     "correct": true,
+     "points": 171
+    }
+   }
+  },
+  {
+   "request": {
+    "question_id": 120,
+    "option_id": null
+   },
+   "status": 200,
+   "response": {
+    "correct": false,
+    "correct_option_id": 400,
+    "late": false,
+    "points": 0,
+    "opponent": {
+     "correct": false,
+     "points": 0
+    }
+   }
+  },
+  {
+   "request": {
+    "question_id": 98,
+    "option_id": 311
+   },
+   "status": 200,
+   "response": {
+    "correct": true,
+    "correct_option_id": 311,
+    "late": false,
+    "points": 199,
+    "opponent": {
+     "correct": true,
+     "points": 169
+    }
+   }
+  }
+ ],
+ "finish": {
+  "score": 596,
+  "correct": 3,
+  "total": 10,
+  "duration_ms": 987,
+  "xp": 5,
+  "xp_daily_limit": 100,
+  "solutions": null,
+  "review": [
+   {
+    "body": "Yer radiusi 6400 km, $g=10$ m/s² deb olib, Yer uchun birinchi kosmik tezlikni hisoblang.",
+    "answer": "8 km/s",
+    "ok": true
+   },
+   {
+    "body": "Пружина жёсткостью $200$ Н/м растянута на $5$ см. Найдите потенциальную энергию деформированной пружины.",
+    "answer": "0,25 Дж",
+    "ok": true
+   },
+   {
+    "body": "Karuselning ipga osilgan o'rindig'i radiusi 5 m bo'lgan gorizontal aylana bo'ylab tekis aylanmoqda, bunda ip vertikal bilan $45^\\circ$ burchak hosil qiladi. O'rindiqning tezligi qancha? ($g=10$ m/s²)",
+    "answer": "≈7,1 m/s",
+    "ok": false
+   },
+   {
+    "body": "Ikki shahar orasidagi masofa 200 km. Ulardan bir vaqtda bir-biriga qarab 60 km/soat va 40 km/soat tezlikli avtomobillar yo'lga chiqdi. Ular qancha vaqtdan keyin uchrashadi?",
+    "answer": "2 soat",
+    "ok": true
+   },
+   {
+    "body": "Шар массой $0{,}5$ кг, движущийся со скоростью $4$ м/с перпендикулярно стене, упруго отскакивает от неё с той же по модулю скоростью. Найдите модуль изменения импульса шара.",
+    "answer": "4 кг·м/с",
+    "ok": null
+   },
+   {
+    "body": "Tekis tezlanuvchan harakatlanayotgan jismning tezligi 4 m/s dan 12 m/s gacha ortdi va bu vaqtda u 32 m yo'l bosdi. Jismning tezlanishi qancha?",
+    "answer": "2 m/s²",
+    "ok": null
+   },
+   {
+    "body": "Jism 5 m balandlikdan erkin tushmoqda. Havo qarshiligi hisobga olinmasa, yerga urilish paytidagi tezligi qancha bo'ladi? ($g=10$ m/s²)",
+    "answer": "10 m/s",
+    "ok": null
+   },
+   {
+    "body": "Jism vertikal yuqoriga 10 m/s tezlik bilan otildi. Qanday balandlikda uning kinetik energiyasi potensial energiyasiga teng bo'ladi? ($g=10$ m/s², havo qarshiligi yo'q)",
+    "answer": "2,5 m",
+    "ok": null
+   },
+   {
+    "body": "Камень брошен горизонтально с высоты $20$ м со скоростью $15$ м/с. На каком расстоянии по горизонтали от точки броска он упадёт? Сопротивлением воздуха пренебречь. Ускорение свободного падения $g=10$ м/с².",
+    "answer": "30 м",
+    "ok": null
+   },
+   {
+    "body": "Massasi 1000 kg bo'lgan avtomobil 72 km/soat tezlik bilan harakatlanib, tekis tormozlanib 5 s da to'xtadi. Tormozlovchi kuchning moduli qancha?",
+    "answer": "4000 N",
+    "ok": null
+   }
+  ],
+  "details": {
+   "duel": {
+    "opponent": "EduBot",
+    "kind": "bot",
+    "opponent_score": 1134,
+    "outcome": "lose"
+   }
+  },
+  "best": 596,
+  "leaderboard": [
+   {
+    "name": "Ergasheva Mohinur",
+    "score": 596,
+    "me": true
+   }
+  ]
+ }
+}

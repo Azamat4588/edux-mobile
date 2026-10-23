@@ -1,0 +1,262 @@
+{
+ "start": {
+  "session_id": 15,
+  "game": "match",
+  "total": 8,
+  "cards": [
+   {
+    "id": "q7v4e6iz",
+    "text": "tarmoq",
+    "side": "term"
+   },
+   {
+    "id": "je4xual5",
+    "text": "nomlangan ma'lumot to'plami",
+    "side": "definition"
+   },
+   {
+    "id": "394dx62m",
+    "text": "algoritm",
+    "side": "term"
+   },
+   {
+    "id": "jjovwrvr",
+    "text": "monitor",
+    "side": "term"
+   },
+   {
+    "id": "yxcdxejk",
+    "text": "fayl",
+    "side": "term"
+   },
+   {
+    "id": "qwo1uxtu",
+    "text": "vazifani bajarish uchun qadamlar ketma-ketligi",
+    "side": "definition"
+   },
+   {
+    "id": "pqfp8bzr",
+    "text": "bayt",
+    "side": "term"
+   },
+   {
+    "id": "gpnrialb",
+    "text": "sakkiz bitdan iborat birlik",
+    "side": "definition"
+   },
+   {
+    "id": "agg8ctvd",
+    "text": "xotira",
+    "side": "term"
+   },
+   {
+    "id": "dnxma5mz",
+    "text": "ma'lumot saqlanadigan joy",
+    "side": "definition"
+   },
+   {
+    "id": "25vx1rff",
+    "text": "tasvir chiqaradigan qurilma",
+    "side": "definition"
+   },
+   {
+    "id": "cejbhamx",
+    "text": "veb-sahifalarni ochadigan dastur",
+    "side": "definition"
+   },
+   {
+    "id": "3bmeeceo",
+    "text": "brauzer",
+    "side": "term"
+   },
+   {
+    "id": "pnj3avnu",
+    "text": "protsessor",
+    "side": "term"
+   },
+   {
+    "id": "g7qtrspz",
+    "text": "buyruqlarni bajaradigan qurilma",
+    "side": "definition"
+   },
+   {
+    "id": "xbjpqhmo",
+    "text": "o'zaro bog'langan kompyuterlar",
+    "side": "definition"
+   }
+  ]
+ },
+ "answers": [
+  {
+   "request": {
+    "a": "25vx1rff",
+    "b": "jjovwrvr"
+   },
+   "status": 200,
+   "response": {
+    "match": true,
+    "done": 1,
+    "mistakes": 0
+   }
+  },
+  {
+   "request": {
+    "a": "je4xual5",
+    "b": "25vx1rff"
+   },
+   "status": 200,
+   "response": {
+    "match": false,
+    "done": 1,
+    "mistakes": 0,
+    "repeat": true
+   }
+  },
+  {
+   "request": {
+    "a": "je4xual5",
+    "b": "yxcdxejk"
+   },
+   "status": 200,
+   "response": {
+    "match": true,
+    "done": 2,
+    "mistakes": 0
+   }
+  },
+  {
+   "request": {
+    "a": "agg8ctvd",
+    "b": "dnxma5mz"
+   },
+   "status": 200,
+   "response": {
+    "match": true,
+    "done": 3,
+    "mistakes": 0
+   }
+  },
+  {
+   "request": {
+    "a": "g7qtrspz",
+    "b": "pnj3avnu"
+   },
+   "status": 200,
+   "response": {
+    "match": true,
+    "done": 4,
+    "mistakes": 0
+   }
+  },
+  {
+   "request": {
+    "a": "3bmeeceo",
+    "b": "cejbhamx"
+   },
+   "status": 200,
+   "response": {
+    "match": true,
+    "done": 5,
+    "mistakes": 0
+   }
+  },
+  {
+   "request": {
+    "a": "gpnrialb",
+    "b": "pqfp8bzr"
+   },
+   "status": 200,
+   "response": {
+    "match": true,
+    "done": 6,
+    "mistakes": 0
+   }
+  },
+  {
+   "request": {
+    "a": "394dx62m",
+    "b": "qwo1uxtu"
+   },
+   "status": 200,
+   "response": {
+    "match": true,
+    "done": 7,
+    "mistakes": 0
+   }
+  },
+  {
+   "request": {
+    "a": "q7v4e6iz",
+    "b": "xbjpqhmo"
+   },
+   "status": 200,
+   "response": {
+    "match": true,
+    "done": 8,
+    "mistakes": 0
+   }
+  }
+ ],
+ "finish": {
+  "score": 990,
+  "correct": 8,
+  "total": 8,
+  "duration_ms": 2294,
+  "xp": 10,
+  "xp_daily_limit": 100,
+  "solutions": null,
+  "review": [
+   {
+    "body": "monitor",
+    "answer": "tasvir chiqaradigan qurilma",
+    "ok": true
+   },
+   {
+    "body": "fayl",
+    "answer": "nomlangan ma'lumot to'plami",
+    "ok": true
+   },
+   {
+    "body": "xotira",
+    "answer": "ma'lumot saqlanadigan joy",
+    "ok": true
+   },
+   {
+    "body": "protsessor",
+    "answer": "buyruqlarni bajaradigan qurilma",
+    "ok": true
+   },
+   {
+    "body": "brauzer",
+    "answer": "veb-sahifalarni ochadigan dastur",
+    "ok": true
+   },
+   {
+    "body": "bayt",
+    "answer": "sakkiz bitdan iborat birlik",
+    "ok": true
+   },
+   {
+    "body": "algoritm",
+    "answer": "vazifani bajarish uchun qadamlar ketma-ketligi",
+    "ok": true
+   },
+   {
+    "body": "tarmoq",
+    "answer": "o'zaro bog'langan kompyuterlar",
+    "ok": true
+   }
+  ],
+  "details": {
+   "mistakes": 0
+  },
+  "best": 990,
+  "leaderboard": [
+   {
+    "name": "Ergasheva Mohinur",
+    "score": 990,
+    "me": true
+   }
+  ]
+ }
+}

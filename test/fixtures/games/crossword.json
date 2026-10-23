@@ -1,0 +1,153 @@
+{
+ "start": {
+  "session_id": 19,
+  "game": "crossword",
+  "total": 8,
+  "seconds": 900,
+  "width": 10,
+  "height": 8,
+  "entries": [
+   {
+    "id": 0,
+    "n": 1,
+    "dir": "down",
+    "x": 3,
+    "y": 0,
+    "length": 5,
+    "text": "burgut"
+   },
+   {
+    "id": 1,
+    "n": 2,
+    "dir": "across",
+    "x": 2,
+    "y": 1,
+    "length": 6,
+    "text": "tuya"
+   },
+   {
+    "id": 2,
+    "n": 3,
+    "dir": "down",
+    "x": 7,
+    "y": 1,
+    "length": 5,
+    "text": "quyon"
+   },
+   {
+    "id": 3,
+    "n": 4,
+    "dir": "down",
+    "x": 0,
+    "y": 2,
+    "length": 5,
+    "text": "yo'lbars"
+   },
+   {
+    "id": 4,
+    "n": 5,
+    "dir": "across",
+    "x": 5,
+    "y": 3,
+    "length": 3,
+    "text": "ot"
+   },
+   {
+    "id": 5,
+    "n": 6,
+    "dir": "across",
+    "x": 0,
+    "y": 4,
+    "length": 5,
+    "text": "mushuk"
+   },
+   {
+    "id": 6,
+    "n": 7,
+    "dir": "down",
+    "x": 9,
+    "y": 4,
+    "length": 4,
+    "text": "it"
+   },
+   {
+    "id": 7,
+    "n": 8,
+    "dir": "across",
+    "x": 5,
+    "y": 5,
+    "length": 5,
+    "text": "sigir"
+   }
+  ]
+ },
+ "answers": [],
+ "finish": {
+  "score": 400,
+  "correct": 4,
+  "total": 8,
+  "duration_ms": 200,
+  "xp": 6,
+  "xp_daily_limit": 100,
+  "solutions": null,
+  "review": [
+   {
+    "body": "1. burgut",
+    "answer": "CAMEL",
+    "ok": true,
+    "dir": "down"
+   },
+   {
+    "body": "2. tuya",
+    "answer": "RABBIT",
+    "ok": false,
+    "dir": "across"
+   },
+   {
+    "body": "3. quyon",
+    "answer": "TIGER",
+    "ok": true,
+    "dir": "down"
+   },
+   {
+    "body": "4. yo'lbars",
+    "answer": "SHEEP",
+    "ok": false,
+    "dir": "down"
+   },
+   {
+    "body": "5. ot",
+    "answer": "DOG",
+    "ok": true,
+    "dir": "across"
+   },
+   {
+    "body": "6. mushuk",
+    "answer": "EAGLE",
+    "ok": false,
+    "dir": "across"
+   },
+   {
+    "body": "7. it",
+    "answer": "BEAR",
+    "ok": true,
+    "dir": "down"
+   },
+   {
+    "body": "8. sigir",
+    "answer": "HORSE",
+    "ok": false,
+    "dir": "across"
+   }
+  ],
+  "details": [],
+  "best": 400,
+  "leaderboard": [
+   {
+    "name": "Ergasheva Mohinur",
+    "score": 400,
+    "me": true
+   }
+  ]
+ }
+}

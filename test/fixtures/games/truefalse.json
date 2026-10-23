@@ -1,0 +1,428 @@
+{
+ "start": {
+  "session_id": 11,
+  "game": "truefalse",
+  "total": 40,
+  "seconds": 60,
+  "items": [
+   {
+    "id": 0,
+    "body": "6 m/s tezlik bilan harakatlanayotgan 2 kg massali sharcha tinch turgan 4 kg massali sharchaga urilib, unga yopishib qoldi. Urilishdan keyingi umumiy tezlik qancha?",
+    "image_url": null,
+    "text": "1,5 m/s",
+    "option_image_url": null
+   },
+   {
+    "id": 1,
+    "body": "Avtomobil dvigateli 60 kW quvvat rivojlantirib, avtomobilni 20 m/s o'zgarmas tezlik bilan harakatlantirmoqda. Dvigatelning tortish kuchi qancha?",
+    "image_url": null,
+    "text": "1,2 MN",
+    "option_image_url": null
+   },
+   {
+    "id": 2,
+    "body": "Tinch turgan 5 kg massali jismga 4 s davomida 10 N o'zgarmas kuch ta'sir qildi. Ishqalanish yo'q. Jism qanday tezlikka erishadi?",
+    "image_url": null,
+    "text": "8 m/s",
+    "option_image_url": null
+   },
+   {
+    "id": 3,
+    "body": "Gorizontal otilgan jism tezligining gorizontal tashkil etuvchisi harakat davomida qanday o'zgaradi? (havo qarshiligi yo'q)",
+    "image_url": null,
+    "text": "O'zgarmaydi",
+    "option_image_url": null
+   },
+   {
+    "id": 4,
+    "body": "Elastiklik kuchi uchun Guk qonuni qaysi formula bilan ifodalanadi?",
+    "image_url": null,
+    "text": "$F=mg$",
+    "option_image_url": null
+   },
+   {
+    "id": 5,
+    "body": "Massasi 2 kg bo'lgan jism 3 m/s tezlik bilan harakatlanmoqda. Uning kinetik energiyasi nimaga teng?",
+    "image_url": null,
+    "text": "9 J",
+    "option_image_url": null
+   },
+   {
+    "id": 6,
+    "body": "Пружина жёсткостью $200$ Н/м растянута на $5$ см. Найдите потенциальную энергию деформированной пружины.",
+    "image_url": null,
+    "text": "0,25 Дж",
+    "option_image_url": null
+   },
+   {
+    "id": 7,
+    "body": "Gorizontal yo'lda burilayotgan avtomobilga markazga intilma tezlanishni qaysi kuch beradi?",
+    "image_url": null,
+    "text": "Yo'lning normal reaksiya kuchi",
+    "option_image_url": null
+   },
+   {
+    "id": 8,
+    "body": "Massasi 3 kg bo'lgan brusok gorizontal sirtda 12 N gorizontal kuch ta'sirida harakatlanmoqda. Ishqalanish koeffitsiyenti 0,2 bo'lsa, brusokning tezlanishi qancha? ($g=10$ m/s²)",
+    "image_url": null,
+    "text": "2 m/s²",
+    "option_image_url": null
+   },
+   {
+    "id": 9,
+    "body": "Jism 45 m balandlikdan boshlang'ich tezliksiz tushmoqda. U yerga necha sekundda yetib keladi? ($g=10$ m/s²)",
+    "image_url": null,
+    "text": "3 s",
+    "option_image_url": null
+   },
+   {
+    "id": 10,
+    "body": "Шар массой $0{,}5$ кг, движущийся со скоростью $4$ м/с перпендикулярно стене, упруго отскакивает от неё с той же по модулю скоростью. Найдите модуль изменения импульса шара.",
+    "image_url": null,
+    "text": "4 кг·м/с",
+    "option_image_url": null
+   },
+   {
+    "id": 11,
+    "body": "Avtomobil gorizontal yo'lda burilmoqda. Uning tezligi 2 marta oshirilsa, sirpanmasdan burilish uchun burilish radiusi kamida necha marta katta bo'lishi kerak? (ishqalanish koeffitsiyenti o'zgarmas)",
+    "image_url": null,
+    "text": "4 marta",
+    "option_image_url": null
+   },
+   {
+    "id": 12,
+    "body": "Vertikal yuqoriga otilgan jism eng yuqori nuqtada bo'lgan paytda uning tezligi va tezlanishi haqida qaysi fikr to'g'ri? (havo qarshiligi yo'q)",
+    "image_url": null,
+    "text": "Tezlik eng katta, tezlanish nolga teng",
+    "option_image_url": null
+   },
+   {
+    "id": 13,
+    "body": "Boshlang'ich tezliksiz erkin tushayotgan jism uchinchi sekund davomida qancha yo'l bosadi? ($g=10$ m/s²)",
+    "image_url": null,
+    "text": "25 m",
+    "option_image_url": null
+   },
+   {
+    "id": 14,
+    "body": "Tekis tezlanuvchan harakatlanayotgan jismning tezligi 4 m/s dan 12 m/s gacha ortdi va bu vaqtda u 32 m yo'l bosdi. Jismning tezlanishi qancha?",
+    "image_url": null,
+    "text": "2 m/s²",
+    "option_image_url": null
+   },
+   {
+    "id": 15,
+    "body": "Vertikal yuqoriga otilgan jism harakat boshlangandan 1 s va 3 s o'tgan paytlarda bir xil balandlikda bo'ldi. Jismning boshlang'ich tezligi qancha? ($g=10$ m/s², havo qarshiligi yo'q)",
+    "image_url": null,
+    "text": "20 m/s",
+    "option_image_url": null
+   },
+   {
+    "id": 16,
+    "body": "Камень брошен горизонтально с высоты $20$ м со скоростью $15$ м/с. На каком расстоянии по горизонтали от точки броска он упадёт? Сопротивлением воздуха пренебречь. Ускорение свободного падения $g=10$ м/с².",
+    "image_url": null,
+    "text": "30 м",
+    "option_image_url": null
+   },
+   {
+    "id": 17,
+    "body": "Massasi 1 t bo'lgan avtomobil tinch holatdan 10 s da 20 m/s tezlikka erishdi. Qarshilik kuchlarini hisobga olmasdan dvigatelning o'rtacha quvvatini toping.",
+    "image_url": null,
+    "text": "200 kW",
+    "option_image_url": null
+   },
+   {
+    "id": 18,
+    "body": "Gorizontga burchak ostida otilgan jismning trayektoriyaning eng yuqori nuqtasidagi tezligi boshlang'ich tezligining yarmiga teng. Jism gorizontga qanday burchak ostida otilgan? (havo qarshiligi yo'q)",
+    "image_url": null,
+    "text": "$60^\\circ$",
+    "option_image_url": null
+   },
+   {
+    "id": 19,
+    "body": "Kran 100 kg yukni 20 s davomida tekis ravishda 12 m balandlikka ko'tardi. Kranning foydali quvvati qancha? ($g=10$ m/s²)",
+    "image_url": null,
+    "text": "60 W",
+    "option_image_url": null
+   },
+   {
+    "id": 20,
+    "body": "Tekis to'g'ri chiziqli harakatda tezlikning vaqtga bog'liqlik grafigi v(t) qanday ko'rinishda bo'ladi?",
+    "image_url": null,
+    "text": "Vaqt o'qiga parallel to'g'ri chiziq",
+    "option_image_url": null
+   },
+   {
+    "id": 21,
+    "body": "6 m/s tezlikdagi 1 kg massali shar tinch turgan 2 kg massali sharga markaziy absolyut elastik urildi. Urilishdan keyin ikkinchi sharning tezligi qancha?",
+    "image_url": null,
+    "text": "4 m/s",
+    "option_image_url": null
+   },
+   {
+    "id": 22,
+    "body": "Yer sirtidan Yer radiusiga teng balandlikda aylanma orbita bo'ylab harakatlanayotgan sun'iy yo'ldoshning tezligi qancha? ($R=6400$ km, $g=10$ m/s²)",
+    "image_url": null,
+    "text": "≈5,66 km/s",
+    "option_image_url": null
+   },
+   {
+    "id": 23,
+    "body": "Bikrligi 100 N/m bo'lgan ikkita bir xil prujina ketma-ket ulandi. Hosil bo'lgan sistemaning bikrligi qancha?",
+    "image_url": null,
+    "text": "100 N/m",
+    "option_image_url": null
+   },
+   {
+    "id": 24,
+    "body": "Silliq relsda tinch turgan 200 kg massali aravachadan 50 kg massali odam relsga parallel ravishda 4 m/s tezlik bilan (yerga nisbatan) sakradi. Aravacha qanday tezlik oladi?",
+    "image_url": null,
+    "text": "16 m/s",
+    "option_image_url": null
+   },
+   {
+    "id": 25,
+    "body": "Massasi 0,5 kg bo'lgan to'p 4 m/s tezlik bilan uchmoqda. To'pning impulsi qancha?",
+    "image_url": null,
+    "text": "2 kg·m/s",
+    "option_image_url": null
+   },
+   {
+    "id": 26,
+    "body": "Massasi 2 kg bo'lgan jismga o'zaro perpendikulyar yo'nalgan 6 N va 8 N kuchlar ta'sir qiladi. Jismning tezlanishi qancha?",
+    "image_url": null,
+    "text": "5 m/s²",
+    "option_image_url": null
+   },
+   {
+    "id": 27,
+    "body": "Ikki shahar orasidagi masofa 200 km. Ulardan bir vaqtda bir-biriga qarab 60 km/soat va 40 km/soat tezlikli avtomobillar yo'lga chiqdi. Ular qancha vaqtdan keyin uchrashadi?",
+    "image_url": null,
+    "text": "2 soat",
+    "option_image_url": null
+   },
+   {
+    "id": 28,
+    "body": "Avtobus keskin tormozlanganda yo'lovchilar oldinga og'adi. Bu qaysi hodisa bilan tushuntiriladi?",
+    "image_url": null,
+    "text": "Rezonans",
+    "option_image_url": null
+   },
+   {
+    "id": 29,
+    "body": "Kilovatt-soat (kW·soat) qaysi fizik kattalikning birligi?",
+    "image_url": null,
+    "text": "Ish (energiya)",
+    "option_image_url": null
+   },
+   {
+    "id": 30,
+    "body": "Massasi 0,1 kg bo'lgan sharcha 0,8 m uzunlikdagi ipga osilgan. Ip gorizontal holatgacha og'dirilib, sharcha qo'yib yuborildi. Eng pastki nuqtada ipning taranglik kuchi qancha? ($g=10$ m/s²)",
+    "image_url": null,
+    "text": "3 N",
+    "option_image_url": null
+   },
+   {
+    "id": 31,
+    "body": "Massasi 4 kg bo'lgan brusok qiyalik burchagi $30^\\circ$ bo'lgan qiya tekislikda tinch turibdi. Brusokka ta'sir qilayotgan ishqalanish kuchi qancha? ($g=10$ m/s²)",
+    "image_url": null,
+    "text": "20 N",
+    "option_image_url": null
+   },
+   {
+    "id": 32,
+    "body": "Ikki sun'iy yo'ldosh Yer atrofida aylanma orbitalarda harakatlanadi. Ikkinchisining orbita radiusi birinchisinikidan 4 marta katta. Ikkinchi yo'ldoshning aylanish davri birinchisinikidan necha marta katta?",
+    "image_url": null,
+    "text": "8 marta",
+    "option_image_url": null
+   },
+   {
+    "id": 33,
+    "body": "Gorizontal 20 m/s tezlik bilan uchayotgan 3 kg massali snaryad ikki bo'lakka ajraldi. 1 kg massali bo'lak avvalgi yo'nalishda 50 m/s tezlik bilan uchdi. Ikkinchi bo'lakning tezligi qanday?",
+    "image_url": null,
+    "text": "5 m/s, avvalgi yo'nalishda",
+    "option_image_url": null
+   },
+   {
+    "id": 34,
+    "body": "Silliq gorizontal sirtda ip bilan bog'langan $m_1=2$ kg va $m_2=3$ kg massali jismlar yotibdi. $m_1$ jismga 10 N gorizontal kuch qo'yib tortilsa, ipning taranglik kuchi qancha bo'ladi?",
+    "image_url": null,
+    "text": "5 N",
+    "option_image_url": null
+   },
+   {
+    "id": 35,
+    "body": "Brusok qiyalik burchagi $30^\\circ$ bo'lgan qiya tekislikdan tinch holatdan sirpana boshladi. Ishqalanish koeffitsiyenti $\\mu=\\sqrt3/6$. 4 s davomida brusok qancha masofani bosadi? ($g=10$ m/s²)",
+    "image_url": null,
+    "text": "20 m",
+    "option_image_url": null
+   },
+   {
+    "id": 36,
+    "body": "Havosi so'rib olingan uzun nayda bir xil balandlikdan bir vaqtda qo'yib yuborilgan qo'rg'oshin sharcha va pat qanday tushadi?",
+    "image_url": null,
+    "text": "Pat umuman tushmaydi",
+    "option_image_url": null
+   },
+   {
+    "id": 37,
+    "body": "Yer radiusi 6400 km. Yer sirtidan qanday balandlikda jismga ta'sir qiluvchi tortishish kuchi Yer sirtidagiga nisbatan 4 marta kamayadi?",
+    "image_url": null,
+    "text": "6400 km",
+    "option_image_url": null
+   },
+   {
+    "id": 38,
+    "body": "Silliq gorizontal stolda massasi 0,5 kg bo'lgan sharcha ipga bog'langan holda radiusi 0,5 m bo'lgan aylana bo'ylab 2 m/s tezlik bilan aylanmoqda. Ipning taranglik kuchi qancha?",
+    "image_url": null,
+    "text": "4 N",
+    "option_image_url": null
+   },
+   {
+    "id": 39,
+    "body": "Jism gorizontga $30^\\circ$ burchak ostida $v_0=20$ m/s tezlik bilan otildi. Uning uchish uzoqligini toping. ($g=10$ m/s², havo qarshiligi hisobga olinmasin)",
+    "image_url": null,
+    "text": "≈34,6 m",
+    "option_image_url": null
+   }
+  ]
+ },
+ "answers": [
+  {
+   "request": {
+    "item": 0,
+    "value": false
+   },
+   "status": 200,
+   "response": {
+    "correct": true,
+    "truth": false,
+    "streak": 1,
+    "late": false
+   }
+  },
+  {
+   "request": {
+    "item": 1,
+    "value": false
+   },
+   "status": 200,
+   "response": {
+    "correct": true,
+    "truth": false,
+    "streak": 2,
+    "late": false
+   }
+  },
+  {
+   "request": {
+    "item": 2,
+    "value": false
+   },
+   "status": 200,
+   "response": {
+    "correct": false,
+    "truth": true,
+    "streak": 0,
+    "late": false
+   }
+  },
+  {
+   "request": {
+    "item": 3,
+    "value": true
+   },
+   "status": 200,
+   "response": {
+    "correct": true,
+    "truth": true,
+    "streak": 1,
+    "late": false
+   }
+  },
+  {
+   "request": {
+    "item": 4,
+    "value": false
+   },
+   "status": 200,
+   "response": {
+    "correct": true,
+    "truth": false,
+    "streak": 2,
+    "late": false
+   }
+  },
+  {
+   "request": {
+    "item": 5,
+    "value": true
+   },
+   "status": 200,
+   "response": {
+    "correct": true,
+    "truth": true,
+    "streak": 3,
+    "late": false
+   }
+  }
+ ],
+ "finish": {
+  "score": 260,
+  "correct": 5,
+  "total": 40,
+  "duration_ms": 618,
+  "xp": 4,
+  "xp_daily_limit": 100,
+  "solutions": null,
+  "review": [
+   {
+    "body": "6 m/s tezlik bilan harakatlanayotgan 2 kg massali sharcha tinch turgan 4 kg massali sharchaga urilib, unga yopishib qoldi. Urilishdan keyingi umumiy tezlik qancha?",
+    "answer": "1,5 m/s",
+    "truth": false,
+    "ok": true
+   },
+   {
+    "body": "Avtomobil dvigateli 60 kW quvvat rivojlantirib, avtomobilni 20 m/s o'zgarmas tezlik bilan harakatlantirmoqda. Dvigatelning tortish kuchi qancha?",
+    "answer": "1,2 MN",
+    "truth": false,
+    "ok": true
+   },
+   {
+    "body": "Tinch turgan 5 kg massali jismga 4 s davomida 10 N o'zgarmas kuch ta'sir qildi. Ishqalanish yo'q. Jism qanday tezlikka erishadi?",
+    "answer": "8 m/s",
+    "truth": true,
+    "ok": false
+   },
+   {
+    "body": "Gorizontal otilgan jism tezligining gorizontal tashkil etuvchisi harakat davomida qanday o'zgaradi? (havo qarshiligi yo'q)",
+    "answer": "O'zgarmaydi",
+    "truth": true,
+    "ok": true
+   },
+   {
+    "body": "Elastiklik kuchi uchun Guk qonuni qaysi formula bilan ifodalanadi?",
+    "answer": "$F=mg$",
+    "truth": false,
+    "ok": true
+   },
+   {
+    "body": "Massasi 2 kg bo'lgan jism 3 m/s tezlik bilan harakatlanmoqda. Uning kinetik energiyasi nimaga teng?",
+    "answer": "9 J",
+    "truth": true,
+    "ok": true
+   }
+  ],
+  "details": {
+   "best_streak": 3
+  },
+  "best": 260,
+  "leaderboard": [
+   {
+    "name": "Ergasheva Mohinur",
+    "score": 260,
+    "me": true
+   }
+  ]
+ }
+}

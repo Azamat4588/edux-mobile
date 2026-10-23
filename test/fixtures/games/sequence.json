@@ -1,0 +1,219 @@
+{
+ "start": {
+  "session_id": 24,
+  "game": "sequence",
+  "total": 10,
+  "seconds": 180,
+  "level": 2,
+  "items": [
+   {
+    "id": 0,
+    "terms": [
+     1,
+     4,
+     9,
+     16,
+     25
+    ]
+   },
+   {
+    "id": 1,
+    "terms": [
+     4,
+     17,
+     30,
+     43,
+     56
+    ]
+   },
+   {
+    "id": 2,
+    "terms": [
+     1,
+     3,
+     9,
+     27,
+     81
+    ]
+   },
+   {
+    "id": 3,
+    "terms": [
+     17,
+     38,
+     59,
+     80,
+     101
+    ]
+   },
+   {
+    "id": 4,
+    "terms": [
+     16,
+     25,
+     36,
+     49,
+     64
+    ]
+   },
+   {
+    "id": 5,
+    "terms": [
+     4,
+     12,
+     36,
+     108,
+     324
+    ]
+   },
+   {
+    "id": 6,
+    "terms": [
+     5,
+     10,
+     20,
+     40,
+     80
+    ]
+   },
+   {
+    "id": 7,
+    "terms": [
+     58,
+     53,
+     48,
+     43,
+     38
+    ]
+   },
+   {
+    "id": 8,
+    "terms": [
+     46,
+     43,
+     40,
+     37,
+     34
+    ]
+   },
+   {
+    "id": 9,
+    "terms": [
+     64,
+     55,
+     46,
+     37,
+     28
+    ]
+   }
+  ]
+ },
+ "answers": [
+  {
+   "request": {
+    "id": 0,
+    "value": "36"
+   },
+   "status": 200,
+   "response": {
+    "correct": true,
+    "answer": 36,
+    "explanation": "Ketma-ket sonlarning kvadratlari",
+    "late": false
+   }
+  },
+  {
+   "request": {
+    "id": 1,
+    "value": "0"
+   },
+   "status": 200,
+   "response": {
+    "correct": false,
+    "answer": 69,
+    "explanation": "Har hadga 13 qo'shiladi",
+    "late": false
+   }
+  }
+ ],
+ "finish": {
+  "score": 100,
+  "correct": 1,
+  "total": 10,
+  "duration_ms": 426,
+  "xp": 3,
+  "xp_daily_limit": 100,
+  "solutions": null,
+  "review": [
+   {
+    "body": "1, 4, 9, 16, 25, …",
+    "answer": "36",
+    "explanation": "Ketma-ket sonlarning kvadratlari",
+    "ok": true
+   },
+   {
+    "body": "4, 17, 30, 43, 56, …",
+    "answer": "69",
+    "explanation": "Har hadga 13 qo'shiladi",
+    "ok": false
+   },
+   {
+    "body": "1, 3, 9, 27, 81, …",
+    "answer": "243",
+    "explanation": "Har had 3 ga ko'paytiriladi",
+    "ok": null
+   },
+   {
+    "body": "17, 38, 59, 80, 101, …",
+    "answer": "122",
+    "explanation": "Har hadga 21 qo'shiladi",
+    "ok": null
+   },
+   {
+    "body": "16, 25, 36, 49, 64, …",
+    "answer": "81",
+    "explanation": "Ketma-ket sonlarning kvadratlari",
+    "ok": null
+   },
+   {
+    "body": "4, 12, 36, 108, 324, …",
+    "answer": "972",
+    "explanation": "Har had 3 ga ko'paytiriladi",
+    "ok": null
+   },
+   {
+    "body": "5, 10, 20, 40, 80, …",
+    "answer": "160",
+    "explanation": "Har had 2 ga ko'paytiriladi",
+    "ok": null
+   },
+   {
+    "body": "58, 53, 48, 43, 38, …",
+    "answer": "33",
+    "explanation": "Har haddan 5 ayriladi",
+    "ok": null
+   },
+   {
+    "body": "46, 43, 40, 37, 34, …",
+    "answer": "31",
+    "explanation": "Har haddan 3 ayriladi",
+    "ok": null
+   },
+   {
+    "body": "64, 55, 46, 37, 28, …",
+    "answer": "19",
+    "explanation": "Har haddan 9 ayriladi",
+    "ok": null
+   }
+  ],
+  "details": [],
+  "best": 100,
+  "leaderboard": [
+   {
+    "name": "Ergasheva Mohinur",
+    "score": 100,
+    "me": true
+   }
+  ]
+ }
+}

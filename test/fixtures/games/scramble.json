@@ -1,0 +1,255 @@
+{
+ "start": {
+  "session_id": 17,
+  "game": "scramble",
+  "total": 10,
+  "seconds": 180,
+  "words": [
+   {
+    "text": "kompyuter bajaradigan buyruqlar to'plami",
+    "hint": "kompyuter bajaradigan buyruqlar to'plami",
+    "letters": [
+     "T",
+     "U",
+     "A",
+     "R",
+     "D",
+     "S"
+    ],
+    "length": 6
+   },
+   {
+    "text": "nomlangan ma'lumot to'plami",
+    "hint": "nomlangan ma'lumot to'plami",
+    "letters": [
+     "L",
+     "Y",
+     "A",
+     "F"
+    ],
+    "length": 4
+   },
+   {
+    "text": "matn kiritish qurilmasi",
+    "hint": "matn kiritish qurilmasi",
+    "letters": [
+     "K",
+     "T",
+     "L",
+     "I",
+     "A",
+     "A",
+     "V",
+     "R",
+     "U",
+     "A"
+    ],
+    "length": 10
+   },
+   {
+    "text": "o'zaro bog'langan kompyuterlar",
+    "hint": "o'zaro bog'langan kompyuterlar",
+    "letters": [
+     "O",
+     "Q",
+     "T",
+     "M",
+     "R",
+     "A"
+    ],
+    "length": 6
+   },
+   {
+    "text": "tasvir chiqaradigan qurilma",
+    "hint": "tasvir chiqaradigan qurilma",
+    "letters": [
+     "M",
+     "T",
+     "O",
+     "O",
+     "N",
+     "I",
+     "R"
+    ],
+    "length": 7
+   },
+   {
+    "text": "veb-sahifalarni ochadigan dastur",
+    "hint": "veb-sahifalarni ochadigan dastur",
+    "letters": [
+     "Z",
+     "U",
+     "B",
+     "A",
+     "E",
+     "R",
+     "R"
+    ],
+    "length": 7
+   },
+   {
+    "text": "ma'lumot saqlanadigan joy",
+    "hint": "ma'lumot saqlanadigan joy",
+    "letters": [
+     "R",
+     "T",
+     "O",
+     "I",
+     "A",
+     "X"
+    ],
+    "length": 6
+   },
+   {
+    "text": "buyruqlarni bajaradigan qurilma",
+    "hint": "buyruqlarni bajaradigan qurilma",
+    "letters": [
+     "S",
+     "R",
+     "P",
+     "O",
+     "O",
+     "R",
+     "S",
+     "E",
+     "S",
+     "T"
+    ],
+    "length": 10
+   },
+   {
+    "text": "vazifani bajarish uchun qadamlar ketma-ketligi",
+    "hint": "vazifani bajarish uchun qadamlar ketma-ketligi",
+    "letters": [
+     "T",
+     "L",
+     "I",
+     "G",
+     "R",
+     "M",
+     "A",
+     "O"
+    ],
+    "length": 8
+   },
+   {
+    "text": "sakkiz bitdan iborat birlik",
+    "hint": "sakkiz bitdan iborat birlik",
+    "letters": [
+     "T",
+     "A",
+     "B",
+     "Y"
+    ],
+    "length": 4
+   }
+  ]
+ },
+ "answers": [
+  {
+   "request": {
+    "index": 0,
+    "value": "dastur"
+   },
+   "status": 200,
+   "response": {
+    "correct": true,
+    "answer": "dastur",
+    "late": false
+   }
+  },
+  {
+   "request": {
+    "index": 1,
+    "value": "xato"
+   },
+   "status": 200,
+   "response": {
+    "correct": false,
+    "answer": "fayl",
+    "late": false
+   }
+  }
+ ],
+ "finish": {
+  "score": 100,
+  "correct": 1,
+  "total": 10,
+  "duration_ms": 361,
+  "xp": 3,
+  "xp_daily_limit": 100,
+  "solutions": [
+   "dastur",
+   "fayl",
+   "klaviatura",
+   "tarmoq",
+   "monitor",
+   "brauzer",
+   "xotira",
+   "protsessor",
+   "algoritm",
+   "bayt"
+  ],
+  "review": [
+   {
+    "body": "kompyuter bajaradigan buyruqlar to'plami",
+    "answer": "dastur",
+    "ok": true
+   },
+   {
+    "body": "nomlangan ma'lumot to'plami",
+    "answer": "fayl",
+    "ok": false
+   },
+   {
+    "body": "matn kiritish qurilmasi",
+    "answer": "klaviatura",
+    "ok": null
+   },
+   {
+    "body": "o'zaro bog'langan kompyuterlar",
+    "answer": "tarmoq",
+    "ok": null
+   },
+   {
+    "body": "tasvir chiqaradigan qurilma",
+    "answer": "monitor",
+    "ok": null
+   },
+   {
+    "body": "veb-sahifalarni ochadigan dastur",
+    "answer": "brauzer",
+    "ok": null
+   },
+   {
+    "body": "ma'lumot saqlanadigan joy",
+    "answer": "xotira",
+    "ok": null
+   },
+   {
+    "body": "buyruqlarni bajaradigan qurilma",
+    "answer": "protsessor",
+    "ok": null
+   },
+   {
+    "body": "vazifani bajarish uchun qadamlar ketma-ketligi",
+    "answer": "algoritm",
+    "ok": null
+   },
+   {
+    "body": "sakkiz bitdan iborat birlik",
+    "answer": "bayt",
+    "ok": null
+   }
+  ],
+  "details": [],
+  "best": 100,
+  "leaderboard": [
+   {
+    "name": "Ergasheva Mohinur",
+    "score": 100,
+    "me": true
+   }
+  ]
+ }
+}

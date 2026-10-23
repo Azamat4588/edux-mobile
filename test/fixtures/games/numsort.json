@@ -1,0 +1,186 @@
+{
+ "start": {
+  "session_id": 25,
+  "game": "numsort",
+  "total": 12,
+  "seconds": 90,
+  "categories": [
+   {
+    "id": 0,
+    "title": "Tub son"
+   },
+   {
+    "id": 1,
+    "title": "Murakkab son"
+   }
+  ],
+  "items": [
+   {
+    "id": 0,
+    "text": "39"
+   },
+   {
+    "id": 1,
+    "text": "6"
+   },
+   {
+    "id": 2,
+    "text": "11"
+   },
+   {
+    "id": 3,
+    "text": "52"
+   },
+   {
+    "id": 4,
+    "text": "16"
+   },
+   {
+    "id": 5,
+    "text": "9"
+   },
+   {
+    "id": 6,
+    "text": "4"
+   },
+   {
+    "id": 7,
+    "text": "27"
+   },
+   {
+    "id": 8,
+    "text": "36"
+   },
+   {
+    "id": 9,
+    "text": "38"
+   },
+   {
+    "id": 10,
+    "text": "33"
+   },
+   {
+    "id": 11,
+    "text": "48"
+   }
+  ]
+ },
+ "answers": [
+  {
+   "request": {
+    "item": 0,
+    "category": 1
+   },
+   "status": 200,
+   "response": {
+    "correct": true,
+    "category": 1,
+    "late": false
+   }
+  },
+  {
+   "request": {
+    "item": 1,
+    "category": 0
+   },
+   "status": 200,
+   "response": {
+    "correct": false,
+    "category": 1,
+    "late": false
+   }
+  },
+  {
+   "request": {
+    "item": 2,
+    "category": 0
+   },
+   "status": 200,
+   "response": {
+    "correct": true,
+    "category": 0,
+    "late": false
+   }
+  }
+ ],
+ "finish": {
+  "score": 175,
+  "correct": 2,
+  "total": 12,
+  "duration_ms": 585,
+  "xp": 4,
+  "xp_daily_limit": 100,
+  "solutions": null,
+  "review": [
+   {
+    "body": "39",
+    "answer": "Murakkab son",
+    "ok": true
+   },
+   {
+    "body": "6",
+    "answer": "Murakkab son",
+    "ok": false
+   },
+   {
+    "body": "11",
+    "answer": "Tub son",
+    "ok": true
+   },
+   {
+    "body": "52",
+    "answer": "Murakkab son",
+    "ok": null
+   },
+   {
+    "body": "16",
+    "answer": "Murakkab son",
+    "ok": null
+   },
+   {
+    "body": "9",
+    "answer": "Murakkab son",
+    "ok": null
+   },
+   {
+    "body": "4",
+    "answer": "Murakkab son",
+    "ok": null
+   },
+   {
+    "body": "27",
+    "answer": "Murakkab son",
+    "ok": null
+   },
+   {
+    "body": "36",
+    "answer": "Murakkab son",
+    "ok": null
+   },
+   {
+    "body": "38",
+    "answer": "Murakkab son",
+    "ok": null
+   },
+   {
+    "body": "33",
+    "answer": "Murakkab son",
+    "ok": null
+   },
+   {
+    "body": "48",
+    "answer": "Murakkab son",
+    "ok": null
+   }
+  ],
+  "details": [],
+  "best": 175,
+  "leaderboard": [
+   {
+    "name": "Ergasheva Mohinur",
+    "score": 175,
+    "me": true
+   }
+  ]
+ }
+}

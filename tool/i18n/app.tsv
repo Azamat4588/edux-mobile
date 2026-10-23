@@ -630,3 +630,109 @@ muddat: {0}	срок: {0}	due: {0}
 {0} baho	{0} оценок	{0} grades
 {0} kelmagan	{0} отсутств.	{0} absent
 {0}-soat	{0}-й урок	Period {0}
+10 bosqich, savollar qiyinlashib boradi. 50/50 va savolni almashtirish yordami bor.	10 этапов, вопросы всё сложнее. Есть подсказки 50/50 и замена вопроса.	10 stages, questions get harder. Lifelines: 50/50 and swap the question.
+10–11-sinf	10–11 класс	Grades 10–11
+1–4-sinf	1–4 класс	Grades 1–4
+3 ta jon. Har xato bitta jonni oladi — iloji boricha uzoq chiday oling.	3 жизни. Каждая ошибка забирает одну — продержитесь как можно дольше.	3 lives. Each mistake costs one — last as long as you can.
+5–6-sinf	5–6 класс	Grades 5–6
+60 soniyada iloji boricha ko'p misol yeching.	Решите как можно больше примеров за 60 секунд.	Solve as many problems as you can in 60 seconds.
+7–9-sinf	7–9 класс	Grades 7–9
+90 soniyada 15 ta savol. Hammasiga javob bersangiz, qolgan vaqt ballga qo'shiladi.	15 вопросов за 90 секунд. Ответите на все — оставшееся время добавится к баллам.	15 questions in 90 seconds. Answer them all and the time left adds to your score.
+Bilaman	Знаю	I know it
+Bilaman: {0} / {1}	Знаю: {0} / {1}	Known: {0} / {1}
+Bilmayman	Не знаю	I don't know
+Bir nechta to'plam so'zlari aralashgan — har birini o'z to'plamiga ajrating.	Слова из нескольких наборов перемешаны — разложите каждое по своему набору.	Words from several sets are mixed — sort each into its own set.
+Birinchi urinishda: {0}	С первой попытки: {0}	First try: {0}
+Bo'yiga	По вертикали	Down
+Bu javob noto'g'ri edi.	Этот ответ был неверным.	That answer was wrong.
+Bu javob to'g'ri edi.	Этот ответ был верным.	That answer was right.
+Bu safar raqib kuchliroq	В этот раз соперник сильнее	Your opponent won this time
+Chapdan so'zni, o'ngdan uning ma'nosini tanlang.	Выберите слово слева и его значение справа.	Pick a word on the left and its meaning on the right.
+Darajani tanlang	Выберите уровень	Choose a level
+Darsga qaytish	Вернуться к уроку	Back to lesson
+Dor	Виселица	Hangman
+Duel	Дуэль	Duel
+Durang	Ничья	Draw
+Eng uzun seriya: {0}	Лучшая серия: {0}	Best streak: {0}
+Eniga	По горизонтали	Across
+Fanni tanlang — savollar savollar bazasidan olinadi.	Выберите предмет — вопросы берутся из базы вопросов.	Choose a subject — questions come from the question bank.
+Flesh-kartalar	Флеш-карточки	Flashcards
+G'alaba!	Победа!	You won!
+Guruhdoshingizning natijasi (yoki bot) bilan bir xil 10 ta savolda bellashing.	Соревнуйтесь с результатом одногруппника (или бота) на тех же 10 вопросах.	Compete with a classmate's result (or a bot) on the same 10 questions.
+Guruhlash	Группировка	Sorting
+Hamma kartalar ochiq: chapdagi so'zni o'ngdagi ma'nosi bilan tez juftlang.	Все карточки открыты: быстро соедините слово слева с его значением справа.	All cards are open: quickly match each word on the left with its meaning on the right.
+Hamma kataklar to'ldirilmagan. Yakunlaysizmi?	Не все клетки заполнены. Завершить?	Not all cells are filled. Finish anyway?
+Hammasi to'g'ri yoki javobsiz qolgan savollar.	Всё верно или остались вопросы без ответа.	All correct, or some questions were left unanswered.
+Hammasini ko'rsatish ({0})	Показать все ({0})	Show all ({0})
+Javob:	Ответ:	Answer:
+Jonlar: {0}	Жизни: {0}	Lives: {0}
+Katak {0}, {1}	Клетка {0}, {1}	Cell {0}, {1}
+Ketma-ketlik	Последовательность	Sequence
+Keyingi so'z	Следующее слово	Next word
+Keyingi sonni toping	Найдите следующее число	Find the next number
+Krossvord	Кроссворд	Crossword
+Ma'nosi berilgan so'zni aralash harflardan yig'ing. 3 daqiqa.	Соберите слово по значению из перемешанных букв. 3 минуты.	Build the word from shuffled letters using its meaning. 3 minutes.
+Ma'nosiga qarab so'zni harfma-harf toping. Har so'zga 6 ta xato.	Угадайте слово по буквам, зная его значение. 6 ошибок на слово.	Guess the word letter by letter from its meaning. 6 mistakes per word.
+Ma'nosini ko'rish uchun bosing	Нажмите, чтобы увидеть значение	Tap to see the meaning
+Matematik sprint	Математический спринт	Math sprint
+Millioner	Миллионер	Millionaire
+Misollar har safar yangidan tuziladi. Sinfingizga mos darajani tanlang.	Примеры каждый раз новые. Выберите уровень для своего класса.	Problems are new every time. Choose the level for your grade.
+Misollar topilmadi.	Примеры не найдены.	No problems found.
+Navbatda: {0}	В очереди: {0}	In queue: {0}
+O'qituvchingiz tuzgan so'z to'plamlari bilan o'ynaladi.	Играем с наборами слов, которые составил учитель.	Played with word sets made by your teacher.
+O'rganish rejimi: kartani ag'daring, «Bilaman» yoki «Bilmayman». Bilmaganlaringiz qaytadi.	Режим изучения: переверните карточку — «Знаю» или «Не знаю». Незнакомые вернутся.	Study mode: flip a card, then “I know it” or “I don't know”. Unknown cards come back.
+O'tildi: {0}	Пройдено: {0}	Passed: {0}
+O'yinni tark etasizmi? Natija saqlanmaydi.	Выйти из игры? Результат не сохранится.	Leave the game? The result will not be saved.
+O'yinni to'xtatib, {0} ballni olasizmi?	Остановить игру и забрать {0} баллов?	Stop the game and take {0} points?
+Omon qol	Выживание	Survival
+Qaysi guruhga tegishli?	К какой группе относится?	Which group does it belong to?
+Qisqartirish	Свернуть	Show less
+Qolgan vaqt: {0}	Осталось времени: {0}	Time left: {0}
+Savol va bitta javob chiqadi — to'g'rimi? 60 soniya, ketma-ket to'g'ri javoblarga bonus.	Вопрос и один ответ — верно ли? 60 секунд, бонус за серию верных ответов.	A question and one answer — is it true? 60 seconds, bonus for streaks.
+Savollar bankidan	Из банка вопросов	From the question bank
+Seriya: {0}	Серия: {0}	Streak: {0}
+So'z to'plami kerak — o'qituvchidan so'rang.	Нужен набор слов — попросите учителя.	A word set is needed — ask your teacher.
+So'z to'plamini tanlang	Выберите набор слов	Choose a word set
+So'z to'plamlaridan	Из наборов слов	From word sets
+So'z: {0}	Слово: {0}	Word: {0}
+So'zni yozing	Напишите слово	Type the word
+Sonlar qatorining qoidasini toping va keyingi sonni yozing.	Найдите правило ряда чисел и напишите следующее число.	Find the rule of the number series and write the next number.
+Sonlarni guruhlash	Группировка чисел	Number sorting
+Sonlarni toifalarga ajrating: juft/toq, tub/murakkab, kasrlar, ishoralar.	Разложите числа по группам: чётные/нечётные, простые/составные, дроби, знаки.	Sort numbers into groups: even/odd, prime/composite, fractions, signs.
+Tahlil	Разбор	Review
+Tarjimasi	Перевод	Translation
+Tarjimasi chiqadi — so'zni yozing. 2 daqiqada 15 ta so'z.	Показан перевод — напишите слово. 15 слов за 2 минуты.	You see the translation — type the word. 15 words in 2 minutes.
+Taslim bo'lish	Сдаться	Give up
+Tez va to'g'ri javob — ko'proq ball.	Быстрый и верный ответ — больше баллов.	A fast correct answer earns more points.
+Tez yozish	Быстрый набор	Speed typing
+To'g'ri javob:	Правильный ответ:	Correct answer:
+To'g'ri javob: {0}	Правильный ответ: {0}	Correct answer: {0}
+To'g'ri javob: {0}. {1}	Правильный ответ: {0}. {1}	Correct answer: {0}. {1}
+To'g'ri yoki noto'g'ri	Верно или неверно	True or false
+To'g'ri! {0}	Верно! {0}	Correct! {0}
+To'ldirildi: {0} / {1} katak	Заполнено: {0} / {1} клеток	Filled: {0} / {1} cells
+To'plamdagi so'zlardan avtomatik tuzilgan kichik krossvord.	Небольшой кроссворд, автоматически составленный из слов набора.	A small crossword built automatically from the set's words.
+To'xtash	Остановиться	Stop
+To'xtash ({0})	Остановиться ({0})	Stop ({0})
+Topdingiz: {0}	Угадали: {0}	You got it: {0}
+Topildi: {0}	Угадано: {0}	Solved: {0}
+XP har o'yin uchun bir marta beriladi, o'yinlardan kuniga eng ko'pi {0} XP.	XP начисляется за игру один раз, из игр — не более {0} XP в день.	XP is given once per game, up to {0} XP a day from games.
+XP har o'yin uchun bir marta beriladi.	XP начисляется за игру один раз.	XP is given once per game.
+Xatolar: {0} / {1}	Ошибки: {0} / {1}	Mistakes: {0} / {1}
+Xotira kartalari	Карточки памяти	Memory cards
+Yakunlash va tekshirish	Завершить и проверить	Finish and check
+Yopiq karta	Закрытая карта	Hidden card
+Yopiq kartalarni ochib, so'z va ma'nosini juftlang. Kam xato — ko'p ball.	Открывайте карточки и находите пары «слово — значение». Меньше ошибок — больше баллов.	Flip the cards to match words with meanings. Fewer mistakes, more points.
+bot	бот	bot
+kafolatlangan	несгораемая	guaranteed
+noto'g'ri	неверно	false
+siz: {0}	вы: {0}	you: {0}
+{0} harf	{0} букв	{0} letters
+{0} ta xato — to'g'ri javoblarni ko'rib chiqing.	Ошибок: {0} — посмотрите правильные ответы.	{0} mistakes — review the correct answers.
+{0}% to'g'ri	{0}% верно	{0}% correct
+{0}-bosqich	{0}-й этап	Stage {0}
+{0}-savol · {1} ball uchun	Вопрос {0} · за {1} баллов	Question {0} · for {1} points
+{0}-so'z, {1} ta	Слово {0} из {1}	Word {0} of {1}
+{0}: {1} ball	{0}: {1} баллов	{0}: {1} points
+«Bilmayman» kartalari navbat oxiriga qaytadi.	Карточки «Не знаю» возвращаются в конец очереди.	“Don't know” cards go back to the end of the queue.
+«{0}» o'yinini boshlash	Начать игру «{0}»	Start “{0}”

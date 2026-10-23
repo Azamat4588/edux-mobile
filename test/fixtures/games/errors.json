@@ -1,0 +1,104 @@
+{
+ "finish_again": {
+  "score": 0,
+  "correct": 0,
+  "total": 15,
+  "duration_ms": 116,
+  "xp": 0,
+  "xp_daily_limit": 100,
+  "solutions": null,
+  "review": [
+   {
+    "ok": null,
+    "body": "Yer radiusi 6400 km, $g=10$ m/s² deb olib, Yer uchun birinchi kosmik tezlikni hisoblang.",
+    "answer": "8 km/s"
+   },
+   {
+    "ok": null,
+    "body": "Yer radiusi 6400 km. Yer sirtidan qanday balandlikda jismga ta'sir qiluvchi tortishish kuchi Yer sirtidagiga nisbatan 4 marta kamayadi?",
+    "answer": "6400 km"
+   },
+   {
+    "ok": null,
+    "body": "Silliq gorizontal stolda massasi 0,5 kg bo'lgan sharcha ipga bog'langan holda radiusi 0,5 m bo'lgan aylana bo'ylab 2 m/s tezlik bilan aylanmoqda. Ipning taranglik kuchi qancha?",
+    "answer": "4 N"
+   },
+   {
+    "ok": null,
+    "body": "Ikki shahar orasidagi masofa 200 km. Ulardan bir vaqtda bir-biriga qarab 60 km/soat va 40 km/soat tezlikli avtomobillar yo'lga chiqdi. Ular qancha vaqtdan keyin uchrashadi?",
+    "answer": "2 soat"
+   },
+   {
+    "ok": null,
+    "body": "Bikrligi 200 N/m bo'lgan prujinaga 10 N kuch ta'sir qilsa, u qanchaga cho'ziladi?",
+    "answer": "5 sm"
+   },
+   {
+    "ok": null,
+    "body": "Kilovatt-soat (kW·soat) qaysi fizik kattalikning birligi?",
+    "answer": "Ish (energiya)"
+   },
+   {
+    "ok": null,
+    "body": "Avtomobil dvigateli 60 kW quvvat rivojlantirib, avtomobilni 20 m/s o'zgarmas tezlik bilan harakatlantirmoqda. Dvigatelning tortish kuchi qancha?",
+    "answer": "3 kN"
+   },
+   {
+    "ok": null,
+    "body": "Jism 15 m balandlikdan 10 m/s tezlik bilan ixtiyoriy yo'nalishda otildi. Yerga urilish paytidagi tezligi qancha? ($g=10$ m/s², havo qarshiligi yo'q)",
+    "answer": "20 m/s"
+   },
+   {
+    "ok": null,
+    "body": "Yer sirtidan Yer radiusiga teng balandlikda aylanma orbita bo'ylab harakatlanayotgan sun'iy yo'ldoshning tezligi qancha? ($R=6400$ km, $g=10$ m/s²)",
+    "answer": "≈5,66 km/s"
+   },
+   {
+    "ok": null,
+    "body": "Massasi 3 kg bo'lgan brusok gorizontal sirtda 12 N gorizontal kuch ta'sirida harakatlanmoqda. Ishqalanish koeffitsiyenti 0,2 bo'lsa, brusokning tezlanishi qancha? ($g=10$ m/s²)",
+    "answer": "2 m/s²"
+   },
+   {
+    "ok": null,
+    "body": "Jismga 0,5 s davomida 20 N o'zgarmas kuch ta'sir qildi. Jism impulsining o'zgarishi qancha?",
+    "answer": "10 kg·m/s"
+   },
+   {
+    "ok": null,
+    "body": "Bikrligi 100 N/m bo'lgan ikkita bir xil prujina ketma-ket ulandi. Hosil bo'lgan sistemaning bikrligi qancha?",
+    "answer": "50 N/m"
+   },
+   {
+    "ok": null,
+    "body": "Брусок массой $3$ кг равномерно тянут по горизонтальной поверхности. Коэффициент трения $\\mu=0{,}2$. Найдите силу тяги, направленную горизонтально. Ускорение свободного падения $g=10$ м/с².",
+    "answer": "6 Н"
+   },
+   {
+    "ok": null,
+    "body": "Massasi 2 kg bo'lgan brusokni qiyalik burchagi $30^\\circ$ bo'lgan qiya tekislik bo'ylab yuqoriga tekis tortish kerak. Ishqalanish koeffitsiyenti $\\mu=\\frac{\\sqrt3}{6}$. Qiya tekislikka parallel qanday kuch qo'yish kerak? ($g=10$ m/s²)",
+    "answer": "15 N"
+   },
+   {
+    "ok": null,
+    "body": "Jism yer sirtidan yuqorida gorizontal yo'nalishda 10 m/s tezlik bilan otildi. 1 s dan keyin uning tezligi qancha bo'ladi? ($g=10$ m/s², havo qarshiligi yo'q)",
+    "answer": "14,1 m/s"
+   }
+  ],
+  "details": [],
+  "best": 300,
+  "leaderboard": [
+   {
+    "name": "Ergasheva Mohinur",
+    "score": 300,
+    "me": true
+   }
+  ]
+ },
+ "finish_again_status": 200,
+ "answer_after_finish": {
+  "status": 422,
+  "response": {
+   "message": "O'yin tugagan."
+  }
+ }
+}

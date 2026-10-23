@@ -1,0 +1,239 @@
+{
+ "start": {
+  "session_id": 12,
+  "game": "millionaire",
+  "total": 10,
+  "ladder": [
+   100,
+   200,
+   300,
+   500,
+   1000,
+   2000,
+   4000,
+   8000,
+   16000,
+   32000
+  ],
+  "safe": [
+   4
+  ],
+  "seconds_per_question": 30,
+  "lifelines": {
+   "fifty": true,
+   "swap": true
+  },
+  "question": {
+   "id": 164,
+   "body": "Raketaning reaktiv harakati qaysi qonunga asoslangan?",
+   "image_url": null,
+   "options": [
+    {
+     "id": 578,
+     "body": "Paskal qonuni",
+     "image_url": null
+    },
+    {
+     "id": 575,
+     "body": "Guk qonuni",
+     "image_url": null
+    },
+    {
+     "id": 576,
+     "body": "impulsning saqlanish qonuni",
+     "image_url": null
+    },
+    {
+     "id": 577,
+     "body": "Arximed qonuni",
+     "image_url": null
+    }
+   ]
+  }
+ },
+ "answers": [
+  {
+   "request": {
+    "action": "fifty"
+   },
+   "status": 200,
+   "response": {
+    "remove": [
+     578,
+     575
+    ],
+    "lifelines": {
+     "swap": true,
+     "fifty": false
+    }
+   }
+  },
+  {
+   "request": {
+    "question_id": 164,
+    "option_id": 576
+   },
+   "status": 200,
+   "response": {
+    "correct": true,
+    "correct_option_id": 576,
+    "late": false,
+    "level": 1,
+    "prize": 100,
+    "over": false,
+    "question": {
+     "id": 177,
+     "body": "Bir xil balandlikdan bir vaqtda bitta sharcha boshlang'ich tezliksiz qo'yib yuborildi, ikkinchisi esa gorizontal yo'nalishda otildi. Qaysi sharcha gorizontal yerga oldin tushadi? (havo qarshiligi yo'q)",
+     "image_url": null,
+     "options": [
+      {
+       "id": 629,
+       "body": "Gorizontal otilgan sharcha oldin tushadi",
+       "image_url": null
+      },
+      {
+       "id": 630,
+       "body": "Gorizontal tezlik kattaligiga qarab har xil bo'ladi",
+       "image_url": null
+      },
+      {
+       "id": 628,
+       "body": "Ikkalasi bir vaqtda tushadi",
+       "image_url": null
+      },
+      {
+       "id": 627,
+       "body": "Qo'yib yuborilgan sharcha oldin tushadi",
+       "image_url": null
+      }
+     ]
+    }
+   }
+  },
+  {
+   "request": {
+    "action": "swap"
+   },
+   "status": 200,
+   "response": {
+    "question": {
+     "id": 80,
+     "body": "Kran 100 kg yukni 20 s davomida tekis ravishda 12 m balandlikka ko'tardi. Kranning foydali quvvati qancha? ($g=10$ m/s²)",
+     "image_url": null,
+     "options": [
+      {
+       "id": 239,
+       "body": "600 W",
+       "image_url": null
+      },
+      {
+       "id": 241,
+       "body": "6000 W",
+       "image_url": null
+      },
+      {
+       "id": 242,
+       "body": "1200 W",
+       "image_url": null
+      },
+      {
+       "id": 240,
+       "body": "60 W",
+       "image_url": null
+      }
+     ]
+    },
+    "lifelines": {
+     "swap": false,
+     "fifty": false
+    }
+   }
+  },
+  {
+   "request": {
+    "question_id": 80,
+    "option_id": 239
+   },
+   "status": 200,
+   "response": {
+    "correct": true,
+    "correct_option_id": 239,
+    "late": false,
+    "level": 2,
+    "prize": 200,
+    "over": false,
+    "question": {
+     "id": 151,
+     "body": "Gorizontal yo'lda burilayotgan avtomobilga markazga intilma tezlanishni qaysi kuch beradi?",
+     "image_url": null,
+     "options": [
+      {
+       "id": 526,
+       "body": "Dvigatelning tortish kuchi",
+       "image_url": null
+      },
+      {
+       "id": 523,
+       "body": "Og'irlik kuchi",
+       "image_url": null
+      },
+      {
+       "id": 525,
+       "body": "Yo'lning normal reaksiya kuchi",
+       "image_url": null
+      },
+      {
+       "id": 524,
+       "body": "Shinalar va yo'l orasidagi ishqalanish kuchi",
+       "image_url": null
+      }
+     ]
+    }
+   }
+  },
+  {
+   "request": {
+    "action": "walk"
+   },
+   "status": 200,
+   "response": {
+    "over": true,
+    "level": 2,
+    "prize": 200
+   }
+  }
+ ],
+ "finish": {
+  "score": 200,
+  "correct": 2,
+  "total": 10,
+  "duration_ms": 1258,
+  "xp": 4,
+  "xp_daily_limit": 100,
+  "solutions": null,
+  "review": [
+   {
+    "body": "Kran 100 kg yukni 20 s davomida tekis ravishda 12 m balandlikka ko'tardi. Kranning foydali quvvati qancha? ($g=10$ m/s²)",
+    "answer": "600 W",
+    "ok": true
+   },
+   {
+    "body": "Raketaning reaktiv harakati qaysi qonunga asoslangan?",
+    "answer": "impulsning saqlanish qonuni",
+    "ok": true
+   }
+  ],
+  "details": {
+   "level": 2,
+   "won": false
+  },
+  "best": 200,
+  "leaderboard": [
+   {
+    "name": "Ergasheva Mohinur",
+    "score": 200,
+    "me": true
+   }
+  ]
+ }
+}

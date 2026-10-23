@@ -1,0 +1,187 @@
+{
+ "start": {
+  "session_id": 16,
+  "game": "memory",
+  "total": 8,
+  "terms": [
+   {
+    "id": "uzbbyleo",
+    "text": "klaviatura"
+   },
+   {
+    "id": "tw0bgitp",
+    "text": "bayt"
+   },
+   {
+    "id": "i7lmq23s",
+    "text": "monitor"
+   },
+   {
+    "id": "ia3zqxdr",
+    "text": "brauzer"
+   },
+   {
+    "id": "3dkzsznc",
+    "text": "protsessor"
+   },
+   {
+    "id": "jj1lcqkt",
+    "text": "algoritm"
+   },
+   {
+    "id": "43jhy0uz",
+    "text": "fayl"
+   },
+   {
+    "id": "kwrfbvrl",
+    "text": "dastur"
+   }
+  ],
+  "definitions": [
+   {
+    "id": "e2ae1nx8",
+    "text": "nomlangan ma'lumot to'plami"
+   },
+   {
+    "id": "ncggvzcx",
+    "text": "vazifani bajarish uchun qadamlar ketma-ketligi"
+   },
+   {
+    "id": "tismviyr",
+    "text": "buyruqlarni bajaradigan qurilma"
+   },
+   {
+    "id": "iscaaz0u",
+    "text": "tasvir chiqaradigan qurilma"
+   },
+   {
+    "id": "ifwmcsvz",
+    "text": "sakkiz bitdan iborat birlik"
+   },
+   {
+    "id": "dhuxkykh",
+    "text": "veb-sahifalarni ochadigan dastur"
+   },
+   {
+    "id": "2qzbqwvb",
+    "text": "matn kiritish qurilmasi"
+   },
+   {
+    "id": "olplgdzx",
+    "text": "kompyuter bajaradigan buyruqlar to'plami"
+   }
+  ]
+ },
+ "answers": [
+  {
+   "request": {
+    "term": "uzbbyleo",
+    "definition": "ncggvzcx"
+   },
+   "status": 200,
+   "response": {
+    "correct": false,
+    "done": 0,
+    "mistakes": 1
+   }
+  },
+  {
+   "request": {
+    "term": "uzbbyleo",
+    "definition": "2qzbqwvb"
+   },
+   "status": 200,
+   "response": {
+    "correct": true,
+    "done": 1,
+    "mistakes": 1
+   }
+  },
+  {
+   "request": {
+    "term": "jj1lcqkt",
+    "definition": "ncggvzcx"
+   },
+   "status": 200,
+   "response": {
+    "correct": true,
+    "done": 2,
+    "mistakes": 1
+   }
+  },
+  {
+   "request": {
+    "term": "ia3zqxdr",
+    "definition": "dhuxkykh"
+   },
+   "status": 200,
+   "response": {
+    "correct": true,
+    "done": 3,
+    "mistakes": 1
+   }
+  }
+ ],
+ "finish": {
+  "score": 150,
+  "correct": 3,
+  "total": 8,
+  "duration_ms": 726,
+  "xp": 5,
+  "xp_daily_limit": 100,
+  "solutions": null,
+  "review": [
+   {
+    "body": "klaviatura",
+    "answer": "matn kiritish qurilmasi",
+    "ok": true
+   },
+   {
+    "body": "algoritm",
+    "answer": "vazifani bajarish uchun qadamlar ketma-ketligi",
+    "ok": true
+   },
+   {
+    "body": "brauzer",
+    "answer": "veb-sahifalarni ochadigan dastur",
+    "ok": true
+   },
+   {
+    "body": "protsessor",
+    "answer": "buyruqlarni bajaradigan qurilma",
+    "ok": false
+   },
+   {
+    "body": "bayt",
+    "answer": "sakkiz bitdan iborat birlik",
+    "ok": false
+   },
+   {
+    "body": "monitor",
+    "answer": "tasvir chiqaradigan qurilma",
+    "ok": false
+   },
+   {
+    "body": "fayl",
+    "answer": "nomlangan ma'lumot to'plami",
+    "ok": false
+   },
+   {
+    "body": "dastur",
+    "answer": "kompyuter bajaradigan buyruqlar to'plami",
+    "ok": false
+   }
+  ],
+  "details": {
+   "mistakes": 1
+  },
+  "best": 150,
+  "leaderboard": [
+   {
+    "name": "Ergasheva Mohinur",
+    "score": 150,
+    "me": true
+   }
+  ]
+ }
+}
