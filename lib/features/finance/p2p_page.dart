@@ -11,6 +11,7 @@ import '../../core/i18n.dart';
 import '../../core/payments.dart';
 import '../../core/session.dart';
 import '../../core/theme.dart';
+import '../../core/web_links.dart';
 import '../../core/widgets.dart';
 
 class P2pPage extends StatefulWidget {
@@ -112,7 +113,13 @@ class _P2pPageState extends State<P2pPage> {
                     if (p2p['enabled'] == false)
                       Padding(
                         padding: const EdgeInsets.only(bottom: 10),
-                        child: AppCard(color: AppColors.soft(AppColors.warning), child: Text(tr("Kartaga o'tkazma sozlamada o'chirilgan (Sozlamalar → Onlayn to'lov)."))),
+                        child: AppCard(
+                          color: AppColors.soft(AppColors.warning),
+                          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
+                            Text(tr("Kartaga o'tkazma sozlamada o'chirilgan (Sozlamalar → Onlayn to'lov → Kartaga o'tkazma).")),
+                            const OpenWebButton(WebPages.paymentsP2p),
+                          ]),
+                        ),
                       ),
                     if (!manual)
                       Padding(

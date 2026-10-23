@@ -13,6 +13,7 @@ import '../../core/session.dart';
 import '../../core/sms_gateway.dart';
 import '../../core/theme.dart';
 import '../../core/webview_guard.dart';
+import '../../core/web_links.dart';
 import '../../core/widgets.dart';
 
 class SmsGatewayPage extends StatefulWidget {
@@ -152,7 +153,12 @@ class _SmsGatewayPageState extends State<SmsGatewayPage> {
             contentPadding: EdgeInsets.zero,
             value: bank.enabled,
             title: Text(tr("Bank SMS'larini yuborish")),
-            subtitle: bank.serverDisabled ? Text(tr("Sozlamada SMS manbasi o'chirilgan (Sozlamalar → Onlayn to'lov)."), style: TextStyle(color: AppColors.warning)) : null,
+            subtitle: bank.serverDisabled
+                ? Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
+                    Text(tr("Sozlamada SMS manbasi o'chirilgan (Sozlamalar → Onlayn to'lov → Kartaga o'tkazma)."), style: TextStyle(color: AppColors.warning)),
+                    const OpenWebButton(WebPages.paymentsP2p),
+                  ])
+                : null,
             onChanged: _bankWorking ? null : (value) => value ? _bankOn(session) : bank.disable(),
           ),
           ListTile(

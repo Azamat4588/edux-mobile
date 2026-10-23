@@ -19,6 +19,7 @@ import '../../core/i18n.dart';
 import '../../core/payments.dart';
 import '../../core/session.dart';
 import '../../core/theme.dart';
+import '../../core/web_links.dart';
 import '../../core/widgets.dart';
 
 /// To'lov davrlari (veb: CYCLE_LABELS).
@@ -411,8 +412,11 @@ class _BillingPageState extends State<BillingPage> with WidgetsBindingObserver {
           if (billing['can_choose_trial_modules'] == true)
             Padding(
               padding: const EdgeInsets.only(top: 8),
-              child: Text(tr('Sinov davrida modullarni veb-versiyadagi «Modullar va obuna» sahifasida yoqasiz.'),
-                  style: TextStyle(color: AppColors.muted, fontSize: 12.5)),
+              child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
+                Text(tr('Sinov davrida modullarni veb-versiyadagi «Modullar va obuna» sahifasida yoqasiz.'),
+                    style: TextStyle(color: AppColors.muted, fontSize: 12.5)),
+                const OpenWebButton(WebPages.modules),
+              ]),
             ),
         ],
         if (addons.isNotEmpty) ...<Widget>[

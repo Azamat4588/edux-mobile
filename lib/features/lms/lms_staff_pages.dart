@@ -10,6 +10,7 @@ import '../../core/help_links.dart';
 import '../../core/i18n.dart';
 import '../../core/session.dart';
 import '../../core/theme.dart';
+import '../../core/web_links.dart';
 import '../../core/widgets.dart';
 
 class LmsQuestionsPage extends StatefulWidget {
@@ -292,7 +293,11 @@ class _LmsAnnouncementsPageState extends State<LmsAnnouncementsPage> {
                   final items = asList(data['announcements'], 'announcements');
                   final manage = data['can_manage'] == true;
                   if (data['enabled'] == false) {
-                    return ListView(children: <Widget>[EmptyState(icon: Icons.campaign_outlined, text: tr("Kurs e'lonlari sozlamalarda o'chirilgan (Sozlamalar → Ta'lim)."))]);
+                    return ListView(children: <Widget>[EmptyState(
+                        icon: Icons.campaign_outlined,
+                        text: tr("Kurs e'lonlari sozlamalarda o'chirilgan (Sozlamalar → Ta'lim)."),
+                        action: <String>['director', 'admin'].contains(AppScope.of(context).role) ? const OpenWebButton(WebPages.lmsSettings) : null,
+                      )]);
                   }
                   if (items.isEmpty) {
                     return ListView(children: <Widget>[

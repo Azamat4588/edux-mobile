@@ -131,11 +131,9 @@ class _TrueFalseBoardState extends State<TrueFalseBoard> {
     return ListView(
       padding: const EdgeInsets.fromLTRB(16, 12, 16, 32),
       children: <Widget>[
-        Row(children: <Widget>[
+        Wrap(spacing: 6, runSpacing: 6, children: <Widget>[
           Pill(tr("To'g'ri: {0}", <Object?>[_correct]), color: AppColors.success),
-          const SizedBox(width: 6),
           Pill(tr('Xatolar: {0}', <Object?>[_wrong]), color: _wrong > 0 ? AppColors.danger : AppColors.muted),
-          const Spacer(),
           if (_streak >= 2) Pill(tr('Seriya: {0}', <Object?>[_streak]), color: AppColors.warning),
         ]),
         const SizedBox(height: 14),

@@ -4174,5 +4174,13 @@
 "«{0}» o'yinini boshlash": "Start “{0}”",
 "Astronomiya": "Astronomy",
 "Geografiya": "Geography",
-"Informatika": "Computer science"
+"Informatika": "Computer science",
+"Kartaga o'tkazma sozlamada o'chirilgan (Sozlamalar → Onlayn to'lov → Kartaga o'tkazma).": "Card transfer is turned off in settings (Settings → Online payment → Card transfer).",
+"Sozlamada SMS manbasi o'chirilgan (Sozlamalar → Onlayn to'lov → Kartaga o'tkazma).": "The SMS source is turned off in settings (Settings → Online payment → Card transfer).",
+"Ilova versiyasi: {0}": "App version: {0}",
+"Ilovaning yangi versiyasi chiqdi (sizda {0}). Yangilash tavsiya etiladi.": "A new version of the app is available (you have {0}). We recommend updating.",
+"Keyinroq": "Later",
+"Sizda so'nggi versiya o'rnatilgan.": "You have the latest version.",
+"Yangi versiya: {0}": "New version: {0}",
+"Yangilanishni tekshirish": "Check for updates"
 }

@@ -782,7 +782,7 @@ class _FlashcardsBoardState extends State<FlashcardsBoard> {
                     Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
                       Icon(Icons.touch_app_outlined, size: 18, color: AppColors.muted),
                       const SizedBox(width: 6),
-                      Text(tr("Ma'nosini ko'rish uchun bosing"), style: TextStyle(color: AppColors.muted)),
+                      Flexible(child: Text(tr("Ma'nosini ko'rish uchun bosing"), textAlign: TextAlign.center, style: TextStyle(color: AppColors.muted))),
                     ]),
                 ]),
               ),

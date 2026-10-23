@@ -4174,5 +4174,13 @@
 "«{0}» o'yinini boshlash": "Начать игру «{0}»",
 "Astronomiya": "Астрономия",
 "Geografiya": "География",
-"Informatika": "Информатика"
+"Informatika": "Информатика",
+"Kartaga o'tkazma sozlamada o'chirilgan (Sozlamalar → Onlayn to'lov → Kartaga o'tkazma).": "Перевод на карту отключён в настройках (Настройки → Онлайн-оплата → Перевод на карту).",
+"Sozlamada SMS manbasi o'chirilgan (Sozlamalar → Onlayn to'lov → Kartaga o'tkazma).": "Источник SMS отключён в настройках (Настройки → Онлайн-оплата → Перевод на карту).",
+"Ilova versiyasi: {0}": "Версия приложения: {0}",
+"Ilovaning yangi versiyasi chiqdi (sizda {0}). Yangilash tavsiya etiladi.": "Вышла новая версия приложения (у вас {0}). Рекомендуем обновить.",
+"Keyinroq": "Позже",
+"Sizda so'nggi versiya o'rnatilgan.": "У вас установлена последняя версия.",
+"Yangi versiya: {0}": "Новая версия: {0}",
+"Yangilanishni tekshirish": "Проверить обновления"
 }

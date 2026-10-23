@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../core/app_update.dart';
 import '../../core/design.dart';
 import '../../core/i18n.dart';
 import '../../core/push.dart';
@@ -228,6 +229,8 @@ class _SettingsPageState extends State<SettingsPage> {
                 trailing: const Icon(Icons.chevron_right),
                 onTap: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const HelpPage())),
               ),
+              const Divider(),
+              AppVersionTile(api: session.api),
               const Divider(),
               ListTile(
                 leading: const Icon(Icons.dns_outlined),

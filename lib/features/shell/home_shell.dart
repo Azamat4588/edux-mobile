@@ -4,6 +4,7 @@
 import 'package:flutter/material.dart';
 
 import '../../core/api.dart';
+import '../../core/app_update.dart';
 import '../../core/bank_sms.dart';
 import '../../core/home_widgets.dart';
 import '../../core/i18n.dart';
@@ -102,6 +103,8 @@ class _HomeShellState extends State<HomeShell> with WidgetsBindingObserver {
       SmsGatewayService.organization.resume(session);
       SmsGatewayService.platform.resume(session);
       BankSmsForwarder.instance.resume(session);
+      // Yangi versiya chiqqan bo'lsa (server «Ilovalar» sozlamasi) — kuniga bir marta taklif.
+      AppUpdate.maybeNotify(context, session.api);
     });
   }
 

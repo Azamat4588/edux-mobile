@@ -315,17 +315,11 @@ class _MathSprintBoardState extends State<MathSprintBoard> {
     return ListView(
       padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
       children: <Widget>[
-        Row(children: <Widget>[
+        Wrap(spacing: 6, runSpacing: 6, crossAxisAlignment: WrapCrossAlignment.center, children: <Widget>[
           Pill(tr("To'g'ri: {0}", <Object?>[_correct]), color: AppColors.success),
-          const SizedBox(width: 6),
           Pill(tr('Xatolar: {0}', <Object?>[_wrong]), color: _wrong > 0 ? AppColors.danger : AppColors.muted),
-          const Spacer(),
-          if (_lastOk != null)
-            Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
-              Icon(_lastOk! ? Icons.check_circle_rounded : Icons.cancel_rounded, size: 18, color: _lastOk! ? AppColors.success : AppColors.danger),
-              const SizedBox(width: 4),
-              if (!_lastOk!) Text(tr("To'g'ri javob: {0}", <Object?>[_lastAnswer]), style: TextStyle(color: AppColors.danger, fontSize: 12.5, fontWeight: FontWeight.w600)),
-            ]),
+          if (_lastOk == false) Pill(tr("To'g'ri javob: {0}", <Object?>[_lastAnswer]), color: AppColors.danger),
+          if (_lastOk == true) Icon(Icons.check_circle_rounded, size: 20, color: AppColors.success),
         ]),
         const SizedBox(height: 16),
         AppCard(

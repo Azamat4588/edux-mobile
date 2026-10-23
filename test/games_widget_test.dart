@@ -163,7 +163,8 @@ void main() {
     final answers = asRawList(fake.host.timeoutPayload!()['answers']);
     expect(answers.length, start.entries.length);
     expect(answers.first, 'AB');
-    await tester.scrollUntilVisible(find.text('Yakunlash va tekshirish'), 300);
+    await tester.ensureVisible(find.text('Yakunlash va tekshirish'));
+    await tester.pumpAndSettle();
     await tester.tap(find.text('Yakunlash va tekshirish'));
     await tester.pumpAndSettle();
     await tester.tap(find.text('Yakunlash').last);
