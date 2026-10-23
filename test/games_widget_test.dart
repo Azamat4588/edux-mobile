@@ -163,7 +163,8 @@ void main() {
     final answers = asRawList(fake.host.timeoutPayload!()['answers']);
     expect(answers.length, start.entries.length);
     expect(answers.first, 'AB');
-    await tester.ensureVisible(find.text('Yakunlash va tekshirish'));
+    await tester.scrollUntilVisible(find.text('Yakunlash va tekshirish'), 300,
+        scrollable: find.descendant(of: find.byType(ListView), matching: find.byType(Scrollable)).first);
     await tester.pumpAndSettle();
     await tester.tap(find.text('Yakunlash va tekshirish'));
     await tester.pumpAndSettle();
@@ -175,6 +176,7 @@ void main() {
   testWidgets('mathsprint: raqam klaviaturasi', (tester) async {
     final fake = await pumpGame(tester, 'mathsprint');
     await tester.tap(find.widgetWithText(OutlinedButton, '1'));
+    await tester.pump();
     await tester.tap(find.widgetWithText(OutlinedButton, '2'));
     await tester.pump();
     await tester.tap(find.text('Javob berish'));

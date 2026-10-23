@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'api.dart';
@@ -40,8 +41,28 @@ class Membership {
 }
 
 class Session extends ChangeNotifier implements ApiCredentials {
-  Session() {
-    api = Api(this);
+  Session({http.Client? client}) {
+    api = Api(this, client: client);
+  }
+
+  /// Testlar va skrinshotlar uchun: tarmoq va telefon xotirasisiz «kirgan» holat (demo ma'lumot bilan).
+  @visibleForTesting
+  void debugSignIn({
+    required String server,
+    required String token,
+    required Map<String, dynamic> user,
+    required List<Membership> memberships,
+    required int organizationId,
+    required Map<String, dynamic> context,
+  }) {
+    _server = server;
+    _token = token;
+    this.user = user;
+    this.memberships = memberships;
+    _organizationId = organizationId;
+    this.context = context;
+    restoring = false;
+    notifyListeners();
   }
 
   /// Telefondagi kontekst nusxasi kaliti: server javobi shakli o'zgarganda (1.29) versiya oshiriladi — eski nusxa o'qilmaydi.
