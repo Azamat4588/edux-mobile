@@ -16,9 +16,9 @@
   "is_current": true
  },
  "class_name": "11-A",
- "subject": "Biologiya",
- "teacher": "Qodirova Gulshan",
- "can_write": false,
+ "subject": "Fizika",
+ "teacher": "Karimova Nodira",
+ "can_write": true,
  "students": [
   {
    "id": 11,
@@ -67,71 +67,253 @@
  ],
  "lessons": [
   {
-   "id": 1004,
-   "date": "2026-09-30",
-   "period_number": 5,
-   "topic": "Hujayra tuzilishi",
+   "id": 5,
+   "date": "2026-09-03",
+   "period_number": 2,
+   "topic": "Nyuton qonunlari",
+   "homework": "§1, 13-masala",
+   "term_id": 1
+  },
+  {
+   "id": 10,
+   "date": "2026-09-05",
+   "period_number": 1,
+   "topic": "Impuls va uning saqlanishi",
+   "homework": "§2, 16-masala",
+   "term_id": 1
+  },
+  {
+   "id": 15,
+   "date": "2026-09-08",
+   "period_number": 1,
+   "topic": "Ish va energiya",
+   "homework": "§3, 19-masala",
+   "term_id": 1
+  },
+  {
+   "id": 22,
+   "date": "2026-09-10",
+   "period_number": 2,
+   "topic": "Mexanik tebranishlar",
+   "homework": "§4, 22-masala",
+   "term_id": 1
+  },
+  {
+   "id": 27,
+   "date": "2026-09-12",
+   "period_number": 1,
+   "topic": "Elektr zaryadi. Kulon qonuni",
+   "homework": "§5, 25-masala",
+   "term_id": 1
+  },
+  {
+   "id": 32,
+   "date": "2026-09-15",
+   "period_number": 1,
+   "topic": "Elektr maydon",
+   "homework": "§6, 28-masala",
+   "term_id": 1
+  },
+  {
+   "id": 39,
+   "date": "2026-09-17",
+   "period_number": 2,
+   "topic": "Om qonuni",
+   "homework": "§7, 31-masala",
+   "term_id": 1
+  },
+  {
+   "id": 44,
+   "date": "2026-09-19",
+   "period_number": 1,
+   "topic": "Laboratoriya ishi",
    "homework": null,
    "term_id": 1
   },
   {
-   "id": 1009,
+   "id": 49,
+   "date": "2026-09-22",
+   "period_number": 1,
+   "topic": "Nyuton qonunlari",
+   "homework": "§9, 37-masala",
+   "term_id": 1
+  },
+  {
+   "id": 56,
+   "date": "2026-09-24",
+   "period_number": 2,
+   "topic": "Impuls va uning saqlanishi",
+   "homework": "§10, 40-masala",
+   "term_id": 1
+  },
+  {
+   "id": 61,
+   "date": "2026-09-26",
+   "period_number": 1,
+   "topic": "Ish va energiya",
+   "homework": "§11, 43-masala",
+   "term_id": 1
+  },
+  {
+   "id": 66,
+   "date": "2026-09-29",
+   "period_number": 1,
+   "topic": "Mexanik tebranishlar",
+   "homework": "§12, 46-masala",
+   "term_id": 1
+  },
+  {
+   "id": 73,
+   "date": "2026-10-01",
+   "period_number": 2,
+   "topic": "Elektr zaryadi. Kulon qonuni",
+   "homework": "§13, 49-masala",
+   "term_id": 1
+  },
+  {
+   "id": 78,
    "date": "2026-10-03",
-   "period_number": 4,
-   "topic": "Fotosintez",
+   "period_number": 1,
+   "topic": "Elektr maydon",
+   "homework": "§14, 52-masala",
+   "term_id": 1
+  },
+  {
+   "id": 83,
+   "date": "2026-10-06",
+   "period_number": 1,
+   "topic": "Om qonuni",
+   "homework": "§15, 55-masala",
+   "term_id": 1
+  },
+  {
+   "id": 90,
+   "date": "2026-10-08",
+   "period_number": 2,
+   "topic": "Laboratoriya ishi",
    "homework": null,
    "term_id": 1
   },
   {
-   "id": 1014,
-   "date": "2026-10-07",
-   "period_number": 5,
-   "topic": "Nafas olish",
-   "homework": null,
-   "term_id": 1
-  },
-  {
-   "id": 1019,
+   "id": 95,
    "date": "2026-10-10",
-   "period_number": 4,
-   "topic": "Genetika asoslari",
-   "homework": null,
+   "period_number": 1,
+   "topic": "Nyuton qonunlari",
+   "homework": "§17, 61-masala",
    "term_id": 1
   },
   {
-   "id": 1024,
-   "date": "2026-10-14",
-   "period_number": 5,
-   "topic": "Mendel qonunlari",
-   "homework": null,
+   "id": 100,
+   "date": "2026-10-13",
+   "period_number": 1,
+   "topic": "Impuls va uning saqlanishi",
+   "homework": "§18, 64-masala",
    "term_id": 1
   },
   {
-   "id": 1029,
+   "id": 107,
+   "date": "2026-10-15",
+   "period_number": 2,
+   "topic": "Ish va energiya",
+   "homework": "§19, 67-masala",
+   "term_id": 1
+  },
+  {
+   "id": 112,
    "date": "2026-10-17",
-   "period_number": 4,
-   "topic": "Evolyutsiya",
-   "homework": null,
-   "term_id": 1
-  },
-  {
-   "id": 1034,
-   "date": "2026-10-21",
-   "period_number": 5,
-   "topic": "Ekosistema",
-   "homework": null,
+   "period_number": 1,
+   "topic": "Mexanik tebranishlar",
+   "homework": "§20, 70-masala",
    "term_id": 1
   }
  ],
  "entries": {
-  "1004": {
+  "5": {
+   "6": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   },
+   "5": {
+    "mark": 5,
+    "attendance": "present",
+    "note": null
+   },
+   "7": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   }
+  },
+  "10": {
    "1": {
+    "mark": 3,
+    "attendance": "present",
+    "note": null
+   },
+   "6": {
     "mark": 5,
     "attendance": "present",
     "note": null
    },
    "2": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   }
+  },
+  "15": {
+   "1": {
     "mark": null,
+    "attendance": "excused",
+    "note": "Shifokor ma'lumotnomasi"
+   },
+   "10": {
+    "mark": 3,
+    "attendance": "present",
+    "note": null
+   },
+   "5": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   },
+   "2": {
+    "mark": 5,
+    "attendance": "present",
+    "note": null
+   },
+   "7": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   }
+  },
+  "22": {
+   "3": {
+    "mark": 5,
+    "attendance": "present",
+    "note": null
+   },
+   "9": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   },
+   "5": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   },
+   "2": {
+    "mark": 5,
+    "attendance": "present",
+    "note": null
+   }
+  },
+  "27": {
+   "4": {
+    "mark": 3,
     "attendance": "present",
     "note": null
    },
@@ -140,14 +322,80 @@
     "attendance": "present",
     "note": null
    },
-   "4": {
-    "mark": null,
+   "9": {
+    "mark": 5,
+    "attendance": "present",
+    "note": null
+   }
+  },
+  "32": {
+   "3": {
+    "mark": 4,
     "attendance": "present",
     "note": null
    },
-   "5": {
+   "6": {
+    "mark": 3,
+    "attendance": "present",
+    "note": null
+   }
+  },
+  "39": {
+   "11": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   },
+   "3": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   },
+   "6": {
     "mark": null,
     "attendance": "absent",
+    "note": null
+   },
+   "8": {
+    "mark": null,
+    "attendance": "excused",
+    "note": "Shifokor ma'lumotnomasi"
+   },
+   "5": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   }
+  },
+  "44": {
+   "11": {
+    "mark": 5,
+    "attendance": "present",
+    "note": null
+   },
+   "1": {
+    "mark": 3,
+    "attendance": "present",
+    "note": null
+   },
+   "4": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   },
+   "3": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   },
+   "10": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   },
+   "9": {
+    "mark": 5,
+    "attendance": "present",
     "note": null
    },
    "6": {
@@ -155,46 +403,31 @@
     "attendance": "present",
     "note": null
    },
-   "7": {
-    "mark": 4,
-    "attendance": "present",
-    "note": null
-   },
    "8": {
-    "mark": 5,
-    "attendance": "present",
-    "note": null
-   },
-   "9": {
-    "mark": null,
-    "attendance": "present",
-    "note": null
-   },
-   "10": {
     "mark": 4,
     "attendance": "present",
     "note": null
    },
-   "11": {
-    "mark": null,
-    "attendance": "present",
-    "note": null
-   }
-  },
-  "1009": {
-   "1": {
-    "mark": 5,
+   "5": {
+    "mark": 4,
     "attendance": "present",
     "note": null
    },
    "2": {
-    "mark": null,
+    "mark": 5,
     "attendance": "present",
     "note": null
    },
-   "3": {
-    "mark": null,
-    "attendance": "absent",
+   "7": {
+    "mark": 5,
+    "attendance": "present",
+    "note": null
+   }
+  },
+  "49": {
+   "1": {
+    "mark": 4,
+    "attendance": "present",
     "note": null
    },
    "4": {
@@ -202,164 +435,67 @@
     "attendance": "present",
     "note": null
    },
-   "5": {
-    "mark": null,
-    "attendance": "late",
-    "note": null
-   },
-   "6": {
-    "mark": null,
+   "10": {
+    "mark": 2,
     "attendance": "present",
-    "note": null
-   },
-   "7": {
-    "mark": null,
-    "attendance": "present",
-    "note": null
-   },
-   "8": {
-    "mark": null,
-    "attendance": "present",
-    "note": null
+    "note": "Uy vazifasini bajarmagan"
    },
    "9": {
-    "mark": null,
-    "attendance": "present",
-    "note": null
-   },
-   "10": {
     "mark": 5,
     "attendance": "present",
     "note": null
    },
-   "11": {
+   "6": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   },
+   "8": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   },
+   "5": {
     "mark": 4,
     "attendance": "present",
     "note": null
    }
   },
-  "1014": {
-   "1": {
-    "mark": 4,
-    "attendance": "present",
-    "note": null
-   },
-   "2": {
-    "mark": null,
+  "56": {
+   "11": {
+    "mark": 5,
     "attendance": "present",
     "note": null
    },
    "3": {
-    "mark": null,
-    "attendance": "absent",
-    "note": null
-   },
-   "4": {
-    "mark": 3,
-    "attendance": "present",
-    "note": null
-   },
-   "5": {
-    "mark": null,
-    "attendance": "present",
-    "note": null
-   },
-   "6": {
-    "mark": null,
-    "attendance": "present",
-    "note": null
-   },
-   "7": {
-    "mark": null,
-    "attendance": "present",
-    "note": null
-   },
-   "8": {
-    "mark": null,
+    "mark": 4,
     "attendance": "present",
     "note": null
    },
    "9": {
-    "mark": 4,
-    "attendance": "late",
-    "note": null
-   },
-   "10": {
     "mark": 5,
     "attendance": "present",
     "note": null
    },
-   "11": {
-    "mark": null,
-    "attendance": "present",
-    "note": null
-   }
-  },
-  "1019": {
-   "1": {
-    "mark": null,
+   "8": {
+    "mark": 4,
     "attendance": "present",
     "note": null
    },
    "2": {
-    "mark": null,
-    "attendance": "present",
-    "note": null
-   },
-   "3": {
-    "mark": null,
-    "attendance": "present",
-    "note": null
-   },
-   "4": {
-    "mark": null,
-    "attendance": "present",
-    "note": null
-   },
-   "5": {
-    "mark": null,
-    "attendance": "present",
-    "note": null
-   },
-   "6": {
-    "mark": null,
-    "attendance": "present",
-    "note": null
-   },
-   "7": {
-    "mark": null,
-    "attendance": "present",
-    "note": null
-   },
-   "8": {
     "mark": 5,
     "attendance": "present",
     "note": null
    },
-   "9": {
-    "mark": null,
-    "attendance": "present",
-    "note": null
-   },
-   "10": {
-    "mark": null,
-    "attendance": "present",
-    "note": null
-   },
-   "11": {
+   "7": {
     "mark": 4,
     "attendance": "present",
     "note": null
    }
   },
-  "1024": {
-   "1": {
+  "61": {
+   "11": {
     "mark": 5,
-    "attendance": "present",
-    "note": null
-   },
-   "2": {
-    "mark": null,
     "attendance": "present",
     "note": null
    },
@@ -368,65 +504,133 @@
     "attendance": "present",
     "note": null
    },
-   "4": {
-    "mark": null,
-    "attendance": "present",
-    "note": null
-   },
-   "5": {
-    "mark": 3,
-    "attendance": "present",
-    "note": null
-   },
-   "6": {
-    "mark": null,
-    "attendance": "present",
-    "note": null
-   },
-   "7": {
-    "mark": null,
+   "9": {
+    "mark": 5,
     "attendance": "present",
     "note": null
    },
    "8": {
-    "mark": null,
+    "mark": 5,
     "attendance": "present",
     "note": null
    },
-   "9": {
-    "mark": null,
-    "attendance": "absent",
-    "note": null
-   },
-   "10": {
-    "mark": null,
-    "attendance": "present",
-    "note": null
-   },
-   "11": {
-    "mark": null,
-    "attendance": "present",
-    "note": null
-   }
-  },
-  "1029": {
-   "1": {
-    "mark": null,
-    "attendance": "present",
-    "note": null
-   },
-   "2": {
+   "7": {
     "mark": 5,
     "attendance": "late",
     "note": null
-   },
-   "3": {
+   }
+  },
+  "66": {
+   "8": {
+    "mark": 3,
+    "attendance": "present",
+    "note": null
+   }
+  },
+  "73": {
+   "11": {
     "mark": 4,
     "attendance": "present",
     "note": null
    },
-   "4": {
+   "6": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   },
+   "8": {
     "mark": null,
+    "attendance": "absent",
+    "note": null
+   },
+   "5": {
+    "mark": null,
+    "attendance": "absent",
+    "note": null
+   }
+  },
+  "78": {
+   "4": {
+    "mark": 5,
+    "attendance": "present",
+    "note": null
+   },
+   "10": {
+    "mark": 3,
+    "attendance": "present",
+    "note": null
+   },
+   "8": {
+    "mark": 3,
+    "attendance": "present",
+    "note": null
+   },
+   "5": {
+    "mark": null,
+    "attendance": "excused",
+    "note": "Shifokor ma'lumotnomasi"
+   },
+   "7": {
+    "mark": 5,
+    "attendance": "present",
+    "note": null
+   }
+  },
+  "83": {
+   "4": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   },
+   "3": {
+    "mark": 5,
+    "attendance": "late",
+    "note": null
+   },
+   "10": {
+    "mark": null,
+    "attendance": "late",
+    "note": null
+   }
+  },
+  "90": {
+   "11": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   },
+   "1": {
+    "mark": 2,
+    "attendance": "present",
+    "note": "Uy vazifasini bajarmagan"
+   },
+   "4": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   },
+   "3": {
+    "mark": 5,
+    "attendance": "present",
+    "note": null
+   },
+   "10": {
+    "mark": 3,
+    "attendance": "present",
+    "note": null
+   },
+   "9": {
+    "mark": 5,
+    "attendance": "present",
+    "note": null
+   },
+   "6": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   },
+   "8": {
+    "mark": 4,
     "attendance": "present",
     "note": null
    },
@@ -435,90 +639,101 @@
     "attendance": "present",
     "note": null
    },
-   "6": {
+   "2": {
     "mark": 5,
     "attendance": "present",
     "note": null
    },
    "7": {
-    "mark": null,
-    "attendance": "present",
-    "note": null
-   },
-   "8": {
-    "mark": null,
-    "attendance": "present",
-    "note": null
-   },
-   "9": {
-    "mark": null,
-    "attendance": "present",
-    "note": null
-   },
-   "10": {
-    "mark": null,
-    "attendance": "present",
-    "note": null
-   },
-   "11": {
-    "mark": 4,
+    "mark": 5,
     "attendance": "present",
     "note": null
    }
   },
-  "1034": {
-   "1": {
-    "mark": 3,
+  "95": {
+   "11": {
+    "mark": 5,
+    "attendance": "present",
+    "note": null
+   },
+   "3": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   },
+   "9": {
+    "mark": 5,
+    "attendance": "present",
+    "note": null
+   },
+   "2": {
+    "mark": 5,
+    "attendance": "present",
+    "note": null
+   }
+  },
+  "100": {
+   "4": {
+    "mark": null,
+    "attendance": "absent",
+    "note": null
+   },
+   "10": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   },
+   "8": {
+    "mark": 4,
     "attendance": "present",
     "note": null
    },
    "2": {
     "mark": null,
-    "attendance": "present",
+    "attendance": "absent",
     "note": null
-   },
-   "3": {
-    "mark": 3,
-    "attendance": "present",
-    "note": null
-   },
-   "4": {
-    "mark": 3,
-    "attendance": "present",
-    "note": null
-   },
-   "5": {
-    "mark": 5,
-    "attendance": "present",
-    "note": null
-   },
-   "6": {
+   }
+  },
+  "107": {
+   "10": {
     "mark": 4,
-    "attendance": "present",
-    "note": null
-   },
-   "7": {
-    "mark": null,
-    "attendance": "present",
-    "note": null
-   },
-   "8": {
-    "mark": null,
     "attendance": "present",
     "note": null
    },
    "9": {
     "mark": null,
+    "attendance": "excused",
+    "note": "Shifokor ma'lumotnomasi"
+   },
+   "2": {
+    "mark": 4,
     "attendance": "present",
     "note": null
-   },
-   "10": {
-    "mark": null,
-    "attendance": "present",
-    "note": null
-   },
+   }
+  },
+  "112": {
    "11": {
-    "mark": null,
+    "mark": 5,
+    "attendance": "present",
+    "note": null
+   },
+   "1": {
+    "mark": 4,
+    "attendance": "present",
+    "note": null
+   },
+   "3": {
+    "mark": 5,
+    "attendance": "present",
+    "note": null
+   },
+   "2": {
+    "mark": 5,
+    "attendance": "present",
+    "note": null
+   },
+   "7": {
+    "mark": 5,
     "attendance": "present",
     "note": null
    }

@@ -206,7 +206,11 @@ class _LessonTile extends StatelessWidget {
     final day = parseDate(lesson['date']);
     final period = asInt(lesson['period_number']);
     return ListTile(
-      title: Text(<String>[if (day != null) dayTitle(day) else asText(lesson['date']), if (period > 0) tr('{0}-soat', <Object?>[period])].join(' · ')),
+      // «5-soat» qator oxirida defisdan bo'linmasin (U+2060 — so'z bog'lovchi).
+      title: Text(<String>[
+        if (day != null) dayTitle(day) else asText(lesson['date']),
+        if (period > 0) tr('{0}-soat', <Object?>[period]).replaceAll('-', '-\u2060'),
+      ].join(' · ')),
       subtitle: Text(asText(lesson['topic'], tr('Mavzu yozilmagan')), maxLines: 2, overflow: TextOverflow.ellipsis),
       trailing: Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.end, children: <Widget>[
         Text(tr('{0} baho', <Object?>[summary.marks]), style: TextStyle(color: AppColors.muted, fontSize: 12.5)),
