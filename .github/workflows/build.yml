@@ -283,7 +283,8 @@ jobs:
           flutter pub get 2>&1 | tee -a ci-ios.log
           dart run tool/configure_platforms.dart --ios 2>&1 | tee -a ci-ios.log
           dart run flutter_launcher_icons 2>&1 | tee -a ci-ios.log
-          echo "::notice title=iOS ikonkalari::$(python3 -c "import json;d=json.load(open('ios/Runner/Assets.xcassets/AppIcon.appiconset/Contents.json'));print(', '.join(sorted({i.get('idiom','')+' '+i.get('size','')+('@'+i['scale'] if 'scale' in i else '') for i in d['images']})))")"
+          icons=ios/Runner/Assets.xcassets/AppIcon.appiconset
+          echo "::notice title=iOS ikonkalari::$(ls $icons | grep -c png) ta PNG; ipad yozuvlari: $(grep -oE '"idiom" *: *"ipad"' $icons/Contents.json | wc -l | tr -d ' '); iPad o'lchamlari: $(grep -oE '"size" *: *"(76x76|83.5x83.5)"' $icons/Contents.json | wc -l | tr -d ' ')"
 
       - name: Firebase (iPhone push)
         env:
