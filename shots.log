@@ -18,3 +18,124 @@
 ::endgroup::
 
 🎉 15 tests passed.
+
+::group::✅ Passing tests
+✅ ios 01 bosh sahifa
+✅ ios 02 jurnal
+✅ ios 03 davomat
+✅ ios 04 oyinlar
+✅ ios 05 laboratoriyalar
+::endgroup::
+::group::✅ ios 06 fikr bildirish
+
+Warning: A call to tap() with finder "Found 1 widget with text "Taklif" (ignoring all but first): [
+  Text("Taklif", dependencies: [DefaultSelectionStyle, DefaultTextStyle, MediaQuery]),
+]" derived an Offset (Offset(192.1, 228.0)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+The finder corresponds to this RenderBox: RenderParagraph#b8260 relayoutBoundary=up18
+The hit test result at that offset is: HitTestResult(RenderPointerListener#a12ed@Offset(54.8, 19.0), RenderSemanticsAnnotations#19298@Offset(54.8, 19.0), RenderMouseRegion#ec001@Offset(54.8, 19.0), RenderSemanticsAnnotations#e690b@Offset(54.8, 19.0), _RenderInkFeatures#7bc47@Offset(54.8, 19.0), RenderCustomPaint#6255b@Offset(54.8, 19.0), RenderPhysicalShape#4b58e@Offset(54.8, 19.0), RenderPositionedBox#4952c@Offset(54.8, 24.0), RenderSemanticsAnnotations#2df5e@Offset(54.8, 24.0), RenderWrap#c15b1@Offset(176.1, 24.0), RenderRepaintBoundary#ee0bf@Offset(176.1, 24.0), RenderIndexedSemantics#66703@Offset(176.1, 24.0), RenderSliverList@(mainAxis: 108.0, crossAxis: 176.0846939086914), RenderSliverPadding@(mainAxis: 124.0, crossAxis: 192.0846939086914), RenderViewport#d98f9@Offset(192.1, 124.0), RenderIgnorePointer#27d9d@Offset(192.1, 124.0), RenderSemanticsAnnotations#16bdb@Offset(192.1, 124.0), RenderPointerListener#3cc85@Offset(192.1, 124.0), RenderSemanticsGestureHandler#69dc0@Offset(192.1, 124.0), RenderPointerListener#c9b26@Offset(192.1, 124.0), _RenderScrollSemantics#a7cb0@Offset(192.1, 124.0), RenderClipRect#72245@Offset(192.1, 124.0), RenderSemanticsAnnotations#a64ad@Offset(192.1, 124.0), RenderRepaintBoundary#99226@Offset(192.1, 124.0), RenderIndexedSemantics#c59d0@Offset(192.1, 124.0), RenderSliverFillViewport@(mainAxis: 192.0846939086914, crossAxis: 124.0), _RenderSliverFractionalPadding@(mainAxis: 192.0846939086914, crossAxis: 124.0), RenderViewport#80848@Offset(192.1, 124.0), RenderIgnorePointer#17161@Offset(192.1, 124.0), RenderSemanticsAnnotations#097ec@Offset(192.1, 124.0), RenderPointerListener#8d470@Offset(192.1, 124.0), RenderSemanticsGestureHandler#54821@Offset(192.1, 124.0), RenderPointerListener#d7e12@Offset(192.1, 124.0), _RenderScrollSemantics#d2bb4@Offset(192.1, 124.0), RenderClipRect#7245d@Offset(192.1, 124.0), RenderCustomMultiChildLayoutBox#efbcd@Offset(192.1, 228.0), _RenderInkFeatures#18ab7@Offset(192.1, 228.0), RenderPhysicalModel#e7396@Offset(192.1, 228.0), RenderCustomMultiChildLayoutBox#fe132@Offset(192.1, 228.0), _RenderInkFeatures#48853@Offset(192.1, 228.0), RenderPhysicalModel#e766b@Offset(192.1, 228.0), RenderSemanticsAnnotations#d9f6d@Offset(192.1, 228.0), RenderRepaintBoundary#f823d@Offset(192.1, 228.0), RenderIgnorePointer#74f5e@Offset(192.1, 228.0), RenderAnimatedOpacity#db812@Offset(192.1, 228.0), RenderAnimatedOpacity#f2ea7@Offset(192.1, 228.0), _RenderColoredBox#8ef77@Offset(192.1, 228.0), RenderAnimatedOpacity#90666@Offset(192.1, 228.0), RenderIgnorePointer#0f1b2@Offset(192.1, 228.0), RenderAnimatedOpacity#a3d84@Offset(192.1, 228.0), RenderRepaintBoundary#3a264@Offset(192.1, 228.0), RenderSemanticsAnnotations#d6b51@Offset(192.1, 228.0), RenderOffstage#d9955@Offset(192.1, 228.0), RenderSemanticsAnnotations#60433@Offset(192.1, 228.0), _RenderTheater#629be@Offset(192.1, 228.0), RenderAbsorbPointer#f0a64@Offset(192.1, 228.0), RenderPointerListener#7d57b@Offset(192.1, 228.0), RenderSemanticsAnnotations#fe660@Offset(192.1, 228.0), RenderSemanticsAnnotations#e93b4@Offset(192.1, 228.0), RenderSemanticsAnnotations#89f4f@Offset(192.1, 228.0), RenderSemanticsAnnotations#a266e@Offset(192.1, 228.0), RenderTapRegionSurface#3b78d@Offset(192.1, 228.0), RenderSemanticsAnnotations#33b8b@Offset(192.1, 228.0), RenderSemanticsAnnotations#485d4@Offset(192.1, 228.0), RenderRepaintBoundary#150e3@Offset(192.1, 228.0), HitTestEntry<HitTestTarget>#1b207(_ReusableRenderView#8bc69), HitTestEntry<HitTestTarget>#36b04(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+#2      WidgetController.tap (package:flutter_test/src/controller.dart:1080:7)
+#3      main.<anonymous closure>.<anonymous closure> (file:///home/runner/work/edux-mobile/edux-mobile/screenshots/devices_test.dart:228:22)
+#4      shootDevice (file:///home/runner/work/edux-mobile/edux-mobile/screenshots/devices_test.dart:119:16)
+<asynchronous suspension>
+#5      main.<anonymous closure> (file:///home/runner/work/edux-mobile/edux-mobile/screenshots/devices_test.dart:226:7)
+<asynchronous suspension>
+#6      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#8      StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "tap()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+
+Warning: A call to tap() with finder "Found 1 widget with text "Taklif" (ignoring all but first): [
+  Text("Taklif", dependencies: [DefaultSelectionStyle, DefaultTextStyle, MediaQuery]),
+]" derived an Offset (Offset(192.1, 228.0)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+The finder corresponds to this RenderBox: RenderParagraph#04702 relayoutBoundary=up18
+The hit test result at that offset is: HitTestResult(RenderPointerListener#3e643@Offset(54.8, 19.0), RenderSemanticsAnnotations#fdcb3@Offset(54.8, 19.0), RenderMouseRegion#36318@Offset(54.8, 19.0), RenderSemanticsAnnotations#843fd@Offset(54.8, 19.0), _RenderInkFeatures#a1602@Offset(54.8, 19.0), RenderCustomPaint#0fe5e@Offset(54.8, 19.0), RenderPhysicalShape#83777@Offset(54.8, 19.0), RenderPositionedBox#de7ea@Offset(54.8, 24.0), RenderSemanticsAnnotations#31b80@Offset(54.8, 24.0), RenderWrap#0b395@Offset(176.1, 24.0), RenderRepaintBoundary#da558@Offset(176.1, 24.0), RenderIndexedSemantics#6e036@Offset(176.1, 24.0), RenderSliverList@(mainAxis: 108.0, crossAxis: 176.0846939086914), RenderSliverPadding@(mainAxis: 124.0, crossAxis: 192.0846939086914), RenderViewport#57d81@Offset(192.1, 124.0), RenderIgnorePointer#8d918@Offset(192.1, 124.0), RenderSemanticsAnnotations#4d885@Offset(192.1, 124.0), RenderPointerListener#e391a@Offset(192.1, 124.0), RenderSemanticsGestureHandler#d0e85@Offset(192.1, 124.0), RenderPointerListener#38aab@Offset(192.1, 124.0), _RenderScrollSemantics#c86a3@Offset(192.1, 124.0), RenderClipRect#78cab@Offset(192.1, 124.0), RenderSemanticsAnnotations#2d886@Offset(192.1, 124.0), RenderRepaintBoundary#4731b@Offset(192.1, 124.0), RenderIndexedSemantics#8f73c@Offset(192.1, 124.0), RenderSliverFillViewport@(mainAxis: 192.0846939086914, crossAxis: 124.0), _RenderSliverFractionalPadding@(mainAxis: 192.0846939086914, crossAxis: 124.0), RenderViewport#29f35@Offset(192.1, 124.0), RenderIgnorePointer#a2b4f@Offset(192.1, 124.0), RenderSemanticsAnnotations#61500@Offset(192.1, 124.0), RenderPointerListener#46703@Offset(192.1, 124.0), RenderSemanticsGestureHandler#9c1cd@Offset(192.1, 124.0), RenderPointerListener#6825d@Offset(192.1, 124.0), _RenderScrollSemantics#dc999@Offset(192.1, 124.0), RenderClipRect#8acde@Offset(192.1, 124.0), RenderCustomMultiChildLayoutBox#c53af@Offset(192.1, 228.0), _RenderInkFeatures#c552c@Offset(192.1, 228.0), RenderPhysicalModel#bb307@Offset(192.1, 228.0), RenderCustomMultiChildLayoutBox#ed0a9@Offset(192.1, 228.0), _RenderInkFeatures#18eb5@Offset(192.1, 228.0), RenderPhysicalModel#49513@Offset(192.1, 228.0), RenderSemanticsAnnotations#0093e@Offset(192.1, 228.0), RenderRepaintBoundary#d2bbf@Offset(192.1, 228.0), RenderIgnorePointer#51bf5@Offset(192.1, 228.0), RenderAnimatedOpacity#b1adf@Offset(192.1, 228.0), RenderAnimatedOpacity#67942@Offset(192.1, 228.0), _RenderColoredBox#a0f27@Offset(192.1, 228.0), RenderAnimatedOpacity#0d431@Offset(192.1, 228.0), RenderIgnorePointer#02f02@Offset(192.1, 228.0), RenderAnimatedOpacity#2f27f@Offset(192.1, 228.0), RenderRepaintBoundary#7c505@Offset(192.1, 228.0), RenderSemanticsAnnotations#9dd2f@Offset(192.1, 228.0), RenderOffstage#61f7c@Offset(192.1, 228.0), RenderSemanticsAnnotations#853d5@Offset(192.1, 228.0), _RenderTheater#73dec@Offset(192.1, 228.0), RenderAbsorbPointer#764ad@Offset(192.1, 228.0), RenderPointerListener#c323e@Offset(192.1, 228.0), RenderSemanticsAnnotations#df375@Offset(192.1, 228.0), RenderSemanticsAnnotations#edcfc@Offset(192.1, 228.0), RenderSemanticsAnnotations#f7e25@Offset(192.1, 228.0), RenderSemanticsAnnotations#bd585@Offset(192.1, 228.0), RenderTapRegionSurface#3b4fd@Offset(192.1, 228.0), RenderSemanticsAnnotations#7d9db@Offset(192.1, 228.0), RenderSemanticsAnnotations#1d242@Offset(192.1, 228.0), RenderRepaintBoundary#bfab5@Offset(192.1, 228.0), HitTestEntry<HitTestTarget>#53b81(_ReusableRenderView#8bc69), HitTestEntry<HitTestTarget>#58390(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+#2      WidgetController.tap (package:flutter_test/src/controller.dart:1080:7)
+#3      main.<anonymous closure>.<anonymous closure> (file:///home/runner/work/edux-mobile/edux-mobile/screenshots/devices_test.dart:228:22)
+#4      shootDevice (file:///home/runner/work/edux-mobile/edux-mobile/screenshots/devices_test.dart:119:16)
+<asynchronous suspension>
+#5      main.<anonymous closure> (file:///home/runner/work/edux-mobile/edux-mobile/screenshots/devices_test.dart:226:7)
+<asynchronous suspension>
+#6      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#8      StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "tap()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+::endgroup::
+::group::✅ Passing tests
+✅ ios 07 rahbar fikrlar
+✅ ipad 01 bosh sahifa
+✅ ipad 02 jurnal
+✅ ipad 03 davomat
+✅ ipad 04 oyinlar
+✅ ipad 05 laboratoriyalar
+::endgroup::
+::group::✅ ipad 06 fikr bildirish
+
+Warning: A call to tap() with finder "Found 1 widget with text "Taklif" (ignoring all but first): [
+  Text("Taklif", dependencies: [DefaultSelectionStyle, DefaultTextStyle, MediaQuery]),
+]" derived an Offset (Offset(368.6, 208.0)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+The finder corresponds to this RenderBox: RenderParagraph#eaf1e relayoutBoundary=up18
+The hit test result at that offset is: HitTestResult(RenderPointerListener#1edb5@Offset(54.8, 19.0), RenderSemanticsAnnotations#92534@Offset(54.8, 19.0), RenderMouseRegion#be1db@Offset(54.8, 19.0), RenderSemanticsAnnotations#f8213@Offset(54.8, 19.0), _RenderInkFeatures#a721d@Offset(54.8, 19.0), RenderCustomPaint#ecb17@Offset(54.8, 19.0), RenderPhysicalShape#ceacb@Offset(54.8, 19.0), RenderPositionedBox#23984@Offset(54.8, 24.0), RenderSemanticsAnnotations#5aac3@Offset(54.8, 24.0), RenderWrap#2ee73@Offset(176.1, 24.0), RenderRepaintBoundary#4467d@Offset(176.1, 24.0), RenderIndexedSemantics#c7060@Offset(176.1, 24.0), RenderSliverList@(mainAxis: 88.0, crossAxis: 176.0846939086914), RenderSliverPadding@(mainAxis: 104.0, crossAxis: 287.5846939086914), RenderViewport#26d8d@Offset(287.6, 104.0), RenderIgnorePointer#2c53b@Offset(287.6, 104.0), RenderSemanticsAnnotations#c75f0@Offset(287.6, 104.0), RenderPointerListener#eee56@Offset(287.6, 104.0), RenderSemanticsGestureHandler#467de@Offset(287.6, 104.0), RenderPointerListener#e9a45@Offset(287.6, 104.0), _RenderScrollSemantics#6fb03@Offset(287.6, 104.0), RenderClipRect#a8fc6@Offset(287.6, 104.0), RenderSemanticsAnnotations#c197f@Offset(287.6, 104.0), RenderRepaintBoundary#31fc4@Offset(287.6, 104.0), RenderIndexedSemantics#ebbbb@Offset(287.6, 104.0), RenderSliverFillViewport@(mainAxis: 287.5846939086914, crossAxis: 104.0), _RenderSliverFractionalPadding@(mainAxis: 287.5846939086914, crossAxis: 104.0), RenderViewport#e87fd@Offset(287.6, 104.0), RenderIgnorePointer#166a8@Offset(287.6, 104.0), RenderSemanticsAnnotations#39c33@Offset(287.6, 104.0), RenderPointerListener#7626c@Offset(287.6, 104.0), RenderSemanticsGestureHandler#2a90a@Offset(287.6, 104.0), RenderPointerListener#ce5ec@Offset(287.6, 104.0), _RenderScrollSemantics#33aaa@Offset(287.6, 104.0), RenderClipRect#d0513@Offset(287.6, 104.0), RenderCustomMultiChildLayoutBox#933d9@Offset(287.6, 208.0), _RenderInkFeatures#7ca97@Offset(287.6, 208.0), RenderPhysicalModel#378c1@Offset(287.6, 208.0), _RenderLayoutBuilder#3d0b6@Offset(287.6, 208.0), RenderFlex#a193a@Offset(368.6, 208.0), RenderCustomMultiChildLayoutBox#2b409@Offset(368.6, 208.0), _RenderInkFeatures#3c0f8@Offset(368.6, 208.0), RenderPhysicalModel#25b54@Offset(368.6, 208.0), RenderSemanticsAnnotations#2f98c@Offset(368.6, 208.0), RenderSemanticsAnnotations#8fbcd@Offset(368.6, 208.0), RenderSemanticsAnnotations#904d2@Offset(368.6, 208.0), RenderRepaintBoundary#f7b12@Offset(368.6, 208.0), RenderIgnorePointer#6d83a@Offset(368.6, 208.0), RenderAnimatedOpacity#eeaa3@Offset(368.6, 208.0), RenderAnimatedOpacity#ec960@Offset(368.6, 208.0), _RenderColoredBox#c4398@Offset(368.6, 208.0), RenderAnimatedOpacity#69de5@Offset(368.6, 208.0), RenderIgnorePointer#e73cb@Offset(368.6, 208.0), RenderAnimatedOpacity#3f36c@Offset(368.6, 208.0), RenderRepaintBoundary#32245@Offset(368.6, 208.0), RenderSemanticsAnnotations#d0db7@Offset(368.6, 208.0), RenderOffstage#47d36@Offset(368.6, 208.0), RenderSemanticsAnnotations#c7fdc@Offset(368.6, 208.0), _RenderTheater#8c0ba@Offset(368.6, 208.0), RenderAbsorbPointer#8bbd2@Offset(368.6, 208.0), RenderPointerListener#03179@Offset(368.6, 208.0), RenderSemanticsAnnotations#92ec0@Offset(368.6, 208.0), RenderSemanticsAnnotations#23aca@Offset(368.6, 208.0), RenderSemanticsAnnotations#17613@Offset(368.6, 208.0), RenderSemanticsAnnotations#a1182@Offset(368.6, 208.0), RenderTapRegionSurface#c599e@Offset(368.6, 208.0), RenderSemanticsAnnotations#bb47d@Offset(368.6, 208.0), RenderSemanticsAnnotations#8f63a@Offset(368.6, 208.0), RenderRepaintBoundary#80d01@Offset(368.6, 208.0), HitTestEntry<HitTestTarget>#9acaf(_ReusableRenderView#8bc69), HitTestEntry<HitTestTarget>#666be(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+#2      WidgetController.tap (package:flutter_test/src/controller.dart:1080:7)
+#3      main.<anonymous closure>.<anonymous closure> (file:///home/runner/work/edux-mobile/edux-mobile/screenshots/devices_test.dart:228:22)
+#4      shootDevice (file:///home/runner/work/edux-mobile/edux-mobile/screenshots/devices_test.dart:119:16)
+<asynchronous suspension>
+#5      main.<anonymous closure> (file:///home/runner/work/edux-mobile/edux-mobile/screenshots/devices_test.dart:226:7)
+<asynchronous suspension>
+#6      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#8      StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "tap()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+
+Warning: A call to tap() with finder "Found 1 widget with text "Taklif" (ignoring all but first): [
+  Text("Taklif", dependencies: [DefaultSelectionStyle, DefaultTextStyle, MediaQuery]),
+]" derived an Offset (Offset(368.6, 208.0)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+The finder corresponds to this RenderBox: RenderParagraph#9ce75 relayoutBoundary=up18
+The hit test result at that offset is: HitTestResult(RenderPointerListener#5885a@Offset(54.8, 19.0), RenderSemanticsAnnotations#1cd1c@Offset(54.8, 19.0), RenderMouseRegion#594c9@Offset(54.8, 19.0), RenderSemanticsAnnotations#63d75@Offset(54.8, 19.0), _RenderInkFeatures#e7cae@Offset(54.8, 19.0), RenderCustomPaint#f2ffb@Offset(54.8, 19.0), RenderPhysicalShape#7ba36@Offset(54.8, 19.0), RenderPositionedBox#bf755@Offset(54.8, 24.0), RenderSemanticsAnnotations#64787@Offset(54.8, 24.0), RenderWrap#c9711@Offset(176.1, 24.0), RenderRepaintBoundary#ece42@Offset(176.1, 24.0), RenderIndexedSemantics#a0f59@Offset(176.1, 24.0), RenderSliverList@(mainAxis: 88.0, crossAxis: 176.0846939086914), RenderSliverPadding@(mainAxis: 104.0, crossAxis: 287.5846939086914), RenderViewport#bf2dd@Offset(287.6, 104.0), RenderIgnorePointer#033d3@Offset(287.6, 104.0), RenderSemanticsAnnotations#9a824@Offset(287.6, 104.0), RenderPointerListener#32385@Offset(287.6, 104.0), RenderSemanticsGestureHandler#2281a@Offset(287.6, 104.0), RenderPointerListener#5d74e@Offset(287.6, 104.0), _RenderScrollSemantics#148fd@Offset(287.6, 104.0), RenderClipRect#8810a@Offset(287.6, 104.0), RenderSemanticsAnnotations#f01a6@Offset(287.6, 104.0), RenderRepaintBoundary#14a34@Offset(287.6, 104.0), RenderIndexedSemantics#47a43@Offset(287.6, 104.0), RenderSliverFillViewport@(mainAxis: 287.5846939086914, crossAxis: 104.0), _RenderSliverFractionalPadding@(mainAxis: 287.5846939086914, crossAxis: 104.0), RenderViewport#342fd@Offset(287.6, 104.0), RenderIgnorePointer#610a6@Offset(287.6, 104.0), RenderSemanticsAnnotations#fa4f1@Offset(287.6, 104.0), RenderPointerListener#2b26c@Offset(287.6, 104.0), RenderSemanticsGestureHandler#ac746@Offset(287.6, 104.0), RenderPointerListener#1b3e1@Offset(287.6, 104.0), _RenderScrollSemantics#da1bd@Offset(287.6, 104.0), RenderClipRect#db6ca@Offset(287.6, 104.0), RenderCustomMultiChildLayoutBox#50679@Offset(287.6, 208.0), _RenderInkFeatures#c6624@Offset(287.6, 208.0), RenderPhysicalModel#32810@Offset(287.6, 208.0), _RenderLayoutBuilder#e2eb3@Offset(287.6, 208.0), RenderFlex#1296f@Offset(368.6, 208.0), RenderCustomMultiChildLayoutBox#a19b7@Offset(368.6, 208.0), _RenderInkFeatures#c45c8@Offset(368.6, 208.0), RenderPhysicalModel#716a8@Offset(368.6, 208.0), RenderSemanticsAnnotations#ae5cb@Offset(368.6, 208.0), RenderSemanticsAnnotations#4442d@Offset(368.6, 208.0), RenderSemanticsAnnotations#c0ff0@Offset(368.6, 208.0), RenderRepaintBoundary#b4f30@Offset(368.6, 208.0), RenderIgnorePointer#54f3e@Offset(368.6, 208.0), RenderAnimatedOpacity#b5063@Offset(368.6, 208.0), RenderAnimatedOpacity#209c3@Offset(368.6, 208.0), _RenderColoredBox#87c4a@Offset(368.6, 208.0), RenderAnimatedOpacity#a7e6e@Offset(368.6, 208.0), RenderIgnorePointer#74da9@Offset(368.6, 208.0), RenderAnimatedOpacity#f9327@Offset(368.6, 208.0), RenderRepaintBoundary#1cbf8@Offset(368.6, 208.0), RenderSemanticsAnnotations#3b6b8@Offset(368.6, 208.0), RenderOffstage#d1d01@Offset(368.6, 208.0), RenderSemanticsAnnotations#c8dd8@Offset(368.6, 208.0), _RenderTheater#cae7d@Offset(368.6, 208.0), RenderAbsorbPointer#d3cb8@Offset(368.6, 208.0), RenderPointerListener#29679@Offset(368.6, 208.0), RenderSemanticsAnnotations#f0a17@Offset(368.6, 208.0), RenderSemanticsAnnotations#24a47@Offset(368.6, 208.0), RenderSemanticsAnnotations#eed92@Offset(368.6, 208.0), RenderSemanticsAnnotations#46353@Offset(368.6, 208.0), RenderTapRegionSurface#095c0@Offset(368.6, 208.0), RenderSemanticsAnnotations#c297c@Offset(368.6, 208.0), RenderSemanticsAnnotations#f12d0@Offset(368.6, 208.0), RenderRepaintBoundary#75812@Offset(368.6, 208.0), HitTestEntry<HitTestTarget>#63c8d(_ReusableRenderView#8bc69), HitTestEntry<HitTestTarget>#06c6f(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+#2      WidgetController.tap (package:flutter_test/src/controller.dart:1080:7)
+#3      main.<anonymous closure>.<anonymous closure> (file:///home/runner/work/edux-mobile/edux-mobile/screenshots/devices_test.dart:228:22)
+#4      shootDevice (file:///home/runner/work/edux-mobile/edux-mobile/screenshots/devices_test.dart:119:16)
+<asynchronous suspension>
+#5      main.<anonymous closure> (file:///home/runner/work/edux-mobile/edux-mobile/screenshots/devices_test.dart:226:7)
+<asynchronous suspension>
+#6      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#8      StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "tap()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+::endgroup::
+::group::✅ Passing tests
+✅ ipad 07 rahbar fikrlar
+::endgroup::
+
+🎉 14 tests passed.
