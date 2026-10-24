@@ -86,22 +86,59 @@ Windows, macOS va Linux uchun EduX ilovasi alohida repozitoriyda: [Azamat4588/ed
 
 ## Skrinshotlar
 
-iPhone 6.7" va iPad 12.9" (App Store o'lchamlari, yorug' va tungi — `docs/screenshots/ios/`, `docs/screenshots/ipad/`):
-
-| | | |
-|---|---|---|
-| ![iPad: bosh sahifa](docs/screenshots/ipad/01-bosh-sahifa.png) | ![iPad: davomat ikki ustunda](docs/screenshots/ipad/03-davomat.png) | ![iPad: rahbar «Fikrlar»](docs/screenshots/ipad/07-fikrlar.png) |
-| ![iPhone: laboratoriyalar](docs/screenshots/ios/05-laboratoriyalar.png) | ![iPhone: fikr bildirish](docs/screenshots/ios/06-fikr-bildirish.png) | ![iPhone: jurnal (tungi)](docs/screenshots/ios/02-jurnal-tungi.png) |
+3.8 — «Daftar 2: hoshiya». Telefon (390×844 @3x), iPhone 6.7" (`docs/screenshots/ios/`), iPad 12.9"
+(`docs/screenshots/ipad/`) va Android telefon 1080×2340 (`docs/screenshots/android/`), yorug' va tungi, bir necha shablonda:
 
 | | | | |
 |---|---|---|---|
-| ![Kirish](docs/screenshots/01-kirish.png) | ![O'qituvchi bosh sahifasi](docs/screenshots/02-oqituvchi-bosh.png) | ![Davomat](docs/screenshots/04-davomat.png) | ![Maktab jurnali](docs/screenshots/03-jurnal-baholar.png) |
-| ![O'quvchi bosh sahifasi](docs/screenshots/06-oquvchi-bosh.png) | ![O'yinlar](docs/screenshots/08-oyinlar.png) | ![Millioner](docs/screenshots/09-oyin-millioner.png) | ![Ota-ona](docs/screenshots/10-ota-ona.png) |
+| ![Kirish](docs/screenshots/01-kirish.png) | ![Direktor bosh sahifasi](docs/screenshots/02-direktor-bosh.png) | ![O'qituvchi, Qog'oz shabloni](docs/screenshots/02-oqituvchi-bosh-qogoz.png) | ![Direktor, Grafit (tungi)](docs/screenshots/02-direktor-bosh-grafit-tungi.png) |
+| ![Davomat](docs/screenshots/04-davomat.png) | ![O'quvchi, Bahor shabloni](docs/screenshots/06-oquvchi-bosh-bahor.png) | ![Ko'rinish](docs/screenshots/14-korinish.png) | ![Ota-ona](docs/screenshots/10-ota-ona.png) |
 
-Hammasi `docs/screenshots/` da (390×844 @3x, 1170×2532 PNG; tungi rejim — `*-tungi.png`). Yangilash:
-`screenshots/shots_test.dart` (demo ma'lumot `screenshots/fixtures/`, haqiqiy shriftlar) — commit xabarida `[skrinshot]`
-bo'lsa yoki Actions → Screenshots → «Run workflow»; rasmlar `screenshots` branch'iga yoziladi
+| | | |
+|---|---|---|
+| ![iPad: bosh sahifa](docs/screenshots/ipad/01-bosh-sahifa.png) | ![iPad: davomat ikki ustunda](docs/screenshots/ipad/03-davomat.png) | ![iPad: rahbar «Fikrlar» (Okean)](docs/screenshots/ipad/07-fikrlar.png) |
+
+Hammasi `docs/screenshots/` da (tungi rejim — `*-tungi.png`). Yangilash: `screenshots/shots_test.dart` va
+`screenshots/devices_test.dart` (demo ma'lumot `screenshots/fixtures/`, haqiqiy shriftlar, demo vaqt — juma 15:40) — commit
+xabarida `[skrinshot]` bo'lsa yoki Actions → Screenshots → «Run workflow»; rasmlar `screenshots` branch'iga yoziladi
 (`git fetch origin screenshots && git checkout FETCH_HEAD -- '*.png'`).
+
+## 3.8 da yangi (veb 1.40 «Daftar 2: hoshiya» — butunlay yangi ko'rinish)
+
+- **Dizayn tili** (`lib/core/theme.dart`, `docs/design.md` serverda): yagona esda qoladigan narsa — **hoshiya**, daftar
+  chetidagi 4 px rangli chiziq: bosh sahifa «hero»si, diqqat talab qiladigan «Bugun» kartasi (qizil/sariq/yashil), «hozir»
+  darsi, «Diqqat talab qiladi» qatorlari, o'qilmagan bildirishnoma, qarzdor kartasi, davomat varaqasida belgilangan holat,
+  faol menyu bandi (telefonda — tepada chiziq, iPad'da — menyu chetida), sahifa sarlavhasi bandi, toast. Gradient yo'q.
+- **Tema v2**: 9 shablon (Klassik — yangilangan, Yumshoq, Qorong'i panel, Ixcham, Maktab, **Qog'oz, Okean, Grafit, Bahor**)
+  × yorug'/tungi — serverdagi jadvalning aniq hex qiymatlari; **12 asosiy rang** (50/100/300/500/600/700 shkala), holat
+  ranglari (success/warning/danger/info fg+bg), semantik tokenlar (canvas/surface/surface2/raised/sunken, ink/muted/subtle,
+  line/lineStrong, focus), menyu paneli ranglari. Karta uslubi (chegarali / soyali / «stiker» / tekis), zichlik (qulay /
+  odatiy / ixcham), fon naqshi (nuqtali, chiziqli, Maktab — katak), «Suzuvchi» pastki menyu (Yumshoq). Barcha
+  kombinatsiyalarda matn kontrasti testda (`test/theme_contrast_test.dart`).
+- **Shriftlar**: Golos Text (asosiy) va Literata (Klassik va Qog'oz sarlavhalari) — serverdagi OFL shriftlardan statik
+  qalinliklar; barcha shriftlar lotin + kirill to'plamiga qisqartirilgan (`tool/fonts/build_fonts.py`). Tashkilot yoki
+  foydalanuvchi boshqa shrift (Onest, Manrope, Nunito) tanlasa — o'sha.
+- **«Ko'rinish»** (Yana → Sozlamalar): jonli namuna (haqiqiy hero, kartalar, chip, menyu), rejim, shablon (har biri o'z
+  palitrasida chizilgan), asosiy rang, matn o'lchami, **animatsiya darajasi** (to'liq / kam / o'chiq), zichlik, shrift,
+  burchaklar, karta uslubi, fon naqshi, menyu. Darhol qo'llanadi, `PUT profile/appearance` ga saqlanadi; ochiq sahifa joyida
+  qoladi (ilova qayta yaratilmaydi). Rang va shablon platforma ruxsat bergandagina.
+- **Bosh sahifalar** (direktor, administrator, o'qituvchi, kassir, marketolog, o'quvchi, ota-ona): hero (sana, «Xayrli
+  kun, …», 1–2 fakt, asosiy harakat, o'ng tomonda nozik katak), «Bugun» kartalari v2 (rangli plitka, katta raqam, 6 oylik
+  tushum mini-grafigi va o'tgan oyga o'zgarish — `crm/dashboard`), bugungi darslar **vaqt chizig'i** (o'tdi / hozir /
+  keyingi, davomat tugmasi), «Diqqat talab qiladi» (qizil → sariq → ma'lumot), tezkor harakatlar.
+- **Kirish oynasi**: «daftar varag'i» — asosiy rangning eng to'q tusi, katak, qizil hoshiya chizig'i, tizimdan uch lahza;
+  iPad'da ikki ustun.
+- **Komponentlar**: sahifa sarlavhasi bandi (bo'lim yo'li «Kundalik ish › Davomat», bo'lim rangi, yorliqlar), holat
+  chiplari (rangli nuqta), ism bosh harfli doiralar (rang ismdan barqaror), 6 ta original illyustratsiya (bo'sh holatlar;
+  veb bilan bir xil SVG, `lib/core/illustrations.dart`), sokin skelet, «Yana» — to'dalar bo'yicha guruhlangan.
+  iPad: o'z yon menyusi (tashkilot bloki, hoshiya), master/detail saqlangan.
+- **Harakat** (`lib/core/motion.dart`): sahifa o'tishlari (iOS — Cupertino, Android — gorizontal «shared axis»), bosh
+  sahifada bitta orkestrlangan yuklanish (≤ 600 ms, seansda bir marta), raqamlar sanab o'tishi (birinchi ochilishda),
+  mini-grafik bir marta chiziladi, ro'yxatga qo'shish/o'chirish (bildirishnomalar — AnimatedList), tugma bosilishi (.97),
+  o'quvchi ro'yxati → karta (Hero). Hammasi «Animatsiya» darajasi va qurilmadagi «Harakatni kamaytirish» ga bo'ysunadi.
+- **Tezlik**: ilova oxirgi nusxa (foydalanuvchi va tashkilot konteksti) bilan darhol ochiladi, server bilan tenglashish
+  fonda; orientatsiya sozlamasi birinchi kadrni kutmaydi; rasm keshi chegaralangan, kichik rasmlar o'lchamiga mos
+  dekodlanadi; APK dan ishlatilmaydigan brand rasmlari chiqarildi.
 
 ## 3.7 da yangi (iPhone va iPad; server 1.39: mijozlar fikri, 462 laboratoriya)
 

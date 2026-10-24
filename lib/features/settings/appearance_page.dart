@@ -148,11 +148,10 @@ class _Section extends StatelessWidget {
 
 /// Bir qatordagi tanlov (segmentlar): faol segment asosiy rangda.
 class _Segments extends StatelessWidget {
-  const _Segments({required this.values, required this.labels, required this.selected, required this.onSelect, this.icons = const <String, IconData>{}});
+  const _Segments({required this.values, required this.labels, required this.selected, required this.onSelect});
 
   final List<String> values;
   final Map<String, String> labels;
-  final Map<String, IconData> icons;
   final String selected;
   final ValueChanged<String> onSelect;
 
@@ -165,7 +164,6 @@ class _Segments extends StatelessWidget {
         for (final value in values)
           ButtonSegment<String>(
             value: value,
-            icon: icons[value] == null ? null : Icon(icons[value], size: 18),
             label: Text(tr(labels[value] ?? value), maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 13)),
           ),
       ],

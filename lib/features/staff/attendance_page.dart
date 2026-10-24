@@ -227,7 +227,6 @@ class _AttendanceSheetPageState extends State<AttendanceSheetPage> {
 
   @override
   Widget build(BuildContext context) {
-    final marked = _status.values.where((value) => value != null).length;
     // O'ng ustunda (iPad) sahifa yopilmaydi — saqlanmagan belgilarni [_allowLeave] himoya qiladi.
     final embedded = isEmbeddedDetail(context);
     return PopScope(
@@ -339,6 +338,7 @@ class _MarkSummary extends StatelessWidget {
                         duration: duration,
                         curve: Curves.easeOutCubic,
                         width: total == 0 ? 0 : width * (counts[key] ?? 0) / total,
+                        height: 8,
                         color: key == 'excused' ? AppColors.lineStrong : (key == 'present' ? AppColors.toneSuccess : (key == 'absent' ? AppColors.toneDanger : AppColors.toneWarning)),
                       ),
                   ]),

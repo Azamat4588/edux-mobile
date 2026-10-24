@@ -363,7 +363,7 @@ class _NotebookPanel extends StatelessWidget {
           const Spacer(),
           if (!wide) const LanguageButton(color: Colors.white),
         ]),
-        SizedBox(height: wide ? 0 : 22),
+        if (!wide) const SizedBox(height: 22),
         Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
           Text(
             tr("Testlar, to'lovlar, davomat va jurnal — bitta oynada."),

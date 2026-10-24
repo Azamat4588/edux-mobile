@@ -288,7 +288,10 @@ Future<void> shoot(
   debugDisableShadows = false;
   await tester.pumpWidget(appFor(session, page, tab: tab, boundary: boundary));
   await settle(tester);
-  if (act != null) await act(tester);
+  if (act != null) {
+    await act(tester);
+    await settle(tester, 6);
+  }
   await capture(tester, boundary, name);
   // Taymerlar (o'yin soati va h.k.) to'xtasin
   await tester.pumpWidget(const SizedBox());
@@ -493,6 +496,8 @@ void main() {
   testWidgets('10 ota-ona farzandim', (tester) async {
     quietImages();
     await shoot(tester, '10-ota-ona', org: 'center', role: 'guardian', page: GuardianHomePage(tab: ValueNotifier<String>('child')), tab: 'child');
+    // Yumshoq shablon (ota-onalar uchun): suzuvchi pastki menyu, soyali kartalar.
+    await shoot(tester, '10-ota-ona-yumshoq', org: 'center', role: 'guardian', page: GuardianHomePage(tab: ValueNotifier<String>('child')), tab: 'child', template: 'soft', accent: 'violet');
   });
 
   testWidgets('11 tolovlarim', (tester) async {
