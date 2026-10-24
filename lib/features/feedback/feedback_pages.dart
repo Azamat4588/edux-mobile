@@ -1204,7 +1204,8 @@ class _FeedbackAdminDetailPageState extends State<FeedbackAdminDetailPage> {
         padding: const EdgeInsets.fromLTRB(12, 8, 8, 8),
         decoration: BoxDecoration(color: AppColors.card, border: Border(top: BorderSide(color: AppColors.line))),
         child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
-          Row(children: <Widget>[
+          // Tor ustunda (telefon, iPad o'ng ustuni) «Hal qilindi» keyingi qatorga o'tadi.
+          Wrap(spacing: 8, runSpacing: 4, crossAxisAlignment: WrapCrossAlignment.center, children: <Widget>[
             SegmentedButton<String>(
               showSelectedIcon: false,
               style: const ButtonStyle(visualDensity: VisualDensity.compact),
@@ -1215,16 +1216,14 @@ class _FeedbackAdminDetailPageState extends State<FeedbackAdminDetailPage> {
               selected: <String>{_mode},
               onSelectionChanged: _busy ? null : (value) => setState(() => _mode = value.first),
             ),
-            const SizedBox(width: 8),
             if (reply)
-              Flexible(
-                child: InkWell(
-                  onTap: _busy ? null : () => setState(() => _resolve = !_resolve),
-                  child: Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
-                    Checkbox(value: _resolve, onChanged: _busy ? null : (value) => setState(() => _resolve = value ?? false)),
-                    Flexible(child: Text(tr('Hal qilindi'), maxLines: 1, overflow: TextOverflow.ellipsis)),
-                  ]),
-                ),
+              InkWell(
+                borderRadius: BorderRadius.circular(8),
+                onTap: _busy ? null : () => setState(() => _resolve = !_resolve),
+                child: Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
+                  Checkbox(value: _resolve, onChanged: _busy ? null : (value) => setState(() => _resolve = value ?? false)),
+                  Padding(padding: const EdgeInsets.only(right: 8), child: Text(tr('Hal qilindi'))),
+                ]),
               ),
           ]),
           const SizedBox(height: 6),

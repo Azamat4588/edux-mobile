@@ -283,7 +283,7 @@ jobs:
           flutter pub get 2>&1 | tee -a ci-ios.log
           dart run tool/configure_platforms.dart --ios 2>&1 | tee -a ci-ios.log
           dart run flutter_launcher_icons 2>&1 | tee -a ci-ios.log
-          echo "::notice title=iPad ikonkalari::$(ls ios/Runner/Assets.xcassets/AppIcon.appiconset | grep -ciE 'ipad|76|83.5|167|152') ta iPad o'lchami; $(grep -c '"idiom" : "ipad"' ios/Runner/Assets.xcassets/AppIcon.appiconset/Contents.json) ta ipad yozuvi"
+          echo "::notice title=iPad ikonkalari::$(ls ios/Runner/Assets.xcassets/AppIcon.appiconset | grep -ciE 'ipad|76|83.5|167|152') ta iPad o'lchami; $(grep -cE '"idiom" *: *"ipad"' ios/Runner/Assets.xcassets/AppIcon.appiconset/Contents.json) ta ipad yozuvi"
 
       - name: Firebase (iPhone push)
         env:
@@ -304,6 +304,8 @@ jobs:
           flutter build ios --config-only --release --no-codesign --dart-define=EDUX_SERVER=$EDUX_SERVER 2>&1 | tee -a ci-ios.log
           dart run tool/configure_platforms.dart --ios 2>&1 | tee -a ci-ios.log
           (cd ios && pod install --repo-update) 2>&1 | tee -a ci-ios.log
+          # Loyiha sozlamalari natijasi (Actions log'isiz ham ko'rinsin).
+          echo "::notice title=iOS sozlamalari::$(grep -E '^  ios: ' ci-ios.log | sort -u | sed ':a;N;$!ba;s/\n/%0A/g')"
 
       - name: iOS (imzosiz)
         run: |

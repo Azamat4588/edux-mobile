@@ -1,0 +1,22 @@
+{
+ "id": 2,
+ "token": "***",
+ "kind": "thanks",
+ "category": "O'qituvchi",
+ "body": "Usmonova Dildora opaga katta rahmat! Farzandim ingliz tilini juda yaxshi ko'rib qoldi.",
+ "rating": 5,
+ "status": "resolved",
+ "is_anonymous": false,
+ "group": null,
+ "teacher": "Rustamov Akmal",
+ "attachments": [],
+ "replies": [
+  {
+   "id": 4,
+   "body": "Iliq so'zlaringiz uchun rahmat! Dildora opaga yetkazdik.",
+   "created_at": "2026-10-24T02:13:37.000000Z"
+  }
+ ],
+ "created_at": "2026-10-24T02:13:37.000000Z",
+ "updated_at": "2026-10-24T02:13:37.000000Z"
+}

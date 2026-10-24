@@ -1,0 +1,83 @@
+{
+ "id": 1,
+ "kind": "complaint",
+ "category": "To'lov",
+ "body": "Kassada to'lov qildim, lekin chek berilmadi va ilovada to'lov 2 kundan beri ko'rinmayapti.",
+ "rating": 2,
+ "status": "in_progress",
+ "is_anonymous": false,
+ "author": {
+  "name": "Ergashev Rustam",
+  "phone": "+998901110003",
+  "role": "guardian",
+  "user_id": 5
+ },
+ "student": {
+  "id": 1,
+  "name": "Ergasheva Mohinur"
+ },
+ "group": {
+  "id": 2,
+  "name": "ING-5"
+ },
+ "teacher": {
+  "id": 4,
+  "name": "Usmonova Dildora"
+ },
+ "assignee": {
+  "id": 1,
+  "name": "Rustamov Akmal"
+ },
+ "source": "app",
+ "attachments_count": 0,
+ "due_at": "2026-10-26T02:13:37.000000Z",
+ "overdue": false,
+ "replied_at": "2026-10-24T02:13:37.000000Z",
+ "resolved_at": null,
+ "created_at": "2026-10-24T02:13:37.000000Z",
+ "attachments": [],
+ "context": {
+  "app": "ios",
+  "page": "feedback",
+  "app_version": "3.7.0"
+ },
+ "events": [
+  {
+   "id": 1,
+   "type": "assign",
+   "body": null,
+   "data": {
+    "name": "Rustamov Akmal",
+    "user_id": 1
+   },
+   "user": "Rustamov Akmal",
+   "created_at": "2026-10-24T02:13:37.000000Z"
+  },
+  {
+   "id": 2,
+   "type": "note",
+   "body": "Kassir bilan gaplashdim, to'lov tizimga kiritilmagan ekan.",
+   "data": {},
+   "user": "Rustamov Akmal",
+   "created_at": "2026-10-24T02:13:37.000000Z"
+  },
+  {
+   "id": 3,
+   "type": "reply",
+   "body": "Uzr so'raymiz! To'lovingiz kiritildi, chek SMS bilan yuborildi. Kassirga ogohlantirish berildi.",
+   "data": {},
+   "user": "Rustamov Akmal",
+   "created_at": "2026-10-24T02:13:37.000000Z"
+  }
+ ],
+ "staff": [
+  {
+   "id": 3,
+   "name": "Islomova Shahnoza"
+  },
+  {
+   "id": 1,
+   "name": "Rustamov Akmal"
+  }
+ ]
+}

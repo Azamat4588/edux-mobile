@@ -1,0 +1,220 @@
+{
+ "data": [
+  {
+   "id": 6,
+   "kind": "complaint",
+   "category": "Bino",
+   "body": "Qishda 2-qavatdagi xonada juda sovuq, bolalar paltoda o'tirishyapti.",
+   "rating": 1,
+   "status": "new",
+   "is_anonymous": false,
+   "author": {
+    "name": "Ergashev Rustam",
+    "phone": "+998901110003",
+    "role": "guardian",
+    "user_id": 5
+   },
+   "student": null,
+   "group": null,
+   "teacher": null,
+   "assignee": null,
+   "source": "app",
+   "attachments_count": 0,
+   "due_at": "2026-10-26T02:13:37.000000Z",
+   "overdue": false,
+   "replied_at": null,
+   "resolved_at": null,
+   "created_at": "2026-10-24T02:13:37.000000Z"
+  },
+  {
+   "id": 5,
+   "kind": "bug",
+   "category": "Boshqa",
+   "body": "Laboratoriyada «Topshiriq» tugmasi ba'zan ikki marta bosilmaguncha ishlamayapti.",
+   "rating": null,
+   "status": "new",
+   "is_anonymous": false,
+   "author": {
+    "name": "Ergasheva Mohinur",
+    "phone": "+998900000005",
+    "role": "student",
+    "user_id": 11
+   },
+   "student": {
+    "id": 1,
+    "name": "Ergasheva Mohinur"
+   },
+   "group": null,
+   "teacher": null,
+   "assignee": null,
+   "source": "app",
+   "attachments_count": 0,
+   "due_at": "2026-10-26T02:13:37.000000Z",
+   "overdue": false,
+   "replied_at": null,
+   "resolved_at": null,
+   "created_at": "2026-10-24T02:13:37.000000Z"
+  },
+  {
+   "id": 3,
+   "kind": "suggestion",
+   "category": "Xizmat",
+   "body": "Shanba kunlari ham qo'shimcha dars bo'lsa yaxshi bo'lardi — ish kunlari olib kelishga ulgurmaymiz.",
+   "rating": null,
+   "status": "new",
+   "is_anonymous": true,
+   "author": null,
+   "student": null,
+   "group": null,
+   "teacher": null,
+   "assignee": null,
+   "source": "app",
+   "attachments_count": 0,
+   "due_at": "2026-10-26T02:13:37.000000Z",
+   "overdue": false,
+   "replied_at": null,
+   "resolved_at": null,
+   "created_at": "2026-10-24T02:13:37.000000Z"
+  },
+  {
+   "id": 4,
+   "kind": "question",
+   "category": "Dars sifati",
+   "body": "Mock test natijalari qachon e'lon qilinadi? Sertifikat ham beriladimi?",
+   "rating": 4,
+   "status": "in_progress",
+   "is_anonymous": false,
+   "author": {
+    "name": "Ergasheva Mohinur",
+    "phone": "+998900000005",
+    "role": "student",
+    "user_id": 11
+   },
+   "student": {
+    "id": 1,
+    "name": "Ergasheva Mohinur"
+   },
+   "group": null,
+   "teacher": null,
+   "assignee": null,
+   "source": "app",
+   "attachments_count": 0,
+   "due_at": "2026-10-26T02:13:37.000000Z",
+   "overdue": false,
+   "replied_at": null,
+   "resolved_at": null,
+   "created_at": "2026-10-24T02:13:37.000000Z"
+  },
+  {
+   "id": 1,
+   "kind": "complaint",
+   "category": "To'lov",
+   "body": "Kassada to'lov qildim, lekin chek berilmadi va ilovada to'lov 2 kundan beri ko'rinmayapti.",
+   "rating": 2,
+   "status": "in_progress",
+   "is_anonymous": false,
+   "author": {
+    "name": "Ergashev Rustam",
+    "phone": "+998901110003",
+    "role": "guardian",
+    "user_id": 5
+   },
+   "student": {
+    "id": 1,
+    "name": "Ergasheva Mohinur"
+   },
+   "group": {
+    "id": 2,
+    "name": "ING-5"
+   },
+   "teacher": {
+    "id": 4,
+    "name": "Usmonova Dildora"
+   },
+   "assignee": {
+    "id": 1,
+    "name": "Rustamov Akmal"
+   },
+   "source": "app",
+   "attachments_count": 0,
+   "due_at": "2026-10-26T02:13:37.000000Z",
+   "overdue": false,
+   "replied_at": "2026-10-24T02:13:37.000000Z",
+   "resolved_at": null,
+   "created_at": "2026-10-24T02:13:37.000000Z"
+  },
+  {
+   "id": 2,
+   "kind": "thanks",
+   "category": "O'qituvchi",
+   "body": "Usmonova Dildora opaga katta rahmat! Farzandim ingliz tilini juda yaxshi ko'rib qoldi.",
+   "rating": 5,
+   "status": "resolved",
+   "is_anonymous": false,
+   "author": {
+    "name": "Ergashev Rustam",
+    "phone": "+998901110003",
+    "role": "guardian",
+    "user_id": 5
+   },
+   "student": null,
+   "group": null,
+   "teacher": {
+    "id": 1,
+    "name": "Rustamov Akmal"
+   },
+   "assignee": null,
+   "source": "app",
+   "attachments_count": 0,
+   "due_at": "2026-10-26T02:13:37.000000Z",
+   "overdue": false,
+   "replied_at": "2026-10-24T02:13:37.000000Z",
+   "resolved_at": "2026-10-24T02:13:37.000000Z",
+   "created_at": "2026-10-24T02:13:37.000000Z"
+  }
+ ],
+ "meta": {
+  "total": 6,
+  "last_page": 1,
+  "current_page": 1
+ },
+ "counts": {
+  "in_progress": 2,
+  "new": 3,
+  "resolved": 1
+ },
+ "overdue": 0,
+ "kinds": {
+  "complaint": "Shikoyat",
+  "suggestion": "Taklif",
+  "bug": "Xatolik",
+  "thanks": "Minnatdorchilik",
+  "question": "Savol"
+ },
+ "statuses": {
+  "new": "Yangi",
+  "in_progress": "Ko'rib chiqilmoqda",
+  "resolved": "Hal qilindi",
+  "rejected": "Rad etildi"
+ },
+ "categories": [
+  "O'qituvchi",
+  "Guruh",
+  "To'lov",
+  "Dars sifati",
+  "Xizmat",
+  "Bino",
+  "Boshqa"
+ ],
+ "staff": [
+  {
+   "id": 3,
+   "name": "Islomova Shahnoza"
+  },
+  {
+   "id": 1,
+   "name": "Rustamov Akmal"
+  }
+ ],
+ "sla_hours": 48
+}

@@ -1,5 +1,6 @@
 # Ilova skrinshotlari (README, do'konlar, yordam maqolalari): screenshots/shots_test.dart demo ma'lumot bilan
-# 390×844 @3x PNG chizadi va ularni `screenshots` branch'iga yozadi (artifact o'rniga — git orqali olish oson:
+# 390×844 @3x PNG chizadi, screenshots/devices_test.dart — App Store o'lchamlari: ios/ (iPhone 6.7", 1290×2796) va
+# ipad/ (iPad 12.9", 2048×2732), yorug' va tungi. Hammasi `screenshots` branch'iga yoziladi (artifact o'rniga — git orqali olish oson:
 # `git fetch origin screenshots && git checkout origin/screenshots -- .`). Faqat qo'lda ishga tushiriladi.
 name: Screenshots
 
@@ -38,8 +39,12 @@ jobs:
       - name: Skrinshotlar
         run: |
           set -o pipefail
-          flutter test screenshots/shots_test.dart 2>&1 | tee shots.log
-          ls -la screenshots/out
+          status=0
+          flutter test screenshots/shots_test.dart 2>&1 | tee shots.log || status=1
+          # App Store o'lchamlari (iPhone 6.7" va iPad 12.9") — birinchisi yiqilsa ham chiziladi.
+          flutter test screenshots/devices_test.dart 2>&1 | tee -a shots.log || status=1
+          ls -laR screenshots/out
+          exit $status
 
       - name: Xato tafsilotlari
         if: failure()
@@ -54,7 +59,8 @@ jobs:
           set -e
           [ -d screenshots/out ] && [ -n "$(ls screenshots/out)" ] || { echo "::warning::rasm yo'q"; exit 0; }
           src="$GITHUB_SHA"
-          mkdir -p /tmp/shots && cp screenshots/out/*.png /tmp/shots/ && cp shots.log /tmp/shots/ || true
+          # Papkalar bilan (ios/, ipad/).
+          mkdir -p /tmp/shots && cp -r screenshots/out/. /tmp/shots/ && cp shots.log /tmp/shots/ || true
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           # Tarix saqlanadi (force-push yo'q): branch bo'lsa — uning ustiga yangi commit, bo'lmasa — yangi (orphan) branch.
@@ -67,9 +73,9 @@ jobs:
           fi
           git rm -rfq . > /dev/null 2>&1 || true
           git clean -fdxq
-          cp /tmp/shots/* .
+          cp -r /tmp/shots/. .
           printf '# EduX mobil skrinshotlari\n\nManba: %s (%s)\n' "$src" "$(date -u +%Y-%m-%dT%H:%MZ)" > README.md
           git add -A
           git commit -qm "Skrinshotlar: $src" || echo "o'zgarish yo'q"
           git push origin screenshots || { echo "::error::push rad etildi"; exit 1; }
-          echo "::notice::$(ls /tmp/shots/*.png | wc -l) ta rasm screenshots branch'ida"
+          echo "::notice::$(find /tmp/shots -name '*.png' | wc -l) ta rasm screenshots branch'ida (ios: $(ls /tmp/shots/ios 2>/dev/null | wc -l), ipad: $(ls /tmp/shots/ipad 2>/dev/null | wc -l))"

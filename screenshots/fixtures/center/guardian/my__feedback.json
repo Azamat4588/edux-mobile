@@ -1,0 +1,97 @@
+{
+ "data": [
+  {
+   "id": 6,
+   "token": "***",
+   "kind": "complaint",
+   "category": "Bino",
+   "body": "Qishda 2-qavatdagi xonada juda sovuq, bolalar paltoda o'tirishyapti.",
+   "rating": 1,
+   "status": "new",
+   "is_anonymous": false,
+   "group": null,
+   "teacher": null,
+   "attachments": [],
+   "replies": [],
+   "created_at": "2026-10-24T02:13:37.000000Z",
+   "updated_at": "2026-10-24T02:13:37.000000Z",
+   "mine": true
+  },
+  {
+   "id": 3,
+   "token": "***",
+   "kind": "suggestion",
+   "category": "Xizmat",
+   "body": "Shanba kunlari ham qo'shimcha dars bo'lsa yaxshi bo'lardi — ish kunlari olib kelishga ulgurmaymiz.",
+   "rating": null,
+   "status": "new",
+   "is_anonymous": true,
+   "group": null,
+   "teacher": null,
+   "attachments": [],
+   "replies": [],
+   "created_at": "2026-10-24T02:13:37.000000Z",
+   "updated_at": "2026-10-24T02:13:37.000000Z",
+   "mine": true
+  },
+  {
+   "id": 2,
+   "token": "***",
+   "kind": "thanks",
+   "category": "O'qituvchi",
+   "body": "Usmonova Dildora opaga katta rahmat! Farzandim ingliz tilini juda yaxshi ko'rib qoldi.",
+   "rating": 5,
+   "status": "resolved",
+   "is_anonymous": false,
+   "group": null,
+   "teacher": "Rustamov Akmal",
+   "attachments": [],
+   "replies": [
+    {
+     "id": 4,
+     "body": "Iliq so'zlaringiz uchun rahmat! Dildora opaga yetkazdik.",
+     "created_at": "2026-10-24T02:13:37.000000Z"
+    }
+   ],
+   "created_at": "2026-10-24T02:13:37.000000Z",
+   "updated_at": "2026-10-24T02:13:37.000000Z",
+   "mine": true
+  },
+  {
+   "id": 1,
+   "token": "***",
+   "kind": "complaint",
+   "category": "To'lov",
+   "body": "Kassada to'lov qildim, lekin chek berilmadi va ilovada to'lov 2 kundan beri ko'rinmayapti.",
+   "rating": 2,
+   "status": "in_progress",
+   "is_anonymous": false,
+   "group": "ING-5",
+   "teacher": "Usmonova Dildora",
+   "attachments": [],
+   "replies": [
+    {
+     "id": 3,
+     "body": "Uzr so'raymiz! To'lovingiz kiritildi, chek SMS bilan yuborildi. Kassirga ogohlantirish berildi.",
+     "created_at": "2026-10-24T02:13:37.000000Z"
+    }
+   ],
+   "created_at": "2026-10-24T02:13:37.000000Z",
+   "updated_at": "2026-10-24T02:13:37.000000Z",
+   "mine": true
+  }
+ ],
+ "kinds": {
+  "complaint": "Shikoyat",
+  "suggestion": "Taklif",
+  "bug": "Xatolik",
+  "thanks": "Minnatdorchilik",
+  "question": "Savol"
+ },
+ "statuses": {
+  "new": "Yangi",
+  "in_progress": "Ko'rib chiqilmoqda",
+  "resolved": "Hal qilindi",
+  "rejected": "Rad etildi"
+ }
+}

@@ -41,5 +41,11 @@
   "read_only_at": "2027-01-02T18:52:34.000000Z"
  },
  "timezone": "Asia/Tashkent",
- "telegram_bot": "edux_demo_bot"
+ "telegram_bot": "edux_demo_bot",
+ "feedback": {
+  "enabled": true,
+  "submit": true,
+  "manage": true,
+  "new": 3
+ }
 }

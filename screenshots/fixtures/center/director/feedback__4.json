@@ -1,0 +1,54 @@
+{
+ "id": 4,
+ "kind": "question",
+ "category": "Dars sifati",
+ "body": "Mock test natijalari qachon e'lon qilinadi? Sertifikat ham beriladimi?",
+ "rating": 4,
+ "status": "in_progress",
+ "is_anonymous": false,
+ "author": {
+  "name": "Ergasheva Mohinur",
+  "phone": "+998900000005",
+  "role": "student",
+  "user_id": 11
+ },
+ "student": {
+  "id": 1,
+  "name": "Ergasheva Mohinur"
+ },
+ "group": null,
+ "teacher": null,
+ "assignee": null,
+ "source": "app",
+ "attachments_count": 0,
+ "due_at": "2026-10-26T02:13:37.000000Z",
+ "overdue": false,
+ "replied_at": null,
+ "resolved_at": null,
+ "created_at": "2026-10-24T02:13:37.000000Z",
+ "attachments": [],
+ "context": {},
+ "events": [
+  {
+   "id": 6,
+   "type": "status",
+   "body": null,
+   "data": {
+    "to": "in_progress",
+    "from": "new"
+   },
+   "user": "Rustamov Akmal",
+   "created_at": "2026-10-24T02:13:37.000000Z"
+  }
+ ],
+ "staff": [
+  {
+   "id": 3,
+   "name": "Islomova Shahnoza"
+  },
+  {
+   "id": 1,
+   "name": "Rustamov Akmal"
+  }
+ ]
+}

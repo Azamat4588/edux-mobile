@@ -1,0 +1,16 @@
+{
+ "data": [],
+ "kinds": {
+  "complaint": "Shikoyat",
+  "suggestion": "Taklif",
+  "bug": "Xatolik",
+  "thanks": "Minnatdorchilik",
+  "question": "Savol"
+ },
+ "statuses": {
+  "new": "Yangi",
+  "in_progress": "Ko'rib chiqilmoqda",
+  "resolved": "Hal qilindi",
+  "rejected": "Rad etildi"
+ }
+}

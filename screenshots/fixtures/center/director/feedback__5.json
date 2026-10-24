@@ -1,0 +1,46 @@
+{
+ "id": 5,
+ "kind": "bug",
+ "category": "Boshqa",
+ "body": "Laboratoriyada «Topshiriq» tugmasi ba'zan ikki marta bosilmaguncha ishlamayapti.",
+ "rating": null,
+ "status": "new",
+ "is_anonymous": false,
+ "author": {
+  "name": "Ergasheva Mohinur",
+  "phone": "+998900000005",
+  "role": "student",
+  "user_id": 11
+ },
+ "student": {
+  "id": 1,
+  "name": "Ergasheva Mohinur"
+ },
+ "group": null,
+ "teacher": null,
+ "assignee": null,
+ "source": "app",
+ "attachments_count": 0,
+ "due_at": "2026-10-26T02:13:37.000000Z",
+ "overdue": false,
+ "replied_at": null,
+ "resolved_at": null,
+ "created_at": "2026-10-24T02:13:37.000000Z",
+ "attachments": [],
+ "context": {
+  "app": "ios",
+  "page": "fun.labs",
+  "app_version": "3.7.0"
+ },
+ "events": [],
+ "staff": [
+  {
+   "id": 3,
+   "name": "Islomova Shahnoza"
+  },
+  {
+   "id": 1,
+   "name": "Rustamov Akmal"
+  }
+ ]
+}

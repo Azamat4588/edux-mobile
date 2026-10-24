@@ -1,4 +1,4 @@
-# EduX — mobil ilova (Android va iPhone)
+# EduX — mobil ilova (Android, iPhone va iPad)
 
 Flutter'da yozilgan to'liq native ilova (WebView emas). EduX serveri bilan o'sha API orqali ishlaydi, o'zbek, rus va ingliz tillarida.
 
@@ -6,6 +6,8 @@ Flutter'da yozilgan to'liq native ilova (WebView emas). EduX serveri bilan o'sha
 
 Har `main` push'dan keyin GitHub Actions ilovani yig'adi va **Releases → latest** ga qo'yadi:
 ko'pchilik telefonlar uchun `app-arm64-v8a-release.apk`, eski telefonlar uchun `app-armeabi-v7a-release.apk`.
+iPhone va iPad uchun o'sha yerda `EduX-iOS-unsigned.ipa` (imzosiz — App Store'ga chiqqunicha sinov uchun: AltStore/Sideloadly
+yoki o'z Apple sertifikatingiz bilan imzolab o'rnatiladi; quyida «iPhone va iPad: App Store'ga chiqarish»).
 
 Actions sozlamalari (Settings → Secrets and variables → Actions):
 
@@ -28,8 +30,52 @@ ham **Releases → latest** ga qo'shiladi (kalitsiz — faqat Actions → Build 
 3. Store listing (tavsif, skrinshotlar, ikonka 512×512), Data safety, Content rating, Privacy policy havolasi
    (`<server>/privacy`) to'ldirilgach — Production'ga chiqarish.
 
-**iPhone / App Store:** Apple Developer Program (yiliga $99) hisobi va imzo sertifikatlari kerak. Ungacha CI dagi `ios` job
-imzosiz yig'ishni tekshiradi xolos; hisob ochilgach Xcode'da Team tanlab `flutter build ipa` → Transporter/TestFlight (pastda «iPhone»).
+**iPhone / iPad / App Store:** Apple Developer Program hisobi ochilgach faqat GitHub secrets qo'shiladi — CI o'zi imzolaydi va
+TestFlight'ga yuklaydi (pastda «iPhone va iPad: App Store'ga chiqarish»).
+
+## iPhone va iPad: App Store'ga chiqarish
+
+Ilova tayyor: iPhone va iPad (bitta ilova, `TARGETED_DEVICE_FAMILY = 1,2`), Bundle ID **`uz.edux.edux`**, minimal iOS 15.0.
+CI har yig'ishda imzosiz `.ipa` chiqaradi; imzo kalitlari secrets'ga qo'shilsa — imzolangan `.ipa` va TestFlight avtomatik.
+
+1. **Apple Developer hisobi** — [developer.apple.com/programs](https://developer.apple.com/programs/) (yiliga $99; tashkilot
+   nomidan bo'lsa D-U-N-S raqami kerak, jismoniy shaxs uchun — shaxsiy hisob). Tasdiqlanishi 1–2 kun.
+2. **Bundle ID**: Certificates, Identifiers & Profiles → Identifiers → «+» → App IDs → `uz.edux.edux`, Capabilities'da
+   **Push Notifications** belgilansin.
+3. **Sertifikat** (Apple Distribution): Mac'da Keychain Access → Certificate Assistant → «Request a Certificate From a
+   Certificate Authority» (CSR) → developer.apple.com → Certificates → «+» → Apple Distribution → CSR yuklanadi → `.cer`
+   yuklab olinib ikki marta bosiladi → Keychain'da sertifikat + kalitni tanlab **Export** → `.p12` (parol bilan).
+   Mac bo'lmasa: `openssl req -new -newkey rsa:2048 -nodes -keyout edux.key -out edux.csr -subj "/CN=EduX"`, so'ng
+   `openssl x509 -inform der -in distribution.cer -out edux.pem` va
+   `openssl pkcs12 -export -inkey edux.key -in edux.pem -out edux.p12 -legacy`.
+4. **Provisioning profili**: Profiles → «+» → **App Store Connect** → App ID `uz.edux.edux` → 3-qadamdagi sertifikat →
+   nom (masalan «EduX App Store») → `.mobileprovision` yuklab olinadi.
+5. **App Store Connect API kaliti** (TestFlight'ga yuklash uchun): [appstoreconnect.apple.com](https://appstoreconnect.apple.com)
+   → Users and Access → Integrations → App Store Connect API → «+» (Access: App Manager) → `AuthKey_XXXX.p8` (bir marta
+   yuklanadi), **Key ID** va **Issuer ID** yozib olinadi.
+6. **App Store Connect'da ilova**: Apps → «+» → New App → iOS, nom «EduX», asosiy til, Bundle ID `uz.edux.edux`, SKU `edux`.
+7. **GitHub secrets** (repo → Settings → Secrets and variables → Actions):
+
+   | Secret | Qiymat |
+   |---|---|
+   | `IOS_P12_BASE64` | `base64 -i edux.p12` (macOS) yoki `base64 -w0 edux.p12` (Linux) |
+   | `IOS_P12_PASSWORD` | `.p12` paroli |
+   | `IOS_PROVISION_BASE64` | `base64 -w0 EduX_App_Store.mobileprovision` |
+   | `APPSTORE_API_KEY_ID`, `APPSTORE_ISSUER_ID` | 5-qadamdagi Key ID va Issuer ID |
+   | `APPSTORE_API_KEY_BASE64` | `base64 -w0 AuthKey_XXXX.p8` |
+   | `GOOGLE_SERVICE_INFO_PLIST` | (ixtiyoriy, push) Firebase → Project settings → iOS ilova `uz.edux.edux` → `GoogleService-Info.plist` matni; Firebase'ga APNs Auth Key (`.p8`, Keys → «+» → Apple Push Notifications service) ham yuklanadi |
+
+   Shundan keyin `main` ga har push'da (yoki Actions → Build → «Run workflow») `ios` job: imzolangan `.ipa`
+   (`edux-ios-appstore` artefakti) va **TestFlight'ga yuklash** (yig'ish raqami = Actions run raqami, har safar o'sadi).
+   Secrets bo'lmasa bu qadamlar o'tkazib yuboriladi — yig'ish yiqilmaydi.
+8. **TestFlight**: App Store Connect → ilova → TestFlight — yig'ish 10–30 daqiqada paydo bo'ladi («Missing Compliance»
+   so'ralmaydi: `ITSAppUsesNonExemptEncryption = false`). Internal Testing guruhiga jamoa qo'shiladi; tashqi sinovchilar
+   uchun — External Testing (Apple ko'rigi ~1 kun).
+9. **App Store sahifasi**: nomi, subtitle, tavsif (uz/ru/en), kalit so'zlar, Support URL (`<server>/help`), Privacy Policy
+   URL (`<server>/privacy`), toifa (Education), yosh reytingi (4+), App Privacy (telefon, ism, foydalanish ma'lumotlari —
+   «App Functionality»). **Skrinshotlar**: iPhone 6.7" (1290×2796) — `docs/screenshots/ios/`, iPad 12.9" (2048×2732) —
+   `docs/screenshots/ipad/`. Ko'rib chiqish uchun demo hisob (telefon va parol) «App Review Information» ga yoziladi.
+   So'ng TestFlight'dagi yig'ishni tanlab **Submit for Review** (odatda 1–3 kun).
 
 ## Kompyuter ilovasi
 
@@ -40,6 +86,13 @@ Windows, macOS va Linux uchun EduX ilovasi alohida repozitoriyda: [Azamat4588/ed
 
 ## Skrinshotlar
 
+iPhone 6.7" va iPad 12.9" (App Store o'lchamlari, yorug' va tungi — `docs/screenshots/ios/`, `docs/screenshots/ipad/`):
+
+| | | |
+|---|---|---|
+| ![iPad: bosh sahifa](docs/screenshots/ipad/01-bosh-sahifa.png) | ![iPad: davomat ikki ustunda](docs/screenshots/ipad/03-davomat.png) | ![iPad: rahbar «Fikrlar»](docs/screenshots/ipad/07-fikrlar.png) |
+| ![iPhone: laboratoriyalar](docs/screenshots/ios/05-laboratoriyalar.png) | ![iPhone: fikr bildirish](docs/screenshots/ios/06-fikr-bildirish.png) | ![iPhone: jurnal (tungi)](docs/screenshots/ios/02-jurnal-tungi.png) |
+
 | | | | |
 |---|---|---|---|
 | ![Kirish](docs/screenshots/01-kirish.png) | ![O'qituvchi bosh sahifasi](docs/screenshots/02-oqituvchi-bosh.png) | ![Davomat](docs/screenshots/04-davomat.png) | ![Maktab jurnali](docs/screenshots/03-jurnal-baholar.png) |
@@ -49,6 +102,35 @@ Hammasi `docs/screenshots/` da (390×844 @3x, 1170×2532 PNG; tungi rejim — `*
 `screenshots/shots_test.dart` (demo ma'lumot `screenshots/fixtures/`, haqiqiy shriftlar) — commit xabarida `[skrinshot]`
 bo'lsa yoki Actions → Screenshots → «Run workflow»; rasmlar `screenshots` branch'iga yoziladi
 (`git fetch origin screenshots && git checkout FETCH_HEAD -- '*.png'`).
+
+## 3.7 da yangi (iPhone va iPad; server 1.39: mijozlar fikri, 462 laboratoriya)
+
+- **iPad** (`lib/core/adaptive.dart`): keng ekranda (oynaning qisqa tomoni ≥ 600 — iPad, Split View'da katta oyna) pastki
+  menyu o'rniga **yon menyu** (NavigationRail; katta oynada yorliqlar bilan, 6 tagacha bo'lim, «Yana» belgisi); **ikki ustun**
+  (ro'yxat + tafsilot, yangi sahifa ochilmaydi): O'quvchilar → karta, Davomat → varaqa, Jurnal → darslar, Moliya (to'lovlar
+  va qarzdorlar) → o'quvchi kartasi, Murojaatlar → yozishma, Fikrlar → fikr kartasi; saqlanmagan davomat yoki yozilgan
+  javob bo'lsa boshqa yozuv tanlanganda so'raladi. Kontent o'qish kengligida (~840; bosh sahifa, o'yinlar va lablar — 1180),
+  to'rlar 2→4 ustun (bosh sahifa kartalari, tezkor harakatlar, ko'rsatkichlar), o'yinlar va lablar katalogi 1→3 ustun.
+  Hamma yo'nalishlar, Split View / Slide Over (`UIRequiresFullScreen = false`), klaviatura (⌘1…⌘9 — menyu, Tab/Enter),
+  sichqoncha/trackpad (hover). Burilganda yoki oyna o'lchami o'zgarganda tanlangan bo'lim va ro'yxat holati saqlanadi.
+- **iOS sifati**: chetdan surib orqaga qaytish (jurnal baholari — o'zgarish bo'lmasa), Dynamic Type 0,85–1,6 oralig'ida,
+  ishga tushish ekrani EduX rangida, iPad ikonkalari (`flutter_launcher_icons`), push uchun `aps-environment`
+  (imzolanganda), ilova tillari (uz/ru/en). SMS shlyuz, bank SMS — faqat Android (iPhone'da menyuda yo'q, platforma egasiga
+  «faqat Android ilovada» deb yoziladi).
+- **Mijozlar fikri** (server 1.39, `docs/feedback.md`; `lib/core/feedback.dart`, `lib/features/feedback/`): «Yana → Fikr
+  bildirish» — turi (shikoyat, taklif, xatolik, minnatdorchilik, savol), yo'nalishi, kimga tegishli (farzand, guruh,
+  o'qituvchi), baho, rasm (3 tagacha), anonim; «Mening fikrlarim» — holat va markaz javobi. Rahbar (va sozlamadagi rollar):
+  «Aloqa → Fikrlar» — holat bo'yicha filtr (soni bilan), muddati o'tganlar, turi, «Menga biriktirilgan», qidiruv; kartada
+  muallif (anonimda yashirin), tarix, mas'ul, holat, muallifga javob («Hal qilindi» belgisi bilan) va ichki izoh.
+  `GET context → feedback` bo'yicha ko'rinadi, menyuda «Yangi» fikrlar soni. Push `feedback` (panel) va `feedback_reply`
+  (muallif) tegishli ekranni ochadi.
+- **Laboratoriyalar (462 ta, 15 fan)**: «Fanlar bo'yicha» — fan → sinf guruhlari (guruhda 6 ta + «Yana»), qidiruv nom,
+  tavsif va darslik mavzusi bo'yicha; «Darslik bo'yicha» — `GET fun/labs/topics?subject=` (darslik → bob → mavzu → lab);
+  yangi fanlar (Tarix, Ona tili, Ingliz tili, Texnologiya, Chizmachilik, Iqtisodiyot, Musiqa, Tasviriy san'at) ikonka va
+  ranglari; fan nomi serverdan foydalanuvchi tilida (`subject_label`).
+- **Yig'ish**: CI `ios` job — `EduX-iOS-unsigned.ipa` (Payload/Runner.app; artefakt va `main` da Releases → latest),
+  imzo kalitlari bo'lsa — App Store `.ipa` va TestFlight; `m139` (yoki commit xabarida `[ios]`) branch'ida ham ishlaydi.
+- **Skrinshotlar**: `screenshots/devices_test.dart` — iPhone 6.7" va iPad 12.9", yorug' va tungi (`docs/screenshots/ios|ipad`).
 
 ## 3.6 da yangi (server 1.38: o'yinlar, to'lov havolasi, yangilanish)
 
@@ -291,7 +373,7 @@ flutter build appbundle --release --dart-define=EDUX_SERVER=https://app.sizning-
 
 Play Market uchun imzo: `keytool -genkey -v -keystore edux.jks -keyalg RSA -keysize 2048 -validity 10000 -alias edux`, so'ng `android/key.properties` va `android/app/build.gradle` dagi `signingConfigs` ni Flutter qo'llanmasi bo'yicha sozlang (https://docs.flutter.dev/deployment/android). Kalit faylini repozitoriyga qo'shmang.
 
-### iPhone
+### iPhone va iPad
 
 ```bash
 cd ios && pod install && cd ..
@@ -299,13 +381,13 @@ open ios/Runner.xcworkspace     # Signing & Capabilities → Team, Bundle ID uz.
 flutter build ipa --release --dart-define=EDUX_SERVER=https://app.sizning-domen.uz
 ```
 
-Tayyor `.ipa` ni Transporter yoki Xcode Organizer orqali App Store Connect / TestFlight'ga yuklang. Kamera, galereya va mikrofon ruxsat matnlari, push fon rejimi va minimal iOS 15.0 `configure_platforms.dart` tomonidan qo'yiladi (Podfile `flutter build ios --config-only` dan keyin paydo bo'lsa, skriptni qayta ishga tushiring).
+Tayyor `.ipa` ni Transporter yoki Xcode Organizer orqali App Store Connect / TestFlight'ga yuklang (yoki CI — yuqorida «iPhone va iPad: App Store'ga chiqarish»). Kamera, galereya va mikrofon ruxsat matnlari, push fon rejimi, iPad sozlamalari (hamma yo'nalishlar, Split View, trackpad, `TARGETED_DEVICE_FAMILY = "1,2"`), `aps-environment` (Release/Profile), ishga tushish ekrani va minimal iOS 15.0 `configure_platforms.dart` tomonidan qo'yiladi (Podfile `flutter build ios --config-only` dan keyin paydo bo'lsa, skriptni qayta ishga tushiring).
 
 ### GitHub Actions
 
-`.github/workflows/build.yml`: boshqa branch'larda faqat tahlil va testlar (`check` job); `main` ga push'da testlarni ishga tushiradi, Android APK yig'adi (Artifacts bo'limida) va alohida `ios` job'ida (macos-latest) iOS'ni imzosiz yig'adi: `flutter build ios --release --no-codesign`, natija — `edux-ios-unsigned` artefaktidagi `Runner.app` arxivi. iOS job xato bersa ham Android yig'ilishi va Releases davom etadi. Server manzilini repozitoriy o'zgaruvchisi `EDUX_SERVER` orqali bering.
+`.github/workflows/build.yml`: boshqa branch'larda faqat tahlil va testlar (`check` job); `main` ga push'da testlarni ishga tushiradi, Android APK yig'adi (Artifacts bo'limida) va alohida `ios` job'ida (macos-latest) iOS'ni imzosiz yig'adi: `flutter build ios --release --no-codesign`, natija — `edux-ios-unsigned` artefaktidagi `EduX-iOS-unsigned.ipa` (`main` da Releases → latest ga ham). Imzo secrets'i bo'lsa — `flutter build ipa --export-options-plist` va TestFlight. iOS job `m139` branch'ida va commit xabarida `[ios]` bo'lsa ham ishlaydi; xato bersa ham Android yig'ilishi va Releases davom etadi. Server manzilini repozitoriy o'zgaruvchisi `EDUX_SERVER` orqali bering.
 
-iOS'da push uchun Firebase'ning `GoogleService-Info.plist` faylini Xcode'da Runner'ga qo'shing va Signing & Capabilities'da «Push Notifications» va «Background Modes → Remote notifications» ni yoqing (CI dagi imzosiz yig'ishda push o'chiq).
+iOS'da push uchun Firebase'ning `GoogleService-Info.plist` matnini `GOOGLE_SERVICE_INFO_PLIST` secret'iga qo'ying (CI uni Runner'ga qo'shadi; «Push Notifications» — `Runner.entitlements`, «Remote notifications» — Info.plist). Imzosiz yig'ishda push o'chiq.
 
 ## Testlar
 

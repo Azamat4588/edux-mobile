@@ -1,0 +1,43 @@
+{
+ "kinds": {
+  "complaint": "Shikoyat",
+  "suggestion": "Taklif",
+  "bug": "Xatolik",
+  "thanks": "Minnatdorchilik",
+  "question": "Savol"
+ },
+ "categories": [
+  "O'qituvchi",
+  "Guruh",
+  "To'lov",
+  "Dars sifati",
+  "Xizmat",
+  "Bino",
+  "Boshqa"
+ ],
+ "anonymous": true,
+ "statuses": {
+  "new": "Yangi",
+  "in_progress": "Ko'rib chiqilmoqda",
+  "resolved": "Hal qilindi",
+  "rejected": "Rad etildi"
+ },
+ "attachments": {
+  "enabled": true,
+  "max_files": 3,
+  "max_kb": 5120,
+  "types": [
+   "jpg",
+   "png",
+   "webp"
+  ]
+ },
+ "enabled": true,
+ "can_submit": true,
+ "can_manage": false,
+ "targets": {
+  "students": [],
+  "groups": [],
+  "teachers": []
+ }
+}

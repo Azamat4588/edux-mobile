@@ -1,0 +1,16 @@
+{
+ "id": 4,
+ "token": "***",
+ "kind": "question",
+ "category": "Dars sifati",
+ "body": "Mock test natijalari qachon e'lon qilinadi? Sertifikat ham beriladimi?",
+ "rating": 4,
+ "status": "in_progress",
+ "is_anonymous": false,
+ "group": null,
+ "teacher": null,
+ "attachments": [],
+ "replies": [],
+ "created_at": "2026-10-24T02:13:37.000000Z",
+ "updated_at": "2026-10-24T02:13:37.000000Z"
+}

@@ -39,5 +39,11 @@
   "suspended": false
  },
  "timezone": "Asia/Tashkent",
- "telegram_bot": "edux_demo_bot"
+ "telegram_bot": "edux_demo_bot",
+ "feedback": {
+  "enabled": true,
+  "submit": true,
+  "manage": false,
+  "new": 0
+ }
 }

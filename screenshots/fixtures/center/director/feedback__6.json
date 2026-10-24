@@ -1,0 +1,39 @@
+{
+ "id": 6,
+ "kind": "complaint",
+ "category": "Bino",
+ "body": "Qishda 2-qavatdagi xonada juda sovuq, bolalar paltoda o'tirishyapti.",
+ "rating": 1,
+ "status": "new",
+ "is_anonymous": false,
+ "author": {
+  "name": "Ergashev Rustam",
+  "phone": "+998901110003",
+  "role": "guardian",
+  "user_id": 5
+ },
+ "student": null,
+ "group": null,
+ "teacher": null,
+ "assignee": null,
+ "source": "app",
+ "attachments_count": 0,
+ "due_at": "2026-10-26T02:13:37.000000Z",
+ "overdue": false,
+ "replied_at": null,
+ "resolved_at": null,
+ "created_at": "2026-10-24T02:13:37.000000Z",
+ "attachments": [],
+ "context": {},
+ "events": [],
+ "staff": [
+  {
+   "id": 3,
+   "name": "Islomova Shahnoza"
+  },
+  {
+   "id": 1,
+   "name": "Rustamov Akmal"
+  }
+ ]
+}

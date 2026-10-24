@@ -1,0 +1,16 @@
+{
+ "id": 6,
+ "token": "***",
+ "kind": "complaint",
+ "category": "Bino",
+ "body": "Qishda 2-qavatdagi xonada juda sovuq, bolalar paltoda o'tirishyapti.",
+ "rating": 1,
+ "status": "new",
+ "is_anonymous": false,
+ "group": null,
+ "teacher": null,
+ "attachments": [],
+ "replies": [],
+ "created_at": "2026-10-24T02:13:37.000000Z",
+ "updated_at": "2026-10-24T02:13:37.000000Z"
+}
