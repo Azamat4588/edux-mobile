@@ -303,7 +303,10 @@ class NoOrganizationPage extends StatelessWidget {
           child: EmptyState(
             icon: Icons.domain_disabled_outlined,
             text: owner
-                ? tr("Platforma egasi paneli veb-versiyada ishlaydi. Ilovada — platforma SMS shlyuzi; tashkilot bo'limlari uchun xodim, o'quvchi yoki ota-ona sifatida kiring.")
+                ? (session.can('platform_sms')
+                    ? tr("Platforma egasi paneli veb-versiyada ishlaydi. Ilovada — platforma SMS shlyuzi; tashkilot bo'limlari uchun xodim, o'quvchi yoki ota-ona sifatida kiring.")
+                    // iPhone/iPad: SMS shlyuz yo'q (iOS ilovalarga SMS yuborishga ruxsat bermaydi).
+                    : tr("Platforma egasi paneli veb-versiyada ishlaydi. Platforma SMS shlyuzi faqat Android ilovada; tashkilot bo'limlari uchun xodim, o'quvchi yoki ota-ona sifatida kiring."))
                 : tr("Hisobingiz hali hech qaysi tashkilotga bog'lanmagan. O'quvchi yoki ota-ona bo'lsangiz, o'qituvchi bergan shaxsiy havolani oching. Xodim bo'lsangiz, direktordan sizni qo'shishni so'rang."),
             action: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
               // Platforma egasi: ilovada — platforma SMS shlyuzi (kirish va tiklash kodlari shu telefondan).

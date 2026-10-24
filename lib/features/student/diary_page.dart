@@ -1,6 +1,7 @@
 // Kundalik (maktab): haftalik dars jadvali — mavzu, uy vazifasi, baho, davomat. Ota-ona farzandini tanlaydi.
 import 'package:flutter/material.dart';
 
+import '../../core/adaptive.dart';
 import '../../core/api.dart';
 import '../../core/format.dart';
 import '../../core/i18n.dart';
@@ -106,7 +107,7 @@ class _DiaryWeekViewState extends State<DiaryWeekView> {
         final days = asList(data['days'], 'days');
         final today = asText(data['today']);
         return ListView(
-          padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
+          padding: readable(context, const EdgeInsets.fromLTRB(16, 8, 16, 24)),
           children: <Widget>[
             Row(children: <Widget>[
               IconButton(onPressed: () => _go(data['previous']?.toString()), icon: const Icon(Icons.chevron_left)),

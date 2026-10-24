@@ -267,6 +267,15 @@ ThemeData buildTheme() {
       indicatorColor: AppColors.brand.withAlpha(AppColors.dark ? 70 : 30),
       labelTextStyle: WidgetStateProperty.all(TextStyle(fontFamily: choice.fontFamily, fontSize: 12, fontWeight: FontWeight.w600)),
     ),
+    // 3.7: iPad yon menyusi — pastki menyu bilan bir xil ranglar.
+    navigationRailTheme: NavigationRailThemeData(
+      backgroundColor: AppColors.card,
+      indicatorColor: AppColors.brand.withAlpha(AppColors.dark ? 70 : 30),
+      selectedIconTheme: IconThemeData(color: AppColors.brand),
+      unselectedIconTheme: IconThemeData(color: AppColors.muted),
+      selectedLabelTextStyle: TextStyle(fontFamily: choice.fontFamily, fontSize: 13, fontWeight: FontWeight.w700, color: AppColors.brand),
+      unselectedLabelTextStyle: TextStyle(fontFamily: choice.fontFamily, fontSize: 13, fontWeight: FontWeight.w600, color: AppColors.ink),
+    ),
     chipTheme: base.chipTheme.copyWith(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular((10 * choice.radiusFactor).clamp(4, 99).toDouble()))),
     tabBarTheme: TabBarThemeData(
       // Hamma TabBar sarlavha paneli (AppBar.bottom) ichida: to'q panelda (Qorong'i panel) — oq matn.

@@ -1,23 +1,28 @@
-// Virtual laboratoriya (o'quvchi): lablar ro'yxati serverdan (GET /my/labs — yangi lablar ilovani yangilamasdan chiqadi),
-// fan bo'yicha filtr bilan. Lab bosilganda interaktiv
-// tajriba ilova ichidagi WebView'da ochiladi (veb /labs/{code} sahifasi, shu foydalanuvchi tokeni bilan); «Topshiriq» —
-// tasodifiy qiymatli masala, javob serverda tekshiriladi (3 ta urinish), XP. API: POST /my/labs/{code}, /my/labs/runs/{run}.
+// Virtual laboratoriya (o'quvchi, 3.7 / server 1.39 — 462 lab, 15 fan): ro'yxat serverdan (GET my/labs — yangi lablar
+// ilovani yangilamasdan chiqadi). «Fanlar bo'yicha» — fan → sinf guruhlari (guruhda 6 ta + «Yana»), qidiruv nom, tavsif va
+// darslik mavzusi bo'yicha; «Darslik bo'yicha» — GET fun/labs/topics?subject=&grade= (darslik → bob → mavzu → lablar).
+// Lab bosilganda interaktiv tajriba ilova ichidagi WebView'da ochiladi (veb /labs/{code}, shu foydalanuvchi tokeni bilan);
+// «Topshiriq» — tasodifiy qiymatli masala, javob serverda tekshiriladi (3 ta urinish), XP. API: POST /my/labs/{code}, /my/labs/runs/{run}.
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
+import '../../core/adaptive.dart';
 import '../../core/api.dart';
 import '../../core/external_links.dart';
 import '../../core/format.dart';
+import '../../core/help_links.dart';
 import '../../core/i18n.dart';
+import '../../core/labs.dart';
 import '../../core/session.dart';
 import '../../core/theme.dart';
 import '../../core/webview_guard.dart';
 import '../../core/widgets.dart';
 
-IconData _labIcon(String subject) {
+/// Fan ikonkasi (server `subject` kaliti — o'zbekcha nom, tarjima qilinmaydi).
+IconData labIcon(String subject) {
   switch (subject) {
     case 'Kimyo':
       return Icons.science_rounded;
@@ -31,12 +36,31 @@ IconData _labIcon(String subject) {
       return Icons.public_rounded;
     case 'Astronomiya':
       return Icons.nightlight_round;
+    case 'Tarix':
+      return Icons.history_edu_rounded;
+    case 'Ona tili':
+      return Icons.spellcheck_rounded;
+    case 'Ingliz tili':
+      return Icons.translate_rounded;
+    case 'Texnologiya':
+      return Icons.handyman_rounded;
+    case 'Chizmachilik':
+      return Icons.architecture_rounded;
+    case 'Iqtisodiyot':
+      return Icons.trending_up_rounded;
+    case 'Musiqa':
+      return Icons.music_note_rounded;
+    case "Tasviriy san'at":
+      return Icons.palette_rounded;
+    case 'Tabiiy fanlar':
+      return Icons.park_rounded;
     default:
       return Icons.bolt_rounded;
   }
 }
 
-Color _labColor(String subject) {
+/// Fan rangi (ikonka foni va «fan · sinf» yozuvi).
+Color labColor(String subject) {
   switch (subject) {
     case 'Kimyo':
       return const Color(0xFF7C3AED);
@@ -50,6 +74,24 @@ Color _labColor(String subject) {
       return const Color(0xFF15803D);
     case 'Astronomiya':
       return const Color(0xFF4338CA);
+    case 'Tarix':
+      return const Color(0xFF92400E);
+    case 'Ona tili':
+      return const Color(0xFF0369A1);
+    case 'Ingliz tili':
+      return const Color(0xFFBE123C);
+    case 'Texnologiya':
+      return const Color(0xFF475569);
+    case 'Chizmachilik':
+      return const Color(0xFF1D4ED8);
+    case 'Iqtisodiyot':
+      return const Color(0xFF047857);
+    case 'Musiqa':
+      return const Color(0xFFDB2777);
+    case "Tasviriy san'at":
+      return const Color(0xFFEA580C);
+    case 'Tabiiy fanlar':
+      return const Color(0xFF65A30D);
     default:
       return AppColors.brand;
   }
@@ -71,82 +113,374 @@ const Map<String, String> labParamLabels = <String, String>{
   'p2': '2-ota-ona',
 };
 
-/// Lablar katalogidagi fanlar (server tartibida, takrorsiz).
-List<String> labSubjects(List<Map<String, dynamic>> labs) {
-  final result = <String>[];
-  for (final lab in labs) {
-    final subject = asText(lab['subject']);
-    if (subject.isNotEmpty && !result.contains(subject)) result.add(subject);
-  }
-  return result;
-}
+/// Guruhda dastlab ko'rinadigan lablar (qolgani «Yana N ta»).
+const int _labsPerGroup = 6;
+
+/// Qidiruv natijalari sahifasi.
+const int _searchPage = 30;
 
 class LabsPage extends StatefulWidget {
-  const LabsPage({super.key});
+  const LabsPage({super.key, this.initialTab = 0});
+
+  /// 0 — fanlar bo'yicha, 1 — darslik bo'yicha.
+  final int initialTab;
 
   @override
   State<LabsPage> createState() => _LabsPageState();
 }
 
 class _LabsPageState extends State<LabsPage> {
-  String? _subject;
-
   @override
   Widget build(BuildContext context) {
     final api = AppScope.of(context).api;
-    return Scaffold(
-      appBar: AppBar(title: Text(tr('Laboratoriya'))),
-      body: AsyncView<List<Map<String, dynamic>>>(
-        cacheKey: 'my_labs',
-        decode: (raw) => asList(raw),
-        load: () async => asList(asMap(await api.get('my/labs'))['labs'], 'labs'),
-        builder: (context, labs, reload) {
-          if (labs.isEmpty) {
-            return ListView(children: <Widget>[EmptyState(icon: Icons.science_outlined, text: tr("Laboratoriya ishlari hali yo'q."))]);
-          }
-          final subjects = labSubjects(labs);
-          final shown = _subject == null ? labs : labs.where((lab) => asText(lab['subject']) == _subject).toList();
-          return ListView(
-            padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
-            children: <Widget>[
-              SizedBox(
-                height: 48,
-                child: ListView(scrollDirection: Axis.horizontal, children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.only(right: 8),
-                    child: ChoiceChip(
-                      label: Text(tr('Hammasi ({0})', <Object?>[labs.length])),
-                      selected: _subject == null,
-                      onSelected: (_) => setState(() => _subject = null),
-                    ),
-                  ),
-                  for (final subject in subjects)
-                    Padding(
-                      padding: const EdgeInsets.only(right: 8),
-                      child: ChoiceChip(
-                        avatar: Icon(_labIcon(subject), size: 16, color: _labColor(subject)),
-                        label: Text(tr(subject)),
-                        selected: _subject == subject,
-                        onSelected: (_) => setState(() => _subject = subject),
-                      ),
-                    ),
-                ]),
-              ),
-              const SizedBox(height: 6),
-              for (final lab in shown) ...<Widget>[
-                _LabCard(lab: lab, onChanged: reload),
-                const SizedBox(height: 10),
-              ],
-            ],
-          );
-        },
+    return DefaultTabController(
+      length: 2,
+      initialIndex: widget.initialTab.clamp(0, 1),
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(tr('Laboratoriya')),
+          actions: const <Widget>[HelpButton(HelpLinks.labs)],
+          bottom: TabBar(tabs: <Widget>[Tab(text: tr("Fanlar bo'yicha")), Tab(text: tr("Darslik bo'yicha"))]),
+        ),
+        body: AsyncView<List<Map<String, dynamic>>>(
+          cacheKey: 'my_labs_v139',
+          decode: (raw) => asList(raw),
+          load: () async => asList(asMap(await api.get('my/labs'))['labs'], 'labs'),
+          refreshable: false,
+          builder: (context, labs, reload) {
+            if (labs.isEmpty) {
+              return ListView(children: <Widget>[EmptyState(icon: Icons.science_outlined, text: tr("Laboratoriya ishlari hali yo'q."))]);
+            }
+            return TabBarView(children: <Widget>[
+              RefreshIndicator(onRefresh: reload, child: LabsCatalogView(labs: labs, onChanged: reload)),
+              LabsTextbookView(labs: labs, onChanged: reload),
+            ]);
+          },
+        ),
       ),
     );
   }
 }
 
-class _LabCard extends StatelessWidget {
-  const _LabCard({required this.lab, required this.onChanged});
+/// «Fanlar bo'yicha»: qidiruv, fan tanlovi, sinf guruhlari (skrinshot testlari ham shu vidjetni chizadi).
+class LabsCatalogView extends StatefulWidget {
+  const LabsCatalogView({super.key, required this.labs, required this.onChanged, this.initialSubject});
+
+  final List<Map<String, dynamic>> labs;
+  final Future<void> Function() onChanged;
+  final String? initialSubject;
+
+  @override
+  State<LabsCatalogView> createState() => _LabsCatalogViewState();
+}
+
+class _LabsCatalogViewState extends State<LabsCatalogView> with AutomaticKeepAliveClientMixin {
+  final TextEditingController _search = TextEditingController();
+  late String? _subject = widget.initialSubject;
+  final Set<String> _expanded = <String>{};
+  int _shown = _searchPage;
+
+  @override
+  bool get wantKeepAlive => true;
+
+  @override
+  void dispose() {
+    _search.dispose();
+    super.dispose();
+  }
+
+  void _pick(String? subject) => setState(() {
+        _subject = subject;
+        _expanded.clear();
+      });
+
+  Widget _grid(List<Map<String, dynamic>> labs) => AdaptiveGrid(
+        minTile: 320,
+        minColumns: 1,
+        maxColumns: 3,
+        spacing: 10,
+        children: <Widget>[for (final lab in labs) LabCard(lab: lab, onChanged: widget.onChanged)],
+      );
+
+  Widget _more(String key, int hidden) => Align(
+        alignment: Alignment.centerLeft,
+        child: TextButton.icon(
+          onPressed: () => setState(() => _expanded.add(key)),
+          icon: const Icon(Icons.expand_more),
+          label: Text(tr('Yana {0} ta', <Object?>[hidden])),
+        ),
+      );
+
+  @override
+  Widget build(BuildContext context) {
+    super.build(context);
+    final labs = widget.labs;
+    final subjects = labSubjects(labs);
+    final query = _search.text.trim();
+    final children = <Widget>[];
+    if (query.isNotEmpty) {
+      final found = labs.where((lab) => (_subject == null || asText(lab['subject']) == _subject) && labMatches(lab, query)).toList();
+      children.add(Padding(
+        padding: const EdgeInsets.fromLTRB(4, 4, 4, 10),
+        child: Text(tr('Topildi: {0}', <Object?>[found.length]), style: TextStyle(color: AppColors.muted)),
+      ));
+      if (found.isEmpty) {
+        children.add(EmptyState(icon: Icons.search_off_rounded, text: tr("Hech narsa topilmadi. Qidiruv so'zini yoki filtrni o'zgartirib ko'ring.")));
+      } else {
+        children.add(_grid(found.take(_shown).toList()));
+        if (found.length > _shown) {
+          children.add(Center(
+            child: TextButton(
+              onPressed: () => setState(() => _shown += _searchPage),
+              child: Text(tr('Yana {0} ta', <Object?>[found.length - _shown])),
+            ),
+          ));
+        }
+      }
+    } else if (_subject == null) {
+      // Hamma fanlar: har fan — 6 ta lab va «Yana» (fanni tanlaydi).
+      for (final subject in subjects) {
+        final list = labs.where((lab) => asText(lab['subject']) == subject).toList();
+        children
+          ..add(SectionTitle(
+            '${labSubjectLabel(list.first)} · ${list.length}',
+            trailing: list.length > _labsPerGroup
+                ? TextButton(onPressed: () => _pick(subject), child: Text(tr('Hammasi')))
+                : null,
+          ))
+          ..add(_grid(list.take(_labsPerGroup).toList()));
+      }
+    } else {
+      final list = labs.where((lab) => asText(lab['subject']) == _subject).toList();
+      for (final entry in labsByGrade(list).entries) {
+        final key = '$_subject/${entry.key}';
+        final open = _expanded.contains(key);
+        children
+          ..add(SectionTitle('${tr('{0}-sinf', <Object?>[entry.key])} · ${entry.value.length}'))
+          ..add(_grid(open ? entry.value : entry.value.take(_labsPerGroup).toList()));
+        if (!open && entry.value.length > _labsPerGroup) children.add(_more(key, entry.value.length - _labsPerGroup));
+      }
+    }
+    return ListView(
+      padding: readable(context, const EdgeInsets.fromLTRB(16, 8, 16, 32), max: kGridWidth),
+      children: <Widget>[
+        TextField(
+          controller: _search,
+          textInputAction: TextInputAction.search,
+          onChanged: (_) => setState(() => _shown = _searchPage),
+          decoration: InputDecoration(
+            prefixIcon: const Icon(Icons.search),
+            hintText: tr('Lab nomi yoki darslik mavzusi'),
+            isDense: true,
+            suffixIcon: query.isEmpty
+                ? null
+                : IconButton(
+                    tooltip: tr('Tozalash'),
+                    icon: const Icon(Icons.close),
+                    onPressed: () => setState(() => _search.clear()),
+                  ),
+          ),
+        ),
+        const SizedBox(height: 8),
+        SizedBox(
+          height: 48,
+          child: ListView(scrollDirection: Axis.horizontal, children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(right: 8),
+              child: ChoiceChip(
+                label: Text(tr('Hammasi ({0})', <Object?>[labs.length])),
+                selected: _subject == null,
+                onSelected: (_) => _pick(null),
+              ),
+            ),
+            for (final subject in subjects)
+              Padding(
+                padding: const EdgeInsets.only(right: 8),
+                child: ChoiceChip(
+                  avatar: Icon(labIcon(subject), size: 16, color: _subject == subject ? null : labColor(subject)),
+                  label: Text(labSubjectLabel(labs.firstWhere((lab) => asText(lab['subject']) == subject))),
+                  selected: _subject == subject,
+                  onSelected: (_) => _pick(subject),
+                ),
+              ),
+          ]),
+        ),
+        ...children,
+      ],
+    );
+  }
+}
+
+/// «Darslik bo'yicha»: fan va sinf tanlanadi, darslik → bob → mavzu → lablar (GET fun/labs/topics).
+class LabsTextbookView extends StatefulWidget {
+  const LabsTextbookView({super.key, required this.labs, required this.onChanged, this.initialSubject, this.tree});
+
+  final List<Map<String, dynamic>> labs;
+  final Future<void> Function() onChanged;
+  final String? initialSubject;
+
+  /// Oldindan olingan daraxt (skrinshot uchun); bo'lmasa serverdan.
+  final Map<String, dynamic>? tree;
+
+  @override
+  State<LabsTextbookView> createState() => _LabsTextbookViewState();
+}
+
+class _LabsTextbookViewState extends State<LabsTextbookView> with AutomaticKeepAliveClientMixin {
+  late String _subject = widget.initialSubject ?? (labSubjects(widget.labs).isEmpty ? '' : labSubjects(widget.labs).first);
+  int _grade = 0;
+  final Map<String, Map<String, dynamic>> _trees = <String, Map<String, dynamic>>{};
+  bool _loading = false;
+  String? _error;
+
+  @override
+  bool get wantKeepAlive => true;
+
+  @override
+  void initState() {
+    super.initState();
+    final tree = widget.tree;
+    if (tree != null) {
+      _trees[_subject] = tree;
+    } else {
+      WidgetsBinding.instance.addPostFrameCallback((_) => _load());
+    }
+  }
+
+  Future<void> _load() async {
+    final subject = _subject;
+    if (subject.isEmpty || _trees.containsKey(subject) || !mounted) return;
+    setState(() {
+      _loading = true;
+      _error = null;
+    });
+    try {
+      final tree = asMap(await AppScope.read(context).api.get('fun/labs/topics', query: <String, Object?>{'subject': subject}));
+      if (!mounted) return;
+      setState(() => _trees[subject] = tree);
+    } on ApiException catch (error) {
+      if (mounted) setState(() => _error = error.message);
+    } finally {
+      if (mounted) setState(() => _loading = false);
+    }
+  }
+
+  void _pick(String subject) {
+    setState(() {
+      _subject = subject;
+      _grade = 0;
+    });
+    _load();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    super.build(context);
+    final labs = widget.labs;
+    final subjects = labSubjects(labs);
+    final byCode = <String, Map<String, dynamic>>{for (final lab in labs) asText(lab['code']): lab};
+    final tree = _trees[_subject];
+    final grades = tree == null ? <int>[] : textbookGrades(tree);
+    final grade = grades.contains(_grade) ? _grade : (grades.isEmpty ? 0 : grades.first);
+    final books = tree == null ? <Map<String, dynamic>>[] : asList(tree['books'], 'books').where((book) => asInt(book['grade']) == grade).toList();
+    String label(String subject) => labSubjectLabel(labs.firstWhere((lab) => asText(lab['subject']) == subject, orElse: () => <String, dynamic>{'subject': subject}));
+    return ListView(
+      padding: readable(context, const EdgeInsets.fromLTRB(16, 12, 16, 32)),
+      children: <Widget>[
+        DropdownButtonFormField<String>(
+          key: ValueKey<String>('subject-$_subject'),
+          initialValue: subjects.contains(_subject) ? _subject : null,
+          isExpanded: true,
+          decoration: InputDecoration(labelText: tr('Fan'), prefixIcon: Icon(labIcon(_subject), color: labColor(_subject))),
+          items: <DropdownMenuItem<String>>[
+            for (final subject in subjects) DropdownMenuItem<String>(value: subject, child: Text(label(subject))),
+          ],
+          onChanged: (value) {
+            if (value != null) _pick(value);
+          },
+        ),
+        const SizedBox(height: 10),
+        if (grades.isNotEmpty)
+          SizedBox(
+            height: 48,
+            child: ListView(scrollDirection: Axis.horizontal, children: <Widget>[
+              for (final item in grades)
+                Padding(
+                  padding: const EdgeInsets.only(right: 8),
+                  child: ChoiceChip(
+                    label: Text(tr('{0}-sinf', <Object?>[item])),
+                    selected: item == grade,
+                    onSelected: (_) => setState(() => _grade = item),
+                  ),
+                ),
+            ]),
+          ),
+        if (_loading && tree == null) const Padding(padding: EdgeInsets.all(32), child: Center(child: CircularProgressIndicator())),
+        if (_error != null && tree == null) ErrorState(message: _error!, onRetry: _load),
+        if (tree != null && books.isEmpty)
+          EmptyState(icon: Icons.menu_book_outlined, text: tr("Bu fan uchun darslik mavzulari hali kiritilmagan. «Fanlar bo'yicha» ro'yxatidan tanlang.")),
+        for (final book in books) ...<Widget>[
+          SectionTitle(asText(book['book'])),
+          for (final chapter in asList(book['chapters'], 'chapters'))
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8),
+              child: AppCard(
+                padding: EdgeInsets.zero,
+                child: Theme(
+                  data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+                  child: ExpansionTile(
+                    initiallyExpanded: chapterLabCount(chapter) > 0 && asList(book['chapters'], 'chapters').length <= 3,
+                    title: Text(asText(chapter['chapter']), style: const TextStyle(fontWeight: FontWeight.w700)),
+                    subtitle: Text(tr('{0} ta mavzuda lab bor', <Object?>[chapterLabCount(chapter)]), style: TextStyle(color: AppColors.muted, fontSize: 12.5)),
+                    childrenPadding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
+                    expandedCrossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: <Widget>[
+                      for (final topic in asList(chapter['topics'], 'topics')) _TopicRow(topic: topic, labs: topicLabs(topic, byCode), onChanged: widget.onChanged),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+        ],
+      ],
+    );
+  }
+}
+
+class _TopicRow extends StatelessWidget {
+  const _TopicRow({required this.topic, required this.labs, required this.onChanged});
+
+  final Map<String, dynamic> topic;
+  final List<Map<String, dynamic>> labs;
+  final Future<void> Function() onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 8),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
+        Text(asText(topic['topic']), style: TextStyle(color: labs.isEmpty ? AppColors.muted : AppColors.ink, fontWeight: FontWeight.w600)),
+        if (labs.isNotEmpty) ...<Widget>[
+          const SizedBox(height: 6),
+          Wrap(spacing: 6, runSpacing: 6, children: <Widget>[
+            for (final lab in labs)
+              ActionChip(
+                avatar: Icon(labIcon(asText(lab['subject'])), size: 16, color: labColor(asText(lab['subject']))),
+                label: Text(asText(lab['name'])),
+                onPressed: () async {
+                  await Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => LabWebPage(code: asText(lab['code']), title: asText(lab['name']))));
+                  await onChanged();
+                },
+              ),
+          ]),
+        ],
+      ]),
+    );
+  }
+}
+
+class LabCard extends StatelessWidget {
+  const LabCard({super.key, required this.lab, required this.onChanged});
 
   final Map<String, dynamic> lab;
   final Future<void> Function() onChanged;
@@ -154,11 +488,12 @@ class _LabCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final subject = asText(lab['subject']);
-    final color = _labColor(subject);
+    final color = labColor(subject);
     final passed = asInt(lab['passed']);
+    final topic = labTopicLine(lab);
     return AppCard(
       onTap: () async {
-        await Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => LabWebPage(code: asText(lab['code']), title: tr(asText(lab['name'])))));
+        await Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => LabWebPage(code: asText(lab['code']), title: asText(lab['name']))));
         await onChanged();
       },
       child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
@@ -166,16 +501,24 @@ class _LabCard extends StatelessWidget {
           width: 46,
           height: 46,
           decoration: BoxDecoration(color: color.withAlpha(30), borderRadius: BorderRadius.circular(AppRadius.control)),
-          child: Icon(_labIcon(subject), color: color),
+          child: Icon(labIcon(subject), color: color),
         ),
         const SizedBox(width: 12),
         Expanded(
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
-            Text(tr(asText(lab['name'])), style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 16)),
-            Text('${tr(subject)} · ${tr('{0}-sinf', <Object?>[asText(lab['grades'])])}',
-                style: TextStyle(color: color, fontWeight: FontWeight.w600, fontSize: 13)),
+            Text(asText(lab['name']), style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 16)),
+            Text('${labSubjectLabel(lab)} · ${tr('{0}-sinf', <Object?>[asText(lab['grades'])])}',
+                style: TextStyle(color: readableOn(color, AppColors.card), fontWeight: FontWeight.w600, fontSize: 13)),
             const SizedBox(height: 4),
-            Text(tr(asText(lab['description'])), style: TextStyle(color: AppColors.muted, fontSize: 13)),
+            Text(asText(lab['description']), maxLines: 3, overflow: TextOverflow.ellipsis, style: TextStyle(color: AppColors.muted, fontSize: 13)),
+            if (topic.isNotEmpty) ...<Widget>[
+              const SizedBox(height: 4),
+              Row(children: <Widget>[
+                Icon(Icons.menu_book_outlined, size: 14, color: AppColors.muted),
+                const SizedBox(width: 4),
+                Expanded(child: Text(topic, maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: AppColors.muted, fontSize: 12))),
+              ]),
+            ],
             const SizedBox(height: 6),
             Wrap(spacing: 8, runSpacing: 4, crossAxisAlignment: WrapCrossAlignment.center, children: <Widget>[
               if (passed > 0) Pill(tr('{0} ta topshiriq bajarildi', <Object?>[passed]), color: AppColors.success),

@@ -1,12 +1,18 @@
 # EduX mobil ilovasini yig'ish: tahlil, testlar, Android APK. main ga har push'dan keyin APK
 # «Releases → latest» sahifasiga qo'yiladi — telefonga shu yerdan yuklab o'rnatiladi.
-# iOS: alohida job (macos-latest) imzosiz `.app` yig'adi va Artifacts ga qo'yadi; u Android job'iga bog'liq emas
-# va xato bersa ham Android yig'ilishi/Releases to'xtamaydi.
+# iOS (iPhone va iPad): alohida job (macos-latest) imzosiz `EduX-iOS-unsigned.ipa` yig'adi (Artifacts; main'da —
+# «Releases → latest» ga ham). Android job'iga bog'liq emas, xato bersa ham Android yig'ilishi/Releases to'xtamaydi.
+# Imzo kalitlari bo'lsa — App Store uchun imzolangan .ipa va TestFlight'ga yuklash (main yoki qo'lda ishga tushirilganda).
 # Sozlamalar (repo → Settings → Secrets and variables → Actions):
 #   vars.EDUX_SERVER             — ilova sukut bo'yicha ulanadigan server (bo'lmasa https://edux.kuchkarov.uz)
 #   secrets.GOOGLE_SERVICES_JSON — Firebase google-services.json matni (push uchun; bo'lmasa push o'chiq)
 #   secrets.ANDROID_KEYSTORE_BASE64, ANDROID_KEYSTORE_PASSWORD, ANDROID_KEY_ALIAS, ANDROID_KEY_PASSWORD — Play Market imzosi (ixtiyoriy;
 #     bo'lsa har yig'ishda imzolangan .aab ham chiqadi va «latest» relizga qo'shiladi)
+#   iOS (ixtiyoriy; README → «iPhone va iPad: App Store'ga chiqarish»):
+#   secrets.IOS_P12_BASE64, IOS_P12_PASSWORD     — Apple Distribution sertifikati (.p12, base64) va paroli
+#   secrets.IOS_PROVISION_BASE64                 — App Store provisioning profili (uz.edux.edux, .mobileprovision, base64)
+#   secrets.APPSTORE_API_KEY_ID, APPSTORE_ISSUER_ID, APPSTORE_API_KEY_BASE64 — App Store Connect API kaliti (.p8, base64) — TestFlight
+#   secrets.GOOGLE_SERVICE_INFO_PLIST            — Firebase GoogleService-Info.plist matni (iPhone push; bo'lmasa push o'chiq)
 name: Build
 
 on:
@@ -240,7 +246,8 @@ jobs:
             gh release upload latest "${files[@]}" --clobber
             keep=" "; for f in "${files[@]}"; do keep="$keep$(basename "$f") "; done
             gh release view latest --json assets --jq '.assets[].name' | while IFS= read -r asset; do
-              case "$keep" in *" $asset "*) ;; *) echo "Eski fayl o'chiriladi: $asset"; gh release delete-asset latest "$asset" --yes ;; esac
+              # iOS fayllari (EduX-iOS-*.ipa) — iOS job'iniki, o'chirilmaydi.
+              case "$keep" in *" $asset "*) ;; *) case "$asset" in EduX-iOS-*) ;; *) echo "Eski fayl o'chiriladi: $asset"; gh release delete-asset latest "$asset" --yes ;; esac ;; esac
             done
           else
             gh release create latest "${files[@]}" --target "$GITHUB_SHA" \
@@ -248,11 +255,14 @@ jobs:
           fi
 
   ios:
-    # Imzosiz iOS yig'ish: loyiha sozlamalari, plaginlar (CocoaPods) va Dart kodi iOS da yig'ilishini tekshiradi.
-    # App Store / TestFlight uchun imzo va GoogleService-Info.plist alohida (README → iPhone).
-    if: github.event_name != 'push' || github.ref == 'refs/heads/main'
+    # iPhone va iPad: imzosiz yig'ish har doim (loyiha sozlamalari, plaginlar va Dart kodi iOS da yig'ilishini tekshiradi) —
+    # `EduX-iOS-unsigned.ipa` (Payload/Runner.app). Imzo kalitlari bo'lsa: App Store uchun imzolangan .ipa va TestFlight.
+    # Ish branch'larida ham ishlaydi: m139 (iPad ishi) yoki commit xabarida «[ios]».
+    if: >-
+      github.event_name != 'push' || github.ref == 'refs/heads/main' || github.ref == 'refs/heads/m139' ||
+      contains(github.event.head_commit.message, '[ios]')
     runs-on: macos-latest
-    timeout-minutes: 60
+    timeout-minutes: 75
     continue-on-error: true
     steps:
       - uses: actions/checkout@v5
@@ -266,12 +276,26 @@ jobs:
         run: |
           set -o pipefail
           flutter --version
+          xcodebuild -version | tee -a ci-ios.log
           # flutter_launcher_icons android papkasini ham kutadi — shuning uchun ikkalasi yaratiladi.
           flutter create --org uz.edux --project-name edux --platforms=android,ios . 2>&1 | tee -a ci-ios.log
           if [ -f test/widget_test.dart ] && grep -q "MyApp" test/widget_test.dart; then rm test/widget_test.dart; fi
           flutter pub get 2>&1 | tee -a ci-ios.log
           dart run tool/configure_platforms.dart --ios 2>&1 | tee -a ci-ios.log
           dart run flutter_launcher_icons 2>&1 | tee -a ci-ios.log
+          echo "::notice title=iPad ikonkalari::$(ls ios/Runner/Assets.xcassets/AppIcon.appiconset | grep -ciE 'ipad|76|83.5|167|152') ta iPad o'lchami; $(grep -c '"idiom" : "ipad"' ios/Runner/Assets.xcassets/AppIcon.appiconset/Contents.json) ta ipad yozuvi"
+
+      - name: Firebase (iPhone push)
+        env:
+          GOOGLE_SERVICE_INFO_PLIST: ${{ secrets.GOOGLE_SERVICE_INFO_PLIST }}
+        run: |
+          if [ -z "$GOOGLE_SERVICE_INFO_PLIST" ]; then
+            echo "::notice::GOOGLE_SERVICE_INFO_PLIST yo'q — iOS ilova push'siz yig'iladi"
+            exit 0
+          fi
+          printf '%s' "$GOOGLE_SERVICE_INFO_PLIST" > ios/Runner/GoogleService-Info.plist
+          # Fayl Runner target resurslariga qo'shiladi (Xcode loyihasi CocoaPods bilan kelgan xcodeproj gem orqali).
+          ruby -e "require 'xcodeproj'; p = Xcodeproj::Project.open('ios/Runner.xcodeproj'); t = p.targets.find { |x| x.name == 'Runner' }; g = p.main_group.find_subpath('Runner', false); unless g.files.any? { |f| f.path == 'GoogleService-Info.plist' }; ref = g.new_reference('GoogleService-Info.plist'); t.resources_build_phase.add_file_reference(ref); end; p.save"
 
       - name: Xcode sozlamasi va CocoaPods
         run: |
@@ -286,15 +310,26 @@ jobs:
           set -o pipefail
           flutter build ios --release --no-codesign --build-number=${{ github.run_number }} --dart-define=EDUX_SERVER=$EDUX_SERVER 2>&1 | tee build-ios.log
 
-      - name: .app arxivi
+      - name: Imzosiz .ipa (Payload/Runner.app)
         run: |
-          cd build/ios/iphoneos
-          ditto -c -k --sequesterRsrc --keepParent Runner.app "$GITHUB_WORKSPACE/edux-ios-unsigned.app.zip"
+          set -e
+          app=build/ios/iphoneos/Runner.app
+          plist="$app/Info.plist"
+          family=$(/usr/libexec/PlistBuddy -c 'Print :UIDeviceFamily' "$plist" | tr -d ' \n')
+          full=$(/usr/libexec/PlistBuddy -c 'Print :UIRequiresFullScreen' "$plist" 2>/dev/null || echo yo\'q)
+          pad=$(/usr/libexec/PlistBuddy -c 'Print :UISupportedInterfaceOrientations~ipad' "$plist" | grep -c Orientation || true)
+          version=$(/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' "$plist")
+          build=$(/usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' "$plist")
+          bundle=$(/usr/libexec/PlistBuddy -c 'Print :CFBundleIdentifier' "$plist")
+          echo "::notice title=iOS ilova::$bundle $version ($build); UIDeviceFamily=$family; UIRequiresFullScreen=$full; iPad yo'nalishlari=$pad; hajm $(du -sh "$app" | cut -f1)"
+          rm -rf Payload && mkdir Payload && cp -R "$app" Payload/
+          zip -qry EduX-iOS-unsigned.ipa Payload
+          ls -la EduX-iOS-unsigned.ipa
 
       - name: Xato tafsilotlari
         if: failure()
         run: |
-          for file in ci-ios.log build-ios.log; do
+          for file in ci-ios.log build-ios.log build-ipa.log; do
             [ -f "$file" ] || continue
             grep -nE "(error|Error|ERROR|FAILED|Exception|CocoaPods|\.dart:[0-9]+:[0-9]+)" "$file" | grep -v "warning" | head -12 | while IFS= read -r line; do
               echo "::error title=iOS $file::$(echo "$line" | cut -c1-900)"
@@ -304,5 +339,120 @@ jobs:
       - uses: actions/upload-artifact@v7
         with:
           name: edux-ios-unsigned
-          path: edux-ios-unsigned.app.zip
+          path: EduX-iOS-unsigned.ipa
           if-no-files-found: error
+
+      - name: Releases → latest (iOS)
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          # Reliz Android job'ida yaratiladi — bo'lmasa biroz kutiladi.
+          for i in 1 2 3 4 5 6 7 8 9 10; do gh release view latest > /dev/null 2>&1 && break; echo "latest reliz hali yo'q — kutilmoqda ($i)"; sleep 60; done
+          if gh release upload latest EduX-iOS-unsigned.ipa --clobber; then
+            echo "::notice::EduX-iOS-unsigned.ipa «Releases → latest» ga qo'yildi (imzosiz: AltStore/Sideloadly yoki o'z sertifikatingiz bilan imzolab o'rnatiladi)"
+          else
+            echo "::warning::iOS .ipa relizga yuklanmadi"
+          fi
+
+      # ---- App Store / TestFlight (imzo kalitlari bo'lsa) ----
+      - name: iOS imzo kalitlari
+        id: signing
+        env:
+          P12: ${{ secrets.IOS_P12_BASE64 }}
+          P12_PASSWORD: ${{ secrets.IOS_P12_PASSWORD }}
+          PROFILE: ${{ secrets.IOS_PROVISION_BASE64 }}
+          API_KEY_ID: ${{ secrets.APPSTORE_API_KEY_ID }}
+          API_ISSUER: ${{ secrets.APPSTORE_ISSUER_ID }}
+          API_KEY: ${{ secrets.APPSTORE_API_KEY_BASE64 }}
+        run: |
+          if [ -n "$P12" ] && [ -n "$P12_PASSWORD" ] && [ -n "$PROFILE" ]; then
+            echo "signed=true" >> "$GITHUB_OUTPUT"
+            if [ -n "$API_KEY_ID" ] && [ -n "$API_ISSUER" ] && [ -n "$API_KEY" ]; then echo "testflight=true" >> "$GITHUB_OUTPUT"; else echo "testflight=false" >> "$GITHUB_OUTPUT"; fi
+          else
+            echo "signed=false" >> "$GITHUB_OUTPUT"
+            echo "testflight=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::iOS imzo kalitlari yo'q — imzolangan .ipa va TestFlight o'tkazib yuborildi (README → «iPhone va iPad: App Store'ga chiqarish»)"
+          fi
+
+      - name: Sertifikat va provisioning profili
+        if: steps.signing.outputs.signed == 'true'
+        env:
+          P12: ${{ secrets.IOS_P12_BASE64 }}
+          P12_PASSWORD: ${{ secrets.IOS_P12_PASSWORD }}
+          PROFILE: ${{ secrets.IOS_PROVISION_BASE64 }}
+        run: |
+          set -e
+          keychain="$RUNNER_TEMP/edux-signing.keychain-db"
+          kpass=$(uuidgen)
+          echo "$P12" | base64 --decode > "$RUNNER_TEMP/dist.p12"
+          echo "$PROFILE" | base64 --decode > "$RUNNER_TEMP/edux.mobileprovision"
+          security create-keychain -p "$kpass" "$keychain"
+          security set-keychain-settings -lut 21600 "$keychain"
+          security unlock-keychain -p "$kpass" "$keychain"
+          security import "$RUNNER_TEMP/dist.p12" -P "$P12_PASSWORD" -A -t cert -f pkcs12 -k "$keychain"
+          security set-key-partition-list -S apple-tool:,apple: -k "$kpass" "$keychain" > /dev/null
+          security list-keychain -d user -s "$keychain" $(security list-keychains -d user | tr -d '"')
+          security cms -D -i "$RUNNER_TEMP/edux.mobileprovision" > "$RUNNER_TEMP/profile.plist"
+          uuid=$(/usr/libexec/PlistBuddy -c 'Print :UUID' "$RUNNER_TEMP/profile.plist")
+          name=$(/usr/libexec/PlistBuddy -c 'Print :Name' "$RUNNER_TEMP/profile.plist")
+          team=$(/usr/libexec/PlistBuddy -c 'Print :TeamIdentifier:0' "$RUNNER_TEMP/profile.plist")
+          app=$(/usr/libexec/PlistBuddy -c 'Print :Entitlements:application-identifier' "$RUNNER_TEMP/profile.plist")
+          for dir in "$HOME/Library/MobileDevice/Provisioning Profiles" "$HOME/Library/Developer/Xcode/UserData/Provisioning Profiles"; do
+            mkdir -p "$dir" && cp "$RUNNER_TEMP/edux.mobileprovision" "$dir/$uuid.mobileprovision"
+          done
+          echo "IOS_TEAM=$team" >> "$GITHUB_ENV"
+          echo "IOS_PROFILE=$name" >> "$GITHUB_ENV"
+          echo "IOS_KEYCHAIN=$keychain" >> "$GITHUB_ENV"
+          echo "::notice title=iOS imzo::profil «$name» ($app), jamoa $team"
+          cat > "$RUNNER_TEMP/ExportOptions.plist" <<EOF
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0">
+          <dict>
+            <key>method</key><string>app-store-connect</string>
+            <key>destination</key><string>export</string>
+            <key>teamID</key><string>$team</string>
+            <key>signingStyle</key><string>manual</string>
+            <key>signingCertificate</key><string>Apple Distribution</string>
+            <key>provisioningProfiles</key>
+            <dict><key>uz.edux.edux</key><string>$name</string></dict>
+            <key>uploadSymbols</key><true/>
+          </dict>
+          </plist>
+          EOF
+          # Runner target'i Release/Profile: qo'lda imzo (Apple Distribution + shu profil).
+          IOS_TEAM_ID="$team" IOS_PROFILE_NAME="$name" ruby -e "require 'xcodeproj'; p = Xcodeproj::Project.open('ios/Runner.xcodeproj'); t = p.targets.find { |x| x.name == 'Runner' }; t.build_configurations.each { |c| next unless ['Release', 'Profile'].include?(c.name); s = c.build_settings; s['CODE_SIGN_STYLE'] = 'Manual'; s['DEVELOPMENT_TEAM'] = ENV['IOS_TEAM_ID']; s['PROVISIONING_PROFILE_SPECIFIER'] = ENV['IOS_PROFILE_NAME']; s['CODE_SIGN_IDENTITY'] = 'Apple Distribution'; s['CODE_SIGN_IDENTITY[sdk=iphoneos*]'] = 'Apple Distribution' }; p.save"
+
+      - name: Imzolangan .ipa (App Store)
+        if: steps.signing.outputs.signed == 'true'
+        run: |
+          set -o pipefail
+          flutter build ipa --release --export-options-plist="$RUNNER_TEMP/ExportOptions.plist" --build-number=${{ github.run_number }} --dart-define=EDUX_SERVER=$EDUX_SERVER 2>&1 | tee build-ipa.log
+          ls -la build/ios/ipa
+
+      - uses: actions/upload-artifact@v7
+        if: steps.signing.outputs.signed == 'true'
+        with:
+          name: edux-ios-appstore
+          path: build/ios/ipa/*.ipa
+
+      - name: TestFlight'ga yuklash
+        if: steps.signing.outputs.testflight == 'true' && (github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main'))
+        env:
+          API_KEY_ID: ${{ secrets.APPSTORE_API_KEY_ID }}
+          API_ISSUER: ${{ secrets.APPSTORE_ISSUER_ID }}
+          API_KEY: ${{ secrets.APPSTORE_API_KEY_BASE64 }}
+        run: |
+          set -e
+          mkdir -p "$HOME/.appstoreconnect/private_keys"
+          echo "$API_KEY" | base64 --decode > "$HOME/.appstoreconnect/private_keys/AuthKey_$API_KEY_ID.p8"
+          ipa=$(ls build/ios/ipa/*.ipa | head -1)
+          xcrun altool --upload-app --type ios -f "$ipa" --apiKey "$API_KEY_ID" --apiIssuer "$API_ISSUER"
+          echo "::notice::TestFlight'ga yuklandi: $(basename "$ipa") (yig'ish ${{ github.run_number }}). App Store Connect → TestFlight'da 10–30 daqiqada ko'rinadi."
+
+      - name: Kalitlarni tozalash
+        if: always() && steps.signing.outputs.signed == 'true'
+        run: |
+          [ -n "$IOS_KEYCHAIN" ] && security delete-keychain "$IOS_KEYCHAIN" || true
+          rm -f "$RUNNER_TEMP/dist.p12" "$RUNNER_TEMP/edux.mobileprovision" "$HOME/.appstoreconnect/private_keys/"*.p8

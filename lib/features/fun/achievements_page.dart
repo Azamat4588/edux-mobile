@@ -2,6 +2,7 @@
 // haftalik reyting («fun» qo'shimchasi) va coin balansi (CRM, coin yoqilgan bo'lsa — GET crm/me).
 import 'package:flutter/material.dart';
 
+import '../../core/adaptive.dart';
 import '../../core/api.dart';
 import '../../core/format.dart';
 import '../../core/i18n.dart';
@@ -46,7 +47,7 @@ class AchievementsPage extends StatelessWidget {
           final board = asList(data['leaderboard'], 'leaderboard');
           final earned = badges.where((item) => item['earned_at'] != null).length;
           return ListView(
-            padding: const EdgeInsets.fromLTRB(16, 12, 16, 32),
+            padding: readable(context, const EdgeInsets.fromLTRB(16, 12, 16, 32)),
             children: <Widget>[
               if (wallet != null) ...<Widget>[
                 _WalletCard(coins: asInt(wallet['coins']), history: asList(wallet['history'])),

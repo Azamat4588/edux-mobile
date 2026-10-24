@@ -59,7 +59,7 @@ class PushService {
 
   static final PushService instance = PushService._();
 
-  static const String appVersion = '3.6.0';
+  static const String appVersion = '3.7.0';
 
   bool _ready = false;
   bool _initTried = false;
@@ -95,6 +95,9 @@ class PushService {
     'crm.leads': 'lead',
     'crm.tasks': 'task',
     'info.support.ticket': 'support',
+    // 1.39: mijozlar fikri — rahbar paneli (yangi fikr, mas'ul) va muallifga javob.
+    'feedback.show': 'feedback',
+    'feedback.mine': 'feedback_reply',
   };
 
   /// Xabar ma'lumoti → ilova ichidagi tur: avval `route` (yangi server), keyin `type` (eski server), oxiri veb manzili
@@ -112,7 +115,7 @@ class PushService {
       return result;
     }
     final type = asText(data['type']);
-    const known = <String>['payment', 'attendance', 'arrival', 'attempt', 'assignment', 'certificate', 'lead', 'task', 'diary', 'child', 'sms_gateway', 'support'];
+    const known = <String>['payment', 'attendance', 'arrival', 'attempt', 'assignment', 'certificate', 'lead', 'task', 'diary', 'child', 'sms_gateway', 'support', 'feedback', 'feedback_reply'];
     if (known.contains(type)) return data;
     // 1.35: dars savoli/javobi va kurs e'loni — id lar havolada (/learn/courses/{kurs}/lessons/{dars}).
     if (type == 'lesson_question' || type == 'lesson_answer' || type == 'course_announcement') {
@@ -166,6 +169,13 @@ class PushService {
     } else if (path.startsWith('/support/t/') && segments.length == 3) {
       result['type'] = 'support';
       result['token'] = segments[2];
+    } else if (path == '/my/feedback') {
+      result['type'] = 'feedback_reply';
+      final feedback = uri.queryParameters['id'];
+      if (feedback != null) result['feedback_id'] = feedback;
+    } else if (path == '/feedback' || (path.startsWith('/feedback/') && id(1) != null)) {
+      result['type'] = 'feedback';
+      if (id(1) != null) result['feedback_id'] = id(1);
     }
     final student = uri.queryParameters['student'] ?? uri.queryParameters['student_id'];
     if (student != null) result['student_id'] = student;

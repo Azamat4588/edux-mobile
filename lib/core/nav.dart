@@ -86,6 +86,8 @@ List<NavSection> buildNav(NavContext ctx) {
         _when(can('sms_gateway'), NavTab('sms.gateway', tr('SMS shlyuz'))),
         _when(can('device_sms'), NavTab('sms.device', tr("Kutilayotgan SMS'lar"))),
         _when(can('tasks'), NavTab('crm.tasks', tr('Topshiriqlar'))),
+        // 1.39: mijozlar fikri paneli (veb: «Aloqa → Fikrlar»).
+        _when(can('feedback_manage'), NavTab('feedback', tr('Fikrlar'))),
       ]),
       _section('settings', tr('Sozlamalar'), 'cog', <NavTab?>[
         _when(can('kiosk'), NavTab('access.kiosk', tr('Kiosk rejimi'))),
@@ -172,6 +174,10 @@ List<NavSection> buildNav(NavContext ctx) {
       // Kurslar (1.35) oxirida: pastki menyuga 4 ta sig'adi — to'lov ota-ona uchun muhimroq.
       _when(can('lms'), NavTab('child.courses', tr('Kurslar'), icon: 'book')),
     ]));
+  }
+  // 1.39: fikrlar paneli boshqa xodimlarga ham ochilgan bo'lsa (sozlama «Fikrlarni kim ko'radi») — alohida bo'lim.
+  if (<String>['teacher', 'cashier', 'marketer'].contains(role)) {
+    sections.add(_section('feedback', tr('Fikrlar'), 'feedback', <NavTab?>[_when(can('feedback_manage'), NavTab('feedback', tr('Fikrlar')))]));
   }
   // Platforma egasi: ilovada — platforma SMS shlyuzi (kirish va tiklash kodlari shu telefondan).
   if (can('platform_sms')) {
@@ -273,4 +279,5 @@ const Map<String, int> sectionColors = <String, int>{
   'settings': 0xFF475569,
   'child': 0xFF2563EB,
   'platform': 0xFF334155,
+  'feedback': 0xFFEA580C,
 };

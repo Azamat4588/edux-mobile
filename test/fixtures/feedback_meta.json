@@ -1,0 +1,70 @@
+{
+ "kinds": {
+  "complaint": "Shikoyat",
+  "suggestion": "Taklif",
+  "bug": "Xatolik",
+  "thanks": "Minnatdorchilik",
+  "question": "Savol"
+ },
+ "categories": [
+  "O'qituvchi",
+  "Guruh",
+  "To'lov",
+  "Dars sifati",
+  "Xizmat",
+  "Bino",
+  "Boshqa"
+ ],
+ "anonymous": true,
+ "statuses": {
+  "new": "Yangi",
+  "in_progress": "Ko'rib chiqilmoqda",
+  "resolved": "Hal qilindi",
+  "rejected": "Rad etildi"
+ },
+ "attachments": {
+  "enabled": true,
+  "max_files": 3,
+  "max_kb": 5120,
+  "types": [
+   "jpg",
+   "png",
+   "webp"
+  ]
+ },
+ "enabled": true,
+ "can_submit": true,
+ "can_manage": false,
+ "targets": {
+  "students": [
+   {
+    "id": 1,
+    "name": "Ergasheva Mohinur"
+   }
+  ],
+  "groups": [
+   {
+    "id": 2,
+    "name": "ING-5",
+    "teacher_id": 4,
+    "teacher": "Usmonova Dildora"
+   },
+   {
+    "id": 1,
+    "name": "M-11",
+    "teacher_id": 1,
+    "teacher": "Rustamov Akmal"
+   }
+  ],
+  "teachers": [
+   {
+    "id": 1,
+    "name": "Rustamov Akmal"
+   },
+   {
+    "id": 4,
+    "name": "Usmonova Dildora"
+   }
+  ]
+ }
+}

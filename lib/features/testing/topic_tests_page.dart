@@ -3,6 +3,7 @@
 // Test vebda tekshirilib e'lon qilinadi.
 import 'package:flutter/material.dart';
 
+import '../../core/adaptive.dart';
 import '../../core/api.dart';
 import '../../core/i18n.dart';
 import '../../core/session.dart';
@@ -275,7 +276,7 @@ class _TopicTestsPageState extends State<TopicTestsPage> {
     return RefreshIndicator(
       onRefresh: _load,
       child: ListView(
-        padding: const EdgeInsets.fromLTRB(AppSpacing.l, AppSpacing.m, AppSpacing.l, AppSpacing.xl),
+        padding: readable(context, const EdgeInsets.fromLTRB(AppSpacing.l, AppSpacing.m, AppSpacing.l, AppSpacing.xl)),
         children: <Widget>[
           if (languages.length > 1) ...<Widget>[
             Row(children: <Widget>[
@@ -542,7 +543,7 @@ class TopicQuestionsPage extends StatelessWidget {
             return ListView(children: <Widget>[EmptyState(text: tr("Bu mavzuda savol yo'q."))]);
           }
           return ListView.separated(
-            padding: const EdgeInsets.all(AppSpacing.l),
+            padding: readable(context, const EdgeInsets.all(AppSpacing.l)),
             itemCount: questions.length,
             separatorBuilder: (_, __) => const SizedBox(height: AppSpacing.m),
             itemBuilder: (context, index) => _QuestionCard(number: index + 1, question: questions[index]),

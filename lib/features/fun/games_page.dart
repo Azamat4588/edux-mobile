@@ -2,6 +2,7 @@
 // matematika. O'yin tanlanganda manba (fan / to'plam / daraja) rekordlari bilan tanlanadi. GET my/games.
 import 'package:flutter/material.dart';
 
+import '../../core/adaptive.dart';
 import '../../core/api.dart';
 import '../../core/games.dart';
 import '../../core/i18n.dart';
@@ -70,7 +71,7 @@ class GamesCatalog extends StatelessWidget {
   Widget build(BuildContext context) {
     final games = availableGames(catalog);
     return ListView(
-      padding: const EdgeInsets.fromLTRB(16, 0, 16, 32),
+      padding: readable(context, const EdgeInsets.fromLTRB(16, 0, 16, 32), max: kGridWidth),
       children: <Widget>[
         for (final source in gameSourceOrder)
           if (games.any((game) => gameSourceOf(game) == source)) ...<Widget>[
@@ -79,10 +80,11 @@ class GamesCatalog extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(4, 0, 4, 10),
               child: Text(tr(gameSourceHintLabels[source]!), style: TextStyle(color: AppColors.muted, fontSize: 13)),
             ),
-            for (final game in games.where((game) => gameSourceOf(game) == source)) ...<Widget>[
-              GameCard(game: game, blocked: gameBlockedReason(catalog, game), record: gameBestRecord(catalog, game), onTap: () => onOpen(game)),
-              const SizedBox(height: 8),
-            ],
+            // Telefonda bitta ustun, iPad'da 2–3 ustunli to'r.
+            AdaptiveGrid(minTile: 320, minColumns: 1, maxColumns: 3, spacing: 8, children: <Widget>[
+              for (final game in games.where((game) => gameSourceOf(game) == source))
+                GameCard(game: game, blocked: gameBlockedReason(catalog, game), record: gameBestRecord(catalog, game), onTap: () => onOpen(game)),
+            ]),
           ],
       ],
     );

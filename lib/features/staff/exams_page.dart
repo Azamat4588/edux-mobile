@@ -1,6 +1,7 @@
 // Testlar (xodim): ro'yxat, natijalar reytingi va shu test varaqalarini skanerlash.
 import 'package:flutter/material.dart';
 
+import '../../core/adaptive.dart';
 import '../../core/api.dart';
 import '../../core/format.dart';
 import '../../core/help_links.dart';
@@ -39,7 +40,7 @@ class ExamsPage extends StatelessWidget {
             return ListView(children: <Widget>[EmptyState(text: tr("Hali test yo'q. Birinchisini yarating."))]);
           }
           return ListView.separated(
-            padding: const EdgeInsets.all(16),
+            padding: readable(context, const EdgeInsets.all(16)),
             itemCount: exams.length,
             separatorBuilder: (_, __) => const SizedBox(height: 10),
             itemBuilder: (context, index) => _ExamTile(exam: exams[index]),
@@ -117,7 +118,7 @@ class ExamDetailPage extends StatelessWidget {
           final scoreIndex = header.length > 9 ? 9 : -1;
           final percentIndex = header.length > 11 ? 11 : -1;
           return ListView(
-            padding: const EdgeInsets.fromLTRB(16, 16, 16, 96),
+            padding: readable(context, const EdgeInsets.fromLTRB(16, 16, 16, 96)),
             children: <Widget>[
               AppCard(
                 child: Column(children: <Widget>[

@@ -1,0 +1,951 @@
+{
+ "subject": "Fizika",
+ "subject_label": "Fizika",
+ "grade": null,
+ "books": [
+  {
+   "grade": 6,
+   "book": "Fizika 6",
+   "chapters": [
+    {
+     "chapter": "Kirish. Fizika nimani o'rganadi",
+     "topics": [
+      {
+       "topic": "7-mavzu. O'lchashlar va o'lchash aniqligi",
+       "labs": [
+        "phy_measure"
+       ]
+      }
+     ]
+    },
+    {
+     "chapter": "I bob. Modda tuzilishi haqida dastlabki ma'lumotlar",
+     "topics": [
+      {
+       "topic": "9-mavzu. Molekulalar va ularning o'lchamlari",
+       "labs": [
+        "phy_molecule_size"
+       ]
+      },
+      {
+       "topic": "14-mavzu. Massa va uning birliklari",
+       "labs": [
+        "phy_balance_scale"
+       ]
+      },
+      {
+       "topic": "15-mavzu. Laboratoriya ishi. Shayinli tarozi yordamida jism massasini o'lchash",
+       "labs": [
+        "phy_balance_scale"
+       ]
+      },
+      {
+       "topic": "16-mavzu. Zichlik va uning birliklari. Beruniy va Hozinning zichlikni aniqlash usullari",
+       "labs": [
+        "phy_density"
+       ]
+      },
+      {
+       "topic": "17-mavzu. Laboratoriya ishi. Qattiq jismning zichligini aniqlash",
+       "labs": [
+        "phy_density"
+       ]
+      }
+     ]
+    },
+    {
+     "chapter": "II bob. Mexanik hodisalar haqida dastlabki ma'lumotlar",
+     "topics": [
+      {
+       "topic": "21-mavzu. Jismlarning o'zaro ta'siri haqida ma'lumotlar. Kuch",
+       "labs": [
+        "phy_dynamometer"
+       ]
+      },
+      {
+       "topic": "22-mavzu. Laboratoriya ishi. Dinamometr yordamida kuchlarni o'lchash",
+       "labs": [
+        "phy_dynamometer"
+       ]
+      },
+      {
+       "topic": "23-mavzu. Bosim va uning birliklari",
+       "labs": [
+        "phy_solid_pressure"
+       ]
+      },
+      {
+       "topic": "24-mavzu. Paskal qonuni va uning qo'llanilishi",
+       "labs": [
+        "phy_hydraulic"
+       ]
+      },
+      {
+       "topic": "25-mavzu. Tinch holatdagi gaz va suyuqlikda bosim",
+       "labs": [
+        "phy_communicating",
+        "pressure"
+       ]
+      },
+      {
+       "topic": "26-mavzu. Atmosfera bosimi. Torrichelli tajribasi",
+       "labs": [
+        "phy_torricelli"
+       ]
+      },
+      {
+       "topic": "27-mavzu. Arximed qonuni va uning qo'llanilishi",
+       "labs": [
+        "phy_float",
+        "buoyancy"
+       ]
+      }
+     ]
+    },
+    {
+     "chapter": "III bob. Jismlarning muvozanati. Oddiy mexanizmlar",
+     "topics": [
+      {
+       "topic": "30-mavzu. Jismlarning massa markazi va uni aniqlash. Muvozanat turlari",
+       "labs": [
+        "phy_center_mass"
+       ]
+      },
+      {
+       "topic": "31-mavzu. Kuch momenti. Richag va uning muvozanat sharti",
+       "labs": [
+        "lever"
+       ]
+      },
+      {
+       "topic": "32-mavzu. Laboratoriya ishi. Richagning muvozanatda bo'lish shartini o'rganish",
+       "labs": [
+        "lever"
+       ]
+      },
+      {
+       "topic": "33-mavzu. Oddiy mexanizmlar: blok, qiya tekislik, vint, pona va chig'iriqning qo'llanilishi",
+       "labs": [
+        "phy_incline",
+        "pulley"
+       ]
+      },
+      {
+       "topic": "35-mavzu. Mexanikaning oltin qoidasi. Mexanizmning foydali ish koeffitsiyenti",
+       "labs": [
+        "phy_incline"
+       ]
+      }
+     ]
+    },
+    {
+     "chapter": "IV bob. Issiqlik hodisalari haqida dastlabki ma'lumotlar",
+     "topics": [
+      {
+       "topic": "37-mavzu. Jismlarning issiqlikdan kengayishi",
+       "labs": [
+        "phy_expansion"
+       ]
+      }
+     ]
+    },
+    {
+     "chapter": "VI bob. Yorug'lik hodisalari haqida dastlabki ma'lumotlar",
+     "topics": [
+      {
+       "topic": "48-mavzu. Yorug'likning to'g'ri chiziq bo'ylab tarqalishi. Soya va yarim soya",
+       "labs": [
+        "phy_shadow"
+       ]
+      },
+      {
+       "topic": "49-mavzu. Quyosh va Oy tutilishi",
+       "labs": [
+        "phy_shadow"
+       ]
+      },
+      {
+       "topic": "50-mavzu. Yorug'likning tezligi. Yorug'likning qaytishi va sinishi",
+       "labs": [
+        "reflection"
+       ]
+      },
+      {
+       "topic": "52-mavzu. Yassi ko'zgu",
+       "labs": [
+        "phy_plane_mirror"
+       ]
+      },
+      {
+       "topic": "53-mavzu. Linzalar haqida tushuncha",
+       "labs": [
+        "lens"
+       ]
+      },
+      {
+       "topic": "54-mavzu. Shisha prizmada yorug'likning tarkibiy qismlarga ajralishi. Kamalak",
+       "labs": [
+        "prism"
+       ]
+      },
+      {
+       "topic": "55-mavzu. Laboratoriya ishi. Yassi ko'zgu yordamida yorug'likning qaytishini o'rganish",
+       "labs": [
+        "phy_plane_mirror"
+       ]
+      },
+      {
+       "topic": "56-mavzu. Laboratoriya ishi. Shisha prizma yordamida yorug'likning spektrga ajralishini o'rganish",
+       "labs": [
+        "prism"
+       ]
+      }
+     ]
+    },
+    {
+     "chapter": "VII bob. Tovush hodisalari haqida dastlabki ma'lumotlar",
+     "topics": [
+      {
+       "topic": "58-mavzu. Tovushning turli muhitlarda tarqalishi",
+       "labs": [
+        "phy_echo"
+       ]
+      },
+      {
+       "topic": "60-mavzu. Tovushning qaytishi. Aks sado",
+       "labs": [
+        "phy_echo"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "grade": 7,
+   "book": "Fizika 7",
+   "chapters": [
+    {
+     "chapter": "II bob. To'g'ri chiziqli harakat",
+     "topics": [
+      {
+       "topic": "6-§. To'g'ri chiziqli tekis harakat tezligi",
+       "labs": [
+        "phy_uniform"
+       ]
+      },
+      {
+       "topic": "7-§. To'g'ri chiziqli tekis harakatning grafik tasviri",
+       "labs": [
+        "phy_uniform"
+       ]
+      },
+      {
+       "topic": "11-§. Tekis o'zgaruvchan harakatda bosib o'tilgan yo'l",
+       "labs": [
+        "phy_accel"
+       ]
+      },
+      {
+       "topic": "12-§. Tekis tezlanuvchan harakatlanayotgan jism tezlanishini aniqlash (1-laboratoriya ishi)",
+       "labs": [
+        "phy_accel"
+       ]
+      },
+      {
+       "topic": "13-§. Jismlarning erkin tushishi",
+       "labs": [
+        "freefall"
+       ]
+      },
+      {
+       "topic": "14-§. Yuqoriga tik otilgan jismning harakati",
+       "labs": [
+        "phy_vertical"
+       ]
+      }
+     ]
+    },
+    {
+     "chapter": "III bob. Tekis aylanma harakat",
+     "topics": [
+      {
+       "topic": "15-§. Jismning tekis aylanma harakati",
+       "labs": [
+        "circular"
+       ]
+      },
+      {
+       "topic": "16-§. Aylanma harakatni tavsiflaydigan kattaliklar orasidagi munosabatlar",
+       "labs": [
+        "circular"
+       ]
+      },
+      {
+       "topic": "17-§. Markazga intilma tezlanish",
+       "labs": [
+        "circular"
+       ]
+      }
+     ]
+    },
+    {
+     "chapter": "IV bob. Harakat qonunlari",
+     "topics": [
+      {
+       "topic": "21-§. Nyutonning ikkinchi qonuni",
+       "labs": [
+        "newton2"
+       ]
+      },
+      {
+       "topic": "22-§. Nyutonning uchinchi qonuni",
+       "labs": [
+        "phy_newton3"
+       ]
+      },
+      {
+       "topic": "23-§. Harakat qonunlarining aylanma harakatga tatbiqi",
+       "labs": [
+        "phy_turn"
+       ]
+      }
+     ]
+    },
+    {
+     "chapter": "V bob. Tashqi kuchlar ta'sirida jismlarning harakati",
+     "topics": [
+      {
+       "topic": "24-§. Elastiklik kuchi",
+       "labs": [
+        "hooke"
+       ]
+      },
+      {
+       "topic": "25-§. Prujina bikirligini aniqlash (2-laboratoriya ishi)",
+       "labs": [
+        "hooke"
+       ]
+      },
+      {
+       "topic": "26-§. Butun olam tortishish qonuni",
+       "labs": [
+        "phy_gravitation"
+       ]
+      },
+      {
+       "topic": "27-§. Og'irlik kuchi",
+       "labs": [
+        "phy_gravitation"
+       ]
+      },
+      {
+       "topic": "28-§. Jismning og'irligi",
+       "labs": [
+        "phy_weight_lift"
+       ]
+      },
+      {
+       "topic": "29-§. Yuklama va vaznsizlik",
+       "labs": [
+        "phy_weight_lift"
+       ]
+      },
+      {
+       "topic": "31-§. Yerning sun'iy yo'ldoshlari",
+       "labs": [
+        "phy_satellite"
+       ]
+      },
+      {
+       "topic": "32-§. Ishqalanish kuchi. Tinchlikdagi ishqalanish",
+       "labs": [
+        "friction"
+       ]
+      },
+      {
+       "topic": "33-§. Sirpanish ishqalanish. Dumalash ishqalanish",
+       "labs": [
+        "friction"
+       ]
+      },
+      {
+       "topic": "34-§. Sirpanish ishqalanish koeffitsiyentini aniqlash (3-laboratoriya ishi)",
+       "labs": [
+        "friction"
+       ]
+      }
+     ]
+    },
+    {
+     "chapter": "VI bob. Impulsning saqlanish qonuni",
+     "topics": [
+      {
+       "topic": "37-§. Impulsning saqlanish qonuni",
+       "labs": [
+        "phy_rocket",
+        "collision"
+       ]
+      },
+      {
+       "topic": "38-§. Reaktiv harakat",
+       "labs": [
+        "phy_rocket"
+       ]
+      }
+     ]
+    },
+    {
+     "chapter": "VII bob. Ish va energiya. Energiyaning saqlanish qonuni",
+     "topics": [
+      {
+       "topic": "39-§. Mexanik ish",
+       "labs": [
+        "phy_work"
+       ]
+      },
+      {
+       "topic": "40-§. Jismni ko'tarishda va shu masofaga gorizontal ko'chirishda bajarilgan ishini hisoblash (4-laboratoriya ishi)",
+       "labs": [
+        "phy_work"
+       ]
+      },
+      {
+       "topic": "42-§. Kinetik energiya",
+       "labs": [
+        "phy_kinetic"
+       ]
+      },
+      {
+       "topic": "43-§. Mexanik energiyaning saqlanish qonuni",
+       "labs": [
+        "energy"
+       ]
+      },
+      {
+       "topic": "44-§. Jism kinetik energiyasining uning tezligi va massasiga bog'liqligini aniqlash (5-laboratoriya ishi)",
+       "labs": [
+        "phy_kinetic"
+       ]
+      },
+      {
+       "topic": "45-§. Quvvat",
+       "labs": [
+        "phy_power"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "grade": 8,
+   "book": "Fizika 8",
+   "chapters": [
+    {
+     "chapter": "I bob. Issiqlik hodisalari",
+     "topics": [
+      {
+       "topic": "Issiqlik miqdori. Solishtirma issiqlik sig'imi",
+       "labs": [
+        "phy_specific_heat",
+        "heat"
+       ]
+      },
+      {
+       "topic": "Issiqlik balansi tenglamasi",
+       "labs": [
+        "phy_mixing"
+       ]
+      },
+      {
+       "topic": "Erish va qotish. Solishtirma erish issiqligi",
+       "labs": [
+        "phy_melting"
+       ]
+      },
+      {
+       "topic": "Bug'lanish va qaynash. Solishtirma bug'lanish issiqligi",
+       "labs": [
+        "phy_boiling"
+       ]
+      },
+      {
+       "topic": "Yoqilg'ining yonish issiqligi. Issiqlik dvigatellari",
+       "labs": [
+        "phy_fuel"
+       ]
+      },
+      {
+       "topic": "Havoning namligi va uni o'lchash",
+       "labs": [
+        "phy_humidity"
+       ]
+      }
+     ]
+    },
+    {
+     "chapter": "II bob. Elektr hodisalari",
+     "topics": [
+      {
+       "topic": "Elektr zaryadlarining o'zaro ta'siri. Kulon qonuni",
+       "labs": [
+        "phy_coulomb"
+       ]
+      },
+      {
+       "topic": "Tok kuchi va kuchlanish. Ampermetr va voltmetr",
+       "labs": [
+        "phy_ammeter"
+       ]
+      },
+      {
+       "topic": "Zanjir qismi uchun Om qonuni",
+       "labs": [
+        "ohm"
+       ]
+      },
+      {
+       "topic": "O'tkazgich qarshiligi. Solishtirma qarshilik",
+       "labs": [
+        "phy_resistivity"
+       ]
+      },
+      {
+       "topic": "Reostatlar",
+       "labs": [
+        "phy_rheostat"
+       ]
+      },
+      {
+       "topic": "O'tkazgichlarni ketma-ket, parallel va aralash ulash",
+       "labs": [
+        "phy_mixed",
+        "circuit_series"
+       ]
+      },
+      {
+       "topic": "Elektr tokining ishi va quvvati. Joul–Lens qonuni",
+       "labs": [
+        "phy_joule"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "grade": 9,
+   "book": "Fizika 9",
+   "chapters": [
+    {
+     "chapter": "I bob. Elektromagnit hodisalar",
+     "topics": [
+      {
+       "topic": "Tokli g'altakning magnit maydoni. Elektromagnitlar",
+       "labs": [
+        "phy_electromagnet"
+       ]
+      }
+     ]
+    },
+    {
+     "chapter": "II bob. Geometrik optika",
+     "topics": [
+      {
+       "topic": "Linzaning optik kuchi. Ko'z va ko'zoynaklar",
+       "labs": [
+        "phy_lens_power"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "grade": 10,
+   "book": "Fizika 10",
+   "chapters": [
+    {
+     "chapter": "I bob. Kinematika",
+     "topics": [
+      {
+       "topic": "5-mavzu. Aylanma va ilgarilanma harakatni o'zaro uzatish",
+       "labs": [
+        "phy_gear"
+       ]
+      },
+      {
+       "topic": "6-mavzu. Gorizontal otilgan jism harakati",
+       "labs": [
+        "phy_horizontal"
+       ]
+      },
+      {
+       "topic": "7-mavzu. Gorizontga qiya otilgan jism harakati",
+       "labs": [
+        "projectile"
+       ]
+      },
+      {
+       "topic": "8-mavzu. Laboratoriya ishi: Gorizontga qiya otilgan jism harakatini o'rganish",
+       "labs": [
+        "projectile"
+       ]
+      }
+     ]
+    },
+    {
+     "chapter": "III bob. Mexanikada saqlanish qonunlari",
+     "topics": [
+      {
+       "topic": "15-mavzu. Laboratoriya ishi: Qiya tekislikda foydali ish koeffitsiyentini aniqlash",
+       "labs": [
+        "phy_incline"
+       ]
+      },
+      {
+       "topic": "16-mavzu. Jismlarning absolyut elastik va noelastik to'qnashishi",
+       "labs": [
+        "collision"
+       ]
+      }
+     ]
+    },
+    {
+     "chapter": "IV bob. Statika va gidrodinamika",
+     "topics": [
+      {
+       "topic": "20-mavzu. Suyuqlik va gazlar harakati, oqimning uzluksizlik teoremasi. Bernulli tenglamasi",
+       "labs": [
+        "phy_bernoulli"
+       ]
+      }
+     ]
+    },
+    {
+     "chapter": "V bob. Mexanik tebranishlar va to'lqinlar",
+     "topics": [
+      {
+       "topic": "22-mavzu. Garmonik tebranishlar",
+       "labs": [
+        "phy_spring_pendulum"
+       ]
+      },
+      {
+       "topic": "23-mavzu. Prujinali va matematik mayatniklar",
+       "labs": [
+        "phy_spring_pendulum",
+        "pendulum"
+       ]
+      },
+      {
+       "topic": "24-mavzu. Laboratoriya ishi: Matematik mayatnik yordamida erkin tushish tezlanishini aniqlash",
+       "labs": [
+        "phy_g_planet"
+       ]
+      },
+      {
+       "topic": "25-mavzu. Majburiy tebranishlar. Texnikada rezonans",
+       "labs": [
+        "phy_resonance"
+       ]
+      },
+      {
+       "topic": "26-mavzu. Mexanik to'lqinlarning muhitlarda tarqalishi. Ultra va infratovushlardan turmushda va texnikada foydalanish",
+       "labs": [
+        "wave"
+       ]
+      }
+     ]
+    },
+    {
+     "chapter": "VI bob. Termodinamika asoslari",
+     "topics": [
+      {
+       "topic": "27-mavzu. Issiqlik jarayonlarining qaytmasligi. Termodinamika qonunlari",
+       "labs": [
+        "phy_first_law"
+       ]
+      },
+      {
+       "topic": "28-mavzu. Adiabatik jarayon. Issiqlik mashinasining foydali ish koeffitsiyenti. Karno sikli",
+       "labs": [
+        "phy_carnot"
+       ]
+      }
+     ]
+    },
+    {
+     "chapter": "VII bob. Elektrodinamika",
+     "topics": [
+      {
+       "topic": "30-mavzu. Zaryadning saqlanish qonuni. Nuqtaviy zaryadning maydoni. Elektr maydon kuchlanganligining superpozitsiya prinsipi",
+       "labs": [
+        "phy_coulomb",
+        "phy_efield"
+       ]
+      },
+      {
+       "topic": "31-mavzu. Zaryadlangan sharning elektr maydoni. Dielektrik singdiruvchanlik",
+       "labs": [
+        "capacitor"
+       ]
+      },
+      {
+       "topic": "32-mavzu. Nuqtaviy zaryad maydonining potensiali. Potensiallar farqi",
+       "labs": [
+        "phy_efield"
+       ]
+      },
+      {
+       "topic": "34-mavzu. Elektr maydon energiyasi",
+       "labs": [
+        "phy_cap_energy"
+       ]
+      }
+     ]
+    },
+    {
+     "chapter": "VIII bob. O'zgarmas tok qonunlari",
+     "topics": [
+      {
+       "topic": "37-mavzu. Butun zanjir uchun Om qonuni. Tok manbayining foydali ish koeffitsiyenti",
+       "labs": [
+        "phy_emf"
+       ]
+      },
+      {
+       "topic": "38-mavzu. Tok manbalarini ketma-ket va parallel ulash",
+       "labs": [
+        "phy_cells"
+       ]
+      },
+      {
+       "topic": "39-mavzu. Ampermetr va voltmetrning o'lchash chegarasini oshirish",
+       "labs": [
+        "phy_shunt"
+       ]
+      },
+      {
+       "topic": "40-mavzu. Laboratoriya ishi: Tok manbayining EYuK va ichki qarshiligini aniqlash",
+       "labs": [
+        "phy_emf"
+       ]
+      }
+     ]
+    },
+    {
+     "chapter": "IX bob. Turli muhitlarda elektr toki",
+     "topics": [
+      {
+       "topic": "42-mavzu. Metall o'tkazgichlar qarshiligining temperaturaga bog'liqligi",
+       "labs": [
+        "phy_rtemp"
+       ]
+      },
+      {
+       "topic": "44-mavzu. Yarimo'tkazgichli asboblar (diod, tranzistor) va ularning texnikada qo'llanilishi",
+       "labs": [
+        "phy_diode"
+       ]
+      },
+      {
+       "topic": "45-mavzu. Laboratoriya ishi: Yarimo'tkazgichli diodning volt-amper xarakteristikasini o'rganish",
+       "labs": [
+        "phy_diode"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "grade": 11,
+   "book": "Fizika 11",
+   "chapters": [
+    {
+     "chapter": "I bob. Magnit maydon",
+     "topics": [
+      {
+       "topic": "1-mavzu. Magnit maydon. Magnit maydonni tavsiflovchi kattaliklar",
+       "labs": [
+        "magnetic"
+       ]
+      },
+      {
+       "topic": "2-mavzu. Bir jinsli magnit maydonning tokli ramkani aylantiruvchi momenti",
+       "labs": [
+        "phy_frame"
+       ]
+      },
+      {
+       "topic": "3-mavzu. Tokli to'g'ri o'tkazgichning, halqa va g'altakning magnit maydoni",
+       "labs": [
+        "phy_electromagnet",
+        "phy_oersted"
+       ]
+      },
+      {
+       "topic": "5-mavzu. Tokli o'tkazgichlarning o'zaro ta'sir kuchi",
+       "labs": [
+        "phy_wires"
+       ]
+      },
+      {
+       "topic": "6-mavzu. Bir jinsli magnit maydonida zaryadli zarraning harakati. Lorens kuchi",
+       "labs": [
+        "phy_lorentz"
+       ]
+      }
+     ]
+    },
+    {
+     "chapter": "II bob. Elektromagnit induksiya",
+     "topics": [
+      {
+       "topic": "7-mavzu. Elektromagnit induksiya hodisasi. Induksiya elektr yurituvchi kuch. Faradey qonuni",
+       "labs": [
+        "induction"
+       ]
+      }
+     ]
+    },
+    {
+     "chapter": "III bob. Elektromagnit tebranishlar",
+     "topics": [
+      {
+       "topic": "11-mavzu. Erkin elektromagnit tebranishlar (tebranish konturi). Tebranish konturida energiyaning o'zgarishi",
+       "labs": [
+        "phy_lc"
+       ]
+      },
+      {
+       "topic": "12-mavzu. Tebranishlarni grafik ravishda tasvirlash. So'nuvchi elektromagnit tebranishlar",
+       "labs": [
+        "phy_lc"
+       ]
+      },
+      {
+       "topic": "15-mavzu. O'zgaruvchan tok zanjiridagi kondensator",
+       "labs": [
+        "phy_ac_cap"
+       ]
+      },
+      {
+       "topic": "16-mavzu. O'zgaruvchan tok zanjiridagi induktiv g'altak",
+       "labs": [
+        "phy_ac_coil"
+       ]
+      },
+      {
+       "topic": "17-mavzu. Aktiv qarshilik, induktiv g'altak va kondensator ketma-ket ulangan o'zgaruvchan tok zanjiri uchun Om qonuni",
+       "labs": [
+        "phy_ac_resonance"
+       ]
+      },
+      {
+       "topic": "19-mavzu. Laboratoriya ishi: O'zgaruvchan tok zanjirida rezonans hodisasini o'rganish",
+       "labs": [
+        "phy_ac_resonance"
+       ]
+      }
+     ]
+    },
+    {
+     "chapter": "IV bob. Elektromagnit to'lqinlar va to'lqin optikasi",
+     "topics": [
+      {
+       "topic": "25-mavzu. Yorug'lik interferensiyasi va difraksiyasi",
+       "labs": [
+        "phy_double_slit"
+       ]
+      },
+      {
+       "topic": "26-mavzu. Laboratoriya ishi: Difraksion panjara yordamida yorug'lik to'lqin uzunligini aniqlash",
+       "labs": [
+        "phy_grating"
+       ]
+      },
+      {
+       "topic": "27-mavzu. Yorug'lik dispersiyasi. Spektral analiz",
+       "labs": [
+        "prism"
+       ]
+      },
+      {
+       "topic": "28-mavzu. Yorug'likning qutblanishi",
+       "labs": [
+        "phy_polarization"
+       ]
+      },
+      {
+       "topic": "30-mavzu. Yorug'lik oqimi. Yorug'lik kuchi. Yoritilganlik qonuni",
+       "labs": [
+        "phy_illuminance"
+       ]
+      },
+      {
+       "topic": "31-mavzu. Laboratoriya ishi: Yoritilganlikning yorug'lik kuchiga bog'liqligi",
+       "labs": [
+        "phy_illuminance"
+       ]
+      }
+     ]
+    },
+    {
+     "chapter": "VI bob. Kvant fizikasi",
+     "topics": [
+      {
+       "topic": "35-mavzu. Fotoelektrik effekt. Fotonlar",
+       "labs": [
+        "phy_photoeffect"
+       ]
+      }
+     ]
+    },
+    {
+     "chapter": "VII bob. Atom va yadro fizikasi. Atom energetikasining fizik asoslari",
+     "topics": [
+      {
+       "topic": "37-mavzu. Atomning Bor modeli. Bor postulatlari",
+       "labs": [
+        "phy_bohr"
+       ]
+      },
+      {
+       "topic": "39-mavzu. Atom yadrosining tarkibi. Bog'lanish energiyasi. Massa defekti",
+       "labs": [
+        "phy_mass_defect"
+       ]
+      },
+      {
+       "topic": "40-mavzu. Radioaktiv nurlanishni va zarralarni qayd qilish usullari",
+       "labs": [
+        "phy_absorption"
+       ]
+      },
+      {
+       "topic": "41-mavzu. Radioaktiv yemirilish qonuni",
+       "labs": [
+        "decay"
+       ]
+      },
+      {
+       "topic": "42-mavzu. Yadro reaksiyalari. Siljish qonuni",
+       "labs": [
+        "phy_nuclear"
+       ]
+      },
+      {
+       "topic": "44-mavzu. Atom energetikasining fizik asoslari. Yadro energiyasidan foydalanishda xavfsizlik choralari",
+       "labs": [
+        "phy_absorption"
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

@@ -2,6 +2,7 @@
 // ochiladi. Bosh sahifalardagi qo'ng'iroqcha — o'qilmaganlar soni bilan.
 import 'package:flutter/material.dart';
 
+import '../../core/adaptive.dart';
 import '../../core/api.dart';
 import '../../core/format.dart';
 import '../../core/i18n.dart';
@@ -135,7 +136,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
                     ),
                   ])
                 : ListView.separated(
-                    padding: const EdgeInsets.symmetric(vertical: AppSpacing.s),
+                    padding: readable(context, const EdgeInsets.symmetric(vertical: AppSpacing.s)),
                     itemCount: items.length,
                     separatorBuilder: (_, __) => const Divider(indent: 72),
                     itemBuilder: (context, index) {

@@ -90,6 +90,9 @@ class Api {
   Future<dynamic> put(String path, [Object? body]) =>
       _send(() => _client.put(uri(path), headers: headers(), body: jsonEncode(body ?? <String, Object?>{})));
 
+  Future<dynamic> patch(String path, [Object? body]) =>
+      _send(() => _client.patch(uri(path), headers: headers(), body: jsonEncode(body ?? <String, Object?>{})));
+
   Future<dynamic> delete(String path) => _send(() => _client.delete(uri(path), headers: headers(json: false)));
 
   /// DELETE so'rovi tanasi bilan (masalan, qurilma tokenini o'chirish).

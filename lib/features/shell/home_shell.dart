@@ -3,8 +3,10 @@
 // nechta yorliq bo'lsa — tepada yorliqlar (veb: SectionTabs). Ota-onada bitta bo'lim — pastki menyuda uning yorliqlari.
 import 'package:flutter/material.dart';
 
+import '../../core/adaptive.dart';
 import '../../core/api.dart';
 import '../../core/app_update.dart';
+import '../../core/feedback.dart';
 import '../../core/bank_sms.dart';
 import '../../core/home_widgets.dart';
 import '../../core/i18n.dart';
@@ -23,6 +25,7 @@ import '../callcenter/callcenter_page.dart';
 import '../crm/device_sms_page.dart';
 import '../crm/leads_page.dart';
 import '../crm/tasks_page.dart';
+import '../feedback/feedback_pages.dart';
 import '../finance/finance_page.dart';
 import '../finance/p2p_page.dart';
 import '../fun/achievements_page.dart';
@@ -69,11 +72,17 @@ class HomeShell extends StatefulWidget {
   State<HomeShell> createState() => _HomeShellState();
 }
 
-class _HomeShellState extends State<HomeShell> with WidgetsBindingObserver {
-  int _index = 0;
+/// Menyu bandlari kalitlari: ota-onaning yagona sahifasi va «Yana».
+const String _guardianKey = '__guardian';
+const String _moreKey = '__more';
 
-  /// Ochilgan tablar: IndexedStack hamma sahifani birdaniga qurmasin.
-  final Set<int> _visited = <int>{0};
+class _HomeShellState extends State<HomeShell> with WidgetsBindingObserver {
+  /// Tanlangan band kaliti (bo'lim kaliti, [_guardianKey] yoki [_moreKey]); bo'sh — birinchi band.
+  /// Kalit bo'yicha: iPad burilganda yoki Split View o'lchami o'zgarganda menyu bandlari soni o'zgarsa ham tanlov saqlanadi.
+  String _selected = '';
+
+  /// Ochilgan bandlar: IndexedStack hamma sahifani birdaniga qurmasin.
+  final Set<String> _visited = <String>{};
 
   /// Bo'lim ichidagi yorliqni tashqaridan tanlash (bosh sahifa kartasi, push).
   final Map<String, ValueNotifier<String?>> _tabRequests = <String, ValueNotifier<String?>>{};
@@ -121,6 +130,17 @@ class _HomeShellState extends State<HomeShell> with WidgetsBindingObserver {
     routes['support'] = (data) {
       final token = asText(data['token']);
       return RegExp(r'^[A-Za-z0-9]{40}$').hasMatch(token) ? TicketPage(token: token) : const SupportPage();
+    };
+    // 1.39: mijozlar fikri — yangi fikr / mas'ul (rahbar paneli) va muallifga javob.
+    routes['feedback'] = (data) {
+      final s = session();
+      if (!s.can('feedback_manage')) return null;
+      final id = asInt(data['feedback_id']);
+      return id > 0 ? FeedbackAdminDetailPage(id: id) : const MasterDetail(master: FeedbackAdminPage());
+    };
+    routes['feedback_reply'] = (data) {
+      final id = asInt(data['feedback_id']);
+      return id > 0 ? MyFeedbackDetailPage(id: id) : const MyFeedbackPage(initialTab: 1);
     };
     routes['certificate'] = (_) {
       final s = session();
@@ -171,14 +191,14 @@ class _HomeShellState extends State<HomeShell> with WidgetsBindingObserver {
     BankSmsForwarder.instance.drain();
   }
 
-  void _go(int index) => setState(() {
-        _index = index;
-        _visited.add(index);
+  void _go(String key) => setState(() {
+        _selected = key;
+        _visited.add(key);
       });
 
   void _home(Map<String, dynamic> data) {
     if (!mounted) return;
-    _go(0);
+    _go('');
     if (AppScope.read(context).isGuardian) GuardianFocus.request.value = data;
   }
 
@@ -190,12 +210,13 @@ class _HomeShellState extends State<HomeShell> with WidgetsBindingObserver {
       case 'home':
         if (session.isStudent) return StudentHomePage(onOpen: _open);
         return StaffHomePage(onOpen: _open);
+      // 3.7: iPad — ro'yxat va tafsilot ikki ustunda (lib/core/adaptive.dart MasterDetail); telefonda o'zgarishsiz.
       case 'students':
-        return const StudentsPage();
+        return MasterDetail(master: const StudentsPage(), hint: tr("O'quvchini tanlang — kartasi shu yerda ochiladi."));
       case 'crm.leads':
         return const LeadsPage();
       case 'attendance':
-        return const AttendancePage();
+        return MasterDetail(master: const AttendancePage(), hint: tr('Guruhni tanlang — davomat varaqasi shu yerda ochiladi.'));
       case 'access.checkin':
         return const CheckinPage();
       case 'access.kiosk':
@@ -213,9 +234,11 @@ class _HomeShellState extends State<HomeShell> with WidgetsBindingObserver {
       case 'topics':
         return const TopicTestsPage();
       case 'crm.payments':
-        return const FinancePage();
+        return MasterDetail(master: const FinancePage(), hint: tr("To'lov yoki qarzdorni tanlang — o'quvchi kartasi shu yerda ochiladi."));
       case 'crm.debtors':
-        return const FinancePage(initialTab: 1);
+        return MasterDetail(master: const FinancePage(initialTab: 1), hint: tr("To'lov yoki qarzdorni tanlang — o'quvchi kartasi shu yerda ochiladi."));
+      case 'feedback':
+        return MasterDetail(master: const FeedbackAdminPage(), hint: tr('Fikrni tanlang — tafsilot va javob shu yerda.'));
       case 'pay.p2p':
         return const P2pPage();
       case 'crm.callcenter':
@@ -255,7 +278,7 @@ class _HomeShellState extends State<HomeShell> with WidgetsBindingObserver {
       case 'my.tutor':
         return const TutorPage();
       case 'school.journal':
-        return const JournalPage();
+        return MasterDetail(master: const JournalPage(), hint: tr('Jurnalni tanlang — darslar va baholar shu yerda ochiladi.'));
       case 'my.payments':
         return const MyPaymentsPage();
     }
@@ -271,7 +294,7 @@ class _HomeShellState extends State<HomeShell> with WidgetsBindingObserver {
     }
     if (session.isGuardian) {
       _guardianTab.value = key == 'pay' ? 'child.payments' : key;
-      _go(0);
+      _go(_guardianKey);
       return;
     }
     if (key == 'pay') {
@@ -279,12 +302,11 @@ class _HomeShellState extends State<HomeShell> with WidgetsBindingObserver {
       return;
     }
     final sections = buildNav(navContextOf(session));
-    final bottom = bottomNav(sections);
+    final bottom = bottomNav(sections, limit: navLimit(isWideScreen(context)));
     final section = sectionOfTab(sections, key);
-    final index = section == null ? -1 : bottom.indexWhere((item) => item.section == section.key);
-    if (index >= 0) {
-      _request(section!.key).value = key;
-      _go(index);
+    if (section != null && bottom.any((item) => item.section == section.key)) {
+      _request(section.key).value = key;
+      _go(section.key);
       return;
     }
     final page = _page(session, key);
@@ -322,81 +344,99 @@ class _HomeShellState extends State<HomeShell> with WidgetsBindingObserver {
               label: section.tabs.length > 1 ? '${section.label} · ${tab.label}' : tab.label,
               page: _page(session, tab.key)!,
             ),
-      _MenuTile(icon: Icons.support_agent_outlined, label: tr('Murojaatlar'), page: const SupportPage()),
+      // 1.39: mijozlar fikri — markaz rahbariyatiga (EduX jamoasiga yoziladigan «Murojaatlar» dan alohida).
+      if (session.can('feedback_submit'))
+        _MenuTile(icon: Icons.rate_review_outlined, label: tr('Fikr bildirish'), page: const MyFeedbackPage()),
+      _MenuTile(
+        icon: Icons.support_agent_outlined,
+        label: tr('Murojaatlar'),
+        page: MasterDetail(master: const SupportPage(), hint: tr('Murojaatni tanlang — yozishma shu yerda ochiladi.')),
+      ),
       _MenuTile(icon: Icons.help_outline, label: tr('Yordam'), page: const HelpPage()),
     ];
     return SettingsPage(extra: extra);
   }
 
+  /// Fikrlar paneli (1.39): «Yangi» holatdagi fikrlar soni — menyu belgisi.
+  int _feedbackBadge(Session session) => session.can('feedback_manage') ? feedbackNewCount(session.context) : 0;
+
   @override
   Widget build(BuildContext context) {
     final session = AppScope.of(context);
+    final wide = isWideScreen(context);
     final sections = buildNav(navContextOf(session));
-    final bottom = bottomNav(sections);
+    final bottom = bottomNav(sections, limit: navLimit(wide));
     final overflow = overflowSections(sections, bottom);
     final guardian = bottom.isNotEmpty && bottom.first.kind == 'tab';
+    final feedbackSection = sectionOfTab(sections, 'feedback')?.key;
+    final feedbackBadge = _feedbackBadge(session);
 
+    final keys = <String>[];
     final pages = <Widget>[];
-    final destinations = <NavigationDestination>[];
+    final destinations = <AdaptiveDestination>[];
     if (guardian) {
+      keys.add(_guardianKey);
       pages.add(GuardianHomePage(tab: _guardianTab));
       for (final item in bottom) {
-        destinations.add(NavigationDestination(icon: Icon(navIcon(item.icon)), label: item.label));
+        destinations.add(AdaptiveDestination(icon: navIcon(item.icon), label: item.label));
       }
     } else {
       for (final item in bottom) {
         final section = sections.firstWhere((candidate) => candidate.key == item.section);
+        keys.add(section.key);
         pages.add(_sectionPage(session, section));
-        destinations.add(NavigationDestination(icon: Icon(navIcon(item.icon)), label: item.label));
+        destinations.add(AdaptiveDestination(icon: navIcon(item.icon), label: item.label, badge: section.key == feedbackSection ? feedbackBadge : 0));
       }
     }
+    keys.add(_moreKey);
     pages.add(_more(session, overflow));
-    destinations.add(NavigationDestination(icon: const Icon(Icons.menu), label: tr('Yana')));
+    final feedbackInMore = feedbackSection != null && !keys.contains(feedbackSection);
+    destinations.add(AdaptiveDestination(icon: Icons.menu, label: tr('Yana'), badge: feedbackInMore ? feedbackBadge : 0));
+
+    final current = keys.contains(_selected) ? _selected : keys.first;
+    _visited.add(current);
+    final stackIndex = keys.indexOf(current);
 
     return ValueListenableBuilder<String>(
       valueListenable: _guardianTab,
       builder: (context, guardianTab, _) {
-        final stackIndex = _index.clamp(0, pages.length - 1);
         var selected = stackIndex;
         if (guardian) {
-          // Ota-ona: tanlangan yorliq pastki menyuda bo'lsa — o'sha band, aks holda «Yana».
+          // Ota-ona: tanlangan yorliq menyuda bo'lsa — o'sha band, aks holda «Yana».
           final active = bottomActive(bottom, tab: guardianTab);
-          selected = stackIndex == pages.length - 1 ? destinations.length - 1 : (active == null ? destinations.length - 1 : bottom.indexWhere((item) => item.key == active));
+          selected = current == _moreKey ? destinations.length - 1 : (active == null ? destinations.length - 1 : bottom.indexWhere((item) => item.key == active));
         }
-        return Scaffold(
-          body: Column(children: <Widget>[
-            if (session.readOnly)
-              _ReadOnlyBanner(
-                suspended: session.suspended,
-                onTap: session.canManageBilling && !session.suspended
-                    ? () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const BillingPage()))
-                    : null,
-              ),
-            Expanded(
-              child: MediaQuery.removePadding(
-                context: context,
-                removeTop: session.readOnly,
-                child: IndexedStack(index: stackIndex, children: <Widget>[
-                  for (var i = 0; i < pages.length; i++)
-                    _visited.contains(i) || i == stackIndex ? TabVisibility(visible: i == stackIndex, child: pages[i]) : const SizedBox.shrink(),
-                ]),
-              ),
-            ),
-          ]),
-          bottomNavigationBar: destinations.length < 2
-              ? null
-              : NavigationBar(
-                  selectedIndex: selected.clamp(0, destinations.length - 1),
-                  onDestinationSelected: (i) {
-                    if (guardian && i < bottom.length) {
-                      _guardianTab.value = bottom[i].key;
-                      _go(0);
-                    } else {
-                      _go(guardian ? pages.length - 1 : i);
-                    }
-                  },
-                  destinations: destinations,
+        return AdaptiveNavScaffold(
+          wide: wide,
+          destinations: destinations,
+          selected: selected,
+          onSelect: (i) {
+            if (guardian && i < bottom.length) {
+              _guardianTab.value = bottom[i].key;
+              _go(_guardianKey);
+            } else {
+              _go(guardian ? _moreKey : keys[i.clamp(0, keys.length - 1)]);
+            }
+          },
+          top: session.readOnly
+              ? _ReadOnlyBanner(
+                  suspended: session.suspended,
+                  onTap: session.canManageBilling && !session.suspended
+                      ? () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const BillingPage()))
+                      : null,
+                )
+              : null,
+          body: MediaQuery.removePadding(
+            context: context,
+            removeTop: session.readOnly,
+            child: IndexedStack(index: stackIndex, children: <Widget>[
+              for (var i = 0; i < pages.length; i++)
+                KeyedSubtree(
+                  key: ValueKey<String>('shell-${keys[i]}'),
+                  child: _visited.contains(keys[i]) ? TabVisibility(visible: i == stackIndex, child: pages[i]) : const SizedBox.shrink(),
                 ),
+            ]),
+          ),
         );
       },
     );

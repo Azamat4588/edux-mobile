@@ -4,6 +4,7 @@
 // Doskani chizish — vebda (mobilda shart emas).
 import 'package:flutter/material.dart';
 
+import '../../core/adaptive.dart';
 import '../../core/api.dart';
 import '../../core/format.dart';
 import '../../core/help_links.dart';
@@ -77,7 +78,7 @@ class _LmsQuestionsPageState extends State<LmsQuestionsPage> {
                 ]);
               }
               return ListView.separated(
-                padding: const EdgeInsets.all(16),
+                padding: readable(context, const EdgeInsets.all(16)),
                 itemCount: questions.length,
                 separatorBuilder: (_, __) => const SizedBox(height: 10),
                 itemBuilder: (context, index) => QuestionCard(
@@ -305,7 +306,7 @@ class _LmsAnnouncementsPageState extends State<LmsAnnouncementsPage> {
                     ]);
                   }
                   return ListView.separated(
-                    padding: const EdgeInsets.fromLTRB(16, 8, 16, 96),
+                    padding: readable(context, const EdgeInsets.fromLTRB(16, 8, 16, 96)),
                     itemCount: items.length,
                     separatorBuilder: (_, __) => const SizedBox(height: 10),
                     itemBuilder: (context, index) {

@@ -1,6 +1,7 @@
 // Bosh sahifa komponentlari (veb: Components/Home/TodayCard.vue, ActionTile.vue, HomeHeader.vue).
 import 'package:flutter/material.dart';
 
+import 'adaptive.dart';
 import 'design.dart';
 import 'format.dart';
 import 'home_today.dart';
@@ -40,6 +41,7 @@ IconData navIcon(String name) {
     'question': Icons.help_outline,
     'megaphone': Icons.campaign_outlined,
     'science': Icons.science_outlined,
+    'feedback': Icons.rate_review_outlined,
   };
   return icons[name] ?? Icons.circle_outlined;
 }
@@ -168,7 +170,7 @@ class TodayCard extends StatelessWidget {
   }
 }
 
-/// «Bugun» kartalari to'ri (2 ustun).
+/// «Bugun» kartalari to'ri (telefonda 2 ustun).
 class TodayGrid extends StatelessWidget {
   const TodayGrid({super.key, required this.items, required this.onOpen});
 
@@ -177,25 +179,13 @@ class TodayGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final rows = <Widget>[];
-    for (var i = 0; i < items.length; i += 2) {
-      Widget cell(TodayItem item) {
-        final target = item.target;
-        return TodayCard(item: item, onTap: target == null || onOpen == null ? null : () => onOpen!(target));
-      }
-
-      rows.add(Padding(
-        padding: const EdgeInsets.only(bottom: 10),
-        child: IntrinsicHeight(
-          child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
-            Expanded(child: cell(items[i])),
-            const SizedBox(width: 10),
-            Expanded(child: i + 1 < items.length ? cell(items[i + 1]) : const SizedBox()),
-          ]),
-        ),
-      ));
+    Widget cell(TodayItem item) {
+      final target = item.target;
+      return TodayCard(item: item, onTap: target == null || onOpen == null ? null : () => onOpen!(target));
     }
-    return Column(children: rows);
+
+    // Telefonda 2 ustun, iPad'da 4 tagacha (lib/core/adaptive.dart).
+    return AdaptiveGrid(minTile: 200, children: <Widget>[for (final item in items) cell(item)]);
   }
 }
 
@@ -249,7 +239,7 @@ class ActionTile extends StatelessWidget {
   }
 }
 
-/// Tezkor harakatlar to'ri (2 ustun).
+/// Tezkor harakatlar to'ri (telefonda 2 ustun, keng ekranda 4 tagacha).
 class ActionGrid extends StatelessWidget {
   const ActionGrid({super.key, required this.actions, required this.onTap});
 
@@ -258,19 +248,8 @@ class ActionGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final rows = <Widget>[];
-    for (var i = 0; i < actions.length; i += 2) {
-      rows.add(Padding(
-        padding: const EdgeInsets.only(bottom: 10),
-        child: IntrinsicHeight(
-          child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
-            Expanded(child: ActionTile(action: actions[i], onTap: () => onTap(actions[i]))),
-            const SizedBox(width: 10),
-            Expanded(child: i + 1 < actions.length ? ActionTile(action: actions[i + 1], onTap: () => onTap(actions[i + 1])) : const SizedBox()),
-          ]),
-        ),
-      ));
-    }
-    return Column(children: rows);
+    return AdaptiveGrid(minTile: 200, children: <Widget>[
+      for (final action in actions) ActionTile(action: action, onTap: () => onTap(action)),
+    ]);
   }
 }

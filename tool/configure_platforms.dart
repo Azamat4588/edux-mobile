@@ -1,6 +1,9 @@
 // `flutter create` yaratgan Android va iOS fayllariga EduX sozlamalarini qo'shadi:
 // kamera, galereya va mikrofon ruxsat matnlari, ilova nomi, havolalarni ochish, push (fon rejimi),
 // iOS minimal versiyasi (Firebase va mobile_scanner uchun 15.0). Takror ishga tushirish xavfsiz.
+// 3.7 (iPhone va iPad): iPad — hamma yo'nalishlar, Split View / Slide Over (UIRequiresFullScreen = false), sichqoncha va
+// trackpad, TARGETED_DEVICE_FAMILY = "1,2"; push uchun `aps-environment` (Release/Profile — imzolanganda), ilova tillari,
+// ishga tushish ekrani (EduX rangi va belgisi — tool/ios/LaunchImage*.png).
 //
 //   dart run tool/configure_platforms.dart          # Android va iOS
 //   dart run tool/configure_platforms.dart --ios    # faqat iOS (macOS CI, android/ papkasiz)
@@ -388,6 +391,11 @@ void _ios() {
     'UIBackgroundModes': '<array>\n\t\t<string>remote-notification</string>\n\t</array>',
     // Faqat standart HTTPS — eksport shifrlash hujjati talab qilinmaydi (TestFlight savoli)
     'ITSAppUsesNonExemptEncryption': '<false/>',
+    // iPad: Split View va Slide Over (to'liq ekran majburiy emas), sichqoncha/trackpad hodisalari
+    'UIRequiresFullScreen': '<false/>',
+    'UIApplicationSupportsIndirectInputEvents': '<true/>',
+    // App Store sahifasida ko'rinadigan tillar (ilova ichida uz/ru/en)
+    'CFBundleLocalizations': '<array>\n\t\t<string>uz</string>\n\t\t<string>ru</string>\n\t\t<string>en</string>\n\t</array>',
   };
   entries.forEach((key, value) {
     if (!text.contains('<key>$key</key>')) {
@@ -407,8 +415,13 @@ void _ios() {
     RegExp(r'(<key>CFBundleDisplayName</key>\s*<string>)[^<]*(</string>)'),
     (match) => '${match.group(1)}EduX${match.group(2)}',
   );
+  // Eski shablonda `UIRequiresFullScreen = true` bo'lsa — iPad Split View ishlamaydi.
+  text = text.replaceAllMapped(RegExp(r'(<key>UIRequiresFullScreen</key>\s*)<true/>'), (match) => '${match.group(1)}<false/>');
+  text = _orientations(text);
   plist.writeAsStringSync(text);
-  stdout.writeln('  ios: Info.plist');
+  stdout.writeln("  ios: Info.plist (iPad: hamma yo'nalishlar, Split View)");
+  _entitlements();
+  _launchScreen();
 
   final podfile = File('ios/Podfile');
   if (podfile.existsSync()) {
@@ -424,6 +437,8 @@ void _ios() {
             "      if config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'].to_f < $iosMinimum\n"
             "        config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '$iosMinimum'\n"
             '      end\n'
+            // Imzolangan yig'ishda (App Store) pod resurs to'plamlari alohida imzo talab qilmasin.
+            "      config.build_settings['CODE_SIGNING_ALLOWED'] = 'NO' if target.respond_to?(:product_type) && target.product_type == 'com.apple.product-type.bundle'\n"
             '    end',
       );
     }
@@ -443,6 +458,7 @@ void _ios() {
     project.writeAsStringSync(text);
     stdout.writeln('  ios: project.pbxproj (IPHONEOS_DEPLOYMENT_TARGET $iosMinimum)');
   }
+  _deviceFamily();
   final framework = File('ios/Flutter/AppFrameworkInfo.plist');
   if (framework.existsSync()) {
     final text = framework.readAsStringSync().replaceFirstMapped(
@@ -451,4 +467,99 @@ void _ios() {
         );
     framework.writeAsStringSync(text);
   }
+}
+
+/// iPhone: tik va ikki yotiq holat; iPad: to'rttala holat (Split View va Slide Over uchun App Store talabi).
+String _orientations(String text) {
+  const phone = <String>['UIInterfaceOrientationPortrait', 'UIInterfaceOrientationLandscapeLeft', 'UIInterfaceOrientationLandscapeRight'];
+  const pad = <String>[
+    'UIInterfaceOrientationPortrait',
+    'UIInterfaceOrientationPortraitUpsideDown',
+    'UIInterfaceOrientationLandscapeLeft',
+    'UIInterfaceOrientationLandscapeRight',
+  ];
+  String array(List<String> items) => '<array>\n${items.map((item) => '\t\t<string>$item</string>\n').join()}\t</array>';
+  var result = text;
+  final keys = <String, List<String>>{'UISupportedInterfaceOrientations': phone, 'UISupportedInterfaceOrientations~ipad': pad};
+  for (final entry in keys.entries) {
+    final pattern = RegExp('<key>${RegExp.escape(entry.key)}</key>\\s*<array>[\\s\\S]*?</array>');
+    final value = '<key>${entry.key}</key>\n\t${array(entry.value)}';
+    if (pattern.hasMatch(result)) {
+      result = result.replaceFirst(pattern, value);
+    } else {
+      result = result.replaceFirst(RegExp(r'</dict>\s*</plist>\s*$'), '\t$value\n</dict>\n</plist>\n');
+    }
+  }
+  return result;
+}
+
+const String _entitlementsPlist = '''
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>aps-environment</key>
+	<string>production</string>
+</dict>
+</plist>
+''';
+
+/// Push (APNs): `aps-environment` faqat imzolangan Release/Profile yig'ishda (App Store / TestFlight profili — production).
+/// Imzosiz yig'ishda (`--no-codesign`) entitlements ishlatilmaydi — zarar bermaydi; Debug (dasturchi profili) o'zgarmaydi.
+void _entitlements() {
+  File('ios/Runner/Runner.entitlements').writeAsStringSync(_entitlementsPlist.trimLeft());
+  final project = File('ios/Runner.xcodeproj/project.pbxproj');
+  if (!project.existsSync()) return;
+  final text = project.readAsStringSync();
+  final updated = text.replaceAllMapped(
+    RegExp(r'/\* (Release|Profile) \*/ = \{\s*isa = XCBuildConfiguration;[\s\S]*?name = (Release|Profile);\s*\};'),
+    (match) {
+      final block = match.group(0)!;
+      if (!block.contains('INFOPLIST_FILE = Runner/Info.plist;') || block.contains('CODE_SIGN_ENTITLEMENTS')) return block;
+      return block.replaceFirst(
+          'INFOPLIST_FILE = Runner/Info.plist;', 'CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;\n\t\t\t\tINFOPLIST_FILE = Runner/Info.plist;');
+    },
+  );
+  project.writeAsStringSync(updated);
+  final count = 'CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;'.allMatches(updated).length;
+  stdout.writeln('  ios: Runner.entitlements (aps-environment — $count ta konfiguratsiya)');
+}
+
+/// iPhone va iPad (1,2): Runner target'ining barcha konfiguratsiyalarida.
+void _deviceFamily() {
+  final project = File('ios/Runner.xcodeproj/project.pbxproj');
+  if (!project.existsSync()) return;
+  var text = project.readAsStringSync();
+  text = text.replaceAll(RegExp(r'TARGETED_DEVICE_FAMILY = [^;]*;'), 'TARGETED_DEVICE_FAMILY = "1,2";');
+  text = text.replaceAllMapped(
+    RegExp(r'/\* (Debug|Release|Profile) \*/ = \{\s*isa = XCBuildConfiguration;[\s\S]*?name = (Debug|Release|Profile);\s*\};'),
+    (match) {
+      final block = match.group(0)!;
+      if (!block.contains('INFOPLIST_FILE = Runner/Info.plist;') || block.contains('TARGETED_DEVICE_FAMILY')) return block;
+      return block.replaceFirst('INFOPLIST_FILE = Runner/Info.plist;', 'INFOPLIST_FILE = Runner/Info.plist;\n\t\t\t\tTARGETED_DEVICE_FAMILY = "1,2";');
+    },
+  );
+  project.writeAsStringSync(text);
+  final count = 'TARGETED_DEVICE_FAMILY = "1,2";'.allMatches(text).length;
+  stdout.writeln('  ios: project.pbxproj (TARGETED_DEVICE_FAMILY "1,2" — $count ta konfiguratsiya)');
+}
+
+/// Ishga tushish ekrani: EduX rangi (#1F63F5) va belgi (84 pt) — ilovadagi birinchi ekran bilan bir xil.
+void _launchScreen() {
+  final storyboard = File('ios/Runner/Base.lproj/LaunchScreen.storyboard');
+  final imageset = Directory('ios/Runner/Assets.xcassets/LaunchImage.imageset');
+  if (!storyboard.existsSync() || !imageset.existsSync()) return;
+  for (final suffix in <String>['', '@2x', '@3x']) {
+    final source = File('tool/ios/LaunchImage$suffix.png');
+    if (source.existsSync()) source.copySync('${imageset.path}/LaunchImage$suffix.png');
+  }
+  var text = storyboard.readAsStringSync();
+  text = text.replaceFirst(
+    RegExp(r'<color key="backgroundColor"[^>]*/>'),
+    '<color key="backgroundColor" red="0.12156862745098039" green="0.38823529411764707" blue="0.96078431372549022" '
+        'alpha="1" colorSpace="custom" customColorSpace="sRGB"/>',
+  );
+  text = text.replaceFirst(RegExp(r'<image name="LaunchImage" width="[0-9.]+" height="[0-9.]+"/>'), '<image name="LaunchImage" width="84" height="84"/>');
+  storyboard.writeAsStringSync(text);
+  stdout.writeln('  ios: LaunchScreen (EduX rangi va belgisi)');
 }

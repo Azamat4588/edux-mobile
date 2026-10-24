@@ -1,0 +1,136 @@
+{
+ "months": 6,
+ "total": 6,
+ "by_kind": {
+  "complaint": 2,
+  "suggestion": 1,
+  "bug": 1,
+  "thanks": 1,
+  "question": 1
+ },
+ "by_status": {
+  "new": 3,
+  "in_progress": 2,
+  "resolved": 1,
+  "rejected": 0
+ },
+ "by_category": [
+  {
+   "category": "To'lov",
+   "count": 1
+  },
+  {
+   "category": "Dars sifati",
+   "count": 1
+  },
+  {
+   "category": "Xizmat",
+   "count": 1
+  },
+  {
+   "category": "Boshqa",
+   "count": 1
+  },
+  {
+   "category": "Bino",
+   "count": 1
+  },
+  {
+   "category": "O'qituvchi",
+   "count": 1
+  }
+ ],
+ "rating": {
+  "average": 3,
+  "count": 4
+ },
+ "resolution_hours": 0,
+ "overdue": 0,
+ "monthly": [
+  {
+   "month": "2026-05",
+   "total": 0,
+   "kinds": {
+    "complaint": 0,
+    "suggestion": 0,
+    "bug": 0,
+    "thanks": 0,
+    "question": 0
+   },
+   "rating": null
+  },
+  {
+   "month": "2026-06",
+   "total": 0,
+   "kinds": {
+    "complaint": 0,
+    "suggestion": 0,
+    "bug": 0,
+    "thanks": 0,
+    "question": 0
+   },
+   "rating": null
+  },
+  {
+   "month": "2026-07",
+   "total": 0,
+   "kinds": {
+    "complaint": 0,
+    "suggestion": 0,
+    "bug": 0,
+    "thanks": 0,
+    "question": 0
+   },
+   "rating": null
+  },
+  {
+   "month": "2026-08",
+   "total": 0,
+   "kinds": {
+    "complaint": 0,
+    "suggestion": 0,
+    "bug": 0,
+    "thanks": 0,
+    "question": 0
+   },
+   "rating": null
+  },
+  {
+   "month": "2026-09",
+   "total": 0,
+   "kinds": {
+    "complaint": 0,
+    "suggestion": 0,
+    "bug": 0,
+    "thanks": 0,
+    "question": 0
+   },
+   "rating": null
+  },
+  {
+   "month": "2026-10",
+   "total": 6,
+   "kinds": {
+    "complaint": 2,
+    "suggestion": 1,
+    "bug": 1,
+    "thanks": 1,
+    "question": 1
+   },
+   "rating": 3
+  }
+ ],
+ "kinds": {
+  "complaint": "Shikoyat",
+  "suggestion": "Taklif",
+  "bug": "Xatolik",
+  "thanks": "Minnatdorchilik",
+  "question": "Savol"
+ },
+ "statuses": {
+  "new": "Yangi",
+  "in_progress": "Ko'rib chiqilmoqda",
+  "resolved": "Hal qilindi",
+  "rejected": "Rad etildi"
+ }
+}

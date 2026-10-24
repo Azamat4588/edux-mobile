@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../core/adaptive.dart';
 import '../../core/api.dart';
 import '../../core/format.dart';
 import '../../core/i18n.dart';
@@ -95,7 +96,7 @@ class _TodayTab extends StatelessWidget {
           byMethod[method] = (byMethod[method] ?? 0) + asInt(payment['amount']);
         }
         return ListView(
-          padding: const EdgeInsets.fromLTRB(AppSpacing.l, AppSpacing.l, AppSpacing.l, 96),
+          padding: readable(context, const EdgeInsets.fromLTRB(AppSpacing.l, AppSpacing.l, AppSpacing.l, 96)),
           children: <Widget>[
             StatGrid(children: <Widget>[
               StatCard(
@@ -188,11 +189,15 @@ class _PaymentRow extends StatelessWidget {
     final paid = parseDate(payment['paid_at']);
     final session = AppScope.of(context);
     return ListTile(
+      selected: isDetailSelected(context, 'student-${asInt(student['id'])}'),
+      selectedTileColor: AppColors.soft(AppColors.brand),
       onTap: student['id'] == null || !session.canSeeStudents
           ? null
-          : () => Navigator.of(context).push(MaterialPageRoute<void>(
+          : () => openDetail(
+                context,
+                id: 'student-${asInt(student['id'])}',
                 builder: (_) => StudentCardPage(studentId: asInt(student['id']), name: asText(student['full_name'])),
-              )),
+              ),
       leading: Avatar(asText(student['full_name'], '?')),
       title: Text(asText(student['full_name'], '—'),
           style: TextStyle(fontWeight: FontWeight.w600, decoration: voided ? TextDecoration.lineThrough : null)),
@@ -319,7 +324,7 @@ class _DebtorsTabState extends State<_DebtorsTab> with AutomaticKeepAliveClientM
     return RefreshIndicator(
       onRefresh: _load,
       child: ListView(
-        padding: const EdgeInsets.fromLTRB(AppSpacing.l, AppSpacing.l, AppSpacing.l, 96),
+        padding: readable(context, const EdgeInsets.fromLTRB(AppSpacing.l, AppSpacing.l, AppSpacing.l, 96)),
         children: <Widget>[
           StatGrid(children: <Widget>[
             StatCard(label: tr('Qarzdorlar'), value: '$_count', icon: Icons.warning_amber_rounded, color: AppColors.danger),
@@ -356,10 +361,13 @@ class _DebtorCard extends StatelessWidget {
     final groups = asRawList(debtor['groups']).join(', ');
     final session = AppScope.of(context);
     return AppCard(
+      color: isDetailSelected(context, 'student-${asInt(debtor['id'])}') ? AppColors.soft(AppColors.brand) : null,
       onTap: session.canSeeStudents
-          ? () => Navigator.of(context).push(MaterialPageRoute<void>(
+          ? () => openDetail(
+                context,
+                id: 'student-${asInt(debtor['id'])}',
                 builder: (_) => StudentCardPage(studentId: asInt(debtor['id']), name: asText(debtor['full_name'])),
-              ))
+              )
           : null,
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
         Row(children: <Widget>[
@@ -439,7 +447,7 @@ class _ReportsTab extends StatelessWidget {
         final months = data['monthly'] is List ? asList(data['monthly']) : <Map<String, dynamic>>[];
         final now = DateTime.now();
         return ListView(
-          padding: const EdgeInsets.fromLTRB(AppSpacing.l, AppSpacing.l, AppSpacing.l, 96),
+          padding: readable(context, const EdgeInsets.fromLTRB(AppSpacing.l, AppSpacing.l, AppSpacing.l, 96)),
           children: <Widget>[
             Text('${monthName(now.month)} ${now.year}', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800, color: AppColors.ink)),
             const SizedBox(height: AppSpacing.m),

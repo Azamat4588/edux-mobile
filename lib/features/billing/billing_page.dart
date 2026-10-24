@@ -13,6 +13,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../core/adaptive.dart';
 import '../../core/api.dart';
 import '../../core/format.dart';
 import '../../core/i18n.dart';
@@ -387,7 +388,7 @@ class _BillingPageState extends State<BillingPage> with WidgetsBindingObserver {
     final modules = asList(billing['module_states']).where((item) => item['is_active'] != false || item['enabled'] == true).toList();
     final addons = asList(billing['addon_states']);
     return ListView(
-      padding: const EdgeInsets.fromLTRB(16, 12, 16, 32),
+      padding: readable(context, const EdgeInsets.fromLTRB(16, 12, 16, 32)),
       children: <Widget>[
         _StatusCard(billing: billing),
         if (usageRows.isNotEmpty) ...<Widget>[

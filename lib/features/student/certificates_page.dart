@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../core/adaptive.dart';
 import '../../core/api.dart';
 import '../../core/format.dart';
 import '../../core/i18n.dart';
@@ -29,7 +30,7 @@ class CertificatesPage extends StatelessWidget {
             ]);
           }
           return ListView.separated(
-            padding: const EdgeInsets.all(16),
+            padding: readable(context, const EdgeInsets.all(16)),
             itemCount: items.length,
             separatorBuilder: (_, __) => const SizedBox(height: 10),
             itemBuilder: (context, index) {
@@ -82,7 +83,7 @@ class MockProgressPage extends StatelessWidget {
           }
           final list = items.reversed.toList();
           return ListView.separated(
-            padding: const EdgeInsets.all(16),
+            padding: readable(context, const EdgeInsets.all(16)),
             itemCount: list.length,
             separatorBuilder: (_, __) => const SizedBox(height: 10),
             itemBuilder: (context, index) {

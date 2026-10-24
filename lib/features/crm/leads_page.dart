@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../core/adaptive.dart';
 import '../../core/api.dart';
 import '../../core/format.dart';
 import '../../core/i18n.dart';
@@ -95,7 +96,7 @@ class _LeadsPageState extends State<LeadsPage> {
               final counts = asMap(data['counts']);
               final leads = asList(data['data']);
               return ListView(
-                padding: const EdgeInsets.fromLTRB(16, 8, 16, 96),
+                padding: readable(context, const EdgeInsets.fromLTRB(16, 8, 16, 96)),
                 children: <Widget>[
                   SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
@@ -203,7 +204,7 @@ class _LeadPageState extends State<LeadPage> {
           final status = asText(lead['status']);
           final events = asList(lead['events']);
           return ListView(
-            padding: const EdgeInsets.all(16),
+            padding: readable(context, const EdgeInsets.all(16)),
             children: <Widget>[
               AppCard(
                 child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[

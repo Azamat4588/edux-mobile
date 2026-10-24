@@ -5,6 +5,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../core/adaptive.dart';
 import '../../core/api.dart';
 import '../../core/format.dart';
 import '../../core/help_links.dart';
@@ -348,7 +349,7 @@ class _OverviewTab extends StatelessWidget {
             ? child.groups
             : asList(crm['groups'], 'groups').map((item) => asText(item['name'])).where((item) => item.isNotEmpty).toList();
         return ListView(
-          padding: const EdgeInsets.fromLTRB(16, 14, 16, 32),
+          padding: readable(context, const EdgeInsets.fromLTRB(16, 14, 16, 32)),
           children: <Widget>[
             Row(children: <Widget>[
               Avatar(child.name, size: 48),
@@ -484,7 +485,7 @@ class _TestsTab extends StatelessWidget {
         final testing = asMap(data['testing']);
         final pending = asList(testing['pending'], 'pending');
         return ListView(
-          padding: const EdgeInsets.fromLTRB(16, 14, 16, 32),
+          padding: readable(context, const EdgeInsets.fromLTRB(16, 14, 16, 32)),
           children: <Widget>[
             if (testing.isNotEmpty)
               StatGrid(children: <Widget>[
@@ -608,7 +609,7 @@ class _PaymentsTab extends StatelessWidget {
         final charges = finance.charges;
         final payments = finance.payments;
         return ListView(
-          padding: const EdgeInsets.fromLTRB(16, 14, 16, 32),
+          padding: readable(context, const EdgeInsets.fromLTRB(16, 14, 16, 32)),
           children: <Widget>[
             _BalanceCard(
               balance: finance.balance,

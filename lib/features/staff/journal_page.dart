@@ -3,6 +3,7 @@
 // API: GET school/journal/options, GET school/journal, POST school/journal/lessons, PUT school/journal/lessons/{id}/entries.
 import 'package:flutter/material.dart';
 
+import '../../core/adaptive.dart';
 import '../../core/api.dart';
 import '../../core/format.dart';
 import '../../core/help_links.dart';
@@ -14,6 +15,8 @@ import '../../core/widgets.dart';
 
 class JournalPage extends StatelessWidget {
   const JournalPage({super.key});
+
+  static String _journalKey(Map<String, dynamic> journal) => 'journal-${asInt(journal['group_id'])}-${asInt(journal['subject_id'])}';
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +38,7 @@ class JournalPage extends StatelessWidget {
           final terms = asList(options['terms'], 'terms');
           final termId = asInt(options['current_term_id'], terms.isEmpty ? 0 : asInt(terms.first['id']));
           return ListView(
-            padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
+            padding: readable(context, const EdgeInsets.fromLTRB(16, 12, 16, 24)),
             children: <Widget>[
               Text(asText(asMap(options['year'])['name']), style: TextStyle(color: AppColors.muted)),
               for (final entry in byClass.entries) ...<Widget>[
@@ -46,13 +49,18 @@ class JournalPage extends StatelessWidget {
                     for (var i = 0; i < entry.value.length; i++) ...<Widget>[
                       if (i > 0) const Divider(height: 1),
                       ListTile(
+                        // iPad: darslar ro'yxati o'ng ustunda (MasterDetail), telefonda — yangi sahifa.
+                        selected: isDetailSelected(context, _journalKey(entry.value[i])),
+                        selectedTileColor: AppColors.soft(AppColors.brand),
                         leading: Icon(entry.value[i]['can_write'] == true ? Icons.edit_note : Icons.visibility_outlined, color: AppColors.brand),
                         title: Text(asText(entry.value[i]['subject'])),
                         subtitle: Text(asText(entry.value[i]['teacher'])),
                         trailing: const Icon(Icons.chevron_right),
-                        onTap: () => Navigator.of(context).push(MaterialPageRoute<void>(
+                        onTap: () => openDetail(
+                          context,
+                          id: _journalKey(entry.value[i]),
                           builder: (_) => JournalGridPage(journal: entry.value[i], terms: terms, termId: termId),
-                        )),
+                        ),
                       ),
                     ],
                   ]),
@@ -124,7 +132,7 @@ class _JournalGridPageState extends State<JournalGridPage> {
     final api = AppScope.of(context).api;
     final title = '${asText(widget.journal['class_name'])} · ${asText(widget.journal['subject'])}';
     return Scaffold(
-      appBar: AppBar(title: Text(title, maxLines: 1, overflow: TextOverflow.ellipsis)),
+      appBar: AppBar(automaticallyImplyLeading: !isEmbeddedDetail(context), title: Text(title, maxLines: 1, overflow: TextOverflow.ellipsis)),
       body: Column(children: <Widget>[
         if (widget.terms.length > 1)
           SizedBox(
@@ -156,7 +164,7 @@ class _JournalGridPageState extends State<JournalGridPage> {
               final lessons = grid.lessons;
               return Stack(children: <Widget>[
                 ListView(
-                  padding: const EdgeInsets.fromLTRB(16, 8, 16, 96),
+                  padding: readable(context, const EdgeInsets.fromLTRB(16, 8, 16, 96)),
                   children: <Widget>[
                     if (!grid.canWrite)
                       AppCard(child: Text(tr("Bu jurnalni faqat ko'rasiz: baho qo'yish — fan o'qituvchisi va rahbarda."), style: TextStyle(color: AppColors.muted))),
@@ -281,8 +289,9 @@ class _LessonEntriesPageState extends State<LessonEntriesPage> {
   Widget build(BuildContext context) {
     final grid = widget.grid;
     final day = parseDate(widget.lesson['date']);
+    // O'zgarish bo'lmasa — oddiy yopiladi (iPhone'da chetdan surib orqaga qaytish ishlaydi).
     return PopScope(
-      canPop: false,
+      canPop: _changes.isEmpty,
       onPopInvokedWithResult: (didPop, _) async {
         if (didPop) return;
         if (await _confirmLeave() && context.mounted) Navigator.pop(context, false);
@@ -297,7 +306,7 @@ class _LessonEntriesPageState extends State<LessonEntriesPage> {
         body: grid == null
             ? ErrorState(message: tr("Ma'lumotni yuklab bo'lmadi."))
             : ListView(
-                padding: const EdgeInsets.fromLTRB(16, 8, 16, 96),
+                padding: readable(context, const EdgeInsets.fromLTRB(16, 8, 16, 96)),
                 children: <Widget>[
                   if (asText(widget.lesson['topic']).isNotEmpty) KeyValue(tr('Mavzu'), asText(widget.lesson['topic'])),
                   if (asText(widget.lesson['homework']).isNotEmpty) KeyValue(tr('Uy vazifasi'), asText(widget.lesson['homework'])),

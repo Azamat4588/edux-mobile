@@ -1,6 +1,7 @@
 // Davomat (CRM guruhlari): guruh va kunni tanlab, har o'quvchini belgilash. Bir bosishda «Hammasi keldi».
 import 'package:flutter/material.dart';
 
+import '../../core/adaptive.dart';
 import '../../core/api.dart';
 import '../../core/format.dart';
 import '../../core/help_links.dart';
@@ -41,7 +42,7 @@ class AttendancePage extends StatelessWidget {
             return ListView(children: <Widget>[EmptyState(text: tr("Guruh yo'q."))]);
           }
           return ListView(
-            padding: const EdgeInsets.all(16),
+            padding: readable(context, const EdgeInsets.all(16)),
             children: <Widget>[
               if (today.isNotEmpty) ...<Widget>[
                 SectionTitle(tr('Bugungi darslar')),
@@ -69,12 +70,18 @@ class _GroupTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final teacher = asMap(group['teacher']);
+    final key = 'attendance-${asInt(group['id'])}';
+    final selected = isDetailSelected(context, key);
     return Padding(
       padding: const EdgeInsets.only(bottom: 10),
       child: AppCard(
-        onTap: () => Navigator.of(context).push(MaterialPageRoute<void>(
+        // iPad: varaqa o'ng ustunda (MasterDetail), telefonda — yangi sahifa.
+        color: selected ? AppColors.soft(AppColors.brand) : null,
+        onTap: () => openDetail(
+          context,
+          id: key,
           builder: (_) => AttendanceSheetPage(groupId: asInt(group['id']), groupName: asText(group['name'])),
-        )),
+        ),
         child: Row(children: <Widget>[
           Container(
             width: 42,
@@ -121,6 +128,7 @@ class _AttendanceSheetPageState extends State<AttendanceSheetPage> {
   List<Map<String, dynamic>> _students = <Map<String, dynamic>>[];
   final Map<int, String?> _status = <int, String?>{};
   final TextEditingController _topic = TextEditingController();
+  MasterDetailState? _owner;
 
   @override
   void initState() {
@@ -129,9 +137,26 @@ class _AttendanceSheetPageState extends State<AttendanceSheetPage> {
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // iPad ikki ustunli rejim: boshqa guruh tanlanganda saqlanmagan belgilar so'raladi.
+    final owner = detailOwner(context);
+    if (owner != null && owner != _owner) {
+      _owner = owner;
+      owner.guard = _allowLeave;
+    }
+  }
+
+  @override
   void dispose() {
+    if (_owner?.guard == _allowLeave) _owner?.guard = null;
     _topic.dispose();
     super.dispose();
+  }
+
+  Future<bool> _allowLeave() async {
+    if (!_dirty) return true;
+    return confirm(context, tr("Saqlanmagan o'zgarishlar bor. Sahifadan chiqilsa, ular yo'qoladi. Davom etilsinmi?"));
   }
 
   Future<void> _load() async {
@@ -209,8 +234,10 @@ class _AttendanceSheetPageState extends State<AttendanceSheetPage> {
   @override
   Widget build(BuildContext context) {
     final marked = _status.values.where((value) => value != null).length;
+    // O'ng ustunda (iPad) sahifa yopilmaydi — saqlanmagan belgilarni [_allowLeave] himoya qiladi.
+    final embedded = isEmbeddedDetail(context);
     return PopScope(
-      canPop: !_dirty,
+      canPop: !_dirty || embedded,
       onPopInvokedWithResult: (didPop, _) async {
         if (didPop) return;
         if (await confirm(context, tr("Saqlanmagan o'zgarishlar bor. Sahifadan chiqilsa, ular yo'qoladi. Davom etilsinmi?"))) {
@@ -219,6 +246,7 @@ class _AttendanceSheetPageState extends State<AttendanceSheetPage> {
       },
       child: Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: !isEmbeddedDetail(context),
           title: Text(widget.groupName),
           actions: <Widget>[
             TextButton.icon(
@@ -233,7 +261,7 @@ class _AttendanceSheetPageState extends State<AttendanceSheetPage> {
             : _error != null
                 ? ErrorState(message: _error!, onRetry: _load)
                 : ListView(
-                    padding: const EdgeInsets.fromLTRB(16, 12, 16, 100),
+                    padding: readable(context, const EdgeInsets.fromLTRB(16, 12, 16, 100)),
                     children: <Widget>[
                       TextField(controller: _topic, decoration: InputDecoration(labelText: tr('Mavzu (ixtiyoriy)')), onChanged: (_) => _dirty = true),
                       const SizedBox(height: 12),

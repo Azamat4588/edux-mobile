@@ -1,6 +1,7 @@
 // O'quvchining bosh sahifasi: balans va to'lov, yaqin darslar, test natijalari, maktab baholari, coinlar.
 import 'package:flutter/material.dart';
 
+import '../../core/adaptive.dart';
 import '../../core/api.dart';
 import '../../core/format.dart';
 import '../../core/home_today.dart';
@@ -49,7 +50,7 @@ class StudentHomePage extends StatelessWidget {
           final actions = session.isGuest || onOpen == null
               ? <QuickAction>[]
               : quickActions('student', session.can, debt: balance < 0, pendingTests: asList(asMap(insights['testing'])['pending'], 'pending').length);
-          return ListView(children: <Widget>[
+          return ListView(padding: readable(context, EdgeInsets.zero, max: kGridWidth), children: <Widget>[
             Padding(
               padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
               child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[

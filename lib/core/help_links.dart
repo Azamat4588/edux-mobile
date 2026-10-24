@@ -34,11 +34,15 @@ class HelpLinks {
   static const String teacherHome = 'oqituvchi-telefonda';
   static const String faq = 'kop-beriladigan-savollar';
   static const String install = 'mobil-ilova-ornatish';
+  // 1.39: mijozlar fikri (yuboruvchi va rahbar paneli), laboratoriyalar katalogi.
+  static const String feedback = 'fikr-bildirish';
+  static const String feedbackPanel = 'fikr-va-shikoyatlar';
+  static const String labs = 'laboratoriyalar-royxati';
 
   /// Ilovada ishlatiladigan barcha slug'lar (test: serverda bor-yo'qligi).
   static const List<String> all = <String>[
     scanner, attendance, guardian, examResults, journal, checkin, kiosk, courseQuestions, lesson, myPayments, myTests,
-    p2p, deviceSms, platformSms, support, login, problems, teacherHome, faq, install,
+    p2p, deviceSms, platformSms, support, login, problems, teacherHome, faq, install, feedback, feedbackPanel, labs,
   ];
 
   /// Manzil: slug bo'lmasa — yordam markazi bosh sahifasi.

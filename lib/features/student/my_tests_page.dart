@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 
+import '../../core/adaptive.dart';
 import '../../core/api.dart';
 import '../../core/format.dart';
 import '../../core/help_links.dart';
@@ -50,7 +51,7 @@ class MyTestsPage extends StatelessWidget {
             ]);
           }
           return ListView.separated(
-            padding: const EdgeInsets.all(16),
+            padding: readable(context, const EdgeInsets.all(16)),
             itemCount: exams.length,
             separatorBuilder: (_, __) => const SizedBox(height: 10),
             itemBuilder: (context, index) => _ExamCard(exam: exams[index], onChanged: reload),
@@ -534,7 +535,7 @@ class _QuestionView extends StatelessWidget {
     final options = asList(question['options'], 'options');
     final multiple = question['type'] == 'multiple';
     return ListView(
-      padding: const EdgeInsets.all(16),
+      padding: readable(context, const EdgeInsets.all(16)),
       children: <Widget>[
         Row(children: <Widget>[
           Text(tr('{0}-savol', <Object?>[asInt(question['number'])]),
@@ -659,7 +660,7 @@ class AttemptResultPage extends StatelessWidget {
           final review = data['review'] is List ? asList(data['review'], 'review') : <Map<String, dynamic>>[];
           final share = total == 0 ? 0.0 : correct / total;
           return ListView(
-            padding: const EdgeInsets.all(16),
+            padding: readable(context, const EdgeInsets.all(16)),
             children: <Widget>[
               AppCard(
                 child: Column(children: <Widget>[

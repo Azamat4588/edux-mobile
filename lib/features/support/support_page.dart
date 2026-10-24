@@ -3,6 +3,7 @@
 // POST public/support (JSON yoki multipart; context[app|app_version|os|page|screen] — ilova o'zi qo'shadi),
 // GET|POST public/support/{token}, POST public/support/{token}/close, POST public/support/{token}/rate.
 import 'dart:io';
+import 'dart:math' as math;
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -10,6 +11,7 @@ import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../core/adaptive.dart';
 import '../../core/api.dart';
 import '../../core/format.dart';
 import '../../core/help_links.dart';
@@ -134,7 +136,7 @@ class _SupportPageState extends State<SupportPage> {
           final tickets = asList(data['tickets'], 'tickets');
           final contacts = supportContacts(asMap(data['meta']));
           return ListView(
-            padding: const EdgeInsets.fromLTRB(16, 12, 16, 96),
+            padding: readable(context, const EdgeInsets.fromLTRB(16, 12, 16, 96)),
             children: <Widget>[
               Text(tr("Savol, xatolik yoki taklifingizni yozing — EduX jamoasi javob beradi. Javob kelganda shu yerda ko'rinadi."),
                   style: TextStyle(color: AppColors.muted)),
@@ -148,8 +150,10 @@ class _SupportPageState extends State<SupportPage> {
               else
                 for (final ticket in tickets) ...<Widget>[
                   AppCard(
+                    // iPad: yozishma o'ng ustunda (MasterDetail), telefonda — yangi sahifa.
+                    color: isDetailSelected(context, 'ticket-${asText(ticket['token'])}') ? AppColors.soft(AppColors.brand) : null,
                     onTap: () async {
-                      await Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => TicketPage(token: asText(ticket['token']))));
+                      await openDetail(context, id: 'ticket-${asText(ticket['token'])}', builder: (_) => TicketPage(token: asText(ticket['token'])));
                       await reload();
                     },
                     child: Row(children: <Widget>[
@@ -206,22 +210,22 @@ Map<String, String> deviceSupportContext(BuildContext context, String page) {
 }
 
 /// Tanlangan rasm (yuborilguncha).
-class _Picked {
-  _Picked(this.name, this.bytes);
+class PickedImage {
+  PickedImage(this.name, this.bytes);
 
   final String name;
   final Uint8List bytes;
 }
 
 /// Rasm tanlash (galereyadan), cheklovlar bo'yicha tekshirib. Xato bo'lsa — xabar.
-Future<List<_Picked>> _pickImages(BuildContext context, SupportAttachmentRules rules, int already) async {
+Future<List<PickedImage>> pickImages(BuildContext context, SupportAttachmentRules rules, int already) async {
   final left = rules.maxFiles - already;
   if (left <= 0) {
     showMessage(context, tr("Ko'pi bilan {0} ta rasm biriktiriladi.", <Object?>[rules.maxFiles]), error: true);
-    return <_Picked>[];
+    return <PickedImage>[];
   }
   final files = await ImagePicker().pickMultiImage(imageQuality: 85, maxWidth: 2400, limit: left > 1 ? left : null);
-  final result = <_Picked>[];
+  final result = <PickedImage>[];
   for (final file in files.take(left)) {
     var name = file.name.isEmpty ? 'rasm.jpg' : file.name;
     if (!name.contains('.')) name = '$name.jpg';
@@ -234,18 +238,18 @@ Future<List<_Picked>> _pickImages(BuildContext context, SupportAttachmentRules r
       if (context.mounted) showMessage(context, tr('Rasm hajmi {0} MB dan oshmasin.', <Object?>[(rules.maxKb / 1024).toStringAsFixed(0)]), error: true);
       continue;
     }
-    result.add(_Picked(name, bytes));
+    result.add(PickedImage(name, bytes));
   }
   return result;
 }
 
-List<http.MultipartFile> _multipartFiles(List<_Picked> picked) =>
+List<http.MultipartFile> imageMultipartFiles(List<PickedImage> picked) =>
     picked.map((item) => http.MultipartFile.fromBytes('attachments[]', item.bytes, filename: item.name)).toList();
 
-class _PickedStrip extends StatelessWidget {
-  const _PickedStrip({required this.items, required this.onRemove});
+class PickedImageStrip extends StatelessWidget {
+  const PickedImageStrip({super.key, required this.items, required this.onRemove});
 
-  final List<_Picked> items;
+  final List<PickedImage> items;
   final ValueChanged<int> onRemove;
 
   @override
@@ -300,7 +304,7 @@ class _NewTicketPageState extends State<NewTicketPage> {
   String? _error;
   Map<String, String> _errors = <String, String>{};
   Map<String, dynamic> _meta = <String, dynamic>{};
-  final List<_Picked> _files = <_Picked>[];
+  final List<PickedImage> _files = <PickedImage>[];
 
   @override
   void initState() {
@@ -334,7 +338,7 @@ class _NewTicketPageState extends State<NewTicketPage> {
   SupportAttachmentRules get _rules => SupportAttachmentRules.fromMeta(_meta);
 
   Future<void> _attach() async {
-    final picked = await _pickImages(context, _rules, _files.length);
+    final picked = await pickImages(context, _rules, _files.length);
     if (picked.isNotEmpty && mounted) setState(() => _files.addAll(picked));
   }
 
@@ -357,7 +361,7 @@ class _NewTicketPageState extends State<NewTicketPage> {
     try {
       final data = asMap(_files.isEmpty
           ? await session.api.post('public/support', payload)
-          : await session.api.multipart('public/support', fields: supportFields(payload), files: _multipartFiles(_files)));
+          : await session.api.multipart('public/support', fields: supportFields(payload), files: imageMultipartFiles(_files)));
       if (!mounted) return;
       showMessage(context, tr(asText(data['message'], 'Murojaatingiz qabul qilindi.')));
       Navigator.pop(context, asText(data['token']));
@@ -383,7 +387,7 @@ class _NewTicketPageState extends State<NewTicketPage> {
     return Scaffold(
       appBar: AppBar(title: Text(tr('Yangi murojaat')), actions: const <Widget>[HelpButton(HelpLinks.support)]),
       body: ListView(
-        padding: const EdgeInsets.all(16),
+        padding: readable(context, const EdgeInsets.all(16), max: 720),
         children: <Widget>[
           if (_error != null && _errors.isEmpty) ...<Widget>[
             Text(_error!, style: TextStyle(color: AppColors.danger)),
@@ -422,7 +426,7 @@ class _NewTicketPageState extends State<NewTicketPage> {
           ),
           if (rules.allowed) ...<Widget>[
             if (_files.isNotEmpty) ...<Widget>[
-              _PickedStrip(items: _files, onRemove: (i) => setState(() => _files.removeAt(i))),
+              PickedImageStrip(items: _files, onRemove: (i) => setState(() => _files.removeAt(i))),
               const SizedBox(height: 8),
             ],
             Align(
@@ -469,7 +473,7 @@ class _TicketPageState extends State<TicketPage> {
   bool _sending = false;
   Map<String, dynamic> _ticket = <String, dynamic>{};
   SupportAttachmentRules _rules = const SupportAttachmentRules();
-  final List<_Picked> _files = <_Picked>[];
+  final List<PickedImage> _files = <PickedImage>[];
 
   @override
   void dispose() {
@@ -497,7 +501,7 @@ class _TicketPageState extends State<TicketPage> {
       if (_files.isEmpty) {
         await api.post('public/support/${widget.token}', <String, Object?>{'body': text});
       } else {
-        await api.multipart('public/support/${widget.token}', fields: <String, String>{'body': text}, files: _multipartFiles(_files));
+        await api.multipart('public/support/${widget.token}', fields: <String, String>{'body': text}, files: imageMultipartFiles(_files));
       }
       _reply.clear();
       _files.clear();
@@ -537,6 +541,7 @@ class _TicketPageState extends State<TicketPage> {
     final canClose = _ticket.containsKey('rated_at') && supportCanClose(asText(_ticket['status']));
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: !isEmbeddedDetail(context),
         title: Text(_ticket['id'] == null ? tr('Murojaat') : tr('Murojaat #{0}', <Object?>[asInt(_ticket['id'])])),
         actions: <Widget>[
           if (canClose)
@@ -552,7 +557,7 @@ class _TicketPageState extends State<TicketPage> {
               final messages = asList(ticket['messages'], 'messages');
               final status = asText(ticket['status']);
               return ListView(
-                padding: const EdgeInsets.fromLTRB(16, 12, 16, 16),
+                padding: readable(context, const EdgeInsets.fromLTRB(16, 12, 16, 16)),
                 children: <Widget>[
                   Text(asText(ticket['subject']), style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w800)),
                   const SizedBox(height: 6),
@@ -586,7 +591,7 @@ class _TicketPageState extends State<TicketPage> {
             decoration: BoxDecoration(color: AppColors.card, border: Border(top: BorderSide(color: AppColors.line))),
             child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
               if (_files.isNotEmpty) ...<Widget>[
-                _PickedStrip(items: _files, onRemove: (i) => setState(() => _files.removeAt(i))),
+                PickedImageStrip(items: _files, onRemove: (i) => setState(() => _files.removeAt(i))),
                 const SizedBox(height: 6),
               ],
               Row(crossAxisAlignment: CrossAxisAlignment.end, children: <Widget>[
@@ -596,7 +601,7 @@ class _TicketPageState extends State<TicketPage> {
                     onPressed: _sending || _files.length >= _rules.maxFiles
                         ? null
                         : () async {
-                            final picked = await _pickImages(context, _rules, _files.length);
+                            final picked = await pickImages(context, _rules, _files.length);
                             if (picked.isNotEmpty && mounted) setState(() => _files.addAll(picked));
                           },
                     icon: const Icon(Icons.add_photo_alternate_outlined),
@@ -678,7 +683,7 @@ class _MessageBubble extends StatelessWidget {
       alignment: staff ? Alignment.centerLeft : Alignment.centerRight,
       child: Container(
         margin: const EdgeInsets.only(bottom: 10),
-        constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.82),
+        constraints: BoxConstraints(maxWidth: math.min(MediaQuery.of(context).size.width * 0.82, 560)),
         padding: const EdgeInsets.fromLTRB(14, 10, 14, 8),
         decoration: BoxDecoration(
           color: staff ? AppColors.card : AppColors.soft(AppColors.brand),
@@ -697,7 +702,7 @@ class _MessageBubble extends StatelessWidget {
             Wrap(spacing: 6, runSpacing: 6, children: <Widget>[
               for (final file in files)
                 GestureDetector(
-                  onTap: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => _ImageViewer(url: asText(file['url']), title: asText(file['name'])))),
+                  onTap: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => ImageViewerPage(url: asText(file['url']), title: asText(file['name'])))),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(8),
                     child: Image.network(
@@ -724,8 +729,8 @@ class _MessageBubble extends StatelessWidget {
   }
 }
 
-class _ImageViewer extends StatelessWidget {
-  const _ImageViewer({required this.url, required this.title});
+class ImageViewerPage extends StatelessWidget {
+  const ImageViewerPage({super.key, required this.url, required this.title});
 
   final String url;
   final String title;

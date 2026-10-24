@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../core/adaptive.dart';
 import '../../core/app_update.dart';
 import '../../core/design.dart';
 import '../../core/i18n.dart';
@@ -111,7 +112,7 @@ class _SettingsPageState extends State<SettingsPage> {
     return Scaffold(
       appBar: AppBar(title: Text(tr('Yana'))),
       body: ListView(
-        padding: const EdgeInsets.all(16),
+        padding: readable(context, const EdgeInsets.all(16)),
         children: <Widget>[
           AppCard(
             child: Row(children: <Widget>[

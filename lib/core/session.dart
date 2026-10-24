@@ -10,6 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'api.dart';
 import 'design.dart';
+import 'feedback.dart';
 import 'i18n.dart';
 import 'notification_store.dart';
 import 'offline_cache.dart';
@@ -239,6 +240,12 @@ class Session extends ChangeNotifier implements ApiCredentials {
       case 'journal':
         // Maktab jurnali (server: school/journal — direktor, administrator, o'qituvchi + module:school).
         return isAcademicStaff && hasModule('school');
+      case 'feedback_submit':
+        // 1.39: «Fikr bildirish» (GET context → feedback.submit); test mehmoni yozmaydi.
+        return !isGuest && feedbackFlags(context).submit;
+      case 'feedback_manage':
+        // Rahbariyat «Fikrlar» paneli (sozlamadagi rollar).
+        return feedbackFlags(context).manage;
       case 'my_payments':
         // O'quvchi CRM kabineti (crm/me): balans, hisoblar, to'lovlar.
         return full && hasModule('crm');

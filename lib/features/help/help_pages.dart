@@ -7,6 +7,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../core/adaptive.dart';
 import '../../core/api.dart';
 import '../../core/help_html.dart';
 import '../../core/help_links.dart';
@@ -104,7 +105,7 @@ class _HelpPageState extends State<HelpPage> {
         ],
       ),
       body: ListView(
-        padding: const EdgeInsets.fromLTRB(16, 12, 16, 32),
+        padding: readable(context, const EdgeInsets.fromLTRB(16, 12, 16, 32)),
         children: <Widget>[
           TextField(
             controller: _query,
@@ -277,7 +278,7 @@ class _HelpArticlePageState extends State<HelpArticlePage> {
           final related = asList(article['related'], 'related');
           final video = article['video'];
           return ListView(
-            padding: const EdgeInsets.fromLTRB(16, 12, 16, 32),
+            padding: readable(context, const EdgeInsets.fromLTRB(16, 12, 16, 32)),
             children: <Widget>[
               Text(asText(article['title']), style: AppTheme.title(size: 22)),
               if (asText(article['summary']).isNotEmpty) ...<Widget>[

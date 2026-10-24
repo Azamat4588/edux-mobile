@@ -2,6 +2,7 @@
 // bir xil tartib — salomlashish, «Bugun» kartalari (3–4 ta raqam oddiy so'zlar bilan), katta tezkor tugmalar, keyin ro'yxatlar.
 import 'package:flutter/material.dart';
 
+import '../../core/adaptive.dart';
 import '../../core/api.dart';
 import '../../core/format.dart';
 import '../../core/help_links.dart';
@@ -100,7 +101,7 @@ class StaffHomePage extends StatelessWidget {
           final leads = asList(asMap(data['leads'])['data']);
           final crmMissing = (session.role == 'cashier' || session.role == 'marketer') && !session.hasModule('crm');
           return ListView(
-            padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
+            padding: readable(context, const EdgeInsets.fromLTRB(16, 12, 16, 24), max: kGridWidth),
             children: <Widget>[
               HomeHeader(name: session.userName, lead: _lead(session)),
               if (crmMissing && session.role == 'cashier' && session.can('p2p'))

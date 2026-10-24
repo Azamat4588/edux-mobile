@@ -13,6 +13,10 @@ import 'features/auth/organization_picker.dart';
 import 'features/scanner/scan_queue.dart';
 import 'features/shell/home_shell.dart';
 
+/// Tizim shrift o'lchami chegaralari (Dynamic Type).
+const double textScaleMin = 0.85;
+const double textScaleMax = 1.6;
+
 class EduxApp extends StatefulWidget {
   const EduxApp({super.key});
 
@@ -61,12 +65,14 @@ class _EduxAppState extends State<EduxApp> with WidgetsBindingObserver {
         GlobalCupertinoLocalizations.delegate,
       ],
       // Shrift o'lchami (Kichik … Juda katta): butun interfeys mutanosib kattalashadi, telefon sozlamasi ham hisobga olinadi.
+      // 3.7: iOS Dynamic Type / Android shrift o'lchami 0.85–1.6 oralig'ida cheklanadi (eng katta «Accessibility» o'lchamlarida
+      // ham tugma va kartalar sig'sin); ilova ichidagi tanlov shu ustiga qo'llanadi.
       builder: (context, child) {
         final media = MediaQuery.of(context);
         final scale = choice.textScale;
-        if (scale == 1) return child ?? const SizedBox();
+        final system = media.textScaler.clamp(minScaleFactor: textScaleMin, maxScaleFactor: textScaleMax);
         return MediaQuery(
-          data: media.copyWith(textScaler: TextScaler.linear(media.textScaler.scale(16) / 16 * scale)),
+          data: media.copyWith(textScaler: scale == 1 ? system : TextScaler.linear(system.scale(16) / 16 * scale)),
           child: child ?? const SizedBox(),
         );
       },

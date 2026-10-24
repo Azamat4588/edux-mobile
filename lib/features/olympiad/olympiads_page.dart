@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../core/adaptive.dart';
 import '../../core/api.dart';
 import '../../core/format.dart';
 import '../../core/i18n.dart';
@@ -127,7 +128,7 @@ class _OlympiadsPageState extends State<OlympiadsPage> {
             ]);
           }
           return ListView.separated(
-            padding: const EdgeInsets.fromLTRB(16, 16, 16, 96),
+            padding: readable(context, const EdgeInsets.fromLTRB(16, 16, 16, 96)),
             itemCount: items.length,
             separatorBuilder: (_, __) => const SizedBox(height: 10),
             itemBuilder: (context, index) => _OlympiadCard(

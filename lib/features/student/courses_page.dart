@@ -10,6 +10,7 @@ import 'package:open_filex/open_filex.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../core/adaptive.dart';
 import '../../core/api.dart';
 import '../../core/format.dart';
 import '../../core/help_links.dart';
@@ -47,7 +48,7 @@ class CoursesPage extends StatelessWidget {
             ]);
           }
           return ListView.separated(
-            padding: const EdgeInsets.all(16),
+            padding: readable(context, const EdgeInsets.all(16)),
             itemCount: courses.length,
             separatorBuilder: (_, __) => const SizedBox(height: 10),
             itemBuilder: (context, index) {
@@ -111,7 +112,7 @@ class CoursePage extends StatelessWidget {
           final subscription = asMap(data['subscription']);
           final daysLeft = subscription['days_left'] == null ? null : asInt(subscription['days_left']);
           return ListView(
-            padding: const EdgeInsets.all(16),
+            padding: readable(context, const EdgeInsets.all(16)),
             children: <Widget>[
               if (asText(course['description']).isNotEmpty) ...<Widget>[
                 Text(asText(course['description']), style: TextStyle(color: AppColors.muted)),
@@ -424,7 +425,7 @@ class _LessonPageState extends State<LessonPage> {
           final feedback = asMap(lesson['feedback']);
           final feedbackValue = _feedbackTouched ? _feedback : (feedback['value'] == null ? null : asInt(feedback['value']));
           return ListView(
-            padding: const EdgeInsets.fromLTRB(16, 16, 16, 32),
+            padding: readable(context, const EdgeInsets.fromLTRB(16, 16, 16, 32)),
             children: <Widget>[
               Text(asText(asMap(lesson['section'])['title']), style: TextStyle(color: AppColors.muted)),
               const SizedBox(height: 4),

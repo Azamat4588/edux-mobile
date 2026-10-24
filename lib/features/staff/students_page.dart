@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../core/adaptive.dart';
 import '../../core/api.dart';
 import '../../core/format.dart';
 import '../../core/i18n.dart';
@@ -150,7 +151,8 @@ class _StudentsPageState extends State<StudentsPage> {
       });
       return;
     }
-    Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => StudentCardPage(studentId: id, name: name)));
+    // iPad: karta o'ng ustunda (MasterDetail), telefonda — yangi sahifa.
+    openDetail(context, id: 'student-$id', builder: (_) => StudentCardPage(studentId: id, name: name));
   }
 
   @override
@@ -220,7 +222,11 @@ class _StudentsPageState extends State<StudentsPage> {
                                         textAlign: TextAlign.center, style: TextStyle(color: AppColors.muted)),
                               );
                             }
-                            return _StudentTile(student: _items[index], onTap: () => _open(_items[index]));
+                            return _StudentTile(
+                              student: _items[index],
+                              selected: isDetailSelected(context, 'student-${asInt(_items[index]['id'])}'),
+                              onTap: () => _open(_items[index]),
+                            );
                           },
                         ),
                 )),
@@ -238,10 +244,11 @@ class _StudentsPageState extends State<StudentsPage> {
 }
 
 class _StudentTile extends StatelessWidget {
-  const _StudentTile({required this.student, required this.onTap});
+  const _StudentTile({required this.student, required this.onTap, this.selected = false});
 
   final Map<String, dynamic> student;
   final VoidCallback onTap;
+  final bool selected;
 
   @override
   Widget build(BuildContext context) {
@@ -250,6 +257,8 @@ class _StudentTile extends StatelessWidget {
     final debt = balance is num && balance < 0;
     return ListTile(
       onTap: onTap,
+      selected: selected,
+      selectedTileColor: AppColors.soft(AppColors.brand),
       leading: Avatar(asText(student['full_name'])),
       title: Text(asText(student['full_name']), style: const TextStyle(fontWeight: FontWeight.w600)),
       subtitle: Text(<String>['#${asText(student['code'])}', if (groups.isNotEmpty) groups].join(' · '),
@@ -328,7 +337,7 @@ class _StudentCardPageState extends State<StudentCardPage> {
   Widget build(BuildContext context) {
     final session = AppScope.of(context);
     return Scaffold(
-      appBar: AppBar(title: Text(widget.name)),
+      appBar: AppBar(automaticallyImplyLeading: !isEmbeddedDetail(context), title: Text(widget.name)),
       floatingActionButton: session.canTakePayments && !session.readOnly
           ? FloatingActionButton.extended(
               onPressed: () async {
@@ -367,7 +376,7 @@ class _Card extends StatelessWidget {
     final hasBalance = data['balance'] != null;
     final balance = asInt(data['balance']);
     return ListView(
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 96),
+      padding: readable(context, const EdgeInsets.fromLTRB(16, 16, 16, 96)),
       children: <Widget>[
         AppCard(
           child: Row(children: <Widget>[

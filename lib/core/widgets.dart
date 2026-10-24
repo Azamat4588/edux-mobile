@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_math_fork/flutter_math.dart';
 
+import 'adaptive.dart';
 import 'api.dart';
 import 'format.dart';
 import 'help_links.dart';
@@ -497,29 +498,14 @@ class StatCard extends StatelessWidget {
   }
 }
 
-/// Ikki ustunli ko'rsatkichlar to'ri.
+/// Ko'rsatkichlar to'ri: telefonda 2 ustun, keng ekranda (iPad) 4 tagacha.
 class StatGrid extends StatelessWidget {
   const StatGrid({super.key, required this.children});
 
   final List<Widget> children;
 
   @override
-  Widget build(BuildContext context) {
-    final rows = <Widget>[];
-    for (var i = 0; i < children.length; i += 2) {
-      rows.add(Padding(
-        padding: const EdgeInsets.only(bottom: 10),
-        child: IntrinsicHeight(
-          child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
-            Expanded(child: children[i]),
-            const SizedBox(width: 10),
-            Expanded(child: i + 1 < children.length ? children[i + 1] : const SizedBox()),
-          ]),
-        ),
-      ));
-    }
-    return Column(children: rows);
-  }
+  Widget build(BuildContext context) => AdaptiveGrid(minTile: 170, children: children);
 }
 
 class Pill extends StatelessWidget {

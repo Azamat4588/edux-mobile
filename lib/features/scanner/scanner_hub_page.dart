@@ -1,6 +1,7 @@
 // Skaner bo'limi: skanerni boshlash (istalgan test yoki tanlangan test), navbat va ko'rib chiqish holati, maslahatlar.
 import 'package:flutter/material.dart';
 
+import '../../core/adaptive.dart';
 import '../../core/api.dart';
 import '../../core/help_links.dart';
 import '../../core/i18n.dart';
@@ -37,7 +38,7 @@ class ScannerHubPage extends StatelessWidget {
           final exams = asList(data['exams'], 'exams');
           final review = asInt(asMap(data['counts'])['needs_review']);
           return ListView(
-            padding: const EdgeInsets.all(16),
+            padding: readable(context, const EdgeInsets.all(16)),
             children: <Widget>[
               Material(
                 color: AppColors.brand,

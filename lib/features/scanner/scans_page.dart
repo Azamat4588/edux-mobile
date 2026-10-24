@@ -1,6 +1,7 @@
 // Tekshirilgan varaqalar: telefondagi navbat (yuborilmagan, yuborilgan) va serverdagi ko'rib chiqish ro'yxati.
 import 'package:flutter/material.dart';
 
+import '../../core/adaptive.dart';
 import '../../core/api.dart';
 import '../../core/format.dart';
 import '../../core/i18n.dart';
@@ -61,7 +62,7 @@ class _QueueTab extends StatelessWidget {
         }
         final waiting = items.where((item) => item.pending).length;
         return ListView(
-          padding: const EdgeInsets.all(16),
+          padding: readable(context, const EdgeInsets.all(16)),
           children: <Widget>[
             Row(children: <Widget>[
               Expanded(
@@ -123,7 +124,7 @@ class _ServerTab extends StatelessWidget {
           ]);
         }
         return ListView.separated(
-          padding: const EdgeInsets.all(16),
+          padding: readable(context, const EdgeInsets.all(16)),
           itemCount: scans.length,
           separatorBuilder: (_, __) => const SizedBox(height: 10),
           itemBuilder: (context, index) => _ServerScanTile(scan: scans[index], onChanged: reload),

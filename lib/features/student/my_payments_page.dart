@@ -2,6 +2,7 @@
 // onlayn to'lash tugmasi. Manba: GET crm/me (balance, charges, payments) — internetsiz oxirgi nusxa ko'rinadi.
 import 'package:flutter/material.dart';
 
+import '../../core/adaptive.dart';
 import '../../core/api.dart';
 import '../../core/format.dart';
 import '../../core/help_links.dart';
@@ -38,7 +39,7 @@ class MyPaymentsPage extends StatelessWidget {
           final payments = asList(data['payments'], 'payments');
           final debt = balance < 0;
           return ListView(
-            padding: const EdgeInsets.fromLTRB(16, 14, 16, 32),
+            padding: readable(context, const EdgeInsets.fromLTRB(16, 14, 16, 32)),
             children: <Widget>[
               AppCard(
                 child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[

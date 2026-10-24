@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../core/adaptive.dart';
 import '../../core/api.dart';
 import '../../core/format.dart';
 import '../../core/i18n.dart';
@@ -68,7 +69,7 @@ class _TasksPageState extends State<TasksPage> {
           final counts = asMap(data['counts']);
           final tasks = asList(data['data']);
           return ListView(
-            padding: const EdgeInsets.fromLTRB(16, 12, 16, 96),
+            padding: readable(context, const EdgeInsets.fromLTRB(16, 12, 16, 96)),
             children: <Widget>[
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
