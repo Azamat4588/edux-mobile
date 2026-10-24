@@ -174,7 +174,7 @@ class StudentOverviewBody extends StatelessWidget {
           Text(<String>[
             if (student['code'] != null) '${tr("O'quvchi kodi")}: ${asText(student['code'])}',
             dayTitle(DateTime.now()),
-          ].join(' · '), style: TextStyle(color: AppColors.muted)),
+          ].join(', '), style: TextStyle(color: AppColors.muted)),
           const SizedBox(height: 14),
         ],
         if (hasBalance)
@@ -211,7 +211,7 @@ class StudentOverviewBody extends StatelessWidget {
                 ListTile(
                   leading: Icon(Icons.event_outlined, color: AppColors.brand),
                   title: Text('${dayTitle(parseDate(upcoming[i]['date']) ?? DateTime.now())}, ${asText(upcoming[i]['start'])}'),
-                  subtitle: Text(<String>[asText(upcoming[i]['group']), if (upcoming[i]['room'] != null) asText(upcoming[i]['room'])].join(' · ')),
+                  subtitle: Text(<String>[asText(upcoming[i]['group']), if (upcoming[i]['room'] != null) asText(upcoming[i]['room'])].join(', ')),
                 ),
               ],
             ]),
@@ -244,7 +244,7 @@ class StudentOverviewBody extends StatelessWidget {
           ],
         ],
         if (subjects.isNotEmpty) ...<Widget>[
-          SectionTitle(<String>[tr('Fanlar bo\'yicha baholar'), if (asMap(school['current_term'])['name'] != null) asText(asMap(school['current_term'])['name'])].join(' · ')),
+          SectionTitle(<String>[tr('Fanlar bo\'yicha baholar'), if (asMap(school['current_term'])['name'] != null) asText(asMap(school['current_term'])['name'])].join(', ')),
           AppCard(
             padding: EdgeInsets.zero,
             child: Column(children: <Widget>[

@@ -74,7 +74,7 @@ class MyPaymentsPage extends StatelessWidget {
                         subtitle: Text(<String>[
                           asText(charges[i]['period']),
                           if (asText(charges[i]['due_on']).isNotEmpty) tr('muddat: {0}', <Object?>[date(charges[i]['due_on'])]),
-                        ].where((item) => item.isNotEmpty).join(' · ')),
+                        ].where((item) => item.isNotEmpty).join(', ')),
                         trailing: Text(money(asInt(charges[i]['amount'])), style: const TextStyle(fontWeight: FontWeight.w700)),
                       ),
                     ],
@@ -96,7 +96,7 @@ class MyPaymentsPage extends StatelessWidget {
                         subtitle: Text(<String>[
                           dateTime(payments[i]['paid_at']),
                           tr(paymentMethods[payments[i]['method']] ?? asText(payments[i]['method'])),
-                        ].join(' · ')),
+                        ].join(', ')),
                         trailing: payments[i]['receipt'] != null
                             ? Text(asText(payments[i]['receipt']), style: TextStyle(color: AppColors.muted, fontSize: 12))
                             : null,

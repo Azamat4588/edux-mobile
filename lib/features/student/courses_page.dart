@@ -133,7 +133,7 @@ class CoursePage extends StatelessWidget {
                       ]),
                       if (asText(item['body']).isNotEmpty) Padding(padding: const EdgeInsets.only(top: 4), child: Text(asText(item['body']))),
                       const SizedBox(height: 4),
-                      Text(<String>[if (asText(item['author']).isNotEmpty) asText(item['author']), dateTime(item['created_at'])].join(' · '),
+                      Text(<String>[if (asText(item['author']).isNotEmpty) asText(item['author']), dateTime(item['created_at'])].join(', '),
                           style: TextStyle(color: AppColors.muted, fontSize: 12)),
                     ]),
                   ),
@@ -177,7 +177,7 @@ class CoursePage extends StatelessWidget {
                           if (asInt(lesson['materials_count']) > 0) tr('{0} ta fayl', <Object?>[asInt(lesson['materials_count'])]),
                           if (asInt(lesson['assignments_count']) > 0) tr('uy vazifasi'),
                           if (lesson['has_exam'] == true) tr('test'),
-                        ].join(' · ')),
+                        ].join(', ')),
                         trailing: lesson['live_at'] != null ? Icon(Icons.videocam_outlined, color: AppColors.danger) : const Icon(Icons.chevron_right),
                         onTap: () async {
                           await Navigator.of(context).push(MaterialPageRoute<void>(

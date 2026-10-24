@@ -129,7 +129,7 @@ class _LeadsPageState extends State<LeadsPage> {
                             Text(asText(lead['full_name'], asText(lead['phone'])), style: const TextStyle(fontWeight: FontWeight.w700)),
                             const SizedBox(height: 2),
                             Text(
-                              <String>[asText(lead['phone']), asText(lead['source_name']), date(lead['created_at'])].where((item) => item.isNotEmpty).join(' · '),
+                              <String>[asText(lead['phone']), asText(lead['source_name']), date(lead['created_at'])].where((item) => item.isNotEmpty).join(', '),
                               style: TextStyle(color: AppColors.muted, fontSize: 13),
                             ),
                           ]),
@@ -268,7 +268,7 @@ class _LeadPageState extends State<LeadPage> {
                       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
                         Text(asText(event['body'], asText(event['text']))),
                         Text(
-                          <String>[dateTime(event['created_at']), asText(event['user'])].where((item) => item.isNotEmpty).join(' · '),
+                          <String>[dateTime(event['created_at']), asText(event['user'])].where((item) => item.isNotEmpty).join(', '),
                           style: TextStyle(color: AppColors.muted, fontSize: 12),
                         ),
                       ]),

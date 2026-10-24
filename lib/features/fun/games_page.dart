@@ -97,6 +97,7 @@ Color gameSourceColor(String source) => switch (source) {
       _ => AppColors.success,
     };
 
+
 class GameCard extends StatelessWidget {
   const GameCard({super.key, required this.game, required this.onTap, this.blocked, this.record});
 
@@ -117,16 +118,11 @@ class GameCard extends StatelessWidget {
         onTap: disabled ? () => showMessage(context, tr(blocked!)) : onTap,
         padding: const EdgeInsets.all(14),
         child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
-          Container(
-            width: 44,
-            height: 44,
-            decoration: BoxDecoration(color: AppColors.soft(color), borderRadius: BorderRadius.circular(12)),
-            child: Icon(gameIcon(game), color: color),
-          ),
+          IconTile(icon: gameIcon(game), colors: tileOf(color), size: 46),
           const SizedBox(width: 12),
           Expanded(
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
-              Text(tr(gameTitleLabels[game] ?? game), style: TextStyle(fontWeight: FontWeight.w800, fontSize: 16, color: AppColors.ink)),
+              Text(tr(gameTitleLabels[game] ?? game), style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16, color: AppColors.ink)),
               const SizedBox(height: 2),
               Text(tr(gameDescriptionLabels[game] ?? ''), style: TextStyle(color: AppColors.muted, fontSize: 13, height: 1.3)),
               if (disabled) ...<Widget>[
@@ -141,12 +137,17 @@ class GameCard extends StatelessWidget {
           ),
           if (!disabled) ...<Widget>[
             const SizedBox(width: 8),
-            Column(children: <Widget>[
-              Icon(Icons.play_circle_fill_rounded, color: color, size: 30),
+            Column(crossAxisAlignment: CrossAxisAlignment.end, children: <Widget>[
+              Container(
+                width: 34,
+                height: 34,
+                decoration: BoxDecoration(color: AppColors.accent, shape: BoxShape.circle),
+                child: const Icon(Icons.play_arrow_rounded, color: Colors.white, size: 22),
+              ),
               if (record != null) ...<Widget>[
-                const SizedBox(height: 4),
-                Text('$record', style: TextStyle(fontWeight: FontWeight.w800, fontSize: 12.5, color: AppColors.ink)),
-                Text(tr('rekord'), style: TextStyle(fontSize: 11, color: AppColors.muted)),
+                const SizedBox(height: 6),
+                Text('$record', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 13, color: AppColors.ink, fontFeatures: AppTheme.tabular)),
+                Text(tr('rekord'), style: TextStyle(fontSize: 11, color: AppColors.subtle)),
               ],
             ]),
           ],
@@ -223,6 +224,6 @@ class GameSourceSheet extends StatelessWidget {
   static String _setSubtitle(String subtitle) {
     final parts = subtitle.split(' · ');
     final count = parts.removeLast();
-    return <String>[...parts, tr("{0} ta so'z", <Object?>[count])].join(' · ');
+    return <String>[...parts, tr("{0} ta so'z", <Object?>[count])].join(', ');
   }
 }

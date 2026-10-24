@@ -351,7 +351,7 @@ class _SectionCard extends StatelessWidget {
               tr('{0} ta mavzu', <Object?>[topics.length]),
               tr('{0} ta savol', <Object?>[questions]),
               if (picked > 0) tr('{0} ta tanlandi', <Object?>[picked]),
-            ].join(' · '),
+            ].join(', '),
             style: TextStyle(color: picked > 0 ? AppColors.brand : AppColors.muted, fontSize: 13),
           ),
           children: <Widget>[

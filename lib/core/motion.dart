@@ -335,3 +335,96 @@ class SparklinePainter extends CustomPainter {
   bool shouldRepaint(SparklinePainter oldDelegate) =>
       oldDelegate.progress != progress || oldDelegate.color != color || oldDelegate.values != values;
 }
+
+// ---------------------------------------------------------------------------
+// Ro'yxat (veb: TransitionGroup «list»): yangi element chapdan siljib paydo bo'ladi, o'chgani so'nib yig'iladi.
+// Ma'lumot ro'yxati o'zgarganda kalitlar bo'yicha farq topiladi — AnimatedList shu farqni o'ynaydi.
+// ---------------------------------------------------------------------------
+
+class DiffAnimatedList<T> extends StatefulWidget {
+  const DiffAnimatedList({
+    super.key,
+    required this.items,
+    required this.keyOf,
+    required this.itemBuilder,
+    this.padding,
+    this.physics,
+    this.skipRemoval,
+  });
+
+  final List<T> items;
+  final String Function(T item) keyOf;
+  final Widget Function(BuildContext context, T item, int index) itemBuilder;
+  final EdgeInsetsGeometry? padding;
+  final ScrollPhysics? physics;
+
+  /// O'chirish harakati kerak emas (masalan, surib o'chirilgan — Dismissible o'zi yig'ib bo'lgan).
+  final bool Function(T item)? skipRemoval;
+
+  @override
+  State<DiffAnimatedList<T>> createState() => _DiffAnimatedListState<T>();
+}
+
+class _DiffAnimatedListState<T> extends State<DiffAnimatedList<T>> {
+  final GlobalKey<AnimatedListState> _list = GlobalKey<AnimatedListState>();
+  late List<T> _items = List<T>.of(widget.items);
+
+  @override
+  void didUpdateWidget(DiffAnimatedList<T> oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    final state = _list.currentState;
+    final next = widget.items;
+    if (state == null) {
+      _items = List<T>.of(next);
+      return;
+    }
+    final level = Motion.of(context);
+    final nextKeys = next.map(widget.keyOf).toSet();
+    // O'chirilganlar — oxiridan boshiga (indekslar siljimasin).
+    for (var i = _items.length - 1; i >= 0; i--) {
+      final old = _items[i];
+      if (nextKeys.contains(widget.keyOf(old))) continue;
+      _items.removeAt(i);
+      final skip = level == MotionLevel.off || (widget.skipRemoval?.call(old) ?? false);
+      state.removeItem(
+        i,
+        (context, animation) => skip
+            ? const SizedBox.shrink()
+            : FadeTransition(
+                opacity: animation,
+                child: SizeTransition(sizeFactor: CurvedAnimation(parent: animation, curve: Curves.easeInOutCubic), child: widget.itemBuilder(context, old, i)),
+              ),
+        duration: skip ? Duration.zero : AppDurations.d3,
+      );
+    }
+    // Yangilari — yangi ro'yxatdagi o'rniga.
+    final oldKeys = _items.map(widget.keyOf).toSet();
+    for (var i = 0; i < next.length; i++) {
+      if (oldKeys.contains(widget.keyOf(next[i]))) continue;
+      _items.insert(i.clamp(0, _items.length), next[i]);
+      state.insertItem(i.clamp(0, _items.length - 1), duration: level == MotionLevel.off ? Duration.zero : AppDurations.d2);
+    }
+    _items = List<T>.of(next);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final rich = Motion.rich(context);
+    return AnimatedList(
+      key: _list,
+      padding: widget.padding,
+      physics: widget.physics,
+      initialItemCount: _items.length,
+      itemBuilder: (context, index, animation) {
+        if (index >= _items.length) return const SizedBox.shrink();
+        final child = widget.itemBuilder(context, _items[index], index);
+        final fade = FadeTransition(opacity: animation, child: child);
+        if (!rich) return fade;
+        return SlideTransition(
+          position: Tween<Offset>(begin: const Offset(-0.03, 0), end: Offset.zero).animate(CurvedAnimation(parent: animation, curve: Curves.easeOutCubic)),
+          child: fade,
+        );
+      },
+    );
+  }
+}

@@ -171,7 +171,7 @@ class _CashRow extends StatelessWidget {
         '+${groupDigits(asInt(account['in']))}',
         '−${groupDigits(asInt(account['out']))}',
         if (shift.isNotEmpty) tr('smena ochiq'),
-      ].join(' · ')),
+      ].join(', ')),
       trailing: Text(money(asInt(account['balance'])), style: const TextStyle(fontWeight: FontWeight.w800)),
     );
   }
@@ -190,7 +190,7 @@ class _PaymentRow extends StatelessWidget {
     final session = AppScope.of(context);
     return ListTile(
       selected: isDetailSelected(context, 'student-${asInt(student['id'])}'),
-      selectedTileColor: AppColors.soft(AppColors.brand),
+      selectedTileColor: AppColors.accentSoft,
       onTap: student['id'] == null || !session.canSeeStudents
           ? null
           : () => openDetail(
@@ -206,10 +206,10 @@ class _PaymentRow extends StatelessWidget {
         tr(paymentMethods[asText(payment['method'])] ?? asText(payment['method'])),
         if (asText(payment['receipt']).isNotEmpty) '№${asText(payment['receipt'])}',
         if (asText(asMap(payment['receiver'])['name']).isNotEmpty) asText(asMap(payment['receiver'])['name']),
-      ].join(' · ')),
+      ].join(', ')),
       trailing: Text(
         voided ? tr('Bekor qilingan') : money(asInt(payment['amount'])),
-        style: TextStyle(fontWeight: FontWeight.w700, color: voided ? AppColors.muted : AppColors.success),
+        style: TextStyle(fontWeight: FontWeight.w700, color: voided ? AppColors.muted : AppColors.success, fontFeatures: AppTheme.tabular),
       ),
     );
   }
@@ -360,8 +360,10 @@ class _DebtorCard extends StatelessWidget {
     final phone = asText(debtor['phone']).replaceAll(RegExp(r'[^+\d]'), '');
     final groups = asRawList(debtor['groups']).join(', ');
     final session = AppScope.of(context);
+    // Qarzdor — qizil hoshiya (diqqat talab qiladi); doira rangi ismdan (bir odam hamma joyda bir rangda).
     return AppCard(
-      color: isDetailSelected(context, 'student-${asInt(debtor['id'])}') ? AppColors.soft(AppColors.brand) : null,
+      tone: AppColors.toneDanger,
+      color: isDetailSelected(context, 'student-${asInt(debtor['id'])}') ? AppColors.accentSoft : null,
       onTap: session.canSeeStudents
           ? () => openDetail(
                 context,
@@ -371,7 +373,7 @@ class _DebtorCard extends StatelessWidget {
           : null,
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
         Row(children: <Widget>[
-          Avatar(asText(debtor['full_name'], '?'), color: AppColors.danger),
+          Avatar(asText(debtor['full_name'], '?')),
           const SizedBox(width: AppSpacing.m),
           Expanded(
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
@@ -380,12 +382,12 @@ class _DebtorCard extends StatelessWidget {
                 <String>[
                   if (groups.isNotEmpty) groups,
                   debtor['last_paid_at'] != null ? tr("Oxirgi to'lov: {0}", <Object?>[date(debtor['last_paid_at'])]) : tr("To'lov qilmagan"),
-                ].join(' · '),
+                ].join(', '),
                 style: TextStyle(color: AppColors.muted, fontSize: 13),
               ),
             ]),
           ),
-          Text(money(-asInt(debtor['debt'])), style: TextStyle(fontWeight: FontWeight.w800, color: AppColors.danger)),
+          Text(money(-asInt(debtor['debt'])), style: TextStyle(fontWeight: FontWeight.w700, color: AppColors.danger, fontFeatures: AppTheme.tabular)),
         ]),
         const SizedBox(height: AppSpacing.m),
         Row(children: <Widget>[

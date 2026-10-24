@@ -218,7 +218,7 @@ class _LessonTile extends StatelessWidget {
       title: Text(<String>[
         if (day != null) dayTitle(day) else asText(lesson['date']),
         if (period > 0) tr('{0}-soat', <Object?>[period]).replaceAll('-', '-\u2060'),
-      ].join(' · ')),
+      ].join(', ')),
       subtitle: Text(asText(lesson['topic'], tr('Mavzu yozilmagan')), maxLines: 2, overflow: TextOverflow.ellipsis),
       trailing: Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.end, children: <Widget>[
         Text(tr('{0} baho', <Object?>[summary.marks]), style: TextStyle(color: AppColors.muted, fontSize: 12.5)),

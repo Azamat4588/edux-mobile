@@ -166,7 +166,7 @@ class _OlympiadPageState extends State<OlympiadPage> {
                     Text(<String>[
                       if (olympiad['subject'] != null) asText(olympiad['subject']),
                       if (olympiad['grades'] != null) tr('{0}-sinflar', <Object?>[asText(olympiad['grades'])]),
-                    ].join(' · '), style: const TextStyle(color: Colors.white)),
+                    ].join(', '), style: const TextStyle(color: Colors.white)),
                   ],
                   const SizedBox(height: 12),
                   Container(
@@ -235,7 +235,7 @@ class _OlympiadPageState extends State<OlympiadPage> {
                         title: Text(asText(leaderboard[i]['name']), style: const TextStyle(fontWeight: FontWeight.w600)),
                         subtitle: Text(<String>[asText(leaderboard[i]['school']), asText(leaderboard[i]['region'])]
                             .where((item) => item.isNotEmpty)
-                            .join(' · ')),
+                            .join(', ')),
                         trailing: Text('${number(asDouble(leaderboard[i]['score']))} / ${number(asDouble(leaderboard[i]['max_score']))}',
                             style: const TextStyle(fontWeight: FontWeight.w800)),
                       ),
@@ -307,7 +307,7 @@ class _MeCard extends StatelessWidget {
               Text(<String>[
                 if (me['number'] != null) tr('Ishtirokchi №{0}', <Object?>[asText(me['number'])]),
                 if (me['school'] != null) asText(me['school']),
-              ].join(' · '), style: TextStyle(color: AppColors.muted, fontSize: 13)),
+              ].join(', '), style: TextStyle(color: AppColors.muted, fontSize: 13)),
             ]),
           ),
           Pill(status == 'pending_payment' ? tr("Badal to'lanmagan") : tr("Ro'yxatdan o'tgan"),

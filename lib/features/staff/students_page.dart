@@ -258,10 +258,11 @@ class _StudentTile extends StatelessWidget {
     return ListTile(
       onTap: onTap,
       selected: selected,
-      selectedTileColor: AppColors.soft(AppColors.brand),
-      leading: Avatar(asText(student['full_name'])),
+      selectedTileColor: AppColors.accentSoft,
+      // Ro'yxat → karta: doira «uchib» o'tadi (Hero), ikki ustunli rejimda — o'z joyida.
+      leading: Avatar(asText(student['full_name']), heroTag: 'student-${asInt(student['id'])}'),
       title: Text(asText(student['full_name']), style: const TextStyle(fontWeight: FontWeight.w600)),
-      subtitle: Text(<String>['#${asText(student['code'])}', if (groups.isNotEmpty) groups].join(' · '),
+      subtitle: Text(<String>['#${asText(student['code'])}', if (groups.isNotEmpty) groups].join(', '),
           maxLines: 1, overflow: TextOverflow.ellipsis),
       trailing: balance is num
           ? Text(money(balance),
@@ -351,16 +352,35 @@ class _StudentCardPageState extends State<StudentCardPage> {
       body: AsyncView<Map<String, dynamic>>(
         key: _view,
         load: () => _load(session),
-        builder: (context, data, reload) => _Card(data: data),
+        // Yuklanayotganda ham ism va doira joyida (Hero o'tishi shu yerga keladi).
+        skeleton: ListView(
+          physics: const NeverScrollableScrollPhysics(),
+          padding: readable(context, const EdgeInsets.fromLTRB(16, 16, 16, 16)),
+          children: <Widget>[
+            AppCard(
+              child: Row(children: <Widget>[
+                Avatar(widget.name, size: 52, heroTag: isEmbeddedDetail(context) ? null : 'student-${widget.studentId}'),
+                const SizedBox(width: 14),
+                Expanded(child: Text(widget.name, style: AppTheme.title(size: 19))),
+              ]),
+            ),
+            const SizedBox(height: 12),
+            const SkeletonBox(height: 96, radius: 14),
+            const SizedBox(height: 12),
+            const SkeletonBox(height: 160, radius: 14),
+          ],
+        ),
+        builder: (context, data, reload) => _Card(data: data, heroTag: isEmbeddedDetail(context) ? null : 'student-${widget.studentId}'),
       ),
     );
   }
 }
 
 class _Card extends StatelessWidget {
-  const _Card({required this.data});
+  const _Card({required this.data, this.heroTag});
 
   final Map<String, dynamic> data;
+  final Object? heroTag;
 
   @override
   Widget build(BuildContext context) {
@@ -380,11 +400,11 @@ class _Card extends StatelessWidget {
       children: <Widget>[
         AppCard(
           child: Row(children: <Widget>[
-            Avatar(asText(student['full_name']), size: 52),
+            Avatar(asText(student['full_name']), size: 52, heroTag: heroTag),
             const SizedBox(width: 14),
             Expanded(
               child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
-                Text(asText(student['full_name']), style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w800)),
+                Text(asText(student['full_name']), style: AppTheme.title(size: 19)),
                 const SizedBox(height: 2),
                 Text('${tr("O'quvchi kodi")}: ${asText(student['code'])}', style: TextStyle(color: AppColors.muted)),
                 if (student['archived'] == true) ...<Widget>[const SizedBox(height: 4), Pill(tr('Arxivda'), color: AppColors.muted)],
@@ -469,7 +489,7 @@ class _Card extends StatelessWidget {
               for (final lesson in asList(attendance['recent'], 'recent').take(8))
                 ListTile(
                   dense: true,
-                  title: Text(<String>[date(lesson['date']), asText(lesson['group'])].join(' · ')),
+                  title: Text(<String>[date(lesson['date']), asText(lesson['group'])].join(', ')),
                   subtitle: lesson['topic'] != null ? Text(asText(lesson['topic'])) : null,
                   trailing: Pill(tr(attendanceLabels[lesson['status']] ?? '—'),
                       color: attendanceColors[lesson['status']] ?? AppColors.muted),
@@ -494,7 +514,7 @@ class _Card extends StatelessWidget {
                     dateTime(payments[i]['paid_at']),
                     tr(paymentMethods[payments[i]['method']] ?? asText(payments[i]['method'])),
                     if (payments[i]['receipt'] != null) asText(payments[i]['receipt']),
-                  ].join(' · ')),
+                  ].join(', ')),
                   trailing: payments[i]['voided_at'] != null ? Pill(tr('Bekor qilingan'), color: AppColors.danger) : null,
                 ),
               ],

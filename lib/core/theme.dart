@@ -584,6 +584,14 @@ ThemeData buildTheme() {
       dragHandleColor: AppColors.lineStrong,
       shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(AppRadius.sheet))),
     ),
+    floatingActionButtonTheme: FloatingActionButtonThemeData(
+      backgroundColor: AppColors.accent,
+      foregroundColor: Colors.white,
+      elevation: 3,
+      highlightElevation: 5,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppRadius.control + 6)),
+      extendedTextStyle: TextStyle(fontFamily: family, fontFamilyFallback: fallback, fontWeight: FontWeight.w600, fontSize: 15),
+    ),
     popupMenuTheme: PopupMenuThemeData(
       color: AppColors.raised,
       surfaceTintColor: Colors.transparent,

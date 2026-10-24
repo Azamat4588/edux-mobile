@@ -16,6 +16,7 @@ import 'package:edux/core/nav.dart';
 import 'package:edux/core/session.dart';
 import 'package:edux/core/theme.dart';
 import 'package:edux/features/auth/login_page.dart';
+import 'package:edux/features/auth/organization_picker.dart';
 import 'package:edux/features/feedback/feedback_pages.dart';
 import 'package:edux/features/fun/games_page.dart';
 import 'package:edux/features/fun/labs_page.dart';
@@ -72,14 +73,7 @@ Widget deviceApp(Session session, Widget page, {required Device device, String? 
       destinations: destinations,
       selected: index,
       onSelect: (_) {},
-      railHeader: Row(children: <Widget>[
-        OrgMark(url: null, name: session.organizationName, size: 40),
-        const SizedBox(width: 10),
-        Expanded(
-          child: Text(session.organizationName,
-              maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(fontWeight: FontWeight.w700, fontSize: 13.5, color: AppColors.navDark ? Colors.white : AppColors.ink)),
-        ),
-      ]),
+      railHeader: RailOrg(name: session.organizationName, logo: null, subtitle: session.membership == null ? '' : roleLabel(session.membership!.role)),
       body: scoped(session, tab, page),
     );
   }

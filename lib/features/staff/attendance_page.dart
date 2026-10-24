@@ -6,6 +6,7 @@ import '../../core/api.dart';
 import '../../core/format.dart';
 import '../../core/help_links.dart';
 import '../../core/i18n.dart';
+import '../../core/motion.dart';
 import '../../core/session.dart';
 import '../../core/theme.dart';
 import '../../core/widgets.dart';
@@ -75,23 +76,16 @@ class _GroupTile extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(bottom: 10),
       child: AppCard(
-        // iPad: varaqa o'ng ustunda (MasterDetail), telefonda — yangi sahifa.
-        color: selected ? AppColors.soft(AppColors.brand) : null,
+        // iPad: varaqa o'ng ustunda (MasterDetail), telefonda — yangi sahifa. Bugun darsi bor guruh — hoshiya bilan.
+        color: selected ? AppColors.accentSoft : null,
+        tone: highlight || selected ? AppColors.accent : null,
         onTap: () => openDetail(
           context,
           id: key,
           builder: (_) => AttendanceSheetPage(groupId: asInt(group['id']), groupName: asText(group['name'])),
         ),
         child: Row(children: <Widget>[
-          Container(
-            width: 42,
-            height: 42,
-            decoration: BoxDecoration(
-              color: (highlight ? AppColors.success : AppColors.brand).withAlpha(26),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Icon(Icons.groups_2_outlined, color: highlight ? AppColors.success : AppColors.brand),
-          ),
+          IconTile(icon: Icons.groups_2_outlined, colors: highlight ? AppColors.tileFor(asText(group['name'])) : StatusColors(AppColors.muted, AppColors.sunken), size: 42),
           const SizedBox(width: 12),
           Expanded(
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
@@ -99,10 +93,10 @@ class _GroupTile extends StatelessWidget {
               Text(<String>[
                 if (teacher['name'] != null) asText(teacher['name']),
                 tr('{0} ta o\'quvchi', <Object?>[asInt(group['students_count'])]),
-              ].join(' · '), style: TextStyle(color: AppColors.muted)),
+              ].join(', '), style: TextStyle(color: AppColors.muted)),
             ]),
           ),
-          Icon(Icons.chevron_right, color: AppColors.muted),
+          Icon(Icons.chevron_right, color: AppColors.subtle),
         ]),
       ),
     );
@@ -257,7 +251,7 @@ class _AttendanceSheetPageState extends State<AttendanceSheetPage> {
           ],
         ),
         body: _loading
-            ? const Center(child: CircularProgressIndicator())
+            ? const SkeletonList(count: 6)
             : _error != null
                 ? ErrorState(message: _error!, onRetry: _load)
                 : ListView(
@@ -265,17 +259,8 @@ class _AttendanceSheetPageState extends State<AttendanceSheetPage> {
                     children: <Widget>[
                       TextField(controller: _topic, decoration: InputDecoration(labelText: tr('Mavzu (ixtiyoriy)')), onChanged: (_) => _dirty = true),
                       const SizedBox(height: 12),
-                      Row(children: <Widget>[
-                        Expanded(
-                          child: Text(tr('Belgilangan: {0} / {1}', <Object?>[marked, _students.length]),
-                              style: TextStyle(color: AppColors.muted)),
-                        ),
-                        TextButton.icon(
-                          onPressed: () => _setAll('present'),
-                          icon: const Icon(Icons.done_all),
-                          label: Text(tr('Hammasi keldi')),
-                        ),
-                      ]),
+                      _MarkSummary(status: _status, total: _students.length, onAll: () => _setAll('present')),
+                      const SizedBox(height: 10),
                       if (_students.isEmpty) EmptyState(text: tr("Guruhda o'quvchi yo'q.")),
                       for (final student in _students) ...<Widget>[
                         _StudentMark(
@@ -314,6 +299,60 @@ class _AttendanceSheetPageState extends State<AttendanceSheetPage> {
   }
 }
 
+/// Belgilanganlar xulosasi: son va holatlar bo'yicha bitta chiziq (yashil — keldi, qizil — kelmadi, sariq — kechikdi).
+class _MarkSummary extends StatelessWidget {
+  const _MarkSummary({required this.status, required this.total, required this.onAll});
+
+  final Map<int, String?> status;
+  final int total;
+  final VoidCallback onAll;
+
+  @override
+  Widget build(BuildContext context) {
+    final counts = <String, int>{for (final key in attendanceLabels.keys) key: status.values.where((value) => value == key).length};
+    final marked = counts.values.fold<int>(0, (sum, value) => sum + value);
+    final duration = Motion.duration(context, AppDurations.d3);
+    return AppCard(
+      padding: const EdgeInsets.fromLTRB(14, 10, 6, 12),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
+        Row(children: <Widget>[
+          Expanded(
+            child: Text(tr('Belgilangan: {0} / {1}', <Object?>[marked, total]),
+                style: TextStyle(color: AppColors.ink, fontWeight: FontWeight.w600, fontFeatures: AppTheme.tabular)),
+          ),
+          TextButton.icon(onPressed: onAll, icon: const Icon(Icons.done_all, size: 20), label: Text(tr('Hammasi keldi'))),
+        ]),
+        const SizedBox(height: 4),
+        Padding(
+          padding: const EdgeInsets.only(right: 8),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(4),
+            child: SizedBox(
+              height: 8,
+              child: LayoutBuilder(builder: (context, box) {
+                final width = box.maxWidth;
+                return Stack(children: <Widget>[
+                  Container(color: AppColors.sunken),
+                  Row(children: <Widget>[
+                    for (final key in attendanceLabels.keys)
+                      AnimatedContainer(
+                        duration: duration,
+                        curve: Curves.easeOutCubic,
+                        width: total == 0 ? 0 : width * (counts[key] ?? 0) / total,
+                        color: key == 'excused' ? AppColors.lineStrong : (key == 'present' ? AppColors.toneSuccess : (key == 'absent' ? AppColors.toneDanger : AppColors.toneWarning)),
+                      ),
+                  ]),
+                ]);
+              }),
+            ),
+          ),
+        ),
+      ]),
+    );
+  }
+}
+
+/// O'quvchi qatori: belgilangan holat chap chetda hoshiya bo'lib ko'rinadi (keldi — yashil, kelmadi — qizil ...).
 class _StudentMark extends StatelessWidget {
   const _StudentMark({required this.name, required this.value, required this.onChanged, this.frozen = false, this.trial = false});
 
@@ -323,13 +362,24 @@ class _StudentMark extends StatelessWidget {
   final bool trial;
   final ValueChanged<String?> onChanged;
 
+  static Color? _tone(String? value) => switch (value) {
+        'present' => AppColors.toneSuccess,
+        'absent' => AppColors.toneDanger,
+        'late' => AppColors.toneWarning,
+        'excused' => AppColors.lineStrong,
+        _ => null,
+      };
+
   @override
   Widget build(BuildContext context) {
     return AppCard(
-      padding: const EdgeInsets.fromLTRB(14, 10, 10, 10),
+      tone: _tone(value) ?? Colors.transparent,
+      padding: const EdgeInsets.fromLTRB(12, 10, 10, 10),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
         Row(children: <Widget>[
-          Expanded(child: Text(name, style: const TextStyle(fontWeight: FontWeight.w600))),
+          Avatar(name, size: 32),
+          const SizedBox(width: 10),
+          Expanded(child: Text(name, style: TextStyle(fontWeight: FontWeight.w600, color: AppColors.ink))),
           if (frozen) Pill(tr('Muzlatilgan'), color: AppColors.muted),
           if (trial) Pill(tr('Sinov darsida'), color: AppColors.brand),
         ]),
@@ -361,25 +411,33 @@ class _StatusChoice extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final duration = Motion.duration(context, AppDurations.d1);
     return Semantics(
       button: true,
       selected: selected,
-      child: Material(
-        color: selected ? AppColors.soft(color) : AppColors.card,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(AppRadius.control),
-          side: BorderSide(color: selected ? color : AppColors.line, width: selected ? 1.6 : 1),
-        ),
-        clipBehavior: Clip.antiAlias,
-        child: InkWell(
-          onTap: onTap,
-          child: Container(
-            height: 42,
-            alignment: Alignment.center,
-            padding: const EdgeInsets.symmetric(horizontal: 2),
-            child: FittedBox(
-              fit: BoxFit.scaleDown,
-              child: Text(label, maxLines: 1, style: TextStyle(color: selected ? color : AppColors.ink, fontWeight: selected ? FontWeight.w700 : FontWeight.w500, fontSize: 14)),
+      child: Pressable(
+        child: AnimatedContainer(
+          duration: duration,
+          curve: Curves.easeOut,
+          decoration: BoxDecoration(
+            color: selected ? AppColors.soft(color) : AppColors.card,
+            borderRadius: BorderRadius.circular(AppRadius.control),
+            border: Border.all(color: selected ? color : AppColors.line, width: selected ? 1.6 : 1),
+          ),
+          child: Material(
+            type: MaterialType.transparency,
+            child: InkWell(
+              borderRadius: BorderRadius.circular(AppRadius.control),
+              onTap: onTap,
+              child: Container(
+                height: 42,
+                alignment: Alignment.center,
+                padding: const EdgeInsets.symmetric(horizontal: 2),
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text(label, maxLines: 1, style: TextStyle(color: selected ? color : AppColors.ink, fontWeight: selected ? FontWeight.w700 : FontWeight.w500, fontSize: 14)),
+                ),
+              ),
             ),
           ),
         ),

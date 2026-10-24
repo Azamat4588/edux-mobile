@@ -214,7 +214,7 @@ class _HeroGridPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     const step = 20.0;
     final line = Paint()
-      ..color = color.withAlpha(AppColors.dark ? 34 : 28)
+      ..color = color.withAlpha(AppColors.dark ? 24 : 28)
       ..strokeWidth = 1;
     final start = size.width * 0.3;
     for (var x = size.width - 0.5; x > start; x -= step) {
@@ -507,12 +507,12 @@ class _TimelineRow extends StatelessWidget {
             height: 34,
             child: primary || now
                 ? FilledButton(
-                    style: FilledButton.styleFrom(minimumSize: const Size(0, 34), padding: const EdgeInsets.symmetric(horizontal: 12), textStyle: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600)),
+                    style: FilledButton.styleFrom(minimumSize: const Size(0, 34), padding: const EdgeInsets.symmetric(horizontal: 12), textStyle: TextStyle(fontFamily: AppColors.choice.fontFamily, fontSize: 13, fontWeight: FontWeight.w600)),
                     onPressed: () => onAttendance!(lesson),
                     child: Text(tr('Davomat')),
                   )
                 : OutlinedButton(
-                    style: OutlinedButton.styleFrom(minimumSize: const Size(0, 34), padding: const EdgeInsets.symmetric(horizontal: 12), textStyle: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600)),
+                    style: OutlinedButton.styleFrom(minimumSize: const Size(0, 34), padding: const EdgeInsets.symmetric(horizontal: 12), textStyle: TextStyle(fontFamily: AppColors.choice.fontFamily, fontSize: 13, fontWeight: FontWeight.w600)),
                     onPressed: () => onAttendance!(lesson),
                     child: Text(tr('Davomat')),
                   ),
@@ -654,5 +654,39 @@ class OrgMark extends StatelessWidget {
         child: Image.network(url!, width: size, height: size, fit: BoxFit.contain, cacheWidth: (size * 3).round(), errorBuilder: (_, __, ___) => letter),
       ),
     );
+  }
+}
+
+/// iPad yon menyusi tepasida tashkilot bloki (veb: org-card): logo yoki bosh harf, nom va rol.
+class RailOrg extends StatelessWidget {
+  const RailOrg({super.key, required this.name, required this.logo, required this.subtitle});
+
+  final String name;
+  final String? logo;
+  final String subtitle;
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(builder: (context, box) {
+      final mark = OrgMark(url: logo, name: name, size: 40);
+      if (box.maxWidth < 160) return Center(child: Tooltip(message: name, child: mark));
+      return Container(
+        padding: const EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          color: Color.alphaBlend(AppColors.navFg.withAlpha(16), AppColors.navBg),
+          borderRadius: BorderRadius.circular(AppRadius.control),
+        ),
+        child: Row(children: <Widget>[
+          mark,
+          const SizedBox(width: 10),
+          Expanded(
+            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
+              Text(name, maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(fontWeight: FontWeight.w700, fontSize: 13.5, color: AppColors.navDark ? Colors.white : AppColors.ink, height: 1.2)),
+              if (subtitle.isNotEmpty) Text(subtitle, maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 12, color: AppColors.navFg)),
+            ]),
+          ),
+        ]),
+      );
+    });
   }
 }

@@ -805,7 +805,7 @@ PreferredSizeWidget pageBar(
         path.join(' › '),
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
-        style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: AppColors.subtle, letterSpacing: 0.1),
+        style: TextStyle(fontFamily: AppColors.choice.fontFamily, fontSize: 12.5, fontWeight: FontWeight.w500, color: AppColors.subtle, letterSpacing: 0),
       ),
       const SizedBox(height: 1),
       DefaultTextStyle.merge(
@@ -818,7 +818,7 @@ PreferredSizeWidget pageBar(
   );
 }
 
-class _SectionChips extends StatelessWidget {
+class _SectionChips extends StatefulWidget {
   const _SectionChips({required this.scope});
 
   final SectionScope scope;
@@ -826,41 +826,65 @@ class _SectionChips extends StatelessWidget {
   static const double height = 48;
 
   @override
+  State<_SectionChips> createState() => _SectionChipsState();
+}
+
+class _SectionChipsState extends State<_SectionChips> {
+  final GlobalKey _active = GlobalKey();
+
+  @override
+  void initState() {
+    super.initState();
+    // Tanlangan yorliq ekranda ko'rinsin (uzun ro'yxatda o'ngda qolib ketmasin).
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final target = _active.currentContext;
+      if (target != null && mounted) Scrollable.ensureVisible(target, alignment: 0.5);
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final scope = widget.scope;
     return SizedBox(
-      height: height,
-      child: ListView.separated(
+      height: _SectionChips.height,
+      child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         padding: const EdgeInsets.fromLTRB(18, 4, 16, 10),
-        itemCount: scope.tabs.length,
-        separatorBuilder: (_, __) => const SizedBox(width: 6),
-        itemBuilder: (context, i) {
-          final active = i == scope.selected;
-          return Semantics(
-            selected: active,
-            button: true,
-            child: Material(
-              color: active ? AppColors.accent : AppColors.card,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(AppRadius.chip + 3),
-                side: BorderSide(color: active ? AppColors.accent : AppColors.line),
-              ),
-              clipBehavior: Clip.antiAlias,
-              child: InkWell(
-                onTap: active ? null : () => scope.onSelect?.call(i),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 14),
-                  child: Center(
-                    child: Text(
-                      scope.tabs[i].label,
-                      style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13.5, color: active ? Colors.white : AppColors.ink),
-                    ),
-                  ),
-                ),
-              ),
+        child: Row(children: <Widget>[
+          for (var i = 0; i < scope.tabs.length; i++) ...<Widget>[
+            if (i > 0) const SizedBox(width: 6),
+            _chip(context, scope, i),
+          ],
+        ]),
+      ),
+    );
+  }
+
+  Widget _chip(BuildContext context, SectionScope scope, int i) {
+    final active = i == scope.selected;
+    return Semantics(
+      key: active ? _active : null,
+      selected: active,
+      button: true,
+      child: Material(
+        color: active ? AppColors.accent : AppColors.card,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppRadius.chip + 3),
+          side: BorderSide(color: active ? AppColors.accent : AppColors.line),
+        ),
+        clipBehavior: Clip.antiAlias,
+        child: InkWell(
+          onTap: active ? null : () => scope.onSelect?.call(i),
+          child: Container(
+            height: 34,
+            padding: const EdgeInsets.symmetric(horizontal: 14),
+            alignment: Alignment.center,
+            child: Text(
+              scope.tabs[i].label,
+              style: TextStyle(fontFamily: AppColors.choice.fontFamily, fontWeight: FontWeight.w600, fontSize: 13.5, color: active ? Colors.white : AppColors.ink),
             ),
-          );
-        },
+          ),
+        ),
       ),
     );
   }

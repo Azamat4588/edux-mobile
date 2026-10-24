@@ -70,7 +70,7 @@ class AssignmentCard extends StatelessWidget {
         if (showCourse && assignment['course'] != null)
           Padding(
             padding: const EdgeInsets.only(top: 2),
-            child: Text(<String>[asText(asMap(assignment['course'])['title']), asText(asMap(assignment['lesson'])['title'])].join(' · '),
+            child: Text(<String>[asText(asMap(assignment['course'])['title']), asText(asMap(assignment['lesson'])['title'])].join(', '),
                 style: TextStyle(color: AppColors.muted, fontSize: 13)),
           ),
         if (asText(assignment['description']).isNotEmpty) ...<Widget>[

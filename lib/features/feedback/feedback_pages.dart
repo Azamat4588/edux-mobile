@@ -123,6 +123,7 @@ class FeedbackAttachments extends StatelessWidget {
               asText(file['url']),
               width: 96,
               height: 96,
+              cacheWidth: 288,
               fit: BoxFit.cover,
               errorBuilder: (_, __, ___) => Container(
                 width: 96,
@@ -608,7 +609,7 @@ class MyFeedbackView extends StatelessWidget {
               FeedbackAttachments(files: asList(item['attachments'], 'attachments')),
             ],
             const SizedBox(height: 10),
-            Text(<String>[dateTime(item['created_at']), if (about.isNotEmpty) about].join(' · '), style: TextStyle(color: AppColors.muted, fontSize: 12.5)),
+            Text(<String>[dateTime(item['created_at']), if (about.isNotEmpty) about].join(', '), style: TextStyle(color: AppColors.muted, fontSize: 12.5)),
           ]),
         ),
         SectionTitle(tr('Markaz javobi')),
@@ -915,7 +916,7 @@ class FeedbackAdminTile extends StatelessWidget {
                 const SizedBox(height: 2),
                 Text(
                   <String>[tr(kinds[kind] ?? feedbackKindLabels[kind] ?? kind), if (asText(item['category']).isNotEmpty) tr(asText(item['category'])), if (about.isNotEmpty) about]
-                      .join(' · '),
+                      .join(', '),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(color: feedbackKindColor(kind), fontSize: 12.5, fontWeight: FontWeight.w600),
@@ -1128,7 +1129,7 @@ class _FeedbackAdminDetailPageState extends State<FeedbackAdminDetailPage> {
                     Text(
                       anonymous
                           ? tr("Muallif ismini ko'rsatmaslikni so'ragan.")
-                          : <String>[tr(feedbackRoleLabels[asText(author['role'])] ?? asText(author['role'])), if (phone.isNotEmpty) phone].join(' · '),
+                          : <String>[tr(feedbackRoleLabels[asText(author['role'])] ?? asText(author['role'])), if (phone.isNotEmpty) phone].join(', '),
                       style: TextStyle(color: AppColors.muted, fontSize: 13),
                     ),
                   ]),
@@ -1160,7 +1161,7 @@ class _FeedbackAdminDetailPageState extends State<FeedbackAdminDetailPage> {
                   dateTime(item['created_at']),
                   if (item['due_at'] != null && !feedbackClosed(status)) tr('Muddat: {0}', <Object?>[dateTime(item['due_at'])]),
                   if (asText(context0['app']).isNotEmpty) '${asText(context0['app'])} ${asText(context0['app_version'])}'.trim(),
-                ].join(' · '),
+                ].join(', '),
                 style: TextStyle(color: AppColors.muted, fontSize: 12.5),
               ),
             ]),
@@ -1297,7 +1298,7 @@ class _EventRow extends StatelessWidget {
       title: Text(tr(feedbackEventLabels[type] ?? type), style: const TextStyle(fontWeight: FontWeight.w600)),
       subtitle: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
         if (detail.isNotEmpty) Text(detail, style: TextStyle(color: AppColors.ink)),
-        Text(<String>[asText(event['user']), dateTime(event['created_at'])].where((part) => part.isNotEmpty).join(' · '),
+        Text(<String>[asText(event['user']), dateTime(event['created_at'])].where((part) => part.isNotEmpty).join(', '),
             style: TextStyle(color: AppColors.muted, fontSize: 12)),
       ]),
     );

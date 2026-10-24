@@ -128,7 +128,7 @@ class OptionButton extends StatelessWidget {
                   if (imageUrl != null)
                     Padding(
                       padding: const EdgeInsets.only(top: 6),
-                      child: Image.network(imageUrl!, height: 90, errorBuilder: (_, __, ___) => const SizedBox()),
+                      child: Image.network(imageUrl!, height: 90, cacheHeight: 270, errorBuilder: (_, __, ___) => const SizedBox()),
                     ),
                 ]),
               ),

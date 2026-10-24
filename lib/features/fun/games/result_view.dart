@@ -81,7 +81,7 @@ class _GameResultViewState extends State<GameResultView> {
                 _Fact(label: 'XP', value: '+${result.xp}', color: result.xp > 0 ? AppColors.success : AppColors.muted),
               ]),
               const SizedBox(height: 12),
-              Text(facts.join(' · '), textAlign: TextAlign.center, style: TextStyle(color: AppColors.muted, fontSize: 13)),
+              Text(facts.join(', '), textAlign: TextAlign.center, style: TextStyle(color: AppColors.muted, fontSize: 13)),
               if (result.xpCapped) ...<Widget>[
                 const SizedBox(height: 6),
                 Text(

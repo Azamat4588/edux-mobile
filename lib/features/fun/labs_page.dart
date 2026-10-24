@@ -243,10 +243,10 @@ class _LabsCatalogViewState extends State<LabsCatalogView> with AutomaticKeepAli
         final list = labs.where((lab) => asText(lab['subject']) == subject).toList();
         children
           ..add(SectionTitle(
-            '${labSubjectLabel(list.first)} · ${list.length}',
+            labSubjectLabel(list.first),
             trailing: list.length > _labsPerGroup
-                ? TextButton(onPressed: () => _pick(subject), child: Text(tr('Hammasi')))
-                : null,
+                ? TextButton(onPressed: () => _pick(subject), child: Text(tr('Hammasi ({0})', <Object?>[list.length])))
+                : Text('${list.length}', style: TextStyle(color: AppColors.subtle, fontWeight: FontWeight.w600)),
           ))
           ..add(_grid(list.take(_labsPerGroup).toList()));
       }
@@ -256,7 +256,7 @@ class _LabsCatalogViewState extends State<LabsCatalogView> with AutomaticKeepAli
         final key = '$_subject/${entry.key}';
         final open = _expanded.contains(key);
         children
-          ..add(SectionTitle('${tr('{0}-sinf', <Object?>[entry.key])} · ${entry.value.length}'))
+          ..add(SectionTitle(tr('{0}-sinf', <Object?>[entry.key]), trailing: Text('${entry.value.length}', style: TextStyle(color: AppColors.subtle, fontWeight: FontWeight.w600))))
           ..add(_grid(open ? entry.value : entry.value.take(_labsPerGroup).toList()));
         if (!open && entry.value.length > _labsPerGroup) children.add(_more(key, entry.value.length - _labsPerGroup));
       }
@@ -497,18 +497,14 @@ class LabCard extends StatelessWidget {
         await onChanged();
       },
       child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
-        Container(
-          width: 46,
-          height: 46,
-          decoration: BoxDecoration(color: color.withAlpha(30), borderRadius: BorderRadius.circular(AppRadius.control)),
-          child: Icon(labIcon(subject), color: color),
-        ),
+        IconTile(icon: labIcon(subject), colors: StatusColors(readableOn(AppColors.dark ? Color.lerp(color, Colors.white, 0.45)! : color, AppColors.card), Color.alphaBlend(color.withAlpha(AppColors.dark ? 46 : 26), AppColors.card)), size: 46),
         const SizedBox(width: 12),
         Expanded(
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
-            Text(asText(lab['name']), style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 16)),
-            Text('${labSubjectLabel(lab)} · ${tr('{0}-sinf', <Object?>[asText(lab['grades'])])}',
-                style: TextStyle(color: readableOn(color, AppColors.card), fontWeight: FontWeight.w600, fontSize: 13)),
+            Text(asText(lab['name']), style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16, color: AppColors.ink, height: 1.25)),
+            const SizedBox(height: 2),
+            Text('${labSubjectLabel(lab)}, ${tr('{0}-sinf', <Object?>[asText(lab['grades'])])}',
+                style: TextStyle(color: readableOn(AppColors.dark ? Color.lerp(color, Colors.white, 0.45)! : color, AppColors.card), fontWeight: FontWeight.w600, fontSize: 13)),
             const SizedBox(height: 4),
             Text(asText(lab['description']), maxLines: 3, overflow: TextOverflow.ellipsis, style: TextStyle(color: AppColors.muted, fontSize: 13)),
             if (topic.isNotEmpty) ...<Widget>[

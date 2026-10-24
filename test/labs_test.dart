@@ -72,10 +72,10 @@ void main() {
     await tester.pumpWidget(MaterialApp(home: Scaffold(body: LabsCatalogView(labs: labs(), onChanged: () async {}))));
     await tester.pump();
     expect(find.byType(LabCard), findsWidgets);
-    expect(find.text('Hammasi'), findsWidgets); // fan bo'limida «Hammasi» tugmasi (6 tadan ko'p)
+    expect(find.textContaining('Hammasi ('), findsWidgets); // fan bo'limida «Hammasi (N)» tugmasi (6 tadan ko'p)
     await tester.pumpWidget(MaterialApp(home: Scaffold(body: LabsCatalogView(key: const ValueKey<String>('tarix'), labs: labs(), onChanged: () async {}, initialSubject: 'Tarix'))));
     await tester.pump();
-    expect(find.textContaining('-sinf ·'), findsWidgets);
+    expect(find.textContaining('-sinf'), findsWidgets);
     await tester.enterText(find.byType(TextField), 'mayatnik');
     await tester.pump();
     expect(find.textContaining('Topildi'), findsOneWidget);

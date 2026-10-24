@@ -217,7 +217,7 @@ class _IncomingCard extends StatelessWidget {
             tr(_source[asText(incoming['source'])] ?? asText(incoming['source'])),
             if (asText(incoming['origin']).isNotEmpty) asText(incoming['origin']),
             dateTime(incoming['occurred_at'] ?? incoming['created_at']),
-          ].join(' · '),
+          ].join(', '),
           style: TextStyle(color: AppColors.muted, fontSize: 12.5),
         ),
         if (asText(incoming['card_last4']).isNotEmpty || asText(incoming['sender_name']).isNotEmpty)
@@ -226,7 +226,7 @@ class _IncomingCard extends StatelessWidget {
               if (asText(incoming['card_last4']).isNotEmpty) '${tr('Karta')}: *${asText(incoming['card_last4'])}',
               if (asText(incoming['sender_name']).isNotEmpty) asText(incoming['sender_name']),
               if (asText(incoming['sender_last4']).isNotEmpty) '*${asText(incoming['sender_last4'])}',
-            ].join(' · '),
+            ].join(', '),
           ),
         if (order.isNotEmpty) Text('${tr("O'quvchi")}: ${asText(order['student'])}', style: const TextStyle(fontWeight: FontWeight.w600)),
         if (asText(incoming['note']).isNotEmpty) Text(asText(incoming['note']), style: TextStyle(color: AppColors.muted, fontSize: 12.5)),
@@ -318,7 +318,7 @@ class _AttachSheetState extends State<_AttachSheet> {
           ListTile(
             contentPadding: EdgeInsets.zero,
             title: Text(asText(student['full_name'])),
-            subtitle: Text(<String>[asText(student['code']), asText(student['phone'])].where((item) => item.isNotEmpty).join(' · ')),
+            subtitle: Text(<String>[asText(student['code']), asText(student['phone'])].where((item) => item.isNotEmpty).join(', ')),
             trailing: const Icon(Icons.person_add_alt),
             onTap: () => Navigator.pop(context, <String, Object?>{'student_id': asInt(student['id'])}),
           ),

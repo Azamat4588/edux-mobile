@@ -139,7 +139,7 @@ void main() {
     final show = fixture('feedback_admin_show');
     expect(feedbackAboutLine(show), contains(asText(asMap(show['group'])['name'])));
     // Muallif javobida guruh va o'qituvchi — matn.
-    expect(feedbackAboutLine(<String, dynamic>{'group': 'ING-5', 'teacher': 'Usmonova Dildora'}), 'ING-5 · Usmonova Dildora');
+    expect(feedbackAboutLine(<String, dynamic>{'group': 'ING-5', 'teacher': 'Usmonova Dildora'}), 'ING-5, Usmonova Dildora');
     expect(feedbackStatusTone('new'), 'warning');
     expect(feedbackClosed('resolved'), isTrue);
     expect(feedbackClosed('in_progress'), isFalse);

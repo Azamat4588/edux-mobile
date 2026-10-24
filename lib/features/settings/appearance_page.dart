@@ -42,7 +42,6 @@ class AppearancePage extends StatelessWidget {
             child: _Segments(
               values: const <String>['light', 'dark', 'system'],
               labels: modeLabels,
-              icons: const <String, IconData>{'light': Icons.light_mode_outlined, 'dark': Icons.dark_mode_outlined, 'system': Icons.brightness_auto_outlined},
               selected: choice.mode,
               onSelect: session.setThemeMode,
             ),

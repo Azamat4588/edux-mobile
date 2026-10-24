@@ -441,7 +441,7 @@ class _OverviewTab extends StatelessWidget {
                     ListTile(
                       dense: true,
                       title: Text(asText(marks[i]['subject']), style: const TextStyle(fontWeight: FontWeight.w600)),
-                      subtitle: Text(<String>[date(marks[i]['date']), if (marks[i]['topic'] != null) asText(marks[i]['topic'])].join(' · '),
+                      subtitle: Text(<String>[date(marks[i]['date']), if (marks[i]['topic'] != null) asText(marks[i]['topic'])].join(', '),
                           maxLines: 1, overflow: TextOverflow.ellipsis),
                       trailing: _Mark(value: asInt(marks[i]['mark'])),
                     ),
@@ -467,7 +467,7 @@ class _OverviewTab extends StatelessWidget {
                       dense: true,
                       title: Text(<String>[date(finance.lessons[i]['date']), asText(finance.lessons[i]['group'])]
                           .where((item) => item.isNotEmpty)
-                          .join(' · ')),
+                          .join(', ')),
                       subtitle: finance.lessons[i]['topic'] != null ? Text(asText(finance.lessons[i]['topic'])) : null,
                       trailing: Pill(tr(attendanceLabels[finance.lessons[i]['status']] ?? '—'),
                           color: attendanceColors[finance.lessons[i]['status']] ?? AppColors.muted),
@@ -599,7 +599,7 @@ class _AttemptCard extends StatelessWidget {
               '$correct/$total',
               if (max > 0) '${number(score)} / ${number(max)} ${tr('ball')}',
               if (label.isNotEmpty) label,
-            ].join(' · '), style: TextStyle(color: AppColors.muted, fontSize: 13)),
+            ].join(', '), style: TextStyle(color: AppColors.muted, fontSize: 13)),
             if (asInt(attempt['pending']) > 0)
               Padding(
                 padding: const EdgeInsets.only(top: 4),
@@ -678,7 +678,7 @@ class _PaymentsTab extends StatelessWidget {
                       subtitle: Text(<String>[
                         dateTime(payments[i]['paid_at']),
                         tr(paymentMethods[payments[i]['method']] ?? asText(payments[i]['method'])),
-                      ].join(' · ')),
+                      ].join(', ')),
                       trailing: payments[i]['receipt'] != null
                           ? Text(asText(payments[i]['receipt']), style: TextStyle(color: AppColors.muted, fontSize: 12))
                           : null,

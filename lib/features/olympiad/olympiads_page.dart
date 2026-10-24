@@ -196,7 +196,7 @@ class _OlympiadCard extends StatelessWidget {
               Text(<String>[
                 if (olympiad['subject'] != null) asText(olympiad['subject']),
                 asText(asMap(data['organization'])['name']),
-              ].where((item) => item.isNotEmpty).join(' · '), style: TextStyle(color: AppColors.muted, fontSize: 13)),
+              ].where((item) => item.isNotEmpty).join(', '), style: TextStyle(color: AppColors.muted, fontSize: 13)),
             ]),
           ),
           Icon(Icons.chevron_right, color: AppColors.muted),

@@ -426,7 +426,7 @@ class _HomeShellState extends State<HomeShell> with WidgetsBindingObserver {
           wide: wide,
           destinations: destinations,
           selected: selected,
-          railHeader: _RailOrg(name: session.organizationName, logo: session.organizationLogo, subtitle: session.membership == null ? '' : roleLabel(session.membership!.role)),
+          railHeader: RailOrg(name: session.organizationName, logo: session.organizationLogo, subtitle: session.membership == null ? '' : roleLabel(session.membership!.role)),
           onSelect: (i) {
             if (guardian && i < bottom.length) {
               _guardianTab.value = bottom[i].key;
@@ -572,36 +572,3 @@ class _ReadOnlyBanner extends StatelessWidget {
   }
 }
 
-/// iPad yon menyusi tepasida tashkilot bloki (veb: org-card): logo yoki bosh harf, nom va rol.
-class _RailOrg extends StatelessWidget {
-  const _RailOrg({required this.name, required this.logo, required this.subtitle});
-
-  final String name;
-  final String? logo;
-  final String subtitle;
-
-  @override
-  Widget build(BuildContext context) {
-    return LayoutBuilder(builder: (context, box) {
-      final mark = OrgMark(url: logo, name: name, size: 40);
-      if (box.maxWidth < 160) return Center(child: Tooltip(message: name, child: mark));
-      return Container(
-        padding: const EdgeInsets.all(10),
-        decoration: BoxDecoration(
-          color: Color.alphaBlend(AppColors.navFg.withAlpha(16), AppColors.navBg),
-          borderRadius: BorderRadius.circular(AppRadius.control),
-        ),
-        child: Row(children: <Widget>[
-          mark,
-          const SizedBox(width: 10),
-          Expanded(
-            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
-              Text(name, maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(fontWeight: FontWeight.w700, fontSize: 13.5, color: AppColors.navDark ? Colors.white : AppColors.ink, height: 1.2)),
-              if (subtitle.isNotEmpty) Text(subtitle, maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 12, color: AppColors.navFg)),
-            ]),
-          ),
-        ]),
-      );
-    });
-  }
-}

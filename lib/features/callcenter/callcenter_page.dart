@@ -351,7 +351,7 @@ class _LiveCallCard extends StatelessWidget {
           if (asText(call['operator']).isNotEmpty) asText(call['operator']),
           if (asText(call['extension']).isNotEmpty) '#${asText(call['extension'])}',
           dateTime(call['started_at']),
-        ].join(' · '), style: TextStyle(color: AppColors.muted, fontSize: 13)),
+        ].join(', '), style: TextStyle(color: AppColors.muted, fontSize: 13)),
         const SizedBox(height: AppSpacing.m),
         Row(children: <Widget>[
           Expanded(
@@ -631,7 +631,7 @@ class _CallRow extends StatelessWidget {
           tr(callResultLabels[result] ?? result),
           if (answered && call['duration'] != null) callDuration(call['duration']),
           if (operator.isNotEmpty) operator,
-        ].join(' · ')),
+        ].join(', ')),
         if (asText(call['note']).isNotEmpty || asText(call['summary']).isNotEmpty)
           Text(asText(call['note']).isNotEmpty ? asText(call['note']) : asText(call['summary']),
               maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(color: AppColors.ink, fontSize: 13)),
@@ -975,7 +975,7 @@ class _QueueTab extends StatelessWidget {
                     child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
                       Text(asText(call['caller']).isNotEmpty ? asText(call['caller']) : phone,
                           style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 16)),
-                      Text(<String>[if (asText(call['caller']).isNotEmpty) phone, dateTime(call['created_at'])].join(' · '),
+                      Text(<String>[if (asText(call['caller']).isNotEmpty) phone, dateTime(call['created_at'])].join(', '),
                           style: TextStyle(color: AppColors.muted, fontSize: 13)),
                     ]),
                   ),

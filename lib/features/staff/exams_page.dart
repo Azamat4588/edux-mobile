@@ -74,7 +74,7 @@ class _ExamTile extends StatelessWidget {
             if (exam['kind'] == 'key') tr('Tayyor test'),
             if (exam['questions_count'] != null) tr('{0} ta savol', <Object?>[asInt(exam['questions_count'])]),
             tr('{0} ta natija', <Object?>[asInt(exam['finished_attempts_count'])]),
-          ].join(' · '),
+          ].join(', '),
           style: TextStyle(color: AppColors.muted),
         ),
       ]),
@@ -152,7 +152,7 @@ class ExamDetailPage extends StatelessWidget {
                           <String>[
                             if (scoreIndex >= 0 && scoreIndex < body[i].length) body[i][scoreIndex],
                             if (percentIndex >= 0 && percentIndex < body[i].length) '${body[i][percentIndex]}%',
-                          ].join(' · '),
+                          ].join(', '),
                           style: const TextStyle(fontWeight: FontWeight.w800),
                         ),
                       ),

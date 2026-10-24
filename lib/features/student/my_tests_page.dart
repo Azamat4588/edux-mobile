@@ -107,7 +107,7 @@ class _ExamCard extends StatelessWidget {
                   '${asInt(attempt['correct'])}/${asInt(attempt['correct']) + asInt(attempt['wrong']) + asInt(attempt['blank'])} · ${number(asDouble(attempt['score']))} ${tr('ball')}',
                 if (canTake && exam['duration_minutes'] != null) tr('{0} daqiqa', <Object?>[asInt(exam['duration_minutes'])]),
                 if (state == 'upcoming' && exam['starts_at'] != null) dateTime(exam['starts_at']),
-              ].join(' · '),
+              ].join(', '),
               style: TextStyle(color: color, fontWeight: FontWeight.w600, fontSize: 13),
             ),
           ]),
@@ -630,7 +630,7 @@ class _OptionTile extends StatelessWidget {
                     padding: EdgeInsets.only(top: body.isNotEmpty ? 8 : 0),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(10),
-                      child: Image.network(imageUrl!, headers: imageHeaders, height: 120, fit: BoxFit.contain, errorBuilder: (_, __, ___) => const SizedBox()),
+                      child: Image.network(imageUrl!, headers: imageHeaders, height: 120, cacheHeight: 360, fit: BoxFit.contain, errorBuilder: (_, __, ___) => const SizedBox()),
                     ),
                   ),
               ]),

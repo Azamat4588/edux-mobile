@@ -108,7 +108,7 @@ class QuestionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final resolved = question['resolved_at'] != null;
     final replies = asList(question['replies'], 'replies');
-    final where = <String>[asText(question['course']), asText(question['lesson'])].where((item) => item.isNotEmpty).join(' · ');
+    final where = <String>[asText(question['course']), asText(question['lesson'])].where((item) => item.isNotEmpty).join(', ');
     return AppCard(
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
         Row(children: <Widget>[
@@ -325,7 +325,7 @@ class _LmsAnnouncementsPageState extends State<LmsAnnouncementsPage> {
                               if (asText(item['author']).isNotEmpty) asText(item['author']),
                               dateTime(item['created_at']),
                               if (asInt(item['notified_count']) > 0) tr('{0} kishiga xabar', <Object?>[asInt(item['notified_count'])]),
-                            ].join(' · '),
+                            ].join(', '),
                             style: TextStyle(color: AppColors.muted, fontSize: 12),
                           ),
                         ]),

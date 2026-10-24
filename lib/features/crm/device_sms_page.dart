@@ -143,7 +143,7 @@ class _DeviceSmsPageState extends State<DeviceSmsPage> {
             <String>[
               if (asInt(message['parts']) > 1) tr('{0} qism', <Object?>[asInt(message['parts'])]),
               dateTime(message['created_at']),
-            ].join(' · '),
+            ].join(', '),
             style: TextStyle(color: AppColors.muted, fontSize: 12),
           ),
           const SizedBox(height: 14),

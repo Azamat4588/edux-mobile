@@ -634,7 +634,7 @@ class _StatusCard extends StatelessWidget {
                 tr("Faol o'quvchilar: {0}", <Object?>[asInt(billing['active_students'])]),
                 if (planCode.isEmpty && asText(billing['student_tier']).isNotEmpty) billingTier(asText(billing['student_tier'])),
                 if (plan.isNotEmpty) tr('Paket: {0}', <Object?>[asText(plan['name'])]),
-              ].join(' · '),
+              ].join(', '),
               style: TextStyle(color: AppColors.muted, fontSize: 13),
             ),
           ),
@@ -800,7 +800,7 @@ class _PlanOption extends StatelessWidget {
                       ? tr("{0} tagacha o'quvchi", <Object?>[asInt(limits['students'])])
                       : tr("O'quvchilar cheklanmagan"),
                   if (limits['staff'] != null) tr('{0} ta xodim', <Object?>[asInt(limits['staff'])]),
-                ].join(' · '),
+                ].join(', '),
                 style: TextStyle(color: AppColors.muted, fontSize: 12),
               ),
             ]),

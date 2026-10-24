@@ -166,7 +166,7 @@ class _SupportPageState extends State<SupportPage> {
                               if (ticket['id'] != null) '#${asInt(ticket['id'])}',
                               tr(supportTopicLabels[ticket['topic']] ?? asText(ticket['topic'])),
                               dateTime(ticket['updated_at']),
-                            ].join(' · '),
+                            ].join(', '),
                             style: TextStyle(color: AppColors.muted, fontSize: 13),
                           ),
                         ]),
@@ -709,6 +709,7 @@ class _MessageBubble extends StatelessWidget {
                       asText(file['url']),
                       width: 96,
                       height: 96,
+                      cacheWidth: 288,
                       fit: BoxFit.cover,
                       errorBuilder: (_, __, ___) => Container(
                         width: 96,

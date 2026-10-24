@@ -172,7 +172,7 @@ class _ServerScanTile extends StatelessWidget {
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
             Text(name, style: const TextStyle(fontWeight: FontWeight.w700)),
             const SizedBox(height: 2),
-            Text(subtitle.join(' · '), style: TextStyle(color: AppColors.muted, fontSize: 13)),
+            Text(subtitle.join(', '), style: TextStyle(color: AppColors.muted, fontSize: 13)),
             const SizedBox(height: 2),
             Text(dateTime(scan['created_at']), style: TextStyle(color: AppColors.muted, fontSize: 12)),
           ]),

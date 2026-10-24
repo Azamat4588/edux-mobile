@@ -219,7 +219,7 @@ String feedbackAuthorLine(Map<String, dynamic> item, {required String anonymousL
 /// Fikr kimga tegishli: guruh, o'qituvchi, farzand (bo'sh qismlar tushadi). Panelda — obyektlar, muallifda — matn.
 String feedbackAboutLine(Map<String, dynamic> item) {
   String name(dynamic value) => value is Map ? asText(value['name']) : asText(value);
-  return <String>[name(item['student']), name(item['group']), name(item['teacher'])].where((part) => part.isNotEmpty).join(' · ');
+  return <String>[name(item['student']), name(item['group']), name(item['teacher'])].where((part) => part.isNotEmpty).join(', ');
 }
 
 /// Push yoki havoladan fikr raqami: data.feedback_id yoki /feedback/31, /my/feedback?id=31.

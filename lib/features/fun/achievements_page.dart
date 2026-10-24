@@ -100,7 +100,7 @@ class AchievementsPage extends StatelessWidget {
                         subtitle: Text(<String>[
                           if (asText(recent[i]['note']).isNotEmpty) tr(asText(recent[i]['note'])),
                           dateTime(recent[i]['at']),
-                        ].join(' · ')),
+                        ].join(', ')),
                         trailing: Text('+${asInt(recent[i]['points'])}',
                             style: TextStyle(fontWeight: FontWeight.w800, color: AppColors.success, fontSize: 16)),
                       ),

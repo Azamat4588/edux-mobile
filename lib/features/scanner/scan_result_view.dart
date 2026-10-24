@@ -197,7 +197,7 @@ class ScanResultCard extends StatelessWidget {
                         if (item.variant != null) tr('{0}-variant', <Object?>[item.variant]),
                         if (item.serverScore != null) '${number(item.serverScore)} ${tr('ball')}'
                         else if (item.localScore != null) '≈ ${number(item.localScore)} ${tr('ball')}',
-                      ].join(' · '),
+                      ].join(', '),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(color: style.color, fontSize: 13, fontWeight: FontWeight.w600),
@@ -276,7 +276,7 @@ class _ScanDetails extends StatelessWidget {
                   if (item.examTitle != null) item.examTitle!,
                   if (item.variant != null) tr('{0}-variant', <Object?>[item.variant]),
                   if (item.studentCode != null) '#${item.studentCode}',
-                ].join(' · '),
+                ].join(', '),
                 style: TextStyle(color: AppColors.muted),
               ),
             ]),

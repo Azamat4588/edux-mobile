@@ -6,6 +6,7 @@ import '../../core/adaptive.dart';
 import '../../core/api.dart';
 import '../../core/format.dart';
 import '../../core/i18n.dart';
+import '../../core/motion.dart';
 import '../../core/notification_store.dart';
 import '../../core/push.dart';
 import '../../core/theme.dart';
@@ -89,6 +90,9 @@ class NotificationsPage extends StatefulWidget {
 class _NotificationsPageState extends State<NotificationsPage> {
   final NotificationStore _store = NotificationStore.instance;
 
+  /// Surib o'chirilganlar (Dismissible o'zi yig'adi — ro'yxat harakati takrorlanmaydi).
+  final Set<String> _dismissed = <String>{};
+
   @override
   void initState() {
     super.initState();
@@ -135,25 +139,31 @@ class _NotificationsPageState extends State<NotificationsPage> {
                           : tr("Hozircha bildirishnoma yo'q. Push-bildirishnomalar bu ilova yig'ilishida yoqilmagan bo'lishi mumkin."),
                     ),
                   ])
-                : ListView.separated(
+                // 3.8: yangi xabar chapdan paydo bo'ladi, o'chirilgani yig'iladi (AnimatedList).
+                : DiffAnimatedList<AppNotification>(
                     padding: readable(context, const EdgeInsets.symmetric(vertical: AppSpacing.s)),
-                    itemCount: items.length,
-                    separatorBuilder: (_, __) => const Divider(indent: 72),
-                    itemBuilder: (context, index) {
-                      final item = items[index];
-                      return Dismissible(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    items: items,
+                    keyOf: (item) => item.id,
+                    skipRemoval: (item) => _dismissed.contains(item.id),
+                    itemBuilder: (context, item, index) => Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+                      if (index > 0) const Divider(indent: 72),
+                      Dismissible(
                         key: ValueKey<String>(item.id),
                         direction: DismissDirection.endToStart,
                         background: Container(
                           alignment: Alignment.centerRight,
                           padding: const EdgeInsets.only(right: AppSpacing.xl),
-                          color: AppColors.soft(AppColors.danger),
+                          color: AppColors.dangerBg,
                           child: Icon(Icons.delete_outline, color: AppColors.danger),
                         ),
-                        onDismissed: (_) => _store.remove(item.id),
+                        onDismissed: (_) {
+                          _dismissed.add(item.id);
+                          _store.remove(item.id);
+                        },
                         child: _NotificationTile(item: item, onTap: () => _open(item)),
-                      );
-                    },
+                      ),
+                    ]),
                   ),
           ),
         );
@@ -172,15 +182,12 @@ class _NotificationTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final type = asText(PushService.normalize(item.data)['type']);
     final color = notificationColor(type);
+    // O'qilmagan xabar — chap chetida hoshiya (diqqat talab qiladi).
     return ListTile(
       onTap: onTap,
-      tileColor: item.read ? null : AppColors.brand.withAlpha(AppColors.dark ? 22 : 10),
-      leading: Container(
-        width: 44,
-        height: 44,
-        decoration: BoxDecoration(color: AppColors.soft(color), borderRadius: BorderRadius.circular(AppRadius.control)),
-        child: Icon(notificationIcon(type), color: color),
-      ),
+      tileColor: item.read ? null : AppColors.accentSoft.withAlpha(AppColors.dark ? 120 : 150),
+      shape: item.read ? null : Border(left: BorderSide(color: AppColors.accent, width: AppSpacing.hoshiya)),
+      leading: IconTile(icon: notificationIcon(type), colors: tileOf(color), size: 44),
       title: Text(
         item.title.isEmpty ? tr('Bildirishnoma') : item.title,
         style: TextStyle(fontWeight: item.read ? FontWeight.w500 : FontWeight.w700),

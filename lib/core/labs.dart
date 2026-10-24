@@ -71,7 +71,7 @@ String labTopicLine(Map<String, dynamic> lab) {
   final topics = asList(lab['topics'], 'topics');
   if (topics.isEmpty) return '';
   final first = topics.first;
-  return <String>[asText(first['book']), asText(first['topic'])].where((part) => part.isNotEmpty).join(' · ');
+  return <String>[asText(first['book']), asText(first['topic'])].where((part) => part.isNotEmpty).join(', ');
 }
 
 /// Darslik daraxtidagi sinflar (`books[].grade`, takrorsiz, o'sish tartibida).
