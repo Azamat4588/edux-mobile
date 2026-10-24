@@ -33,7 +33,6 @@ import '../fun/achievements_page.dart';
 import '../fun/games_page.dart';
 import '../fun/labs_page.dart';
 import '../guardian/guardian_home_page.dart';
-import '../help/help_pages.dart';
 import '../lms/lms_staff_pages.dart';
 import '../notifications/notifications_page.dart';
 import '../olympiad/olympiads_page.dart';

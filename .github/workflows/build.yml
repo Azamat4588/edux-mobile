@@ -259,7 +259,7 @@ jobs:
     # `EduX-iOS-unsigned.ipa` (Payload/Runner.app). Imzo kalitlari bo'lsa: App Store uchun imzolangan .ipa va TestFlight.
     # Ish branch'larida ham ishlaydi: m139 (iPad ishi) yoki commit xabarida «[ios]».
     if: >-
-      github.event_name != 'push' || github.ref == 'refs/heads/main' || github.ref == 'refs/heads/m139' || github.ref == 'refs/heads/m140' ||
+      github.event_name != 'push' || github.ref == 'refs/heads/main' || github.ref == 'refs/heads/m139' ||
       contains(github.event.head_commit.message, '[ios]')
     runs-on: macos-latest
     timeout-minutes: 75

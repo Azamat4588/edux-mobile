@@ -219,7 +219,7 @@ void main() {
   });
 
   group('karkas', () {
-    testWidgets("iPad: yon menyu tashkilot bloki va hoshiya bilan", (tester) async {
+    testWidgets('iPad: yon menyu tashkilot bloki va hoshiya bilan', (tester) async {
       tester.view.physicalSize = const Size(1366, 1024) * 2;
       tester.view.devicePixelRatio = 2;
       addTearDown(tester.view.reset);
