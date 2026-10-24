@@ -142,7 +142,7 @@ class _CheckinPageState extends State<CheckinPage> {
     final marked = result == null ? const <dynamic>[] : (result['marked'] is List ? result['marked'] as List : const <dynamic>[]);
     return Scaffold(
       backgroundColor: Colors.black,
-      appBar: AppBar(
+      appBar: pageBar(context,
         backgroundColor: Colors.black,
         foregroundColor: Colors.white,
         title: Text(tr('Kirish nazorati')),

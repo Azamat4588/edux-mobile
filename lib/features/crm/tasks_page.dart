@@ -54,7 +54,7 @@ class _TasksPageState extends State<TasksPage> {
   Widget build(BuildContext context) {
     final api = AppScope.of(context).api;
     return Scaffold(
-      appBar: AppBar(title: Text(tr('Topshiriqlar'))),
+      appBar: pageBar(context, title: Text(tr('Topshiriqlar'))),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: _add,
         icon: const Icon(Icons.add_task),

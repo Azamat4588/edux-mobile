@@ -27,7 +27,7 @@ class AttendancePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final session = AppScope.of(context);
     return Scaffold(
-      appBar: AppBar(title: Text(tr('Davomat')), actions: const <Widget>[HelpButton(HelpLinks.attendance)]),
+      appBar: pageBar(context, title: Text(tr('Davomat')), actions: const <Widget>[HelpButton(HelpLinks.attendance)]),
       body: AsyncView<Map<String, dynamic>>(
         load: () => _load(session),
         builder: (context, data, reload) {
@@ -245,7 +245,7 @@ class _AttendanceSheetPageState extends State<AttendanceSheetPage> {
         }
       },
       child: Scaffold(
-        appBar: AppBar(
+        appBar: pageBar(context,
           automaticallyImplyLeading: !isEmbeddedDetail(context),
           title: Text(widget.groupName),
           actions: <Widget>[

@@ -49,7 +49,7 @@ class _OrganizationPickerState extends State<OrganizationPicker> {
   Widget build(BuildContext context) {
     final session = AppScope.of(context);
     return Scaffold(
-      appBar: AppBar(
+      appBar: pageBar(context,
         title: Text(tr('Tashkilotni tanlang')),
         automaticallyImplyLeading: widget.inline,
         actions: <Widget>[

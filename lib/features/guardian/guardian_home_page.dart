@@ -10,6 +10,7 @@ import '../../core/api.dart';
 import '../../core/format.dart';
 import '../../core/help_links.dart';
 import '../../core/i18n.dart';
+import '../../core/motion.dart';
 import '../../core/offline_cache.dart';
 import '../../core/session.dart';
 import '../../core/theme.dart';
@@ -161,11 +162,11 @@ class _GuardianHomePageState extends State<GuardianHomePage> {
       } else {
         body = const SkeletonList(header: true, count: 3);
       }
-      return Scaffold(appBar: AppBar(title: Text(tr('Farzandim')), actions: const <Widget>[HelpButton(HelpLinks.guardian), NotificationBell()]), body: body);
+      return Scaffold(appBar: pageBar(context, title: Text(tr('Farzandim')), actions: const <Widget>[HelpButton(HelpLinks.guardian), NotificationBell()]), body: body);
     }
     if (children.isEmpty) {
       return Scaffold(
-        appBar: AppBar(title: Text(tr('Farzandim')), actions: const <Widget>[HelpButton(HelpLinks.guardian), NotificationBell()]),
+        appBar: pageBar(context, title: Text(tr('Farzandim')), actions: const <Widget>[HelpButton(HelpLinks.guardian), NotificationBell()]),
         body: RefreshIndicator(
           onRefresh: _load,
           child: ListView(children: <Widget>[
@@ -198,7 +199,7 @@ class _GuardianHomePageState extends State<GuardianHomePage> {
       final key = local[external.value] ?? 'overview';
       final current = tabs.firstWhere((tab) => tab.key == key, orElse: () => tabs.first);
       return Scaffold(
-        appBar: AppBar(
+        appBar: pageBar(context,
           title: Text(current.key == 'overview' ? tr('Farzandim') : current.label),
           actions: const <Widget>[HelpButton(HelpLinks.guardian), NotificationBell()],
           bottom: children.length < 2 ? null : PreferredSize(preferredSize: const Size.fromHeight(58), child: _switcher(children, child)),
@@ -212,7 +213,7 @@ class _GuardianHomePageState extends State<GuardianHomePage> {
       length: tabs.length,
       initialIndex: focus < 0 ? 0 : focus,
       child: Scaffold(
-        appBar: AppBar(
+        appBar: pageBar(context,
           title: Text(tr('Farzandim')),
           actions: const <Widget>[HelpButton(HelpLinks.guardian), NotificationBell()],
           bottom: children.length < 2 && tabs.length < 2
@@ -286,9 +287,9 @@ class _BalanceCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final debt = balance < 0;
     return AppCard(
-      color: debt ? AppColors.soft(AppColors.danger) : AppColors.card,
+      tone: debt ? AppColors.toneDanger : AppColors.toneSuccess,
       child: Row(children: <Widget>[
-        Icon(Icons.account_balance_wallet_outlined, color: debt ? AppColors.danger : AppColors.success, size: 30),
+        IconTile(icon: Icons.account_balance_wallet_outlined, colors: tileOf(debt ? AppColors.danger : AppColors.success), size: 42),
         const SizedBox(width: 12),
         Expanded(
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
@@ -348,35 +349,61 @@ class _OverviewTab extends StatelessWidget {
         final groups = child.groups.isNotEmpty
             ? child.groups
             : asList(crm['groups'], 'groups').map((item) => asText(item['name'])).where((item) => item.isNotEmpty).toList();
-        return ListView(
-          padding: readable(context, const EdgeInsets.fromLTRB(16, 14, 16, 32)),
+        final can = AppScope.of(context).can;
+        final debt = (balance ?? 0) < 0;
+        final all = onOpen == null ? <QuickAction>[] : quickActions('guardian', can, debt: debt);
+        QuickAction? hero;
+        for (final action in all) {
+          if (action.primary) {
+            hero = action;
+            break;
+          }
+        }
+        final actions = all.where((item) => item != hero).toList();
+        final today = studentToday(insights, guardian: true);
+        return IntroScope(
+          id: 'home-guardian-${child.id}',
+          child: ListView(
+          padding: readable(context, const EdgeInsets.fromLTRB(16, 14, 16, 32), max: kGridWidth),
           children: <Widget>[
-            Row(children: <Widget>[
-              Avatar(child.name, size: 48),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
-                  Text(child.name, style: const TextStyle(fontSize: 19, fontWeight: FontWeight.w800)),
-                  Text(<String>[
-                    if (child.code != null && child.code!.isNotEmpty) '${tr("O'quvchi kodi")}: ${child.code}',
-                    if (groups.isNotEmpty) groups.join(', '),
-                  ].join(' · '), style: TextStyle(color: AppColors.muted, fontSize: 13)),
+            IntroItem(
+              index: 0,
+              shiftOnly: true,
+              child: HomeHeader(
+                name: child.name,
+                title: child.name,
+                subtitle: <String>[
+                  if (child.code != null && child.code!.isNotEmpty) '${tr("O'quvchi kodi")}: ${child.code}',
+                  if (groups.isNotEmpty) groups.join(', '),
+                ].join(', '),
+                trailing: Avatar(child.name, size: 40, heroTag: 'child-${child.id}'),
+                facts: studentFacts(insights, guardian: true),
+                action: hero == null
+                    ? null
+                    : FilledButton.icon(
+                        onPressed: () => onOpen!(hero!.key),
+                        icon: Icon(navIcon(hero.icon), size: 20),
+                        label: Text(hero.label, maxLines: 1, overflow: TextOverflow.ellipsis),
+                      ),
+              ),
+            ),
+            // 3.4 (veb 1.35 StudentToday, ota-ona): «Bugun» kartalari va tezkor harakatlar.
+            if (today.isNotEmpty)
+              IntroItem(
+                index: 1,
+                child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
+                  SectionTitle(tr('Bugun')),
+                  TodayGrid(items: today, onOpen: onOpen),
                 ]),
               ),
-            ]),
-            const SizedBox(height: 4),
-            // 3.4 (veb 1.35 StudentToday, ota-ona): «Bugun» kartalari va tezkor harakatlar.
-            if (studentToday(insights, guardian: true).isNotEmpty) ...<Widget>[
-              SectionTitle(tr('Bugun')),
-              TodayGrid(items: studentToday(insights, guardian: true), onOpen: onOpen),
-            ],
-            if (onOpen != null && quickActions('guardian', AppScope.of(context).can, debt: (balance ?? 0) < 0).isNotEmpty) ...<Widget>[
-              SectionTitle(tr('Tezkor harakatlar')),
-              ActionGrid(
-                actions: quickActions('guardian', AppScope.of(context).can, debt: (balance ?? 0) < 0),
-                onTap: (action) => onOpen!(action.key),
+            if (actions.isNotEmpty)
+              IntroItem(
+                index: 2,
+                child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
+                  SectionTitle(tr('Tezkor harakatlar')),
+                  ActionGrid(actions: actions, onTap: (action) => onOpen!(action.key)),
+                ]),
               ),
-            ],
             const SizedBox(height: 10),
             if (balance != null) ...<Widget>[
               _BalanceCard(
@@ -452,6 +479,7 @@ class _OverviewTab extends StatelessWidget {
             if (balance == null && marks.isEmpty && attempts.isEmpty && !counts.values.any((value) => value > 0))
               EmptyState(icon: Icons.insights_outlined, text: tr("Hozircha ma'lumot yo'q. Darslar, baholar va natijalar shu yerda ko'rinadi.")),
           ],
+          ),
         );
       },
     );

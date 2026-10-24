@@ -7,6 +7,7 @@ import '../../core/format.dart';
 import '../../core/home_today.dart';
 import '../../core/home_widgets.dart';
 import '../../core/i18n.dart';
+import '../../core/motion.dart';
 import '../../core/session.dart';
 import '../../core/theme.dart';
 import '../../core/widgets.dart';
@@ -34,7 +35,15 @@ class StudentHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final session = AppScope.of(context);
     return Scaffold(
-      appBar: AppBar(title: Text(session.organizationName), actions: const <Widget>[NotificationBell()]),
+      appBar: pageBar(context,
+        titleSpacing: 16,
+        title: Row(children: <Widget>[
+          OrgMark(url: session.organizationLogo, name: session.organizationName, size: 32),
+          const SizedBox(width: 10),
+          Expanded(child: Text(session.organizationName, maxLines: 1, overflow: TextOverflow.ellipsis)),
+        ]),
+        actions: const <Widget>[NotificationBell()],
+      ),
       body: AsyncView<Map<String, dynamic>>(
         load: () => _load(session),
         cacheKey: 'student_home',
@@ -47,27 +56,64 @@ class StudentHomePage extends StatelessWidget {
           final upcoming = asList(crm['upcoming'], 'upcoming');
           final cards = session.isGuest ? <TodayItem>[] : studentToday(insights, upcoming: upcoming);
           final balance = asInt(crm['balance'] ?? asMap(insights['crm'])['balance']);
-          final actions = session.isGuest || onOpen == null
+          final all = session.isGuest || onOpen == null
               ? <QuickAction>[]
               : quickActions('student', session.can, debt: balance < 0, pendingTests: asList(asMap(insights['testing'])['pending'], 'pending').length);
-          return ListView(padding: readable(context, EdgeInsets.zero, max: kGridWidth), children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
-              child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
-                HomeHeader(name: asText(asMap(insights['student'])['full_name'], session.userName), lead: tr('Bugun nima qilish kerak: testlar, uy vazifalari va to\'lov.')),
-                if (cards.isNotEmpty) ...<Widget>[
-                  SectionTitle(tr('Bugun')),
-                  TodayGrid(items: cards, onOpen: onOpen),
-                ],
-                if (actions.isNotEmpty) ...<Widget>[
-                  SectionTitle(tr('Tezkor harakatlar')),
-                  ActionGrid(actions: actions, onTap: (action) => onOpen!(action.key)),
-                ],
+          QuickAction? hero;
+          for (final action in all) {
+            if (action.primary) {
+              hero = action;
+              break;
+            }
+          }
+          final actions = all.where((item) => item != hero).toList();
+          final name = asText(asMap(insights['student'])['full_name'], session.userName);
+          return IntroScope(
+            id: 'home-student',
+            child: CanvasPattern(
+              child: ListView(padding: readable(context, EdgeInsets.zero, max: kGridWidth), children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 14, 16, 0),
+                  child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
+                    IntroItem(
+                      index: 0,
+                      shiftOnly: true,
+                      child: HomeHeader(
+                        name: name,
+                        lead: tr('Bugun nima qilish kerak: testlar, uy vazifalari va to\'lov.'),
+                        facts: session.isGuest ? const <HeroFact>[] : studentFacts(insights, upcoming: upcoming),
+                        action: hero == null
+                            ? null
+                            : FilledButton.icon(
+                                onPressed: () => onOpen!(hero!.key),
+                                icon: Icon(navIcon(hero.icon), size: 20),
+                                label: Text(hero.label, maxLines: 1, overflow: TextOverflow.ellipsis),
+                              ),
+                      ),
+                    ),
+                    if (cards.isNotEmpty)
+                      IntroItem(
+                        index: 1,
+                        child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
+                          SectionTitle(tr('Bugun')),
+                          TodayGrid(items: cards, onOpen: onOpen),
+                        ]),
+                      ),
+                    if (actions.isNotEmpty)
+                      IntroItem(
+                        index: 2,
+                        child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
+                          SectionTitle(tr('Tezkor harakatlar')),
+                          ActionGrid(actions: actions, onTap: (action) => onOpen!(action.key)),
+                        ]),
+                      ),
+                  ]),
+                ),
+                IntroItem(index: 3, child: StudentOverviewBody(insights: insights, crm: crm, onPaid: reload, showGreeting: false, showIdentity: false)),
+                const _QuickActions(),
               ]),
             ),
-            StudentOverviewBody(insights: insights, crm: crm, onPaid: reload, showGreeting: false, showIdentity: false),
-            const _QuickActions(),
-          ]);
+          );
         },
       ),
     );
@@ -133,9 +179,9 @@ class StudentOverviewBody extends StatelessWidget {
         ],
         if (hasBalance)
           AppCard(
-            color: balance < 0 ? AppColors.soft(AppColors.danger) : AppColors.card,
+            tone: balance < 0 ? AppColors.toneDanger : AppColors.toneSuccess,
             child: Row(children: <Widget>[
-              Icon(Icons.account_balance_wallet_outlined, color: balance < 0 ? AppColors.danger : AppColors.success, size: 30),
+              IconTile(icon: Icons.account_balance_wallet_outlined, colors: tileOf(balance < 0 ? AppColors.danger : AppColors.success), size: 42),
               const SizedBox(width: 12),
               Expanded(
                 child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[

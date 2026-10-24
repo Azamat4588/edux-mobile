@@ -160,7 +160,7 @@ class _StudentsPageState extends State<StudentsPage> {
     final session = AppScope.of(context);
     final title = widget.forPayment ? tr("To'lov qabul qilish") : session.term('students', "O'quvchilar");
     return Scaffold(
-      appBar: AppBar(
+      appBar: pageBar(context,
         title: Text(title),
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(64),
@@ -337,7 +337,7 @@ class _StudentCardPageState extends State<StudentCardPage> {
   Widget build(BuildContext context) {
     final session = AppScope.of(context);
     return Scaffold(
-      appBar: AppBar(automaticallyImplyLeading: !isEmbeddedDetail(context), title: Text(widget.name)),
+      appBar: pageBar(context, automaticallyImplyLeading: !isEmbeddedDetail(context), title: Text(widget.name)),
       floatingActionButton: session.canTakePayments && !session.readOnly
           ? FloatingActionButton.extended(
               onPressed: () async {

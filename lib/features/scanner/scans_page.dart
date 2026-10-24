@@ -24,7 +24,7 @@ class ScansPage extends StatelessWidget {
       length: 3,
       initialIndex: initialTab,
       child: Scaffold(
-        appBar: AppBar(
+        appBar: pageBar(context,
           title: Text(tr('Varaqalar')),
           bottom: TabBar(
             isScrollable: true,

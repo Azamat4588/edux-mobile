@@ -364,6 +364,15 @@ class Session extends ChangeNotifier implements ApiCredentials {
       _token = null;
     }
     if (_token != null) {
+      // 3.8: tez ochilish — telefonda oxirgi nusxa (foydalanuvchi va tashkilot konteksti) bo'lsa, ilova darhol shu bilan
+      // ochiladi, server bilan tenglashish fonda (token bekor bo'lsa — kirish oynasiga qaytadi).
+      _restoreOffline(prefs);
+      if (contextFromCache) {
+        restoring = false;
+        notifyListeners();
+        unawaited(_refresh(prefs));
+        return;
+      }
       try {
         final me = asMap(await api.get('me'));
         _apply(me);
@@ -380,6 +389,23 @@ class Session extends ChangeNotifier implements ApiCredentials {
     }
     restoring = false;
     notifyListeners();
+  }
+
+  /// Fonda yangilash (tez ochilishdan keyin): `me`, tashkilot va kontekst.
+  Future<void> _refresh(SharedPreferences prefs) async {
+    try {
+      final me = asMap(await api.get('me'));
+      _apply(me);
+      unawaited(prefs.setString('offline.me', jsonEncode(me)));
+      await _chooseOrganization(prefs);
+      notifyListeners();
+    } on ApiException catch (error) {
+      if (error.isUnauthorized) {
+        await _forget();
+        notifyListeners();
+      }
+      // Internet yo'q: nusxa bilan qoladi — ilova qayta ochilganda (resumed) yana urinadi.
+    } catch (_) {}
   }
 
   /// Internetsiz ochilish: telefonda saqlangan `me` va tanlangan tashkilot konteksti (bo'lmasa — oddiy kutish oynasi).

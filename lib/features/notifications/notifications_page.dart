@@ -115,7 +115,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
       builder: (context, _) {
         final items = _store.items;
         return Scaffold(
-          appBar: AppBar(
+          appBar: pageBar(context,
             title: Text(tr('Bildirishnomalar')),
             actions: <Widget>[
               if (_store.unread > 0)

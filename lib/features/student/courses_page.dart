@@ -36,7 +36,7 @@ class CoursesPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final api = AppScope.of(context).api;
     return Scaffold(
-      appBar: AppBar(title: Text(tr('Kurslarim'))),
+      appBar: pageBar(context, title: Text(tr('Kurslarim'))),
       body: AsyncView<List<Map<String, dynamic>>>(
         cacheKey: 'lms_my_courses',
         decode: (raw) => asList(raw),
@@ -97,7 +97,7 @@ class CoursePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final api = AppScope.of(context).api;
     return Scaffold(
-      appBar: AppBar(title: Text(title, maxLines: 1, overflow: TextOverflow.ellipsis)),
+      appBar: pageBar(context, title: Text(title, maxLines: 1, overflow: TextOverflow.ellipsis)),
       body: AsyncView<Map<String, dynamic>>(
         cacheKey: 'lms_my_course_$courseId',
         decode: asMap,
@@ -413,7 +413,7 @@ class _LessonPageState extends State<LessonPage> {
   Widget build(BuildContext context) {
     final api = AppScope.of(context).api;
     return Scaffold(
-      appBar: AppBar(title: Text(tr('Dars')), actions: const <Widget>[HelpButton(HelpLinks.lesson)]),
+      appBar: pageBar(context, title: Text(tr('Dars')), actions: const <Widget>[HelpButton(HelpLinks.lesson)]),
       body: AsyncView<Map<String, dynamic>>(
         key: _view,
         load: () async => asMap(await api.get('lms/my/lessons/${widget.lessonId}')),

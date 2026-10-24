@@ -92,7 +92,7 @@ class _P2pPageState extends State<P2pPage> {
     return DefaultTabController(
       length: 3,
       child: Scaffold(
-        appBar: AppBar(
+        appBar: pageBar(context,
           title: Text(tr("Kartaga o'tkazmalar")),
           actions: const <Widget>[HelpButton(HelpLinks.p2p)],
           bottom: TabBar(tabs: <Widget>[Tab(text: tr('Kutilmoqda')), Tab(text: tr("Noma'lum")), Tab(text: tr("So'nggi"))]),

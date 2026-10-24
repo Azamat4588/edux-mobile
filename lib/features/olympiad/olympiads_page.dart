@@ -108,7 +108,7 @@ class _OlympiadsPageState extends State<OlympiadsPage> {
   Widget build(BuildContext context) {
     final session = AppScope.of(context);
     return Scaffold(
-      appBar: AppBar(title: Text(tr('Olimpiadalarim'))),
+      appBar: pageBar(context, title: Text(tr('Olimpiadalarim'))),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: _join,
         icon: const Icon(Icons.add_link_rounded),

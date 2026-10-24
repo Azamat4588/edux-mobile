@@ -197,7 +197,7 @@ class _PlayPageState extends State<PlayPage> {
         if (await _confirmLeave() && context.mounted) Navigator.of(context).pop();
       },
       child: Scaffold(
-        appBar: AppBar(
+        appBar: pageBar(context,
           title: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
             Text(tr(gameTitleLabels[widget.game] ?? widget.game)),
             if (widget.title.isNotEmpty)

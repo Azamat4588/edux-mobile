@@ -50,7 +50,7 @@ class _DiaryPageState extends State<DiaryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      appBar: pageBar(context,
         title: Text(tr('Kundalik')),
         actions: <Widget>[
           if (_children.length > 1)

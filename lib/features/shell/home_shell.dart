@@ -17,6 +17,7 @@ import '../../core/session.dart';
 import '../../core/sms_gateway.dart';
 import '../../core/theme.dart';
 import '../../core/widgets.dart';
+import '../auth/organization_picker.dart';
 import '../access/checkin_page.dart';
 import '../access/kiosk_page.dart';
 import '../access/sms_gateway_page.dart';
@@ -319,42 +320,58 @@ class _HomeShellState extends State<HomeShell> with WidgetsBindingObserver {
       final page = _page(session, tab.key);
       if (page != null) pages[tab] = page;
     }
-    if (pages.length == 1) return pages.values.first;
-    return SectionTabsPage(key: ValueKey<String>('section-${section.key}'), pages: pages, request: _request(section.key));
+    final color = Color(sectionColorOf(section.key));
+    if (pages.length == 1) {
+      // Bosh sahifadan boshqa bo'limda — sahifa sarlavhasi bandi (bo'lim yo'li, hoshiya).
+      if (section.key == 'home') return pages.values.first;
+      return SectionScope(section: section.key, label: section.label, cluster: clusterOf(section.key), color: color, child: pages.values.first);
+    }
+    return SectionTabsPage(key: ValueKey<String>('section-${section.key}'), section: section, color: color, pages: pages, request: _request(section.key));
   }
 
-  /// «Yana»: pastki menyuga sig'magan bo'limlar, bildirishnomalar, murojaatlar, «Yordam», keyin sozlamalar.
+  /// «Yana»: pastki menyuga sig'magan bo'limlar (to'dalar bo'yicha), ilova bandlari, keyin sozlamalar.
   Widget _more(Session session, List<NavSection> overflow) {
     final colored = AppColors.choice.coloredIcons;
-    final extra = <Widget>[
-      _MenuTile(icon: Icons.notifications_none_rounded, label: tr('Bildirishnomalar'), page: const NotificationsPage()),
-      for (final section in overflow)
-        for (final tab in section.tabs)
-          if (session.isGuardian)
-            ListTile(
-              leading: Icon(navIcon(tab.icon.isEmpty ? section.icon : tab.icon), color: colored ? Color(sectionColors[section.key] ?? 0xFF64748B) : null),
-              title: Text(tab.label),
-              trailing: const Icon(Icons.chevron_right),
-              onTap: () => _open(tab.key),
-            )
-          else if (_page(session, tab.key) != null)
-            _MenuTile(
-              icon: navIcon(section.icon),
-              color: colored ? Color(sectionColors[section.key] ?? 0xFF64748B) : null,
-              label: section.tabs.length > 1 ? '${section.label} · ${tab.label}' : tab.label,
-              page: _page(session, tab.key)!,
-            ),
+    Color? colorOf(String section) => colored ? Color(sectionColorOf(section)) : null;
+    final groups = <String, List<Widget>>{};
+    String groupOf(String section) => clusterOf(section) ?? tr("Bo'limlar");
+    for (final section in overflow) {
+      for (final tab in section.tabs) {
+        final title = section.tabs.length > 1 ? '${section.label}: ${tab.label}' : tab.label;
+        if (session.isGuardian) {
+          groups.putIfAbsent(groupOf(section.key), () => <Widget>[]).add(
+                MenuTile(icon: navIcon(tab.icon.isEmpty ? section.icon : tab.icon), color: colorOf(section.key), label: tab.label, onTap: () => _open(tab.key)),
+              );
+        } else if (_page(session, tab.key) != null) {
+          final page = _page(session, tab.key)!;
+          groups.putIfAbsent(groupOf(section.key), () => <Widget>[]).add(
+                MenuTile(
+                  icon: navIcon(section.icon),
+                  color: colorOf(section.key),
+                  label: title,
+                  badge: tab.key == 'feedback' ? _feedbackBadge(session) : 0,
+                  page: SectionScope.none(child: page),
+                ),
+              );
+        }
+      }
+    }
+    final app = <Widget>[
+      MenuTile(icon: Icons.notifications_none_rounded, color: AppColors.accent, label: tr('Bildirishnomalar'), page: const NotificationsPage()),
       // 1.39: mijozlar fikri — markaz rahbariyatiga (EduX jamoasiga yoziladigan «Murojaatlar» dan alohida).
       if (session.can('feedback_submit'))
-        _MenuTile(icon: Icons.rate_review_outlined, label: tr('Fikr bildirish'), page: const MyFeedbackPage()),
-      _MenuTile(
+        MenuTile(icon: Icons.rate_review_outlined, color: colored ? const Color(0xFFEA580C) : null, label: tr('Fikr bildirish'), page: const MyFeedbackPage()),
+      MenuTile(
         icon: Icons.support_agent_outlined,
+        color: colored ? const Color(0xFF0891B2) : null,
         label: tr('Murojaatlar'),
         page: MasterDetail(master: const SupportPage(), hint: tr('Murojaatni tanlang — yozishma shu yerda ochiladi.')),
       ),
-      _MenuTile(icon: Icons.help_outline, label: tr('Yordam'), page: const HelpPage()),
     ];
-    return SettingsPage(extra: extra);
+    return SettingsPage(groups: <MenuGroup>[
+      for (final entry in groups.entries) MenuGroup(entry.key, entry.value),
+      MenuGroup(tr('Xabarlar va yordam'), app),
+    ]);
   }
 
   /// Fikrlar paneli (1.39): «Yangi» holatdagi fikrlar soni — menyu belgisi.
@@ -410,6 +427,7 @@ class _HomeShellState extends State<HomeShell> with WidgetsBindingObserver {
           wide: wide,
           destinations: destinations,
           selected: selected,
+          railHeader: _RailOrg(name: session.organizationName, logo: session.organizationLogo, subtitle: session.membership == null ? '' : roleLabel(session.membership!.role)),
           onSelect: (i) {
             if (guardian && i < bottom.length) {
               _guardianTab.value = bottom[i].key;
@@ -443,10 +461,13 @@ class _HomeShellState extends State<HomeShell> with WidgetsBindingObserver {
   }
 }
 
-/// Bo'lim ichidagi yorliqlar (veb: SectionTabs): tepada yorliqlar, ostida tanlangan sahifa (birinchi ochilganda quriladi).
+/// Bo'lim ichidagi yorliqlar (veb: SectionTabs, 1.40 — sahifa sarlavhasi bandida): har sahifa o'z sarlavha panelida bo'lim
+/// yo'li va yorliqlarni ko'rsatadi ([SectionScope], [pageBar]); tanlangan sahifa birinchi ochilganda quriladi.
 class SectionTabsPage extends StatefulWidget {
-  const SectionTabsPage({super.key, required this.pages, this.request});
+  const SectionTabsPage({super.key, required this.section, required this.color, required this.pages, this.request});
 
+  final NavSection section;
+  final Color color;
   final Map<NavTab, Widget> pages;
   final ValueNotifier<String?>? request;
 
@@ -493,65 +514,23 @@ class _SectionTabsPageState extends State<SectionTabsPage> {
     final outerVisible = TabVisibility.of(context);
     final tabs = widget.pages.keys.toList();
     final pages = widget.pages.values.toList();
-    return Column(children: <Widget>[
-      Material(
-        color: AppColors.chrome,
-        child: SafeArea(
-          bottom: false,
-          child: SizedBox(
-            height: 46,
-            child: ListView.separated(
-              scrollDirection: Axis.horizontal,
-              padding: const EdgeInsets.fromLTRB(12, 6, 12, 4),
-              itemCount: tabs.length,
-              separatorBuilder: (_, __) => const SizedBox(width: 6),
-              itemBuilder: (context, i) {
-                final active = i == _index;
-                final onChrome = AppColors.onChrome;
-                return ChoiceChip(
-                  label: Text(tabs[i].label),
-                  selected: active,
-                  showCheckmark: false,
-                  labelStyle: TextStyle(fontWeight: FontWeight.w600, color: active ? Colors.white : onChrome),
-                  selectedColor: AppColors.brand,
-                  backgroundColor: AppColors.chrome,
-                  side: BorderSide(color: active ? AppColors.brand : AppColors.line),
-                  onSelected: (_) => _select(i),
-                );
-              },
-            ),
-          ),
-        ),
-      ),
-      Expanded(
-        child: MediaQuery.removePadding(
-          context: context,
-          removeTop: true,
-          child: IndexedStack(index: _index, children: <Widget>[
-            for (var i = 0; i < pages.length; i++) _visited.contains(i) ? TabVisibility(visible: i == _index && outerVisible, child: pages[i]) : const SizedBox.shrink(),
-          ]),
-        ),
-      ),
+    final meta = <SectionTab>[for (final tab in tabs) SectionTab(tab.key, tab.label)];
+    final cluster = clusterOf(widget.section.key);
+    return IndexedStack(index: _index, children: <Widget>[
+      for (var i = 0; i < pages.length; i++)
+        _visited.contains(i)
+            ? SectionScope(
+                section: widget.section.key,
+                label: widget.section.label,
+                cluster: cluster,
+                color: widget.color,
+                tabs: meta,
+                selected: i,
+                onSelect: _select,
+                child: TabVisibility(visible: i == _index && outerVisible, child: pages[i]),
+              )
+            : const SizedBox.shrink(),
     ]);
-  }
-}
-
-class _MenuTile extends StatelessWidget {
-  const _MenuTile({required this.icon, required this.label, required this.page, this.color});
-
-  final IconData icon;
-  final String label;
-  final Widget page;
-  final Color? color;
-
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      leading: Icon(icon, color: color),
-      title: Text(label),
-      trailing: const Icon(Icons.chevron_right),
-      onTap: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => page)),
-    );
   }
 }
 
@@ -591,5 +570,39 @@ class _ReadOnlyBanner extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+/// iPad yon menyusi tepasida tashkilot bloki (veb: org-card): logo yoki bosh harf, nom va rol.
+class _RailOrg extends StatelessWidget {
+  const _RailOrg({required this.name, required this.logo, required this.subtitle});
+
+  final String name;
+  final String? logo;
+  final String subtitle;
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(builder: (context, box) {
+      final mark = OrgMark(url: logo, name: name, size: 40);
+      if (box.maxWidth < 160) return Center(child: Tooltip(message: name, child: mark));
+      return Container(
+        padding: const EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          color: Color.alphaBlend(AppColors.navFg.withAlpha(16), AppColors.navBg),
+          borderRadius: BorderRadius.circular(AppRadius.control),
+        ),
+        child: Row(children: <Widget>[
+          mark,
+          const SizedBox(width: 10),
+          Expanded(
+            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
+              Text(name, maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(fontWeight: FontWeight.w700, fontSize: 13.5, color: AppColors.navDark ? Colors.white : AppColors.ink, height: 1.2)),
+              if (subtitle.isNotEmpty) Text(subtitle, maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 12, color: AppColors.navFg)),
+            ]),
+          ),
+        ]),
+      );
+    });
   }
 }

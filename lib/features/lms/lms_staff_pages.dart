@@ -49,7 +49,7 @@ class _LmsQuestionsPageState extends State<LmsQuestionsPage> {
   Widget build(BuildContext context) {
     final api = AppScope.of(context).api;
     return Scaffold(
-      appBar: AppBar(title: Text(tr("O'quvchi savollari")), actions: const <Widget>[HelpButton(HelpLinks.courseQuestions)]),
+      appBar: pageBar(context, title: Text(tr("O'quvchi savollari")), actions: const <Widget>[HelpButton(HelpLinks.courseQuestions)]),
       body: Column(children: <Widget>[
         Padding(
           padding: const EdgeInsets.fromLTRB(16, 10, 16, 0),
@@ -254,7 +254,7 @@ class _LmsAnnouncementsPageState extends State<LmsAnnouncementsPage> {
   Widget build(BuildContext context) {
     final api = AppScope.of(context).api;
     return Scaffold(
-      appBar: AppBar(title: Text(tr("Kurs e'lonlari")), actions: const <Widget>[HelpButton(HelpLinks.courseQuestions)]),
+      appBar: pageBar(context, title: Text(tr("Kurs e'lonlari")), actions: const <Widget>[HelpButton(HelpLinks.courseQuestions)]),
       floatingActionButton: _course == null
           ? null
           : FloatingActionButton.extended(onPressed: () => _write(_course!), icon: const Icon(Icons.campaign_outlined), label: Text(tr("E'lon yozish"))),

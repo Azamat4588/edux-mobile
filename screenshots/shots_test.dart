@@ -10,12 +10,16 @@ import 'dart:ui' as ui;
 
 import 'package:edux/core/api.dart';
 import 'package:edux/core/games.dart';
+import 'package:edux/core/adaptive.dart';
+import 'package:edux/core/feedback.dart';
+import 'package:edux/core/home_today.dart';
 import 'package:edux/core/home_widgets.dart';
 import 'package:edux/core/i18n.dart';
 import 'package:edux/core/nav.dart';
 import 'package:edux/core/notification_store.dart';
 import 'package:edux/core/session.dart';
 import 'package:edux/core/theme.dart';
+import 'package:edux/core/widgets.dart';
 import 'package:edux/features/auth/login_page.dart';
 import 'package:edux/features/fun/games/game_host.dart';
 import 'package:edux/features/fun/games/result_view.dart';
@@ -24,6 +28,7 @@ import 'package:edux/features/fun/play_page.dart';
 import 'package:edux/features/guardian/guardian_home_page.dart';
 import 'package:edux/features/help/help_pages.dart';
 import 'package:edux/features/notifications/notifications_page.dart';
+import 'package:edux/features/settings/appearance_page.dart';
 import 'package:edux/features/settings/settings_page.dart';
 import 'package:edux/features/scanner/scanner_hub_page.dart';
 import 'package:edux/features/shell/home_shell.dart';
@@ -101,16 +106,19 @@ class FakeServer {
       http.Response.bytes(utf8.encode(jsonEncode(data)), status, headers: <String, String>{'content-type': 'application/json; charset=utf-8'});
 }
 
-Session sessionFor(String org, String role, {String mode = 'light', String? accent}) {
+Session sessionFor(String org, String role, {String mode = 'light', String? accent, String? template}) {
   final server = FakeServer(org, role);
   final session = Session(client: MockClient(server.handle));
   if (role == 'guest') {
     session.restoring = false;
+    // Kirish oynasi: rejim va shablon platforma standarti orqali.
+    session.siteTheme = <String, dynamic>{'mode': mode, if (accent != null) 'accent': accent, if (template != null) 'template': template};
     return session;
   }
   final dir = 'screenshots/fixtures/$org/$role';
   final me = asMap(readJson('$dir/me.json'));
-  final user = asMap(me['user'])..['appearance'] = <String, dynamic>{'mode': mode, if (accent != null) 'accent': accent};
+  final user = asMap(me['user'])
+    ..['appearance'] = <String, dynamic>{'mode': mode, if (accent != null) 'accent': accent, if (template != null) 'template': template};
   final memberships = asList(me['memberships'], 'memberships').map(Membership.fromJson).toList();
   session.debugSignIn(
     server: 'https://edux.kuchkarov.uz',
@@ -130,33 +138,63 @@ Session sessionFor(String org, String role, {String mode = 'light', String? acce
   return session;
 }
 
-/// Pastki menyu (HomeShell bilan bir xil manba: nav.dart) — sahifa ilovadagidek ko'rinsin.
-Widget? bottomBar(Session session, String? tab) {
+/// Pastki menyu (HomeShell bilan bir xil manba: nav.dart, AppNavBar) — sahifa ilovadagidek ko'rinsin.
+Widget? bottomBar(Session session, String? tab, {int limit = 4}) {
   if (tab == null) return null;
   final sections = buildNav(navContextOf(session));
-  final bottom = bottomNav(sections);
-  final destinations = <NavigationDestination>[
-    for (final item in bottom) NavigationDestination(icon: Icon(navIcon(item.icon)), label: item.label),
-    NavigationDestination(icon: const Icon(Icons.menu), label: tr('Yana')),
+  final bottom = bottomNav(sections, limit: limit);
+  final badge = session.can('feedback_manage') ? feedbackNewCount(session.context) : 0;
+  final feedbackSection = sectionOfTab(sections, 'feedback')?.key;
+  final shown = bottom.any((item) => item.section == feedbackSection);
+  final destinations = <AdaptiveDestination>[
+    for (final item in bottom) AdaptiveDestination(icon: navIcon(item.icon), label: item.label, badge: item.section == feedbackSection ? badge : 0),
+    AdaptiveDestination(icon: Icons.menu, label: tr('Yana'), badge: feedbackSection != null && !shown ? badge : 0),
   ];
   final section = sectionOfTab(sections, tab);
   var index = bottom.indexWhere((item) => item.key == tab || (section != null && item.section == section.key));
   if (index < 0) index = destinations.length - 1;
-  return NavigationBar(selectedIndex: index, destinations: destinations, onDestinationSelected: (_) {});
+  return AppNavBar(destinations: destinations, selected: index, onSelect: (_) {});
 }
 
-/// «Yana» sahifasi (HomeShell._more bilan bir xil tuzilma: bildirishnomalar, pastki menyuga sig'magan bo'limlar, murojaatlar, yordam).
+/// Bo'lim sahifasi sarlavha bandi bilan (HomeShell kabi: bo'lim yo'li, hoshiya, yorliqlar).
+Widget scoped(Session session, String? tab, Widget page) {
+  if (tab == null || tab == 'home' || tab == 'more' || session.isGuardian) return page;
+  final sections = buildNav(navContextOf(session));
+  final section = sectionOfTab(sections, tab);
+  if (section == null || section.key == 'home') return page;
+  return SectionScope(
+    section: section.key,
+    label: section.label,
+    cluster: clusterOf(section.key),
+    color: Color(sectionColorOf(section.key)),
+    tabs: <SectionTab>[for (final item in section.tabs) SectionTab(item.key, item.label)],
+    selected: section.tabs.indexWhere((item) => item.key == tab).clamp(0, section.tabs.length - 1),
+    onSelect: (_) {},
+    child: page,
+  );
+}
+
+/// «Yana» sahifasi (HomeShell._more bilan bir xil tuzilma: to'dalar bo'yicha bo'limlar, xabarlar va yordam, sozlamalar).
 Widget morePage(Session session) {
   final sections = buildNav(navContextOf(session));
   final overflow = overflowSections(sections, bottomNav(sections));
-  ListTile tile(IconData icon, String label) =>
-      ListTile(leading: Icon(icon), title: Text(label), trailing: const Icon(Icons.chevron_right), onTap: () {});
-  return SettingsPage(extra: <Widget>[
-    tile(Icons.notifications_none_rounded, tr('Bildirishnomalar')),
-    for (final section in overflow)
-      for (final tab in section.tabs) tile(navIcon(section.icon), section.tabs.length > 1 ? '${section.label} · ${tab.label}' : tab.label),
-    tile(Icons.support_agent_outlined, tr('Murojaatlar')),
-    tile(Icons.help_outline, tr('Yordam')),
+  final groups = <String, List<Widget>>{};
+  for (final section in overflow) {
+    for (final tab in section.tabs) {
+      groups.putIfAbsent(clusterOf(section.key) ?? tr("Bo'limlar"), () => <Widget>[]).add(MenuTile(
+            icon: navIcon(section.icon),
+            color: Color(sectionColorOf(section.key)),
+            label: section.tabs.length > 1 ? '${section.label}: ${tab.label}' : tab.label,
+            onTap: () {},
+          ));
+    }
+  }
+  return SettingsPage(groups: <MenuGroup>[
+    for (final entry in groups.entries) MenuGroup(entry.key, entry.value),
+    MenuGroup(tr('Xabarlar va yordam'), <Widget>[
+      MenuTile(icon: Icons.notifications_none_rounded, color: AppColors.accent, label: tr('Bildirishnomalar'), onTap: () {}),
+      MenuTile(icon: Icons.support_agent_outlined, color: const Color(0xFF0891B2), label: tr('Murojaatlar'), onTap: () {}),
+    ]),
   ]);
 }
 
@@ -177,7 +215,7 @@ Widget appFor(Session session, Widget page, {String? tab, GlobalKey? boundary}) 
           GlobalWidgetsLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,
         ],
-        home: Scaffold(body: page, bottomNavigationBar: bottomBar(session, tab)),
+        home: Scaffold(body: scoped(session, tab, page), bottomNavigationBar: bottomBar(session, tab)),
       ),
     ),
   );
@@ -239,11 +277,12 @@ Future<void> shoot(
   String? tab,
   String mode = 'light',
   String? accent,
+  String? template,
   String locale = 'uz',
   Future<void> Function(WidgetTester tester)? act,
 }) async {
   await tester.runAsync(() => I18n.load(locale));
-  final session = sessionFor(org, role, mode: mode, accent: accent);
+  final session = sessionFor(org, role, mode: mode, accent: accent, template: template);
   final boundary = GlobalKey();
   // Testda soyalar sukut bo'yicha qora chiziq bo'lib chiziladi — haqiqiy soyalar (oxirida qaytariladi).
   debugDisableShadows = false;
@@ -265,6 +304,8 @@ void main() {
     await loadFonts();
     // Telefondagidek: klaviatura fokus ramkasi chizilmaydi.
     FocusManager.instance.highlightStrategy = FocusHighlightStrategy.alwaysTouch;
+    // Demo kun va vaqt: juma, 23-oktabr, 15:40 (darslar vaqt chizig'ida «hozir» va «keyingi» ko'rinadi).
+    homeClock = () => DateTime(2026, 10, 23, 15, 40);
   });
 
   setUp(() {
@@ -293,12 +334,27 @@ void main() {
   testWidgets('01 kirish', (tester) async {
     quietImages();
     await shoot(tester, '01-kirish', org: 'center', role: 'guest', page: const LoginPage());
+    await shoot(tester, '01-kirish-tungi', org: 'center', role: 'guest', page: const LoginPage(), mode: 'dark');
   });
 
   testWidgets('02 oqituvchi bosh sahifa', (tester) async {
     quietImages();
     await shoot(tester, '02-oqituvchi-bosh', org: 'center', role: 'teacher', page: StaffHomePage(onOpen: (_) {}), tab: 'home');
     await shoot(tester, '02-oqituvchi-bosh-tungi', org: 'center', role: 'teacher', page: StaffHomePage(onOpen: (_) {}), tab: 'home', mode: 'dark');
+  });
+
+  testWidgets('02a direktor bosh sahifa va shablonlar', (tester) async {
+    quietImages();
+    await shoot(tester, '02-direktor-bosh', org: 'center', role: 'director', page: StaffHomePage(onOpen: (_) {}), tab: 'home');
+    await shoot(tester, '02-direktor-bosh-grafit-tungi', org: 'center', role: 'director', page: StaffHomePage(onOpen: (_) {}), tab: 'home', mode: 'dark', template: 'graphite');
+    await shoot(tester, '02-oqituvchi-bosh-qogoz', org: 'center', role: 'teacher', page: StaffHomePage(onOpen: (_) {}), tab: 'home', template: 'paper', accent: 'forest');
+    await shoot(tester, '02-oqituvchi-bosh-okean-tungi', org: 'center', role: 'teacher', page: StaffHomePage(onOpen: (_) {}), tab: 'home', mode: 'dark', template: 'ocean', accent: 'teal');
+  });
+
+  testWidgets('14 korinish', (tester) async {
+    quietImages();
+    await shoot(tester, '14-korinish', org: 'center', role: 'teacher', page: const AppearancePage());
+    await shoot(tester, '14-korinish-bahor', org: 'center', role: 'student', page: const AppearancePage(), template: 'spring', accent: 'sunset');
   });
 
   testWidgets('02b yana menyusi', (tester) async {
@@ -364,6 +420,7 @@ void main() {
     quietImages();
     await shoot(tester, '06-oquvchi-bosh', org: 'center', role: 'student', page: const StudentHomePage(), tab: 'home');
     await shoot(tester, '06-oquvchi-bosh-tungi', org: 'center', role: 'student', page: const StudentHomePage(), tab: 'home', mode: 'dark');
+    await shoot(tester, '06-oquvchi-bosh-bahor', org: 'center', role: 'student', page: const StudentHomePage(), tab: 'home', template: 'spring', accent: 'sunset');
   });
 
   testWidgets('07 testlar', (tester) async {

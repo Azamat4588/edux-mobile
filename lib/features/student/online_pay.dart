@@ -462,7 +462,7 @@ class _P2pTransferPageState extends State<P2pTransferPage> with WidgetsBindingOb
   Widget build(BuildContext context) {
     final state = _state;
     return Scaffold(
-      appBar: AppBar(
+      appBar: pageBar(context,
         title: Text(tr("Kartaga o'tkazma")),
         leading: IconButton(icon: const Icon(Icons.close), onPressed: () => Navigator.pop(context, state == 'paid')),
       ),

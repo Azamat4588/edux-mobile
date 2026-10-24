@@ -34,7 +34,7 @@ class AchievementsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final session = AppScope.of(context);
     return Scaffold(
-      appBar: AppBar(title: Text(tr('Yutuqlarim'))),
+      appBar: pageBar(context, title: Text(tr('Yutuqlarim'))),
       body: AsyncView<Map<String, dynamic>>(
         load: () => _load(session),
         builder: (context, result, reload) {
@@ -169,7 +169,7 @@ class _LevelCard extends StatelessWidget {
     final progress = (asInt(level['progress']) / 100).clamp(0.0, 1.0).toDouble();
     return Container(
       padding: const EdgeInsets.all(18),
-      decoration: BoxDecoration(gradient: AppColors.gradient, borderRadius: BorderRadius.circular(18)),
+      decoration: BoxDecoration(color: AppColors.panel, borderRadius: BorderRadius.circular(18)),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
         Row(children: <Widget>[
           Container(

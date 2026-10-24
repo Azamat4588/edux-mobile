@@ -210,7 +210,7 @@ class _SmsGatewayPageState extends State<SmsGatewayPage> {
   Widget build(BuildContext context) {
     final session = AppScope.of(context);
     return Scaffold(
-      appBar: AppBar(
+      appBar: pageBar(context,
         title: Text(widget.platform ? tr('SMS shlyuz (platforma)') : tr('SMS shlyuz')),
         actions: <Widget>[HelpButton(widget.platform ? HelpLinks.platformSms : HelpLinks.deviceSms)],
       ),

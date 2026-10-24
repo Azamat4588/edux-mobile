@@ -92,7 +92,7 @@ class _TutorPageState extends State<TutorPage> {
         ),
       );
     }
-    return Scaffold(appBar: AppBar(title: Text(title)), body: body);
+    return Scaffold(appBar: pageBar(context, title: Text(title)), body: body);
   }
 }
 
@@ -233,7 +233,7 @@ class _TutorChatState extends State<_TutorChat> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      appBar: pageBar(context,
         title: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
           Text(widget.staff ? tr('AI yordamchi') : tr('AI ustoz')),
           if (_remaining != null)

@@ -41,6 +41,21 @@ class _EduxAppState extends State<EduxApp> with WidgetsBindingObserver {
   @override
   void didChangePlatformBrightness() => setState(() {});
 
+  /// Oxirgi qo'llangan ko'rinish kaliti: o'zgarsa — butun daraxt qayta chiziladi (navigatsiya holati saqlanadi).
+  String? _themeKey;
+
+  /// 3.8: ko'rinish almashganda MaterialApp qayta yaratilmaydi (ochiq sahifalar, masalan «Ko'rinish», joyida qoladi) —
+  /// AppColors statik tokenlarini o'qiydigan barcha elementlar keyingi kadrda qayta quriladi.
+  void _rebuildAll() {
+    if (!mounted) return;
+    void visit(Element element) {
+      element.markNeedsBuild();
+      element.visitChildren(visit);
+    }
+
+    (context as Element).visitChildren(visit);
+  }
+
   @override
   Widget build(BuildContext context) {
     final session = AppScope.of(context);
@@ -50,9 +65,15 @@ class _EduxAppState extends State<EduxApp> with WidgetsBindingObserver {
     final accent = session.accent;
     final choice = session.themeChoice;
     AppTheme.apply(dark: dark, accent: accent, choice: choice);
+    final themeKey = '$dark-${choice.key}';
+    if (_themeKey != null && _themeKey != themeKey) {
+      WidgetsBinding.instance.addPostFrameCallback((_) => _rebuildAll());
+    }
+    _themeKey = themeKey;
     return MaterialApp(
-      // Til yoki ko'rinish (rang, shablon, shrift, o'lcham) almashganda butun daraxt yangi ko'rinishda qayta quriladi
-      key: ValueKey<String>('${I18n.locale}-$dark-${choice.key}'),
+      // Til almashganda butun daraxt yangi tilda qayta quriladi (server yorliqlari ham qayta yuklanadi).
+      key: ValueKey<String>(I18n.locale),
+      themeAnimationDuration: Duration.zero,
       navigatorKey: rootNavigator,
       title: 'EduX',
       debugShowCheckedModeBanner: false,
@@ -107,18 +128,19 @@ class _Splash extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // «Daftar varag'i»: asosiy rangning eng to'q tusi, chapda qizil hoshiya chizig'i (gradient yo'q).
     return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(gradient: AppColors.gradient),
-        alignment: Alignment.center,
-        child: Center(
-        child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-          Image.asset('assets/brand/mark.png', width: 84, height: 84),
-          const SizedBox(height: 18),
-          const SizedBox(width: 26, height: 26, child: CircularProgressIndicator(strokeWidth: 2.6, color: Colors.white)),
-        ]),
+      backgroundColor: AppColors.panel,
+      body: Stack(children: <Widget>[
+        Positioned(left: 28, top: 0, bottom: 0, child: Container(width: 2, color: AppColors.margin.withAlpha(200))),
+        Center(
+          child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+            Image.asset('assets/brand/mark.png', width: 76, height: 76),
+            const SizedBox(height: 20),
+            const SizedBox(width: 24, height: 24, child: CircularProgressIndicator(strokeWidth: 2.4, color: Colors.white)),
+          ]),
         ),
-      ),
+      ]),
     );
   }
 }

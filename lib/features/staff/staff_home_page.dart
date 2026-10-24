@@ -9,10 +9,13 @@ import '../../core/help_links.dart';
 import '../../core/home_today.dart';
 import '../../core/home_widgets.dart';
 import '../../core/i18n.dart';
+import '../../core/illustrations.dart';
+import '../../core/motion.dart';
 import '../../core/session.dart';
 import '../../core/theme.dart';
 import '../../core/widgets.dart';
 import '../notifications/notifications_page.dart';
+import 'attendance_page.dart';
 
 class StaffHomePage extends StatelessWidget {
   const StaffHomePage({super.key, required this.onOpen});
@@ -64,14 +67,33 @@ class StaffHomePage extends StatelessWidget {
     return tr('Bugun nima qilish kerak — birinchi: qarzdorlar, tushum, darslar va murojaatlar.');
   }
 
+  /// Hero asosiy harakati (veb: heroAction): rahbar va kassir — to'lov qabul qilish, qolganlar — birinchi asosiy tezkor tugma.
+  QuickAction? _heroAction(Session session, List<QuickAction> actions) {
+    for (final action in actions) {
+      if (action.primary) return action;
+    }
+    return null;
+  }
+
+  void _attendance(BuildContext context, Map<String, dynamic> lesson) {
+    final group = asMap(lesson['group']);
+    if (lesson['kind'] == 'school' || asInt(group['id']) == 0) {
+      onOpen(lesson['kind'] == 'school' ? 'school.journal' : 'attendance');
+      return;
+    }
+    Navigator.of(context).push(MaterialPageRoute<void>(
+      builder: (_) => AttendanceSheetPage(groupId: asInt(group['id']), groupName: asText(group['name'])),
+    ));
+  }
+
   @override
   Widget build(BuildContext context) {
     final session = AppScope.of(context);
     return Scaffold(
-      appBar: AppBar(
+      appBar: pageBar(context,
         titleSpacing: 16,
         title: Row(children: <Widget>[
-          _OrgLogo(url: session.organizationLogo, name: session.organizationName),
+          OrgMark(url: session.organizationLogo, name: session.organizationName, size: 32),
           const SizedBox(width: 10),
           Expanded(child: Text(session.organizationName, maxLines: 1, overflow: TextOverflow.ellipsis)),
         ]),
@@ -85,151 +107,155 @@ class StaffHomePage extends StatelessWidget {
         builder: (context, data, reload) {
           final lessons = asList(asMap(data['timetable'])['items'], 'items');
           final overview = asMap(data['overview']);
+          final dashboard = asMap(data['dashboard']);
           List<TodayItem> cards;
+          List<HeroFact> facts;
+          var attention = <AttentionItem>[];
           switch (session.role) {
             case 'cashier':
               cards = data.isEmpty ? <TodayItem>[] : cashierToday(asMap(data['payments']), asMap(data['debtors']));
+              facts = data.isEmpty ? <HeroFact>[] : cashierFacts(asMap(data['payments']), asMap(data['debtors']));
             case 'marketer':
               cards = data.isEmpty ? <TodayItem>[] : marketerToday(asMap(asMap(data['leads'])['counts']));
+              facts = const <HeroFact>[];
             case 'teacher':
               cards = teacherToday(overview, lessons: lessons);
+              facts = teacherFacts(overview, lessons: lessons);
+              attention = teacherAttention(overview);
             default:
-              cards = managerToday(overview, dashboard: asMap(data['dashboard']), lessons: lessons);
+              cards = managerToday(overview, dashboard: dashboard, lessons: lessons);
+              facts = managerFacts(overview, dashboard: dashboard, lessons: lessons);
+              attention = managerAttention(overview, dashboard: dashboard);
           }
-          final actions = quickActions(session.role, session.can);
+          final all = quickActions(session.role, session.can);
+          final hero = _heroAction(session, all);
+          final actions = all.where((item) => item != hero).toList();
           final payments = asList(asMap(data['payments'])['data']);
           final leads = asList(asMap(data['leads'])['data']);
           final crmMissing = (session.role == 'cashier' || session.role == 'marketer') && !session.hasModule('crm');
-          return ListView(
-            padding: readable(context, const EdgeInsets.fromLTRB(16, 12, 16, 24), max: kGridWidth),
-            children: <Widget>[
-              HomeHeader(name: session.userName, lead: _lead(session)),
-              if (crmMissing && session.role == 'cashier' && session.can('p2p'))
-                AppCard(
-                  child: ListTile(
-                    contentPadding: EdgeInsets.zero,
-                    leading: const Icon(Icons.credit_card),
-                    title: Text(tr("Kartaga o'tkazmalar")),
-                    subtitle: Text(tr("Kelgan o'tkazmalarni buyurtmalar bilan tasdiqlang.")),
-                    trailing: const Icon(Icons.chevron_right),
-                    onTap: () => onOpen('pay.p2p'),
+          final showAttention = session.role != 'cashier' && session.role != 'marketer' && data.isNotEmpty;
+          var order = 0;
+          Widget item(Widget child, {bool shiftOnly = false}) => IntroItem(index: order++, shiftOnly: shiftOnly, child: child);
+          return IntroScope(
+            id: 'home-${session.role}',
+            child: CanvasPattern(
+              child: ListView(
+                padding: readable(context, const EdgeInsets.fromLTRB(16, 14, 16, 28), max: kGridWidth),
+                children: <Widget>[
+                  item(
+                    HomeHeader(
+                      name: session.userName,
+                      lead: _lead(session),
+                      facts: facts,
+                      action: hero == null
+                          ? null
+                          : FilledButton.icon(
+                              onPressed: () => onOpen(hero.key),
+                              icon: Icon(navIcon(hero.icon), size: 20),
+                              label: Text(hero.label, maxLines: 1, overflow: TextOverflow.ellipsis),
+                            ),
+                    ),
+                    shiftOnly: true,
                   ),
-                )
-              else if (crmMissing)
-                EmptyState(
-                  icon: Icons.lock_outline,
-                  text: tr("Bu sahifalar CRM moduli bilan ishlaydi. Tashkilot rahbaridan modulni yoqishni so'rang."),
-                ),
-              if (cards.isNotEmpty) ...<Widget>[
-                SectionTitle(session.role == 'marketer' ? tr('Murojaatlar') : tr('Bugun')),
-                TodayGrid(items: cards, onOpen: onOpen),
-              ],
-              if (actions.isNotEmpty) ...<Widget>[
-                SectionTitle(tr('Tezkor harakatlar')),
-                ActionGrid(actions: actions, onTap: (action) => onOpen(action.key)),
-              ],
-              if (lessons.isNotEmpty) ...<Widget>[
-                SectionTitle(tr('Bugungi darslar')),
-                AppCard(
-                  padding: EdgeInsets.zero,
-                  child: Column(children: <Widget>[
-                    for (var i = 0; i < lessons.length; i++) ...<Widget>[
-                      if (i > 0) const Divider(),
-                      _LessonRow(lesson: lessons[i]),
-                    ],
-                  ]),
-                ),
-              ],
-              if (session.role == 'cashier' && data.isNotEmpty) ...<Widget>[
-                SectionTitle(tr("Bugungi to'lovlar"), trailing: TextButton(onPressed: () => onOpen('crm.payments'), child: Text(tr('Hammasi')))),
-                if (payments.isEmpty)
-                  AppCard(child: Text(tr("Bugun hali to'lov yo'q"), style: TextStyle(color: AppColors.muted)))
-                else
-                  AppCard(
-                    padding: EdgeInsets.zero,
-                    child: Column(children: <Widget>[
-                      for (var i = 0; i < payments.length && i < 8; i++) ...<Widget>[
-                        if (i > 0) const Divider(),
-                        ListTile(
-                          dense: true,
-                          title: Text(asText(asMap(payments[i]['student'])['full_name']), style: const TextStyle(fontWeight: FontWeight.w600)),
-                          subtitle: Text(dateTime(payments[i]['paid_at'])),
-                          trailing: Text(money(asInt(payments[i]['amount'])), style: TextStyle(fontWeight: FontWeight.w700, color: AppColors.success)),
+                  if (crmMissing && session.role == 'cashier' && session.can('p2p'))
+                    Padding(
+                      padding: const EdgeInsets.only(top: 12),
+                      child: AppCard(
+                        onTap: () => onOpen('pay.p2p'),
+                        child: Row(children: <Widget>[
+                          IconTile(icon: Icons.credit_card, colors: tileOf(AppColors.brand)),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
+                              Text(tr("Kartaga o'tkazmalar"), style: const TextStyle(fontWeight: FontWeight.w600)),
+                              Text(tr("Kelgan o'tkazmalarni buyurtmalar bilan tasdiqlang."), style: TextStyle(color: AppColors.muted, fontSize: 13)),
+                            ]),
+                          ),
+                          Icon(Icons.chevron_right, color: AppColors.subtle),
+                        ]),
+                      ),
+                    )
+                  else if (crmMissing)
+                    EmptyState(
+                      icon: Icons.lock_outline,
+                      text: tr("Bu sahifalar CRM moduli bilan ishlaydi. Tashkilot rahbaridan modulni yoqishni so'rang."),
+                    ),
+                  if (cards.isNotEmpty)
+                    item(Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
+                      SectionTitle(session.role == 'marketer' ? tr('Murojaatlar') : tr('Bugun')),
+                      TodayGrid(items: cards, onOpen: onOpen),
+                    ])),
+                  if (lessons.isNotEmpty || showAttention)
+                    item(Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
+                      if (lessons.isNotEmpty) ...<Widget>[
+                        SectionTitle(session.isTeacher ? tr('Bugungi darslarim') : tr('Bugungi darslar')),
+                        AppCard(
+                          padding: const EdgeInsets.fromLTRB(4, 8, 8, 8),
+                          child: LessonTimeline(
+                            lessons: lessons,
+                            primary: session.isTeacher,
+                            onAttendance: session.can('attendance') ? (lesson) => _attendance(context, lesson) : null,
+                          ),
                         ),
                       ],
-                    ]),
-                  ),
-              ],
-              if (session.role == 'marketer' && data.isNotEmpty) ...<Widget>[
-                SectionTitle(tr('Javob kutayotganlar'), trailing: TextButton(onPressed: () => onOpen('crm.leads'), child: Text(tr('Hammasi')))),
-                if (leads.isEmpty)
-                  AppCard(child: Text(tr("Yangi murojaat yo'q"), style: TextStyle(color: AppColors.muted)))
-                else
-                  AppCard(
-                    padding: EdgeInsets.zero,
-                    child: Column(children: <Widget>[
-                      for (var i = 0; i < leads.length && i < 8; i++) ...<Widget>[
-                        if (i > 0) const Divider(),
-                        ListTile(
-                          dense: true,
-                          title: Text(asText(leads[i]['name'], asText(leads[i]['full_name'])), style: const TextStyle(fontWeight: FontWeight.w600)),
-                          subtitle: Text(<String>[asText(leads[i]['phone']), dateTime(leads[i]['created_at'])].where((item) => item.isNotEmpty).join(' · ')),
-                          onTap: () => onOpen('crm.leads'),
-                        ),
+                      if (showAttention) ...<Widget>[
+                        SectionTitle(tr('Diqqat talab qiladi')),
+                        AttentionList(items: attention, onOpen: onOpen),
                       ],
-                    ]),
-                  ),
-              ],
-            ],
+                    ])),
+                  if (actions.isNotEmpty)
+                    item(Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
+                      SectionTitle(tr('Tezkor harakatlar')),
+                      ActionGrid(actions: actions, onTap: (action) => onOpen(action.key)),
+                    ])),
+                  if (session.role == 'cashier' && data.isNotEmpty) ...<Widget>[
+                    SectionTitle(tr("Bugungi to'lovlar"), trailing: TextButton(onPressed: () => onOpen('crm.payments'), child: Text(tr('Hammasi')))),
+                    if (payments.isEmpty)
+                      AppCard(child: EmptyState(art: EmptyArt.wallet, text: tr("Bugun hali to'lov yo'q")))
+                    else
+                      AppCard(
+                        padding: EdgeInsets.zero,
+                        child: Column(children: <Widget>[
+                          for (var i = 0; i < payments.length && i < 8; i++) ...<Widget>[
+                            if (i > 0) const Divider(indent: 64),
+                            ListTile(
+                              leading: Avatar(asText(asMap(payments[i]['student'])['full_name']), size: 36),
+                              title: Text(asText(asMap(payments[i]['student'])['full_name']), style: const TextStyle(fontWeight: FontWeight.w600)),
+                              subtitle: Text(dateTime(payments[i]['paid_at'])),
+                              trailing: Text(money(asInt(payments[i]['amount'])),
+                                  style: TextStyle(fontWeight: FontWeight.w700, color: AppColors.success, fontFeatures: AppTheme.tabular)),
+                            ),
+                          ],
+                        ]),
+                      ),
+                  ],
+                  if (session.role == 'marketer' && data.isNotEmpty) ...<Widget>[
+                    SectionTitle(tr('Javob kutayotganlar'), trailing: TextButton(onPressed: () => onOpen('crm.leads'), child: Text(tr('Hammasi')))),
+                    if (leads.isEmpty)
+                      AppCard(child: EmptyState(art: EmptyArt.people, text: tr("Yangi murojaat yo'q")))
+                    else
+                      AppCard(
+                        padding: EdgeInsets.zero,
+                        child: Column(children: <Widget>[
+                          for (var i = 0; i < leads.length && i < 8; i++) ...<Widget>[
+                            if (i > 0) const Divider(indent: 64),
+                            ListTile(
+                              leading: Avatar(asText(leads[i]['name'], asText(leads[i]['full_name'])), size: 36),
+                              title: Text(asText(leads[i]['name'], asText(leads[i]['full_name'])), style: const TextStyle(fontWeight: FontWeight.w600)),
+                              subtitle: Text(<String>[asText(leads[i]['phone']), dateTime(leads[i]['created_at'])].where((item) => item.isNotEmpty).join(', ')),
+                              trailing: Icon(Icons.chevron_right, color: AppColors.subtle),
+                              onTap: () => onOpen('crm.leads'),
+                            ),
+                          ],
+                        ]),
+                      ),
+                  ],
+                ],
+              ),
+            ),
           );
         },
       ),
-    );
-  }
-}
-
-class _LessonRow extends StatelessWidget {
-  const _LessonRow({required this.lesson});
-
-  final Map<String, dynamic> lesson;
-
-  @override
-  Widget build(BuildContext context) {
-    final group = asMap(lesson['group']);
-    final cancelled = lesson['status'] == 'cancelled';
-    return ListTile(
-      leading: SizedBox(
-        width: 56,
-        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
-          Text(asText(lesson['start']), style: const TextStyle(fontWeight: FontWeight.w700)),
-          Text(asText(lesson['end']), style: TextStyle(color: AppColors.muted, fontSize: 12)),
-        ]),
-      ),
-      title: Text(
-        <String>[asText(group['name']), if (lesson['course'] != null) asText(lesson['course'])].join(' · '),
-        style: TextStyle(fontWeight: FontWeight.w600, decoration: cancelled ? TextDecoration.lineThrough : null),
-      ),
-      subtitle: Text(<String>[
-        if (lesson['teacher'] != null) asText(lesson['teacher']),
-        if (lesson['room'] != null) asText(lesson['room']),
-      ].join(' · ')),
-      trailing: lesson['kind'] == 'school' ? Pill(tr('Maktab'), color: AppColors.muted) : null,
-    );
-  }
-}
-
-class _OrgLogo extends StatelessWidget {
-  const _OrgLogo({required this.url, required this.name});
-
-  final String? url;
-  final String name;
-
-  @override
-  Widget build(BuildContext context) {
-    if (url == null) return Avatar(name, size: 32);
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(8),
-      child: Image.network(url!, width: 32, height: 32, fit: BoxFit.cover, errorBuilder: (_, __, ___) => Avatar(name, size: 32)),
     );
   }
 }

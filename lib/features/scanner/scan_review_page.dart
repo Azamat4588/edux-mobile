@@ -158,7 +158,7 @@ class _ScanReviewPageState extends State<ScanReviewPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(tr("Varaqani ko'rib chiqish"))),
+      appBar: pageBar(context, title: Text(tr("Varaqani ko'rib chiqish"))),
       body: _loading
           ? const Center(child: CircularProgressIndicator())
           : _error != null

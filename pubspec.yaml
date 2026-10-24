@@ -1,7 +1,7 @@
 name: edux
 description: EduX — test, CRM, kurslar va maktab tizimining mobil ilovasi (iPhone, iPad va Android).
 publish_to: none
-version: 3.7.0+12
+version: 3.8.0+13
 
 environment:
   sdk: '>=3.5.0 <4.0.0'
@@ -42,8 +42,27 @@ flutter:
   assets:
     - assets/i18n/
     - assets/brand/
-  # Veb 1.35 dizayn tizimi shriftlari (OFL, assets/fonts/OFL-*.txt): o'zgaruvchan shriftdan 400/600/800 qalinliklari.
+  # Dizayn tizimi shriftlari (SIL OFL, assets/fonts/OFL-*.txt). 3.8: Golos Text (asosiy) va Literata (sarlavhalar) —
+  # backend resources/fonts dagi o'zgaruvchan woff2 dan statik qalinliklar; hamma shrift lotin + kirill (uz/ru/en) to'plamiga
+  # qisqartirilgan (APK hajmi). Qayta yig'ish: tool/fonts/build_fonts.py.
   fonts:
+    - family: GolosText
+      fonts:
+        - asset: assets/fonts/GolosText-400.ttf
+        - asset: assets/fonts/GolosText-500.ttf
+          weight: 500
+        - asset: assets/fonts/GolosText-600.ttf
+          weight: 600
+        - asset: assets/fonts/GolosText-700.ttf
+          weight: 700
+    - family: Literata
+      fonts:
+        - asset: assets/fonts/Literata-500.ttf
+          weight: 500
+        - asset: assets/fonts/Literata-600.ttf
+          weight: 600
+        - asset: assets/fonts/Literata-700.ttf
+          weight: 700
     - family: Onest
       fonts:
         - asset: assets/fonts/Onest-400.ttf

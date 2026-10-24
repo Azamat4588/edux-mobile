@@ -170,7 +170,7 @@ class _MyFeedbackPageState extends State<MyFeedbackPage> with SingleTickerProvid
   Widget build(BuildContext context) {
     final api = AppScope.of(context).api;
     return Scaffold(
-      appBar: AppBar(
+      appBar: pageBar(context,
         title: Text(tr('Fikr bildirish')),
         actions: const <Widget>[HelpButton(HelpLinks.feedback)],
         bottom: TabBar(controller: _tabs, tabs: <Widget>[Tab(text: tr('Yangi fikr')), Tab(text: tr('Mening fikrlarim'))]),
@@ -562,7 +562,7 @@ class MyFeedbackDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final api = AppScope.of(context).api;
     return Scaffold(
-      appBar: AppBar(automaticallyImplyLeading: !isEmbeddedDetail(context), title: Text(tr('Fikr #{0}', <Object?>[id]))),
+      appBar: pageBar(context, automaticallyImplyLeading: !isEmbeddedDetail(context), title: Text(tr('Fikr #{0}', <Object?>[id]))),
       body: AsyncView<Map<String, dynamic>>(
         load: () async {
           final data = asMap(await api.get('my/feedback/$id'));
@@ -751,7 +751,7 @@ class _FeedbackAdminPageState extends State<FeedbackAdminPage> {
     final lastPage = asInt(meta['last_page'], 1);
     final all = counts.values.fold<int>(0, (sum, value) => sum + asInt(value));
     return Scaffold(
-      appBar: AppBar(
+      appBar: pageBar(context,
         automaticallyImplyLeading: !isEmbeddedDetail(context),
         title: Text(tr('Fikrlar')),
         actions: <Widget>[
@@ -1065,7 +1065,7 @@ class _FeedbackAdminDetailPageState extends State<FeedbackAdminDetailPage> {
     final session = AppScope.of(context);
     final canWrite = !session.readOnly;
     return Scaffold(
-      appBar: AppBar(
+      appBar: pageBar(context,
         automaticallyImplyLeading: !isEmbeddedDetail(context),
         title: Text(tr('Fikr #{0}', <Object?>[widget.id])),
         actions: <Widget>[

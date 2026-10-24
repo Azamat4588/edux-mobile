@@ -1,0 +1,422 @@
+// «Ko'rinish» (3.8, veb: Profil → Ko'rinish, Components/ThemePicker.vue): rejim, shablon (9), asosiy rang (12), matn o'lchami,
+// animatsiya darajasi, zichlik va qo'shimcha (shrift, burchaklar, karta uslubi, fon naqshi, menyu). Tepada — jonli namuna:
+// ilovaning haqiqiy komponentlari (hero, «Bugun» kartalari, holat chipi, pastki menyu) tanlangan ko'rinishda.
+// Tanlov darhol qo'llanadi va hisobga saqlanadi (PUT profile/appearance). Rang va shablonni platforma ruxsat bergandagina
+// foydalanuvchi o'zi tanlaydi; rejim, o'lcham va animatsiya — har doim shaxsiy.
+import 'package:flutter/material.dart';
+
+import '../../core/adaptive.dart';
+import '../../core/design.dart';
+import '../../core/home_today.dart';
+import '../../core/home_widgets.dart';
+import '../../core/i18n.dart';
+import '../../core/motion.dart';
+import '../../core/session.dart';
+import '../../core/theme.dart';
+import '../../core/widgets.dart';
+
+class AppearancePage extends StatelessWidget {
+  const AppearancePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final session = AppScope.of(context);
+    final choice = session.themeChoice;
+    final open = session.canCustomizeTheme;
+    final systemReduced = MediaQuery.maybeDisableAnimationsOf(context) ?? false;
+    void apply(String field, String? value) => session.setAppearance(<String, String?>{field: value});
+    return Scaffold(
+      appBar: pageBar(context, title: Text(tr("Ko'rinish"))),
+      body: ListView(
+        padding: readable(context, const EdgeInsets.fromLTRB(16, 16, 16, 32)),
+        children: <Widget>[
+          const AppearancePreview(),
+          const SizedBox(height: 8),
+          Text(
+            tr('Hozirgi ko\'rinish: {0}, {1}', <Object?>[tr(templateLabels[choice.template] ?? ''), tr(accentOf(choice.accent).label)]),
+            textAlign: TextAlign.center,
+            style: TextStyle(color: AppColors.subtle, fontSize: 12.5),
+          ),
+          _Section(
+            title: tr('Rejim'),
+            child: _Segments(
+              values: const <String>['light', 'dark', 'system'],
+              labels: modeLabels,
+              icons: const <String, IconData>{'light': Icons.light_mode_outlined, 'dark': Icons.dark_mode_outlined, 'system': Icons.brightness_auto_outlined},
+              selected: choice.mode,
+              onSelect: session.setThemeMode,
+            ),
+          ),
+          if (open) ...<Widget>[
+            _Section(
+              title: tr('Shablon'),
+              child: _TemplateGrid(selected: choice.template, accent: accentOf(choice.accent), onSelect: (value) => apply('template', value)),
+            ),
+            _Section(
+              title: tr('Asosiy rang'),
+              child: _AccentRow(selected: choice.accent, onSelect: (value) => apply('accent', value)),
+            ),
+          ] else
+            Padding(
+              padding: const EdgeInsets.only(top: 18),
+              child: HoshiyaBox(
+                color: AppColors.accent,
+                background: AppColors.accentSoft,
+                radius: BorderRadius.circular(AppRadius.control),
+                padding: const EdgeInsets.all(12),
+                child: Text(tr("Shablon va rangni tashkilot belgilaydi. Rejim, matn o'lchami va animatsiyani o'zingiz tanlaysiz."),
+                    style: TextStyle(color: AppColors.ink, fontSize: 13.5, height: 1.4)),
+              ),
+            ),
+          _Section(
+            title: tr("Matn o'lchami"),
+            child: _Segments(values: const <String>['sm', 'md', 'lg', 'xl'], labels: sizeLabels, selected: choice.size, onSelect: (value) => apply('size', value)),
+          ),
+          _Section(
+            title: tr('Animatsiya'),
+            hint: systemReduced
+                ? tr("Telefoningizda «Harakatni kamaytirish» yoqilgan — animatsiyalar o'chiq.")
+                : tr("«Kam» — faqat yumshoq so'nish, «O'chiq» — hech qanday harakat."),
+            child: _Segments(values: const <String>['full', 'reduced', 'off'], labels: motionLabels, selected: choice.motion, onSelect: (value) => apply('motion', value)),
+          ),
+          if (open) ...<Widget>[
+            _Section(
+              title: tr('Zichlik'),
+              child: _Segments(values: const <String>['auto', 'comfy', 'normal', 'compact'], labels: densityLabels, selected: choice.density, onSelect: (value) => apply('density', value)),
+            ),
+            _Section(
+              title: tr('Qo\'shimcha'),
+              child: AppCard(
+                padding: const EdgeInsets.symmetric(vertical: 4),
+                child: Column(children: <Widget>[
+                  _Dropdown(label: tr('Shrift'), icon: Icons.font_download_outlined, labels: fontLabels, value: choice.font, onChanged: (value) => apply('font', value)),
+                  const Divider(indent: 56),
+                  _Dropdown(label: tr('Burchaklar'), icon: Icons.rounded_corner, labels: radiusLabels, value: choice.radius, onChanged: (value) => apply('radius', value)),
+                  const Divider(indent: 56),
+                  _Dropdown(label: tr('Karta uslubi'), icon: Icons.crop_square_rounded, labels: cardsLabels, value: choice.cards, onChanged: (value) => apply('cards', value)),
+                  const Divider(indent: 56),
+                  _Dropdown(label: tr('Fon naqshi'), icon: Icons.grid_4x4_rounded, labels: patternLabels, value: choice.pattern, onChanged: (value) => apply('pattern', value)),
+                  const Divider(indent: 56),
+                  _Dropdown(
+                    label: tr('Pastki menyu'),
+                    icon: Icons.space_bar_rounded,
+                    labels: const <String, String>{'auto': 'Shablonga qarab', 'full': "To'liq", 'floating': 'Suzuvchi'},
+                    value: choice.sidebar == 'icons' ? 'full' : choice.sidebar,
+                    onChanged: (value) => apply('sidebar', value),
+                  ),
+                  const Divider(indent: 56),
+                  _Dropdown(label: tr('Menyu ikonalari'), icon: Icons.palette_outlined, labels: iconsLabels, value: choice.icons, onChanged: (value) => apply('icons', value)),
+                ]),
+              ),
+            ),
+          ],
+          const SizedBox(height: 20),
+          Center(
+            child: TextButton.icon(
+              onPressed: () => session.setAppearance(<String, String?>{
+                for (final field in themeOptions.keys)
+                  if (field != 'mode' && (open || personalThemeFields.contains(field))) field: null,
+              }),
+              icon: const Icon(Icons.restart_alt_rounded, size: 20),
+              label: Text(tr('Standart ko\'rinishga qaytarish')),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _Section extends StatelessWidget {
+  const _Section({required this.title, required this.child, this.hint});
+
+  final String title;
+  final String? hint;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
+      SectionTitle(title),
+      child,
+      if (hint != null) ...<Widget>[
+        const SizedBox(height: 6),
+        Text(hint!, style: TextStyle(color: AppColors.subtle, fontSize: 12.5, height: 1.35)),
+      ],
+    ]);
+  }
+}
+
+/// Bir qatordagi tanlov (segmentlar): faol segment asosiy rangda.
+class _Segments extends StatelessWidget {
+  const _Segments({required this.values, required this.labels, required this.selected, required this.onSelect, this.icons = const <String, IconData>{}});
+
+  final List<String> values;
+  final Map<String, String> labels;
+  final Map<String, IconData> icons;
+  final String selected;
+  final ValueChanged<String> onSelect;
+
+  @override
+  Widget build(BuildContext context) {
+    return SegmentedButton<String>(
+      showSelectedIcon: false,
+      expandedInsets: EdgeInsets.zero,
+      segments: <ButtonSegment<String>>[
+        for (final value in values)
+          ButtonSegment<String>(
+            value: value,
+            icon: icons[value] == null ? null : Icon(icons[value], size: 18),
+            label: Text(tr(labels[value] ?? value), maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 13)),
+          ),
+      ],
+      selected: <String>{values.contains(selected) ? selected : values.first},
+      onSelectionChanged: (value) => onSelect(value.first),
+    );
+  }
+}
+
+class _Dropdown extends StatelessWidget {
+  const _Dropdown({required this.label, required this.icon, required this.labels, required this.value, required this.onChanged});
+
+  final String label;
+  final IconData icon;
+  final Map<String, String> labels;
+  final String value;
+  final ValueChanged<String> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      leading: Icon(icon),
+      title: Text(label),
+      trailing: DropdownButton<String>(
+        value: labels.containsKey(value) ? value : labels.keys.first,
+        underline: const SizedBox(),
+        items: labels.entries.map((entry) => DropdownMenuItem<String>(value: entry.key, child: Text(tr(entry.value)))).toList(),
+        onChanged: (next) {
+          if (next != null) onChanged(next);
+        },
+      ),
+    );
+  }
+}
+
+/// 12 asosiy rang: doiralar, tanlangani halqa va belgi bilan.
+class _AccentRow extends StatelessWidget {
+  const _AccentRow({required this.selected, required this.onSelect});
+
+  final String selected;
+  final ValueChanged<String> onSelect;
+
+  @override
+  Widget build(BuildContext context) {
+    return Wrap(spacing: 10, runSpacing: 10, children: <Widget>[
+      for (final accent in accents)
+        Semantics(
+          label: tr(accent.label),
+          selected: accent.key == selected,
+          button: true,
+          child: Tooltip(
+            message: tr(accent.label),
+            child: InkWell(
+              customBorder: const CircleBorder(),
+              onTap: () => onSelect(accent.key),
+              child: AnimatedContainer(
+                duration: Motion.duration(context, AppDurations.d2),
+                width: 40,
+                height: 40,
+                padding: const EdgeInsets.all(3),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(color: accent.key == selected ? AppColors.ink : Colors.transparent, width: 2),
+                ),
+                child: DecoratedBox(
+                  decoration: BoxDecoration(color: accent.c600, shape: BoxShape.circle),
+                  child: accent.key == selected ? const Icon(Icons.check_rounded, size: 18, color: Colors.white) : null,
+                ),
+              ),
+            ),
+          ),
+        ),
+    ]);
+  }
+}
+
+/// 9 shablon: har biri o'z palitrasida chizilgan kichik namuna (menyu paneli, karta, hoshiya).
+class _TemplateGrid extends StatelessWidget {
+  const _TemplateGrid({required this.selected, required this.accent, required this.onSelect});
+
+  final String selected;
+  final Accent accent;
+  final ValueChanged<String> onSelect;
+
+  @override
+  Widget build(BuildContext context) {
+    final keys = themeOptions['template']!;
+    return AdaptiveGrid(
+      minTile: 104,
+      minColumns: 3,
+      maxColumns: 5,
+      spacing: 10,
+      children: <Widget>[for (final key in keys) _TemplateSwatch(template: key, accent: accent, selected: key == selected, onTap: () => onSelect(key))],
+    );
+  }
+}
+
+class _TemplateSwatch extends StatelessWidget {
+  const _TemplateSwatch({required this.template, required this.accent, required this.selected, required this.onTap});
+
+  final String template;
+  final Accent accent;
+  final bool selected;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final palette = templatePalettes[template]![AppColors.dark ? 1 : 0];
+    final darkNav = palette.sidebarBg.computeLuminance() < 0.2;
+    final radius = BorderRadius.circular(AppRadius.control);
+    return Semantics(
+      selected: selected,
+      button: true,
+      label: tr(templateLabels[template] ?? template),
+      child: Material(
+        color: AppColors.card,
+        shape: RoundedRectangleBorder(borderRadius: radius, side: BorderSide(color: selected ? AppColors.accent : AppColors.line, width: selected ? 2 : 1)),
+        clipBehavior: Clip.antiAlias,
+        child: InkWell(
+          onTap: onTap,
+          child: Padding(
+            padding: const EdgeInsets.all(6),
+            child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
+              // Namuna: kanvas, karta (hoshiya bilan), pastki menyu paneli.
+              ClipRRect(
+                borderRadius: BorderRadius.circular((AppRadius.control - 3).clamp(2, 20).toDouble()),
+                child: SizedBox(
+                  height: 62,
+                  child: ColoredBox(
+                    color: palette.canvas,
+                    child: Column(children: <Widget>[
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(6, 6, 6, 4),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: palette.surface,
+                              border: Border(left: BorderSide(color: accent.c600, width: 3)),
+                              borderRadius: BorderRadius.circular(3),
+                            ),
+                            padding: const EdgeInsets.fromLTRB(5, 5, 5, 4),
+                            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
+                              Container(height: 4, width: 34, color: palette.text1),
+                              const SizedBox(height: 4),
+                              Container(height: 3, width: 22, color: palette.text3.withAlpha(150)),
+                            ]),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        height: 13,
+                        color: palette.sidebarBg,
+                        child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: <Widget>[
+                          Container(width: 14, height: 5, decoration: BoxDecoration(color: template == 'soft' || template == 'night' || template == 'graphite' ? accent.c600 : (darkNav ? Colors.white : accent.c600.withAlpha(90)), borderRadius: BorderRadius.circular(3))),
+                          for (var i = 0; i < 3; i++) Container(width: 6, height: 5, decoration: BoxDecoration(color: palette.sidebarFg.withAlpha(110), borderRadius: BorderRadius.circular(3))),
+                        ]),
+                      ),
+                    ]),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 6),
+              Row(children: <Widget>[
+                Expanded(
+                  child: Text(tr(templateLabels[template] ?? template),
+                      maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 12.5, fontWeight: FontWeight.w600, color: AppColors.ink)),
+                ),
+                if (selected) Icon(Icons.check_circle_rounded, size: 16, color: AppColors.accent),
+              ]),
+            ]),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Jonli namuna: ilovaning haqiqiy komponentlari joriy ko'rinishda (bosilmaydi).
+class AppearancePreview extends StatelessWidget {
+  const AppearancePreview({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final radius = BorderRadius.circular(AppRadius.card + 6);
+    const items = <TodayItem>[
+      TodayItem(key: 'preview-debt', value: '3', text: "o'quvchining qarzi bor", tone: TodayTone.danger, icon: 'warning'),
+      TodayItem(key: 'preview-lessons', value: '16:00', text: 'ING-5, davomat bir bosishda', icon: 'calendar'),
+    ];
+    return Semantics(
+      label: tr('Namuna'),
+      child: ExcludeSemantics(
+        child: IgnorePointer(
+          child: Container(
+            decoration: BoxDecoration(borderRadius: radius, border: Border.all(color: AppColors.lineStrong), color: AppColors.canvas),
+            clipBehavior: Clip.antiAlias,
+            child: FittedBox(
+              fit: BoxFit.fitWidth,
+              alignment: Alignment.topCenter,
+              child: SizedBox(
+                width: 380,
+                child: CanvasPattern(
+                  child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(14, 14, 14, 0),
+                      child: HomeHeader(
+                        name: 'Karimova Nodira',
+                        facts: <HeroFact>[
+                          HeroFact('2', tr('ta dars bugun')),
+                          HeroFact('3', tr("o'quvchining qarzi bor"), tone: TodayTone.danger),
+                        ],
+                        action: FilledButton.icon(onPressed: () {}, icon: const Icon(Icons.payments_outlined, size: 20), label: Text(tr("To'lov qabul qilish"))),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(14, 12, 14, 0),
+                      child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
+                        Expanded(child: TodayCard(item: TodayItem(key: items[0].key, value: items[0].value, text: tr(items[0].text), tone: items[0].tone, icon: items[0].icon))),
+                        const SizedBox(width: 10),
+                        Expanded(child: TodayCard(item: TodayItem(key: items[1].key, value: items[1].value, text: tr(items[1].text), icon: items[1].icon))),
+                      ]),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(14, 12, 14, 14),
+                      child: Wrap(spacing: 8, children: <Widget>[
+                        Pill(tr("To'langan"), color: AppColors.success),
+                        Pill(tr('Kutilmoqda'), color: AppColors.warning),
+                        Pill(tr('Qarz'), color: AppColors.danger),
+                      ]),
+                    ),
+                    MediaQuery.removePadding(
+                      context: context,
+                      removeBottom: true,
+                      child: AppNavBar(
+                      destinations: <AdaptiveDestination>[
+                        AdaptiveDestination(icon: Icons.home_outlined, label: tr('Bosh sahifa')),
+                        AdaptiveDestination(icon: Icons.groups_outlined, label: tr("O'quvchilar")),
+                        AdaptiveDestination(icon: Icons.payments_outlined, label: tr('Moliya')),
+                        AdaptiveDestination(icon: Icons.menu, label: tr('Yana')),
+                      ],
+                      selected: 0,
+                      onSelect: (_) {},
+                    ),
+                    ),
+                  ]),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}

@@ -6,7 +6,10 @@ import '../../core/theme.dart';
 
 /// Til tanlash tugmasi (globus): o'zbek, rus, ingliz.
 class LanguageButton extends StatelessWidget {
-  const LanguageButton({super.key});
+  const LanguageButton({super.key, this.color});
+
+  /// Matn va belgi rangi (to'q panelda — oq).
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
@@ -20,9 +23,9 @@ class LanguageButton extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
         child: Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
-          Icon(Icons.language, size: 20, color: AppColors.muted),
+          Icon(Icons.language, size: 20, color: color ?? AppColors.muted),
           const SizedBox(width: 6),
-          Text(I18n.locale.toUpperCase(), style: TextStyle(fontWeight: FontWeight.w700, color: AppColors.muted)),
+          Text(I18n.locale.toUpperCase(), style: TextStyle(fontWeight: FontWeight.w700, color: color ?? AppColors.muted)),
         ]),
       ),
     );

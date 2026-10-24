@@ -30,7 +30,7 @@ class ExamsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final api = AppScope.of(context).api;
     return Scaffold(
-      appBar: AppBar(title: Text(tr('Testlar')), actions: const <Widget>[HelpButton(HelpLinks.examResults)]),
+      appBar: pageBar(context, title: Text(tr('Testlar')), actions: const <Widget>[HelpButton(HelpLinks.examResults)]),
       body: AsyncView<List<Map<String, dynamic>>>(
         cacheKey: 'exams',
         decode: (raw) => asList(raw),
@@ -93,7 +93,7 @@ class ExamDetailPage extends StatelessWidget {
     final id = asInt(exam['id']);
     final status = asText(exam['status']);
     return Scaffold(
-      appBar: AppBar(title: Text(asText(exam['title']), maxLines: 1, overflow: TextOverflow.ellipsis)),
+      appBar: pageBar(context, title: Text(asText(exam['title']), maxLines: 1, overflow: TextOverflow.ellipsis)),
       floatingActionButton: session.canScan && status != 'draft'
           ? FloatingActionButton.extended(
               onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(

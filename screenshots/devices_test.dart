@@ -9,14 +9,17 @@ import 'dart:ui' as ui;
 import 'package:edux/core/adaptive.dart';
 import 'package:edux/core/api.dart';
 import 'package:edux/core/feedback.dart';
+import 'package:edux/core/home_today.dart';
 import 'package:edux/core/home_widgets.dart';
 import 'package:edux/core/i18n.dart';
 import 'package:edux/core/nav.dart';
 import 'package:edux/core/session.dart';
 import 'package:edux/core/theme.dart';
+import 'package:edux/features/auth/login_page.dart';
 import 'package:edux/features/feedback/feedback_pages.dart';
 import 'package:edux/features/fun/games_page.dart';
 import 'package:edux/features/fun/labs_page.dart';
+import 'package:edux/features/settings/appearance_page.dart';
 import 'package:edux/features/shell/home_shell.dart';
 import 'package:edux/features/staff/attendance_page.dart';
 import 'package:edux/features/staff/journal_page.dart';
@@ -27,7 +30,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'shots_test.dart' show loadFonts, missing, readJson, sessionFor, settle;
+import 'shots_test.dart' show loadFonts, missing, readJson, scoped, sessionFor, settle;
 
 /// Qurilma: nom (papka), mantiqiy o'lcham, piksel zichligi.
 class Device {
@@ -41,6 +44,9 @@ class Device {
 
 const Device iphone = Device('ios', Size(430, 932), 3, wide: false);
 const Device ipad = Device('ipad', Size(1024, 1366), 2, wide: true);
+
+/// Android telefon (Play Market): 1080×2340 — 360×780 @3x.
+const Device android = Device('android', Size(360, 780), 3, wide: false);
 
 /// Ilova karkasi: menyu (telefonda pastki, iPad'da yon) — HomeShell bilan bir xil manba (nav.dart, AdaptiveNavScaffold).
 Widget deviceApp(Session session, Widget page, {required Device device, String? tab, GlobalKey? boundary}) {
@@ -61,7 +67,21 @@ Widget deviceApp(Session session, Widget page, {required Device device, String? 
       AdaptiveDestination(icon: Icons.menu, label: tr('Yana'), badge: feedbackSection != null && !shown ? badge : 0),
     ];
     if (index < 0) index = destinations.length - 1;
-    body = AdaptiveNavScaffold(wide: device.wide, destinations: destinations, selected: index, onSelect: (_) {}, body: page);
+    body = AdaptiveNavScaffold(
+      wide: device.wide,
+      destinations: destinations,
+      selected: index,
+      onSelect: (_) {},
+      railHeader: Row(children: <Widget>[
+        OrgMark(url: null, name: session.organizationName, size: 40),
+        const SizedBox(width: 10),
+        Expanded(
+          child: Text(session.organizationName,
+              maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(fontWeight: FontWeight.w700, fontSize: 13.5, color: AppColors.navDark ? Colors.white : AppColors.ink)),
+        ),
+      ]),
+      body: scoped(session, tab, page),
+    );
   }
   return RepaintBoundary(
     key: boundary,
@@ -109,6 +129,8 @@ Future<void> shootDevice(
   required String role,
   required Widget Function() page,
   String? tab,
+  String? template,
+  String? accent,
   Future<void> Function(WidgetTester tester)? act,
 }) async {
   final binding = TestWidgetsFlutterBinding.instance;
@@ -116,7 +138,7 @@ Future<void> shootDevice(
   binding.platformDispatcher.views.first.devicePixelRatio = device.ratio;
   await tester.runAsync(() => I18n.load('uz'));
   for (final mode in <String>['light', 'dark']) {
-    final session = sessionFor(org, role, mode: mode);
+    final session = sessionFor(org, role, mode: mode, template: template, accent: accent);
     final boundary = GlobalKey();
     // Testda soyalar sukut bo'yicha qora chiziq bo'lib chiziladi — haqiqiy soyalar yoqiladi (oxirida qaytariladi).
     debugDisableShadows = false;
@@ -140,6 +162,7 @@ void main() {
     SharedPreferences.setMockInitialValues(<String, Object>{});
     await loadFonts();
     FocusManager.instance.highlightStrategy = FocusHighlightStrategy.alwaysTouch;
+    homeClock = () => DateTime(2026, 10, 23, 15, 40);
   });
 
   tearDownAll(() {
@@ -166,12 +189,23 @@ void main() {
   final feedbackList = asList(readJson('screenshots/fixtures/center/director/feedback.json'));
   final featured = feedbackList.firstWhere((item) => asText(item['kind']) == 'complaint' && item['assignee'] != null, orElse: () => feedbackList.first);
 
-  for (final device in <Device>[iphone, ipad]) {
+  for (final device in <Device>[iphone, ipad, android]) {
     final prefix = device.folder;
+
+    testWidgets('$prefix 00 kirish', (tester) async {
+      quietImages();
+      await shootDevice(tester, device, '00-kirish', org: 'center', role: 'guest', page: () => const LoginPage());
+    });
 
     testWidgets('$prefix 01 bosh sahifa', (tester) async {
       quietImages();
       await shootDevice(tester, device, '01-bosh-sahifa', org: 'center', role: 'teacher', page: () => StaffHomePage(onOpen: (_) {}), tab: 'home');
+      await shootDevice(tester, device, '01-bosh-sahifa-direktor', org: 'center', role: 'director', page: () => StaffHomePage(onOpen: (_) {}), tab: 'home', template: 'graphite');
+    });
+
+    testWidgets('$prefix 08 korinish', (tester) async {
+      quietImages();
+      await shootDevice(tester, device, '08-korinish', org: 'center', role: 'teacher', page: () => const AppearancePage(), template: 'paper', accent: 'forest');
     });
 
     testWidgets('$prefix 02 jurnal', (tester) async {
@@ -220,7 +254,7 @@ void main() {
 
     testWidgets('$prefix 04 oyinlar', (tester) async {
       quietImages();
-      await shootDevice(tester, device, '04-oyinlar', org: 'center', role: 'student', page: () => const GamesPage(), tab: 'fun.games');
+      await shootDevice(tester, device, '04-oyinlar', org: 'center', role: 'student', page: () => const GamesPage(), tab: 'fun.games', template: 'spring', accent: 'sunset');
     });
 
     testWidgets('$prefix 05 laboratoriyalar', (tester) async {
@@ -243,12 +277,12 @@ void main() {
     testWidgets('$prefix 07 rahbar fikrlar', (tester) async {
       quietImages();
       if (device.wide) {
-        await shootDevice(tester, device, '07-fikrlar', org: 'center', role: 'director', tab: 'feedback',
+        await shootDevice(tester, device, '07-fikrlar', org: 'center', role: 'director', tab: 'feedback', template: 'ocean',
             page: () => const MasterDetail(master: FeedbackAdminPage()), act: (tester) async {
           await tester.tap(find.byType(FeedbackAdminTile).at(feedbackList.indexOf(featured)));
         });
       } else {
-        await shootDevice(tester, device, '07-fikrlar', org: 'center', role: 'director', page: () => const FeedbackAdminPage(), tab: 'feedback');
+        await shootDevice(tester, device, '07-fikrlar', org: 'center', role: 'director', page: () => const FeedbackAdminPage(), tab: 'feedback', template: 'ocean');
         await shootDevice(tester, device, '07-fikr-tafsilot', org: 'center', role: 'director', page: () => FeedbackAdminDetailPage(id: asInt(featured['id'])));
       }
     });

@@ -150,7 +150,7 @@ class _CallCenterPageState extends State<CallCenterPage> with WidgetsBindingObse
     return DefaultTabController(
       length: 4,
       child: Scaffold(
-        appBar: AppBar(
+        appBar: pageBar(context,
           title: Text(tr('Call markazi')),
           actions: <Widget>[
             IconButton(tooltip: tr("Qo'ng'iroqni qayd etish"), onPressed: _logCall, icon: const Icon(Icons.add_call)),

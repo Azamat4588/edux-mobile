@@ -1,4 +1,4 @@
-// 3.7 (iPhone va iPad): keng ekran mantig'i, yon menyu (NavigationRail) va ro'yxat + tafsilot (MasterDetail).
+// 3.7 (iPhone va iPad): keng ekran mantig'i, yon menyu (AppRail, 3.8) va ro'yxat + tafsilot (MasterDetail).
 import 'package:edux/core/adaptive.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -103,8 +103,8 @@ void main() {
   testWidgets('telefonda — pastki menyu', (tester) async {
     await setView(tester, const Size(430, 932));
     await tester.pumpWidget(navApp());
-    expect(find.byType(NavigationBar), findsOneWidget);
-    expect(find.byType(NavigationRail), findsNothing);
+    expect(find.byType(AppNavBar), findsOneWidget);
+    expect(find.byType(AppRail), findsNothing);
     expect(find.text('3'), findsOneWidget); // belgi
   });
 
@@ -113,9 +113,9 @@ void main() {
     final picked = <int>[];
     await tester.pumpWidget(navApp(onSelect: picked.add));
     await tester.pump();
-    expect(find.byType(NavigationRail), findsOneWidget);
-    expect(find.byType(NavigationBar), findsNothing);
-    expect(tester.widget<NavigationRail>(find.byType(NavigationRail)).extended, isFalse);
+    expect(find.byType(AppRail), findsOneWidget);
+    expect(find.byType(AppNavBar), findsNothing);
+    expect(tester.widget<AppRail>(find.byType(AppRail)).extended, isFalse);
     await tester.tap(find.text('Yana'));
     expect(picked, <int>[2]);
     await tester.sendKeyDownEvent(LogicalKeyboardKey.metaLeft);
@@ -127,7 +127,7 @@ void main() {
   testWidgets('iPad yotiq — kengaytirilgan yon menyu', (tester) async {
     await setView(tester, const Size(1366, 1024));
     await tester.pumpWidget(navApp());
-    expect(tester.widget<NavigationRail>(find.byType(NavigationRail)).extended, isTrue);
+    expect(tester.widget<AppRail>(find.byType(AppRail)).extended, isTrue);
   });
 
   testWidgets("iPad'da ro'yxat va tafsilot yonma-yon (yangi sahifa ochilmaydi)", (tester) async {

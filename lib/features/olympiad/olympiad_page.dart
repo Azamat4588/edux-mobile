@@ -140,7 +140,7 @@ class _OlympiadPageState extends State<OlympiadPage> {
   Widget build(BuildContext context) {
     final session = AppScope.of(context);
     return Scaffold(
-      appBar: AppBar(title: Text(tr('Olimpiada'))),
+      appBar: pageBar(context, title: Text(tr('Olimpiada'))),
       body: AsyncView<Map<String, dynamic>>(
         key: _view,
         load: () => _load(session),
@@ -155,7 +155,7 @@ class _OlympiadPageState extends State<OlympiadPage> {
             children: <Widget>[
               Container(
                 padding: const EdgeInsets.all(18),
-                decoration: BoxDecoration(gradient: AppColors.gradient, borderRadius: BorderRadius.circular(18)),
+                decoration: BoxDecoration(color: AppColors.panel, borderRadius: BorderRadius.circular(18)),
                 child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
                   Text(asText(organization['name']), style: const TextStyle(color: Colors.white70)),
                   const SizedBox(height: 4),

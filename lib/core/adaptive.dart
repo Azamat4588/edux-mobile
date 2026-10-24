@@ -4,7 +4,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'illustrations.dart';
+import 'motion.dart';
 import 'theme.dart';
+import 'widgets.dart';
 
 /// Keng ekran chegarasi (oynaning eng qisqa tomoni).
 const double kWideShortestSide = 600;
@@ -203,7 +206,7 @@ class MasterDetailState extends State<MasterDetail> {
           SizedBox(width: masterPaneWidth(box.maxWidth), child: ReadableArea(child: master)),
           VerticalDivider(width: 1, thickness: 1, color: AppColors.line),
           Expanded(
-            child: _DetailScope(state: null, owner: this, selected: null, child: ReadableArea(child: detail)),
+            child: _DetailScope(state: null, owner: this, selected: null, child: SectionScope.none(child: ReadableArea(child: detail))),
           ),
         ]),
       );
@@ -260,7 +263,7 @@ class DetailPlaceholder extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(32),
           child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-            Icon(icon, size: 48, color: AppColors.muted.withAlpha(150)),
+            const EmptyIllustration(EmptyArt.notebook, width: 120),
             if (text != null && text!.isNotEmpty) ...<Widget>[
               const SizedBox(height: 12),
               Text(text!, textAlign: TextAlign.center, style: TextStyle(color: AppColors.muted, fontSize: 15)),
@@ -308,10 +311,251 @@ Map<ShortcutActivator, VoidCallback> navShortcuts(int count, ValueChanged<int> o
   return result;
 }
 
-Widget _destinationIcon(AdaptiveDestination item) {
-  final icon = Icon(item.icon);
-  if (item.badge <= 0) return icon;
-  return Badge(label: Text(item.badge > 99 ? '99+' : '${item.badge}'), child: icon);
+Widget _badged(Widget icon, int badge) {
+  if (badge <= 0) return icon;
+  return Badge(
+    label: Text(badge > 99 ? '99+' : '$badge'),
+    backgroundColor: AppColors.dangerFill,
+    textColor: Colors.white,
+    child: icon,
+  );
+}
+
+/// Faol band matni menyu fonida o'qilsin (to'liq rangli faol bandda — asosiy rangning to'q yoki och tusi).
+Color _activeLabel() {
+  if (contrastRatio(AppColors.navActiveFg, AppColors.navBg) >= 3) return AppColors.navActiveFg;
+  return AppColors.navDark ? Colors.white : AppColors.accentStrong;
+}
+
+/// Pastki menyu (telefon): faol band tepasida hoshiya chizig'i, belgi yumshoq «tabletka» ichida. «Suzuvchi» menyuda
+/// (Yumshoq shablon) — chetlardan ajralgan, yumaloq panel.
+class AppNavBar extends StatelessWidget {
+  const AppNavBar({super.key, required this.destinations, required this.selected, required this.onSelect});
+
+  final List<AdaptiveDestination> destinations;
+  final int selected;
+  final ValueChanged<int> onSelect;
+
+  @override
+  Widget build(BuildContext context) {
+    final floating = AppColors.choice.floatingNav;
+    final dense = AppColors.choice.dense;
+    final height = dense ? 58.0 : 64.0;
+    final row = SizedBox(
+      height: height,
+      child: Row(children: <Widget>[
+        for (var i = 0; i < destinations.length; i++)
+          Expanded(child: _NavBarItem(item: destinations[i], active: i == selected, onTap: () => onSelect(i), floating: floating)),
+      ]),
+    );
+    if (!floating) {
+      return Material(
+        color: AppColors.navBg,
+        child: DecoratedBox(
+          decoration: BoxDecoration(border: Border(top: BorderSide(color: AppColors.navLine))),
+          child: SafeArea(top: false, child: row),
+        ),
+      );
+    }
+    final radius = BorderRadius.circular((AppRadius.card + 6).clamp(8, 28).toDouble());
+    return SafeArea(
+      top: false,
+      minimum: const EdgeInsets.only(bottom: 10),
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(12, 0, 12, 0),
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            borderRadius: radius,
+            boxShadow: <BoxShadow>[
+              BoxShadow(color: AppColors.dark ? const Color(0x88000000) : AppColors.accent.withAlpha(40), blurRadius: 24, offset: const Offset(0, 8), spreadRadius: -6),
+            ],
+          ),
+          child: Material(
+            color: AppColors.navBg,
+            shape: RoundedRectangleBorder(borderRadius: radius, side: BorderSide(color: AppColors.navLine)),
+            clipBehavior: Clip.antiAlias,
+            child: row,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _NavBarItem extends StatelessWidget {
+  const _NavBarItem({required this.item, required this.active, required this.onTap, required this.floating});
+
+  final AdaptiveDestination item;
+  final bool active;
+  final VoidCallback onTap;
+  final bool floating;
+
+  @override
+  Widget build(BuildContext context) {
+    final duration = Motion.duration(context, AppDurations.d2);
+    final fg = active ? AppColors.navActiveFg : AppColors.navFg;
+    return Semantics(
+      selected: active,
+      button: true,
+      label: item.badge > 0 ? '${item.label}, ${item.badge}' : item.label,
+      excludeSemantics: true,
+      child: InkResponse(
+        onTap: onTap,
+        containedInkWell: true,
+        highlightShape: BoxShape.rectangle,
+        child: Stack(children: <Widget>[
+          // Hoshiya: faol band tepasida chiziq.
+          Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
+            child: Center(
+              child: AnimatedContainer(
+                duration: duration,
+                curve: Curves.easeOutCubic,
+                width: active ? 28 : 0,
+                height: 3,
+                decoration: BoxDecoration(
+                  color: AppColors.navDark && !AppColors.dark ? AppColors.accent : _activeLabel(),
+                  borderRadius: const BorderRadius.vertical(bottom: Radius.circular(3)),
+                ),
+              ),
+            ),
+          ),
+          Center(
+            child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+              AnimatedContainer(
+                duration: duration,
+                curve: Curves.easeOutCubic,
+                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 4),
+                decoration: BoxDecoration(color: active ? AppColors.navActiveBg : Colors.transparent, borderRadius: BorderRadius.circular(99)),
+                child: _badged(Icon(item.icon, size: 22, color: fg), item.badge),
+              ),
+              const SizedBox(height: 3),
+              Text(
+                item.label,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(fontSize: 11.5, fontWeight: active ? FontWeight.w700 : FontWeight.w500, color: active ? _activeLabel() : AppColors.navFg),
+              ),
+            ]),
+          ),
+        ]),
+      ),
+    );
+  }
+}
+
+/// iPad yon menyusi: tepada tashkilot belgisi, faol bandning chap chetida hoshiya (menyu chetigacha).
+class AppRail extends StatelessWidget {
+  const AppRail({super.key, required this.destinations, required this.selected, required this.onSelect, required this.extended, this.header});
+
+  final List<AdaptiveDestination> destinations;
+  final int selected;
+  final ValueChanged<int> onSelect;
+  final bool extended;
+
+  /// Tepadagi blok (tashkilot belgisi va nomi); bo'lmasa — EduX belgisi.
+  final Widget? header;
+
+  @override
+  Widget build(BuildContext context) {
+    final width = extended ? 240.0 : 92.0;
+    return Material(
+      color: AppColors.navBg,
+      child: SafeArea(
+        right: false,
+        child: SizedBox(
+          width: width,
+          child: ListView(padding: const EdgeInsets.only(top: 12, bottom: 16), children: <Widget>[
+            Padding(
+              padding: EdgeInsets.fromLTRB(extended ? 16 : 0, 0, extended ? 12 : 0, 16),
+              child: header ?? Center(child: Image.asset('assets/brand/mark.png', width: 36, height: 36, semanticLabel: 'EduX')),
+            ),
+            for (var i = 0; i < destinations.length; i++)
+              _RailItem(item: destinations[i], active: i == selected, extended: extended, onTap: () => onSelect(i)),
+          ]),
+        ),
+      ),
+    );
+  }
+}
+
+class _RailItem extends StatelessWidget {
+  const _RailItem({required this.item, required this.active, required this.extended, required this.onTap});
+
+  final AdaptiveDestination item;
+  final bool active;
+  final bool extended;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final duration = Motion.duration(context, AppDurations.d2);
+    final fg = active ? AppColors.navActiveFg : AppColors.navFg;
+    final radius = BorderRadius.circular(AppRadius.control);
+    final icon = _badged(Icon(item.icon, size: 22, color: fg), item.badge);
+    final label = Text(
+      item.label,
+      maxLines: extended ? 1 : 2,
+      overflow: TextOverflow.ellipsis,
+      textAlign: extended ? TextAlign.start : TextAlign.center,
+      style: TextStyle(fontSize: extended ? 14.5 : 11.5, fontWeight: active ? FontWeight.w700 : FontWeight.w500, color: extended ? fg : (active ? _activeLabel() : AppColors.navFg)),
+    );
+    return Semantics(
+      selected: active,
+      button: true,
+      label: item.label,
+      excludeSemantics: true,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 2),
+        child: Stack(children: <Widget>[
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: extended ? 12 : 10),
+            child: InkWell(
+              onTap: onTap,
+              borderRadius: radius,
+              child: extended
+                  ? AnimatedContainer(
+                      duration: duration,
+                      height: 46,
+                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                      decoration: BoxDecoration(color: active ? AppColors.navActiveBg : Colors.transparent, borderRadius: radius),
+                      child: Row(children: <Widget>[icon, const SizedBox(width: 14), Expanded(child: label)]),
+                    )
+                  : Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 6),
+                      child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+                        AnimatedContainer(
+                          duration: duration,
+                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
+                          decoration: BoxDecoration(color: active ? AppColors.navActiveBg : Colors.transparent, borderRadius: BorderRadius.circular(99)),
+                          child: icon,
+                        ),
+                        const SizedBox(height: 4),
+                        label,
+                      ]),
+                    ),
+            ),
+          ),
+          // Hoshiya: menyu chetigacha.
+          Positioned(
+            left: 0,
+            top: 6,
+            bottom: 6,
+            child: AnimatedContainer(
+              duration: duration,
+              width: active ? AppSpacing.hoshiya : 0,
+              decoration: BoxDecoration(
+                color: AppColors.navDark && !AppColors.dark ? AppColors.accent : _activeLabel(),
+                borderRadius: const BorderRadius.horizontal(right: Radius.circular(AppSpacing.hoshiya)),
+              ),
+            ),
+          ),
+        ]),
+      ),
+    );
+  }
 }
 
 /// Asosiy oyna karkasi: telefonda pastki menyu, keng ekranda chapda yon menyu (kengaytirilgan — katta oynada).
@@ -324,6 +568,7 @@ class AdaptiveNavScaffold extends StatelessWidget {
     required this.body,
     this.top,
     this.wide,
+    this.railHeader,
   });
 
   final List<AdaptiveDestination> destinations;
@@ -337,6 +582,9 @@ class AdaptiveNavScaffold extends StatelessWidget {
   /// Majburiy rejim (skrinshot va testlar uchun); null — ekran o'lchamidan.
   final bool? wide;
 
+  /// Yon menyu tepasidagi blok (tashkilot).
+  final Widget? railHeader;
+
   @override
   Widget build(BuildContext context) {
     final isWide = wide ?? isWideScreen(context);
@@ -346,43 +594,18 @@ class AdaptiveNavScaffold extends StatelessWidget {
     if (!isWide || count < 2) {
       return Scaffold(
         body: content,
-        bottomNavigationBar: count < 2
-            ? null
-            : NavigationBar(
-                selectedIndex: index,
-                onDestinationSelected: onSelect,
-                destinations: <NavigationDestination>[
-                  for (final item in destinations) NavigationDestination(icon: _destinationIcon(item), label: item.label),
-                ],
-              ),
+        bottomNavigationBar: count < 2 ? null : AppNavBar(destinations: destinations, selected: index, onSelect: onSelect),
       );
     }
     final extended = railExtended(MediaQuery.sizeOf(context).width);
-    final rail = NavigationRail(
-      selectedIndex: index,
-      onDestinationSelected: onSelect,
-      extended: extended,
-      minExtendedWidth: 232,
-      labelType: extended ? NavigationRailLabelType.none : NavigationRailLabelType.all,
-      backgroundColor: AppColors.card,
-      groupAlignment: -1,
-      leading: Padding(
-        padding: const EdgeInsets.only(top: 8, bottom: 8),
-        child: Image.asset('assets/brand/mark.png', width: 36, height: 36, semanticLabel: 'EduX'),
-      ),
-      destinations: <NavigationRailDestination>[
-        for (final item in destinations)
-          NavigationRailDestination(icon: _destinationIcon(item), label: Text(item.label, maxLines: 2, overflow: TextOverflow.ellipsis)),
-      ],
-    );
     return CallbackShortcuts(
       bindings: navShortcuts(count, onSelect),
       child: Focus(
         autofocus: true,
         child: Scaffold(
           body: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
-            Material(color: AppColors.card, child: SafeArea(right: false, child: rail)),
-            VerticalDivider(width: 1, thickness: 1, color: AppColors.line),
+            AppRail(destinations: destinations, selected: index, onSelect: onSelect, extended: extended, header: railHeader),
+            VerticalDivider(width: 1, thickness: 1, color: AppColors.navLine),
             Expanded(child: ReadableArea(child: content)),
           ]),
         ),

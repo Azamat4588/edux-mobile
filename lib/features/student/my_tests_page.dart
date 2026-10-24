@@ -39,7 +39,7 @@ class MyTestsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final api = AppScope.of(context).api;
     return Scaffold(
-      appBar: AppBar(title: Text(tr('Testlar')), actions: const <Widget>[HelpButton(HelpLinks.myTests)]),
+      appBar: pageBar(context, title: Text(tr('Testlar')), actions: const <Widget>[HelpButton(HelpLinks.myTests)]),
       body: AsyncView<List<Map<String, dynamic>>>(
         load: () async => asList(asMap(await api.get('my/exams'))['exams'], 'exams'),
         cacheKey: 'my_tests',
@@ -416,7 +416,7 @@ class _TakeTestPageState extends State<TakeTestPage> {
         }
       },
       child: Scaffold(
-        appBar: AppBar(
+        appBar: pageBar(context,
           title: Text(widget.title, maxLines: 1, overflow: TextOverflow.ellipsis),
           actions: <Widget>[
             if (_left != null)
@@ -651,7 +651,7 @@ class AttemptResultPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final api = AppScope.of(context).api;
     return Scaffold(
-      appBar: AppBar(title: Text(tr('Natija'))),
+      appBar: pageBar(context, title: Text(tr('Natija'))),
       body: AsyncView<Map<String, dynamic>>(
         load: () async => asMap(await api.get('attempts/$attemptId')),
         builder: (context, data, reload) {

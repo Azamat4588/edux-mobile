@@ -89,7 +89,7 @@ class _DeviceSmsPageState extends State<DeviceSmsPage> {
   Widget build(BuildContext context) {
     final messages = _messages;
     return Scaffold(
-      appBar: AppBar(
+      appBar: pageBar(context,
         title: Text(tr("O'z telefonimdan SMS")),
         actions: <Widget>[IconButton(tooltip: tr('Yangilash'), onPressed: _load, icon: const Icon(Icons.refresh)), const HelpButton(HelpLinks.deviceSms)],
       ),

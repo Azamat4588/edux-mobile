@@ -18,7 +18,7 @@ class AssignmentsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final api = AppScope.of(context).api;
     return Scaffold(
-      appBar: AppBar(title: Text(tr('Uy vazifalari'))),
+      appBar: pageBar(context, title: Text(tr('Uy vazifalari'))),
       body: AsyncView<List<Map<String, dynamic>>>(
         cacheKey: 'lms_my_assignments',
         decode: (raw) => asList(raw),

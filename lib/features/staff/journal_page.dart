@@ -22,7 +22,7 @@ class JournalPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final api = AppScope.of(context).api;
     return Scaffold(
-      appBar: AppBar(title: Text(tr('Jurnal')), actions: const <Widget>[HelpButton(HelpLinks.journal)]),
+      appBar: pageBar(context, title: Text(tr('Jurnal')), actions: const <Widget>[HelpButton(HelpLinks.journal)]),
       body: AsyncView<Map<String, dynamic>>(
         cacheKey: 'school_journal_options',
         decode: asMap,
@@ -132,7 +132,7 @@ class _JournalGridPageState extends State<JournalGridPage> {
     final api = AppScope.of(context).api;
     final title = '${asText(widget.journal['class_name'])} · ${asText(widget.journal['subject'])}';
     return Scaffold(
-      appBar: AppBar(automaticallyImplyLeading: !isEmbeddedDetail(context), title: Text(title, maxLines: 1, overflow: TextOverflow.ellipsis)),
+      appBar: pageBar(context, automaticallyImplyLeading: !isEmbeddedDetail(context), title: Text(title, maxLines: 1, overflow: TextOverflow.ellipsis)),
       body: Column(children: <Widget>[
         if (widget.terms.length > 1)
           SizedBox(
@@ -297,7 +297,7 @@ class _LessonEntriesPageState extends State<LessonEntriesPage> {
         if (await _confirmLeave() && context.mounted) Navigator.pop(context, false);
       },
       child: Scaffold(
-        appBar: AppBar(
+        appBar: pageBar(context,
           title: Text(day == null ? asText(widget.lesson['date']) : dayTitle(day)),
           actions: <Widget>[
             if (_canWrite) TextButton(onPressed: _allPresent, child: Text(tr('Hammasi keldi'))),

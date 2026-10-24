@@ -458,7 +458,7 @@ class _ScannerPageState extends State<ScannerPage> with WidgetsBindingObserver {
     final title = widget.examTitle ?? _kit?.title ?? tr('Skaner');
     return Scaffold(
       backgroundColor: Colors.black,
-      appBar: AppBar(
+      appBar: pageBar(context,
         backgroundColor: Colors.black,
         foregroundColor: Colors.white,
         titleTextStyle: const TextStyle(color: Colors.white, fontSize: 17, fontWeight: FontWeight.w700),

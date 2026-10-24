@@ -12,6 +12,7 @@ import '../../core/board.dart';
 import '../../core/i18n.dart';
 import '../../core/session.dart';
 import '../../core/theme.dart';
+import '../../core/widgets.dart';
 
 /// data:image rasmlar keshi (src → ui.Image).
 class _BoardImages {
@@ -277,7 +278,7 @@ class _BoardPageState extends State<BoardPage> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFF1F2937),
-      appBar: AppBar(
+      appBar: pageBar(context,
         title: Text(asText(_board['title'], tr('Doska')), maxLines: 1, overflow: TextOverflow.ellipsis),
         actions: <Widget>[
           if (_live) const Padding(padding: EdgeInsets.only(right: 8), child: Center(child: _LiveBadge())),

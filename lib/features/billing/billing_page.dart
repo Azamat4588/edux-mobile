@@ -375,7 +375,7 @@ class _BillingPageState extends State<BillingPage> with WidgetsBindingObserver {
     } else {
       body = RefreshIndicator(onRefresh: _load, child: _content(billing));
     }
-    return Scaffold(appBar: AppBar(title: Text(tr('Modullar va obuna'))), body: body);
+    return Scaffold(appBar: pageBar(context, title: Text(tr('Modullar va obuna'))), body: body);
   }
 
   Widget _content(Map<String, dynamic> billing) {

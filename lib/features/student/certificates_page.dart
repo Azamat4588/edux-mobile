@@ -18,7 +18,7 @@ class CertificatesPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final session = AppScope.of(context);
     return Scaffold(
-      appBar: AppBar(title: Text(tr('Sertifikatlar'))),
+      appBar: pageBar(context, title: Text(tr('Sertifikatlar'))),
       body: AsyncView<List<Map<String, dynamic>>>(
         cacheKey: 'my_certificates',
         decode: (raw) => asList(raw),
@@ -72,7 +72,7 @@ class MockProgressPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final api = AppScope.of(context).api;
     return Scaffold(
-      appBar: AppBar(title: Text(tr('Mock natijalari'))),
+      appBar: pageBar(context, title: Text(tr('Mock natijalari'))),
       body: AsyncView<List<Map<String, dynamic>>>(
         cacheKey: 'my_mock',
         decode: (raw) => asList(raw),
@@ -132,7 +132,7 @@ class MockResultSummary extends StatelessWidget {
       Row(children: <Widget>[
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-          decoration: BoxDecoration(gradient: AppColors.gradient, borderRadius: BorderRadius.circular(14)),
+          decoration: BoxDecoration(color: AppColors.panel, borderRadius: BorderRadius.circular(14)),
           child: Text(label, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w800, fontSize: 20)),
         ),
         const SizedBox(width: 10),

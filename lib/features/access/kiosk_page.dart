@@ -131,7 +131,7 @@ class _KioskPageState extends State<KioskPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(tr('Kiosk rejimi')), actions: const <Widget>[HelpButton(HelpLinks.kiosk)]),
+      appBar: pageBar(context, title: Text(tr('Kiosk rejimi')), actions: const <Widget>[HelpButton(HelpLinks.kiosk)]),
       body: _loading
           ? const Center(child: CircularProgressIndicator())
           : ListView(padding: const EdgeInsets.all(16), children: <Widget>[

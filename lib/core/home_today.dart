@@ -10,7 +10,18 @@ import 'i18n.dart';
 
 /// «Bugun» kartasi: katta raqam, izoh, ixtiyoriy qo'shimcha matn, ohang (chap chiziq) va ochiladigan bo'lim (nav kaliti).
 class TodayItem {
-  const TodayItem({required this.key, required this.value, required this.text, this.hint = '', this.tone = TodayTone.none, this.target, this.icon = ''});
+  const TodayItem({
+    required this.key,
+    required this.value,
+    required this.text,
+    this.hint = '',
+    this.tone = TodayTone.none,
+    this.target,
+    this.icon = '',
+    this.trend,
+    this.delta,
+    this.deltaText = '',
+  });
 
   final String key;
   final String value;
@@ -23,6 +34,75 @@ class TodayItem {
 
   /// Belgi nomi (veb ikonka nomi: warning, banknote, calendar ...).
   final String icon;
+
+  /// 1.40: mini-grafik (masalan, 6 oylik tushum) va o'zgarish foizi («+12% o'tgan oyga»).
+  final List<num>? trend;
+  final int? delta;
+  final String deltaText;
+}
+
+/// Bosh sahifa «hero»sidagi fakt: «3 o'quvchining qarzi bor» (veb: HomeHeader facts).
+class HeroFact {
+  const HeroFact(this.value, this.text, {this.tone = TodayTone.none});
+
+  final String value;
+  final String text;
+  final TodayTone tone;
+}
+
+/// «Diqqat talab qiladi» qatori (veb: AttentionList): ohang (danger → warning → info), son, matn, ochiladigan bo'lim.
+class AttentionItem {
+  const AttentionItem({required this.key, required this.tone, required this.count, required this.text, this.hint = '', this.target});
+
+  final String key;
+
+  /// `danger`, `warning` yoki `info`.
+  final String tone;
+  final int count;
+  final String text;
+  final String hint;
+  final String? target;
+}
+
+/// Ustuvorlik bo'yicha saralash, nollar tushiriladi, ko'pi bilan [limit] ta (veb: AttentionList.vue).
+List<AttentionItem> sortAttention(List<AttentionItem> items, {int limit = 5}) {
+  const order = <String, int>{'danger': 0, 'warning': 1, 'info': 2};
+  final list = items.where((item) => item.count > 0).toList();
+  // Barqaror saralash: bir xil ohangdagilar o'z tartibida qoladi.
+  final indexed = <(int, AttentionItem)>[for (var i = 0; i < list.length; i++) (i, list[i])];
+  indexed.sort((a, b) {
+    final byTone = (order[a.$2.tone] ?? 3).compareTo(order[b.$2.tone] ?? 3);
+    return byTone != 0 ? byTone : a.$1.compareTo(b.$1);
+  });
+  return indexed.map((entry) => entry.$2).take(limit).toList();
+}
+
+/// Bugungi dars vaqt chizig'idagi holat (veb: LessonTimeline): o'tdi / hozir / keyingi / keyinroq / bekor.
+enum LessonState { done, now, next, later, off }
+
+int _minutes(Object? time) {
+  final parts = asText(time, '0:0').split(':');
+  return (int.tryParse(parts.first) ?? 0) * 60 + (parts.length > 1 ? int.tryParse(parts[1]) ?? 0 : 0);
+}
+
+/// Darslar holati [now] vaqtiga nisbatan; bekor qilingan, ko'chirilgan va dam olish — `off`.
+List<LessonState> lessonStates(List<Map<String, dynamic>> lessons, DateTime now) {
+  final current = now.hour * 60 + now.minute;
+  var nextGiven = false;
+  return <LessonState>[
+    for (final lesson in lessons)
+      () {
+        const off = <String>['cancelled', 'moved', 'holiday'];
+        if (off.contains(asText(lesson['status']))) return LessonState.off;
+        if (_minutes(lesson['end']) <= current) return LessonState.done;
+        if (_minutes(lesson['start']) <= current) return LessonState.now;
+        if (!nextGiven) {
+          nextGiven = true;
+          return LessonState.next;
+        }
+        return LessonState.later;
+      }(),
+  ];
 }
 
 /// Tezkor harakat: katta tugma.
@@ -35,6 +115,9 @@ class QuickAction {
   final String icon;
   final bool primary;
 }
+
+/// Bosh sahifa soati (skrinshotlarda — demo kun va vaqt).
+DateTime Function() homeClock = DateTime.now;
 
 /// Ko'pi bilan 4 ta karta (veb: `.slice(0, 4)`).
 const int todayLimit = 4;
@@ -56,6 +139,8 @@ List<TodayItem> managerToday(Map<String, dynamic> overview, {Map<String, dynamic
       icon: 'warning',
     ));
     final month = asMap(dashboard['month']);
+    // 1.40: 6 oylik tushum — mini-grafik, shu oy o'tgan oyga nisbatan (delta).
+    final incomes = <num>[for (final row in asList(dashboard['series'], 'series')) asInt(row['income'])];
     cards.add(TodayItem(
       key: 'income',
       value: money(asInt(crm['income_today'])),
@@ -63,6 +148,9 @@ List<TodayItem> managerToday(Map<String, dynamic> overview, {Map<String, dynamic
       hint: month.isNotEmpty ? tr('Shu oy: {0}', <Object?>[money(asInt(month['income']))]) : '',
       target: 'crm.payments',
       icon: 'banknote',
+      trend: incomes.length > 1 ? incomes : null,
+      delta: monthDeltaPercent(incomes),
+      deltaText: tr("o'tgan oyga"),
     ));
     final first = _firstLesson(lessons);
     cards.add(TodayItem(
@@ -350,4 +438,122 @@ List<QuickAction> quickActions(String role, bool Function(String permission) can
       if (can('lms')) list.add(QuickAction(key: 'child.courses', label: tr('Kurslar'), hint: tr("O'zlashtirish"), icon: 'book'));
   }
   return list.take(6).toList();
+}
+
+/// Direktor/administrator hero faktlari (veb: ManagerHome heroFacts).
+List<HeroFact> managerFacts(Map<String, dynamic> overview, {Map<String, dynamic> dashboard = const <String, dynamic>{}, List<Map<String, dynamic>> lessons = const <Map<String, dynamic>>[]}) {
+  final facts = <HeroFact>[];
+  if (overview['crm'] is Map) {
+    facts.add(HeroFact('${lessons.length}', tr('ta dars bugun')));
+    final debtors = asInt(asMap(dashboard['counters'])['debtors'] ?? asMap(overview['crm'])['debtors']);
+    facts.add(HeroFact('$debtors', tr("o'quvchining qarzi bor"), tone: debtors > 0 ? TodayTone.danger : TodayTone.success));
+  } else if (overview['testing'] is Map) {
+    final testing = asMap(overview['testing']);
+    facts.add(HeroFact('${asInt(testing['open_exams'])}', tr('ta test hozir ochiq')));
+    if (asInt(testing['needs_review']) > 0) facts.add(HeroFact('${asInt(testing['needs_review'])}', tr('ta varaqa tekshirishni kutmoqda'), tone: TodayTone.warning));
+  }
+  return facts;
+}
+
+/// O'qituvchi hero faktlari (veb: TeacherHome heroFacts).
+List<HeroFact> teacherFacts(Map<String, dynamic> overview, {List<Map<String, dynamic>> lessons = const <Map<String, dynamic>>[]}) {
+  final facts = <HeroFact>[];
+  final school = asMap(overview['school']);
+  if (overview['crm'] is Map || overview['school'] is Map) {
+    facts.add(HeroFact('${lessons.length + asInt(school['lessons_today'])}', tr('ta darsingiz bor bugun')));
+  }
+  Map<String, dynamic>? next;
+  for (final lesson in lessons) {
+    if (lesson['status'] == 'planned') {
+      next = lesson;
+      break;
+    }
+  }
+  if (next != null) {
+    facts.add(HeroFact(asText(next['start']), tr('keyingisi: {0}', <Object?>[asText(asMap(next['group'])['name'])])));
+  } else if (asInt(asMap(overview['lms'])['to_grade']) > 0) {
+    facts.add(HeroFact('${asInt(asMap(overview['lms'])['to_grade'])}', tr('ta uy vazifasini baholash kerak'), tone: TodayTone.warning));
+  }
+  return facts;
+}
+
+/// Kassir hero faktlari.
+List<HeroFact> cashierFacts(Map<String, dynamic> payments, Map<String, dynamic> debtors) {
+  final summary = asMap(payments['summary']);
+  final debtorCount = asInt(debtors['count']);
+  return <HeroFact>[
+    HeroFact(money(asInt(summary['amount'])), tr('bugun qabul qilindi'), tone: asInt(summary['count']) > 0 ? TodayTone.success : TodayTone.none),
+    HeroFact('$debtorCount', tr("o'quvchining qarzi bor"), tone: debtorCount > 0 ? TodayTone.danger : TodayTone.success),
+  ];
+}
+
+/// O'quvchi va ota-ona hero faktlari (veb: lib/studentHero.js): qarz → test → muddati o'tgan vazifa → keyingi dars.
+List<HeroFact> studentFacts(Map<String, dynamic> insights, {bool guardian = false, List<Map<String, dynamic>> upcoming = const <Map<String, dynamic>>[]}) {
+  final facts = <HeroFact>[];
+  final crm = asMap(insights['crm']);
+  if (insights['crm'] is Map) {
+    final balance = asInt(crm['balance']);
+    facts.add(balance < 0
+        ? HeroFact(money(balance.abs()), tr("to'lash kerak"), tone: TodayTone.danger)
+        : HeroFact(tr("Qarz yo'q"), '', tone: TodayTone.success));
+  }
+  final pending = asList(asMap(insights['testing'])['pending'], 'pending').length;
+  if (pending > 0) {
+    facts.add(HeroFact('$pending', guardian ? tr('ta test hali ishlanmagan') : tr('ta test ishlash kerak'), tone: TodayTone.warning));
+  }
+  final overdue = asList(asMap(asMap(insights['lms'])['assignments'])['pending'], 'pending').where((item) => item['overdue'] == true).length;
+  if (overdue > 0 && facts.length < 2) facts.add(HeroFact('$overdue', tr("uy vazifasining muddati o'tgan"), tone: TodayTone.danger));
+  if (upcoming.isNotEmpty && facts.length < 2) {
+    facts.add(HeroFact(asText(upcoming.first['start']), tr('keyingi dars: {0}', <Object?>[asText(upcoming.first['group'])])));
+  }
+  return facts.take(2).toList();
+}
+
+/// Direktor «Diqqat talab qiladi» (veb: ManagerHome attention).
+List<AttentionItem> managerAttention(Map<String, dynamic> overview, {Map<String, dynamic> dashboard = const <String, dynamic>{}}) {
+  final list = <AttentionItem>[];
+  final crm = asMap(overview['crm']);
+  final counters = asMap(dashboard['counters']);
+  if (overview['crm'] is Map) {
+    list.add(AttentionItem(key: 'overdue', tone: 'danger', count: asInt(dashboard['tasks_overdue']), text: tr("topshiriqning muddati o'tgan"), target: 'crm.tasks'));
+    final debtors = asInt(counters['debtors'] ?? crm['debtors']);
+    list.add(AttentionItem(
+      key: 'debtors',
+      tone: 'danger',
+      count: debtors,
+      text: tr("o'quvchining qarzi bor"),
+      hint: debtors > 0 ? tr('Jami: {0}', <Object?>[money(asInt(counters['debt_total'] ?? crm['debt_total']))]) : '',
+      target: 'crm.debtors',
+    ));
+    list.add(AttentionItem(key: 'leads', tone: 'warning', count: asInt(crm['open_leads']), text: tr('ta murojaat javob kutmoqda'), target: 'crm.leads'));
+    list.add(AttentionItem(key: 'trial', tone: 'info', count: asInt(counters['trial']), text: tr("o'quvchi sinov darsida"), hint: tr("Guruhga o'tkazishni unutmang"), target: 'students'));
+    list.add(AttentionItem(key: 'birthdays', tone: 'info', count: asRawList(dashboard['birthdays']).length, text: tr("o'quvchining bugun tug'ilgan kuni")));
+  }
+  final testing = asMap(overview['testing']);
+  if (asInt(testing['needs_review']) > 0) {
+    list.add(AttentionItem(key: 'review', tone: 'warning', count: asInt(testing['needs_review']), text: tr('ta varaqa tekshirishni kutmoqda'), target: 'scans'));
+  }
+  final grade = asInt(asMap(overview['lms'])['to_grade']);
+  if (grade > 0) list.add(AttentionItem(key: 'grade', tone: 'warning', count: grade, text: tr('ta uy vazifasi baholanmagan'), target: 'lms.questions'));
+  return sortAttention(list);
+}
+
+/// O'qituvchi «Diqqat talab qiladi» (veb: TeacherHome attention).
+List<AttentionItem> teacherAttention(Map<String, dynamic> overview) {
+  return sortAttention(<AttentionItem>[
+    AttentionItem(key: 'grade', tone: 'warning', count: asInt(asMap(overview['lms'])['to_grade']), text: tr('ta uy vazifasini baholash kerak'), target: 'lms.questions'),
+    AttentionItem(key: 'review', tone: 'warning', count: asInt(asMap(overview['testing'])['needs_review']), text: tr('ta varaqa tekshirishni kutmoqda'), target: 'scans'),
+    AttentionItem(key: 'tasks', tone: 'danger', count: asInt(asMap(overview['crm'])['tasks_today']), text: tr('ta topshiriq bajarilishi kerak'), target: 'crm.tasks'),
+    AttentionItem(key: 'trial', tone: 'info', count: asInt(asMap(overview['crm'])['trial']), text: tr("o'quvchi sinov darsida"), target: 'students'),
+  ]);
+}
+
+/// Salomlashish soatga qarab (veb: HomeHeader).
+String greetingFor(DateTime now) => now.hour < 11 ? tr('Xayrli tong') : (now.hour < 18 ? tr('Xayrli kun') : tr('Xayrli kech'));
+
+/// «Familiya Ism Otasining ismi» → ism.
+String firstNameOf(String name) {
+  final parts = name.trim().split(RegExp(r'\s+')).where((part) => part.isNotEmpty).toList();
+  if (parts.isEmpty) return '';
+  return parts.length > 1 ? parts[1] : parts.first;
 }

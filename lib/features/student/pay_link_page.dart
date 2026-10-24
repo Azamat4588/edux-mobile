@@ -140,7 +140,7 @@ class _PayLinkPageState extends State<PayLinkPage> {
   Widget build(BuildContext context) {
     final info = _info;
     return Scaffold(
-      appBar: AppBar(
+      appBar: pageBar(context,
         title: Text(tr("To'lov havolasi")),
         actions: <Widget>[
           if (info != null) IconButton(tooltip: tr('Yangilash'), onPressed: _busy ? null : _open, icon: const Icon(Icons.refresh)),

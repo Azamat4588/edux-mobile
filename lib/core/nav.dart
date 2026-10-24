@@ -281,3 +281,22 @@ const Map<String, int> sectionColors = <String, int>{
   'platform': 0xFF334155,
   'feedback': 0xFFEA580C,
 };
+
+/// Bo'limlar to'dalari (veb 1.40 nav/clusters.js): «Kundalik ish», «Pul va aloqa», «Boshqaruv». Sahifa sarlavhasi bandida
+/// bo'lim yo'li («Kundalik ish › Davomat») va «Yana» menyusida guruh sarlavhalari.
+const List<(String, String, List<String>)> navClusters = <(String, String, List<String>)>[
+  ('daily', 'Kundalik ish', <String>['home', 'students', 'groups', 'schedule', 'education', 'testing', 'tasks', 'child', 'tests', 'courses', 'diary', 'my']),
+  ('money', 'Pul va aloqa', <String>['finance', 'payments', 'debtors', 'comms', 'callcenter', 'leads', 'rewards', 'salary', 'achievements', 'tutor', 'feedback', 'assistant']),
+  ('manage', 'Boshqaruv', <String>['reports', 'settings', 'platform']),
+];
+
+/// Bo'lim to'dasining nomi (tarjima qilingan) yoki null.
+String? clusterOf(String section) {
+  for (final cluster in navClusters) {
+    if (cluster.$3.contains(section)) return tr(cluster.$2);
+  }
+  return null;
+}
+
+/// Bo'lim rangi (topilmasa — grafit).
+int sectionColorOf(String section) => sectionColors[section] ?? 0xFF64748B;

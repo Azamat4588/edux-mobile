@@ -137,7 +137,7 @@ class _LabsPageState extends State<LabsPage> {
       length: 2,
       initialIndex: widget.initialTab.clamp(0, 1),
       child: Scaffold(
-        appBar: AppBar(
+        appBar: pageBar(context,
           title: Text(tr('Laboratoriya')),
           actions: const <Widget>[HelpButton(HelpLinks.labs)],
           bottom: TabBar(tabs: <Widget>[Tab(text: tr("Fanlar bo'yicha")), Tab(text: tr("Darslik bo'yicha"))]),
@@ -605,7 +605,7 @@ class _LabWebPageState extends State<LabWebPage> {
   Widget build(BuildContext context) {
     final controller = _controller;
     return Scaffold(
-      appBar: AppBar(
+      appBar: pageBar(context,
         title: Text(widget.title, maxLines: 1, overflow: TextOverflow.ellipsis),
         actions: <Widget>[
           if (controller != null) IconButton(tooltip: tr('Yangilash'), onPressed: controller.reload, icon: const Icon(Icons.refresh)),
@@ -698,7 +698,7 @@ class _LabPageState extends State<LabPage> {
     final params = Map<String, dynamic>.fromEntries(asMap(task?['params']).entries.where((entry) => labParamLabels.containsKey(entry.key)));
     final unit = asText(task?['unit']);
     return Scaffold(
-      appBar: AppBar(title: Text(tr(asText(lab['name'])))),
+      appBar: pageBar(context, title: Text(tr(asText(lab['name'])))),
       body: ListView(
         padding: const EdgeInsets.fromLTRB(16, 12, 16, 32),
         children: <Widget>[

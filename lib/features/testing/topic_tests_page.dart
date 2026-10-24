@@ -220,7 +220,7 @@ class _TopicTestsPageState extends State<TopicTestsPage> {
     }
     final total = _total;
     return Scaffold(
-      appBar: AppBar(
+      appBar: pageBar(context,
         title: Text(tr("Mavzular bo'yicha test")),
         bottom: _subjects.isEmpty
             ? null
@@ -535,7 +535,7 @@ class TopicQuestionsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(title, maxLines: 1, overflow: TextOverflow.ellipsis)),
+      appBar: pageBar(context, title: Text(title, maxLines: 1, overflow: TextOverflow.ellipsis)),
       body: AsyncView<List<Map<String, dynamic>>>(
         load: () async => asList(asMap(await bank.questions(code, language: language))['questions'], 'questions'),
         builder: (context, questions, reload) {

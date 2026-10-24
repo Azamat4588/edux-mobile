@@ -28,7 +28,7 @@ class MyPaymentsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final session = AppScope.of(context);
     return Scaffold(
-      appBar: AppBar(title: Text(tr("To'lovlarim")), actions: const <Widget>[HelpButton(HelpLinks.myPayments)]),
+      appBar: pageBar(context, title: Text(tr("To'lovlarim")), actions: const <Widget>[HelpButton(HelpLinks.myPayments)]),
       body: AsyncView<Map<String, dynamic>>(
         cacheKey: 'crm_me',
         decode: asMap,

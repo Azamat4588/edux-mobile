@@ -41,7 +41,7 @@ class _GamesPageState extends State<GamesPage> {
   Widget build(BuildContext context) {
     final api = AppScope.of(context).api;
     return Scaffold(
-      appBar: AppBar(
+      appBar: pageBar(context,
         title: Text(tr("O'yinlar")),
         actions: <Widget>[
           IconButton(

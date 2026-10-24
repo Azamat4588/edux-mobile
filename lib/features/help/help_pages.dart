@@ -98,7 +98,7 @@ class _HelpPageState extends State<HelpPage> {
     final session = AppScope.of(context);
     final query = _query.text.trim();
     return Scaffold(
-      appBar: AppBar(
+      appBar: pageBar(context,
         title: Text(tr('Yordam')),
         actions: <Widget>[
           IconButton(tooltip: tr('Brauzerda ochish'), icon: const Icon(Icons.open_in_new), onPressed: () => HelpLinks.open(context)),
@@ -263,7 +263,7 @@ class _HelpArticlePageState extends State<HelpArticlePage> {
   Widget build(BuildContext context) {
     final session = AppScope.of(context);
     return Scaffold(
-      appBar: AppBar(
+      appBar: pageBar(context,
         title: Text(tr('Yordam')),
         actions: <Widget>[
           IconButton(tooltip: tr('Brauzerda ochish'), icon: const Icon(Icons.open_in_new), onPressed: () => HelpLinks.open(context, widget.slug)),

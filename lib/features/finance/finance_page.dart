@@ -39,7 +39,7 @@ class _FinancePageState extends State<FinancePage> {
       length: 3,
       initialIndex: widget.initialTab.clamp(0, 2),
       child: Scaffold(
-        appBar: AppBar(
+        appBar: pageBar(context,
           title: Text(tr('Moliya')),
           bottom: TabBar(tabs: <Widget>[Tab(text: tr('Bugun')), Tab(text: tr('Qarzdorlar')), Tab(text: tr('Hisobot'))]),
         ),

@@ -123,7 +123,7 @@ class _SupportPageState extends State<SupportPage> {
   Widget build(BuildContext context) {
     final session = AppScope.of(context);
     return Scaffold(
-      appBar: AppBar(title: Text(tr('Murojaatlar')), actions: const <Widget>[HelpButton(HelpLinks.support)]),
+      appBar: pageBar(context, title: Text(tr('Murojaatlar')), actions: const <Widget>[HelpButton(HelpLinks.support)]),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: _create,
         icon: const Icon(Icons.edit_outlined),
@@ -385,7 +385,7 @@ class _NewTicketPageState extends State<NewTicketPage> {
     final rules = _rules;
     final contacts = supportContacts(_meta);
     return Scaffold(
-      appBar: AppBar(title: Text(tr('Yangi murojaat')), actions: const <Widget>[HelpButton(HelpLinks.support)]),
+      appBar: pageBar(context, title: Text(tr('Yangi murojaat')), actions: const <Widget>[HelpButton(HelpLinks.support)]),
       body: ListView(
         padding: readable(context, const EdgeInsets.all(16), max: 720),
         children: <Widget>[
@@ -540,7 +540,7 @@ class _TicketPageState extends State<TicketPage> {
     // Yopish — yangi server (1.38: javobda rated_at bor) va murojaat ochiq bo'lsa.
     final canClose = _ticket.containsKey('rated_at') && supportCanClose(asText(_ticket['status']));
     return Scaffold(
-      appBar: AppBar(
+      appBar: pageBar(context,
         automaticallyImplyLeading: !isEmbeddedDetail(context),
         title: Text(_ticket['id'] == null ? tr('Murojaat') : tr('Murojaat #{0}', <Object?>[asInt(_ticket['id'])])),
         actions: <Widget>[
@@ -739,7 +739,7 @@ class ImageViewerPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      appBar: AppBar(backgroundColor: Colors.black, foregroundColor: Colors.white, title: Text(title, maxLines: 1, overflow: TextOverflow.ellipsis)),
+      appBar: pageBar(context, backgroundColor: Colors.black, foregroundColor: Colors.white, title: Text(title, maxLines: 1, overflow: TextOverflow.ellipsis)),
       body: Center(child: InteractiveViewer(maxScale: 5, child: Image.network(url))),
     );
   }

@@ -31,7 +31,7 @@ class ScannerHubPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final api = AppScope.of(context).api;
     return Scaffold(
-      appBar: AppBar(title: Text(tr('Skaner')), actions: const <Widget>[HelpButton(HelpLinks.scanner)]),
+      appBar: pageBar(context, title: Text(tr('Skaner')), actions: const <Widget>[HelpButton(HelpLinks.scanner)]),
       body: AsyncView<Map<String, dynamic>>(
         load: () => _load(api),
         builder: (context, data, reload) {

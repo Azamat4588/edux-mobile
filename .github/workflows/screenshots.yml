@@ -78,4 +78,4 @@ jobs:
           git add -A
           git commit -qm "Skrinshotlar: $src" || echo "o'zgarish yo'q"
           git push origin screenshots || { echo "::error::push rad etildi"; exit 1; }
-          echo "::notice::$(find /tmp/shots -name '*.png' | wc -l) ta rasm screenshots branch'ida (ios: $(ls /tmp/shots/ios 2>/dev/null | wc -l), ipad: $(ls /tmp/shots/ipad 2>/dev/null | wc -l))"
+          echo "::notice::$(find /tmp/shots -name '*.png' | wc -l) ta rasm screenshots branch'ida (ios: $(ls /tmp/shots/ios 2>/dev/null | wc -l), ipad: $(ls /tmp/shots/ipad 2>/dev/null | wc -l), android: $(ls /tmp/shots/android 2>/dev/null | wc -l))"

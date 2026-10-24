@@ -72,7 +72,7 @@ class _LeadsPageState extends State<LeadsPage> {
   Widget build(BuildContext context) {
     final api = AppScope.of(context).api;
     return Scaffold(
-      appBar: AppBar(title: Text(tr('Lidlar'))),
+      appBar: pageBar(context, title: Text(tr('Lidlar'))),
       floatingActionButton: FloatingActionButton.extended(onPressed: _add, icon: const Icon(Icons.person_add_alt_1), label: Text(tr('Lid'))),
       body: Column(children: <Widget>[
         Padding(
@@ -195,7 +195,7 @@ class _LeadPageState extends State<LeadPage> {
   Widget build(BuildContext context) {
     final api = AppScope.of(context).api;
     return Scaffold(
-      appBar: AppBar(title: Text(tr('Lid'))),
+      appBar: pageBar(context, title: Text(tr('Lid'))),
       body: AsyncView<Map<String, dynamic>>(
         key: _view,
         load: () async => asMap(await api.get('crm/leads/${widget.leadId}')),
