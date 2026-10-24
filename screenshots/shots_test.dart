@@ -245,6 +245,8 @@ Future<void> shoot(
   await tester.runAsync(() => I18n.load(locale));
   final session = sessionFor(org, role, mode: mode, accent: accent);
   final boundary = GlobalKey();
+  // Testda soyalar sukut bo'yicha qora chiziq bo'lib chiziladi — haqiqiy soyalar (oxirida qaytariladi).
+  debugDisableShadows = false;
   await tester.pumpWidget(appFor(session, page, tab: tab, boundary: boundary));
   await settle(tester);
   if (act != null) await act(tester);
@@ -252,6 +254,7 @@ Future<void> shoot(
   // Taymerlar (o'yin soati va h.k.) to'xtasin
   await tester.pumpWidget(const SizedBox());
   await tester.pump(const Duration(seconds: 2));
+  debugDisableShadows = true;
 }
 
 void main() {

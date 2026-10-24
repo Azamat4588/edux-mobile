@@ -8,6 +8,7 @@ import 'dart:ui' as ui;
 
 import 'package:edux/core/adaptive.dart';
 import 'package:edux/core/api.dart';
+import 'package:edux/core/feedback.dart';
 import 'package:edux/core/home_widgets.dart';
 import 'package:edux/core/i18n.dart';
 import 'package:edux/core/nav.dart';
@@ -51,9 +52,13 @@ Widget deviceApp(Session session, Widget page, {required Device device, String? 
     final bottom = bottomNav(sections, limit: navLimit(device.wide));
     final section = sectionOfTab(sections, tab);
     var index = bottom.indexWhere((item) => item.key == tab || (section != null && item.section == section.key));
+    // «Yangi» fikrlar soni — fikrlar bo'limida (menyuda bo'lmasa «Yana» da), HomeShell kabi.
+    final badge = session.can('feedback_manage') ? feedbackNewCount(session.context) : 0;
+    final feedbackSection = sectionOfTab(sections, 'feedback')?.key;
+    final shown = bottom.any((item) => item.section == feedbackSection);
     final destinations = <AdaptiveDestination>[
-      for (final item in bottom) AdaptiveDestination(icon: navIcon(item.icon), label: item.label),
-      AdaptiveDestination(icon: Icons.menu, label: tr('Yana')),
+      for (final item in bottom) AdaptiveDestination(icon: navIcon(item.icon), label: item.label, badge: item.section == feedbackSection ? badge : 0),
+      AdaptiveDestination(icon: Icons.menu, label: tr('Yana'), badge: feedbackSection != null && !shown ? badge : 0),
     ];
     if (index < 0) index = destinations.length - 1;
     body = AdaptiveNavScaffold(wide: device.wide, destinations: destinations, selected: index, onSelect: (_) {}, body: page);
@@ -113,6 +118,8 @@ Future<void> shootDevice(
   for (final mode in <String>['light', 'dark']) {
     final session = sessionFor(org, role, mode: mode);
     final boundary = GlobalKey();
+    // Testda soyalar sukut bo'yicha qora chiziq bo'lib chiziladi — haqiqiy soyalar yoqiladi (oxirida qaytariladi).
+    debugDisableShadows = false;
     await tester.pumpWidget(deviceApp(session, page(), device: device, tab: tab, boundary: boundary));
     await settle(tester);
     if (act != null) {
@@ -122,6 +129,7 @@ Future<void> shootDevice(
     await captureTo(tester, boundary, device, mode == 'dark' ? '$name-tungi' : name);
     await tester.pumpWidget(const SizedBox());
     await tester.pump(const Duration(seconds: 2));
+    debugDisableShadows = true;
   }
 }
 
