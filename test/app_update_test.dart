@@ -36,8 +36,8 @@ void main() {
 
   test('eski server: platforms.android', () {
     final info = updateFrom(<String, dynamic>{
-      'platforms': <String, dynamic>{'android': <String, dynamic>{'apk_url': 'https://a/b.apk', 'version': '3.8.0'}},
+      'platforms': <String, dynamic>{'android': <String, dynamic>{'apk_url': 'https://a/b.apk', 'version': '3.9.0'}},
     }, platform: 'android', current: '3.6.0');
-    expect(info?.version, '3.8.0');
+    expect(info?.version, '3.9.0');
   });
 }

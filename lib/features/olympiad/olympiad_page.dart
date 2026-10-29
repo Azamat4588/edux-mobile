@@ -8,6 +8,7 @@ import '../../core/format.dart';
 import '../../core/i18n.dart';
 import '../../core/payments.dart';
 import '../../core/session.dart';
+import '../../core/koshin.dart';
 import '../../core/theme.dart';
 import '../../core/widgets.dart';
 import '../student/my_tests_page.dart';
@@ -153,9 +154,7 @@ class _OlympiadPageState extends State<OlympiadPage> {
           return ListView(
             padding: const EdgeInsets.fromLTRB(16, 12, 16, 32),
             children: <Widget>[
-              Container(
-                padding: const EdgeInsets.all(18),
-                decoration: BoxDecoration(color: AppColors.panel, borderRadius: BorderRadius.circular(18)),
+              KoshinBanner(
                 child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
                   Text(asText(organization['name']), style: const TextStyle(color: Colors.white70)),
                   const SizedBox(height: 4),

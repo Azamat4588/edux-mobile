@@ -6,6 +6,7 @@ import '../../core/api.dart';
 import '../../core/help_links.dart';
 import '../../core/design.dart';
 import '../../core/i18n.dart';
+import '../../core/koshin.dart';
 import '../../core/motion.dart';
 import '../../core/session.dart';
 import '../../core/sms_gateway.dart';
@@ -152,20 +153,16 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
-  /// Forma: sarlavha (hoshiya bilan), kirish usuli, maydonlar va qo'shimcha yo'llar.
+  /// Forma: sarlavha, kirish usuli, maydonlar va qo'shimcha yo'llar.
   List<Widget> _form(Session session) {
     final host = Uri.tryParse(session.server)?.host ?? session.server;
     return <Widget>[
-      HoshiyaBox(
-        color: AppColors.accent,
-        padding: const EdgeInsets.only(left: 14),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
-          Semantics(header: true, child: Text(tr('Hisobingizga kiring'), style: AppTheme.title(size: 26))),
-          const SizedBox(height: 6),
-          Text(_codeMode ? tr('Telefon raqamingizga bir martalik kod yuboramiz.') : tr('Telefon raqamingiz va parolingizni kiriting.'),
-              style: TextStyle(color: AppColors.muted, fontSize: 15, height: 1.4)),
-        ]),
-      ),
+      Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
+        Semantics(header: true, child: Text(tr('Hisobingizga kiring'), style: AppTheme.title(size: 28))),
+        const SizedBox(height: 6),
+        Text(_codeMode ? tr('Telefon raqamingizga bir martalik kod yuboramiz.') : tr('Telefon raqamingiz va parolingizni kiriting.'),
+            style: TextStyle(color: AppColors.muted, fontSize: 15, height: 1.4)),
+      ]),
       const SizedBox(height: 24),
       if (_options['login_code'] == true) ...<Widget>[
         SegmentedButton<bool>(
@@ -186,10 +183,9 @@ class _LoginPageState extends State<LoginPage> {
         const SizedBox(height: 18),
       ],
       if (_error != null) ...<Widget>[
-        HoshiyaBox(
+        ToneBox(
           color: AppColors.toneDanger,
           background: AppColors.dangerBg,
-          radius: BorderRadius.circular(AppRadius.control),
           padding: const EdgeInsets.all(12),
           child: Semantics(liveRegion: true, child: Text(_error!, style: TextStyle(color: AppColors.danger, fontWeight: FontWeight.w500))),
         ),
@@ -295,7 +291,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     final session = AppScope.of(context);
     final wide = MediaQuery.sizeOf(context).width >= 840;
-    final panel = _NotebookPanel(onLogoLongPress: _changeServer, wide: wide);
+    final panel = _KoshinPanel(onLogoLongPress: _changeServer, wide: wide);
     if (wide) {
       return Scaffold(
         backgroundColor: AppColors.canvas,
@@ -337,10 +333,11 @@ class _LoginPageState extends State<LoginPage> {
   }
 }
 
-/// Kirish oynasining «daftar varag'i» (veb: AuthShell 1.40): asosiy rangning eng to'q tusi, nozik katak, chapda qizil
-/// hoshiya chizig'i va tizimdan uchta lahza (haqiqiy «Bugun» kartasi uslubida). Lahzalar bir marta ketma-ket paydo bo'ladi.
-class _NotebookPanel extends StatelessWidget {
-  const _NotebookPanel({required this.onLogoLongPress, required this.wide});
+/// Kirish oynasining lojuvard paneli (veb 1.41: AuthShell): «lojuvard tun» foni, oq girih yulduzlari naqshi va tizimdan
+/// uchta lahza — haqiqiy koshin plitkalar (qarz — anor, test natijasi — pista, dars — shafran). Plitkalar bir marta
+/// navbat bilan «qo'yiladi».
+class _KoshinPanel extends StatelessWidget {
+  const _KoshinPanel({required this.onLogoLongPress, required this.wide});
 
   final VoidCallback onLogoLongPress;
   final bool wide;
@@ -348,102 +345,101 @@ class _NotebookPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final top = MediaQuery.paddingOf(context).top;
-    final moments = <(String, String, TodayTone)>[
-      ('3', tr("o'quvchining qarzi bor"), TodayTone.danger),
-      ('8 / 12', tr('test natijasi ota-onaga yuborildi'), TodayTone.success),
-      ('16:00', tr('ING-5, davomat bir bosishda'), TodayTone.none),
-    ];
+    Widget tile(int order, KoshinHue hue, String value, String text, {String hint = '', double? size}) => IntroTile(
+          order: order,
+          child: _Moment(hue: hue, value: value, text: text, hint: hint, size: size ?? (wide ? 28 : 22), compact: !wide),
+        );
+    final gap = wide ? 12.0 : 8.0;
+    final moments = IntroScope(
+      id: 'login-moments',
+      child: IntrinsicHeight(
+        child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
+          Expanded(child: tile(0, KoshinHue.anor, '3', tr("o'quvchining qarzi bor"), hint: tr('Ota-onaga eslatma ketdi'), size: wide ? 44 : 34)),
+          SizedBox(width: gap),
+          Expanded(
+            child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
+              tile(1, KoshinHue.pista, '8 / 12', tr('test natijasi ota-onaga yuborildi')),
+              SizedBox(height: gap),
+              tile(2, KoshinHue.shafran, '16:00', tr('ING-5, davomat bir bosishda')),
+            ]),
+          ),
+        ]),
+      ),
+    );
     final content = Padding(
-      padding: EdgeInsets.fromLTRB(wide ? 72 : 52, top + (wide ? 40 : 18), wide ? 48 : 20, wide ? 40 : 26),
+      padding: EdgeInsets.fromLTRB(wide ? 48 : 20, top + (wide ? 40 : 14), wide ? 48 : 20, wide ? 40 : 22),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: wide ? MainAxisAlignment.spaceBetween : MainAxisAlignment.start, children: <Widget>[
         Row(children: <Widget>[
           GestureDetector(onLongPress: onLogoLongPress, child: Image.asset('assets/brand/mark.png', width: 40, height: 40)),
           const SizedBox(width: 10),
-          const Text('EduX', style: TextStyle(fontSize: 22, fontWeight: FontWeight.w800, color: Colors.white, letterSpacing: -0.3)),
+          Text('EduX', style: AppTheme.display(size: 23, color: Colors.white).copyWith(letterSpacing: -0.4)),
           const Spacer(),
           if (!wide) const LanguageButton(color: Colors.white),
         ]),
-        if (!wide) const SizedBox(height: 22),
+        if (!wide) const SizedBox(height: 18),
         Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
           Text(
             tr("Testlar, to'lovlar, davomat va jurnal — bitta oynada."),
-            style: AppTheme.title(size: wide ? 34 : 25, color: Colors.white).copyWith(fontFamily: 'Literata', fontWeight: FontWeight.w600),
+            style: AppTheme.display(size: wide ? 40 : 25, color: Colors.white).copyWith(height: 1.06),
           ),
-          SizedBox(height: wide ? 28 : 18),
-          IntroScope(
-            id: 'login-moments',
-            child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
-              for (var i = 0; i < moments.length; i++)
-                IntroItem(
-                  index: i,
-                  child: Padding(
-                    padding: const EdgeInsets.only(bottom: 8),
-                    child: _Moment(value: moments[i].$1, text: moments[i].$2, tone: moments[i].$3, compact: !wide),
-                  ),
-                ),
-            ]),
-          ),
+          SizedBox(height: wide ? 30 : 16),
+          ConstrainedBox(constraints: const BoxConstraints(maxWidth: 520), child: moments),
+          if (wide) ...<Widget>[
+            const SizedBox(height: 30),
+            for (final line in <String>[
+              tr("O'quv markaz, maktab va OTM uchun"),
+              tr('Telefon va kompyuterda bir xil ishlaydi'),
+              tr('Ota-onalar Telegram yoki SMS orqali xabardor'),
+            ])
+              Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: Row(children: <Widget>[
+                  const Icon(Icons.check_circle_outline_rounded, size: 20, color: Koshin.shafran),
+                  const SizedBox(width: 12),
+                  Expanded(child: Text(line, style: TextStyle(color: Colors.white.withAlpha(217), fontSize: 15.5))),
+                ]),
+              ),
+          ],
         ]),
-        if (wide)
-          Text('© ${DateTime.now().year} EduX', style: TextStyle(color: Colors.white.withAlpha(170), fontSize: 13)),
+        if (wide) Text('© ${DateTime.now().year} EduX', style: TextStyle(color: Colors.white.withAlpha(178), fontSize: 13)),
       ]),
     );
     return Container(
-      color: AppColors.panel,
-      child: CustomPaint(painter: _PanelPainter(), child: wide ? SizedBox.expand(child: content) : content),
+      color: Koshin.night,
+      child: CustomPaint(painter: GirihPatternPainter(step: wide ? 120 : 96), child: wide ? SizedBox.expand(child: content) : content),
     );
   }
 }
 
-/// Panel foni: oq rangdagi 22px katak (juda nozik) va chapda qizil hoshiya chizig'i.
-class _PanelPainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    const step = 22.0;
-    final grid = Paint()
-      ..color = const Color(0x14FFFFFF)
-      ..strokeWidth = 1;
-    for (var x = step; x < size.width; x += step) {
-      canvas.drawLine(Offset(x, 0), Offset(x, size.height), grid);
-    }
-    for (var y = step; y < size.height; y += step) {
-      canvas.drawLine(Offset(0, y), Offset(size.width, y), grid);
-    }
-    final margin = size.width > 600 ? 44.0 : 32.0;
-    canvas.drawRect(Rect.fromLTWH(margin, 0, 2, size.height), Paint()..color = AppColors.margin.withAlpha(220));
-  }
-
-  @override
-  bool shouldRepaint(_PanelPainter oldDelegate) => false;
-}
-
-/// Tizimdan lahza: oq karta, chap chetida ohang hoshiyasi, katta raqam va jumla (har doim yorug' ko'rinishda).
+/// Tizimdan lahza — koshin plitka (har doim bir xil ranglarda, shablonga bog'liq emas).
 class _Moment extends StatelessWidget {
-  const _Moment({required this.value, required this.text, required this.tone, required this.compact});
+  const _Moment({required this.hue, required this.value, required this.text, required this.size, required this.compact, this.hint = ''});
 
+  final KoshinHue hue;
   final String value;
   final String text;
-  final TodayTone tone;
+  final String hint;
+  final double size;
   final bool compact;
 
   @override
   Widget build(BuildContext context) {
-    const tones = <TodayTone, Color>{TodayTone.danger: Color(0xFFC70036), TodayTone.success: Color(0xFF007A55)};
-    const lines = <TodayTone, Color>{TodayTone.danger: Color(0xFFC70036), TodayTone.success: Color(0xFF00BC7D)};
+    final fg = Koshin.onTile(hue);
     return Container(
-      padding: EdgeInsets.fromLTRB(14, compact ? 9 : 12, 14, compact ? 9 : 12),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(AppRadius.control),
-        border: Border(left: BorderSide(color: lines[tone] ?? Colors.white, width: AppSpacing.hoshiya)),
-        boxShadow: const <BoxShadow>[BoxShadow(color: Color(0x33000000), blurRadius: 14, offset: Offset(0, 6), spreadRadius: -6)],
-      ),
-      child: Row(children: <Widget>[
-        SizedBox(
-          width: compact ? 64 : 76,
-          child: Text(value, style: TextStyle(fontSize: compact ? 19 : 22, fontWeight: FontWeight.w700, color: tones[tone] ?? const Color(0xFF131C36), fontFeatures: AppTheme.tabular)),
-        ),
-        Expanded(child: Text(text, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: Color(0xFF131C36), height: 1.3))),
+      padding: EdgeInsets.all(compact ? 12 : 16),
+      decoration: BoxDecoration(color: Koshin.of(hue), borderRadius: BorderRadius.circular(compact ? 16 : 20)),
+      clipBehavior: Clip.antiAlias,
+      child: Stack(clipBehavior: Clip.none, children: <Widget>[
+        Positioned(right: compact ? -34 : -40, top: compact ? -34 : -40, child: GirihStar(size: compact ? 96 : 120, color: fg.withAlpha(41), line: true)),
+        Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.end, children: <Widget>[
+          Text(value, style: AppTheme.display(size: size, color: fg)),
+          SizedBox(height: compact ? 4 : 6),
+          Text(text, style: TextStyle(fontSize: compact ? 12.5 : 14, fontWeight: FontWeight.w600, color: fg, height: 1.3)),
+          if (hint.isNotEmpty) ...<Widget>[
+            const SizedBox(height: 2),
+            Text(hint, style: TextStyle(fontSize: compact ? 11.5 : 12.5, color: fg.withAlpha(214), height: 1.3)),
+          ],
+        ]),
       ]),
     );
   }

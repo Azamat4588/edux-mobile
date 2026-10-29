@@ -1,10 +1,10 @@
-// EduX ko'rinishi v2 (3.8, veb 1.40 «Daftar 2: hoshiya», docs/design.md «Rang qiymatlari (mobil ilova uchun)»):
-// 9 shablon × yorug'/tungi palitra (aniq hex qiymatlar), 12 asosiy rang shkalasi (50/100/300/500/600/700), holat ranglari,
-// semantik tokenlar (canvas/surface/surface2/raised, ink/muted/subtle, line/lineStrong, focus), menyu paneli ranglari.
+// EduX ko'rinishi v3 (3.9, veb 1.41 «Koshin», docs/design.md «Rang qiymatlari (mobil ilova uchun)»):
+// 9 shablon × yorug'/tungi palitra (aniq hex qiymatlar), 12 asosiy rang shkalasi (50/100/300/500/600/700), holat ranglari
+// (fg/bg + to'liq «solid»), koshin ranglari (feruza, lojuvard, anor, pista, shafran, olxo'ri), semantik tokenlar.
 //
-// AppColors dagi ranglar joriy mavzuga qarab o'zgaradi: AppTheme.apply() ularni MaterialApp qurilishidan oldin yangilaydi,
-// ilova esa yangi kalit bilan to'liq qayta chiziladi. Rang faqat ma'no uchun: asosiy rang — harakat, qizil — qarz/xato,
-// sariq — kutilmoqda, yashil — bajarildi. Esda qoladigan yagona narsa — hoshiya (chap chetdagi rangli chiziq, [AppSpacing.hoshiya]).
+// G'oya — Registon koshinlari: ish qismi (ro'yxat, forma) oq va sokin, rang ma'noli joyda — bosh sahifadagi koshin
+// plitkalar, holat chiplari, faol menyu bandi, muhim lahzalar (to'lov muhri). AppColors joriy mavzuga qarab o'zgaradi:
+// AppTheme.apply() ularni MaterialApp qurilishidan oldin yangilaydi.
 import 'dart:math' as math;
 
 import 'package:flutter/cupertino.dart';
@@ -12,7 +12,7 @@ import 'package:flutter/material.dart';
 
 import 'design.dart';
 
-/// Asosiy rang shkalasi (veb: palette.css, docs/design.md jadvali).
+/// Asosiy rang shkalasi (veb: palette.css, docs/design.md jadvali; v3 — oklch, 600 ustida oq matn ≥ 4.6:1).
 class Accent {
   const Accent(this.key, this.label, this.c50, this.c100, this.c300, this.c500, this.c600, this.c700);
 
@@ -25,28 +25,69 @@ class Accent {
   final Color c600;
   final Color c700;
 
-  /// Asosiy to'liq rang (tugma, faol band) — 600 (oq matn bilan ≥ 4.5:1).
+  /// Asosiy to'liq rang (tugma, faol band) — 600.
   Color get from => c600;
 }
 
+/// 12 rang (tartib — veb ACCENTS: standart Feruza birinchi).
 const List<Accent> accents = <Accent>[
-  Accent('blue', 'Moviy', Color(0xFFEEF4FF), Color(0xFFDCE8FF), Color(0xFF8DB4FF), Color(0xFF3478FF), Color(0xFF1F63F5), Color(0xFF1650D4)),
-  Accent('indigo', 'Indigo', Color(0xFFEEF2FF), Color(0xFFE0E7FF), Color(0xFFA3B3FF), Color(0xFF615FFF), Color(0xFF4F39F6), Color(0xFF432DD7)),
-  Accent('violet', 'Binafsha', Color(0xFFF5F3FF), Color(0xFFEDE9FE), Color(0xFFC4B4FF), Color(0xFF8E51FF), Color(0xFF7F22FE), Color(0xFF7008E7)),
-  Accent('plum', "Olxo'ri", Color(0xFFFDF4FF), Color(0xFFFAE8FF), Color(0xFFF4A8FF), Color(0xFFC800DE), Color(0xFFA800B7), Color(0xFF8A0194)),
-  Accent('rose', 'Anor', Color(0xFFFFF1F2), Color(0xFFFFE4E6), Color(0xFFFFA1AD), Color(0xFFFF2056), Color(0xFFEC003F), Color(0xFFC70036)),
-  Accent('sunset', 'Shafaq', Color(0xFFFFF7ED), Color(0xFFFFEDD4), Color(0xFFFFB86A), Color(0xFFF54A00), Color(0xFFCA3500), Color(0xFF9F2D00)),
-  Accent('amber', 'Qahrabo', Color(0xFFFFFBEB), Color(0xFFFEF3C6), Color(0xFFFFD230), Color(0xFFE17100), Color(0xFFBB4D00), Color(0xFF973C00)),
-  Accent('forest', "O'rmon", Color(0xFFF0FDF4), Color(0xFFDBFCE7), Color(0xFF7BF1A8), Color(0xFF00A63E), Color(0xFF008236), Color(0xFF016630)),
-  Accent('emerald', 'Zumrad', Color(0xFFECFDF5), Color(0xFFD0FAE5), Color(0xFF5EE9B5), Color(0xFF009966), Color(0xFF007A55), Color(0xFF006045)),
-  Accent('teal', 'Feruza', Color(0xFFECFEFF), Color(0xFFCEFAFE), Color(0xFF53EAFD), Color(0xFF0092B8), Color(0xFF007595), Color(0xFF005F78)),
-  Accent('sky', 'Osmon', Color(0xFFF0F9FF), Color(0xFFDFF2FE), Color(0xFF74D4FF), Color(0xFF0084D1), Color(0xFF0069A8), Color(0xFF00598A)),
-  Accent('slate', 'Grafit', Color(0xFFF8FAFC), Color(0xFFF1F5F9), Color(0xFFCAD5E2), Color(0xFF62748E), Color(0xFF45556C), Color(0xFF314158)),
+  Accent('teal', 'Feruza', Color(0xFFEAFBFD), Color(0xFFD2F6FA), Color(0xFF4FDCEB), Color(0xFF00A4B1), Color(0xFF00808B), Color(0xFF006A73)),
+  Accent('blue', 'Moviy', Color(0xFFF2F7FF), Color(0xFFE5EEFF), Color(0xFFA7C6FF), Color(0xFF4F8BFF), Color(0xFF256BF7), Color(0xFF1456D8)),
+  Accent('indigo', 'Indigo', Color(0xFFF5F6FF), Color(0xFFE9EDFF), Color(0xFFB8C1FF), Color(0xFF797FFF), Color(0xFF635DFD), Color(0xFF5249DE)),
+  Accent('violet', 'Binafsha', Color(0xFFF7F5FF), Color(0xFFEFEBFF), Color(0xFFCAB9FF), Color(0xFF9D6EFF), Color(0xFF8D48FD), Color(0xFF7833DE)),
+  Accent('plum', "Olxo'ri", Color(0xFFFFF2FE), Color(0xFFFFE4FD), Color(0xFFFF9CFC), Color(0xFFD451D3), Color(0xFFBE3BBE), Color(0xFFA427A4)),
+  Accent('rose', 'Anor', Color(0xFFFFF4F4), Color(0xFFFFE7E8), Color(0xFFFFABB2), Color(0xFFF74368), Color(0xFFDE2654), Color(0xFFC10743)),
+  Accent('sunset', 'Shafaq', Color(0xFFFFF4F1), Color(0xFFFFE8E1), Color(0xFFFFAF96), Color(0xFFF5510D), Color(0xFFD24100), Color(0xFFB13600)),
+  Accent('amber', 'Qahrabo', Color(0xFFFFF5EC), Color(0xFFFFE9D8), Color(0xFFFFB36E), Color(0xFFD07800), Color(0xFFAC6200), Color(0xFF905100)),
+  Accent('forest', "O'rmon", Color(0xFFEDFBEE), Color(0xFFD9F7DC), Color(0xFF7AE08C), Color(0xFF00AE45), Color(0xFF008734), Color(0xFF00702A)),
+  Accent('emerald', 'Zumrad', Color(0xFFEBFBF4), Color(0xFFD6F7E8), Color(0xFF67E0B3), Color(0xFF00AA7D), Color(0xFF008561), Color(0xFF006E50)),
+  Accent('sky', 'Osmon', Color(0xFFEEF8FF), Color(0xFFDCF1FF), Color(0xFF82D0FF), Color(0xFF009CDA), Color(0xFF007CAF), Color(0xFF006792)),
+  Accent('slate', 'Grafit', Color(0xFFF6F7F8), Color(0xFFECEEF1), Color(0xFFC0C6D0), Color(0xFF8A919D), Color(0xFF4F5660), Color(0xFF3C434C)),
 ];
 
+/// Kalit bo'yicha rang (noma'lum — Feruza).
 Accent accentOf(String? key) => accents.firstWhere((item) => item.key == key, orElse: () => accents.first);
 
-/// Shablon palitrasi (asosiy rang — Moviy bo'lganda hisoblangan qiymatlar, docs/design.md).
+/// Koshin ranglari (veb: --k-*) — shablon, rejim va asosiy rangdan mustaqil: KPI plitkalar, muhr, holat nuqtalari.
+class Koshin {
+  Koshin._();
+
+  static const Color sir = Color(0xFFF2F6F9);
+  static const Color ink = Color(0xFF111C3A);
+  static const Color feruza = Color(0xFF00808B);
+  static const Color feruzaBright = Color(0xFF19B4C2);
+  static const Color lojuvard = Color(0xFF2D4BD0);
+  static const Color anor = Color(0xFFD0284F);
+  static const Color pista = Color(0xFF12814A);
+  static const Color shafran = Color(0xFFF2A93B);
+  static const Color shafranInk = Color(0xFF2A1A00);
+  static const Color olxori = Color(0xFF9B3596);
+
+  /// Kirish oynasi va splash paneli — «lojuvard tun» (veb: .auth-panel #0F1D4A).
+  static const Color night = Color(0xFF0F1D4A);
+
+  static Color of(KoshinHue hue) {
+    switch (hue) {
+      case KoshinHue.feruza:
+        return feruza;
+      case KoshinHue.lojuvard:
+        return lojuvard;
+      case KoshinHue.anor:
+        return anor;
+      case KoshinHue.pista:
+        return pista;
+      case KoshinHue.shafran:
+        return shafran;
+      case KoshinHue.olxori:
+        return olxori;
+    }
+  }
+
+  /// Plitka ustidagi matn: oq, shafranda — to'q (veb: --k-shafran-ink).
+  static Color onTile(KoshinHue hue) => hue == KoshinHue.shafran ? shafranInk : Colors.white;
+}
+
+/// Shablon palitrasi (asosiy rang — standart Feruza bo'lganda hisoblangan qiymatlar, docs/design.md).
 class TemplatePalette {
   const TemplatePalette({
     required this.canvas,
@@ -62,6 +103,7 @@ class TemplatePalette {
     required this.sidebarFg,
     required this.sidebarActiveBg,
     required this.sidebarActiveFg,
+    required this.headerBg,
   });
 
   final Color canvas;
@@ -77,6 +119,7 @@ class TemplatePalette {
   final Color sidebarFg;
   final Color sidebarActiveBg;
   final Color sidebarActiveFg;
+  final Color headerBg;
 }
 
 TemplatePalette _p(List<int> v) => TemplatePalette(
@@ -93,61 +136,52 @@ TemplatePalette _p(List<int> v) => TemplatePalette(
       sidebarFg: Color(0xFF000000 | v[10]),
       sidebarActiveBg: Color(0xFF000000 | v[11]),
       sidebarActiveFg: Color(0xFF000000 | v[12]),
+      headerBg: Color(0xFF000000 | v[13]),
     );
 
-/// docs/design.md «Rang qiymatlari (mobil ilova uchun)»: shablon → [yorug', tungi].
+/// docs/design.md «Rang qiymatlari (mobil ilova uchun)», v3: shablon → [yorug', tungi].
 /// Tartib: canvas, surface, surface-2, raised, text-1, text-2, text-3, border, border-strong, sidebar-bg, sidebar-fg,
-/// sidebar-active-bg, sidebar-active-fg.
+/// sidebar-active-bg, sidebar-active-fg, header-bg.
 final Map<String, List<TemplatePalette>> templatePalettes = <String, List<TemplatePalette>>{
   'classic': <TemplatePalette>[
-    _p(<int>[0xf5f7fb, 0xffffff, 0xf8f9fc, 0xffffff, 0x131c36, 0x4f5a73, 0x586379, 0xe2e8f2, 0xcbd3e1, 0xffffff, 0x3b4560, 0xeef4ff, 0x1650d4]),
-    _p(<int>[0x0b1222, 0x121a2c, 0x162036, 0x182238, 0xeef1f6, 0xa6afc3, 0x98a2b8, 0x243049, 0x334160, 0x0f1727, 0xc4cbd9, 0x162545, 0x8db4ff]),
+    _p(<int>[0xf2f6f9, 0xffffff, 0xf6f9fb, 0xffffff, 0x111c3a, 0x49566d, 0x556378, 0xdde5ec, 0xc8d2dc, 0xffffff, 0x33415c, 0x00808b, 0xffffff, 0xffffff]),
+    _p(<int>[0x0b1424, 0x111c2f, 0x15223a, 0x1a2842, 0xedf2f6, 0xaab5c4, 0x9ba7b8, 0x22304a, 0x33435f, 0x0e1828, 0xc5cfd9, 0x00808b, 0xffffff, 0x0e1828]),
   ],
   'soft': <TemplatePalette>[
-    _p(<int>[0xeef3fd, 0xffffff, 0xf6f9ff, 0xffffff, 0x131c36, 0x4f5a73, 0x586379, 0xe2e8f2, 0xcbd3e1, 0xf6f9ff, 0x3b4560, 0x1f63f5, 0xffffff]),
-    _p(<int>[0x0d1426, 0x121a2c, 0x172138, 0x182238, 0xeef1f6, 0xa6afc3, 0x98a2b8, 0x243049, 0x334160, 0x111a2e, 0xc4cbd9, 0x1f63f5, 0xffffff]),
+    _p(<int>[0xe9f8fb, 0xffffff, 0xf2fdfe, 0xffffff, 0x111c3a, 0x49566d, 0x556378, 0xdde5ec, 0xc8d2dc, 0xf4fdfe, 0x33415c, 0x00808b, 0xffffff, 0xf0fafc]),
+    _p(<int>[0x0d1528, 0x111c2f, 0x172239, 0x1a2842, 0xedf2f6, 0xaab5c4, 0x9ba7b8, 0x22304a, 0x33435f, 0x121c32, 0xc5cfd9, 0x00808b, 0xffffff, 0x0d1528]),
   ],
   'night': <TemplatePalette>[
-    _p(<int>[0xf5f7fb, 0xffffff, 0xf8f9fc, 0xffffff, 0x131c36, 0x4f5a73, 0x586379, 0xe2e8f2, 0xcbd3e1, 0x111a2e, 0xc9d1e0, 0x1f63f5, 0xffffff]),
-    _p(<int>[0x0b1222, 0x121a2c, 0x162036, 0x182238, 0xeef1f6, 0xa6afc3, 0x98a2b8, 0x243049, 0x334160, 0x070c18, 0xc9d1e0, 0x1f63f5, 0xffffff]),
+    _p(<int>[0xf2f6f9, 0xffffff, 0xf6f9fb, 0xffffff, 0x111c3a, 0x49566d, 0x556378, 0xdde5ec, 0xc8d2dc, 0x12225a, 0xdbe3f7, 0x00808b, 0xffffff, 0xffffff]),
+    _p(<int>[0x0b1424, 0x111c2f, 0x15223a, 0x1a2842, 0xedf2f6, 0xaab5c4, 0x9ba7b8, 0x22304a, 0x33435f, 0x0a1640, 0xdbe3f7, 0x00808b, 0xffffff, 0x0e1828]),
   ],
   'compact': <TemplatePalette>[
-    _p(<int>[0xf5f7fb, 0xffffff, 0xf8f9fc, 0xffffff, 0x131c36, 0x4f5a73, 0x586379, 0xe2e8f2, 0xcbd3e1, 0xffffff, 0x3b4560, 0xeef4ff, 0x1650d4]),
-    _p(<int>[0x0b1222, 0x121a2c, 0x162036, 0x182238, 0xeef1f6, 0xa6afc3, 0x98a2b8, 0x243049, 0x334160, 0x0f1727, 0xc4cbd9, 0x162545, 0x8db4ff]),
+    _p(<int>[0xf2f6f9, 0xffffff, 0xf6f9fb, 0xffffff, 0x111c3a, 0x49566d, 0x556378, 0xdde5ec, 0xc8d2dc, 0xffffff, 0x33415c, 0x00808b, 0xffffff, 0xffffff]),
+    _p(<int>[0x0b1424, 0x111c2f, 0x15223a, 0x1a2842, 0xedf2f6, 0xaab5c4, 0x9ba7b8, 0x22304a, 0x33435f, 0x0e1828, 0xc5cfd9, 0x00808b, 0xffffff, 0x0e1828]),
   ],
   'school': <TemplatePalette>[
-    _p(<int>[0xfbf7f1, 0xffffff, 0xfdfaf5, 0xffffff, 0x131c36, 0x4f5a73, 0x586379, 0xe9e1d4, 0xd8ccb9, 0xfffdf9, 0x3b4560, 0xdfebff, 0x2a2216]),
-    _p(<int>[0x13110e, 0x1b1814, 0x211d18, 0x221e19, 0xeef1f6, 0xa6afc3, 0x98a2b8, 0x322c24, 0x463e33, 0x17140f, 0xc4cbd9, 0x1f2a40, 0xf4efe6]),
+    _p(<int>[0xf3f7ff, 0xffffff, 0xf7f9ff, 0xffffff, 0x111c3a, 0x49566d, 0x556378, 0xdbe3f3, 0xc3cfe6, 0xffffff, 0x33415c, 0xe1edee, 0x111c3a, 0xffffff]),
+    _p(<int>[0x0b1424, 0x111c2f, 0x15223a, 0x1a2842, 0xedf2f6, 0xaab5c4, 0x9ba7b8, 0x22304a, 0x33435f, 0x0e1828, 0xc5cfd9, 0x153244, 0xeef3fd, 0x0e1828]),
   ],
-  'paper': <TemplatePalette>[
-    _p(<int>[0xeeece4, 0xfbfaf6, 0xf4f2eb, 0xfbfaf6, 0x1f1b16, 0x5d5952, 0x68645d, 0xddd8cb, 0xc7c0ae, 0xf5f3ec, 0x47433d, 0xe5ecf8, 0x1650d4]),
-    _p(<int>[0x15130f, 0x1e1b16, 0x24211b, 0x26231d, 0xf3eee6, 0xb3afa7, 0xa5a199, 0x36322a, 0x4a453a, 0x1a1813, 0xcfcac2, 0x212b3e, 0xf1ece1]),
+  'atlas': <TemplatePalette>[
+    _p(<int>[0xfaf4f8, 0xffffff, 0xfdf8fb, 0xffffff, 0x2d112f, 0x664b60, 0x72596c, 0xeedde8, 0xdcc4d4, 0x3a1342, 0xf6e8f3, 0xf2a93b, 0x2a1a00, 0xffffff]),
+    _p(<int>[0x150c17, 0x1d1220, 0x241828, 0x2a1c2f, 0xf5eff3, 0xbeafba, 0xb2a0ad, 0x3a2840, 0x4f3956, 0x12081a, 0xf6e8f3, 0xf2a93b, 0x2a1a00, 0x1a101c]),
   ],
   'ocean': <TemplatePalette>[
-    _p(<int>[0xedf3f6, 0xffffff, 0xf4f8fa, 0xffffff, 0x0b1e27, 0x485d67, 0x536872, 0xd3e1e9, 0xb5c8d4, 0xf6fafc, 0x334750, 0xeef4ff, 0x1650d4]),
-    _p(<int>[0x08151c, 0x0f2029, 0x132731, 0x152b36, 0xe8f2f7, 0x9eb3be, 0x8fa6b0, 0x1e3540, 0x2b4755, 0x0b1a22, 0xbbced7, 0x162545, 0x8db4ff]),
+    _p(<int>[0xeaf5f7, 0xffffff, 0xf3f9fa, 0xffffff, 0x002030, 0x395b69, 0x476774, 0xd0e4ea, 0xb1ccd5, 0xf6fbfc, 0x214656, 0x00808b, 0xffffff, 0xf6fbfc]),
+    _p(<int>[0x07151b, 0x0e2029, 0x122731, 0x152c37, 0xeaf3f5, 0xa1b7bd, 0x90aab0, 0x1d3641, 0x2a4856, 0x0a1a21, 0xc0d2d5, 0x00808b, 0xffffff, 0x0a1a21]),
   ],
   'graphite': <TemplatePalette>[
-    _p(<int>[0xffffff, 0xffffff, 0xf4f5f7, 0xffffff, 0x111418, 0x33353b, 0x45484d, 0xb9c0cc, 0x8a93a3, 0x1f232b, 0xe6e8ec, 0x1f63f5, 0xffffff]),
-    _p(<int>[0x0e1014, 0x15181e, 0x1b1f26, 0x1d2128, 0xf4f5f8, 0xd2d4d8, 0xb4b7bd, 0x3a404c, 0x59616f, 0x0a0c0f, 0xe6e8ec, 0x1f63f5, 0xffffff]),
+    _p(<int>[0xffffff, 0xffffff, 0xf4f5f7, 0xffffff, 0x111418, 0x33353b, 0x45484d, 0xb9c0cc, 0x8a93a3, 0x16191f, 0xe8eaee, 0x00808b, 0xffffff, 0xffffff]),
+    _p(<int>[0x0e1014, 0x15181e, 0x1b1f26, 0x1d2128, 0xf4f5f8, 0xd2d4d8, 0xb4b7bd, 0x3a404c, 0x59616f, 0x0a0c0f, 0xe8eaee, 0x00808b, 0xffffff, 0x111318]),
   ],
   'spring': <TemplatePalette>[
-    _p(<int>[0xf2f7ea, 0xffffff, 0xf7fbf2, 0xffffff, 0x171e14, 0x545c50, 0x5f685b, 0xdce7cf, 0xbfd0ad, 0xffffff, 0x3f463b, 0xdbe8ff, 0x1f2a1a]),
-    _p(<int>[0x0e140b, 0x161e12, 0x1b2416, 0x1d2718, 0xedf2eb, 0xaab3a6, 0x9ca597, 0x2a3623, 0x3c4b33, 0x12190f, 0xc6cdc2, 0x182f3f, 0xeef5e6]),
+    _p(<int>[0xeef8e8, 0xffffff, 0xf6fbf2, 0xffffff, 0x141f11, 0x4b5a48, 0x576554, 0xd8e8cb, 0xbcd3a8, 0xffffff, 0x374634, 0xdceaec, 0x1f2a1a, 0xffffff]),
+    _p(<int>[0x0d150a, 0x151e11, 0x1a2415, 0x1c2717, 0xeef3ec, 0xadb6a8, 0x9ea899, 0x293622, 0x3b4b32, 0x11190e, 0xc9d1c5, 0x19342c, 0xeef6e6, 0x10180d]),
   ],
 };
 
-/// Faol menyu bandi foni boshqa asosiy ranglarda: menyu foni va asosiy rang aralashmasi (Moviy jadvalidan olingan ulush).
-const Map<String, List<double>> _activeMix = <String, List<double>>{
-  'classic': <double>[0.07, 0.15],
-  'compact': <double>[0.07, 0.15],
-  'school': <double>[0.13, 0.22],
-  'paper': <double>[0.07, 0.20],
-  'ocean': <double>[0.04, 0.17],
-  'spring': <double>[0.16, 0.22],
-};
-
-/// Holat ranglari (docs/design.md): [fg, bg] yorug' va tungi rejimda.
+/// Holat ranglari: [fg, bg] (matn va yumshoq fon).
 class StatusColors {
   const StatusColors(this.fg, this.bg);
 
@@ -158,10 +192,7 @@ class StatusColors {
 class AppColors {
   AppColors._();
 
-  static const Color sun = Color(0xFFFFC233);
-
-  /// Daftar hoshiyasi (kirish paneli, «daftar varag'i»): qizil chiziq — veb landing `--lp-margin`.
-  static const Color margin = Color(0xFFD7414A);
+  static const Color sun = Koshin.shafran;
 
   // Ma'no ranglari (matn, ikonka): docs/design.md «Holat» jadvali — yorug'da to'q, tungi rejimda och.
   static Color success = const Color(0xFF007A55);
@@ -173,88 +204,96 @@ class AppColors {
   static Color dangerBg = const Color(0xFFFFF1F2);
   static Color infoBg = const Color(0xFFF0F9FF);
 
-  /// Oq matnli to'liq fon (nishon, xato xabari, «Jonli» belgisi, xavfli tugma) — ikkala rejimda bir xil, oq bilan ≥ 4.5.
-  static const Color successFill = Color(0xFF007A55);
-  static const Color warningFill = Color(0xFFBB4D00);
-  static const Color dangerFill = Color(0xFFC70036);
+  /// Oq matnli to'liq fon (nishon, xato xabari, «Jonli» belgisi, xavfli tugma) — koshin ranglari, ikkala rejimda bir xil.
+  static const Color successFill = Koshin.pista;
+  static const Color warningFill = Color(0xFFB45F00);
+  static const Color dangerFill = Koshin.anor;
 
-  /// Asosiy rang ustidagi matn (tugma): odatda oq.
+  /// Asosiy rang ustidagi matn (tugma): oq.
   static Color onBrand = Colors.white;
 
   /// Matn va ikonka uchun asosiy rang (yorug'da 600, tungi rejimda 300 — sirtda ≥ 4.5:1).
-  static Color brand = const Color(0xFF1F63F5);
+  static Color brand = Koshin.feruza;
 
-  /// To'liq asosiy rang (tugma, faol band, hoshiya) — 600.
-  static Color accent = const Color(0xFF1F63F5);
+  /// To'liq asosiy rang (tugma, faol band) — 600.
+  static Color accent = Koshin.feruza;
+
+  /// Bezak uchun yorqin tus (veb: --accent-bright, 500): grafik chizig'i, nuqta.
+  static Color accentBright = const Color(0xFF00A4B1);
 
   /// Asosiy rangning matn tusi (`--accent-strong`): yorug'da 700, tungi rejimda 300.
-  static Color accentStrong = const Color(0xFF1650D4);
+  static Color accentStrong = const Color(0xFF006A73);
 
   /// Asosiy rangning yumshoq foni (`--accent-soft`, `--accent-soft-2`).
-  static Color accentSoft = const Color(0xFFEEF4FF);
-  static Color accentSoft2 = const Color(0xFFDCE8FF);
+  static Color accentSoft = const Color(0xFFEAFBFD);
+  static Color accentSoft2 = const Color(0xFFD2F6FA);
 
-  /// Asosiy rangning eng to'q tusi: kirish paneli, sertifikat va yutuqlar banneri (gradient o'rnida).
-  static Color panel = const Color(0xFF0D2C78);
-  static Color brandDark = const Color(0xFF1650D4);
+  /// Kirish paneli, sertifikat va yutuqlar banneri — «lojuvard tun».
+  static Color panel = Koshin.night;
+  static Color brandDark = const Color(0xFF006A73);
 
   // Sirtlar va matn (semantik tokenlar).
-  static Color canvas = const Color(0xFFF5F7FB);
-  static Color surface = const Color(0xFFF5F7FB); // = canvas (eski nom: sahifa foni)
+  static Color canvas = const Color(0xFFF2F6F9);
+  static Color surface = const Color(0xFFF2F6F9); // = canvas (eski nom: sahifa foni)
   static Color card = Colors.white; // = surface (karta)
-  static Color surface2 = const Color(0xFFF8F9FC);
+  static Color surface2 = const Color(0xFFF6F9FB);
   static Color raised = Colors.white;
-  static Color sunken = const Color(0xFFF0F3F8);
-  static Color ink = const Color(0xFF131C36);
-  static Color muted = const Color(0xFF4F5A73);
-  static Color subtle = const Color(0xFF586379);
-  static Color line = const Color(0xFFE2E8F2);
-  static Color lineStrong = const Color(0xFFCBD3E1);
-  static Color focus = const Color(0xFF1F63F5);
+  static Color sunken = const Color(0xFFE9EFF4);
+  static Color ink = const Color(0xFF111C3A);
+  static Color muted = const Color(0xFF49566D);
+  static Color subtle = const Color(0xFF556378);
+  static Color line = const Color(0xFFDDE5EC);
+  static Color lineStrong = const Color(0xFFC8D2DC);
+  static Color focus = Koshin.feruza;
   static bool dark = false;
 
-  /// Karta chegarasi (Soyali/Tekis kartada — shaffof) va soyasi.
-  static Color cardBorder = const Color(0xFFE2E8F2);
+  /// Karta chegarasi (Soyali/Tekis kartada — shaffof) va soyasi (v3 standarti — soyasiz).
+  static Color cardBorder = const Color(0xFFDDE5EC);
   static List<BoxShadow> cardShadow = const <BoxShadow>[];
 
-  /// Sarlavha paneli (AppBar) va uning matni.
-  static Color chrome = Colors.white;
-  static Color onChrome = const Color(0xFF131C36);
+  /// Bosiladigan karta/plitka ko'tarilganda va menyu, oyna soyasi (veb: --shadow-2/3, lojuvard tusli).
+  static List<BoxShadow> shadow2 = const <BoxShadow>[];
+  static List<BoxShadow> shadow3 = const <BoxShadow>[];
 
-  /// Menyu paneli (pastki menyu, iPad yon menyusi): fon, matn, faol band.
+  /// Sarlavha paneli (AppBar, pastki menyu — veb: --header-bg, tekis) va uning matni.
+  static Color chrome = Colors.white;
+  static Color onChrome = const Color(0xFF111C3A);
+
+  /// iPad yon menyusi (veb: sidebar): fon, matn, faol band (to'liq rangli tabletka).
   static Color navBg = Colors.white;
-  static Color navFg = const Color(0xFF3B4560);
-  static Color navActiveBg = const Color(0xFFEEF4FF);
-  static Color navActiveFg = const Color(0xFF1650D4);
-  static Color navLine = const Color(0xFFE2E8F2);
+  static Color navFg = const Color(0xFF33415C);
+  static Color navActiveBg = Koshin.feruza;
+  static Color navActiveFg = Colors.white;
+  static Color navLine = const Color(0xFFDDE5EC);
   static bool navDark = false;
 
-  /// Hoshiya ohanglari (veb: danger-fg, amber-500, emerald-500).
-  static Color toneDanger = const Color(0xFFC70036);
-  static Color toneWarning = const Color(0xFFFE9A00);
-  static Color toneSuccess = const Color(0xFF00BC7D);
+  /// Holatning to'liq rangi (veb: --success-solid ...): chip nuqtasi, son plitkasi, toast belgisi.
+  static Color toneDanger = Koshin.anor;
+  static Color toneWarning = Koshin.shafran;
+  static Color toneSuccess = Koshin.pista;
+  static Color toneInfo = Koshin.lojuvard;
 
   /// Joriy ko'rinish (shablon, shrift, burchak ...).
   static ThemeChoice choice = const ThemeChoice();
 
-  /// Plitka ranglari (veb: tile-blue … tile-rose): [fg, bg]. Avatar va belgi plitkalari.
+  /// Avatar va belgi plitkalari (koshin oilasi): [fg, bg].
   static List<StatusColors> tiles = const <StatusColors>[];
 
   /// Ma'no rangining yumshoq foni (ogohlantirish, xato, faol band ...): holat ranglari uchun — jadvaldagi aniq fon.
   static Color soft(Color color) {
-    if (color == success) return successBg;
-    if (color == warning) return warningBg;
-    if (color == danger) return dangerBg;
-    if (color == info) return infoBg;
+    if (color == success || color == toneSuccess) return successBg;
+    if (color == warning || color == toneWarning) return warningBg;
+    if (color == danger || color == toneDanger) return dangerBg;
+    if (color == info || color == toneInfo) return infoBg;
     if (color == brand || color == accent) return accentSoft;
-    return Color.alphaBlend(color.withAlpha(dark ? 46 : 22), card);
+    return Color.alphaBlend(color.withAlpha(dark ? 66 : 38), card);
   }
 
   /// Ismdan barqaror plitka rangi (Avatar).
   static StatusColors tileFor(String name) => tiles.isEmpty ? StatusColors(brand, accentSoft) : tiles[stableIndex(name, tiles.length)];
 }
 
-/// Bir xil oraliqlar (4px qadam) va hoshiya qalinligi.
+/// Bir xil oraliqlar (4px qadam).
 class AppSpacing {
   AppSpacing._();
 
@@ -263,28 +302,41 @@ class AppSpacing {
   static const double m = 12;
   static const double l = 16;
   static const double xl = 24;
-
-  /// Daftar hoshiyasi (veb: --hoshiya 4px).
-  static const double hoshiya = 4;
 }
 
 class AppRadius {
   AppRadius._();
 
-  /// Karta va boshqaruv burchagi shablon va foydalanuvchi tanloviga ko'paytiriladi (AppTheme.apply).
+  /// Burchaklar shablon va foydalanuvchi tanloviga ko'paytiriladi (veb: --r-* × --rk; AppTheme.apply).
   static double card = 14;
   static double control = 10;
   static double chip = 6;
+
+  /// KPI plitka (veb: --kpi-r = --r-xl, Ixcham/Grafit — --r-lg).
+  static double kpi = 20;
   static const double sheet = 22;
 }
 
-/// Harakat davomiyliklari (veb: --dur-1/2/3).
+/// Harakat (veb: --dur-1/2/3, --ease-out, --ease-spring, --stagger, --press-scale).
 class AppDurations {
   AppDurations._();
 
-  static const Duration d1 = Duration(milliseconds: 120);
-  static const Duration d2 = Duration(milliseconds: 180);
-  static const Duration d3 = Duration(milliseconds: 260);
+  static const Duration d1 = Duration(milliseconds: 110);
+  static const Duration d2 = Duration(milliseconds: 200);
+  static const Duration d3 = Duration(milliseconds: 280);
+
+  /// Plitkalar orasidagi navbat.
+  static const Duration stagger = Duration(milliseconds: 45);
+}
+
+class AppCurves {
+  AppCurves._();
+
+  /// cubic-bezier(.22, .8, .24, 1)
+  static const Curve out = Cubic(0.22, 0.8, 0.24, 1);
+
+  /// Prujina: cubic-bezier(.34, 1.5, .64, 1) — biroz oshib, joyiga qaytadi.
+  static const Curve spring = Cubic(0.34, 1.5, 0.64, 1);
 }
 
 class AppTheme {
@@ -295,7 +347,7 @@ class AppTheme {
     AppColors.choice = choice;
     final template = templatePalettes.containsKey(choice.template) ? choice.template : 'classic';
     final palette = templatePalettes[template]![dark ? 1 : 0];
-    final blue = accent.key == 'blue';
+    final teal = accent.key == 'teal';
 
     // Sirt va matn — jadvaldagi aniq qiymatlar.
     AppColors.canvas = palette.canvas;
@@ -309,59 +361,55 @@ class AppTheme {
     AppColors.lineStrong = palette.borderStrong;
     AppColors.navBg = palette.sidebarBg;
     AppColors.navFg = palette.sidebarFg;
-    // Yumshoq shablon: tuman foni asosiy rangdan (veb: asosiy rang 34% + #F7F8FC).
-    if (template == 'soft' && !dark && !blue) {
-      AppColors.canvas = Color.lerp(const Color(0xFFF7F8FC), accent.c600, 0.045)!;
-      AppColors.surface2 = Color.lerp(Colors.white, accent.c600, 0.035)!;
-      AppColors.navBg = AppColors.surface2;
+    AppColors.chrome = palette.headerBg;
+    // Yumshoq shablon: pastel kanvas asosiy rangdan (veb: color-mix(indigo-100 38%, #f7f9fc)).
+    if (template == 'soft' && !dark && !teal) {
+      AppColors.canvas = Color.lerp(const Color(0xFFF7F9FC), accent.c100, 0.38)!;
+      AppColors.surface2 = Color.lerp(Colors.white, accent.c50, 0.6)!;
+      AppColors.navBg = Color.lerp(Colors.white, accent.c50, 0.55)!;
+      AppColors.chrome = Color.lerp(Colors.white, AppColors.canvas, 0.7)!;
     }
     AppColors.surface = AppColors.canvas;
-    AppColors.sunken = Color.lerp(AppColors.canvas, dark ? Colors.black : AppColors.lineStrong, dark ? 0.25 : 0.18)!;
+    AppColors.sunken = Color.lerp(AppColors.canvas, dark ? Colors.black : AppColors.lineStrong, dark ? 0.25 : 0.22)!;
 
     // Asosiy rang.
     AppColors.accent = accent.c600;
+    AppColors.accentBright = accent.c500;
     AppColors.accentStrong = dark ? accent.c300 : accent.c700;
     AppColors.brand = readableOn(dark ? accent.c300 : accent.c600, palette.surface);
     AppColors.brandDark = accent.c700;
     AppColors.accentSoft = dark ? Color.lerp(palette.surface, accent.c500, 0.16)! : accent.c50;
     AppColors.accentSoft2 = dark ? Color.lerp(palette.surface, accent.c500, 0.26)! : accent.c100;
-    AppColors.panel = Color.lerp(accent.c700, Colors.black, 0.42)!;
     AppColors.focus = dark ? accent.c300 : accent.c600;
-    AppColors.onBrand = contrastRatio(Colors.white, AppColors.brand) >= 4.5 ? Colors.white : palette.canvas;
+    AppColors.onBrand = contrastRatio(Colors.white, AppColors.accent) >= 4.5 ? Colors.white : Koshin.ink;
 
-    // Menyu: faol band (Yumshoq, Qorong'i panel, Grafit — to'liq asosiy rang, oq matn).
-    final filledActive = template == 'soft' || template == 'night' || template == 'graphite';
-    if (filledActive) {
-      AppColors.navActiveBg = accent.c600;
-      AppColors.navActiveFg = Colors.white;
-    } else {
-      AppColors.navActiveBg = blue ? palette.sidebarActiveBg : Color.lerp(palette.sidebarBg, accent.c600, _activeMix[template]![dark ? 1 : 0])!;
-      switch (template) {
-        case 'school':
-        case 'spring':
-          AppColors.navActiveFg = palette.sidebarActiveFg;
-        case 'paper':
-          AppColors.navActiveFg = dark ? palette.sidebarActiveFg : accent.c700;
-        default:
-          AppColors.navActiveFg = dark ? accent.c300 : accent.c700;
-      }
+    // iPad yon menyusi: faol band — to'liq rangli tabletka (Atlas — shafran; Maktab/Bahor — bo'lim rangining och tusi,
+    // [sectionActive] har band uchun hisoblaydi; jadvaldagi qiymat Feruza uchun).
+    switch (template) {
+      case 'atlas':
+        AppColors.navActiveBg = palette.sidebarActiveBg;
+        AppColors.navActiveFg = palette.sidebarActiveFg;
+      case 'school':
+      case 'spring':
+        AppColors.navActiveBg = teal ? palette.sidebarActiveBg : sectionActive(accent.c600);
+        AppColors.navActiveFg = palette.sidebarActiveFg;
+      default:
+        AppColors.navActiveBg = accent.c600;
+        AppColors.navActiveFg = Colors.white;
     }
     AppColors.navDark = palette.sidebarBg.computeLuminance() < 0.2;
     AppColors.navLine = AppColors.navDark && !dark ? palette.sidebarBg : palette.border;
 
-    // Holat ranglari (jadval).
+    // Holat ranglari (jadval) va to'liq ranglar (koshin).
     if (dark) {
       AppColors.success = const Color(0xFF5EE9B5);
-      AppColors.successBg = const Color(0xFF142D38);
+      AppColors.successBg = const Color(0xFF132F3A);
       AppColors.warning = const Color(0xFFFFD230);
-      AppColors.warningBg = const Color(0xFF2C2B31);
+      AppColors.warningBg = const Color(0xFF2C2C33);
       AppColors.danger = const Color(0xFFFFA1AD);
-      AppColors.dangerBg = const Color(0xFF2F2234);
+      AppColors.dangerBg = const Color(0xFF302436);
       AppColors.info = const Color(0xFF74D4FF);
-      AppColors.infoBg = const Color(0xFF142A43);
-      AppColors.toneDanger = const Color(0xFFFF637E);
-      AppColors.toneWarning = const Color(0xFFFFB900);
-      AppColors.toneSuccess = const Color(0xFF00D492);
+      AppColors.infoBg = const Color(0xFF142C45);
     } else {
       AppColors.success = const Color(0xFF007A55);
       AppColors.successBg = const Color(0xFFECFDF5);
@@ -371,77 +419,119 @@ class AppTheme {
       AppColors.dangerBg = const Color(0xFFFFF1F2);
       AppColors.info = const Color(0xFF0069A8);
       AppColors.infoBg = const Color(0xFFF0F9FF);
-      AppColors.toneDanger = const Color(0xFFC70036);
-      AppColors.toneWarning = const Color(0xFFFE9A00);
-      AppColors.toneSuccess = const Color(0xFF00BC7D);
     }
-    // Tungi sirtda holat foni jadvaldagi qiymat; ba'zi shablonlarda karta foni boshqacha — o'qilishini kafolatlaymiz.
+    AppColors.toneDanger = Koshin.anor;
+    AppColors.toneWarning = Koshin.shafran;
+    AppColors.toneSuccess = Koshin.pista;
+    AppColors.toneInfo = Koshin.lojuvard;
+    // Ba'zi shablonlarda karta foni boshqacha — o'qilishini kafolatlaymiz.
     AppColors.success = readableOn(AppColors.success, AppColors.card);
     AppColors.warning = readableOn(AppColors.warning, AppColors.card);
     AppColors.danger = readableOn(AppColors.danger, AppColors.card);
 
-    // Plitkalar (veb: tile-blue … tile-rose; tile-blue — asosiy rang).
-    StatusColors tile(Color light, Color lightBg, Color darkFg) =>
-        dark ? StatusColors(darkFg, Color.alphaBlend(darkFg.withAlpha(34), palette.surface)) : StatusColors(light, lightBg);
+    // Avatar/belgi plitkalari — koshin oilasi (birinchisi asosiy rang).
+    StatusColors tile(Color base) {
+      if (dark) {
+        final fg = readableOn(Color.lerp(base, Colors.white, 0.42)!, palette.surface);
+        return StatusColors(fg, Color.alphaBlend(base.withAlpha(56), palette.surface));
+      }
+      return StatusColors(readableOn(base, Color.lerp(Colors.white, base, 0.12)!), Color.lerp(Colors.white, base, 0.12)!);
+    }
+
     AppColors.tiles = <StatusColors>[
-      tile(accent.c700, accent.c50, accent.c300),
-      tile(const Color(0xFF7008E7), const Color(0xFFF5F3FF), const Color(0xFFC4B4FF)),
-      tile(const Color(0xFF007595), const Color(0xFFECFEFF), const Color(0xFF53EAFD)),
-      tile(const Color(0xFF007A55), const Color(0xFFECFDF5), const Color(0xFF5EE9B5)),
-      tile(const Color(0xFF973C00), const Color(0xFFFFFBEB), const Color(0xFFFFD230)),
-      tile(const Color(0xFFC70036), const Color(0xFFFFF1F2), const Color(0xFFFFA1AD)),
+      tile(accent.c600),
+      tile(Koshin.lojuvard),
+      tile(Koshin.olxori),
+      tile(Koshin.pista),
+      tile(const Color(0xFFB45F00)),
+      tile(Koshin.anor),
     ];
 
-    // Burchaklar.
+    // Burchaklar (veb: --r-lg kartalar, --r-md boshqaruv, --r-xl KPI).
     final k = choice.radiusFactor;
-    AppRadius.card = (14 * k).clamp(4, 26).toDouble();
-    AppRadius.control = (10 * k).clamp(4, 22).toDouble();
-    AppRadius.chip = (6 * k).clamp(3, 14).toDouble();
+    AppRadius.card = (14 * k).clamp(4, 28).toDouble();
+    AppRadius.control = (10 * k).clamp(3, 22).toDouble();
+    AppRadius.chip = (6 * k).clamp(2, 14).toDouble();
+    AppRadius.kpi = ((choice.quietTiles ? 14 : 20) * k).clamp(6, 32).toDouble();
 
-    // Karta uslubi: chegarali (yengil soya), soyali (chegarasiz), tekis (fon bilan ajraladi).
+    // Soyalar (lojuvard tusli; Grafit — chiziq).
+    final shadowInk = dark ? const Color(0xFF000000) : Koshin.ink;
+    AppColors.shadow2 = template == 'graphite'
+        ? <BoxShadow>[BoxShadow(color: palette.borderStrong, spreadRadius: 1)]
+        : <BoxShadow>[
+            BoxShadow(color: shadowInk.withAlpha(dark ? 60 : 13), blurRadius: 4, offset: const Offset(0, 2)),
+            BoxShadow(color: shadowInk.withAlpha(dark ? 120 : 51), blurRadius: 28, offset: const Offset(0, 14), spreadRadius: -12),
+          ];
+    AppColors.shadow3 = <BoxShadow>[
+      BoxShadow(color: shadowInk.withAlpha(dark ? 70 : 15), blurRadius: 10, offset: const Offset(0, 4)),
+      BoxShadow(color: shadowInk.withAlpha(dark ? 150 : 82), blurRadius: 56, offset: const Offset(0, 28), spreadRadius: -16),
+    ];
+
+    // Karta uslubi: chegarali (v3 — soyasiz), soyali (chegarasiz), tekis (fon bilan ajraladi).
     switch (choice.effectiveCards) {
       case 'shadow':
         AppColors.cardBorder = dark ? palette.border : Colors.transparent;
         if (dark) {
           AppColors.cardShadow = const <BoxShadow>[BoxShadow(color: Color(0x99000000), blurRadius: 24, offset: Offset(0, 10), spreadRadius: -14)];
         } else if (template == 'spring') {
-          // «Stiker»: qattiq, siljigan soya.
-          AppColors.cardShadow = <BoxShadow>[BoxShadow(color: palette.borderStrong, offset: const Offset(0, 3))];
+          // «Stiker»: qattiq pastki soya va nozik halqa.
+          AppColors.cardShadow = const <BoxShadow>[
+            BoxShadow(color: Color(0x1F3C6028), offset: Offset(0, 2)),
+            BoxShadow(color: Color(0x123C6028), spreadRadius: 1),
+          ];
         } else {
           AppColors.cardShadow = <BoxShadow>[
-            const BoxShadow(color: Color(0x0A101828), blurRadius: 2, offset: Offset(0, 1)),
-            BoxShadow(color: accent.c600.withAlpha(46), blurRadius: 26, offset: const Offset(0, 10), spreadRadius: -14),
+            const BoxShadow(color: Color(0x08111C3A), blurRadius: 2, offset: Offset(0, 1)),
+            BoxShadow(color: accent.c600.withAlpha(56), blurRadius: 28, offset: const Offset(0, 10), spreadRadius: -16),
           ];
         }
       case 'flat':
         AppColors.cardBorder = dark ? palette.border.withAlpha(140) : Colors.transparent;
-        AppColors.cardShadow = const <BoxShadow>[];
+        AppColors.cardShadow = dark || template != 'ocean'
+            ? const <BoxShadow>[]
+            : const <BoxShadow>[
+                BoxShadow(color: Color(0x0D0A323C), blurRadius: 2, offset: Offset(0, 1)),
+                BoxShadow(color: Color(0x330A323C), blurRadius: 24, offset: Offset(0, 8), spreadRadius: -16),
+              ];
       default:
         AppColors.cardBorder = palette.border;
-        AppColors.cardShadow = dark || template == 'graphite' || template == 'compact'
-            ? const <BoxShadow>[]
-            : const <BoxShadow>[BoxShadow(color: Color(0x0A101828), blurRadius: 2, offset: Offset(0, 1))];
+        AppColors.cardShadow = const <BoxShadow>[];
     }
 
-    // Sarlavha paneli: karta rangida, matn — siyoh.
-    AppColors.chrome = palette.surface;
     AppColors.onChrome = palette.text1;
   }
 
-  /// Sarlavha uslubi (veb: --font-title, --title-weight, --title-tracking).
+  /// Maktab/Bahor: faol menyu bandi — bo'lim rangining och tusi (veb: color-mix(section 14–16%, #fff), tungi — 24%).
+  static Color sectionActive(Color section) {
+    final base = AppColors.dark ? AppColors.card : Colors.white;
+    return Color.lerp(base, section, AppColors.dark ? 0.24 : (AppColors.choice.template == 'spring' ? 0.16 : 0.14))!;
+  }
+
+  /// Sarlavha uslubi (veb: --font-title Commissioner / Nunito, --title-weight, --title-tracking −0.03em).
   static TextStyle title({double size = 22, Color? color, FontWeight? weight}) {
     final choice = AppColors.choice;
-    final serif = choice.serifTitles;
+    final nunito = choice.titleFamily == 'Nunito';
     return TextStyle(
       fontFamily: choice.titleFamily,
-      fontFamilyFallback: const <String>['GolosText', 'Onest'],
+      fontFamilyFallback: const <String>['Commissioner', 'Onest'],
       fontSize: size,
-      height: serif ? 1.18 : 1.15,
+      height: 1.15,
       fontWeight: weight ?? _weight(choice.titleWeight),
-      letterSpacing: size >= 20 ? (serif ? -0.022 * size : -0.012 * size) : (serif ? -0.1 : 0),
+      letterSpacing: size >= 20 ? (nunito ? -0.015 : -0.03) * size : -0.1,
       color: color ?? AppColors.ink,
     );
   }
+
+  /// Raqam uslubi (veb: .today-value — Commissioner 800, −0.035em): KPI plitka, hero faktlari, muhim summalar.
+  static TextStyle display({double size = 32, Color? color, FontWeight weight = FontWeight.w800}) => TextStyle(
+        fontFamily: 'Commissioner',
+        fontFamilyFallback: const <String>['Onest'],
+        fontSize: size,
+        height: 1.0,
+        fontWeight: weight,
+        letterSpacing: -0.035 * size,
+        color: color ?? AppColors.ink,
+      );
 
   static FontWeight _weight(int value) {
     if (value >= 800) return FontWeight.w800;
@@ -450,7 +540,7 @@ class AppTheme {
     return FontWeight.w500;
   }
 
-  /// Raqam uslubi: jadval raqamlari (tabular) — ustunlarda tekis turadi.
+  /// Raqam uslubi: jadval raqamlari (tabular) — ustunlarda tekis turadi (Onest).
   static const List<FontFeature> tabular = <FontFeature>[FontFeature.tabularFigures()];
 }
 
@@ -526,7 +616,8 @@ ThemeData buildTheme() {
   final density = choice.densityFactor;
   final dense = choice.dense;
   final control = (46 * density).clamp(38, 54).toDouble();
-  const fallback = <String>['Onest'];
+  // Onest'da o'zbek ʻ va kirill Қ Ғ Ҳ yo'q — Commissioner'dan olinadi.
+  const fallback = <String>['Commissioner'];
   final family = choice.fontFamily;
   final base = ThemeData(
     useMaterial3: true,

@@ -1,4 +1,4 @@
-// 3.4.1: tungi rejim va 5 shablonda matn o'qilishi (WCAG AA, oddiy matn ≥ 4.5:1) — har asosiy rang, shablon va rejim uchun.
+// 3.4.1 → 3.9: tungi rejim va 9 shablonda matn o'qilishi (WCAG AA, oddiy matn ≥ 4.5:1) — har asosiy rang, shablon va rejim uchun.
 import 'package:edux/core/design.dart';
 import 'package:edux/core/theme.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +24,7 @@ void main() {
           expect(contrastRatio(AppColors.ink, AppColors.card), greaterThanOrEqualTo(7), reason: 'ink $where');
           expect(contrastRatio(AppColors.muted, AppColors.card), greaterThanOrEqualTo(4.5), reason: 'muted $where');
           expect(contrastRatio(AppColors.brand, AppColors.card), greaterThanOrEqualTo(4.5), reason: 'brand $where');
-          expect(contrastRatio(AppColors.onBrand, AppColors.brand), greaterThanOrEqualTo(4.5), reason: 'onBrand $where');
+          expect(contrastRatio(AppColors.onBrand, AppColors.accent), greaterThanOrEqualTo(4.5), reason: 'onBrand $where');
           expect(contrastRatio(AppColors.onChrome, AppColors.chrome), greaterThanOrEqualTo(4.5), reason: 'chrome $where');
           for (final semantic in <Color>[AppColors.success, AppColors.warning, AppColors.danger]) {
             expect(contrastRatio(semantic, AppColors.card), greaterThanOrEqualTo(4.5), reason: 'semantic $semantic $where');

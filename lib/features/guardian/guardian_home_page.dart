@@ -389,16 +389,13 @@ class _OverviewTab extends StatelessWidget {
             ),
             // 3.4 (veb 1.35 StudentToday, ota-ona): «Bugun» kartalari va tezkor harakatlar.
             if (today.isNotEmpty)
-              IntroItem(
-                index: 1,
-                child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
-                  SectionTitle(tr('Bugun')),
-                  TodayGrid(items: today, onOpen: onOpen),
-                ]),
-              ),
+              Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
+                SectionTitle(tr('Bugun')),
+                TodayGrid(items: today, onOpen: onOpen),
+              ]),
             if (actions.isNotEmpty)
               IntroItem(
-                index: 2,
+                index: 1,
                 child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
                   SectionTitle(tr('Tezkor harakatlar')),
                   ActionGrid(actions: actions, onTap: (action) => onOpen!(action.key)),

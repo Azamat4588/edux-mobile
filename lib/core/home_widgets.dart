@@ -1,6 +1,6 @@
-// Bosh sahifa komponentlari (veb 1.40: Components/Home/HomeHeader.vue, TodayCard.vue, ActionTile.vue, LessonTimeline.vue,
-// AttentionList.vue, Sparkline.vue). Hoshiya — chap chetdagi rangli chiziq — hero, «Bugun» kartasi, «hozir» darsi va diqqat
-// ro'yxatini bir tilda bog'laydi.
+// Bosh sahifa komponentlari (veb 1.41 «Koshin»: Components/Home/HomeHeader.vue, TodayCard.vue, ActionTile.vue,
+// LessonTimeline.vue, AttentionList.vue, Sparkline.vue). Rang ma'noli joyda: koshin plitkalar (KPI), «hozir» darsi —
+// shafran, diqqat ro'yxatidagi son plitkasi — holat rangida; hero kartasiz, kanvasning o'zida.
 import 'package:flutter/material.dart';
 
 import 'adaptive.dart';
@@ -9,6 +9,7 @@ import 'design.dart';
 import 'format.dart';
 import 'home_today.dart';
 import 'i18n.dart';
+import 'koshin.dart';
 import 'motion.dart';
 import 'theme.dart';
 import 'widgets.dart';
@@ -47,55 +48,22 @@ IconData navIcon(String name) {
     'megaphone': Icons.campaign_outlined,
     'science': Icons.science_outlined,
     'feedback': Icons.rate_review_outlined,
+    'coins': Icons.toll_outlined,
+    'clock': Icons.schedule_outlined,
+    'inbox': Icons.inbox_outlined,
+    'user-plus': Icons.person_add_alt_1_outlined,
+    'credit-card': Icons.credit_card,
+    'timer': Icons.timer_outlined,
+    'trending-up': Icons.trending_up_rounded,
   };
   return icons[name] ?? Icons.circle_outlined;
 }
 
-Color toneColor(TodayTone tone) {
-  switch (tone) {
-    case TodayTone.danger:
-      return AppColors.toneDanger;
-    case TodayTone.warning:
-      return AppColors.toneWarning;
-    case TodayTone.success:
-      return AppColors.toneSuccess;
-    case TodayTone.none:
-      return Colors.transparent;
-  }
-}
+/// Koshin plitka rangi «Bugun» kartasi uchun (veb TodayCard: holat → anor/shafran/pista, aks holda belgi ma'nosidan).
+KoshinHue todayHue(TodayItem item) => hueOf(tone: item.tone, icon: item.icon);
 
-/// Ohangning matn rangi (raqam): qizil / sariq / yashil yoki siyoh.
-Color toneText(TodayTone tone) {
-  switch (tone) {
-    case TodayTone.danger:
-      return AppColors.danger;
-    case TodayTone.warning:
-      return AppColors.warning;
-    case TodayTone.success:
-      return AppColors.success;
-    case TodayTone.none:
-      return AppColors.ink;
-  }
-}
-
-/// Ohang plitkasi (veb: TodayCard TILE): qizil → tile-rose, sariq → tile-sun, yashil → tile-green, oddiy — asosiy rang.
-StatusColors toneTile(TodayTone tone) {
-  final tiles = AppColors.tiles;
-  if (tiles.length < 6) return StatusColors(AppColors.brand, AppColors.accentSoft);
-  switch (tone) {
-    case TodayTone.danger:
-      return tiles[5];
-    case TodayTone.warning:
-      return tiles[4];
-    case TodayTone.success:
-      return tiles[3];
-    case TodayTone.none:
-      return tiles[0];
-  }
-}
-
-/// Bosh sahifa «hero»si (veb: HomeHeader, `home-hero`): sana (asosiy rangda), salom (sarlavha shriftida), 1–2 fakt va asosiy
-/// harakat. Chap chetida hoshiya, o'ng tomonda asosiy rangdagi nozik katak (chapga so'nadi).
+/// Bosh sahifa «hero»si (veb 1.41: HomeHeader, `home-hero` — kartasiz, kanvasning o'zida): sana tabletkasi (shafran romb),
+/// katta salom (Commissioner), faktlar — chip ichida rangli son doirasi, asosiy harakat.
 class HomeHeader extends StatelessWidget {
   const HomeHeader({super.key, required this.name, this.lead = '', this.facts = const <HeroFact>[], this.action, this.secondary, this.trailing, this.title, this.subtitle});
 
@@ -119,37 +87,34 @@ class HomeHeader extends StatelessWidget {
     final now = homeClock();
     final first = firstNameOf(name);
     final dense = AppColors.choice.dense;
-    final radius = BorderRadius.circular(AppRadius.card);
-    final pad = (20 * AppColors.choice.densityFactor).clamp(14, 24).toDouble();
-    final content = Padding(
-      padding: EdgeInsets.fromLTRB(pad + AppSpacing.hoshiya, pad, pad, pad),
+    return Padding(
+      padding: const EdgeInsets.only(top: 2, bottom: 4),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
         Row(children: <Widget>[
-          Expanded(
-            child: Text(dayTitle(now), style: TextStyle(fontSize: 13.5, fontWeight: FontWeight.w600, color: AppColors.accentStrong)),
-          ),
+          Flexible(child: HeroDate(text: dayTitle(now))),
+          const Spacer(),
           if (trailing != null) trailing!,
         ]),
-        const SizedBox(height: 4),
+        SizedBox(height: dense ? 8 : 10),
         Semantics(
           header: true,
           child: Text(
             title ?? (first.isEmpty ? greetingFor(now) : '${greetingFor(now)}, $first'),
-            style: AppTheme.title(size: dense ? 24 : 28),
+            style: AppTheme.title(size: dense ? 26 : 31).copyWith(height: 1.08),
           ),
         ),
         if (subtitle != null && subtitle!.isNotEmpty) ...<Widget>[
-          const SizedBox(height: 2),
-          Text(subtitle!, style: TextStyle(color: AppColors.subtle, fontSize: 13)),
+          const SizedBox(height: 4),
+          Text(subtitle!, style: TextStyle(color: AppColors.subtle, fontSize: 13.5)),
         ],
         if (facts.isNotEmpty) ...<Widget>[
-          const SizedBox(height: 10),
-          Wrap(spacing: 18, runSpacing: 6, children: <Widget>[
-            for (var i = 0; i < facts.length; i++) _Fact(fact: facts[i], countKey: 'hero:$i:${facts[i].text}'),
+          const SizedBox(height: 12),
+          Wrap(spacing: 8, runSpacing: 8, children: <Widget>[
+            for (var i = 0; i < facts.length; i++) HeroFactChip(fact: facts[i], countKey: 'hero:$i:${facts[i].text}'),
           ]),
         ] else if (lead.isNotEmpty) ...<Widget>[
           const SizedBox(height: 8),
-          Text(lead, style: TextStyle(color: AppColors.muted, fontSize: 14.5, height: 1.4)),
+          Text(lead, style: TextStyle(color: AppColors.muted, fontSize: 15, height: 1.4)),
         ],
         if (action != null || secondary != null) ...<Widget>[
           const SizedBox(height: 16),
@@ -161,86 +126,72 @@ class HomeHeader extends StatelessWidget {
         ],
       ]),
     );
-    Widget card = Material(
-      color: AppColors.card,
-      shape: RoundedRectangleBorder(borderRadius: radius, side: BorderSide(color: AppColors.cardBorder)),
-      clipBehavior: Clip.antiAlias,
-      child: CustomPaint(
-        painter: _HeroGridPainter(color: AppColors.accent, background: AppColors.card),
-        child: DecoratedBox(
-          decoration: BoxDecoration(border: Border(left: BorderSide(color: AppColors.accent, width: AppSpacing.hoshiya))),
-          child: content,
-        ),
-      ),
-    );
-    if (AppColors.cardShadow.isNotEmpty) {
-      card = DecoratedBox(decoration: BoxDecoration(borderRadius: radius, boxShadow: AppColors.cardShadow), child: card);
-    }
-    return card;
   }
 }
 
-class _Fact extends StatelessWidget {
-  const _Fact({required this.fact, required this.countKey});
+/// Sana tabletkasi (veb: home-hero-date): asosiy rangning och fonida, chapda shafran romb.
+class HeroDate extends StatelessWidget {
+  const HeroDate({super.key, required this.text});
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.fromLTRB(10, 5, 12, 5),
+      decoration: BoxDecoration(color: AppColors.accentSoft, borderRadius: BorderRadius.circular(99)),
+      child: Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
+        Transform.rotate(
+          angle: 0.785398,
+          child: Container(width: 8, height: 8, decoration: BoxDecoration(color: Koshin.shafran, borderRadius: BorderRadius.circular(2))),
+        ),
+        const SizedBox(width: 8),
+        Flexible(
+          child: Text(text, maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 13.5, fontWeight: FontWeight.w600, color: AppColors.accentStrong)),
+        ),
+      ]),
+    );
+  }
+}
+
+/// Hero fakti (veb: home-hero-fact): tabletka, chapda son — holat rangidagi doirada.
+class HeroFactChip extends StatelessWidget {
+  const HeroFactChip({super.key, required this.fact, required this.countKey});
 
   final HeroFact fact;
   final String countKey;
 
   @override
   Widget build(BuildContext context) {
-    final valueStyle = TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: toneText(fact.tone), fontFeatures: AppTheme.tabular);
-    return Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
-      if (fact.tone != TodayTone.none) ...<Widget>[
-        Container(width: 8, height: 8, decoration: BoxDecoration(color: toneColor(fact.tone), shape: BoxShape.circle)),
-        const SizedBox(width: 7),
-      ],
-      CountUpText(fact.value, countKey: countKey, style: valueStyle),
-      if (fact.text.isNotEmpty) ...<Widget>[
-        const SizedBox(width: 6),
-        Text(fact.text, style: TextStyle(fontSize: 15, color: AppColors.muted)),
-      ],
-    ]);
-  }
-}
-
-/// Hero foni: o'ng tomonda asosiy rangdagi 20px katak, chapga so'nadi (veb: home-hero::after).
-class _HeroGridPainter extends CustomPainter {
-  _HeroGridPainter({required this.color, required this.background});
-
-  final Color color;
-  final Color background;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    const step = 20.0;
-    final line = Paint()
-      ..color = color.withAlpha(AppColors.dark ? 24 : 28)
-      ..strokeWidth = 1;
-    final start = size.width * 0.3;
-    for (var x = size.width - 0.5; x > start; x -= step) {
-      canvas.drawLine(Offset(x, 0), Offset(x, size.height), line);
-    }
-    for (var y = step - 0.5; y < size.height; y += step) {
-      canvas.drawLine(Offset(start, y), Offset(size.width, y), line);
-    }
-    // Chapga so'nish: karta rangidan shaffofga.
-    final fade = Rect.fromLTWH(0, 0, size.width, size.height);
-    canvas.drawRect(
-      fade,
-      Paint()
-        ..shader = LinearGradient(
-          colors: <Color>[background, background, background.withAlpha(0)],
-          stops: const <double>[0, 0.38, 0.88],
-        ).createShader(fade),
+    final (Color bg, Color fg) = switch (fact.tone) {
+      TodayTone.danger => (AppColors.toneDanger, Colors.white),
+      TodayTone.warning => (AppColors.toneWarning, Koshin.shafranInk),
+      TodayTone.success => (AppColors.toneSuccess, Colors.white),
+      TodayTone.none => (AppColors.sunken, AppColors.ink),
+    };
+    return Container(
+      padding: const EdgeInsets.fromLTRB(5, 5, 12, 5),
+      decoration: BoxDecoration(color: AppColors.card, borderRadius: BorderRadius.circular(99), border: Border.all(color: AppColors.line)),
+      child: Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
+        Container(
+          constraints: const BoxConstraints(minWidth: 26),
+          height: 26,
+          padding: const EdgeInsets.symmetric(horizontal: 7),
+          alignment: Alignment.center,
+          decoration: BoxDecoration(color: bg, borderRadius: BorderRadius.circular(99)),
+          child: CountUpText(fact.value, countKey: countKey, style: AppTheme.display(size: 14, color: fg).copyWith(letterSpacing: 0, height: 1.1)),
+        ),
+        if (fact.text.isNotEmpty) ...<Widget>[
+          const SizedBox(width: 8),
+          Flexible(child: Text(fact.text, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: AppColors.muted))),
+        ],
+      ]),
     );
   }
-
-  @override
-  bool shouldRepaint(_HeroGridPainter oldDelegate) => oldDelegate.color != color || oldDelegate.background != background;
 }
 
-/// «Bugun» kartasi v2 (veb: TodayCard 1.40): rangli belgi plitkasi, katta raqam (sanab o'tadi), oddiy so'zlar bilan jumla,
-/// ixtiyoriy o'zgarish va mini-grafik. Diqqat talab qilsa — chap chetida ohang hoshiyasi.
+/// «Bugun» kartasi v3 (veb: TodayCard 1.41) — koshin plitka: to'liq rangli fon, burchakda girih yulduzi, katta raqam
+/// (sanab o'tadi), oddiy so'zlar bilan jumla, ixtiyoriy o'zgarish va mini-grafik.
 class TodayCard extends StatelessWidget {
   const TodayCard({super.key, required this.item, this.onTap});
 
@@ -249,72 +200,28 @@ class TodayCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final radius = BorderRadius.circular(AppRadius.card);
-    final tone = toneColor(item.tone);
-    final dense = AppColors.choice.dense;
-    final long = item.value.length > 8;
+    final hue = todayHue(item);
+    final colors = KoshinTileColors.of(hue);
     final delta = item.delta;
     final trend = item.trend;
-    final body = Container(
-      constraints: BoxConstraints(minHeight: dense ? 104 : 124),
-      decoration: item.tone == TodayTone.none ? null : BoxDecoration(border: Border(left: BorderSide(color: tone, width: AppSpacing.hoshiya))),
-      padding: EdgeInsets.fromLTRB(dense ? 12 : 14, dense ? 10 : 14, dense ? 10 : 12, dense ? 10 : 12),
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
-        Row(children: <Widget>[
-          if (item.icon.isNotEmpty) IconTile(icon: navIcon(item.icon), colors: toneTile(item.tone), size: dense ? 30 : 34),
-          const Spacer(),
-          if (delta != null)
-            Text(
-              '${delta > 0 ? '+' : ''}$delta%',
-              style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: delta == 0 ? AppColors.muted : (delta > 0 ? AppColors.success : AppColors.danger)),
-            )
-          else if (onTap != null)
-            Icon(Icons.chevron_right, size: 18, color: AppColors.subtle),
-        ]),
-        SizedBox(height: dense ? 8 : 10),
-        FittedBox(
-          fit: BoxFit.scaleDown,
-          alignment: Alignment.centerLeft,
-          child: CountUpText(
-            item.value,
-            countKey: 'today:${item.key}',
-            style: TextStyle(
-              fontSize: long ? (dense ? 19 : 21) : (dense ? 24 : 28),
-              fontWeight: FontWeight.w700,
-              height: 1.05,
-              letterSpacing: -0.5,
-              color: toneText(item.tone),
-              fontFeatures: AppTheme.tabular,
-            ),
-          ),
-        ),
-        const SizedBox(height: 4),
-        Text(item.text, maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 13.5, fontWeight: FontWeight.w500, color: AppColors.ink, height: 1.3)),
-        if (item.hint.isNotEmpty)
-          Padding(
-            padding: const EdgeInsets.only(top: 2),
-            child: Text(item.hint, maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 12, color: AppColors.subtle)),
-          ),
-        if (trend != null && trend.length > 1) ...<Widget>[
-          const SizedBox(height: 8),
-          Sparkline(values: trend, height: 26, label: tr("So'nggi 6 oy tushumi"), animationKey: 'today:${item.key}'),
-        ],
-      ]),
+    return KoshinTile(
+      hue: hue,
+      value: item.value,
+      text: item.text,
+      hint: item.hint,
+      icon: item.icon.isEmpty ? null : navIcon(item.icon),
+      delta: delta == null ? null : '${delta > 0 ? '+' : ''}$delta%',
+      onTap: onTap,
+      valueBuilder: (style) => CountUpText(item.value, countKey: 'today:${item.key}', maxLines: 1, style: style),
+      footer: trend != null && trend.length > 1
+          ? Sparkline(values: trend, height: 26, color: colors.value, label: tr("So'nggi 6 oy tushumi"), animationKey: 'today:${item.key}')
+          : null,
     );
-    Widget card = Material(
-      color: AppColors.card,
-      shape: RoundedRectangleBorder(borderRadius: radius, side: BorderSide(color: AppColors.cardBorder)),
-      clipBehavior: Clip.antiAlias,
-      child: onTap == null ? body : InkWell(onTap: onTap, child: body),
-    );
-    if (AppColors.cardShadow.isNotEmpty) {
-      card = DecoratedBox(decoration: BoxDecoration(borderRadius: radius, boxShadow: AppColors.cardShadow), child: card);
-    }
-    return Pressable(enabled: onTap != null, child: card);
   }
 }
 
-/// «Bugun» kartalari to'ri (telefonda 2 ustun).
+/// «Bugun» plitkalari to'ri (telefonda 2 ustun, iPad'da 4 tagacha). Bosh sahifa yuklanishida plitkalar navbat bilan
+/// «qo'yiladi» ([IntroTile]).
 class TodayGrid extends StatelessWidget {
   const TodayGrid({super.key, required this.items, required this.onOpen});
 
@@ -323,34 +230,51 @@ class TodayGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget cell(TodayItem item) {
+    Widget cell(int index) {
+      final item = items[index];
       final target = item.target;
-      return TodayCard(item: item, onTap: target == null || onOpen == null ? null : () => onOpen!(target));
+      return IntroTile(order: index, child: TodayCard(item: item, onTap: target == null || onOpen == null ? null : () => onOpen!(target)));
     }
 
-    // Telefonda 2 ustun, iPad'da 4 tagacha (lib/core/adaptive.dart).
-    return AdaptiveGrid(minTile: 200, children: <Widget>[for (final item in items) cell(item)]);
+    return AdaptiveGrid(minTile: 160, children: <Widget>[for (var i = 0; i < items.length; i++) cell(i)]);
   }
 }
 
-/// Katta tezkor tugma (veb: action-tile): rangli plitka, nom va izoh. `primary` — asosiy rangda to'liq.
-class ActionTile extends StatelessWidget {
+/// Katta tezkor tugma (veb: action-tile): oq karta, rangli belgi plitkasi (bosilganda qiyshayadi), nom va izoh.
+/// `primary` — asosiy rangda to'liq.
+class ActionTile extends StatefulWidget {
   const ActionTile({super.key, required this.action, required this.onTap, this.index = 0});
 
   final QuickAction action;
   final VoidCallback onTap;
 
-  /// Plitka rangi tartibi (veb: tile-green, tile-blue, tile-violet ...).
+  /// Plitka rangi tartibi.
   final int index;
 
   @override
+  State<ActionTile> createState() => _ActionTileState();
+}
+
+class _ActionTileState extends State<ActionTile> {
+  bool _down = false;
+
+  @override
   Widget build(BuildContext context) {
+    final action = widget.action;
     final primary = action.primary;
     final radius = BorderRadius.circular(AppRadius.card);
-    final fg = primary ? Colors.white : AppColors.ink;
+    final fg = primary ? AppColors.onBrand : AppColors.ink;
     final tiles = AppColors.tiles;
-    const order = <int>[0, 1, 2, 3, 4, 5];
-    final tile = tiles.isEmpty ? StatusColors(AppColors.brand, AppColors.accentSoft) : tiles[order[index % order.length]];
+    final tile = tiles.isEmpty ? StatusColors(AppColors.brand, AppColors.accentSoft) : tiles[widget.index % tiles.length];
+    final rich = Motion.rich(context);
+    final icon = primary
+        ? Container(
+            width: 38,
+            height: 38,
+            decoration: BoxDecoration(color: Colors.white.withAlpha(51), borderRadius: BorderRadius.circular(AppRadius.control)),
+            child: Icon(navIcon(action.icon), size: 20, color: AppColors.onBrand),
+          )
+        : IconTile(icon: navIcon(action.icon), colors: tile, size: 38);
     return Pressable(
       child: DecoratedBox(
         decoration: BoxDecoration(borderRadius: radius, boxShadow: primary ? const <BoxShadow>[] : AppColors.cardShadow),
@@ -359,26 +283,25 @@ class ActionTile extends StatelessWidget {
           shape: RoundedRectangleBorder(borderRadius: radius, side: BorderSide(color: primary ? AppColors.accent : AppColors.cardBorder)),
           clipBehavior: Clip.antiAlias,
           child: InkWell(
-            onTap: onTap,
+            onTap: widget.onTap,
+            onHighlightChanged: (value) => setState(() => _down = value),
             child: Container(
               constraints: BoxConstraints(minHeight: AppColors.choice.dense ? 56 : 66),
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
               child: Row(children: <Widget>[
-                primary
-                    ? Container(
-                        width: 38,
-                        height: 38,
-                        decoration: BoxDecoration(color: Colors.white.withAlpha(36), borderRadius: BorderRadius.circular(AppRadius.control)),
-                        child: Icon(navIcon(action.icon), size: 20, color: Colors.white),
-                      )
-                    : IconTile(icon: navIcon(action.icon), colors: tile, size: 38),
+                AnimatedRotation(
+                  turns: _down && rich ? -4 / 360 : 0,
+                  duration: AppDurations.d2,
+                  curve: AppCurves.spring,
+                  child: AnimatedScale(scale: _down && rich ? 1.08 : 1, duration: AppDurations.d2, curve: AppCurves.spring, child: icon),
+                ),
                 const SizedBox(width: 11),
                 Expanded(
                   child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
                     Text(action.label, maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14.5, color: fg, height: 1.25)),
                     if (action.hint.isNotEmpty)
                       Text(action.hint, maxLines: 1, overflow: TextOverflow.ellipsis,
-                          style: TextStyle(fontSize: 12, color: primary ? Colors.white.withAlpha(215) : AppColors.subtle)),
+                          style: TextStyle(fontSize: 12, color: primary ? AppColors.onBrand.withAlpha(215) : AppColors.subtle)),
                   ]),
                 ),
               ]),
@@ -405,8 +328,8 @@ class ActionGrid extends StatelessWidget {
   }
 }
 
-/// Bugungi darslar — vaqt chizig'i (veb: LessonTimeline.vue): chapda vaqt, o'rtada chiziq va nuqta (o'tdi / hozir /
-/// keyingi), o'ngda guruh va izoh. «Hozir» darsi hoshiya bilan; davomat tugmasi (o'qituvchida — asosiy rangda).
+/// Bugungi darslar — vaqt chizig'i (veb 1.41: LessonTimeline): chapda vaqt, o'rtada chiziq va romb nuqta (o'tdi / hozir /
+/// keyingi), o'ngda guruh va izoh. «Hozir» — shafran romb (halqa tarqaladi) va shafran tusli qator.
 class LessonTimeline extends StatelessWidget {
   const LessonTimeline({super.key, required this.lessons, this.primary = false, this.onAttendance, this.detail, this.now});
 
@@ -457,24 +380,27 @@ class _TimelineRow extends StatelessWidget {
     final status = LessonTimeline._status[asText(lesson['status'])];
     final now = state == LessonState.now;
     final done = state == LessonState.done;
-    final dot = Container(
-      width: 14,
-      height: 14,
-      margin: const EdgeInsets.only(top: 5),
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: now ? AppColors.accent : (done ? AppColors.lineStrong : AppColors.card),
-        border: Border.all(color: now || state == LessonState.next ? AppColors.accent : AppColors.lineStrong, width: 2),
-        boxShadow: now ? <BoxShadow>[BoxShadow(color: AppColors.accent.withAlpha(60), spreadRadius: 4)] : null,
+    final next = state == LessonState.next;
+    Widget dot = Transform.rotate(
+      angle: 0.785398,
+      child: Container(
+        width: 13,
+        height: 13,
+        decoration: BoxDecoration(
+          color: now ? Koshin.shafran : (done ? AppColors.lineStrong : AppColors.card),
+          border: Border.all(color: now ? Koshin.shafran : (next ? AppColors.accent : AppColors.lineStrong), width: 2),
+          borderRadius: BorderRadius.circular(3),
+        ),
       ),
     );
+    if (now) dot = PulseRing(color: Koshin.shafran, size: 13, child: dot);
     final body = Container(
       padding: const EdgeInsets.fromLTRB(12, 8, 8, 8),
       decoration: now
           ? BoxDecoration(
-              color: AppColors.accentSoft,
+              color: Color.lerp(AppColors.card, Koshin.shafran, AppColors.dark ? 0.2 : 0.16),
               borderRadius: BorderRadius.circular(AppRadius.control),
-              border: Border(left: BorderSide(color: AppColors.accent, width: AppSpacing.hoshiya)),
+              border: Border.all(color: Koshin.shafran.withAlpha(115)),
             )
           : null,
       child: Row(children: <Widget>[
@@ -494,10 +420,16 @@ class _TimelineRow extends StatelessWidget {
               ),
               if (stateText.isNotEmpty) ...<Widget>[
                 const SizedBox(width: 8),
-                Text(stateText, style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: done ? AppColors.subtle : AppColors.accentStrong)),
+                now
+                    ? Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 1),
+                        decoration: BoxDecoration(color: Koshin.shafran, borderRadius: BorderRadius.circular(99)),
+                        child: Text(stateText, style: const TextStyle(fontSize: 11.5, fontWeight: FontWeight.w700, color: Koshin.shafranInk)),
+                      )
+                    : Text(stateText, style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: done ? AppColors.subtle : AppColors.accentStrong)),
               ],
             ]),
-            if (info.isNotEmpty) Text(info, maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 12.5, color: AppColors.subtle)),
+            if (info.isNotEmpty) Text(info, maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 12.5, color: now ? AppColors.muted : AppColors.subtle)),
           ]),
         ),
         if (status != null)
@@ -524,7 +456,7 @@ class _TimelineRow extends StatelessWidget {
       child: IntrinsicHeight(
         child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
           SizedBox(
-            width: 50,
+            width: 48,
             child: Padding(
               padding: const EdgeInsets.only(top: 8),
               child: Column(crossAxisAlignment: CrossAxisAlignment.end, children: <Widget>[
@@ -536,9 +468,9 @@ class _TimelineRow extends StatelessWidget {
           const SizedBox(width: 8),
           SizedBox(
             width: 16,
-            child: Stack(alignment: Alignment.topCenter, children: <Widget>[
-              Positioned(top: 0, bottom: last ? null : 0, height: last ? 12 : null, child: Container(width: 2, color: AppColors.line)),
-              Padding(padding: const EdgeInsets.only(top: 8), child: dot),
+            child: Stack(alignment: Alignment.topCenter, clipBehavior: Clip.none, children: <Widget>[
+              Positioned(top: 0, bottom: last ? null : 0, height: last ? 14 : null, child: Container(width: 2, decoration: BoxDecoration(color: AppColors.line, borderRadius: BorderRadius.circular(2)))),
+              Padding(padding: const EdgeInsets.only(top: 14), child: dot),
             ]),
           ),
           const SizedBox(width: 8),
@@ -549,8 +481,8 @@ class _TimelineRow extends StatelessWidget {
   }
 }
 
-/// «Diqqat talab qiladi» (veb: AttentionList.vue): har qatorda son (ohang rangida), nima va qayerga borish; chap chetida
-/// ohang hoshiyasi. Bo'sh bo'lsa — «Hammasi joyida».
+/// «Diqqat talab qiladi» (veb 1.41: AttentionList): chapda to'liq rangli son plitkasi (ustuvorlik rangi), nima va qayerga
+/// borish; bosilganda o'q siljiydi. Bo'sh bo'lsa — «Hammasi joyida».
 class AttentionList extends StatelessWidget {
   const AttentionList({super.key, required this.items, this.onOpen});
 
@@ -576,51 +508,64 @@ class AttentionList extends StatelessWidget {
   }
 }
 
-class _AttentionRow extends StatelessWidget {
+class _AttentionRow extends StatefulWidget {
   const _AttentionRow({required this.item, this.onTap});
 
   final AttentionItem item;
   final VoidCallback? onTap;
 
   @override
+  State<_AttentionRow> createState() => _AttentionRowState();
+}
+
+class _AttentionRowState extends State<_AttentionRow> {
+  bool _down = false;
+
+  @override
   Widget build(BuildContext context) {
-    final tone = switch (item.tone) {
-      'danger' => AppColors.toneDanger,
-      'warning' => AppColors.toneWarning,
-      _ => AppColors.accent,
-    };
-    final countColor = switch (item.tone) {
-      'danger' => AppColors.danger,
-      'warning' => AppColors.warning,
-      _ => AppColors.accentStrong,
+    final item = widget.item;
+    final (Color tone, Color ink) = switch (item.tone) {
+      'danger' => (AppColors.toneDanger, Colors.white),
+      'warning' => (AppColors.toneWarning, Koshin.shafranInk),
+      'info' => (AppColors.toneInfo, Colors.white),
+      _ => (AppColors.accent, AppColors.onBrand),
     };
     final radius = BorderRadius.circular(AppRadius.control);
     final row = Container(
-      constraints: const BoxConstraints(minHeight: 52),
-      padding: const EdgeInsets.fromLTRB(12, 8, 8, 8),
-      decoration: BoxDecoration(border: Border(left: BorderSide(color: tone, width: AppSpacing.hoshiya))),
+      constraints: const BoxConstraints(minHeight: 54),
+      padding: const EdgeInsets.fromLTRB(8, 8, 10, 8),
       child: Row(children: <Widget>[
-        SizedBox(
-          width: 40,
-          child: CountUpText('${item.count}',
-              countKey: 'attention:${item.key}',
-              style: TextStyle(fontSize: 19, fontWeight: FontWeight.w700, color: countColor, fontFeatures: AppTheme.tabular)),
+        Container(
+          constraints: const BoxConstraints(minWidth: 38),
+          height: 38,
+          padding: const EdgeInsets.symmetric(horizontal: 6),
+          alignment: Alignment.center,
+          decoration: BoxDecoration(color: tone, borderRadius: BorderRadius.circular(AppRadius.control)),
+          child: CountUpText('${item.count}', countKey: 'attention:${item.key}', style: AppTheme.display(size: 17, color: ink).copyWith(letterSpacing: 0)),
         ),
-        const SizedBox(width: 6),
+        const SizedBox(width: 12),
         Expanded(
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
-            Text(item.text, style: TextStyle(fontWeight: FontWeight.w500, color: AppColors.ink, fontSize: 14.5)),
+            Text(item.text, style: TextStyle(fontWeight: FontWeight.w600, color: AppColors.ink, fontSize: 14.5, height: 1.3)),
             if (item.hint.isNotEmpty) Text(item.hint, style: TextStyle(fontSize: 12, color: AppColors.subtle)),
           ]),
         ),
-        if (onTap != null) Icon(Icons.chevron_right, size: 20, color: AppColors.subtle),
+        if (widget.onTap != null)
+          AnimatedSlide(
+            offset: Offset(_down && Motion.rich(context) ? 0.18 : 0, 0),
+            duration: AppDurations.d2,
+            curve: AppCurves.spring,
+            child: Icon(Icons.chevron_right, size: 20, color: AppColors.subtle),
+          ),
       ]),
     );
     return Material(
-      color: AppColors.surface2,
-      shape: RoundedRectangleBorder(borderRadius: radius),
+      color: _down ? Color.lerp(AppColors.surface2, tone, 0.08) : AppColors.surface2,
+      shape: RoundedRectangleBorder(borderRadius: radius, side: BorderSide(color: _down ? tone.withAlpha(77) : Colors.transparent)),
       clipBehavior: Clip.antiAlias,
-      child: onTap == null ? row : InkWell(onTap: onTap, child: row),
+      child: widget.onTap == null
+          ? row
+          : InkWell(onTap: widget.onTap, onHighlightChanged: (value) => setState(() => _down = value), child: row),
     );
   }
 }

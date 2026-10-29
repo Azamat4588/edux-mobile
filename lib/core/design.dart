@@ -1,13 +1,14 @@
-// Dizayn tizimi v2 (veb 1.40 «Daftar 2: hoshiya», docs/design.md): rejim, 12 asosiy rang, 9 shablon, shrift, o'lcham,
+// Dizayn tizimi v3 (veb 1.41 «Koshin», docs/design.md): rejim, 12 asosiy rang, 9 shablon, shrift, o'lcham,
 // burchaklar, ikonalar, zichlik, karta uslubi, menyu uslubi, fon naqshi va animatsiya darajasi.
 //
 // Uch qatlam (pastdagisi ustidagini bosadi): platforma standarti (GET /site → theme.defaults) → tashkilot brendi
 // (GET /context → theme) → shaxsiy tanlov (GET /me → user.appearance). Server qatlamlarni ruxsatga qarab o'zi tozalaydi
-// (Theme::organization / Theme::user), ilova faqat birlashtiradi. Eski qiymatlar: vivid → school, midnight → night.
-// «auto» (Shablonga qarab) — shablonning o'z tanlovi (templateDefaults, server: Theme::TEMPLATE_DEFAULTS).
+// (Theme::organization / Theme::user), ilova faqat birlashtiradi. Eski qiymatlar (Theme::LEGACY): vivid → school,
+// midnight → night, 1.41: paper («Qog'oz») → atlas. «auto» (Shablonga qarab) — shablonning o'z tanlovi (templateDefaults,
+// server: Theme::TEMPLATE_DEFAULTS).
 //
-// Mobil ilovaga xos: rejim standarti — «Qurilmaga qarab»; asosiy shrift — Golos Text (platforma standarti o'zgartirilmagan,
-// ya'ni «onest» bo'lsa ham). Tashkilot yoki foydalanuvchi boshqa shrift tanlagan bo'lsa — o'sha.
+// Mobil ilovaga xos: rejim standarti — «Qurilmaga qarab». Matn shrifti — Onest (veb standarti), sarlavha va raqamlar —
+// Commissioner; «golos» (veb variant) ilovada Onest bilan chiziladi (Golos fayllari 3.9 da olib tashlangan).
 //
 // Bu fayl toza mantiq (Flutter vidjetlarisiz) — test/design_test.dart shu funksiyalarni tekshiradi.
 
@@ -15,24 +16,24 @@
 const Map<String, List<String>> themeOptions = <String, List<String>>{
   'mode': <String>['light', 'dark', 'system'],
   'accent': <String>['blue', 'indigo', 'violet', 'plum', 'rose', 'sunset', 'amber', 'forest', 'emerald', 'teal', 'sky', 'slate'],
-  'template': <String>['classic', 'soft', 'night', 'compact', 'school', 'paper', 'ocean', 'graphite', 'spring'],
-  'font': <String>['onest', 'manrope', 'nunito', 'golos'],
+  'template': <String>['classic', 'soft', 'night', 'compact', 'school', 'atlas', 'ocean', 'graphite', 'spring'],
+  'font': <String>['onest', 'commissioner', 'manrope', 'nunito', 'golos'],
   'size': <String>['sm', 'md', 'lg', 'xl'],
   'radius': <String>['sharp', 'rounded', 'pill'],
   'icons': <String>['color', 'mono'],
   'density': <String>['auto', 'comfy', 'normal', 'compact'],
   'cards': <String>['auto', 'bordered', 'shadow', 'flat'],
   'sidebar': <String>['auto', 'full', 'icons', 'floating'],
-  'pattern': <String>['auto', 'none', 'dots', 'lines'],
+  'pattern': <String>['auto', 'none', 'dots', 'lines', 'grid'],
   'motion': <String>['full', 'reduced', 'off'],
 };
 
-/// Standart qiymatlar (server: Theme::DEFAULTS). Mobil ilovada rejim standarti — «Qurilmaga qarab», shrift — Golos.
+/// Standart qiymatlar (server: Theme::DEFAULTS; v3 — Feruza, Koshin, Onest). Mobil ilovada rejim standarti — «Qurilmaga qarab».
 const Map<String, String> themeDefaults = <String, String>{
   'mode': 'system',
-  'accent': 'blue',
+  'accent': 'teal',
   'template': 'classic',
-  'font': 'golos',
+  'font': 'onest',
   'size': 'md',
   'radius': 'rounded',
   'icons': 'color',
@@ -49,50 +50,52 @@ const Map<String, Map<String, String>> templateDefaults = <String, Map<String, S
   'soft': <String, String>{'density': 'comfy', 'cards': 'shadow', 'sidebar': 'floating', 'pattern': 'none'},
   'night': <String, String>{'density': 'normal', 'cards': 'bordered', 'sidebar': 'full', 'pattern': 'none'},
   'compact': <String, String>{'density': 'compact', 'cards': 'bordered', 'sidebar': 'full', 'pattern': 'none'},
-  'school': <String, String>{'density': 'normal', 'cards': 'bordered', 'sidebar': 'full', 'pattern': 'none'},
-  'paper': <String, String>{'density': 'normal', 'cards': 'bordered', 'sidebar': 'full', 'pattern': 'none'},
+  'school': <String, String>{'density': 'normal', 'cards': 'bordered', 'sidebar': 'full', 'pattern': 'grid'},
+  'atlas': <String, String>{'density': 'normal', 'cards': 'bordered', 'sidebar': 'full', 'pattern': 'none'},
   'ocean': <String, String>{'density': 'normal', 'cards': 'flat', 'sidebar': 'full', 'pattern': 'none'},
   'graphite': <String, String>{'density': 'normal', 'cards': 'bordered', 'sidebar': 'full', 'pattern': 'none'},
   'spring': <String, String>{'density': 'comfy', 'cards': 'shadow', 'sidebar': 'full', 'pattern': 'dots'},
 };
 
-/// Eski qiymat → yangi (1.35 gacha).
+/// Eski qiymat → yangi (server: Theme::LEGACY, veb: lib/theme.js LEGACY): 1.35 — vivid, midnight; 1.41 — paper («Qog'oz»).
 const Map<String, Map<String, String>> themeLegacy = <String, Map<String, String>>{
-  'template': <String, String>{'vivid': 'school', 'midnight': 'night'},
+  'template': <String, String>{'vivid': 'school', 'midnight': 'night', 'paper': 'atlas'},
 };
 
 /// Shablon va boshqa variantlar nomlari (tanlash panelida, tarjima kaliti — o'zbekcha matn).
 const Map<String, String> templateLabels = <String, String>{
-  'classic': 'Klassik',
+  'classic': 'Koshin',
   'soft': 'Yumshoq',
-  'night': "Qorong'i panel",
+  'night': 'Lojuvard',
   'compact': 'Ixcham',
   'school': 'Maktab',
-  'paper': "Qog'oz",
+  'atlas': 'Atlas',
   'ocean': 'Okean',
   'graphite': 'Grafit',
   'spring': 'Bahor',
 };
 
-/// Shablon kimga mos (Ko'rinish ekranida izoh).
+/// Shablon kimga mos (Ko'rinish ekranida izoh; veb: TEMPLATES[].for).
 const Map<String, String> templateHints = <String, String>{
-  'classic': 'Kundalik ish uchun',
-  'soft': "Ota-onalar va o'quvchilar uchun",
-  'night': "To'q menyu, uzoq ishlaganda",
-  'compact': 'Kassir va administrator uchun',
-  'school': "Iliq qog'oz, katak daftar",
-  'paper': "Ko'p o'qiladigan darslar uchun",
+  'classic': 'Har kuni ishlash uchun (standart)',
+  'soft': "Ota-onalar va o'quvchilar",
+  'night': 'Uzoq vaqt ishlaydiganlar',
+  'compact': 'Kassir va administrator',
+  'school': "Maktab va o'quv markazi",
+  'atlas': 'Til va ijodiy markazlar',
   'ocean': "Zamonaviy o'quv markazi",
-  'graphite': 'Direktor va hisobotlar',
-  'spring': 'Bolalar markazi',
+  'graphite': 'Direktor va hisobotlar bilan ishlash',
+  'spring': "Bolalar markazi va boshlang'ich sinflar",
 };
-const Map<String, String> fontLabels = <String, String>{'golos': 'Golos Text', 'onest': 'Onest', 'manrope': 'Manrope', 'nunito': 'Nunito'};
+
+/// Ilovada tanlanadigan shriftlar (golos — faqat serverdan kelsa, Onest bilan chiziladi).
+const Map<String, String> fontLabels = <String, String>{'onest': 'Onest', 'commissioner': 'Commissioner', 'manrope': 'Manrope', 'nunito': 'Nunito'};
 const Map<String, String> sizeLabels = <String, String>{'sm': 'Kichik', 'md': "O'rta", 'lg': 'Katta', 'xl': 'Juda katta'};
 const Map<String, String> radiusLabels = <String, String>{'sharp': 'Tik', 'rounded': 'Yumaloq', 'pill': 'Juda yumaloq'};
 const Map<String, String> iconsLabels = <String, String>{'color': 'Rangli', 'mono': 'Bir rangli'};
 const Map<String, String> densityLabels = <String, String>{'auto': 'Shablonga qarab', 'comfy': 'Qulay', 'normal': 'Odatiy', 'compact': 'Ixcham'};
 const Map<String, String> cardsLabels = <String, String>{'auto': 'Shablonga qarab', 'bordered': 'Chegarali', 'shadow': 'Soyali', 'flat': 'Tekis'};
-const Map<String, String> patternLabels = <String, String>{'auto': 'Shablonga qarab', 'none': "Yo'q", 'dots': 'Nuqtali', 'lines': 'Chiziqli'};
+const Map<String, String> patternLabels = <String, String>{'auto': 'Shablonga qarab', 'none': "Yo'q", 'dots': 'Nuqtali', 'lines': 'Chiziqli', 'grid': 'Katak'};
 const Map<String, String> motionLabels = <String, String>{'full': "To'liq", 'reduced': 'Kam', 'off': "O'chiq"};
 const Map<String, String> modeLabels = <String, String>{'light': 'Kunduzgi', 'dark': 'Tungi', 'system': 'Qurilmaga qarab'};
 
@@ -113,8 +116,9 @@ enum MotionLevel { full, reduced, off }
 
 MotionLevel motionLevelOf(String value, {bool systemReduced = false}) {
   if (value == 'off') return MotionLevel.off;
-  // Qurilmada harakat kamaytirilgan: o'tishlar bir zumda, sanash yo'q (veb: motionLevel() → reduced).
-  if (systemReduced) return MotionLevel.off;
+  // Qurilmada «harakatni kamaytirish» yoqilgan: kamida «Kam» — siljish, prujina, sanash, pulsatsiya yo'q, faqat
+  // shaffoflik (veb: prefers-reduced-motion → motionLevel() = reduced).
+  if (systemReduced) return MotionLevel.reduced;
   return value == 'reduced' ? MotionLevel.reduced : MotionLevel.full;
 }
 
@@ -122,9 +126,9 @@ MotionLevel motionLevelOf(String value, {bool systemReduced = false}) {
 class ThemeChoice {
   const ThemeChoice({
     this.mode = 'system',
-    this.accent = 'blue',
+    this.accent = 'teal',
     this.template = 'classic',
-    this.font = 'golos',
+    this.font = 'onest',
     this.size = 'md',
     this.radius = 'rounded',
     this.icons = 'color',
@@ -158,8 +162,6 @@ class ThemeChoice {
         if (field == 'mode') continue;
         final value = normalizeThemeValue(field, layer[field]);
         if (value == null) continue;
-        // Platforma standartidagi «onest» — serverning o'zgartirilmagan standarti: mobilda Golos qoladi.
-        if (i == 0 && layers.length > 1 && field == 'font' && value == 'onest') continue;
         values[field] = value;
       }
     }
@@ -233,7 +235,8 @@ class ThemeChoice {
   /// Burchak ko'paytmasi: foydalanuvchi tanlovi (tik 0.4, yumaloq 1, juda yumaloq 1.45) × shablon.
   double get radiusFactor {
     const user = <String, double>{'sharp': 0.4, 'rounded': 1, 'pill': 1.45};
-    const template = <String, double>{'soft': 1.4, 'compact': 0.65, 'spring': 1.3, 'graphite': 0.75};
+    // Shablon (veb: --t-radius): Yumshoq 1.35, Ixcham 0.65, Atlas 1.1, Grafit 0.5, Bahor 1.5.
+    const template = <String, double>{'soft': 1.35, 'compact': 0.65, 'atlas': 1.1, 'graphite': 0.5, 'spring': 1.5};
     return (user[radius] ?? 1) * (template[this.template] ?? 1);
   }
 
@@ -246,39 +249,11 @@ class ThemeChoice {
   /// Ilovaga qo'shilgan shrift oilasi (assets/fonts).
   String get fontFamily => familyOf(font);
 
-  /// Sarlavha shrifti (veb: --font-title): Klassik va Qog'oz — Literata (serif), Yumshoq va Bahor — Nunito,
-  /// Maktab — Manrope, Okean — Golos Text, qolganlari — asosiy shrift.
-  String get titleFamily {
-    switch (template) {
-      case 'classic':
-      case 'paper':
-        return 'Literata';
-      case 'soft':
-      case 'spring':
-        return 'Nunito';
-      case 'school':
-        return 'Manrope';
-      case 'ocean':
-        return 'GolosText';
-    }
-    return fontFamily;
-  }
+  /// Sarlavha shrifti (veb: --font-title): Commissioner, Yumshoq va Bahor — Nunito.
+  String get titleFamily => template == 'soft' || template == 'spring' ? 'Nunito' : 'Commissioner';
 
-  /// Sarlavha qalinligi (veb: --title-weight; Flutter qadamlariga yaxlitlangan).
-  int get titleWeight {
-    switch (template) {
-      case 'classic':
-      case 'paper':
-        return 600;
-      case 'compact':
-      case 'ocean':
-        return 700;
-    }
-    return 800;
-  }
-
-  /// Serif sarlavha (Literata): harflar orasi biroz qisiladi, qator balandligi kattaroq.
-  bool get serifTitles => titleFamily == 'Literata';
+  /// Sarlavha qalinligi (veb: --title-weight 750–900; Flutter qadamlariga yaxlitlangan, Nunito 800 gacha).
+  int get titleWeight => template == 'compact' ? 700 : 800;
 
   /// Zich ko'rinish (kassir/administrator): kichikroq boshqaruv balandligi, zich ro'yxatlar.
   bool get dense => effectiveDensity == 'compact';
@@ -289,11 +264,14 @@ class ThemeChoice {
   /// Kartalar chegarasiz (soyali yoki tekis).
   bool get borderlessCards => effectiveCards != 'bordered';
 
-  /// To'q menyu paneli (Qorong'i panel, Grafit — mobilda yuqori va pastki panel).
-  bool get darkChrome => template == 'night' || template == 'graphite';
+  /// To'q yon menyu (veb: darkSidebar — Lojuvard, Atlas, Grafit): iPad yon menyusi to'q fonda.
+  bool get darkChrome => template == 'night' || template == 'atlas' || template == 'graphite';
 
-  /// Katak daftar foni (Maktab).
-  bool get notebook => template == 'school';
+  /// KPI plitkalar och (veb: Ixcham va Grafit — kun bo'yi sokin), qolganlarida to'liq rangli koshin.
+  bool get quietTiles => template == 'compact' || template == 'graphite';
+
+  /// Har bo'lim o'z rangida (Maktab, Bahor): faol menyu bandi — bo'lim rangining och tusi.
+  bool get sectionTinted => template == 'school' || template == 'spring';
 
   /// Pastki menyu suzuvchi (Yumshoq yoki «Suzuvchi» menyu).
   bool get floatingNav => effectiveSidebar == 'floating';
@@ -306,14 +284,14 @@ class ThemeChoice {
 
   static String familyOf(String font) {
     switch (font) {
+      case 'commissioner':
+        return 'Commissioner';
       case 'manrope':
         return 'Manrope';
       case 'nunito':
         return 'Nunito';
-      case 'onest':
-        return 'Onest';
     }
-    return 'GolosText';
+    return 'Onest';
   }
 
   Map<String, String> toJson() => <String, String>{
@@ -332,8 +310,41 @@ class ThemeChoice {
       };
 }
 
-/// «Bugun» kartasi ohangi (chap chetdagi rangli chiziq): danger — qizil, warning — sariq, success — yashil.
+/// «Bugun» kartasi ohangi (holat): danger — anor, warning — shafran, success — pista.
 enum TodayTone { none, danger, warning, success }
+
+/// Koshin plitka rangi (veb: TodayCard data-hue): feruza — pul va asosiy harakat, lojuvard — dars/vaqt, anor — qarz/xato,
+/// pista — bajarildi, shafran — kutilmoqda/«hozir», olxo'ri — test/vazifa.
+enum KoshinHue { feruza, lojuvard, anor, pista, shafran, olxori }
+
+const Map<String, KoshinHue> _iconHue = <String, KoshinHue>{
+  'banknote': KoshinHue.feruza, 'wallet': KoshinHue.feruza, 'coins': KoshinHue.feruza, 'receipt': KoshinHue.feruza, 'credit-card': KoshinHue.feruza,
+  'card': KoshinHue.feruza,
+  'calendar': KoshinHue.lojuvard, 'clock': KoshinHue.lojuvard, 'timer': KoshinHue.lojuvard, 'book': KoshinHue.lojuvard, 'academic-cap': KoshinHue.lojuvard,
+  'clipboard-list': KoshinHue.olxori, 'pencil': KoshinHue.olxori, 'list-checks': KoshinHue.olxori, 'trophy': KoshinHue.olxori,
+  'columns': KoshinHue.shafran, 'inbox': KoshinHue.shafran, 'users': KoshinHue.shafran, 'user-plus': KoshinHue.shafran, 'phone': KoshinHue.shafran,
+  'chat': KoshinHue.shafran,
+};
+
+/// Plitka rangi (veb TodayCard hueName): aniq [hue] → holatdan → belgi ma'nosidan → feruza.
+KoshinHue hueOf({TodayTone tone = TodayTone.none, String icon = '', String? hue}) {
+  if (hue != null) {
+    for (final value in KoshinHue.values) {
+      if (value.name == hue) return value;
+    }
+  }
+  switch (tone) {
+    case TodayTone.danger:
+      return KoshinHue.anor;
+    case TodayTone.warning:
+      return KoshinHue.shafran;
+    case TodayTone.success:
+      return KoshinHue.pista;
+    case TodayTone.none:
+      break;
+  }
+  return _iconHue[icon] ?? KoshinHue.feruza;
+}
 
 TodayTone toneOf(String? value) {
   switch (value) {

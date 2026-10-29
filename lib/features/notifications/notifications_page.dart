@@ -182,11 +182,10 @@ class _NotificationTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final type = asText(PushService.normalize(item.data)['type']);
     final color = notificationColor(type);
-    // O'qilmagan xabar — chap chetida hoshiya (diqqat talab qiladi).
+    // O'qilmagan xabar — asosiy rangning och foni va o'ngda shafran nuqta.
     return ListTile(
       onTap: onTap,
-      tileColor: item.read ? null : AppColors.accentSoft.withAlpha(AppColors.dark ? 120 : 150),
-      shape: item.read ? null : Border(left: BorderSide(color: AppColors.accent, width: AppSpacing.hoshiya)),
+      tileColor: item.read ? null : AppColors.accentSoft.withAlpha(AppColors.dark ? 120 : 170),
       leading: IconTile(icon: notificationIcon(type), colors: tileOf(color), size: 44),
       title: Text(
         item.title.isEmpty ? tr('Bildirishnoma') : item.title,
@@ -199,7 +198,7 @@ class _NotificationTile extends StatelessWidget {
       ]),
       trailing: item.read
           ? null
-          : Container(width: 10, height: 10, decoration: BoxDecoration(color: AppColors.brand, shape: BoxShape.circle)),
+          : Container(width: 10, height: 10, decoration: const BoxDecoration(color: Koshin.shafran, shape: BoxShape.circle)),
     );
   }
 }

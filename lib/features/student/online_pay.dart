@@ -11,6 +11,7 @@ import '../../core/api.dart';
 import '../../core/format.dart';
 import '../../core/payments.dart';
 import '../../core/i18n.dart';
+import '../../core/koshin.dart';
 import '../../core/session.dart';
 import '../../core/theme.dart';
 import '../../core/widgets.dart';
@@ -473,14 +474,8 @@ class _P2pTransferPageState extends State<P2pTransferPage> with WidgetsBindingOb
   Widget _success() {
     return ListView(padding: const EdgeInsets.all(24), children: <Widget>[
       const SizedBox(height: 32),
-      Center(
-        child: Container(
-          width: 96,
-          height: 96,
-          decoration: BoxDecoration(color: AppColors.soft(AppColors.success), shape: BoxShape.circle),
-          child: Icon(Icons.check_rounded, size: 60, color: AppColors.success),
-        ),
-      ),
+      // Girih muhri (veb: SuccessStamp — onlayn to'lov sahifasi).
+      const Center(child: SuccessStamp(size: 96)),
       const SizedBox(height: 18),
       Text(tr("To'lov qabul qilindi"), textAlign: TextAlign.center, style: AppTheme.title(size: 24)),
       const SizedBox(height: 8),

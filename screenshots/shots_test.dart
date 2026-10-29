@@ -350,7 +350,7 @@ void main() {
     quietImages();
     await shoot(tester, '02-direktor-bosh', org: 'center', role: 'director', page: StaffHomePage(onOpen: (_) {}), tab: 'home');
     await shoot(tester, '02-direktor-bosh-grafit-tungi', org: 'center', role: 'director', page: StaffHomePage(onOpen: (_) {}), tab: 'home', mode: 'dark', template: 'graphite');
-    await shoot(tester, '02-oqituvchi-bosh-qogoz', org: 'center', role: 'teacher', page: StaffHomePage(onOpen: (_) {}), tab: 'home', template: 'paper', accent: 'forest');
+    await shoot(tester, '02-oqituvchi-bosh-atlas', org: 'center', role: 'teacher', page: StaffHomePage(onOpen: (_) {}), tab: 'home', template: 'atlas');
     await shoot(tester, '02-oqituvchi-bosh-okean-tungi', org: 'center', role: 'teacher', page: StaffHomePage(onOpen: (_) {}), tab: 'home', mode: 'dark', template: 'ocean', accent: 'teal');
   });
 

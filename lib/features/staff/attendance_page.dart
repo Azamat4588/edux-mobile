@@ -76,7 +76,7 @@ class _GroupTile extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(bottom: 10),
       child: AppCard(
-        // iPad: varaqa o'ng ustunda (MasterDetail), telefonda — yangi sahifa. Bugun darsi bor guruh — hoshiya bilan.
+        // iPad: varaqa o'ng ustunda (MasterDetail), telefonda — yangi sahifa. Bugun darsi bor guruh — ajratilgan.
         color: selected ? AppColors.accentSoft : null,
         tone: highlight || selected ? AppColors.accent : null,
         onTap: () => openDetail(
@@ -352,7 +352,7 @@ class _MarkSummary extends StatelessWidget {
   }
 }
 
-/// O'quvchi qatori: belgilangan holat chap chetda hoshiya bo'lib ko'rinadi (keldi — yashil, kelmadi — qizil ...).
+/// O'quvchi qatori: belgilangan holat kartani shu rangga moyil qiladi (keldi — pista, kelmadi — anor ...).
 class _StudentMark extends StatelessWidget {
   const _StudentMark({required this.name, required this.value, required this.onChanged, this.frozen = false, this.trial = false});
 

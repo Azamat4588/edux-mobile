@@ -59,41 +59,43 @@ IconData labIcon(String subject) {
   }
 }
 
-/// Fan rangi (ikonka foni va «fan · sinf» yozuvi).
+/// Fan rangi (v3 — koshin oilasi): fan belgisi plitkasi foni va «fan, sinf» yozuvi.
 Color labColor(String subject) {
   switch (subject) {
     case 'Kimyo':
-      return const Color(0xFF7C3AED);
+      return Koshin.olxori;
     case 'Biologiya':
-      return AppColors.success;
+      return Koshin.pista;
     case 'Matematika':
-      return AppColors.warning;
+      return const Color(0xFFB45F00);
+    case 'Fizika':
+      return Koshin.lojuvard;
     case 'Informatika':
-      return const Color(0xFF0E7490);
+      return Koshin.feruza;
     case 'Geografiya':
-      return const Color(0xFF15803D);
+      return const Color(0xFF0B8576);
     case 'Astronomiya':
-      return const Color(0xFF4338CA);
+      return const Color(0xFF5149DC);
     case 'Tarix':
-      return const Color(0xFF92400E);
+      return const Color(0xFF9A5B13);
     case 'Ona tili':
-      return const Color(0xFF0369A1);
+      return const Color(0xFF2D6FB8);
     case 'Ingliz tili':
-      return const Color(0xFFBE123C);
+      return Koshin.anor;
     case 'Texnologiya':
-      return const Color(0xFF475569);
+      return const Color(0xFF556378);
     case 'Chizmachilik':
-      return const Color(0xFF1D4ED8);
+      return const Color(0xFF3D52A8);
     case 'Iqtisodiyot':
-      return const Color(0xFF047857);
+      return const Color(0xFF0F7A5A);
     case 'Musiqa':
-      return const Color(0xFFDB2777);
+      return const Color(0xFF7446E6);
     case "Tasviriy san'at":
-      return const Color(0xFFEA580C);
+      return const Color(0xFFD2560C);
     case 'Tabiiy fanlar':
-      return const Color(0xFF65A30D);
+      return const Color(0xFF4C7D12);
     default:
-      return AppColors.brand;
+      return AppColors.accent;
   }
 }
 
@@ -497,7 +499,8 @@ class LabCard extends StatelessWidget {
         await onChanged();
       },
       child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
-        IconTile(icon: labIcon(subject), colors: StatusColors(readableOn(AppColors.dark ? Color.lerp(color, Colors.white, 0.45)! : color, AppColors.card), Color.alphaBlend(color.withAlpha(AppColors.dark ? 46 : 26), AppColors.card)), size: 46),
+        // Fan belgisi — to'liq rangli koshin plitka (veb: lab katalogi).
+        IconTile(icon: labIcon(subject), colors: StatusColors(Colors.white, color), size: 46),
         const SizedBox(width: 12),
         Expanded(
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[

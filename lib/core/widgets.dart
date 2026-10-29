@@ -1,5 +1,6 @@
-// Umumiy komponentlar (3.8, «Daftar 2: hoshiya»): yuklanish holatlari (skelet), internetsiz nusxa, kartalar, ko'rsatkichlar,
-// holat chiplari, ism bosh harfli doiralar, bo'sh holat illyustratsiyalari, sahifa sarlavhasi bandi, xabarlar (toast).
+// Umumiy komponentlar (3.9, dizayn v3 «Koshin»): yuklanish holatlari (yaltiroq skelet), internetsiz nusxa, kartalar,
+// ko'rsatkichlar, holat chiplari (tabletka + rangli nuqta), ism bosh harfli doiralar, bo'sh holat (girih + chiziqli rasm),
+// sahifa sarlavhasi bandi (bo'lim belgisi), xabarlar (toast — holat rangidagi doira belgi, muvaffaqiyatda muhr kabi bosiladi).
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -12,6 +13,7 @@ import 'format.dart';
 import 'help_links.dart';
 import 'i18n.dart';
 import 'illustrations.dart';
+import 'koshin.dart';
 import 'motion.dart';
 import 'offline_cache.dart';
 import 'theme.dart';
@@ -149,11 +151,13 @@ class AsyncViewState<T> extends State<AsyncView<T>> {
   }
 }
 
-/// Chap chetida hoshiya (daftar chizig'i) bo'lgan blok: diqqat talab qiladigan karta, toast, banner.
-class HoshiyaBox extends StatelessWidget {
-  const HoshiyaBox({super.key, required this.child, required this.color, this.background, this.radius, this.padding = EdgeInsets.zero});
+/// Holat bloki (veb: alert/banner): holatning yumshoq foni, shu rangdagi nozik chegara, yumaloq burchak.
+class ToneBox extends StatelessWidget {
+  const ToneBox({super.key, required this.child, required this.color, this.background, this.radius, this.padding = EdgeInsets.zero});
 
   final Widget child;
+
+  /// Holat rangi (to'liq): chegara shu rangdan.
   final Color color;
   final Color? background;
   final BorderRadius? radius;
@@ -161,15 +165,14 @@ class HoshiyaBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: radius ?? BorderRadius.zero,
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          color: background,
-          border: Border(left: BorderSide(color: color, width: AppSpacing.hoshiya)),
-        ),
-        child: Padding(padding: padding, child: child),
+    return Container(
+      padding: padding,
+      decoration: BoxDecoration(
+        color: background ?? AppColors.soft(color),
+        borderRadius: radius ?? BorderRadius.circular(AppRadius.control),
+        border: Border.all(color: color.withAlpha(AppColors.dark ? 90 : 70)),
       ),
+      child: child,
     );
   }
 }
@@ -183,9 +186,10 @@ class OfflineBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return HoshiyaBox(
+    return ToneBox(
       color: AppColors.toneWarning,
       background: AppColors.warningBg,
+      radius: BorderRadius.zero,
       padding: const EdgeInsets.fromLTRB(12, 6, 4, 6),
       child: Row(children: <Widget>[
         Icon(Icons.cloud_off_rounded, size: 18, color: AppColors.warning),
@@ -202,7 +206,7 @@ class OfflineBanner extends StatelessWidget {
   }
 }
 
-/// Yuklanish skeleti: sokin kulrang bloklar (veb: `loading-line`).
+/// Yuklanish skeleti: sokin bloklar (veb: `loading-line`); To'liq darajada ustidan yaltirash o'tadi.
 class SkeletonBox extends StatelessWidget {
   const SkeletonBox({super.key, this.width, this.height = 14, this.radius = 6});
 
@@ -220,28 +224,25 @@ class SkeletonBox extends StatelessWidget {
   }
 }
 
-/// Skelet «nafas olishi» — faqat To'liq darajada (Kam va O'chiq — harakatsiz).
-class _Pulse extends StatefulWidget {
-  const _Pulse({required this.child});
+/// Skelet yaltirashi (veb: shimmer 1.4 s — chapdan o'ngga, faqat transform) — faqat To'liq darajada.
+class _Shimmer extends StatefulWidget {
+  const _Shimmer({required this.child});
 
   final Widget child;
 
   @override
-  State<_Pulse> createState() => _PulseState();
+  State<_Shimmer> createState() => _ShimmerState();
 }
 
-class _PulseState extends State<_Pulse> with SingleTickerProviderStateMixin {
-  late final AnimationController _controller =
-      AnimationController(vsync: this, duration: const Duration(milliseconds: 1100), lowerBound: 0.55, upperBound: 1, value: 1);
-  bool _started = false;
+class _ShimmerState extends State<_Shimmer> with SingleTickerProviderStateMixin {
+  late final AnimationController _controller = AnimationController(vsync: this, duration: const Duration(milliseconds: 1400));
+  bool _rich = false;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    if (!_started && Motion.rich(context)) {
-      _started = true;
-      _controller.repeat(reverse: true);
-    }
+    _rich = Motion.rich(context);
+    if (_rich && !_controller.isAnimating) _controller.repeat();
   }
 
   @override
@@ -251,10 +252,29 @@ class _PulseState extends State<_Pulse> with SingleTickerProviderStateMixin {
   }
 
   @override
-  Widget build(BuildContext context) => FadeTransition(opacity: _controller, child: widget.child);
+  Widget build(BuildContext context) {
+    if (!_rich) return widget.child;
+    final glow = Colors.white.withAlpha(AppColors.dark ? 18 : 140);
+    return AnimatedBuilder(
+      animation: _controller,
+      child: widget.child,
+      builder: (context, child) => ShaderMask(
+        blendMode: BlendMode.srcATop,
+        shaderCallback: (rect) {
+          final x = -1.0 + 3.0 * _controller.value;
+          return LinearGradient(
+            begin: Alignment(x - 1, 0),
+            end: Alignment(x, 0),
+            colors: <Color>[glow.withAlpha(0), glow, glow.withAlpha(0)],
+          ).createShader(rect);
+        },
+        child: child,
+      ),
+    );
+  }
 }
 
-/// Ro'yxat sahifalari uchun skelet: kartalar (doira + ikki qator).
+/// Ro'yxat sahifalari uchun skelet: kartalar (doira + ikki qator). [header] — bosh sahifa: hero va koshin plitkalar o'rni.
 class SkeletonList extends StatelessWidget {
   const SkeletonList({super.key, this.count = 6, this.header = false});
 
@@ -268,35 +288,27 @@ class SkeletonList extends StatelessWidget {
     return Semantics(
       label: tr('Yuklanmoqda...'),
       liveRegion: true,
-      child: _Pulse(
+      child: _Shimmer(
         child: ListView(
           physics: const NeverScrollableScrollPhysics(),
           padding: readable(context, const EdgeInsets.all(AppSpacing.l), max: kGridWidth),
           children: <Widget>[
             if (header) ...<Widget>[
-              Container(
-                height: 132,
-                decoration: BoxDecoration(
-                  color: AppColors.card,
-                  borderRadius: BorderRadius.circular(AppRadius.card),
-                  border: Border(left: BorderSide(color: AppColors.sunken, width: AppSpacing.hoshiya)),
-                ),
-                padding: const EdgeInsets.all(18),
-                child: const Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
-                  SkeletonBox(width: 110, height: 12),
-                  SizedBox(height: 12),
-                  SkeletonBox(width: 220, height: 24),
-                  SizedBox(height: 14),
-                  SkeletonBox(width: 160),
+              const SkeletonBox(width: 150, height: 26, radius: 13),
+              const SizedBox(height: 14),
+              const SkeletonBox(width: 250, height: 30, radius: 8),
+              const SizedBox(height: 14),
+              const Row(children: <Widget>[SkeletonBox(width: 130, height: 34, radius: 17), SizedBox(width: 8), SkeletonBox(width: 110, height: 34, radius: 17)]),
+              const SizedBox(height: 20),
+              for (var row = 0; row < 2; row++) ...<Widget>[
+                Row(children: <Widget>[
+                  Expanded(child: SkeletonBox(height: 140, radius: AppRadius.kpi)),
+                  const SizedBox(width: 10),
+                  Expanded(child: SkeletonBox(height: 140, radius: AppRadius.kpi)),
                 ]),
-              ),
-              const SizedBox(height: AppSpacing.m),
-              Row(children: <Widget>[
-                Expanded(child: SkeletonBox(height: 112, radius: AppRadius.card)),
-                const SizedBox(width: AppSpacing.m),
-                Expanded(child: SkeletonBox(height: 112, radius: AppRadius.card)),
-              ]),
-              const SizedBox(height: AppSpacing.m),
+                const SizedBox(height: 10),
+              ],
+              const SizedBox(height: 6),
             ],
             for (var i = 0; i < count; i++)
               Container(
@@ -331,39 +343,63 @@ String errorText(Object? error) {
   return tr("Ma'lumotni yuklab bo'lmadi.");
 }
 
-/// Toast (veb: `toast` + `data-tone`): ko'tarilgan sirt, chap chetida hoshiya — xato qizil, oddiy xabar asosiy rangda.
+/// Toast (veb 1.41: `toast` + `data-tone`): ko'tarilgan sirt, chapda holat rangidagi doira belgi — muvaffaqiyatda muhr
+/// kabi bosiladi; xato — anor, oddiy xabar — pista.
 void showMessage(BuildContext context, String text, {bool error = false, String? actionLabel, VoidCallback? onAction}) {
   final messenger = ScaffoldMessenger.maybeOf(context);
   if (messenger == null) return;
-  final tone = error ? AppColors.toneDanger : AppColors.accent;
   messenger
     ..hideCurrentSnackBar()
     ..showSnackBar(SnackBar(
       padding: EdgeInsets.zero,
       clipBehavior: Clip.antiAlias,
-      content: IntrinsicHeight(
-        child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
-          Container(width: AppSpacing.hoshiya, color: tone),
-          const SizedBox(width: 12),
-          Padding(
-            padding: const EdgeInsets.only(top: 14, bottom: 14, right: 4),
-            child: Icon(error ? Icons.error_outline_rounded : Icons.check_circle_outline_rounded, size: 20, color: error ? AppColors.danger : AppColors.brand),
+      content: Row(children: <Widget>[
+        Padding(padding: const EdgeInsets.fromLTRB(12, 12, 12, 12), child: ToastIcon(error: error)),
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(0, 14, 12, 14),
+            child: Text(text, style: TextStyle(color: AppColors.ink, fontSize: 14.5, height: 1.35, fontWeight: FontWeight.w500)),
           ),
-          const SizedBox(width: 10),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 14),
-              child: Text(text, style: TextStyle(color: AppColors.ink, fontSize: 14.5, height: 1.35)),
-            ),
-          ),
-          const SizedBox(width: 12),
-        ]),
-      ),
+        ),
+      ]),
       behavior: SnackBarBehavior.floating,
       backgroundColor: AppColors.raised,
+      elevation: 0,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppRadius.card), side: BorderSide(color: AppColors.line)),
       duration: onAction == null ? const Duration(seconds: 4) : const Duration(seconds: 8),
       action: onAction == null ? null : SnackBarAction(label: actionLabel ?? tr('Ochish'), textColor: AppColors.accentStrong, onPressed: onAction),
     ));
+}
+
+/// Toast belgisi: holat rangidagi doira, oq belgi. To'liq darajada muhr kabi bosiladi (scale 1.7 → 1, −14° → 0, 520 ms).
+class ToastIcon extends StatelessWidget {
+  const ToastIcon({super.key, this.error = false});
+
+  final bool error;
+
+  @override
+  Widget build(BuildContext context) {
+    final circle = Container(
+      width: 30,
+      height: 30,
+      decoration: BoxDecoration(color: error ? AppColors.toneDanger : AppColors.toneSuccess, shape: BoxShape.circle),
+      child: Icon(error ? Icons.priority_high_rounded : Icons.check_rounded, size: 19, color: Colors.white),
+    );
+    if (!Motion.rich(context)) return circle;
+    return TweenAnimationBuilder<double>(
+      tween: Tween<double>(begin: 0, end: 1),
+      duration: const Duration(milliseconds: 520),
+      curve: Curves.easeOut,
+      child: circle,
+      builder: (context, t, child) {
+        final k = Curves.easeOutBack.transform(t);
+        return Opacity(
+          opacity: (t * 3).clamp(0.0, 1.0),
+          child: Transform.rotate(angle: (1 - k) * -0.24, child: Transform.scale(scale: 1.7 - 0.7 * k, child: child)),
+        );
+      },
+    );
+  }
 }
 
 /// Pastki menyu bo'limi ko'rinib turibdimi (IndexedStack ochilgan bo'limlarni tirik saqlaydi — yashirin bo'limdagi
@@ -412,7 +448,7 @@ class ErrorState extends StatelessWidget {
       child: SingleChildScrollView(
         padding: const EdgeInsets.all(32),
         child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-          EmptyIllustration(EmptyArt.search, width: 104, color: AppColors.danger),
+          EmptyIllustration(EmptyArt.search, width: 92, color: AppColors.danger),
           const SizedBox(height: 14),
           Text(tr("Ma'lumotni yuklab bo'lmadi"), textAlign: TextAlign.center, style: AppTheme.title(size: 18)),
           const SizedBox(height: 6),
@@ -444,7 +480,7 @@ class ForbiddenState extends StatelessWidget {
       child: SingleChildScrollView(
         padding: const EdgeInsets.all(32),
         child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-          EmptyIllustration(EmptyArt.notebook, width: 104, color: AppColors.warning),
+          EmptyIllustration(EmptyArt.notebook, width: 92, color: AppColors.warning),
           const SizedBox(height: 14),
           Text(tr("Bu bo'lim hozircha mavjud emas"), textAlign: TextAlign.center, style: AppTheme.title(size: 18)),
           const SizedBox(height: 6),
@@ -480,8 +516,8 @@ class EmptyState extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 40),
       child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-        EmptyIllustration(art ?? artForIcon(icon), width: 112),
-        const SizedBox(height: 16),
+        EmptyIllustration(art ?? artForIcon(icon), width: 96),
+        const SizedBox(height: 12),
         ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 360),
           child: Text(text, textAlign: TextAlign.center, style: TextStyle(color: AppColors.muted, fontSize: 15, height: 1.45)),
@@ -492,7 +528,8 @@ class EmptyState extends StatelessWidget {
   }
 }
 
-/// Karta (veb: `card`): shablonga qarab chegarali / soyali / tekis. [tone] — chap chetida hoshiya (diqqat talab qiladi).
+/// Karta (veb: `card`): shablonga qarab chegarali / soyali / tekis (v3 standarti — 1px chiziq, soyasiz). [tone] — diqqat
+/// talab qiladi: chegara va fon shu holat rangiga moyil.
 class AppCard extends StatelessWidget {
   const AppCard({super.key, required this.child, this.padding = const EdgeInsets.all(16), this.onTap, this.color, this.tone});
 
@@ -505,13 +542,15 @@ class AppCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final radius = BorderRadius.circular(AppRadius.card);
-    Widget content = Padding(padding: padding, child: child);
-    if (tone != null) {
-      content = DecoratedBox(decoration: BoxDecoration(border: Border(left: BorderSide(color: tone!, width: AppSpacing.hoshiya))), child: content);
-    }
+    final content = Padding(padding: padding, child: child);
+    final toned = tone;
+    final base = color ?? AppColors.card;
     Widget card = Material(
-      color: color ?? AppColors.card,
-      shape: RoundedRectangleBorder(borderRadius: radius, side: BorderSide(color: AppColors.cardBorder)),
+      color: toned == null ? base : Color.lerp(base, toned, AppColors.dark ? 0.08 : 0.04),
+      shape: RoundedRectangleBorder(
+        borderRadius: radius,
+        side: BorderSide(color: toned == null ? AppColors.cardBorder : Color.lerp(AppColors.line, toned, 0.5)!),
+      ),
       clipBehavior: Clip.antiAlias,
       child: onTap == null ? content : InkWell(onTap: onTap, child: content),
     );
@@ -590,7 +629,7 @@ class StatCard extends StatelessWidget {
         CountUpText(value,
             countKey: 'stat:$label',
             maxLines: 1,
-            style: TextStyle(fontSize: 22, fontWeight: FontWeight.w700, color: AppColors.ink, fontFeatures: AppTheme.tabular, letterSpacing: -0.3)),
+            style: AppTheme.display(size: 24)),
         const SizedBox(height: 2),
         Text(label, maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 13, color: AppColors.muted, height: 1.3)),
         if (hint != null && hint!.isNotEmpty)
@@ -610,7 +649,7 @@ class StatGrid extends StatelessWidget {
   Widget build(BuildContext context) => AdaptiveGrid(minTile: 170, children: children);
 }
 
-/// Holat belgisi — «chip» (veb 1.40): chapda rangli nuqta, yumshoq to'rtburchak.
+/// Holat belgisi — «chip» (veb 1.41 badge-*): tabletka, chapda holatning to'liq rangidagi nuqta.
 class Pill extends StatelessWidget {
   const Pill(this.text, {super.key, Color? color, this.dot = true}) : _color = color;
 
@@ -619,17 +658,28 @@ class Pill extends StatelessWidget {
   final bool dot;
   Color get color => _color ?? AppColors.brand;
 
+  /// Nuqta rangi: holat ranglari — koshin (solid), boshqasi — o'zi.
+  static Color solidOf(Color color) {
+    if (color == AppColors.success || color == AppColors.toneSuccess) return AppColors.toneSuccess;
+    if (color == AppColors.warning || color == AppColors.toneWarning) return AppColors.toneWarning;
+    if (color == AppColors.danger || color == AppColors.toneDanger) return AppColors.toneDanger;
+    if (color == AppColors.info || color == AppColors.toneInfo) return AppColors.toneInfo;
+    if (color == AppColors.brand) return AppColors.accent;
+    return color;
+  }
+
   @override
   Widget build(BuildContext context) {
     final neutral = color == AppColors.muted || color == AppColors.subtle;
-    final fg = neutral ? AppColors.muted : color;
+    final solid = neutral ? AppColors.lineStrong : solidOf(color);
+    final fg = neutral ? AppColors.muted : (solid == AppColors.toneWarning ? AppColors.warning : readableOn(color, AppColors.soft(color)));
     final bg = neutral ? AppColors.sunken : AppColors.soft(color);
     return Container(
-      padding: EdgeInsets.fromLTRB(dot ? 7 : 8, 3, 8, 3),
-      decoration: BoxDecoration(color: bg, borderRadius: BorderRadius.circular(AppRadius.chip)),
+      padding: EdgeInsets.fromLTRB(dot ? 8 : 10, 3, 10, 3),
+      decoration: BoxDecoration(color: bg, borderRadius: BorderRadius.circular(99)),
       child: Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
         if (dot) ...<Widget>[
-          Container(width: 6, height: 6, decoration: BoxDecoration(color: fg, shape: BoxShape.circle)),
+          Container(width: 7, height: 7, decoration: BoxDecoration(color: solid, shape: BoxShape.circle)),
           const SizedBox(width: 6),
         ],
         Flexible(child: Text(text, maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: fg, height: 1.25))),
@@ -693,9 +743,9 @@ class Avatar extends StatelessWidget {
 }
 
 // ---------------------------------------------------------------------------
-// Sahifa sarlavhasi bandi (veb: page-band): bo'lim rangining 7% foni, chap chetida hoshiya, bo'lim yo'li
-// («Kundalik ish › Davomat») va bo'lim yorliqlari. Faqat menyu bo'limlarining asosiy sahifalarida (HomeShell beradi);
-// ochilgan tafsilot sahifalari — oddiy sarlavha paneli.
+// Sahifa sarlavhasi bandi (veb 1.41: page-band): tekis sarlavha paneli, chapda bo'lim rangidagi belgi plitkasi, ustida
+// bo'lim yo'li («Kundalik ish»), ostida bo'lim yorliqlari — tabletkalar, faoli to'liq asosiy rangda. Faqat menyu
+// bo'limlarining asosiy sahifalarida (HomeShell beradi); ochilgan tafsilot sahifalari — oddiy sarlavha paneli.
 // ---------------------------------------------------------------------------
 
 class SectionTab {
@@ -711,6 +761,7 @@ class SectionScope extends InheritedWidget {
     required this.section,
     required this.label,
     required this.color,
+    this.icon,
     this.cluster,
     this.tabs = const <SectionTab>[],
     this.selected = 0,
@@ -723,6 +774,7 @@ class SectionScope extends InheritedWidget {
       : section = '',
         label = '',
         color = const Color(0x00000000),
+        icon = null,
         cluster = null,
         tabs = const <SectionTab>[],
         selected = 0,
@@ -731,6 +783,9 @@ class SectionScope extends InheritedWidget {
   final String section;
   final String label;
   final Color color;
+
+  /// Bo'lim belgisi (bandda rangli plitka ichida).
+  final IconData? icon;
   final String? cluster;
   final List<SectionTab> tabs;
   final int selected;
@@ -786,33 +841,33 @@ PreferredSizeWidget pageBar(
       child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[chips, if (bottom != null) bottom]),
     );
   }
-  final tint = Color.alphaBlend(scope.color.withAlpha(AppColors.dark ? 26 : 18), AppColors.chrome);
-  final path = <String>[if (scope.cluster != null) scope.cluster!, scope.label];
+  final cluster = scope.cluster;
+  final icon = scope.icon;
   return AppBar(
-    toolbarHeight: 60,
-    backgroundColor: tint,
+    toolbarHeight: 62,
     automaticallyImplyLeading: automaticallyImplyLeading,
     leading: leading,
-    titleSpacing: titleSpacing ?? 20,
+    titleSpacing: titleSpacing ?? 16,
     actions: actions,
     bottom: fullBottom,
-    flexibleSpace: Align(
-      alignment: Alignment.centerLeft,
-      child: Container(width: AppSpacing.hoshiya, color: scope.color),
-    ),
-    title: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisSize: MainAxisSize.min, children: <Widget>[
-      Text(
-        path.join(' › '),
-        maxLines: 1,
-        overflow: TextOverflow.ellipsis,
-        style: TextStyle(fontFamily: AppColors.choice.fontFamily, fontSize: 12.5, fontWeight: FontWeight.w500, color: AppColors.subtle, letterSpacing: 0),
-      ),
-      const SizedBox(height: 1),
-      DefaultTextStyle.merge(
-        style: titleTextStyle ?? AppTheme.title(size: AppColors.choice.dense ? 17 : 19, color: AppColors.ink),
-        maxLines: 1,
-        overflow: TextOverflow.ellipsis,
-        child: title ?? Text(scope.label),
+    title: Row(children: <Widget>[
+      if (icon != null) ...<Widget>[SectionMark(icon: icon, color: scope.color, size: 34), const SizedBox(width: 12)],
+      Expanded(
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisSize: MainAxisSize.min, children: <Widget>[
+          if (cluster != null)
+            Text(
+              cluster,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(fontFamily: AppColors.choice.fontFamily, fontSize: 12.5, fontWeight: FontWeight.w500, color: AppColors.subtle, letterSpacing: 0, height: 1.2),
+            ),
+          DefaultTextStyle.merge(
+            style: titleTextStyle ?? AppTheme.title(size: AppColors.choice.dense ? 18 : 20, color: AppColors.ink),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            child: title ?? Text(scope.label),
+          ),
+        ]),
       ),
     ]),
   );
@@ -823,7 +878,7 @@ class _SectionChips extends StatefulWidget {
 
   final SectionScope scope;
 
-  static const double height = 48;
+  static const double height = 50;
 
   @override
   State<_SectionChips> createState() => _SectionChipsState();
@@ -849,7 +904,7 @@ class _SectionChipsState extends State<_SectionChips> {
       height: _SectionChips.height,
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
-        padding: const EdgeInsets.fromLTRB(18, 4, 16, 10),
+        padding: const EdgeInsets.fromLTRB(16, 4, 16, 10),
         child: Row(children: <Widget>[
           for (var i = 0; i < scope.tabs.length; i++) ...<Widget>[
             if (i > 0) const SizedBox(width: 6),
@@ -862,26 +917,36 @@ class _SectionChipsState extends State<_SectionChips> {
 
   Widget _chip(BuildContext context, SectionScope scope, int i) {
     final active = i == scope.selected;
+    final duration = Motion.duration(context, AppDurations.d2);
     return Semantics(
       key: active ? _active : null,
       selected: active,
       button: true,
-      child: Material(
-        color: active ? AppColors.accent : AppColors.card,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(AppRadius.chip + 3),
-          side: BorderSide(color: active ? AppColors.accent : AppColors.line),
-        ),
-        clipBehavior: Clip.antiAlias,
-        child: InkWell(
-          onTap: active ? null : () => scope.onSelect?.call(i),
-          child: Container(
-            height: 34,
-            padding: const EdgeInsets.symmetric(horizontal: 14),
-            alignment: Alignment.center,
-            child: Text(
-              scope.tabs[i].label,
-              style: TextStyle(fontFamily: AppColors.choice.fontFamily, fontWeight: FontWeight.w600, fontSize: 13.5, color: active ? Colors.white : AppColors.ink),
+      child: Pressable(
+        enabled: !active,
+        child: AnimatedContainer(
+          duration: duration,
+          curve: AppCurves.out,
+          decoration: BoxDecoration(
+            color: active ? AppColors.accent : AppColors.card,
+            borderRadius: BorderRadius.circular(99),
+            border: Border.all(color: active ? AppColors.accent : AppColors.line),
+          ),
+          child: Material(
+            type: MaterialType.transparency,
+            child: InkWell(
+              customBorder: const StadiumBorder(),
+              onTap: active ? null : () => scope.onSelect?.call(i),
+              child: Container(
+                height: 34,
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                alignment: Alignment.center,
+                child: AnimatedDefaultTextStyle(
+                  duration: duration,
+                  style: TextStyle(fontFamily: AppColors.choice.fontFamily, fontWeight: FontWeight.w600, fontSize: 13.5, color: active ? AppColors.onBrand : AppColors.muted),
+                  child: Text(scope.tabs[i].label),
+                ),
+              ),
             ),
           ),
         ),
@@ -933,7 +998,7 @@ class MathText extends StatelessWidget {
   }
 }
 
-/// Fon naqshi (veb: data-pattern): nuqtali yoki chiziqli, juda nozik; «Maktab» — katak (sahifa boshida, pastga so'nadi).
+/// Fon naqshi (veb: data-pattern): nuqtali, chiziqli yoki katak (Maktab standarti — sahifa boshida, pastga so'nadi), juda nozik.
 class CanvasPattern extends StatelessWidget {
   const CanvasPattern({super.key, required this.child});
 
@@ -942,8 +1007,8 @@ class CanvasPattern extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final pattern = AppColors.choice.effectivePattern;
-    if (pattern == 'none' && !AppColors.choice.notebook) return child;
-    return CustomPaint(painter: PatternPainter(pattern: AppColors.choice.notebook && pattern == 'none' ? 'grid' : pattern, color: AppColors.lineStrong), child: child);
+    if (pattern == 'none') return child;
+    return CustomPaint(painter: PatternPainter(pattern: pattern, color: AppColors.lineStrong), child: child);
   }
 }
 

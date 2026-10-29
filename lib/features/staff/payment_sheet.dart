@@ -1,37 +1,42 @@
-// To'lov qabul qilish (kassa): summa, usul, guruh va izoh. Natija — kvitansiya raqami.
+// To'lov qabul qilish (kassa): summa, usul, guruh va izoh. Natija — girih muhri (veb: PaymentModal + SuccessStamp),
+// summa va kvitansiya raqami.
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../core/api.dart';
 import '../../core/format.dart';
 import '../../core/i18n.dart';
+import '../../core/koshin.dart';
 import '../../core/session.dart';
 import '../../core/theme.dart';
 import '../../core/widgets.dart';
 import 'students_page.dart';
 
-/// true — to'lov saqlandi.
+/// true — to'lov saqlandi (muhr ko'rinishi «Tayyor» bosilmay yopilsa ham).
 Future<bool?> showPaymentSheet(
   BuildContext context, {
   required int studentId,
   required String studentName,
   List<Map<String, dynamic>> groups = const <Map<String, dynamic>>[],
-}) {
-  return showModalBottomSheet<bool>(
+}) async {
+  var saved = false;
+  final result = await showModalBottomSheet<bool>(
     context: context,
     isScrollControlled: true,
     useSafeArea: true,
     shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(22))),
     builder: (context) => Padding(
       padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-      child: _PaymentForm(studentId: studentId, studentName: studentName, groups: groups),
+      child: _PaymentForm(studentId: studentId, studentName: studentName, groups: groups, onSaved: () => saved = true),
     ),
   );
+  return result ?? (saved ? true : null);
 }
 
 class _PaymentForm extends StatefulWidget {
-  const _PaymentForm({required this.studentId, required this.studentName, required this.groups});
+  const _PaymentForm({required this.studentId, required this.studentName, required this.groups, required this.onSaved});
 
+  final VoidCallback onSaved;
   final int studentId;
   final String studentName;
   final List<Map<String, dynamic>> groups;
@@ -47,6 +52,9 @@ class _PaymentFormState extends State<_PaymentForm> {
   int? _groupId;
   bool _saving = false;
   String? _error;
+
+  /// Saqlangan to'lov: summa va kvitansiya (muhr ko'rinishi).
+  ({int amount, String receipt})? _done;
 
   @override
   void initState() {
@@ -82,8 +90,8 @@ class _PaymentFormState extends State<_PaymentForm> {
       if (!mounted) return;
       HapticFeedback.mediumImpact();
       final receipt = asText(asMap(payment['payment']).isNotEmpty ? asMap(payment['payment'])['receipt'] : payment['receipt']);
-      showMessage(context, receipt.isEmpty ? tr("To'lov qabul qilindi") : '${tr("To'lov qabul qilindi")}: $receipt');
-      Navigator.pop(context, true);
+      widget.onSaved();
+      setState(() => _done = (amount: amount, receipt: receipt));
     } on ApiException catch (error) {
       if (mounted) setState(() => _error = error.message);
     } finally {
@@ -91,12 +99,38 @@ class _PaymentFormState extends State<_PaymentForm> {
     }
   }
 
+  Widget _success(({int amount, String receipt}) done) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(20, 8, 20, 20),
+      child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
+        const Center(child: SuccessStamp(size: 84)),
+        const SizedBox(height: 16),
+        Semantics(
+          liveRegion: true,
+          child: Text(tr("To'lov qabul qilindi"), textAlign: TextAlign.center, style: AppTheme.title(size: 22)),
+        ),
+        const SizedBox(height: 6),
+        Text(money(done.amount), textAlign: TextAlign.center, style: AppTheme.display(size: 30, color: AppColors.ink)),
+        const SizedBox(height: 4),
+        Text(
+          <String>[widget.studentName, if (done.receipt.isNotEmpty) '${tr('Kvitansiya')}: ${done.receipt}'].join(', '),
+          textAlign: TextAlign.center,
+          style: TextStyle(color: AppColors.muted),
+        ),
+        const SizedBox(height: 20),
+        FilledButton(onPressed: () => Navigator.pop(context, true), child: Text(tr('Tayyor'))),
+      ]),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    final done = _done;
+    if (done != null) return _success(done);
     return SingleChildScrollView(
       padding: const EdgeInsets.fromLTRB(20, 16, 20, 20),
       child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, mainAxisSize: MainAxisSize.min, children: <Widget>[
-        Text(tr("To'lov qabul qilish"), style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w800)),
+        Text(tr("To'lov qabul qilish"), style: AppTheme.title(size: 21)),
         const SizedBox(height: 2),
         Text(widget.studentName, style: TextStyle(color: AppColors.muted)),
         const SizedBox(height: 18),

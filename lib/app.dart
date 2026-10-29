@@ -4,6 +4,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'core/api.dart';
 import 'core/i18n.dart';
+import 'core/koshin.dart';
 import 'core/push.dart';
 import 'core/session.dart';
 import 'core/theme.dart';
@@ -128,11 +129,11 @@ class _Splash extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // «Daftar varag'i»: asosiy rangning eng to'q tusi, chapda qizil hoshiya chizig'i (gradient yo'q).
+    // Kirish paneli bilan bir xil: «lojuvard tun» va oq girih yulduzlari naqshi (gradient yo'q).
     return Scaffold(
-      backgroundColor: AppColors.panel,
+      backgroundColor: Koshin.night,
       body: Stack(children: <Widget>[
-        Positioned(left: 28, top: 0, bottom: 0, child: Container(width: 2, color: AppColors.margin.withAlpha(200))),
+        Positioned.fill(child: CustomPaint(painter: GirihPatternPainter(step: 96))),
         Center(
           child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
             Image.asset('assets/brand/mark.png', width: 76, height: 76),

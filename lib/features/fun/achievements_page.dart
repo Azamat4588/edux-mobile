@@ -7,6 +7,7 @@ import '../../core/api.dart';
 import '../../core/format.dart';
 import '../../core/i18n.dart';
 import '../../core/session.dart';
+import '../../core/koshin.dart';
 import '../../core/theme.dart';
 import '../../core/widgets.dart';
 import 'fun_labels.dart';
@@ -167,9 +168,7 @@ class _LevelCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final progress = (asInt(level['progress']) / 100).clamp(0.0, 1.0).toDouble();
-    return Container(
-      padding: const EdgeInsets.all(18),
-      decoration: BoxDecoration(color: AppColors.panel, borderRadius: BorderRadius.circular(18)),
+    return KoshinBanner(
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
         Row(children: <Widget>[
           Container(

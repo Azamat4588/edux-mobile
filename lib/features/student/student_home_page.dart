@@ -92,16 +92,13 @@ class StudentHomePage extends StatelessWidget {
                       ),
                     ),
                     if (cards.isNotEmpty)
-                      IntroItem(
-                        index: 1,
-                        child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
-                          SectionTitle(tr('Bugun')),
-                          TodayGrid(items: cards, onOpen: onOpen),
-                        ]),
-                      ),
+                      Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
+                        SectionTitle(tr('Bugun')),
+                        TodayGrid(items: cards, onOpen: onOpen),
+                      ]),
                     if (actions.isNotEmpty)
                       IntroItem(
-                        index: 2,
+                        index: 1,
                         child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
                           SectionTitle(tr('Tezkor harakatlar')),
                           ActionGrid(actions: actions, onTap: (action) => onOpen!(action.key)),
@@ -109,7 +106,7 @@ class StudentHomePage extends StatelessWidget {
                       ),
                   ]),
                 ),
-                IntroItem(index: 3, child: StudentOverviewBody(insights: insights, crm: crm, onPaid: reload, showGreeting: false, showIdentity: false)),
+                IntroItem(index: 2, child: StudentOverviewBody(insights: insights, crm: crm, onPaid: reload, showGreeting: false, showIdentity: false)),
                 const _QuickActions(),
               ]),
             ),

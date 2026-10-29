@@ -280,10 +280,13 @@ class DetailPlaceholder extends StatelessWidget {
 // ---------------------------------------------------------------------------
 
 class AdaptiveDestination {
-  const AdaptiveDestination({required this.icon, required this.label, this.badge = 0});
+  const AdaptiveDestination({required this.icon, required this.label, this.badge = 0, this.color});
 
   final IconData icon;
   final String label;
+
+  /// Bo'lim rangi (rangli menyu ikonalari, Maktab/Bahor faol bandi).
+  final Color? color;
 
   /// Yangi yozuvlar soni (masalan, «Yangi» fikrlar) — 0 bo'lsa ko'rinmaydi.
   final int badge;
@@ -321,14 +324,9 @@ Widget _badged(Widget icon, int badge) {
   );
 }
 
-/// Faol band matni menyu fonida o'qilsin (to'liq rangli faol bandda — asosiy rangning to'q yoki och tusi).
-Color _activeLabel() {
-  if (contrastRatio(AppColors.navActiveFg, AppColors.navBg) >= 3) return AppColors.navActiveFg;
-  return AppColors.navDark ? Colors.white : AppColors.accentStrong;
-}
-
-/// Pastki menyu (telefon): faol band tepasida hoshiya chizig'i, belgi yumshoq «tabletka» ichida. «Suzuvchi» menyuda
-/// (Yumshoq shablon) — chetlardan ajralgan, yumaloq panel.
+/// Pastki menyu (telefon, veb 1.41 bottom-nav): sarlavha paneli rangida, faol bandning belgisi to'liq asosiy rangli
+/// tabletka ichida (oq belgi), yorlig'i asosiy rangda; bosilganda belgi .9 ga kichrayib prujina bilan qaytadi.
+/// «Suzuvchi» menyuda (Yumshoq shablon) — chetlardan ajralgan, yumaloq panel.
 class AppNavBar extends StatelessWidget {
   const AppNavBar({super.key, required this.destinations, required this.selected, required this.onSelect});
 
@@ -345,34 +343,29 @@ class AppNavBar extends StatelessWidget {
       height: height,
       child: Row(children: <Widget>[
         for (var i = 0; i < destinations.length; i++)
-          Expanded(child: _NavBarItem(item: destinations[i], active: i == selected, onTap: () => onSelect(i), floating: floating)),
+          Expanded(child: _NavBarItem(item: destinations[i], active: i == selected, onTap: () => onSelect(i))),
       ]),
     );
     if (!floating) {
       return Material(
-        color: AppColors.navBg,
+        color: AppColors.chrome,
         child: DecoratedBox(
-          decoration: BoxDecoration(border: Border(top: BorderSide(color: AppColors.navLine))),
+          decoration: BoxDecoration(border: Border(top: BorderSide(color: AppColors.line))),
           child: SafeArea(top: false, child: row),
         ),
       );
     }
-    final radius = BorderRadius.circular((AppRadius.card + 6).clamp(8, 28).toDouble());
+    final radius = BorderRadius.circular((AppRadius.card + 8).clamp(10, 30).toDouble());
     return SafeArea(
       top: false,
       minimum: const EdgeInsets.only(bottom: 10),
       child: Padding(
         padding: const EdgeInsets.fromLTRB(12, 0, 12, 0),
         child: DecoratedBox(
-          decoration: BoxDecoration(
-            borderRadius: radius,
-            boxShadow: <BoxShadow>[
-              BoxShadow(color: AppColors.dark ? const Color(0x88000000) : AppColors.accent.withAlpha(40), blurRadius: 24, offset: const Offset(0, 8), spreadRadius: -6),
-            ],
-          ),
+          decoration: BoxDecoration(borderRadius: radius, boxShadow: AppColors.shadow3),
           child: Material(
-            color: AppColors.navBg,
-            shape: RoundedRectangleBorder(borderRadius: radius, side: BorderSide(color: AppColors.navLine)),
+            color: AppColors.chrome,
+            shape: RoundedRectangleBorder(borderRadius: radius, side: BorderSide(color: AppColors.line)),
             clipBehavior: Clip.antiAlias,
             child: row,
           ),
@@ -382,71 +375,70 @@ class AppNavBar extends StatelessWidget {
   }
 }
 
-class _NavBarItem extends StatelessWidget {
-  const _NavBarItem({required this.item, required this.active, required this.onTap, required this.floating});
+class _NavBarItem extends StatefulWidget {
+  const _NavBarItem({required this.item, required this.active, required this.onTap});
 
   final AdaptiveDestination item;
   final bool active;
   final VoidCallback onTap;
-  final bool floating;
+
+  @override
+  State<_NavBarItem> createState() => _NavBarItemState();
+}
+
+class _NavBarItemState extends State<_NavBarItem> {
+  bool _down = false;
 
   @override
   Widget build(BuildContext context) {
+    final item = widget.item;
+    final active = widget.active;
     final duration = Motion.duration(context, AppDurations.d2);
-    final fg = active ? AppColors.navActiveFg : AppColors.navFg;
+    final rich = Motion.rich(context);
+    final fg = active ? AppColors.onBrand : AppColors.subtle;
     return Semantics(
       selected: active,
       button: true,
       label: item.badge > 0 ? '${item.label}, ${item.badge}' : item.label,
       excludeSemantics: true,
       child: InkResponse(
-        onTap: onTap,
+        onTap: widget.onTap,
+        onHighlightChanged: (value) => setState(() => _down = value),
         containedInkWell: true,
         highlightShape: BoxShape.rectangle,
-        child: Stack(children: <Widget>[
-          // Hoshiya: faol band tepasida chiziq.
-          Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            child: Center(
+        highlightColor: Colors.transparent,
+        splashColor: AppColors.accent.withAlpha(20),
+        child: Center(
+          child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+            AnimatedScale(
+              scale: _down && rich ? 0.9 : 1,
+              duration: _down ? AppDurations.d1 : AppDurations.d2,
+              curve: _down ? Curves.easeOut : AppCurves.spring,
               child: AnimatedContainer(
                 duration: duration,
-                curve: Curves.easeOutCubic,
-                width: active ? 28 : 0,
-                height: 3,
-                decoration: BoxDecoration(
-                  color: AppColors.navDark && !AppColors.dark ? AppColors.accent : _activeLabel(),
-                  borderRadius: const BorderRadius.vertical(bottom: Radius.circular(3)),
-                ),
+                curve: AppCurves.out,
+                width: 54,
+                height: 30,
+                decoration: BoxDecoration(color: active ? AppColors.accent : Colors.transparent, borderRadius: BorderRadius.circular(99)),
+                child: Center(child: _badged(Icon(item.icon, size: 21, color: fg), item.badge)),
               ),
             ),
-          ),
-          Center(
-            child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-              AnimatedContainer(
-                duration: duration,
-                curve: Curves.easeOutCubic,
-                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 4),
-                decoration: BoxDecoration(color: active ? AppColors.navActiveBg : Colors.transparent, borderRadius: BorderRadius.circular(99)),
-                child: _badged(Icon(item.icon, size: 22, color: fg), item.badge),
-              ),
-              const SizedBox(height: 3),
-              Text(
-                item.label,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(fontSize: 11.5, fontWeight: active ? FontWeight.w700 : FontWeight.w500, color: active ? _activeLabel() : AppColors.navFg),
-              ),
-            ]),
-          ),
-        ]),
+            const SizedBox(height: 3),
+            Text(
+              item.label,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(fontSize: 11.5, fontWeight: active ? FontWeight.w700 : FontWeight.w600, color: active ? AppColors.accentStrong : AppColors.subtle),
+            ),
+          ]),
+        ),
       ),
     );
   }
 }
 
-/// iPad yon menyusi: tepada tashkilot belgisi, faol bandning chap chetida hoshiya (menyu chetigacha).
+/// iPad yon menyusi (veb 1.41 sidebar): tepada tashkilot bloki, faol band — to'liq rangli tabletka (Atlas — shafran,
+/// Maktab/Bahor — bo'lim rangining och tusi); rangli ikonalar har bo'lim o'z rangida.
 class AppRail extends StatelessWidget {
   const AppRail({super.key, required this.destinations, required this.selected, required this.onSelect, required this.extended, this.header});
 
@@ -460,7 +452,7 @@ class AppRail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final width = extended ? 240.0 : 92.0;
+    final width = extended ? 248.0 : 92.0;
     return Material(
       color: AppColors.navBg,
       child: SafeArea(
@@ -469,7 +461,7 @@ class AppRail extends StatelessWidget {
           width: width,
           child: ListView(padding: const EdgeInsets.only(top: 12, bottom: 16), children: <Widget>[
             Padding(
-              padding: EdgeInsets.fromLTRB(extended ? 16 : 0, 0, extended ? 12 : 0, 16),
+              padding: EdgeInsets.fromLTRB(extended ? 12 : 0, 0, extended ? 12 : 0, 16),
               child: header ?? Center(child: Image.asset('assets/brand/mark.png', width: 36, height: 36, semanticLabel: 'EduX')),
             ),
             for (var i = 0; i < destinations.length; i++)
@@ -479,6 +471,23 @@ class AppRail extends StatelessWidget {
       ),
     );
   }
+}
+
+/// Faol band ranglari: [fon, matn].
+(Color, Color) railActiveColors(AdaptiveDestination item) {
+  final section = item.color;
+  if (AppColors.choice.sectionTinted && section != null) {
+    return (AppTheme.sectionActive(section), AppColors.dark ? Colors.white : AppColors.ink);
+  }
+  return (AppColors.navActiveBg, AppColors.navActiveFg);
+}
+
+/// Faol bo'lmagan band belgisi: rangli ikonalarda bo'lim rangi (to'q menyuda — och tusi), aks holda menyu matni.
+Color railIconColor(AdaptiveDestination item) {
+  final section = item.color;
+  if (!AppColors.choice.coloredIcons || section == null) return AppColors.navFg;
+  if (AppColors.navDark) return Color.lerp(section, Colors.white, 0.45)!;
+  return readableOn(section, AppColors.navBg, min: 3);
 }
 
 class _RailItem extends StatelessWidget {
@@ -492,15 +501,20 @@ class _RailItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final duration = Motion.duration(context, AppDurations.d2);
-    final fg = active ? AppColors.navActiveFg : AppColors.navFg;
-    final radius = BorderRadius.circular(AppRadius.control);
-    final icon = _badged(Icon(item.icon, size: 22, color: fg), item.badge);
+    final (activeBg, activeFg) = railActiveColors(item);
+    final fg = active ? activeFg : AppColors.navFg;
+    final radius = BorderRadius.circular(AppColors.choice.template == 'spring' || AppColors.choice.template == 'soft' ? 99 : AppRadius.control);
+    final icon = _badged(Icon(item.icon, size: 22, color: active ? activeFg : railIconColor(item)), item.badge);
     final label = Text(
       item.label,
       maxLines: extended ? 1 : 2,
       overflow: TextOverflow.ellipsis,
       textAlign: extended ? TextAlign.start : TextAlign.center,
-      style: TextStyle(fontSize: extended ? 14.5 : 11.5, fontWeight: active ? FontWeight.w700 : FontWeight.w500, color: extended ? fg : (active ? _activeLabel() : AppColors.navFg)),
+      style: TextStyle(
+        fontSize: extended ? 14.5 : 11.5,
+        fontWeight: active ? FontWeight.w700 : FontWeight.w500,
+        color: extended ? fg : (active ? (AppColors.navDark ? Colors.white : AppColors.ink) : AppColors.navFg),
+      ),
     );
     return Semantics(
       selected: active,
@@ -508,51 +522,37 @@ class _RailItem extends StatelessWidget {
       label: item.label,
       excludeSemantics: true,
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 2),
-        child: Stack(children: <Widget>[
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: extended ? 12 : 10),
-            child: InkWell(
-              onTap: onTap,
-              borderRadius: radius,
-              child: extended
-                  ? AnimatedContainer(
-                      duration: duration,
-                      height: 46,
-                      padding: const EdgeInsets.symmetric(horizontal: 12),
-                      decoration: BoxDecoration(color: active ? AppColors.navActiveBg : Colors.transparent, borderRadius: radius),
-                      child: Row(children: <Widget>[icon, const SizedBox(width: 14), Expanded(child: label)]),
-                    )
-                  : Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 6),
-                      child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-                        AnimatedContainer(
-                          duration: duration,
-                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
-                          decoration: BoxDecoration(color: active ? AppColors.navActiveBg : Colors.transparent, borderRadius: BorderRadius.circular(99)),
-                          child: icon,
-                        ),
-                        const SizedBox(height: 4),
-                        label,
-                      ]),
-                    ),
-            ),
+        padding: EdgeInsets.symmetric(horizontal: extended ? 12 : 10, vertical: 2),
+        child: Pressable(
+          scale: 0.97,
+          child: InkWell(
+            onTap: onTap,
+            borderRadius: radius,
+            child: extended
+                ? AnimatedContainer(
+                    duration: duration,
+                    curve: AppCurves.out,
+                    height: 46,
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                    decoration: BoxDecoration(color: active ? activeBg : Colors.transparent, borderRadius: radius),
+                    child: Row(children: <Widget>[icon, const SizedBox(width: 14), Expanded(child: label)]),
+                  )
+                : Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 6),
+                    child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+                      AnimatedContainer(
+                        duration: duration,
+                        curve: AppCurves.out,
+                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+                        decoration: BoxDecoration(color: active ? activeBg : Colors.transparent, borderRadius: BorderRadius.circular(99)),
+                        child: icon,
+                      ),
+                      const SizedBox(height: 4),
+                      label,
+                    ]),
+                  ),
           ),
-          // Hoshiya: menyu chetigacha.
-          Positioned(
-            left: 0,
-            top: 6,
-            bottom: 6,
-            child: AnimatedContainer(
-              duration: duration,
-              width: active ? AppSpacing.hoshiya : 0,
-              decoration: BoxDecoration(
-                color: AppColors.navDark && !AppColors.dark ? AppColors.accent : _activeLabel(),
-                borderRadius: const BorderRadius.horizontal(right: Radius.circular(AppSpacing.hoshiya)),
-              ),
-            ),
-          ),
-        ]),
+        ),
       ),
     );
   }

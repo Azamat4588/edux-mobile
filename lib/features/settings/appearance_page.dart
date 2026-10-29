@@ -1,4 +1,4 @@
-// «Ko'rinish» (3.8, veb: Profil → Ko'rinish, Components/ThemePicker.vue): rejim, shablon (9), asosiy rang (12), matn o'lchami,
+// «Ko'rinish» (3.9, dizayn v3 «Koshin»; veb: Profil → Ko'rinish, Components/ThemePicker.vue): rejim, shablon (9), asosiy rang (12), matn o'lchami,
 // animatsiya darajasi, zichlik va qo'shimcha (shrift, burchaklar, karta uslubi, fon naqshi, menyu). Tepada — jonli namuna:
 // ilovaning haqiqiy komponentlari (hero, «Bugun» kartalari, holat chipi, pastki menyu) tanlangan ko'rinishda.
 // Tanlov darhol qo'llanadi va hisobga saqlanadi (PUT profile/appearance). Rang va shablonni platforma ruxsat bergandagina
@@ -10,6 +10,7 @@ import '../../core/design.dart';
 import '../../core/home_today.dart';
 import '../../core/home_widgets.dart';
 import '../../core/i18n.dart';
+import '../../core/koshin.dart';
 import '../../core/motion.dart';
 import '../../core/session.dart';
 import '../../core/theme.dart';
@@ -58,10 +59,9 @@ class AppearancePage extends StatelessWidget {
           ] else
             Padding(
               padding: const EdgeInsets.only(top: 18),
-              child: HoshiyaBox(
+              child: ToneBox(
                 color: AppColors.accent,
                 background: AppColors.accentSoft,
-                radius: BorderRadius.circular(AppRadius.control),
                 padding: const EdgeInsets.all(12),
                 child: Text(tr("Shablon va rangni tashkilot belgilaydi. Rejim, matn o'lchami va animatsiyani o'zingiz tanlaysiz."),
                     style: TextStyle(color: AppColors.ink, fontSize: 13.5, height: 1.4)),
@@ -74,7 +74,7 @@ class AppearancePage extends StatelessWidget {
           _Section(
             title: tr('Animatsiya'),
             hint: systemReduced
-                ? tr("Telefoningizda «Harakatni kamaytirish» yoqilgan — animatsiyalar o'chiq.")
+                ? tr("Telefoningizda «Harakatni kamaytirish» yoqilgan — faqat yumshoq so'nish qoladi.")
                 : tr("«Kam» — faqat yumshoq so'nish, «O'chiq» — hech qanday harakat."),
             child: _Segments(values: const <String>['full', 'reduced', 'off'], labels: motionLabels, selected: choice.motion, onSelect: (value) => apply('motion', value)),
           ),
@@ -240,7 +240,8 @@ class _AccentRow extends StatelessWidget {
   }
 }
 
-/// 9 shablon: har biri o'z palitrasida chizilgan kichik namuna (menyu paneli, karta, hoshiya).
+/// 9 shablon: har biri o'z palitrasida chizilgan kichik namuna — yon menyu (faol band), sarlavha paneli, ikki koshin
+/// plitka (Ixcham/Grafit — och), ostida nom va kimga mosligi.
 class _TemplateGrid extends StatelessWidget {
   const _TemplateGrid({required this.selected, required this.accent, required this.onSelect});
 
@@ -272,68 +273,95 @@ class _TemplateSwatch extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final palette = templatePalettes[template]![AppColors.dark ? 1 : 0];
-    final darkNav = palette.sidebarBg.computeLuminance() < 0.2;
+    final quiet = template == 'compact' || template == 'graphite';
+    final activeBg = template == 'atlas' ? Koshin.shafran : accent.c600;
+    final rk = const <String, double>{'soft': 1.35, 'compact': 0.65, 'atlas': 1.1, 'graphite': 0.5, 'spring': 1.5}[template] ?? 1;
     final radius = BorderRadius.circular(AppRadius.control);
+    Widget tile(Color color) => Expanded(
+          child: Container(
+            height: 22,
+            decoration: BoxDecoration(
+              color: quiet ? Color.lerp(palette.surface, color, 0.12) : color,
+              borderRadius: BorderRadius.circular(4 * rk),
+              border: quiet ? Border.all(color: color.withAlpha(90), width: 0.8) : null,
+            ),
+            alignment: Alignment.bottomLeft,
+            padding: const EdgeInsets.all(3),
+            child: Container(width: 9, height: 3, color: quiet ? color : Colors.white.withAlpha(220)),
+          ),
+        );
     return Semantics(
       selected: selected,
       button: true,
       label: tr(templateLabels[template] ?? template),
-      child: Material(
-        color: AppColors.card,
-        shape: RoundedRectangleBorder(borderRadius: radius, side: BorderSide(color: selected ? AppColors.accent : AppColors.line, width: selected ? 2 : 1)),
-        clipBehavior: Clip.antiAlias,
-        child: InkWell(
-          onTap: onTap,
-          child: Padding(
-            padding: const EdgeInsets.all(6),
-            child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
-              // Namuna: kanvas, karta (hoshiya bilan), pastki menyu paneli.
-              ClipRRect(
-                borderRadius: BorderRadius.circular((AppRadius.control - 3).clamp(2, 20).toDouble()),
-                child: SizedBox(
-                  height: 62,
-                  child: ColoredBox(
-                    color: palette.canvas,
-                    child: Column(children: <Widget>[
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.fromLTRB(6, 6, 6, 4),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: palette.surface,
-                              border: Border(left: BorderSide(color: accent.c600, width: 3)),
-                              borderRadius: BorderRadius.circular(3),
-                            ),
-                            padding: const EdgeInsets.fromLTRB(5, 5, 5, 4),
-                            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
-                              Container(height: 4, width: 34, color: palette.text1),
+      child: Pressable(
+        child: AnimatedContainer(
+          duration: Motion.duration(context, AppDurations.d2),
+          decoration: BoxDecoration(
+            color: AppColors.card,
+            borderRadius: radius,
+            border: Border.all(color: selected ? AppColors.accent : AppColors.line, width: selected ? 2 : 1),
+          ),
+          child: Material(
+            type: MaterialType.transparency,
+            child: InkWell(
+              onTap: onTap,
+              borderRadius: radius,
+              child: Padding(
+                padding: const EdgeInsets.all(6),
+                child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular((AppRadius.control - 3).clamp(2, 20).toDouble()),
+                    child: SizedBox(
+                      height: 66,
+                      child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
+                        // Yon menyu: logo nuqtasi, faol band (tabletka), bandlar.
+                        Container(
+                          width: 22,
+                          color: palette.sidebarBg,
+                          padding: const EdgeInsets.fromLTRB(4, 6, 4, 0),
+                          child: Column(children: <Widget>[
+                            Container(height: 7, decoration: BoxDecoration(color: accent.c600, borderRadius: BorderRadius.circular(2))),
+                            const SizedBox(height: 6),
+                            Container(height: 6, decoration: BoxDecoration(color: template == 'school' || template == 'spring' ? Color.lerp(palette.sidebarBg, accent.c600, 0.3) : activeBg, borderRadius: BorderRadius.circular(3))),
+                            for (var i = 0; i < 3; i++) ...<Widget>[
                               const SizedBox(height: 4),
-                              Container(height: 3, width: 22, color: palette.text3.withAlpha(150)),
+                              Container(height: 3, margin: const EdgeInsets.symmetric(horizontal: 2), color: palette.sidebarFg.withAlpha(110)),
+                            ],
+                          ]),
+                        ),
+                        Expanded(
+                          child: ColoredBox(
+                            color: palette.canvas,
+                            child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
+                              Container(height: 10, color: palette.headerBg, child: Align(alignment: Alignment.centerLeft, child: Container(margin: const EdgeInsets.only(left: 5), width: 18, height: 3, color: palette.text3.withAlpha(140)))),
+                              Container(height: 1, color: palette.border),
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(5, 6, 5, 0),
+                                child: Align(alignment: Alignment.centerLeft, child: Container(width: 30, height: 4, color: palette.text1)),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(5, 6, 5, 0),
+                                child: Row(children: <Widget>[tile(Koshin.anor), const SizedBox(width: 3), tile(Koshin.lojuvard)]),
+                              ),
                             ]),
                           ),
                         ),
-                      ),
-                      Container(
-                        height: 13,
-                        color: palette.sidebarBg,
-                        child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: <Widget>[
-                          Container(width: 14, height: 5, decoration: BoxDecoration(color: template == 'soft' || template == 'night' || template == 'graphite' ? accent.c600 : (darkNav ? Colors.white : accent.c600.withAlpha(90)), borderRadius: BorderRadius.circular(3))),
-                          for (var i = 0; i < 3; i++) Container(width: 6, height: 5, decoration: BoxDecoration(color: palette.sidebarFg.withAlpha(110), borderRadius: BorderRadius.circular(3))),
-                        ]),
-                      ),
-                    ]),
+                      ]),
+                    ),
                   ),
-                ),
+                  const SizedBox(height: 6),
+                  Row(children: <Widget>[
+                    Expanded(
+                      child: Text(tr(templateLabels[template] ?? template),
+                          maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: AppColors.ink)),
+                    ),
+                    if (selected) Icon(Icons.check_circle_rounded, size: 16, color: AppColors.accent),
+                  ]),
+                  Text(tr(templateHints[template] ?? ''), maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 11, color: AppColors.subtle, height: 1.25)),
+                ]),
               ),
-              const SizedBox(height: 6),
-              Row(children: <Widget>[
-                Expanded(
-                  child: Text(tr(templateLabels[template] ?? template),
-                      maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 12.5, fontWeight: FontWeight.w600, color: AppColors.ink)),
-                ),
-                if (selected) Icon(Icons.check_circle_rounded, size: 16, color: AppColors.accent),
-              ]),
-            ]),
+            ),
           ),
         ),
       ),
@@ -351,6 +379,7 @@ class AppearancePreview extends StatelessWidget {
     const items = <TodayItem>[
       TodayItem(key: 'preview-debt', value: '3', text: "o'quvchining qarzi bor", tone: TodayTone.danger, icon: 'warning'),
       TodayItem(key: 'preview-lessons', value: '16:00', text: 'ING-5, davomat bir bosishda', icon: 'calendar'),
+      TodayItem(key: 'preview-paid', value: '12', text: "to'lov bugun qabul qilindi", icon: 'banknote'),
     ];
     return Semantics(
       label: tr('Namuna'),
@@ -379,11 +408,22 @@ class AppearancePreview extends StatelessWidget {
                     ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(14, 12, 14, 0),
-                      child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
-                        Expanded(child: TodayCard(item: TodayItem(key: items[0].key, value: items[0].value, text: tr(items[0].text), tone: items[0].tone, icon: items[0].icon))),
-                        const SizedBox(width: 10),
-                        Expanded(child: TodayCard(item: TodayItem(key: items[1].key, value: items[1].value, text: tr(items[1].text), icon: items[1].icon))),
-                      ]),
+                      child: IntrinsicHeight(
+                        child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
+                          for (var i = 0; i < items.length; i++) ...<Widget>[
+                            if (i > 0) const SizedBox(width: 8),
+                            Expanded(
+                              child: KoshinTile(
+                                hue: todayHue(items[i]),
+                                value: items[i].value,
+                                text: tr(items[i].text),
+                                icon: navIcon(items[i].icon),
+                                minHeight: 118,
+                              ),
+                            ),
+                          ],
+                        ]),
+                      ),
                     ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(14, 12, 14, 14),
@@ -399,6 +439,7 @@ class AppearancePreview extends StatelessWidget {
                       child: AppNavBar(
                       destinations: <AdaptiveDestination>[
                         AdaptiveDestination(icon: Icons.home_outlined, label: tr('Bosh sahifa')),
+                        AdaptiveDestination(icon: Icons.event_outlined, label: tr('Jadval')),
                         AdaptiveDestination(icon: Icons.groups_outlined, label: tr("O'quvchilar")),
                         AdaptiveDestination(icon: Icons.payments_outlined, label: tr('Moliya')),
                         AdaptiveDestination(icon: Icons.menu, label: tr('Yana')),

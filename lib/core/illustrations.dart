@@ -1,48 +1,56 @@
-// Bo'sh holat illyustratsiyalari (veb 1.40 bilan bir xil: resources/css/app.css --art-*): o'zimizniki, chiziqli,
-// asosiy rangda. SVG manbalari shu yerda — kichik yo'l (path) tahlilchisi bilan chiziladi (qo'shimcha paketsiz).
+// Bo'sh holat illyustratsiyalari (veb 1.41 bilan bir xil: resources/css/app.css --art-*): o'zimizniki, chiziqli,
+// asosiy rangda, orqasida girih yulduzi. SVG manbalari shu yerda — kichik yo'l (path) tahlilchisi bilan chiziladi (qo'shimcha paketsiz).
 // notebook (standart), people, calendar, wallet, checklist, search.
 import 'package:flutter/material.dart';
 
+import 'koshin.dart';
 import 'theme.dart';
 
 enum EmptyArt { notebook, people, calendar, wallet, checklist, search }
 
-/// SVG elementlari: viewBox 0 0 96 72, chiziq 2.4, uchlari yumaloq.
+/// SVG elementlari (veb 1.41 --art-*): viewBox 0 0 96 72, chiziq 2.6, uchlari yumaloq. `fill ` bilan boshlangani — to'liq.
 const Map<EmptyArt, List<String>> emptyArtSvg = <EmptyArt, List<String>>{
   EmptyArt.notebook: <String>[
-    'rect 22 10 50 54 4',
-    'M31 10v54M39 24h25M39 32h25M39 40h16',
-    'M22 18h-4M22 28h-4M22 38h-4M22 48h-4M22 58h-4',
-    'M66 60l14-14 5 5-14 14-7 2z',
+    'M20 22c9-4 18-4 27 1v36c-9-5-18-5-27-1z',
+    'M76 22c-9-4-18-4-27 1v36c9-5 18-5 27-1z',
+    'M26 31c5-1.5 10-1.5 15 .5M26 39c5-1.5 10-1.5 15 .5M55 31c5-2 10-2 15-.5',
+    'M62 52l14-14 4 4-14 14-6 2z',
+    'fill circle 30 48 2.4',
   ],
   EmptyArt.people: <String>[
-    'circle 38 26 9',
-    'M21 60c0-11 7-18 17-18s17 7 17 18',
-    'circle 63 30 7',
-    'M58 44c1.5-.6 3.2-1 5-1 8 0 13 6 13 16',
+    'circle 48 27 8',
+    'M33 58c0-9 6.5-15 15-15s15 6 15 15',
+    'circle 26 33 5.5',
+    'M15 56c0-6.5 4.5-11 11-11 2 0 4 .5 5.5 1.3',
+    'circle 70 33 5.5',
+    'M81 56c0-6.5-4.5-11-11-11-2 0-4 .5-5.5 1.3',
   ],
   EmptyArt.calendar: <String>[
-    'rect 16 15 62 49 5',
-    'M16 27h62M31 9v12M63 9v12',
-    'M27 39h6M43 39h6M59 39h6M27 51h6M43 51h6',
-    'M57 51l4 4 8-8',
+    'rect 19 17 58 45 7',
+    'M19 29h58M33 11v11M63 11v11',
+    'M29 40h5M45 40h5M61 40h5M29 51h5M45 51h5',
+    'fill rect 58 46 11 10 3',
   ],
   EmptyArt.wallet: <String>[
-    'M18 22a6 6 0 0 1 6-6h40v10',
-    'M18 22v36a6 6 0 0 0 6 6h48a6 6 0 0 0 6-6V32a6 6 0 0 0-6-6H24a6 6 0 0 1-6-6',
-    'M78 37H66a5 5 0 0 0 0 10h12z',
-    'M30 44h18',
+    'M18 27a7 7 0 0 1 7-7h38v8',
+    'M18 27v28a7 7 0 0 0 7 7h44a7 7 0 0 0 7-7V35a7 7 0 0 0-7-7H25a7 7 0 0 1-7-7',
+    'M76 39H65a5 5 0 0 0 0 10h11z',
+    'circle 70 14 7',
+    'M70 11v6',
   ],
   EmptyArt.checklist: <String>[
-    'rect 24 13 48 53 5',
-    'rect 38 8 20 10 3',
-    'M32 32l3.5 3.5L42 29M48 32h16M32 46l3.5 3.5L42 43M48 46h16M48 58h10',
+    'rect 23 14 50 52 7',
+    'rect 38 9 20 10 4',
+    'M32 33l3.5 3.5L42 30M49 33h15M32 48l3.5 3.5L42 45M49 48h15',
+    'fill circle 36.5 60 2.2',
+    'M49 60h9',
   ],
   EmptyArt.search: <String>[
-    'rect 16 11 44 53 4',
-    'M25 25h26M25 33h18M25 41h12',
-    'circle 60 46 12',
-    'M69 55l11 11',
+    'rect 16 12 44 52 6',
+    'M25 25h26M25 33h18M25 41h11',
+    'circle 60 47 12',
+    'M69 56l10 10',
+    'fill circle 60 47 4.5',
   ],
 };
 
@@ -120,7 +128,7 @@ Path parseSvgPath(String data) {
 
 /// Bitta element (rect / circle / path) → yo'l.
 Path artElementPath(String element) {
-  final parts = element.split(' ');
+  final parts = (element.startsWith('fill ') ? element.substring(5) : element).split(' ');
   if (parts.first == 'rect') {
     final v = parts.skip(1).map(double.parse).toList();
     return Path()..addRRect(RRect.fromRectAndRadius(Rect.fromLTWH(v[0], v[1], v[2], v[3]), Radius.circular(v[4])));
@@ -146,11 +154,12 @@ class EmptyArtPainter extends CustomPainter {
     final paint = Paint()
       ..color = color
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 2.4
+      ..strokeWidth = 2.6
       ..strokeCap = StrokeCap.round
       ..strokeJoin = StrokeJoin.round;
+    final fill = Paint()..color = color;
     for (final element in emptyArtSvg[art]!) {
-      canvas.drawPath(artElementPath(element), paint);
+      canvas.drawPath(artElementPath(element), element.startsWith('fill ') ? fill : paint);
     }
     canvas.restore();
   }
@@ -159,21 +168,31 @@ class EmptyArtPainter extends CustomPainter {
   bool shouldRepaint(EmptyArtPainter oldDelegate) => oldDelegate.art != art || oldDelegate.color != color;
 }
 
-/// Illyustratsiya (asosiy rangda). Kenglik/balandlik nisbati 4:3.
+/// Illyustratsiya (veb 1.41 empty-state): orqada girih yulduzi plitkasi (asosiy rangning och tusi), ustida chiziqli rasm
+/// (asosiy rangning to'q tusi). [width] — yulduz kengligi (rasm ≈ 0.91 × width).
 class EmptyIllustration extends StatelessWidget {
-  const EmptyIllustration(this.art, {super.key, this.width = 112, this.color});
+  const EmptyIllustration(this.art, {super.key, this.width = 112, this.color, this.backdrop = true});
 
   final EmptyArt art;
   final double width;
   final Color? color;
 
+  /// Girih yulduzi foni.
+  final bool backdrop;
+
   @override
   Widget build(BuildContext context) {
+    final k = width / 92;
+    final ink = color ?? AppColors.accentStrong;
+    final soft = color == null ? AppColors.accentSoft2 : Color.alphaBlend(ink.withAlpha(AppColors.dark ? 56 : 36), AppColors.card);
     return ExcludeSemantics(
       child: SizedBox(
         width: width,
-        height: width * 0.75,
-        child: CustomPaint(painter: EmptyArtPainter(art, color ?? AppColors.brand)),
+        height: width,
+        child: Stack(alignment: Alignment.topCenter, children: <Widget>[
+          if (backdrop) CustomPaint(size: Size.square(width), painter: GirihStarPainter(color: soft)),
+          Positioned(top: 14 * k, child: SizedBox(width: 84 * k, height: 64 * k, child: CustomPaint(painter: EmptyArtPainter(art, ink)))),
+        ]),
       ),
     );
   }

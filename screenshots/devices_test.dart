@@ -199,7 +199,7 @@ void main() {
 
     testWidgets('$prefix 08 korinish', (tester) async {
       quietImages();
-      await shootDevice(tester, device, '08-korinish', org: 'center', role: 'teacher', page: () => const AppearancePage(), template: 'paper', accent: 'forest');
+      await shootDevice(tester, device, '08-korinish', org: 'center', role: 'teacher', page: () => const AppearancePage(), template: 'atlas');
     });
 
     testWidgets('$prefix 02 jurnal', (tester) async {

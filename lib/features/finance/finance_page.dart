@@ -360,7 +360,7 @@ class _DebtorCard extends StatelessWidget {
     final phone = asText(debtor['phone']).replaceAll(RegExp(r'[^+\d]'), '');
     final groups = asRawList(debtor['groups']).join(', ');
     final session = AppScope.of(context);
-    // Qarzdor — qizil hoshiya (diqqat talab qiladi); doira rangi ismdan (bir odam hamma joyda bir rangda).
+    // Qarzdor — anor tusli karta (diqqat talab qiladi); doira rangi ismdan (bir odam hamma joyda bir rangda).
     return AppCard(
       tone: AppColors.toneDanger,
       color: isDetailSelected(context, 'student-${asInt(debtor['id'])}') ? AppColors.accentSoft : null,

@@ -321,9 +321,16 @@ class _HomeShellState extends State<HomeShell> with WidgetsBindingObserver {
     }
     final color = Color(sectionColorOf(section.key));
     if (pages.length == 1) {
-      // Bosh sahifadan boshqa bo'limda — sahifa sarlavhasi bandi (bo'lim yo'li, hoshiya).
+      // Bosh sahifadan boshqa bo'limda — sahifa sarlavhasi bandi (bo'lim belgisi va yo'li).
       if (section.key == 'home') return pages.values.first;
-      return SectionScope(section: section.key, label: section.label, cluster: clusterOf(section.key), color: color, child: pages.values.first);
+      return SectionScope(
+        section: section.key,
+        label: section.label,
+        cluster: clusterOf(section.key),
+        color: color,
+        icon: navIcon(section.icon),
+        child: pages.values.first,
+      );
     }
     return SectionTabsPage(key: ValueKey<String>('section-${section.key}'), section: section, color: color, pages: pages, request: _request(section.key));
   }
@@ -359,10 +366,10 @@ class _HomeShellState extends State<HomeShell> with WidgetsBindingObserver {
       MenuTile(icon: Icons.notifications_none_rounded, color: AppColors.accent, label: tr('Bildirishnomalar'), page: const NotificationsPage()),
       // 1.39: mijozlar fikri — markaz rahbariyatiga (EduX jamoasiga yoziladigan «Murojaatlar» dan alohida).
       if (session.can('feedback_submit'))
-        MenuTile(icon: Icons.rate_review_outlined, color: colored ? const Color(0xFFEA580C) : null, label: tr('Fikr bildirish'), page: const MyFeedbackPage()),
+        MenuTile(icon: Icons.rate_review_outlined, color: colored ? Color(sectionColorOf('feedback')) : null, label: tr('Fikr bildirish'), page: const MyFeedbackPage()),
       MenuTile(
         icon: Icons.support_agent_outlined,
-        color: colored ? const Color(0xFF0891B2) : null,
+        color: colored ? Koshin.feruza : null,
         label: tr('Murojaatlar'),
         page: MasterDetail(master: const SupportPage(), hint: tr('Murojaatni tanlang — yozishma shu yerda ochiladi.')),
       ),
@@ -394,14 +401,19 @@ class _HomeShellState extends State<HomeShell> with WidgetsBindingObserver {
       keys.add(_guardianKey);
       pages.add(GuardianHomePage(tab: _guardianTab));
       for (final item in bottom) {
-        destinations.add(AdaptiveDestination(icon: navIcon(item.icon), label: item.label));
+        destinations.add(AdaptiveDestination(icon: navIcon(item.icon), label: item.label, color: Color(sectionColorOf(item.section))));
       }
     } else {
       for (final item in bottom) {
         final section = sections.firstWhere((candidate) => candidate.key == item.section);
         keys.add(section.key);
         pages.add(_sectionPage(session, section));
-        destinations.add(AdaptiveDestination(icon: navIcon(item.icon), label: item.label, badge: section.key == feedbackSection ? feedbackBadge : 0));
+        destinations.add(AdaptiveDestination(
+          icon: navIcon(item.icon),
+          label: item.label,
+          badge: section.key == feedbackSection ? feedbackBadge : 0,
+          color: Color(sectionColorOf(section.key)),
+        ));
       }
     }
     keys.add(_moreKey);
@@ -523,6 +535,7 @@ class _SectionTabsPageState extends State<SectionTabsPage> {
                 label: widget.section.label,
                 cluster: cluster,
                 color: widget.color,
+                icon: navIcon(widget.section.icon),
                 tabs: meta,
                 selected: i,
                 onSelect: _select,

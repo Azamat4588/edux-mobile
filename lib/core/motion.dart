@@ -1,10 +1,11 @@
-// Harakat (3.8, veb 1.40 «Harakat qoidalari»): har harakat foydalanuvchi harakatiga javob yoki nima o'zgarganini ko'rsatadi.
-// Daraja: To'liq — hammasi; Kam — faqat so'nish (siljish, sanash va grafik o'sishi yo'q); O'chiq — hech narsa.
-// Qurilmada «harakatni kamaytirish» (MediaQuery.disableAnimations) yoqilgan bo'lsa — O'chiq kabi.
+// Harakat (3.9, veb 1.41 «Harakat qoidalari»): ko'proq, lekin ma'noli — har harakat foydalanuvchi harakatiga javob beradi
+// yoki nima o'zgarganini ko'rsatadi. Faqat transform/opacity.
+// Daraja: To'liq — hammasi; Kam — faqat shaffoflik (siljish, prujina, sanash, grafik o'sishi, pulsatsiya yo'q);
+// O'chiq — hech narsa. Qurilmada «harakatni kamaytirish» (MediaQuery.disableAnimations) — kamida «Kam».
 //
-// Bu yerda: [Motion] (daraja, davomiylik, «seansda bir marta»), [IntroScope]/[IntroItem] — bosh sahifadagi yagona
-// orkestrlangan yuklanish (≤ 600 ms), [CountUpText] — raqam sanab o'tishi, [Pressable] — bosilganda .97 kichrayish,
-// [Sparkline] — mini-grafik (bir marta chapdan o'ngga ochiladi).
+// Bu yerda: [Motion] (daraja, davomiylik, «seansda bir marta»), [IntroScope]/[IntroItem]/[IntroTile] — bosh sahifadagi
+// yagona orkestrlangan yuklanish (≤ 700 ms), [CountUpText] — raqam sanab o'tishi, [Pressable] — bosilganda .96 + prujina,
+// [Sparkline] — mini-grafik, [PulseRing] — «hozir» darsi halqasi, [SuccessStamp] — girih muhri.
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -39,7 +40,9 @@ class Motion {
 }
 
 // ---------------------------------------------------------------------------
-// Bosh sahifadagi yagona yuklanish: hero → kartalar → ro'yxatlar, jami ≤ 600 ms, seansda bir marta.
+// Bosh sahifadagi yagona orkestrlangan yuklanish (veb: .intro, ≤ 700 ms, seansda bir marta): hero faqat siljiydi
+// (shaffoflik 0 dan boshlanmaydi — birinchi ko'rinish kechikmaydi), koshin plitkalar navbat bilan «qo'yiladi»
+// (scale .94 → 1, prujina, 45 ms oraliq), keyin qolgan bloklar yengil paydo bo'ladi. «Kam» — faqat shaffoflik.
 // ---------------------------------------------------------------------------
 
 class IntroScope extends StatefulWidget {
@@ -50,7 +53,10 @@ class IntroScope extends StatefulWidget {
   final Widget child;
 
   /// Umumiy davomiylik.
-  static const Duration total = Duration(milliseconds: 600);
+  static const Duration total = Duration(milliseconds: 700);
+
+  /// Faol yuklanish bormi (testlar uchun).
+  static bool playing(BuildContext context) => context.dependOnInheritedWidgetOfExactType<_IntroData>()?.animation != null;
 
   @override
   State<IntroScope> createState() => _IntroScopeState();
@@ -92,8 +98,30 @@ class _IntroData extends InheritedWidget {
   bool updateShouldNotify(_IntroData oldWidget) => oldWidget.animation != animation || oldWidget.level != level;
 }
 
-/// Yuklanish ketma-ketligidagi bo'lak: [index] — tartib (0 — hero). [shiftOnly] — faqat siljiydi (hero: shaffoflik 0 dan
-/// boshlanmaydi, birinchi ko'rinish kechikmaydi).
+/// Yuklanish vaqt jadvali (ms, [IntroScope.total] ichida) — toza mantiq, test/design_v3_test.dart.
+class IntroTiming {
+  IntroTiming._();
+
+  /// Blok: 0 — hero (0–300 ms), keyingilari plitkalardan keyin 70 ms oraliq bilan, har biri 300 ms.
+  static (int, int) block(int index) {
+    if (index <= 0) return (0, 300);
+    final start = math.min(320 + (index - 1) * 70, 400);
+    return (start, 300);
+  }
+
+  /// Koshin plitka: 60 ms dan boshlab 45 ms navbat, har biri 420 ms (prujina); oxirgisi ham 700 ms ichida.
+  static (int, int) tile(int order) {
+    final start = math.min(60 + order * 45, 280);
+    return (start, 420);
+  }
+
+  static Interval interval((int, int) slot, Curve curve) {
+    final total = IntroScope.total.inMilliseconds;
+    return Interval(slot.$1 / total, math.min((slot.$1 + slot.$2) / total, 1.0), curve: curve);
+  }
+}
+
+/// Yuklanish ketma-ketligidagi blok: [index] — tartib (0 — hero). [shiftOnly] — faqat siljiydi (hero).
 class IntroItem extends StatelessWidget {
   const IntroItem({super.key, required this.index, required this.child, this.shiftOnly = false});
 
@@ -106,17 +134,51 @@ class IntroItem extends StatelessWidget {
     final data = context.dependOnInheritedWidgetOfExactType<_IntroData>();
     final animation = data?.animation;
     if (data == null || animation == null) return child;
-    final start = math.min(index * 0.14, 0.56);
-    final curve = CurvedAnimation(parent: animation, curve: Interval(start, math.min(start + 0.44, 1.0), curve: Curves.easeOutCubic));
-    final shift = data.level == MotionLevel.full ? 6.0 : 0.0;
+    final curve = CurvedAnimation(parent: animation, curve: IntroTiming.interval(IntroTiming.block(index), AppCurves.out));
+    final shift = data.level == MotionLevel.full ? 8.0 : 0.0;
+    if (shiftOnly && shift == 0) return child;
     return AnimatedBuilder(
       animation: curve,
       child: child,
       builder: (context, child) {
         final t = curve.value;
-        Widget result = Transform.translate(offset: Offset(0, (1 - t) * shift * (shiftOnly ? 1.4 : 1)), child: child);
-        if (!shiftOnly) result = Opacity(opacity: t, child: result);
+        Widget result = Transform.translate(offset: Offset(0, (1 - t) * shift * (shiftOnly ? 1.5 : 1)), child: child);
+        if (!shiftOnly) result = Opacity(opacity: t.clamp(0.0, 1.0), child: result);
         return result;
+      },
+    );
+  }
+}
+
+/// Koshin plitka «qo'yilishi» (veb: @keyframes tile-set): 10px pastdan, scale .94 → 1 prujina bilan, [order] bo'yicha
+/// 45 ms navbat. [IntroScope] bo'lmasa yoki seansda ikkinchi marta — harakatsiz.
+class IntroTile extends StatelessWidget {
+  const IntroTile({super.key, required this.order, required this.child});
+
+  final int order;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    final data = context.dependOnInheritedWidgetOfExactType<_IntroData>();
+    final animation = data?.animation;
+    if (data == null || animation == null) return child;
+    final slot = IntroTiming.tile(order);
+    final fade = CurvedAnimation(parent: animation, curve: IntroTiming.interval((slot.$1, 200), Curves.easeOut));
+    if (data.level != MotionLevel.full) return FadeTransition(opacity: fade, child: child);
+    final set = CurvedAnimation(parent: animation, curve: IntroTiming.interval(slot, AppCurves.spring));
+    return AnimatedBuilder(
+      animation: set,
+      child: child,
+      builder: (context, child) {
+        final t = set.value;
+        return Opacity(
+          opacity: fade.value.clamp(0.0, 1.0),
+          child: Transform.translate(
+            offset: Offset(0, (1 - t) * 10),
+            child: Transform.scale(scale: 0.94 + 0.06 * t, child: child),
+          ),
+        );
       },
     );
   }
@@ -202,14 +264,17 @@ class _CountUpTextState extends State<CountUpText> {
 }
 
 // ---------------------------------------------------------------------------
-// Bosilish: .97 ga kichrayadi (veb: --press-scale), 120 ms.
+// Bosilish: .96 ga kichrayadi (veb: --press-scale), qaytishda prujina.
 // ---------------------------------------------------------------------------
 
 class Pressable extends StatefulWidget {
-  const Pressable({super.key, required this.child, this.enabled = true});
+  const Pressable({super.key, required this.child, this.enabled = true, this.scale = 0.96});
 
   final Widget child;
   final bool enabled;
+
+  /// Bosilgandagi o'lcham (katta plitka — .98, tugma — .96).
+  final double scale;
 
   @override
   State<Pressable> createState() => _PressableState();
@@ -229,7 +294,12 @@ class _PressableState extends State<Pressable> {
       onPointerDown: (_) => _set(true),
       onPointerUp: (_) => _set(false),
       onPointerCancel: (_) => _set(false),
-      child: AnimatedScale(scale: _down ? 0.97 : 1, duration: AppDurations.d1, curve: Curves.easeOut, child: widget.child),
+      child: AnimatedScale(
+        scale: _down ? widget.scale : 1,
+        duration: _down ? AppDurations.d1 : AppDurations.d2,
+        curve: _down || !Motion.rich(context) ? Curves.easeOut : AppCurves.spring,
+        child: widget.child,
+      ),
     );
   }
 }
@@ -426,5 +496,67 @@ class _DiffAnimatedListState<T> extends State<DiffAnimatedList<T>> {
         );
       },
     );
+  }
+}
+
+// ---------------------------------------------------------------------------
+// «Hozir» darsi: romb nuqta atrofida tarqaladigan halqa (veb: pulse-ring 1.8 s, takror). Faqat To'liq darajada.
+// ---------------------------------------------------------------------------
+
+class PulseRing extends StatefulWidget {
+  const PulseRing({super.key, required this.color, required this.child, this.size = 14});
+
+  final Color color;
+  final double size;
+  final Widget child;
+
+  @override
+  State<PulseRing> createState() => _PulseRingState();
+}
+
+class _PulseRingState extends State<PulseRing> with SingleTickerProviderStateMixin {
+  late final AnimationController _controller = AnimationController(vsync: this, duration: const Duration(milliseconds: 1800));
+  bool _rich = false;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _rich = Motion.rich(context);
+    if (_rich && !_controller.isAnimating) _controller.repeat();
+    if (!_rich && _controller.isAnimating) _controller.stop();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (!_rich) return widget.child;
+    return Stack(clipBehavior: Clip.none, alignment: Alignment.center, children: <Widget>[
+      AnimatedBuilder(
+        animation: _controller,
+        builder: (context, _) {
+          final t = AppCurves.out.transform(_controller.value);
+          return Opacity(
+            opacity: (0.8 * (1 - t)).clamp(0.0, 1.0),
+            child: Transform.scale(
+              scale: 1 + 1.1 * t,
+              child: Transform.rotate(
+                angle: math.pi / 4,
+                child: Container(
+                  width: widget.size,
+                  height: widget.size,
+                  decoration: BoxDecoration(border: Border.all(color: widget.color, width: 2), borderRadius: BorderRadius.circular(3)),
+                ),
+              ),
+            ),
+          );
+        },
+      ),
+      widget.child,
+    ]);
   }
 }

@@ -7,6 +7,7 @@ import '../../core/adaptive.dart';
 import '../../core/app_update.dart';
 import '../../core/design.dart';
 import '../../core/i18n.dart';
+import '../../core/koshin.dart';
 import '../../core/push.dart';
 import '../../core/session.dart';
 import '../../core/theme.dart';
@@ -129,18 +130,20 @@ class _SettingsPageState extends State<SettingsPage> {
       body: ListView(
         padding: readable(context, const EdgeInsets.fromLTRB(16, 16, 16, 32)),
         children: <Widget>[
-          AppCard(
-            tone: AppColors.accent,
+          // Profil — lojuvard banner (kirish paneli oilasi): kim va qaysi tashkilotda.
+          KoshinBanner(
+            radius: AppRadius.card + 4,
+            padding: const EdgeInsets.all(16),
             child: Row(children: <Widget>[
               Avatar(session.userName, size: 52),
               const SizedBox(width: 14),
               Expanded(
                 child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
-                  Text(session.userName, style: AppTheme.title(size: 19)),
+                  Text(session.userName, style: AppTheme.title(size: 20, color: Colors.white)),
                   const SizedBox(height: 2),
                   Text(
                     <String>[if (membership != null) roleLabel(membership.role), session.organizationName].where((item) => item.isNotEmpty).join(', '),
-                    style: TextStyle(color: AppColors.muted, fontSize: 13.5),
+                    style: TextStyle(color: Colors.white.withAlpha(204), fontSize: 13.5),
                   ),
                 ]),
               ),

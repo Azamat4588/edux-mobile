@@ -180,11 +180,12 @@ class StaffHomePage extends StatelessWidget {
                       icon: Icons.lock_outline,
                       text: tr("Bu sahifalar CRM moduli bilan ishlaydi. Tashkilot rahbaridan modulni yoqishni so'rang."),
                     ),
+                  // Koshin plitkalar o'zi navbat bilan «qo'yiladi» (IntroTile) — blok sifatida so'nmaydi.
                   if (cards.isNotEmpty)
-                    item(Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
+                    Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
                       SectionTitle(session.role == 'marketer' ? tr('Murojaatlar') : tr('Bugun')),
                       TodayGrid(items: cards, onOpen: onOpen),
-                    ])),
+                    ]),
                   if (lessons.isNotEmpty || showAttention)
                     item(Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
                       if (lessons.isNotEmpty) ...<Widget>[

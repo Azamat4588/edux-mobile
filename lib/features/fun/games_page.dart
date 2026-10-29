@@ -92,9 +92,9 @@ class GamesCatalog extends StatelessWidget {
 }
 
 Color gameSourceColor(String source) => switch (source) {
-      'bank' => AppColors.brand,
-      'math' => AppColors.warning,
-      _ => AppColors.success,
+      'bank' => AppColors.accent,
+      'math' => Koshin.olxori,
+      _ => Koshin.pista,
     };
 
 
@@ -118,7 +118,7 @@ class GameCard extends StatelessWidget {
         onTap: disabled ? () => showMessage(context, tr(blocked!)) : onTap,
         padding: const EdgeInsets.all(14),
         child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
-          IconTile(icon: gameIcon(game), colors: tileOf(color), size: 46),
+          IconTile(icon: gameIcon(game), colors: StatusColors(Colors.white, color), size: 46),
           const SizedBox(width: 12),
           Expanded(
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[

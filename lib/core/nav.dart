@@ -254,32 +254,33 @@ List<NavSection> overflowSections(List<NavSection> sections, List<NavItem> botto
   return sections.where((section) => !shown.contains(section.key)).toList();
 }
 
-/// Bo'lim rangi (veb nav/colors.js — «Rangli» menyu ikonalari): ARGB.
+/// Bo'lim rangi (veb nav/colors.js 1.41 — koshin oilasi, «Rangli» menyu ikonalari): ARGB. Ma'no bo'yicha: lojuvard — bosh
+/// sahifa va dars, feruza — pul, anor — qarz, olxo'ri — test, pista — ta'lim, shafran — kutilayotgan ish.
 const Map<String, int> sectionColors = <String, int>{
-  'home': 0xFF2563EB,
-  'students': 0xFF7C3AED,
-  'groups': 0xFF7C3AED,
-  'schedule': 0xFF0891B2,
-  'education': 0xFF059669,
-  'courses': 0xFF059669,
-  'testing': 0xFFDB2777,
-  'tests': 0xFFDB2777,
-  'finance': 0xFF16A34A,
-  'payments': 0xFF16A34A,
-  'debtors': 0xFFDC2626,
-  'comms': 0xFFEA580C,
-  'callcenter': 0xFFEA580C,
-  'leads': 0xFF0EA5E9,
-  'tasks': 0xFFD97706,
-  'rewards': 0xFFCA8A04,
-  'achievements': 0xFFCA8A04,
-  'diary': 0xFF0D9488,
-  'tutor': 0xFF9333EA,
-  'assistant': 0xFF9333EA,
-  'settings': 0xFF475569,
-  'child': 0xFF2563EB,
-  'platform': 0xFF334155,
-  'feedback': 0xFFEA580C,
+  'home': 0xFF2D4BD0,
+  'students': 0xFF0B8576,
+  'groups': 0xFF0B8576,
+  'schedule': 0xFF7446E6,
+  'education': 0xFF12814A,
+  'courses': 0xFF12814A,
+  'testing': 0xFF9B3596,
+  'tests': 0xFF9B3596,
+  'finance': 0xFF00808B,
+  'payments': 0xFF00808B,
+  'debtors': 0xFFD0284F,
+  'comms': 0xFFD2560C,
+  'callcenter': 0xFFD2560C,
+  'leads': 0xFFC97A00,
+  'tasks': 0xFF5149DC,
+  'rewards': 0xFFC97A00,
+  'achievements': 0xFFC97A00,
+  'diary': 0xFF12814A,
+  'tutor': 0xFF7446E6,
+  'assistant': 0xFF7446E6,
+  'settings': 0xFF556378,
+  'child': 0xFF2D4BD0,
+  'platform': 0xFF556378,
+  'feedback': 0xFFD2560C,
 };
 
 /// Bo'limlar to'dalari (veb 1.40 nav/clusters.js): «Kundalik ish», «Pul va aloqa», «Boshqaruv». Sahifa sarlavhasi bandida
@@ -299,4 +300,4 @@ String? clusterOf(String section) {
 }
 
 /// Bo'lim rangi (topilmasa — grafit).
-int sectionColorOf(String section) => sectionColors[section] ?? 0xFF64748B;
+int sectionColorOf(String section) => sectionColors[section] ?? 0xFF556378;
