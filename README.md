@@ -86,12 +86,12 @@ Windows, macOS va Linux uchun EduX ilovasi alohida repozitoriyda: [Azamat4588/ed
 
 ## Skrinshotlar
 
-3.8 — «Daftar 2: hoshiya». Telefon (390×844 @3x), iPhone 6.7" (`docs/screenshots/ios/`), iPad 12.9"
+3.9 — dizayn v3 «Koshin». Telefon (390×844 @3x), iPhone 6.7" (`docs/screenshots/ios/`), iPad 12.9"
 (`docs/screenshots/ipad/`) va Android telefon 1080×2340 (`docs/screenshots/android/`), yorug' va tungi, bir necha shablonda:
 
 | | | | |
 |---|---|---|---|
-| ![Kirish](docs/screenshots/01-kirish.png) | ![Direktor bosh sahifasi](docs/screenshots/02-direktor-bosh.png) | ![O'qituvchi, Qog'oz shabloni](docs/screenshots/02-oqituvchi-bosh-qogoz.png) | ![Direktor, Grafit (tungi)](docs/screenshots/02-direktor-bosh-grafit-tungi.png) |
+| ![Kirish](docs/screenshots/01-kirish.png) | ![Direktor bosh sahifasi](docs/screenshots/02-direktor-bosh.png) | ![O'qituvchi, Atlas shabloni](docs/screenshots/02-oqituvchi-bosh-atlas.png) | ![Direktor, Grafit (tungi)](docs/screenshots/02-direktor-bosh-grafit-tungi.png) |
 | ![Davomat](docs/screenshots/04-davomat.png) | ![O'quvchi, Bahor shabloni](docs/screenshots/06-oquvchi-bosh-bahor.png) | ![Ko'rinish](docs/screenshots/14-korinish.png) | ![Ota-ona](docs/screenshots/10-ota-ona.png) |
 
 | | | |
@@ -103,7 +103,35 @@ Hammasi `docs/screenshots/` da (tungi rejim — `*-tungi.png`). Yangilash: `scre
 xabarida `[skrinshot]` bo'lsa yoki Actions → Screenshots → «Run workflow»; rasmlar `screenshots` branch'iga yoziladi
 (`git fetch origin screenshots && git checkout FETCH_HEAD -- '*.png'`).
 
-## 3.8 da yangi (veb 1.40 «Daftar 2: hoshiya» — butunlay yangi ko'rinish)
+## 3.9 da yangi (veb 1.41 dizayn v3 «Koshin» — butunlay boshqa uslub)
+
+1.40 dagi «Daftar» (daftar varag'i, qizil hoshiya, Literata, Golos Text) **to'liq olib tashlandi**. Yangi g'oya — Registon
+koshinlari: ish qismi (ro'yxat, forma) oq va sokin, rang ma'noli joyda; ilova veb bilan bir oila.
+
+- **Tema v3** (`lib/core/theme.dart`, `lib/core/design.dart`; serverda `docs/design.md` «Rang qiymatlari»): 9 shablon —
+  **Koshin** (standart, `classic`), Yumshoq, **Lojuvard** (`night`), Ixcham, Maktab (katak daftar, bo'limlar o'z rangida),
+  **Atlas** (eski «Qog'oz» o'rniga — `paper` → `atlas`, LEGACY), Okean, Grafit, Bahor — × yorug'/tungi, jadvalning aniq hex
+  qiymatlari (14 ustun, sarlavha paneli rangi ham); 12 asosiy rang (standart — **Feruza**), holat ranglari va ularning
+  to'liq «solid» tusi, **koshin ranglari**: feruza, lojuvard, anor, pista, shafran, olxo'ri (`Koshin`).
+- **Shriftlar**: **Commissioner** (sarlavha va raqamlar) va **Onest** (matn) — veb bilan bir xil, OFL
+  (`assets/fonts/OFL-*.txt`, `tool/fonts/build_fonts.py`); Golos Text va Literata olib tashlandi.
+- **Koshin plitkalar** (`lib/core/koshin.dart`): «Bugun» ko'rsatkichlari to'liq rangda, burchagida chiziqli **girih
+  yulduzi**, katta raqam (sanab o'tadi), rang ma'nodan (qarz — anor, kutilmoqda — shafran, bajarildi — pista, pul — feruza,
+  dars — lojuvard, test — olxo'ri); Ixcham va Grafitda — och, sokin plitka. Bosilganda girih 22.5° buriladi.
+- **Ekranlar**: hero kartasiz (sana tabletkasi shafran romb bilan, katta salom, faktlar — rangli son doirasi), darslar vaqt
+  chizig'i — romb nuqtalar, «hozir» — shafran (halqa tarqaladi), «Diqqat talab qiladi» — to'liq rangli son plitkasi;
+  pastki menyu — faol band to'liq rangli tabletka, iPad yon menyusi — faol band to'liq rangda (Atlas — shafran), sahifa
+  sarlavhasi bandi — bo'lim rangidagi belgi plitkasi, yorliqlar — tabletkalar; **kirish oynasi** — «lojuvard tun» paneli,
+  oq girih naqshi va uch koshin plitka (veb kirish sahifasi bilan bir g'oya); «Yana» — lojuvard profil banneri; to'lov
+  qabul qilinganda — **girih muhri** (veb SuccessStamp); bo'sh holatlar — girih ustida chiziqli rasm; lab va o'yin
+  katalogida fan/o'yin belgisi to'liq rangda; toast — holat rangidagi doira belgi.
+- **Harakat**: bosh sahifada bitta orkestrlangan yuklanish (hero siljiydi, plitkalar 45 ms navbat bilan prujina bilan
+  «qo'yiladi», keyin bloklar — jami ≤ 700 ms, seansda bir marta), tugma/tanlov bosilishi .96 + prujina, skelet yaltirashi,
+  muhr. «Animatsiya» darajasi: to'liq / kam (faqat so'nish) / o'chiq; qurilmadagi «Harakatni kamaytirish» — kamida «Kam».
+- Testlar: `test/design_test.dart`, `test/design_v3_test.dart` (tokenlar, LEGACY, shablon tanlash, plitka kontrasti,
+  reduce motion, yuklanish ≤ 700 ms, iPad yon menyusi, sahifa bandi), `test/theme_contrast_test.dart`.
+
+## 3.8 da yangi (veb 1.40 «Daftar 2: hoshiya»; 3.9 da almashtirildi)
 
 - **Dizayn tili** (`lib/core/theme.dart`, `docs/design.md` serverda): yagona esda qoladigan narsa — **hoshiya**, daftar
   chetidagi 4 px rangli chiziq: bosh sahifa «hero»si, diqqat talab qiladigan «Bugun» kartasi (qizil/sariq/yashil), «hozir»
