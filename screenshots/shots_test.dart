@@ -167,6 +167,7 @@ Widget scoped(Session session, String? tab, Widget page) {
     label: section.label,
     cluster: clusterOf(section.key),
     color: Color(sectionColorOf(section.key)),
+    icon: navIcon(section.icon),
     tabs: <SectionTab>[for (final item in section.tabs) SectionTab(item.key, item.label)],
     selected: section.tabs.indexWhere((item) => item.key == tab).clamp(0, section.tabs.length - 1),
     onSelect: (_) {},

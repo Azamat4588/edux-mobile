@@ -12,7 +12,7 @@
  "theme": {
   "defaults": {
    "mode": "light",
-   "accent": "blue",
+   "accent": "teal",
    "template": "classic",
    "font": "onest",
    "size": "md",

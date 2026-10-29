@@ -8,7 +8,7 @@
   "telegram_linked": false,
   "appearance": {
    "mode": "light",
-   "accent": "blue",
+   "accent": "teal",
    "template": "classic"
   }
  },

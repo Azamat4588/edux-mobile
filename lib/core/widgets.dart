@@ -902,6 +902,7 @@ class _SectionChipsState extends State<_SectionChips> {
     final scope = widget.scope;
     return SizedBox(
       height: _SectionChips.height,
+      width: double.infinity,
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         padding: const EdgeInsets.fromLTRB(16, 4, 16, 10),

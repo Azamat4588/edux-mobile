@@ -9,7 +9,6 @@ import '../../core/i18n.dart';
 import '../../core/koshin.dart';
 import '../../core/session.dart';
 import '../../core/theme.dart';
-import '../../core/widgets.dart';
 import 'students_page.dart';
 
 /// true — to'lov saqlandi (muhr ko'rinishi «Tayyor» bosilmay yopilsa ham).

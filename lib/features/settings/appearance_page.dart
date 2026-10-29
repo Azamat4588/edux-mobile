@@ -378,7 +378,6 @@ class AppearancePreview extends StatelessWidget {
     final radius = BorderRadius.circular(AppRadius.card + 6);
     const items = <TodayItem>[
       TodayItem(key: 'preview-debt', value: '3', text: "o'quvchining qarzi bor", tone: TodayTone.danger, icon: 'warning'),
-      TodayItem(key: 'preview-lessons', value: '16:00', text: 'ING-5, davomat bir bosishda', icon: 'calendar'),
       TodayItem(key: 'preview-paid', value: '12', text: "to'lov bugun qabul qilindi", icon: 'banknote'),
     ];
     return Semantics(

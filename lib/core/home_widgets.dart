@@ -118,11 +118,16 @@ class HomeHeader extends StatelessWidget {
         ],
         if (action != null || secondary != null) ...<Widget>[
           const SizedBox(height: 16),
-          Row(children: <Widget>[
-            if (action != null) Expanded(child: action!),
-            if (action != null && secondary != null) const SizedBox(width: 10),
-            if (secondary != null) Expanded(child: secondary!),
-          ]),
+          // Telefonda tugmalar butun kenglikda, keng ekranda (iPad) — o'z kengligida (veb: home-hero-actions).
+          LayoutBuilder(builder: (context, box) {
+            final wide = box.maxWidth >= 600;
+            Widget slot(Widget child) => wide ? ConstrainedBox(constraints: const BoxConstraints(minWidth: 220), child: child) : Expanded(child: child);
+            return Row(children: <Widget>[
+              if (action != null) slot(action!),
+              if (action != null && secondary != null) const SizedBox(width: 10),
+              if (secondary != null) slot(secondary!),
+            ]);
+          }),
         ],
       ]),
     );

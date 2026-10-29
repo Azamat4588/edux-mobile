@@ -513,7 +513,7 @@ class AppTheme {
     final nunito = choice.titleFamily == 'Nunito';
     return TextStyle(
       fontFamily: choice.titleFamily,
-      fontFamilyFallback: const <String>['Commissioner', 'Onest'],
+      fontFamilyFallback: const <String>['Commissioner', 'Onest', 'Manrope'],
       fontSize: size,
       height: 1.15,
       fontWeight: weight ?? _weight(choice.titleWeight),
@@ -525,7 +525,7 @@ class AppTheme {
   /// Raqam uslubi (veb: .today-value — Commissioner 800, −0.035em): KPI plitka, hero faktlari, muhim summalar.
   static TextStyle display({double size = 32, Color? color, FontWeight weight = FontWeight.w800}) => TextStyle(
         fontFamily: 'Commissioner',
-        fontFamilyFallback: const <String>['Onest'],
+        fontFamilyFallback: const <String>['Onest', 'Manrope'],
         fontSize: size,
         height: 1.0,
         fontWeight: weight,
@@ -616,8 +616,8 @@ ThemeData buildTheme() {
   final density = choice.densityFactor;
   final dense = choice.dense;
   final control = (46 * density).clamp(38, 54).toDouble();
-  // Onest'da o'zbek ʻ va kirill Қ Ғ Ҳ yo'q — Commissioner'dan olinadi.
-  const fallback = <String>['Commissioner'];
+  // Onest'da o'zbek ʻ va kirill Қ Ғ Ҳ yo'q — Commissioner'dan, strelkalar (→ ←) — Manrope'dan olinadi.
+  const fallback = <String>['Commissioner', 'Manrope'];
   final family = choice.fontFamily;
   final base = ThemeData(
     useMaterial3: true,
