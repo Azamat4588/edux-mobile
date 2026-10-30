@@ -344,8 +344,25 @@ class Session extends ChangeNotifier implements ApiCredentials {
     Future<void>.microtask(signOut);
   }
 
-  /// Ilova ochilganda: saqlangan til, server va token.
+  /// Oxirgi [restore] serverdan foydalanuvchini ololmagan sabab (internet yoki server xatosi); muvaffaqiyatda null.
+  String? restoreError;
+
+  /// Ilova ochilganda: saqlangan til, server va token. 3.9.1: har qanday xatoda ham kutish oynasi yopiladi
+  /// (oldin kutilmagan xato `restoring` ni true qoldirib, ilova logotip ustida aylanib qolardi).
   Future<void> restore() async {
+    restoreError = null;
+    try {
+      // Umumiy chegara: ochilish hech qachon logotip ustida qotib qolmasin (tarmoq so'rovlarining o'z chegarasi bor).
+      await _restore().timeout(const Duration(seconds: 75));
+    } catch (error) {
+      restoreError = error is ApiException ? error.message : tr("Serverda xatolik yuz berdi. Birozdan keyin qayta urinib ko'ring.");
+    } finally {
+      restoring = false;
+      notifyListeners();
+    }
+  }
+
+  Future<void> _restore() async {
     final prefs = await SharedPreferences.getInstance();
     final languageCode = WidgetsBinding.instance.platformDispatcher.locale.languageCode;
     await I18n.load(prefs.getString('locale') ?? I18n.fromDevice(languageCode));
@@ -359,7 +376,8 @@ class Session extends ChangeNotifier implements ApiCredentials {
     } catch (_) {}
     unawaited(_loadSite());
     try {
-      _token = await _secure.read(key: 'token');
+      // 3.9.1: ba'zi Android qurilmalarda shifrlangan xotira (yangilanishdan keyin) javob bermay qoladi — kutish chegaralangan.
+      _token = await _secure.read(key: 'token').timeout(const Duration(seconds: 6));
     } catch (_) {
       _token = null;
     }
@@ -383,6 +401,7 @@ class Session extends ChangeNotifier implements ApiCredentials {
           await _forget();
         } else {
           // Internet yo'q: token saqlanadi, oxirgi foydalanuvchi va kontekst nusxasi bilan ochiladi.
+          restoreError = error.message;
           _restoreOffline(prefs);
         }
       }

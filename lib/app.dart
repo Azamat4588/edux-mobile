@@ -170,11 +170,17 @@ class _ContextLoaderState extends State<_ContextLoader> {
       if (session.user.isEmpty || session.memberships.isEmpty) {
         // Ilova internetsiz ochilgan: foydalanuvchi va a'zoliklarni qayta olamiz
         await session.restore();
+        // 3.9.1: server javob bermasa — cheksiz aylanish emas, sabab va «Qayta urinish» / «Chiqish».
+        if (mounted && session.user.isEmpty) {
+          setState(() => _error = session.restoreError ?? tr("Server javob bermadi. Internetni tekshirib, qayta urinib ko'ring."));
+        }
         return;
       }
       await session.loadContext();
     } on ApiException catch (error) {
       if (mounted) setState(() => _error = error.message);
+    } catch (_) {
+      if (mounted) setState(() => _error = tr("Serverda xatolik yuz berdi. Birozdan keyin qayta urinib ko'ring."));
     }
   }
 
