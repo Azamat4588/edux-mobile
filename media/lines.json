@@ -1,12 +1,45 @@
 {
-  "voices": ["uz-UZ-SardorNeural", "uz-UZ-MadinaNeural"],
-  "rate": "+8%",
-  "lines": {
-    "r1_01": "O'qituvchingiz hozir nima qilyapti?",
-    "r1_02": "Yana test varaqasi tekshiryapti. Yuzlab varaqa. Har oy.",
-    "r1_03": "Bas!",
-    "r1_04": "EduX bilan varaqani telefonga ko'rsatasiz, ball shu zahoti tayyor.",
-    "r1_05": "Reyting o'zi tuziladi. Ota-ona natijani darhol ko'radi.",
-    "r1_06": "Yigirma beshta o'quvchigacha bepul. Edux app nuqta uz saytida hoziroq boshlang!"
-  }
+ "voices": [
+  "uz-UZ-SardorNeural",
+  "uz-UZ-MadinaNeural"
+ ],
+ "rate": "+8%",
+ "lines": {
+  "r1_01": "O'qituvchingiz hozir nima qilyapti?",
+  "r1_02": "Yana test varaqasi tekshiryapti. Yuzlab varaqa. Har oy.",
+  "r1_03": "Bas!",
+  "r1_04": "EduX bilan varaqani telefonga ko'rsatasiz, ball shu zahoti tayyor.",
+  "r1_05": "Reyting o'zi tuziladi. Ota-ona natijani darhol ko'radi.",
+  "r1_06": "Yigirma beshta o'quvchigacha bepul. Edux app nuqta uz saytida hoziroq boshlang!",
+  "r2_01": "Markazingizda hozir nechta qarzdor bor?",
+  "r2_02": "Uch. Ikki. Bir.",
+  "r2_03": "Bilmadingizmi? Daftar, Excel, beshta chat. Tanish holat.",
+  "r2_04": "EduX'da qarzdorlar bitta ekranda: kim, qancha, qaysi guruhdan.",
+  "r2_05": "To'lovni qabul qildingiz, hisob o'zi yangilanadi.",
+  "r2_06": "Markazingizni cho'ntagingizda boshqaring. Edux app nuqta uz, bepul boshlang!",
+  "r3_01": "Instagramdan ellikta odam yozdi. Nechtasi kursga keldi?",
+  "r3_02": "Javob kechikdi. Keyin qo'ng'iroq qilaman, dedingiz va unutildi.",
+  "r3_03": "Har bir yo'qolgan lid, yo'qolgan pul.",
+  "r3_04": "EduX'da har bir murojaat ro'yxatda: yangi, qo'ng'iroq, sinov dars, o'quvchi.",
+  "r3_05": "Vaqtida eslatma keladi. Birorta lid unutilmaydi.",
+  "r3_06": "Reklama pulingizni yo'qotmang. Edux app nuqta uz.",
+  "r4_01": "Farzandingiz hozir darsdami?",
+  "r4_02": "Ota-ona qo'ng'iroq qiladi. Administrator javob bermaydi.",
+  "r4_03": "EduX bilan ota-ona bilib turadi.",
+  "r4_04": "O'quvchi kelishi bilan davomat o'zi belgilanadi.",
+  "r4_05": "Ota-onaga darhol xabar boradi: farzandingiz darsga keldi.",
+  "r4_06": "Ota-onalar ishonchi, eng yaxshi reklama. Edux app nuqta uz.",
+  "r5_01": "Bu kimning to'lovi edi?",
+  "r5_02": "Chek skrinshotlari, Excel, qo'lda solishtirish. Va yana xato.",
+  "r5_03": "Endi tekshirish shart emas.",
+  "r5_04": "O'quvchi kartaga o'tkazadi, EduX to'lovni o'zi topib, avtomatik tasdiqlaydi.",
+  "r5_05": "Kvitansiya chiqadi, balans yangilanadi, direktor tushumni darhol ko'radi.",
+  "r5_06": "Skrinshotlarsiz, xatosiz. Edux app nuqta uz.",
+  "r6_01": "Bir yuz qirq to'qqiz ming so'm. Qimmatmi?",
+  "r6_02": "O'ttiz kunga bo'ling: kuniga besh ming so'm. Bir choy narxi.",
+  "r6_03": "Shu narxga: testlar, CRM, davomat, to'lovlar, kurslar va mobil ilova.",
+  "r6_04": "Yigirma beshta o'quvchigacha esa, butunlay bepul.",
+  "r6_05": "O'sganingizda tarif almashtirish shart emas. Har qo'shimcha o'quvchi uchun oz miqdor.",
+  "r6_06": "Bugun bepul boshlang. Edux app nuqta uz."
+ }
 }
