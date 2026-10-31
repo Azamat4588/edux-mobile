@@ -1,0 +1,12 @@
+{
+  "voices": ["uz-UZ-SardorNeural", "uz-UZ-MadinaNeural"],
+  "rate": "+8%",
+  "lines": {
+    "r1_01": "O'qituvchingiz hozir nima qilyapti?",
+    "r1_02": "Yana test varaqasi tekshiryapti. Yuzlab varaqa. Har oy.",
+    "r1_03": "Bas!",
+    "r1_04": "EduX bilan varaqani telefonga ko'rsatasiz, ball shu zahoti tayyor.",
+    "r1_05": "Reyting o'zi tuziladi. Ota-ona natijani darhol ko'radi.",
+    "r1_06": "Yigirma beshta o'quvchigacha bepul. Edux app nuqta uz saytida hoziroq boshlang!"
+  }
+}

@@ -1,0 +1,19 @@
+name: Media
+# Reels ovozi: media/lines.json dagi qatorlar edge-tts (uz-UZ) bilan mp3 qilinadi, draft release media-<run_id> ga yuklanadi.
+on:
+  push:
+    branches: [media]
+    paths: ['media/**', '.github/workflows/media.yml']
+permissions:
+  contents: write
+jobs:
+  tts:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install -q edge-tts
+      - run: python media/tts.py
+      - run: cd out && zip -q ../voice.zip *.mp3
+      - env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "media-${{ github.run_id }}" voice.zip --draft --title "media ${{ github.run_id }}" --notes "Reels ovozi" --target "${{ github.sha }}"
