@@ -1,0 +1,54 @@
+{
+    "data": [],
+    "meta": {
+        "current_page": 1,
+        "last_page": 1,
+        "total": 0
+    },
+    "counts": [],
+    "types": [
+        {
+            "value": "center",
+            "label": "O'quv markaz",
+            "modules": [
+                "testing",
+                "crm",
+                "lms"
+            ]
+        },
+        {
+            "value": "school",
+            "label": "Maktab",
+            "modules": [
+                "testing",
+                "lms",
+                "school"
+            ]
+        },
+        {
+            "value": "private_school",
+            "label": "Xususiy maktab",
+            "modules": [
+                "testing",
+                "crm",
+                "lms",
+                "school"
+            ]
+        },
+        {
+            "value": "university",
+            "label": "OTM yoki kollej",
+            "modules": [
+                "testing",
+                "lms"
+            ]
+        },
+        {
+            "value": "other",
+            "label": "Boshqa tashkilot",
+            "modules": [
+                "testing"
+            ]
+        }
+    ]
+}

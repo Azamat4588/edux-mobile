@@ -1,0 +1,15 @@
+{
+    "user": {
+        "id": 2,
+        "name": "Platforma egasi",
+        "phone": "+998900000000",
+        "is_platform_admin": true,
+        "has_password": true,
+        "telegram_linked": false,
+        "appearance": {}
+    },
+    "memberships": [],
+    "mode": "platform",
+    "new_requests": 0,
+    "new_support": 6
+}

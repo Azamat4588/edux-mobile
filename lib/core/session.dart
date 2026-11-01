@@ -55,7 +55,7 @@ class Session extends ChangeNotifier implements ApiCredentials {
     required String token,
     required Map<String, dynamic> user,
     required List<Membership> memberships,
-    required int organizationId,
+    required int? organizationId,
     required Map<String, dynamic> context,
   }) {
     _server = server;

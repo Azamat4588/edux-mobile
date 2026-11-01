@@ -28,6 +28,8 @@ import 'package:edux/features/fun/play_page.dart';
 import 'package:edux/features/guardian/guardian_home_page.dart';
 import 'package:edux/features/help/help_pages.dart';
 import 'package:edux/features/notifications/notifications_page.dart';
+import 'package:edux/features/platform/platform_pages.dart';
+import 'package:edux/features/settings/sessions_page.dart';
 import 'package:edux/features/settings/appearance_page.dart';
 import 'package:edux/features/settings/settings_page.dart';
 import 'package:edux/features/scanner/scanner_hub_page.dart';
@@ -125,7 +127,8 @@ Session sessionFor(String org, String role, {String mode = 'light', String? acce
     token: 'demo',
     user: user,
     memberships: memberships,
-    organizationId: memberships.first.organizationId,
+    // Platforma egasi (3.11) — tashkilotsiz.
+    organizationId: memberships.isEmpty ? null : memberships.first.organizationId,
     context: asMap(readJson('$dir/context.json')),
   );
   final site = File('$dir/site.json');
@@ -516,5 +519,18 @@ void main() {
     quietImages();
     await shoot(tester, '13-murojaatlar', org: 'center', role: 'student', page: const SupportPage());
     await shoot(tester, '13-murojaat', org: 'center', role: 'student', page: const TicketPage(token: 'demoTokenDemoTokenDemoTokenDemoToken1234'));
+  });
+
+  // 3.11: platforma egasi ilovada — to'liq panel (oldin faqat SMS shlyuz). Ma'lumot: 1.45 demo serveri.
+  testWidgets('15 platforma egasi', (tester) async {
+    quietImages();
+    await shoot(tester, '15-platforma-bosh', org: 'platform', role: 'owner', page: const PlatformDashboardPage(), tab: 'platform.dashboard');
+    await shoot(tester, '15-platforma-tashkilotlar', org: 'platform', role: 'owner', page: const PlatformOrganizationsPage(), tab: 'platform.organizations');
+    await shoot(tester, '15-platforma-tashkilot', org: 'platform', role: 'owner', page: const PlatformOrganizationPage(id: 1, title: "Ilm yo'li o'quv markazi"));
+    await shoot(tester, '15-platforma-sessiyalar', org: 'platform', role: 'owner', page: const PlatformSessionsPage(), tab: 'platform.sessions');
+    await shoot(tester, '15-platforma-sessiyalar-tungi', org: 'platform', role: 'owner', page: const PlatformSessionsPage(), tab: 'platform.sessions', mode: 'dark');
+    await shoot(tester, '15-faol-qurilmalar', org: 'platform', role: 'owner', page: const SessionsPage());
+    final session = sessionFor('platform', 'owner');
+    await shoot(tester, '15-platforma-yana', org: 'platform', role: 'owner', page: morePage(session), tab: 'more');
   });
 }

@@ -1,0 +1,22 @@
+{
+    "data": [
+        {
+            "id": 1,
+            "name": "Ilm yo'li o'quv markazi",
+            "type": "center",
+            "is_active": true,
+            "status": "active",
+            "status_label": "Faol",
+            "period_ends_at": "2026-12-28T18:52:34.000000Z",
+            "trial_ends_at": "2026-11-02T14:23:57.000000Z",
+            "active_students": 12,
+            "negotiated_students_price": null,
+            "modules": [
+                "testing",
+                "crm",
+                "lms"
+            ],
+            "suspended": false
+        }
+    ]
+}

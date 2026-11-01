@@ -1,0 +1,127 @@
+{
+    "data": [
+        {
+            "id": 8,
+            "name": "Ergasheva Mohinur",
+            "contact": "+998900000005",
+            "topic": "question",
+            "subject": "Sertifikatni qanday yuklab olaman?",
+            "status": "open",
+            "organization": "Ilm yo'li o'quv markazi",
+            "messages_count": 1,
+            "helpful": null,
+            "updated_at": "2026-10-20T06:40:21.000000Z"
+        },
+        {
+            "id": 7,
+            "name": "Rustamov Akmal",
+            "contact": "+998900000001",
+            "topic": "payment",
+            "subject": "Click to'lovlari kechikib tushmoqda",
+            "status": "open",
+            "organization": "Ilm yo'li o'quv markazi",
+            "messages_count": 1,
+            "helpful": null,
+            "updated_at": "2026-10-20T06:40:20.000000Z"
+        },
+        {
+            "id": 6,
+            "name": "Karimova Dildora",
+            "contact": "+998 90 777 12 34",
+            "topic": "bug",
+            "subject": "SMS kod kelmayapti",
+            "status": "open",
+            "organization": null,
+            "messages_count": 1,
+            "helpful": null,
+            "updated_at": "2026-10-19T15:34:27.000000Z"
+        },
+        {
+            "id": 5,
+            "name": "Karimova Dildora",
+            "contact": "+998 90 777 12 34",
+            "topic": "bug",
+            "subject": "SMS kod kelmayapti",
+            "status": "open",
+            "organization": null,
+            "messages_count": 1,
+            "helpful": null,
+            "updated_at": "2026-10-19T15:33:12.000000Z"
+        },
+        {
+            "id": 4,
+            "name": "Saidova Nilufar",
+            "contact": "+998935554433",
+            "topic": "feature",
+            "subject": "Ota-onalarga haftalik hisobotni ovozli xabar qilib yuborish",
+            "status": "open",
+            "organization": null,
+            "messages_count": 1,
+            "helpful": null,
+            "updated_at": "2026-10-19T05:32:02.000000Z"
+        },
+        {
+            "id": 1,
+            "name": "Rustamov Akmal",
+            "contact": "+998901234567",
+            "topic": "bug",
+            "subject": "Davomat jadvali telefonda kesilib qolyapti",
+            "status": "open",
+            "organization": null,
+            "messages_count": 1,
+            "helpful": null,
+            "updated_at": "2026-10-18T11:32:02.000000Z"
+        },
+        {
+            "id": 2,
+            "name": "Ergasheva Mohinur",
+            "contact": "mohinur@example.uz",
+            "topic": "payment",
+            "subject": "Hisob-fakturani yuridik shaxs nomiga qayta chiqarish",
+            "status": "answered",
+            "organization": null,
+            "messages_count": 2,
+            "helpful": null,
+            "updated_at": "2026-10-18T17:32:02.000000Z"
+        },
+        {
+            "id": 3,
+            "name": "Yusupov Jasur",
+            "contact": "@jasur_teacher",
+            "topic": "question",
+            "subject": "Bir o'qituvchini ikki filialga biriktirish mumkinmi?",
+            "status": "closed",
+            "organization": null,
+            "messages_count": 3,
+            "helpful": null,
+            "updated_at": "2026-10-18T23:32:02.000000Z"
+        }
+    ],
+    "meta": {
+        "total": 8,
+        "last_page": 1,
+        "current_page": 1
+    },
+    "counts": {
+        "answered": 1,
+        "closed": 1,
+        "open": 6
+    },
+    "ratings": {
+        "helpful": 0,
+        "not_helpful": 0
+    },
+    "topics": {
+        "question": "Savol",
+        "bug": "Xatolik",
+        "payment": "To'lov va hisob",
+        "feature": "Taklif",
+        "other": "Boshqa"
+    },
+    "statuses": {
+        "open": "Yangi",
+        "answered": "Javob berilgan",
+        "closed": "Yopilgan"
+    },
+    "quick_replies": []
+}

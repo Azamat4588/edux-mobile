@@ -1,0 +1,290 @@
+{
+    "data": [
+        {
+            "id": 387,
+            "client": "android",
+            "client_label": "Android ilova",
+            "device": "Google Pixel 8",
+            "app_version": "3.11.0",
+            "ip": "127.0.0.1",
+            "created_at": "2026-11-01T11:43:39.000000Z",
+            "last_used_at": "2026-11-01T11:43:39.000000Z",
+            "expires_at": "2027-01-30T11:43:39.000000Z",
+            "online": true,
+            "current": true,
+            "user": {
+                "id": 2,
+                "name": "Platforma egasi",
+                "phone": "+998900000000",
+                "owner": true,
+                "max_sessions": null,
+                "limit": 0,
+                "organizations": []
+            }
+        },
+        {
+            "id": 378,
+            "client": "web",
+            "client_label": "Brauzer",
+            "device": "Chrome · Windows",
+            "app_version": null,
+            "ip": "84.54.178.146",
+            "created_at": "2026-11-01T11:43:29.000000Z",
+            "last_used_at": "2026-11-01T11:43:32.000000Z",
+            "expires_at": "2026-12-01T11:43:29.000000Z",
+            "online": true,
+            "current": false,
+            "user": {
+                "id": 2,
+                "name": "Platforma egasi",
+                "phone": "+998900000000",
+                "owner": true,
+                "max_sessions": null,
+                "limit": 0,
+                "organizations": []
+            }
+        },
+        {
+            "id": 379,
+            "client": "web",
+            "client_label": "Brauzer",
+            "device": "Chrome · Windows",
+            "app_version": null,
+            "ip": "84.54.179.153",
+            "created_at": "2026-11-01T11:43:29.000000Z",
+            "last_used_at": "2026-11-01T11:24:32.000000Z",
+            "expires_at": "2026-12-01T11:43:29.000000Z",
+            "online": false,
+            "current": false,
+            "user": {
+                "id": 1,
+                "name": "Rustamov Akmal",
+                "phone": "+998900000001",
+                "owner": false,
+                "max_sessions": null,
+                "limit": 10,
+                "organizations": [
+                    "Ilm yo'li o'quv markazi"
+                ]
+            }
+        },
+        {
+            "id": 380,
+            "client": "android",
+            "client_label": "Android ilova",
+            "device": "Samsung Galaxy A54",
+            "app_version": "3.11.0",
+            "ip": "84.54.180.160",
+            "created_at": "2026-11-01T11:43:30.000000Z",
+            "last_used_at": "2026-11-01T10:27:32.000000Z",
+            "expires_at": "2027-01-30T11:43:30.000000Z",
+            "online": false,
+            "current": false,
+            "user": {
+                "id": 1,
+                "name": "Rustamov Akmal",
+                "phone": "+998900000001",
+                "owner": false,
+                "max_sessions": null,
+                "limit": 10,
+                "organizations": [
+                    "Ilm yo'li o'quv markazi"
+                ]
+            }
+        },
+        {
+            "id": 381,
+            "client": "android",
+            "client_label": "Android ilova",
+            "device": "Xiaomi Redmi Note 13",
+            "app_version": "3.11.0",
+            "ip": "84.54.181.167",
+            "created_at": "2026-11-01T11:43:30.000000Z",
+            "last_used_at": "2026-11-01T08:52:32.000000Z",
+            "expires_at": "2027-01-30T11:43:30.000000Z",
+            "online": false,
+            "current": false,
+            "user": {
+                "id": 1,
+                "name": "Rustamov Akmal",
+                "phone": "+998900000001",
+                "owner": false,
+                "max_sessions": null,
+                "limit": 10,
+                "organizations": [
+                    "Ilm yo'li o'quv markazi"
+                ]
+            }
+        },
+        {
+            "id": 382,
+            "client": "ios",
+            "client_label": "iPhone/iPad ilova",
+            "device": "iPhone/iPad",
+            "app_version": "3.11.0",
+            "ip": "84.54.182.174",
+            "created_at": "2026-11-01T11:43:30.000000Z",
+            "last_used_at": "2026-11-01T06:39:32.000000Z",
+            "expires_at": "2027-01-30T11:43:30.000000Z",
+            "online": false,
+            "current": false,
+            "user": {
+                "id": 3,
+                "name": "Islomova Shahnoza",
+                "phone": "+998901110001",
+                "owner": false,
+                "max_sessions": null,
+                "limit": 10,
+                "organizations": [
+                    "Ilm yo'li o'quv markazi"
+                ]
+            }
+        },
+        {
+            "id": 383,
+            "client": "web",
+            "client_label": "Brauzer",
+            "device": "Safari · macOS",
+            "app_version": null,
+            "ip": "84.54.183.181",
+            "created_at": "2026-11-01T11:43:31.000000Z",
+            "last_used_at": "2026-11-01T03:48:32.000000Z",
+            "expires_at": "2026-12-01T11:43:31.000000Z",
+            "online": false,
+            "current": false,
+            "user": {
+                "id": 4,
+                "name": "Usmonova Dildora",
+                "phone": "+998901110002",
+                "owner": false,
+                "max_sessions": null,
+                "limit": 10,
+                "organizations": [
+                    "Ilm yo'li o'quv markazi"
+                ]
+            }
+        },
+        {
+            "id": 384,
+            "client": "web",
+            "client_label": "Brauzer",
+            "device": "Chrome · Windows",
+            "app_version": null,
+            "ip": "84.54.184.188",
+            "created_at": "2026-11-01T11:43:31.000000Z",
+            "last_used_at": "2026-11-01T00:19:32.000000Z",
+            "expires_at": "2026-12-01T11:43:31.000000Z",
+            "online": false,
+            "current": false,
+            "user": {
+                "id": 5,
+                "name": "Ergashev Rustam",
+                "phone": "+998901110003",
+                "owner": false,
+                "max_sessions": null,
+                "limit": 10,
+                "organizations": [
+                    "Ilm yo'li o'quv markazi"
+                ]
+            }
+        },
+        {
+            "id": 385,
+            "client": "android",
+            "client_label": "Android ilova",
+            "device": "Samsung Galaxy S23",
+            "app_version": "3.10.0",
+            "ip": "84.54.185.195",
+            "created_at": "2026-11-01T11:43:31.000000Z",
+            "last_used_at": "2026-10-31T20:12:32.000000Z",
+            "expires_at": "2027-01-30T11:43:31.000000Z",
+            "online": false,
+            "current": false,
+            "user": {
+                "id": 8,
+                "name": "Karimova Nodira",
+                "phone": "+998900000002",
+                "owner": false,
+                "max_sessions": null,
+                "limit": 10,
+                "organizations": [
+                    "Ilm yo'li o'quv markazi"
+                ]
+            }
+        },
+        {
+            "id": 386,
+            "client": "desktop",
+            "client_label": "Kompyuter ilovasi",
+            "device": "KASSA-PC",
+            "app_version": "3.11.0",
+            "ip": "84.54.186.202",
+            "created_at": "2026-11-01T11:43:31.000000Z",
+            "last_used_at": "2026-10-31T15:27:32.000000Z",
+            "expires_at": "2027-01-30T11:43:31.000000Z",
+            "online": false,
+            "current": false,
+            "user": {
+                "id": 6,
+                "name": "Hamidova Feruza",
+                "phone": "+998901110004",
+                "owner": false,
+                "max_sessions": null,
+                "limit": 10,
+                "organizations": [
+                    "Ilm yo'li o'quv markazi"
+                ]
+            }
+        }
+    ],
+    "meta": {
+        "current_page": 1,
+        "last_page": 1,
+        "total": 10
+    },
+    "summary": {
+        "total": 10,
+        "online": 2,
+        "users": 7,
+        "by_client": {
+            "web": 4,
+            "android": 4,
+            "ios": 1,
+            "desktop": 1
+        },
+        "locked": 0
+    },
+    "policy": {
+        "session_days": 30,
+        "app_session_days": 90,
+        "idle_hours": 0,
+        "max_sessions": 10,
+        "limit_mode": "oldest"
+    },
+    "clients": [
+        {
+            "value": "web",
+            "label": "Brauzer"
+        },
+        {
+            "value": "android",
+            "label": "Android ilova"
+        },
+        {
+            "value": "ios",
+            "label": "iPhone/iPad ilova"
+        },
+        {
+            "value": "app",
+            "label": "Mobil ilova"
+        },
+        {
+            "value": "desktop",
+            "label": "Kompyuter ilovasi"
+        },
+        {
+            "value": "telegram",
+            "label": "Telegram mini-ilova"
+        }
+    ]
+}
