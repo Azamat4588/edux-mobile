@@ -18,7 +18,7 @@ name: Build
 on:
   push:
     # main — to'liq yig'ish va reliz; boshqa branch'lar — faqat tahlil va testlar (`check` job, relizsiz).
-    branches: ['**', '!screenshots']
+    branches: ['**', '!screenshots', '!media']
   pull_request:
   workflow_dispatch:
 
