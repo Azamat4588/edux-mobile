@@ -356,7 +356,7 @@ class _SmsGatewayPageState extends State<SmsGatewayPage> with WidgetsBindingObse
                 padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
                 child: Text(
                   gateway.native
-                      ? tr("Shlyuz fon xizmatida ishlaydi (bildirishnomalar panelida «SMS shlyuz ishlayapti»): telefon qulflansa, ilova yopilsa yoki telefon qayta yoqilsa ham navbat har 20 soniyada tekshiriladi. Xiaomi, Huawei, Oppo, Vivo, Samsung telefonlarida ilova sozlamalarida «Avtomatik ishga tushish» ni yoqing va batareya rejimini «Cheklovsiz» qiling.")
+                      ? tr('Shlyuz fon xizmatida ishlaydi (bildirishnomalar panelida «SMS shlyuz ishlayapti»): telefon qulflansa, ilova yopilsa yoki telefon qayta yoqilsa ham navbat har 20 soniyada tekshiriladi. Xiaomi, Huawei, Oppo, Vivo, Samsung telefonlarida ilova sozlamalarida «Avtomatik ishga tushish» ni yoqing va batareya rejimini «Cheklovsiz» qiling.')
                       : tr("Ilova ochiq tursin: navbat har 20 soniyada tekshiriladi. Ilova yopilsa, SMS'lar boshqa ulangan telefonlardan ketadi yoki navbatda kutib turadi. Bir hisob bilan bir nechta telefon ulash mumkin — server navbatni ular orasida chegaralari bo'yicha taqsimlaydi."),
                   style: TextStyle(color: AppColors.muted, fontSize: 13),
                 ),

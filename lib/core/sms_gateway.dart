@@ -238,7 +238,7 @@ class SmsGatewayService extends ChangeNotifier {
       'app_version': PushService.appVersion,
       'texts': <String, String>{
         'title': tr('EduX: SMS shlyuz ishlayapti'),
-        'body': tr("Telefon qulflansa ham SMS yuboriladi. Yuborildi: {0}"),
+        'body': tr('Telefon qulflansa ham SMS yuboriladi. Yuborildi: {0}'),
       },
     };
     try {
@@ -284,7 +284,7 @@ class SmsGatewayService extends ChangeNotifier {
       enabled = false;
       _stop(service: false);
       native = false;
-      if (asInt(status['stopped']) == 401) lastError = tr("Kirish muddati tugadi: ilovaga qayta kiring va shlyuzni yoqing.");
+      if (asInt(status['stopped']) == 401) lastError = tr('Kirish muddati tugadi: ilovaga qayta kiring va shlyuzni yoqing.');
       final prefs = await SharedPreferences.getInstance();
       await prefs.setBool(_prefKey, false);
     }
