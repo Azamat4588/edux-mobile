@@ -377,7 +377,7 @@ class _PlatformOrganizationPageState extends State<PlatformOrganizationPage> {
           final suspended = subscription['suspended_at'] != null;
           final (label, color) = subscriptionStatus(asText(data['status']), suspended: suspended);
           final staff = asList(data['staff']);
-          final modules = (data['modules'] is List ? data['modules'] as List : const <dynamic>[]).map((item) => tr(asText(item))).join(', ');
+          final modules = asRawList(data['modules']).map((item) => tr(_moduleLabels[asText(item)] ?? asText(item))).join(', ');
           return ListView(padding: const EdgeInsets.all(16), children: <Widget>[
             AppCard(
               child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
@@ -443,6 +443,14 @@ class _PlatformOrganizationPageState extends State<PlatformOrganizationPage> {
     );
   }
 }
+
+/// Modul nomlari (server App\\Enums\\Module::label).
+const Map<String, String> _moduleLabels = <String, String>{
+  'testing': 'Test tizimi',
+  'crm': 'CRM',
+  'lms': "Ta'lim (kurslar)",
+  'school': 'Maktab boshqaruvi',
+};
 
 // ─────────────────────────────── Hisoblar ───────────────────────────────
 
