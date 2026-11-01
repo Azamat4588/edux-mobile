@@ -1,4 +1,11 @@
 {
+"Android ekran o'chgach bir muddatdan keyin ilovani uxlatib qo'yadi va SMS'lar to'xtaydi. EduX ga «Cheklovsiz» ruxsat bering.": "Some time after the screen turns off, Android puts the app to sleep and SMS stop. Allow EduX to run «Unrestricted».",
+"Batareya cheklovini olib tashlash": "Remove battery restriction",
+"Batareya tejash yoqilgan": "Battery saving is on",
+"EduX: SMS shlyuz ishlayapti": "EduX: SMS gateway is running",
+"Kirish muddati tugadi: ilovaga qayta kiring va shlyuzni yoqing.": "Your sign-in expired: sign in to the app again and turn the gateway on.",
+"Shlyuz fon xizmatida ishlaydi (bildirishnomalar panelida «SMS shlyuz ishlayapti»): telefon qulflansa, ilova yopilsa yoki telefon qayta yoqilsa ham navbat har 20 soniyada tekshiriladi. Xiaomi, Huawei, Oppo, Vivo, Samsung telefonlarida ilova sozlamalarida «Avtomatik ishga tushish» ni yoqing va batareya rejimini «Cheklovsiz» qiling.": "The gateway runs as a background service (notification «SMS gateway is running»): the queue is checked every 20 seconds even when the phone is locked, the app is closed or the phone restarts. On Xiaomi, Huawei, Oppo, Vivo and Samsung phones, turn on «Autostart» in the app settings and set the battery mode to «Unrestricted».",
+"Telefon qulflansa ham SMS yuboriladi. Yuborildi: {0}": "SMS are sent even when the phone is locked. Sent: {0}",
 "0 dan 100 gacha son kiriting.": "Enter a number from 0 to 100.",
 "Bitta hisobga {0} ta qurilma ({1}).": "{0} devices per account ({1}).",
 "Blokdan chiqarildi.": "Unblocked.",

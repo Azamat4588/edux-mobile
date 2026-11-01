@@ -651,6 +651,8 @@ class Session extends ChangeNotifier implements ApiCredentials {
 
   Future<void> signOut() async {
     if (_token != null) {
+      // 3.12: SMS shlyuz fon xizmati shu token bilan ishlaydi — chiqishda to'xtaydi.
+      await SmsGatewayService.stopAll();
       await PushService.instance.detach(this);
       try {
         await api.post('auth/logout');

@@ -103,6 +103,14 @@ Hammasi `docs/screenshots/` da (tungi rejim — `*-tungi.png`). Yangilash: `scre
 xabarida `[skrinshot]` bo'lsa yoki Actions → Screenshots → «Run workflow»; rasmlar `screenshots` branch'iga yoziladi
 (`git fetch origin screenshots && git checkout FETCH_HEAD -- '*.png'`).
 
+## 3.12 da yangi (SMS shlyuz fonda)
+
+- **SMS shlyuz telefon qulflanganda ham ishlaydi.** Navbatni endi Android fon xizmati (doimiy bildirishnoma «EduX: SMS shlyuz
+  ishlayapti») tekshiradi va yuboradi: ekran o'chsa, ilova yopilsa yoki telefon qayta yoqilsa ham to'xtamaydi. Protsessor va
+  Wi‑Fi uyg'oq ushlab turiladi.
+- **Batareya tejash.** Shlyuz yoqilganda «Cheklovsiz» ruxsat so'raladi; cheklov qolsa, sahifada ogohlantirish va tugma.
+- Kirish muddati tugasa yoki shlyuz vebda o'chirilsa, xizmat to'xtaydi va ilova sababini ko'rsatadi; chiqishda xizmat to'xtaydi.
+
 ## 3.11 da yangi (server 1.45: platforma egasi ilovada, sessiyalar va xavfsizlik)
 
 - **Platforma egasi — to'liq panel.** Oldin egasiga ilovada faqat SMS shlyuz ochilardi. Endi: bosh sahifa (tashkilotlar,

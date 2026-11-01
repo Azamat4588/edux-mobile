@@ -1,4 +1,11 @@
 {
+"Android ekran o'chgach bir muddatdan keyin ilovani uxlatib qo'yadi va SMS'lar to'xtaydi. EduX ga «Cheklovsiz» ruxsat bering.": "После выключения экрана Android через некоторое время усыпляет приложение, и SMS перестают отправляться. Разрешите EduX работать «Без ограничений».",
+"Batareya cheklovini olib tashlash": "Снять ограничение батареи",
+"Batareya tejash yoqilgan": "Включена экономия батареи",
+"EduX: SMS shlyuz ishlayapti": "EduX: SMS-шлюз работает",
+"Kirish muddati tugadi: ilovaga qayta kiring va shlyuzni yoqing.": "Срок входа истёк: войдите в приложение снова и включите шлюз.",
+"Shlyuz fon xizmatida ishlaydi (bildirishnomalar panelida «SMS shlyuz ishlayapti»): telefon qulflansa, ilova yopilsa yoki telefon qayta yoqilsa ham navbat har 20 soniyada tekshiriladi. Xiaomi, Huawei, Oppo, Vivo, Samsung telefonlarida ilova sozlamalarida «Avtomatik ishga tushish» ni yoqing va batareya rejimini «Cheklovsiz» qiling.": "Шлюз работает в фоновой службе (в шторке уведомлений — «SMS-шлюз работает»): очередь проверяется каждые 20 секунд, даже если телефон заблокирован, приложение закрыто или телефон перезагружен. На Xiaomi, Huawei, Oppo, Vivo, Samsung включите в настройках приложения «Автозапуск» и режим батареи «Без ограничений».",
+"Telefon qulflansa ham SMS yuboriladi. Yuborildi: {0}": "SMS отправляются даже при заблокированном телефоне. Отправлено: {0}",
 "0 dan 100 gacha son kiriting.": "Введите число от 0 до 100.",
 "Bitta hisobga {0} ta qurilma ({1}).": "На один аккаунт — {0} устройств ({1}).",
 "Blokdan chiqarildi.": "Разблокирован.",

@@ -8,7 +8,11 @@
 // 3.10 (server 1.44): bir hisob bilan bir nechta telefon — har telefon o'z `device_id` si bilan ro'yxatdan o'tadi; server
 // telefonning 30 daqiqalik va kunlik chegarasini hisoblab beradi, SMS orasidagi tanaffusni (`pause_ms`) aytadi,
 // yubora olmagan xabarni boshqa telefonga o'tkazadi va ketma-ket xatoda telefonni pauzaga qo'yadi (`paused_until`).
+// 3.12: navbatni Android fon xizmati (SmsGatewayService.kt, doimiy bildirishnoma) tekshiradi va yuboradi — telefon
+// qulflansa, ilova yopilsa yoki telefon qayta yoqilsa ham ishlaydi. Dart sozlamani (server, token, navbat) beradi va
+// holatni o'qiydi; eski yig'ilishda xizmat bo'lmasa — avvalgidek Dart taymeri.
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 
@@ -17,6 +21,7 @@ import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'api.dart';
+import 'i18n.dart';
 import 'push.dart';
 import 'session.dart';
 
@@ -47,6 +52,10 @@ class SmsGatewayService extends ChangeNotifier {
 
   Session? _session;
   Timer? _timer;
+
+  /// Fon xizmati ishlayaptimi (aks holda — Dart taymeri). Holat har 3 soniyada xizmatdan o'qiladi.
+  bool native = false;
+  Timer? _statusTimer;
   bool _busy = false;
   bool _again = false;
 
@@ -177,17 +186,124 @@ class SmsGatewayService extends ChangeNotifier {
 
   void _start() {
     _timer?.cancel();
-    _timer = Timer.periodic(interval, (_) => poll());
-    unawaited(poll());
+    unawaited(_startNative().then((ok) {
+      if (ok) return;
+      // Fon xizmati yo'q (eski yig'ilish yoki xato) — ilova ochiq turganda Dart taymeri.
+      _timer?.cancel();
+      _timer = Timer.periodic(interval, (_) => poll());
+      unawaited(poll());
+    }));
     notifyListeners();
   }
 
-  void _stop() {
+  void _stop({bool service = true}) {
     _timer?.cancel();
     _timer = null;
+    _statusTimer?.cancel();
+    _statusTimer = null;
+    if (service && supported) {
+      // Ilova qayta ochilganda Dart `native` ni bilmaydi — xizmatdagi shu navbat baribir to'xtatiladi.
+      native = false;
+      unawaited(_invoke('gatewayStop', <String, Object?>{'scope': scope}));
+    }
   }
 
+  static Future<Object?> _invoke(String method, [Map<String, Object?>? arguments]) async {
+    try {
+      return await _channel.invokeMethod<Object?>(method, arguments);
+    } catch (_) {
+      return null;
+    }
+  }
+
+  /// Chiqishda: telefondagi hamma fon navbatlari to'xtaydi (token bekor bo'ladi).
+  static Future<void> stopAll() async {
+    for (final service in <SmsGatewayService>[organization, platform]) {
+      service._stop(service: false);
+      service.native = false;
+    }
+    if (Platform.isAndroid) await _invoke('gatewayStopAll');
+  }
+
+  Future<bool> _startNative() async {
+    final session = _session;
+    if (!supported || session == null || session.token == null) return false;
+    final config = <String, Object?>{
+      'server': session.server,
+      'token': session.token,
+      'prefix': prefix,
+      'organization': isPlatform ? null : session.organizationId,
+      'device_id': await deviceId(),
+      'locale': I18n.locale,
+      'app_version': PushService.appVersion,
+      'texts': <String, String>{
+        'title': tr('EduX: SMS shlyuz ishlayapti'),
+        'body': tr("Telefon qulflansa ham SMS yuboriladi. Yuborildi: {0}"),
+      },
+    };
+    try {
+      await _channel.invokeMethod<Object?>('gatewayStart', <String, Object?>{'scope': scope, 'config': jsonEncode(config)});
+    } on MissingPluginException {
+      return false;
+    } catch (_) {
+      return false;
+    }
+    native = true;
+    // Bildirishnoma ruxsati (Android 13+): xizmat ruxsatsiz ham ishlaydi, lekin belgisi ko'rinmaydi.
+    unawaited(_invoke('requestNotifications'));
+    _statusTimer?.cancel();
+    _statusTimer = Timer.periodic(const Duration(seconds: 3), (_) => refreshStatus());
+    unawaited(refreshStatus());
+    return true;
+  }
+
+  /// Fon xizmati holati: yuborilganlar, xato, chegaralar; server shlyuzni o'chirgan yoki kirish tugagan bo'lsa — to'xtaydi.
+  Future<void> refreshStatus() async {
+    if (!native) return;
+    final raw = await _invoke('gatewayStatus', <String, Object?>{'scope': scope});
+    if (raw is! String || raw.isEmpty) return;
+    Map<String, dynamic> status;
+    try {
+      status = asMap(jsonDecode(raw));
+    } catch (_) {
+      return;
+    }
+    sentSession = asInt(status['sent']);
+    failedSession = asInt(status['failed']);
+    final error = asText(status['last_error']);
+    lastError = error.isEmpty ? null : error;
+    final polled = asInt(status['last_poll']);
+    if (polled > 0) lastPoll = DateTime.fromMillisecondsSinceEpoch(polled);
+    final data = asMap(status['data']);
+    if (data.isNotEmpty) {
+      leftToday = asInt(data['left_today']);
+      _limits(data);
+    }
+    if (status['enabled'] == false && enabled) {
+      // Xizmat navbatni to'xtatdi: 404 — vebda o'chirilgan, 401 — kirish muddati tugagan.
+      enabled = false;
+      _stop(service: false);
+      native = false;
+      if (asInt(status['stopped']) == 401) lastError = tr("Kirish muddati tugadi: ilovaga qayta kiring va shlyuzni yoqing.");
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setBool(_prefKey, false);
+    }
+    notifyListeners();
+  }
+
+  /// Batareya tejash ilovani uxlatadimi (Android 6+). true — cheklov bor, istisno so'rash kerak.
+  Future<bool> batteryOptimized() async => supported && (await _invoke('batteryOptimized')) == true;
+
+  Future<void> requestBatteryExemption() async => _invoke('requestBatteryExemption');
+
   Future<void> poll() async {
+    if (native) {
+      // Fon xizmati o'zi yuboradi — faqat «hozir tekshir» deymiz.
+      await _invoke('gatewayPoke');
+      await Future<void>.delayed(const Duration(seconds: 2));
+      await refreshStatus();
+      return;
+    }
     final session = _session;
     if (session == null || !session.signedIn || !enabled) return;
     if (_busy) {

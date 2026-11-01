@@ -1,6 +1,8 @@
 // "SMS shlyuz": shu telefonni markazning SMS yuboruvchisi qilish (faqat Android, direktor/administrator).
 // 3.4: platforma egasi hisobida — platforma navbati (kirish va tiklash kodlari); tashkilotda — bank SMS'larini serverga
 // yuborish (kartaga o'tkazmani avtomatik tasdiqlash), yoqish/o'chirish, jo'natuvchilar ro'yxati va oxirgi yuborilganlar.
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 
@@ -26,22 +28,40 @@ class SmsGatewayPage extends StatefulWidget {
   State<SmsGatewayPage> createState() => _SmsGatewayPageState();
 }
 
-class _SmsGatewayPageState extends State<SmsGatewayPage> {
+class _SmsGatewayPageState extends State<SmsGatewayPage> with WidgetsBindingObserver {
   late final SmsGatewayService gateway = widget.platform ? SmsGatewayService.platform : SmsGatewayService.organization;
   final BankSmsForwarder bank = BankSmsForwarder.instance;
   bool _working = false;
   bool _awake = false;
   bool _bankWorking = false;
 
+  /// 3.12: batareya tejash ilovani uxlatadimi (true — istisno so'ralishi kerak).
+  bool _batteryLimited = false;
+
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     gateway.addListener(_changed);
     bank.addListener(_changed);
+    _checkBattery();
+    unawaited(gateway.refreshStatus());
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    // Sozlamalardan qaytganda (batareya istisnosi berilgan bo'lishi mumkin).
+    if (state == AppLifecycleState.resumed) _checkBattery();
+  }
+
+  Future<void> _checkBattery() async {
+    final limited = await gateway.batteryOptimized();
+    if (mounted) setState(() => _batteryLimited = limited);
   }
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     gateway.removeListener(_changed);
     bank.removeListener(_changed);
     if (_awake) WakelockPlus.disable();
@@ -64,6 +84,8 @@ class _SmsGatewayPageState extends State<SmsGatewayPage> {
       }
       await gateway.enable(session);
       if (mounted) showMessage(context, tr('Telefon SMS shlyuz sifatida ulandi.'));
+      // Ekran qulflanganda ham ishlashi uchun — batareya tejashdan istisno (bir marta so'raladi).
+      if (await gateway.batteryOptimized()) await gateway.requestBatteryExemption();
     } catch (e) {
       if (mounted) showMessage(context, errorText(e), error: true);
     } finally {
@@ -264,7 +286,7 @@ class _SmsGatewayPageState extends State<SmsGatewayPage> {
               AppCard(
                 padding: EdgeInsets.zero,
                 child: Column(children: <Widget>[
-                  ListTile(title: Text(tr('Yuborildi (shu ochilishda)')), trailing: Text('${gateway.sentSession}', style: const TextStyle(fontWeight: FontWeight.w700))),
+                  ListTile(title: Text(gateway.native ? tr('Yuborildi') : tr('Yuborildi (shu ochilishda)')), trailing: Text('${gateway.sentSession}', style: const TextStyle(fontWeight: FontWeight.w700))),
                   const Divider(),
                   ListTile(title: Text(tr('Yuborilmadi')), trailing: Text('${gateway.failedSession}', style: TextStyle(fontWeight: FontWeight.w700, color: gateway.failedSession > 0 ? AppColors.danger : null))),
                   const Divider(),
@@ -306,6 +328,20 @@ class _SmsGatewayPageState extends State<SmsGatewayPage> {
                   ],
                 ]),
               ),
+              if (_batteryLimited) ...<Widget>[
+                const SizedBox(height: 12),
+                ToneBox(
+                  color: AppColors.warning,
+                  padding: const EdgeInsets.all(14),
+                  child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
+                    Text(tr('Batareya tejash yoqilgan'), style: const TextStyle(fontWeight: FontWeight.w700)),
+                    const SizedBox(height: 4),
+                    Text(tr("Android ekran o'chgach bir muddatdan keyin ilovani uxlatib qo'yadi va SMS'lar to'xtaydi. EduX ga «Cheklovsiz» ruxsat bering.")),
+                    const SizedBox(height: 8),
+                    FilledButton.tonal(onPressed: gateway.requestBatteryExemption, child: Text(tr('Batareya cheklovini olib tashlash'))),
+                  ]),
+                ),
+              ],
               const SizedBox(height: 8),
               SwitchListTile(
                 value: _awake,
@@ -319,7 +355,9 @@ class _SmsGatewayPageState extends State<SmsGatewayPage> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
                 child: Text(
-                  tr("Ilova ochiq tursin: navbat har 20 soniyada tekshiriladi. Ilova yopilsa, SMS'lar boshqa ulangan telefonlardan ketadi yoki navbatda kutib turadi. Bir hisob bilan bir nechta telefon ulash mumkin — server navbatni ular orasida chegaralari bo'yicha taqsimlaydi."),
+                  gateway.native
+                      ? tr("Shlyuz fon xizmatida ishlaydi (bildirishnomalar panelida «SMS shlyuz ishlayapti»): telefon qulflansa, ilova yopilsa yoki telefon qayta yoqilsa ham navbat har 20 soniyada tekshiriladi. Xiaomi, Huawei, Oppo, Vivo, Samsung telefonlarida ilova sozlamalarida «Avtomatik ishga tushish» ni yoqing va batareya rejimini «Cheklovsiz» qiling.")
+                      : tr("Ilova ochiq tursin: navbat har 20 soniyada tekshiriladi. Ilova yopilsa, SMS'lar boshqa ulangan telefonlardan ketadi yoki navbatda kutib turadi. Bir hisob bilan bir nechta telefon ulash mumkin — server navbatni ular orasida chegaralari bo'yicha taqsimlaydi."),
                   style: TextStyle(color: AppColors.muted, fontSize: 13),
                 ),
               ),
