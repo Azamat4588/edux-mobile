@@ -3,15 +3,13 @@
 // interaktiv blok), jonli dars kartasi, savol-javob va dars oxiridagi «tushundim» so'rovi.
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:open_filex/open_filex.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../core/adaptive.dart';
 import '../../core/api.dart';
+import '../../core/file_open.dart';
 import '../../core/format.dart';
 import '../../core/help_links.dart';
 import '../../core/i18n.dart';
@@ -318,12 +316,9 @@ class _LessonPageState extends State<LessonPage> {
           bytes = raw;
         }
       }
-      final dir = await getTemporaryDirectory();
       final name = asText(material['original_name'], 'material.${asText(material['extension'], 'pdf')}');
-      final file = File('${dir.path}/$id-$name');
-      await file.writeAsBytes(bytes, flush: true);
-      final result = await OpenFilex.open(file.path);
-      if (result.type != ResultType.done && mounted) {
+      final opened = await openBytesAsFile(bytes, name, prefix: '$id-');
+      if (!opened && mounted) {
         showMessage(context, tr('Bu turdagi fayl ilova ichida ochilmaydi.'), error: true);
       }
     } on ApiException catch (error) {

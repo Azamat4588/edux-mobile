@@ -61,7 +61,7 @@ class _ScanReviewPageState extends State<ScanReviewPage> {
     try {
       final scan = asMap(await api.get('scans/${widget.scanId}'));
       final result = asMap(scan['result']);
-      final exams = asList(await api.get('exams'))
+      final exams = asList(await api.get('exams', query: <String, Object?>{'per_page': 200}))
           .where((exam) => exam['status'] != 'draft')
           .toList();
       Uint8List? image;
@@ -80,6 +80,7 @@ class _ScanReviewPageState extends State<ScanReviewPage> {
         ..clear()
         ..addAll(flags.where((f) => f['question'] is num).map((f) => (f['question'] as num).toInt() - 1));
       final examId = scan['exam_id'] ?? result['exam_id'];
+      if (!mounted) return;
       setState(() {
         _scan = scan;
         _image = image;
@@ -94,6 +95,7 @@ class _ScanReviewPageState extends State<ScanReviewPage> {
       });
       if (_examId != null) _loadKit(_examId!);
     } on ApiException catch (error) {
+      if (!mounted) return;
       setState(() {
         _error = error.message;
         _loading = false;

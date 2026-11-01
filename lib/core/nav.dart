@@ -111,6 +111,8 @@ List<NavSection> buildNav(NavContext ctx) {
       _education(ctx),
       _testing(ctx),
       _section('tasks', tr('Topshiriqlar'), 'list-checks', <NavTab?>[_when(can('tasks'), NavTab('crm.tasks', tr('Topshiriqlar')))]),
+      // 3.15: «Maoshim» — oy bo'yicha hisoblangan, berilgan va qoldiq (CRM moduli; server crm/my/salary).
+      _section('salary', tr('Maoshim'), 'wallet', <NavTab?>[_when(can('my_salary'), NavTab('crm.my.salary', tr('Maoshim')))]),
       _section('assistant', tr('AI yordamchi'), 'sparkle', <NavTab?>[_when(can('staff_ai'), NavTab('ai.staff', tr('AI yordamchi')))]),
     ]);
   } else if (role == 'cashier') {

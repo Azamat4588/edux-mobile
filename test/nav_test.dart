@@ -41,6 +41,15 @@ void main() {
     expect(bottomActive(bottom, tab: 'child.tests'), 'child.tests');
   });
 
+  test('o\'qituvchi (3.15): «Maoshim» CRM bilan «Yana»da', () {
+    final sections = buildNav(ctx('teacher', <String>{'crm', 'students', 'attendance', 'testing', 'lms_staff', 'tasks', 'my_salary'}));
+    final more = overflowSections(sections, bottomNav(sections)).map((item) => item.key).toList();
+    expect(more, contains('salary'));
+    expect(sectionOfTab(sections, 'crm.my.salary')?.key, 'salary');
+    final noCrm = buildNav(ctx('teacher', <String>{'students', 'testing'}));
+    expect(noCrm.any((item) => item.key == 'salary'), isFalse);
+  });
+
   test('o\'quvchi va mehmon', () {
     final student = buildNav(ctx('student', <String>{'testing', 'lms', 'fun', 'school'}));
     expect(bottomNav(student).map((item) => item.key).toList(), <String>['home', 'tests', 'courses', 'diary']);

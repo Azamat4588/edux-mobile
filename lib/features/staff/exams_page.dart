@@ -34,7 +34,8 @@ class ExamsPage extends StatelessWidget {
       body: AsyncView<List<Map<String, dynamic>>>(
         cacheKey: 'exams',
         decode: (raw) => asList(raw),
-        load: () async => asList(await api.get('exams')),
+        // Server sahifalaydi (odatiy 30) — hammasi bitta so'rovda (eng ko'pi 200).
+        load: () async => asList(await api.get('exams', query: <String, Object?>{'per_page': 200})),
         builder: (context, exams, reload) {
           if (exams.isEmpty) {
             return ListView(children: <Widget>[EmptyState(text: tr("Hali test yo'q. Birinchisini yarating."))]);

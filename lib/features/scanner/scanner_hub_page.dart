@@ -17,7 +17,7 @@ class ScannerHubPage extends StatelessWidget {
 
   Future<Map<String, dynamic>> _load(Api api) async {
     final results = await Future.wait<dynamic>(<Future<dynamic>>[
-      api.get('exams', query: <String, Object?>{'status': 'published'}),
+      api.get('exams', query: <String, Object?>{'status': 'published', 'per_page': 200}),
       api.get('scans', query: <String, Object?>{'status': 'needs_review'}),
     ]);
     return <String, dynamic>{'exams': asList(results[0]), 'counts': asMap(asMap(results[1])['counts'])};
