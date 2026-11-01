@@ -71,6 +71,10 @@ void main() {
     final tabs = buildNav(NavContext(role: teacher.role, can: teacher.can, groupsLabel: 'Sinflar')).expand((s) => s.tabs).map((t) => t.key);
     expect(tabs, contains('school.journal'));
     expect(quickActions('teacher', teacher.can).map((a) => a.key), contains('school.journal'));
+    // 1.48: aralash tashkilot (sinflar + pullik guruhlar) — bo'lim nomi serverdan, turdan emas.
+    final mixed = buildNav(NavContext(role: teacher.role, can: teacher.can, groupsLabel: 'Sinf va guruhlar', myGroupsLabel: 'Sinf va guruhlarim'));
+    expect(mixed.map((s) => s.label), contains('Sinf va guruhlarim'));
+    expect(buildNav(NavContext(role: teacher.role, can: teacher.can, groupsLabel: 'Sinflar')).map((s) => s.label), contains('Sinflarim'));
 
     final student = Session()..context = fixture('center_student_context');
     final studentTabs = buildNav(NavContext(role: student.role, can: student.can)).expand((s) => s.tabs).map((t) => t.key);

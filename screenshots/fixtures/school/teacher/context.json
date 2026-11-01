@@ -9,7 +9,7 @@
   "url": null
  },
  "theme": [],
- "terms": {
+ "terms": {"my_groups": "Sinflarim", "has_classes": true, "has_groups": false, "mixed": false, "primary": "classes", 
   "group": "Sinf",
   "groups": "Sinflar",
   "student": "O'quvchi",
