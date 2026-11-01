@@ -376,7 +376,7 @@ class Session extends ChangeNotifier implements ApiCredentials {
   void onUnauthorized() {
     if (_token == null) return;
     // Token bekor qilingan yoki muddati tugagan: qaytadan kirish kerak (3.11: sabab kirish oynasida ko'rinadi).
-    signOutReason = tr("Kirish muddati tugadi yoki bu qurilma boshqa joydan yopildi. Qayta kiring.");
+    signOutReason = tr('Kirish muddati tugadi yoki bu qurilma boshqa joydan yopildi. Qayta kiring.');
     Future<void>.microtask(signOut);
   }
 
@@ -438,7 +438,7 @@ class Session extends ChangeNotifier implements ApiCredentials {
         await _chooseOrganization(prefs);
       } on ApiException catch (error) {
         if (error.isUnauthorized) {
-          signOutReason = tr("Kirish muddati tugadi yoki bu qurilma boshqa joydan yopildi. Qayta kiring.");
+          signOutReason = tr('Kirish muddati tugadi yoki bu qurilma boshqa joydan yopildi. Qayta kiring.');
           await _forget();
         } else {
           // Internet yo'q: token saqlanadi, oxirgi foydalanuvchi va kontekst nusxasi bilan ochiladi.

@@ -100,7 +100,7 @@ class PlatformDashboardPage extends StatelessWidget {
           return ListView(padding: const EdgeInsets.all(16), children: <Widget>[
             Text(tr('Salom, {0}', <Object?>[session.userName]), style: AppTheme.title(size: 20)),
             const SizedBox(height: 4),
-            Text(tr("Platforma holati: tashkilotlar, tushum va kutilayotgan ishlar."), style: TextStyle(color: AppColors.muted)),
+            Text(tr('Platforma holati: tashkilotlar, tushum va kutilayotgan ishlar.'), style: TextStyle(color: AppColors.muted)),
             const SizedBox(height: 14),
             StatGrid(children: <Widget>[
               StatCard(
@@ -170,7 +170,7 @@ class PlatformDashboardPage extends StatelessWidget {
               style: TextStyle(color: AppColors.muted, fontSize: 13),
             ),
             const SizedBox(height: 4),
-            Text(tr("Narxlar, sayt, sozlamalar va server — veb panelda."), style: TextStyle(color: AppColors.muted, fontSize: 13)),
+            Text(tr('Narxlar, sayt, sozlamalar va server — veb panelda.'), style: TextStyle(color: AppColors.muted, fontSize: 13)),
           ]);
         },
       ),
@@ -436,7 +436,7 @@ class _PlatformOrganizationPageState extends State<PlatformOrganizationPage> {
                 ]),
               ),
             const SizedBox(height: 12),
-            Text(tr("Modullar, tarif, narx va integratsiyalar — veb panelda (Tashkilotlar)."), style: TextStyle(color: AppColors.muted, fontSize: 13)),
+            Text(tr('Modullar, tarif, narx va integratsiyalar — veb panelda (Tashkilotlar).'), style: TextStyle(color: AppColors.muted, fontSize: 13)),
           ]);
         },
       ),
@@ -912,7 +912,7 @@ class _PlatformSessionsPageState extends State<PlatformSessionsPage> {
     if (value == null || !mounted) return;
     final number = value.isEmpty ? null : int.tryParse(value);
     if (value.isNotEmpty && (number == null || number < 0 || number > 100)) {
-      showMessage(context, tr("0 dan 100 gacha son kiriting."), error: true);
+      showMessage(context, tr('0 dan 100 gacha son kiriting.'), error: true);
       return;
     }
     final api = _api(context);
@@ -986,7 +986,7 @@ class _PlatformSessionsPageState extends State<PlatformSessionsPage> {
                               asText(policy['limit_mode']) == 'reject' ? tr("ortig'i rad etiladi") : tr('eng eskisi yopiladi'),
                             ])
                           : tr('Qurilmalar soni cheklanmagan.'),
-                      tr("Qoidalar — veb: Sozlamalar → Kirish va Telegram → Sessiyalar."),
+                      tr('Qoidalar — veb: Sozlamalar → Kirish va Telegram → Sessiyalar.'),
                     ].join(' '),
                     style: TextStyle(color: AppColors.muted, fontSize: 12.5),
                   ),
