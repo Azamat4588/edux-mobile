@@ -115,7 +115,7 @@ class PushService {
       return result;
     }
     final type = asText(data['type']);
-    const known = <String>['payment', 'attendance', 'arrival', 'attempt', 'assignment', 'certificate', 'lead', 'task', 'diary', 'child', 'sms_gateway', 'support', 'feedback', 'feedback_reply', 'document', 'chat'];
+    const known = <String>['payment', 'attendance', 'arrival', 'attempt', 'assignment', 'certificate', 'lead', 'task', 'diary', 'child', 'sms_gateway', 'support', 'feedback', 'feedback_reply', 'document', 'chat', 'call'];
     if (known.contains(type)) return data;
     // 1.35: dars savoli/javobi va kurs e'loni — id lar havolada (/learn/courses/{kurs}/lessons/{dars}).
     if (type == 'lesson_question' || type == 'lesson_answer' || type == 'course_announcement') {

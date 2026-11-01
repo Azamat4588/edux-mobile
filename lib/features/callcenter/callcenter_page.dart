@@ -87,7 +87,13 @@ class _CallCenterPageState extends State<CallCenterPage> with WidgetsBindingObse
         _queueCount = queue;
       });
       if (changedQueue) unawaited(_queueView.currentState?.reload());
-      final calls = asList(live['live'], 'live');
+      // 3.13: karta — menga (ichki raqamim yoki raqamsiz) jiringlayotgan yoki gaplashilayotgan qo'ng'iroq; oldin ro'yxatdagi
+      // birinchisi (boshqa operatorniki ham) ochilardi.
+      final me = asMap(live['me']);
+      final myExt = asText(me['extension']);
+      final calls = asList(live['live'], 'live')
+          .where((call) => asText(call['extension']).isEmpty || myExt.isEmpty || asText(call['extension']) == myExt)
+          .toList();
       final phone = calls.isEmpty ? null : asText(calls.first['phone']);
       if (phone != null && phone.isNotEmpty && phone != _callerPhone) unawaited(_loadCaller(phone));
       if (phone == null && _callerPhone != null) {

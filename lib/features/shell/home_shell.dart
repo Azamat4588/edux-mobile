@@ -146,6 +146,8 @@ class _HomeShellState extends State<HomeShell> with WidgetsBindingObserver {
       final id = asInt(data['feedback_id']);
       return id > 0 ? MyFeedbackDetailPage(id: id) : const MyFeedbackPage(initialTab: 1);
     };
+    // 3.13: kiruvchi qo'ng'iroq (server 1.47: type=call) — call markaz.
+    routes['call'] = (_) => session().canCallCenter ? const CallCenterPage() : null;
     // 3.13: yangi xabar (server 1.47: type=chat, thread_id).
     routes['chat'] = (data) {
       final id = asInt(data['thread_id']);
