@@ -55,6 +55,8 @@ IconData navIcon(String name) {
     'credit-card': Icons.credit_card,
     'timer': Icons.timer_outlined,
     'trending-up': Icons.trending_up_rounded,
+    'building': Icons.domain_outlined,
+    'devices': Icons.devices_outlined,
   };
   return icons[name] ?? Icons.circle_outlined;
 }

@@ -36,6 +36,7 @@ import '../guardian/guardian_home_page.dart';
 import '../lms/lms_staff_pages.dart';
 import '../notifications/notifications_page.dart';
 import '../olympiad/olympiads_page.dart';
+import '../platform/platform_pages.dart';
 import '../scanner/scan_queue.dart';
 import '../scanner/scanner_hub_page.dart';
 import '../scanner/scans_page.dart';
@@ -249,6 +250,19 @@ class _HomeShellState extends State<HomeShell> with WidgetsBindingObserver {
         return const DeviceSmsPage();
       case 'platform.sms':
         return const SmsGatewayPage(platform: true);
+      // 3.11: platforma egasi paneli.
+      case 'platform.dashboard':
+        return const PlatformDashboardPage();
+      case 'platform.organizations':
+        return const PlatformOrganizationsPage();
+      case 'platform.invoices':
+        return const PlatformInvoicesPage();
+      case 'platform.requests':
+        return const PlatformRequestsPage();
+      case 'platform.support':
+        return const PlatformSupportPage();
+      case 'platform.sessions':
+        return const PlatformSessionsPage();
       case 'crm.tasks':
         return const TasksPage();
       case 'billing':
@@ -367,12 +381,14 @@ class _HomeShellState extends State<HomeShell> with WidgetsBindingObserver {
       // 1.39: mijozlar fikri — markaz rahbariyatiga (EduX jamoasiga yoziladigan «Murojaatlar» dan alohida).
       if (session.can('feedback_submit'))
         MenuTile(icon: Icons.rate_review_outlined, color: colored ? Color(sectionColorOf('feedback')) : null, label: tr('Fikr bildirish'), page: const MyFeedbackPage()),
-      MenuTile(
-        icon: Icons.support_agent_outlined,
-        color: colored ? Koshin.feruza : null,
-        label: tr('Murojaatlar'),
-        page: MasterDetail(master: const SupportPage(), hint: tr('Murojaatni tanlang — yozishma shu yerda ochiladi.')),
-      ),
+      // Platforma egasining o'zi EduX jamoasi — unga «Yordam so'rovlari» (platforma) bo'limi bor.
+      if (!session.isPlatformOwnerOnly)
+        MenuTile(
+          icon: Icons.support_agent_outlined,
+          color: colored ? Koshin.feruza : null,
+          label: tr('Murojaatlar'),
+          page: MasterDetail(master: const SupportPage(), hint: tr('Murojaatni tanlang — yozishma shu yerda ochiladi.')),
+        ),
     ];
     return SettingsPage(groups: <MenuGroup>[
       for (final entry in groups.entries) MenuGroup(entry.key, entry.value),
@@ -438,7 +454,9 @@ class _HomeShellState extends State<HomeShell> with WidgetsBindingObserver {
           wide: wide,
           destinations: destinations,
           selected: selected,
-          railHeader: RailOrg(name: session.organizationName, logo: session.organizationLogo, subtitle: session.membership == null ? '' : roleLabel(session.membership!.role)),
+          railHeader: session.isPlatformOwnerOnly
+              ? RailOrg(name: tr('EduX platformasi'), logo: null, subtitle: tr('Platforma egasi'))
+              : RailOrg(name: session.organizationName, logo: session.organizationLogo, subtitle: session.membership == null ? '' : roleLabel(session.membership!.role)),
           onSelect: (i) {
             if (guardian && i < bottom.length) {
               _guardianTab.value = bottom[i].key;

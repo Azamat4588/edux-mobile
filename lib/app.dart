@@ -116,6 +116,8 @@ class _Gate extends StatelessWidget {
     ScanQueue.instance.attach(session);
     if (session.memberships.isEmpty) {
       if (session.user.isEmpty) return const _ContextLoader();
+      // 3.11: platforma egasi (tashkilotsiz) — ilova platforma paneli sifatida ochiladi (oldin faqat SMS shlyuz edi).
+      if (session.isPlatformAdmin) return const HomeShell(key: ValueKey<String>('platform-owner'));
       return const NoOrganizationPage();
     }
     if (session.organizationId == null) return const OrganizationPicker();

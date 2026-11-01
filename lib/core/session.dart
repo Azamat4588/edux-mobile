@@ -1,6 +1,7 @@
 // Kirish holati: server, token, foydalanuvchi, tashkilot va uning konteksti (rol, modullar).
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io' show Platform;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
@@ -15,6 +16,7 @@ import 'i18n.dart';
 import 'notification_store.dart';
 import 'offline_cache.dart';
 import 'push.dart';
+import 'sms_gateway.dart';
 import 'theme.dart';
 import 'webview_guard.dart';
 
@@ -219,6 +221,8 @@ class Session extends ChangeNotifier implements ApiCredentials {
         return canUseSmsGateway && defaultTargetPlatform == TargetPlatform.android;
       case 'device_sms':
         return isManager && hasModule('crm') && hasFeature('sms');
+      case 'platform':
+        return isPlatformAdmin;
       case 'platform_sms':
         return isPlatformAdmin && defaultTargetPlatform == TargetPlatform.android;
       case 'billing':
@@ -306,8 +310,39 @@ class Session extends ChangeNotifier implements ApiCredentials {
       .map((item) => <String, Object?>{'organization_id': item.organizationId, 'organization': item.organization, 'role': item.role})
       .toList();
 
-  /// Platforma egasi (sotuv paneli vebda; ilovada — platforma SMS shlyuzi).
+  /// Platforma egasi (3.11: ilovada ham platforma paneli — tashkilotlar, hisoblar, arizalar, murojaatlar, sessiyalar, SMS shlyuz).
   bool get isPlatformAdmin => user['is_platform_admin'] == true;
+
+  /// Faqat platforma egasi (hech qaysi tashkilotda a'zo emas): ilova to'liq platforma paneli sifatida ochiladi.
+  bool get isPlatformOwnerOnly => isPlatformAdmin && memberships.isEmpty;
+
+  /// 3.11: qurilma sarlavhalari (Api.clientHeaders) — «Faol qurilmalar» ro'yxati uchun. Xato bo'lsa — sarlavhasiz.
+  Future<void> _loadClientHeaders() async {
+    try {
+      final platform = switch (defaultTargetPlatform) {
+        TargetPlatform.android => 'android',
+        TargetPlatform.iOS => 'ios',
+        TargetPlatform.windows => 'windows',
+        TargetPlatform.macOS => 'macos',
+        _ => 'linux',
+      };
+      var model = switch (defaultTargetPlatform) {
+        TargetPlatform.android => await SmsGatewayService.organization.deviceModel(),
+        TargetPlatform.iOS => 'iPhone/iPad',
+        _ => Platform.localHostname,
+      };
+      // HTTP sarlavhasi faqat ASCII: boshqa belgilar almashtiriladi.
+      model = model.replaceAll(RegExp(r'[^\x20-\x7E]'), '?').trim();
+      Api.clientHeaders = <String, String>{
+        'X-Device-Id': await SmsGatewayService.deviceId(),
+        'X-Platform': platform,
+        'X-App-Version': PushService.appVersion,
+        if (model.isNotEmpty) 'X-Device-Model': model.length > 100 ? model.substring(0, 100) : model,
+      };
+    } catch (_) {
+      // sarlavhalarsiz ham ishlaydi
+    }
+  }
 
   /// Kunduzgi/tungi/qurilmaga qarab: darhol qo'llanadi, hisobga saqlanadi (veb bilan umumiy).
   Future<void> setThemeMode(String mode) async {
@@ -340,9 +375,13 @@ class Session extends ChangeNotifier implements ApiCredentials {
   @override
   void onUnauthorized() {
     if (_token == null) return;
-    // Token bekor qilingan yoki muddati tugagan: qaytadan kirish kerak.
+    // Token bekor qilingan yoki muddati tugagan: qaytadan kirish kerak (3.11: sabab kirish oynasida ko'rinadi).
+    signOutReason = tr("Kirish muddati tugadi yoki bu qurilma boshqa joydan yopildi. Qayta kiring.");
     Future<void>.microtask(signOut);
   }
+
+  /// Avtomatik chiqarilganda — kirish oynasida bir marta ko'rsatiladigan sabab.
+  String? signOutReason;
 
   /// Oxirgi [restore] serverdan foydalanuvchini ololmagan sabab (internet yoki server xatosi); muvaffaqiyatda null.
   String? restoreError;
@@ -364,6 +403,7 @@ class Session extends ChangeNotifier implements ApiCredentials {
 
   Future<void> _restore() async {
     final prefs = await SharedPreferences.getInstance();
+    await _loadClientHeaders();
     final languageCode = WidgetsBinding.instance.platformDispatcher.locale.languageCode;
     await I18n.load(prefs.getString('locale') ?? I18n.fromDevice(languageCode));
     _server = prefs.getString('server') ?? defaultServer;
@@ -398,6 +438,7 @@ class Session extends ChangeNotifier implements ApiCredentials {
         await _chooseOrganization(prefs);
       } on ApiException catch (error) {
         if (error.isUnauthorized) {
+          signOutReason = tr("Kirish muddati tugadi yoki bu qurilma boshqa joydan yopildi. Qayta kiring.");
           await _forget();
         } else {
           // Internet yo'q: token saqlanadi, oxirgi foydalanuvchi va kontekst nusxasi bilan ochiladi.
@@ -549,6 +590,8 @@ class Session extends ChangeNotifier implements ApiCredentials {
     if (memberships.isEmpty) {
       _organizationId = null;
       context = <String, dynamic>{};
+      // Platforma egasi tashkilotsiz: push (yangi ariza, murojaat, SMS navbati) shu telefonga ham kelsin.
+      if (isPlatformAdmin) unawaited(PushService.instance.attach(this));
       return;
     }
     final saved = memberships.where((item) => item.organizationId == _organizationId);

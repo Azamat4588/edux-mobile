@@ -67,11 +67,16 @@ class Api {
     return params.isEmpty ? parsed : parsed.replace(queryParameters: <String, String>{...parsed.queryParameters, ...params});
   }
 
+  /// 3.11: qurilma belgisi, platforma, model va ilova versiyasi — server «Faol qurilmalar» ro'yxatida ko'rsatadi va
+  /// bir qurilmadan qayta kirilganda eski kirishni almashtiradi (Session._loadClientHeaders to'ldiradi).
+  static Map<String, String> clientHeaders = <String, String>{};
+
   Map<String, String> headers({bool json = true}) {
     final result = <String, String>{
       'Accept': 'application/json',
       'X-Locale': I18n.locale,
       'X-Requested-With': 'EduXMobile',
+      ...clientHeaders,
     };
     if (json) result['Content-Type'] = 'application/json';
     final token = credentials.token;

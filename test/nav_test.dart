@@ -53,4 +53,18 @@ void main() {
     final sections = buildNav(ctx('', <String>{'platform_sms'}));
     expect(sections.single.tabs.single.key, 'platform.sms');
   });
+
+  test('platforma egasi (3.11): ilovada to\'liq platforma paneli', () {
+    final owner = buildNav(ctx('', <String>{'platform', 'platform_sms'}));
+    expect(owner.map((item) => item.key).toList(), <String>['home', 'organizations', 'invoices', 'inbox', 'system']);
+    expect(bottomNav(owner).map((item) => item.key).toList(), <String>['home', 'organizations', 'invoices', 'inbox']);
+    expect(owner.last.tabs.map((tab) => tab.key).toList(), <String>['platform.sessions', 'platform.sms']);
+    // iPhone: SMS shlyuzsiz.
+    final ios = buildNav(ctx('', <String>{'platform'}));
+    expect(ios.last.tabs.map((tab) => tab.key).toList(), <String>['platform.sessions']);
+    // Tashkilotda ham ishlaydi: bitta «Platforma» bo'limi oxirida.
+    final director = buildNav(ctx('director', <String>{'platform', 'students'}));
+    expect(director.last.key, 'platform');
+    expect(director.last.tabs.first.key, 'platform.dashboard');
+  });
 }

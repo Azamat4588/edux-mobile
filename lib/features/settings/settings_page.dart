@@ -15,6 +15,7 @@ import '../../core/widgets.dart';
 import '../auth/organization_picker.dart';
 import '../help/help_pages.dart';
 import 'appearance_page.dart';
+import 'sessions_page.dart';
 
 /// Skaner sozlamalari (qurilmada saqlanadi).
 class ScannerPrefs {
@@ -171,6 +172,13 @@ class _SettingsPageState extends State<SettingsPage> {
                   if (code != null) session.setLocale(code);
                 },
               ),
+            ),
+            // 3.11: hisobga kirilgan qurilmalar — tanimaganini yopish.
+            MenuTile(
+              icon: Icons.devices_outlined,
+              label: tr('Faol qurilmalar'),
+              subtitle: tr('Telefon, kompyuter va brauzerdagi kirishlar'),
+              page: const SessionsPage(),
             ),
             if (session.memberships.length > 1)
               MenuTile(

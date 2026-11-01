@@ -179,8 +179,34 @@ List<NavSection> buildNav(NavContext ctx) {
   if (<String>['teacher', 'cashier', 'marketer'].contains(role)) {
     sections.add(_section('feedback', tr('Fikrlar'), 'feedback', <NavTab?>[_when(can('feedback_manage'), NavTab('feedback', tr('Fikrlar')))]));
   }
-  // Platforma egasi: ilovada — platforma SMS shlyuzi (kirish va tiklash kodlari shu telefondan).
-  if (can('platform_sms')) {
+  // Platforma egasi (3.11): ilovada ham platforma paneli. Faqat egasi (tashkilotsiz) — to'liq menyu; tashkilotda ham
+  // ishlasa — bitta «Platforma» bo'limi. SMS shlyuz — faqat Android.
+  if (can('platform') && role.isEmpty) {
+    sections.addAll(<NavSection?>[
+      _section('home', tr('Bosh sahifa'), 'home', <NavTab?>[NavTab('platform.dashboard', tr('Bosh sahifa'))]),
+      _section('organizations', tr('Tashkilotlar'), 'building', <NavTab?>[NavTab('platform.organizations', tr('Tashkilotlar'))]),
+      _section('invoices', tr('Hisoblar'), 'receipt', <NavTab?>[NavTab('platform.invoices', tr('Hisoblar'))]),
+      _section('inbox', tr('Murojaatlar'), 'inbox', <NavTab?>[
+        NavTab('platform.requests', tr('Ulanish arizalari'), short: tr('Arizalar')),
+        NavTab('platform.support', tr("Yordam so'rovlari"), short: tr("So'rovlar")),
+      ]),
+      _section('system', tr('Tizim'), 'devices', <NavTab?>[
+        NavTab('platform.sessions', tr('Sessiyalar')),
+        _when(can('platform_sms'), NavTab('platform.sms', tr('SMS shlyuz'))),
+      ]),
+    ]);
+  } else if (can('platform')) {
+    sections.add(_section('platform', tr('Platforma'), 'server', <NavTab?>[
+      NavTab('platform.dashboard', tr('Umumiy')),
+      NavTab('platform.organizations', tr('Tashkilotlar')),
+      NavTab('platform.invoices', tr('Hisoblar')),
+      NavTab('platform.requests', tr('Ulanish arizalari')),
+      NavTab('platform.support', tr("Yordam so'rovlari")),
+      NavTab('platform.sessions', tr('Sessiyalar')),
+      _when(can('platform_sms'), NavTab('platform.sms', tr('SMS shlyuz (platforma)'))),
+    ]));
+  } else if (can('platform_sms')) {
+    // Eski server (is_platform_admin bor, lekin `platform` ruxsati berilmagan holat bo'lmaydi) — moslik uchun.
     sections.add(_section('platform', tr('Platforma'), 'server', <NavTab?>[NavTab('platform.sms', tr('SMS shlyuz (platforma)'))]));
   }
   return sections.whereType<NavSection>().toList();
@@ -281,6 +307,10 @@ const Map<String, int> sectionColors = <String, int>{
   'child': 0xFF2D4BD0,
   'platform': 0xFF556378,
   'feedback': 0xFFD2560C,
+  'organizations': 0xFF0B8576,
+  'invoices': 0xFF00808B,
+  'inbox': 0xFFD2560C,
+  'system': 0xFF556378,
 };
 
 /// Bo'limlar to'dalari (veb 1.40 nav/clusters.js): «Kundalik ish», «Pul va aloqa», «Boshqaruv». Sahifa sarlavhasi bandida
@@ -289,6 +319,8 @@ const List<(String, String, List<String>)> navClusters = <(String, String, List<
   ('daily', 'Kundalik ish', <String>['home', 'students', 'groups', 'schedule', 'education', 'testing', 'tasks', 'child', 'tests', 'courses', 'diary', 'my']),
   ('money', 'Pul va aloqa', <String>['finance', 'payments', 'debtors', 'comms', 'callcenter', 'leads', 'rewards', 'salary', 'achievements', 'tutor', 'feedback', 'assistant']),
   ('manage', 'Boshqaruv', <String>['reports', 'settings', 'platform']),
+  ('clients', 'Mijozlar', <String>['organizations', 'invoices', 'inbox']),
+  ('system', 'Tizim', <String>['system']),
 ];
 
 /// Bo'lim to'dasining nomi (tarjima qilingan) yoki null.

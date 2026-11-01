@@ -103,6 +103,18 @@ Hammasi `docs/screenshots/` da (tungi rejim — `*-tungi.png`). Yangilash: `scre
 xabarida `[skrinshot]` bo'lsa yoki Actions → Screenshots → «Run workflow»; rasmlar `screenshots` branch'iga yoziladi
 (`git fetch origin screenshots && git checkout FETCH_HEAD -- '*.png'`).
 
+## 3.11 da yangi (server 1.45: platforma egasi ilovada, sessiyalar va xavfsizlik)
+
+- **Platforma egasi — to'liq panel.** Oldin egasiga ilovada faqat SMS shlyuz ochilardi. Endi: bosh sahifa (tashkilotlar,
+  tushum, to'lanmagan hisoblar, yangi arizalar, ochiq murojaatlar, faol kirishlar), tashkilotlar (obunani 30–365 kunga
+  uzaytirish, sinovni uzaytirish, to'xtatish/yoqish; xodimni bloklash, qurilmalardan chiqarish), hisoblar (qo'lda
+  to'lovni tasdiqlash), ulanish arizalari (qo'ng'iroq, holat), yordam so'rovlari (javob yozish), sessiyalar va SMS shlyuz
+  (Android). Egasi tashkilotda ham ishlasa — menyuda bitta «Platforma» bo'limi.
+- **Faol qurilmalar** (Sozlamalar): hisobga kirilgan telefon, kompyuter va brauzerlar; bittasini yoki boshqa hammasini yopish.
+- **Qurilma belgisi.** Ilova server bilan qurilma ID, model va versiyani yuboradi: bir telefondan qayta kirish eski kirishni
+  almashtiradi va qurilmalar chegarasiga kirmaydi.
+- **Avtomatik chiqarilganda sabab** (muddat tugagan yoki boshqa qurilmadan yopilgan) kirish oynasida ko'rinadi.
+
 ## 3.10 da yangi (server 1.44: bir nechta telefondan SMS)
 
 - **SMS shlyuz — bir hisob bilan bir nechta telefon.** Har o'rnatish o'z ID si bilan ro'yxatdan o'tadi; server navbatni

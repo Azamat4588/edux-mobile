@@ -9,10 +9,8 @@ import '../../core/i18n.dart';
 import '../../core/koshin.dart';
 import '../../core/motion.dart';
 import '../../core/session.dart';
-import '../../core/sms_gateway.dart';
 import '../../core/theme.dart';
 import '../../core/widgets.dart';
-import '../access/sms_gateway_page.dart';
 import '../settings/language_button.dart';
 import '../student/pay_link_page.dart';
 import 'passwordless.dart';
@@ -38,7 +36,16 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => _loadOptions());
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      // 3.11: avtomatik chiqarilgan bo'lsa (muddat tugagan, boshqa qurilmadan yopilgan) — sababi.
+      final session = AppScope.read(context);
+      final reason = session.signOutReason;
+      if (reason != null && mounted) {
+        session.signOutReason = null;
+        setState(() => _error = reason);
+      }
+      _loadOptions();
+    });
   }
 
   Future<void> _loadOptions() async {
@@ -445,40 +452,21 @@ class _Moment extends StatelessWidget {
   }
 }
 
-/// Hisob hech qaysi tashkilotga bog'lanmagan (masalan, platforma egasi — u veb-paneldan ishlaydi).
+/// Hisob hech qaysi tashkilotga bog'lanmagan (o'quvchi havolasiz kirgan yoki xodim hali qo'shilmagan).
 class NoOrganizationPage extends StatelessWidget {
   const NoOrganizationPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    // Platforma egasi bu yerga tushmaydi (3.11: unga platforma paneli ochiladi — app.dart).
     final session = AppScope.of(context);
-    final owner = session.user['is_platform_admin'] == true;
     return Scaffold(
       body: SafeArea(
         child: Center(
           child: EmptyState(
             icon: Icons.domain_disabled_outlined,
-            text: owner
-                ? (session.can('platform_sms')
-                    ? tr("Platforma egasi paneli veb-versiyada ishlaydi. Ilovada — platforma SMS shlyuzi; tashkilot bo'limlari uchun xodim, o'quvchi yoki ota-ona sifatida kiring.")
-                    // iPhone/iPad: SMS shlyuz yo'q (iOS ilovalarga SMS yuborishga ruxsat bermaydi).
-                    : tr("Platforma egasi paneli veb-versiyada ishlaydi. Platforma SMS shlyuzi faqat Android ilovada; tashkilot bo'limlari uchun xodim, o'quvchi yoki ota-ona sifatida kiring."))
-                : tr("Hisobingiz hali hech qaysi tashkilotga bog'lanmagan. O'quvchi yoki ota-ona bo'lsangiz, o'qituvchi bergan shaxsiy havolani oching. Xodim bo'lsangiz, direktordan sizni qo'shishni so'rang."),
-            action: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-              // Platforma egasi: ilovada — platforma SMS shlyuzi (kirish va tiklash kodlari shu telefondan).
-              if (session.can('platform_sms')) ...<Widget>[
-                FilledButton.icon(
-                  onPressed: () {
-                    SmsGatewayService.platform.resume(session);
-                    Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const SmsGatewayPage(platform: true)));
-                  },
-                  icon: const Icon(Icons.sms_outlined),
-                  label: Text(tr('SMS shlyuz (platforma)')),
-                ),
-                const SizedBox(height: 10),
-              ],
-              OutlinedButton(onPressed: session.signOut, child: Text(tr('Chiqish'))),
-            ]),
+            text: tr("Hisobingiz hali hech qaysi tashkilotga bog'lanmagan. O'quvchi yoki ota-ona bo'lsangiz, o'qituvchi bergan shaxsiy havolani oching. Xodim bo'lsangiz, direktordan sizni qo'shishni so'rang."),
+            action: OutlinedButton(onPressed: session.signOut, child: Text(tr('Chiqish'))),
           ),
         ),
       ),
