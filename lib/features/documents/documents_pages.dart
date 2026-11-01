@@ -167,12 +167,16 @@ class _MyDocumentPageState extends State<MyDocumentPage> {
                 color: AppColors.warning,
                 padding: const EdgeInsets.all(12),
                 child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
-                  CheckboxListTile(
-                    contentPadding: EdgeInsets.zero,
-                    controlAffinity: ListTileControlAffinity.leading,
-                    value: _agree,
-                    onChanged: (value) => setState(() => _agree = value ?? false),
-                    title: Text(order ? tr("Buyruq bilan to'liq tanishdim.") : tr("Hujjat bilan to'liq tanishdim va uning shartlariga roziman.")),
+                  // ToneBox (rangli fon) ichida — ListTile o'z Material'ida bo'lsin, aks holda bosish effekti ko'rinmaydi.
+                  Material(
+                    type: MaterialType.transparency,
+                    child: CheckboxListTile(
+                      contentPadding: EdgeInsets.zero,
+                      controlAffinity: ListTileControlAffinity.leading,
+                      value: _agree,
+                      onChanged: (value) => setState(() => _agree = value ?? false),
+                      title: Text(order ? tr("Buyruq bilan to'liq tanishdim.") : tr("Hujjat bilan to'liq tanishdim va uning shartlariga roziman.")),
+                    ),
                   ),
                   Text(tr("Tasdiqlaganingizda ismingiz, sana, vaqt va IP manzil hujjatga yoziladi. Savolingiz bo'lsa, tasdiqlamay turib hujjatni bergan tashkilotga murojaat qiling."),
                       style: TextStyle(color: AppColors.muted, fontSize: 12.5)),
