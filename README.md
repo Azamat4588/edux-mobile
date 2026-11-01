@@ -103,6 +103,11 @@ Hammasi `docs/screenshots/` da (tungi rejim — `*-tungi.png`). Yangilash: `scre
 xabarida `[skrinshot]` bo'lsa yoki Actions → Screenshots → «Run workflow»; rasmlar `screenshots` branch'iga yoziladi
 (`git fetch origin screenshots && git checkout FETCH_HEAD -- '*.png'`).
 
+## 3.12.1 (server 1.46)
+
+- «Faol qurilmalar» va «Sessiyalar»: ilovada kirish foydalanib turilsa o'zi uzayishi ko'rsatiladi (SMS shlyuz telefonlari
+  90 kundan keyin to'xtamaydi).
+
 ## 3.12 da yangi (SMS shlyuz fonda)
 
 - **SMS shlyuz telefon qulflanganda ham ishlaydi.** Navbatni endi Android fon xizmati (doimiy bildirishnoma «EduX: SMS shlyuz

@@ -987,6 +987,7 @@ class _PlatformSessionsPageState extends State<PlatformSessionsPage> {
                   Text(
                     <String>[
                       tr('Brauzerda {0} kun, ilovada {1} kun amal qiladi.', <Object?>[asInt(policy['session_days']), asInt(policy['app_session_days'])]),
+                      if (policy['app_sliding'] == true) tr("Ilovada foydalanib turilsa, muddat o'zi uzayadi."),
                       asInt(policy['idle_hours']) > 0 ? tr('{0} soat foydalanilmasa yopiladi.', <Object?>[asInt(policy['idle_hours'])]) : tr("Faolsizlik chegarasi o'chiq."),
                       asInt(policy['max_sessions']) > 0
                           ? tr('Bitta hisobga {0} ta qurilma ({1}).', <Object?>[

@@ -134,6 +134,7 @@ class _SessionsPageState extends State<SessionsPage> {
               <String>[
                 limit > 0 ? tr("Ko'pi bilan {0} ta qurilma.", <Object?>[limit]) : tr('Qurilmalar soni cheklanmagan.'),
                 tr('Brauzerda {0} kun, ilovada {1} kun amal qiladi.', <Object?>[asInt(policy['session_days']), asInt(policy['app_session_days'])]),
+                if (policy['app_sliding'] == true) tr("Ilovada foydalanib turilsa, muddat o'zi uzayadi."),
                 if (asInt(policy['idle_hours']) > 0) tr('{0} soat foydalanilmasa yopiladi.', <Object?>[asInt(policy['idle_hours'])]),
               ].join(' '),
               style: TextStyle(color: AppColors.muted, fontSize: 12.5),
