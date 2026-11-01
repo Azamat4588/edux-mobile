@@ -3,6 +3,7 @@
 // nechta yorliq bo'lsa — tepada yorliqlar (veb: SectionTabs). Ota-onada bitta bo'lim — pastki menyuda uning yorliqlari.
 import 'package:flutter/material.dart';
 
+import '../chat/chat_pages.dart';
 import '../documents/documents_pages.dart';
 import '../../core/adaptive.dart';
 import '../../core/api.dart';
@@ -116,6 +117,7 @@ class _HomeShellState extends State<HomeShell> with WidgetsBindingObserver {
       BankSmsForwarder.instance.resume(session);
       // Yangi versiya chiqqan bo'lsa (server «Ilovalar» sozlamasi) — kuniga bir marta taklif.
       AppUpdate.maybeNotify(context, session.api);
+      if (session.memberships.isNotEmpty) refreshChatUnread(session.api);
     });
   }
 
@@ -143,6 +145,11 @@ class _HomeShellState extends State<HomeShell> with WidgetsBindingObserver {
     routes['feedback_reply'] = (data) {
       final id = asInt(data['feedback_id']);
       return id > 0 ? MyFeedbackDetailPage(id: id) : const MyFeedbackPage(initialTab: 1);
+    };
+    // 3.13: yangi xabar (server 1.47: type=chat, thread_id).
+    routes['chat'] = (data) {
+      final id = asInt(data['thread_id']);
+      return id > 0 ? ChatThreadPage(threadId: id) : const ChatListPage();
     };
     // 3.13: yangi hujjat (server 1.47: type=document, document_id).
     routes['document'] = (data) {
@@ -383,6 +390,12 @@ class _HomeShellState extends State<HomeShell> with WidgetsBindingObserver {
       }
     }
     final app = <Widget>[
+      // 3.13: suhbatlar (o'quvchi ↔ ustoz, ota-ona ↔ o'qituvchi, guruh kanallari, izohlar).
+      if (session.memberships.isNotEmpty)
+        ValueListenableBuilder<int>(
+          valueListenable: chatUnread,
+          builder: (context, unread, _) => MenuTile(icon: Icons.forum_outlined, color: AppColors.brand, label: tr('Suhbatlar'), badge: unread, page: const ChatListPage()),
+        ),
       MenuTile(icon: Icons.notifications_none_rounded, color: AppColors.accent, label: tr('Bildirishnomalar'), page: const NotificationsPage()),
       // 1.39: mijozlar fikri — markaz rahbariyatiga (EduX jamoasiga yoziladigan «Murojaatlar» dan alohida).
       if (session.can('feedback_submit'))

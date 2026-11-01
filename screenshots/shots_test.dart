@@ -8,6 +8,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:ui' as ui;
 
+import 'package:edux/features/chat/chat_pages.dart';
 import 'package:edux/features/documents/documents_pages.dart';
 import 'package:edux/core/api.dart';
 import 'package:edux/core/games.dart';
@@ -543,5 +544,12 @@ void main() {
     await shoot(tester, '16-hujjatlar-direktor', org: 'center', role: 'director', page: const IssuedDocumentsPage());
     await shoot(tester, '16-hujjat-direktor', org: 'center', role: 'director', page: const IssuedDocumentPage(id: 4));
     await shoot(tester, '16-hujjatlar-platforma', org: 'platform', role: 'owner', page: const IssuedDocumentsPage(platform: true));
+  });
+
+  // 3.13: suhbatlar (server 1.47) — o'qituvchi: ro'yxat va o'quvchi bilan yozishma.
+  testWidgets('17 suhbatlar', (tester) async {
+    quietImages();
+    await shoot(tester, '17-suhbatlar', org: 'center', role: 'teacher', page: const ChatListPage());
+    await shoot(tester, '17-suhbat', org: 'center', role: 'teacher', page: const ChatThreadPage(threadId: 1));
   });
 }

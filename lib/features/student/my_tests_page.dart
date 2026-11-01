@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 
+import '../chat/chat_pages.dart';
 import '../../core/adaptive.dart';
 import '../../core/api.dart';
 import '../../core/format.dart';
@@ -662,6 +663,15 @@ class AttemptResultPage extends StatelessWidget {
           return ListView(
             padding: readable(context, const EdgeInsets.all(16)),
             children: <Widget>[
+              // 3.13: natija bo'yicha ustozga savol (izoh) — o'quvchi, ota-ona va ustoz ko'radi.
+              Align(
+                alignment: Alignment.centerRight,
+                child: TextButton.icon(
+                  onPressed: () => ChatThreadPage.subject(context, 'attempt', attemptId),
+                  icon: const Icon(Icons.comment_outlined, size: 18),
+                  label: Text(tr('Ustozga savol')),
+                ),
+              ),
               AppCard(
                 child: Column(children: <Widget>[
                   Text(asText(asMap(data['exam'])['title']), textAlign: TextAlign.center, style: const TextStyle(fontWeight: FontWeight.w700)),
