@@ -66,6 +66,7 @@ NavContext navContextOf(Session session) => NavContext(
       can: session.can,
       studentsLabel: session.term('students', "O'quvchilar"),
       groupsLabel: asText(asMap(session.context['terms'])['groups'], 'Guruhlar'),
+      myGroupsLabel: asText(asMap(session.context['terms'])['my_groups'], ''),
     );
 
 class HomeShell extends StatefulWidget {

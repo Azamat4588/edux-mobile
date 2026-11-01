@@ -359,7 +359,7 @@ class Session extends ChangeNotifier implements ApiCredentials {
     }
   }
 
-  /// Tashkilot turiga qarab atamalar (Guruh/Sinf, O'quvchi/Talaba).
+  /// Atamalar (1.48): imkoniyatga qarab — sinflar, guruhlar yoki ikkalasi («Sinf va guruhlar»); o'quvchi/talaba — turdan.
   String term(String key, String fallback) {
     final value = asMap(context['terms'])[key];
     return value == null ? tr(fallback) : tr(value.toString());

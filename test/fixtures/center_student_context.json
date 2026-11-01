@@ -9,7 +9,7 @@
   "url": null
  },
  "theme": [],
- "terms": {
+ "terms": {"my_groups": "Guruhlarim", "has_classes": false, "has_groups": true, "mixed": false, "primary": "groups", 
   "group": "Guruh",
   "groups": "Guruhlar",
   "student": "O'quvchi",

@@ -103,6 +103,11 @@ Hammasi `docs/screenshots/` da (tungi rejim — `*-tungi.png`). Yangilash: `scre
 xabarida `[skrinshot]` bo'lsa yoki Actions → Screenshots → «Run workflow»; rasmlar `screenshots` branch'iga yoziladi
 (`git fetch origin screenshots && git checkout FETCH_HEAD -- '*.png'`).
 
+## 3.14 da yangi (server 1.48: maktab va o'quv markaz birga)
+
+- Menyu atamalari serverdan, tashkilot turidan emas: sinflar va pullik guruh/to'garaklar bir tashkilotda bo'lsa —
+  «Sinf va guruhlar» (o'qituvchida «Sinf va guruhlarim»). Tur o'zgarsa sinflar yo'qolmaydi.
+
 ## 3.13 da yangi (server 1.47: suhbatlar, hujjatlar, call markaz)
 
 - **Suhbatlar** (Yana → Suhbatlar): o'quvchi ustoziga, ota-ona o'qituvchi va rahbariyatga yozadi; o'qituvchi guruh

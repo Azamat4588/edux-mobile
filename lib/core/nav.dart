@@ -41,7 +41,7 @@ class NavItem {
 }
 
 class NavContext {
-  const NavContext({required this.role, required this.can, this.studentsLabel = "O'quvchilar", this.groupsLabel = 'Guruhlar'});
+  const NavContext({required this.role, required this.can, this.studentsLabel = "O'quvchilar", this.groupsLabel = 'Guruhlar', this.myGroupsLabel = ''});
 
   final String role;
 
@@ -49,6 +49,9 @@ class NavContext {
   final bool Function(String permission) can;
   final String studentsLabel;
   final String groupsLabel;
+
+  /// 1.48: o'qituvchi bo'limi — «Sinflarim», «Guruhlarim» yoki aralash tashkilotda «Sinf va guruhlarim».
+  final String myGroupsLabel;
 }
 
 const List<String> _managers = <String>['director', 'admin'];
@@ -96,10 +99,10 @@ List<NavSection> buildNav(NavContext ctx) {
       ]),
     ]);
   } else if (role == 'teacher') {
-    final school = ctx.groupsLabel == 'Sinflar';
+    final mine = ctx.myGroupsLabel.isNotEmpty ? ctx.myGroupsLabel : (ctx.groupsLabel == 'Sinflar' ? 'Sinflarim' : 'Guruhlarim');
     sections.addAll(<NavSection?>[
       _section('home', tr('Bosh sahifa'), 'home', <NavTab?>[NavTab('home', tr('Bosh sahifa'))]),
-      _section('groups', school ? tr('Sinflarim') : tr('Guruhlarim'), 'users', <NavTab?>[
+      _section('groups', tr(mine), 'users', <NavTab?>[
         _when(can('students'), NavTab('students', ctx.studentsLabel)),
         _when(can('attendance'), NavTab('attendance', tr('Davomat'))),
         _when(can('journal'), NavTab('school.journal', tr('Jurnal'))),
