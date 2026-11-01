@@ -103,6 +103,18 @@ Hammasi `docs/screenshots/` da (tungi rejim — `*-tungi.png`). Yangilash: `scre
 xabarida `[skrinshot]` bo'lsa yoki Actions → Screenshots → «Run workflow»; rasmlar `screenshots` branch'iga yoziladi
 (`git fetch origin screenshots && git checkout FETCH_HEAD -- '*.png'`).
 
+## 3.10 da yangi (server 1.44: bir nechta telefondan SMS)
+
+- **SMS shlyuz — bir hisob bilan bir nechta telefon.** Har o'rnatish o'z ID si bilan ro'yxatdan o'tadi; server navbatni
+  telefonlar orasida chegaralari bo'yicha teng bo'ladi, operatori ko'rsatilgan telefonga o'sha operator raqamlarini
+  birinchi beradi.
+- **Chegaralar serverda.** 30 daqiqalik oyna (Android 30 daqiqada 30 tadan ko'p SMS uchun ruxsat so'raydi) va kunlik
+  chegara SMS bo'laklarida; ilova «30 daqiqada yana», «Bugun yana», «Chegara to'ldi: 14:33 dan davom etadi» ni ko'rsatadi.
+- **Tanaffus serverdan.** SMS orasidagi tanaffus panel sozlamasidan olinadi (eski serverda 1,5 s).
+- **Xato bo'lsa.** Yubora olmagan SMS boshqa telefonga o'tadi; ketma-ket xatoda telefon pauzaga qo'yiladi va ilova
+  sababini ko'rsatadi.
+- 3.9.1: ilova logotip ustida qotib qolmaydi (server javob bermasa — sabab va «Qayta urinish»).
+
 ## 3.9 da yangi (veb 1.41 dizayn v3 «Koshin» — butunlay boshqa uslub)
 
 1.40 dagi «Daftar» (daftar varag'i, qizil hoshiya, Literata, Golos Text) **to'liq olib tashlandi**. Yangi g'oya — Registon

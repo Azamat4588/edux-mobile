@@ -200,10 +200,10 @@ class _SmsGatewayPageState extends State<SmsGatewayPage> {
     ];
   }
 
-  String _time(DateTime? time) {
+  String _time(DateTime? time, {bool seconds = true}) {
     if (time == null) return '—';
     String two(int value) => value.toString().padLeft(2, '0');
-    return '${two(time.hour)}:${two(time.minute)}:${two(time.second)}';
+    return seconds ? '${two(time.hour)}:${two(time.minute)}:${two(time.second)}' : '${two(time.hour)}:${two(time.minute)}';
   }
 
   @override
@@ -268,7 +268,32 @@ class _SmsGatewayPageState extends State<SmsGatewayPage> {
                   const Divider(),
                   ListTile(title: Text(tr('Yuborilmadi')), trailing: Text('${gateway.failedSession}', style: TextStyle(fontWeight: FontWeight.w700, color: gateway.failedSession > 0 ? AppColors.danger : null))),
                   const Divider(),
-                  ListTile(title: Text(tr('Bugun yana yuborish mumkin')), trailing: Text('${gateway.leftToday}')),
+                  ListTile(
+                    title: Text(tr('Bugun yana yuborish mumkin')),
+                    trailing: Text(gateway.dailyLimit > 0 ? '${gateway.leftToday} / ${gateway.dailyLimit}' : '${gateway.leftToday}'),
+                  ),
+                  if (gateway.windowLimit > 0) ...<Widget>[
+                    const Divider(),
+                    ListTile(
+                      title: Text(tr('{0} daqiqada yana', <Object?>[gateway.windowMinutes])),
+                      subtitle: Text(tr("Android 30 daqiqada 30 tadan ko'p SMS uchun ruxsat so'raydi — server chegarani o'zi ushlab turadi.")),
+                      trailing: Text('${gateway.leftWindow} / ${gateway.windowLimit}'),
+                    ),
+                  ],
+                  if (gateway.pausedUntil != null && gateway.pausedUntil!.isAfter(DateTime.now())) ...<Widget>[
+                    const Divider(),
+                    ListTile(
+                      leading: Icon(Icons.pause_circle_outline, color: AppColors.warning),
+                      title: Text(tr('Pauzada: {0} gacha', <Object?>[_time(gateway.pausedUntil, seconds: false)])),
+                      subtitle: Text(tr("Ketma-ket xato bo'ldi — SMS'lar boshqa telefonlarga o'tkazildi. SIM balansi va aloqani tekshiring.")),
+                    ),
+                  ] else if (gateway.nextAt != null && gateway.nextAt!.isAfter(DateTime.now())) ...<Widget>[
+                    const Divider(),
+                    ListTile(
+                      leading: Icon(Icons.schedule, color: AppColors.warning),
+                      title: Text(tr("Chegara to'ldi: {0} dan davom etadi", <Object?>[_time(gateway.nextAt, seconds: false)])),
+                    ),
+                  ],
                   const Divider(),
                   ListTile(
                     title: Text(tr('Oxirgi tekshiruv')),
@@ -294,7 +319,7 @@ class _SmsGatewayPageState extends State<SmsGatewayPage> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
                 child: Text(
-                  tr("Ilova ochiq tursin: navbat har 20 soniyada tekshiriladi. Ilova yopilsa, SMS'lar navbatda kutib turadi va keyingi ochilishda ketadi."),
+                  tr("Ilova ochiq tursin: navbat har 20 soniyada tekshiriladi. Ilova yopilsa, SMS'lar boshqa ulangan telefonlardan ketadi yoki navbatda kutib turadi. Bir hisob bilan bir nechta telefon ulash mumkin — server navbatni ular orasida chegaralari bo'yicha taqsimlaydi."),
                   style: TextStyle(color: AppColors.muted, fontSize: 13),
                 ),
               ),

@@ -1,4 +1,10 @@
 {
+"{0} daqiqada yana": "Left in {0} minutes",
+"Android 30 daqiqada 30 tadan ko'p SMS uchun ruxsat so'raydi — server chegarani o'zi ushlab turadi.": "Android asks permission for more than 30 SMS in 30 minutes — the server keeps within the limit.",
+"Pauzada: {0} gacha": "Paused until {0}",
+"Ketma-ket xato bo'ldi — SMS'lar boshqa telefonlarga o'tkazildi. SIM balansi va aloqani tekshiring.": "Several errors in a row — SMS were moved to other phones. Check the SIM balance and signal.",
+"Chegara to'ldi: {0} dan davom etadi": "Limit reached: resumes at {0}",
+"Ilova ochiq tursin: navbat har 20 soniyada tekshiriladi. Ilova yopilsa, SMS'lar boshqa ulangan telefonlardan ketadi yoki navbatda kutib turadi. Bir hisob bilan bir nechta telefon ulash mumkin — server navbatni ular orasida chegaralari bo'yicha taqsimlaydi.": "Keep the app open: the queue is checked every 20 seconds. If the app is closed, SMS go from other connected phones or wait in the queue. You can connect several phones with one account — the server splits the queue between them by their limits.",
 "\"To'g'ri javob\" ustunida harf bo'lishi kerak (masalan C yoki A,C).": "The \"Correct answer\" column must contain a letter (e.g. C or A,C).",
 "\"{0}\" fani o'chirilsinmi?": "Delete the subject \"{0}\"?",
 "\"{0}\" filiali o'chirilsinmi? Guruhlari saqlanadi, lekin filialsiz qoladi.": "Delete the branch \"{0}\"? Its groups will be kept but left without a branch.",

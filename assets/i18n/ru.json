@@ -1,4 +1,10 @@
 {
+"{0} daqiqada yana": "Ещё за {0} минут",
+"Android 30 daqiqada 30 tadan ko'p SMS uchun ruxsat so'raydi — server chegarani o'zi ushlab turadi.": "Android запрашивает разрешение на более чем 30 SMS за 30 минут — сервер сам соблюдает лимит.",
+"Pauzada: {0} gacha": "На паузе до {0}",
+"Ketma-ket xato bo'ldi — SMS'lar boshqa telefonlarga o'tkazildi. SIM balansi va aloqani tekshiring.": "Несколько ошибок подряд — SMS переданы другим телефонам. Проверьте баланс SIM и связь.",
+"Chegara to'ldi: {0} dan davom etadi": "Лимит исчерпан: продолжит с {0}",
+"Ilova ochiq tursin: navbat har 20 soniyada tekshiriladi. Ilova yopilsa, SMS'lar boshqa ulangan telefonlardan ketadi yoki navbatda kutib turadi. Bir hisob bilan bir nechta telefon ulash mumkin — server navbatni ular orasida chegaralari bo'yicha taqsimlaydi.": "Держите приложение открытым: очередь проверяется каждые 20 секунд. Если приложение закрыто, SMS уйдут с других подключённых телефонов или подождут в очереди. С одним аккаунтом можно подключить несколько телефонов — сервер распределяет очередь между ними по их лимитам.",
 "\"To'g'ri javob\" ustunida harf bo'lishi kerak (masalan C yoki A,C).": "В столбце «Правильный ответ» должна быть буква (например, C или A,C).",
 "\"{0}\" fani o'chirilsinmi?": "Удалить предмет \"{0}\"?",
 "\"{0}\" filiali o'chirilsinmi? Guruhlari saqlanadi, lekin filialsiz qoladi.": "Удалить филиал \"{0}\"? Его группы сохранятся, но останутся без филиала.",

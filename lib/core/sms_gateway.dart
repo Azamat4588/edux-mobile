@@ -5,8 +5,12 @@
 // → har bir SMS native SmsManager orqali → POST <prefix>/report.
 // 3.4: ikki navbat — tashkilot (`crm/sms/gateway/*`, direktor/administrator) va platforma (`platform/sms/gateway/*`,
 // platforma egasi: kirish va parol tiklash kodlari). Push `type=sms_gateway, scope=platform` — platforma navbati.
+// 3.10 (server 1.44): bir hisob bilan bir nechta telefon — har telefon o'z `device_id` si bilan ro'yxatdan o'tadi; server
+// telefonning 30 daqiqalik va kunlik chegarasini hisoblab beradi, SMS orasidagi tanaffusni (`pause_ms`) aytadi,
+// yubora olmagan xabarni boshqa telefonga o'tkazadi va ketma-ket xatoda telefonni pauzaga qo'yadi (`paused_until`).
 import 'dart:async';
 import 'dart:io';
+import 'dart:math';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
@@ -53,6 +57,51 @@ class SmsGatewayService extends ChangeNotifier {
   String? lastError;
   DateTime? lastPoll;
 
+  /// Server aytgan chegaralar (eski server yubormasa — 0 / null).
+  int dailyLimit = 0;
+  int leftWindow = 0;
+  int windowLimit = 0;
+  int windowMinutes = 30;
+
+  /// Chegara to'lgan bo'lsa — qachon davom etadi; telefon pauzada bo'lsa — qachongacha.
+  DateTime? nextAt;
+  DateTime? pausedUntil;
+
+  /// SMS orasidagi tanaffus (server sozlamasi; eski serverda 1,5 s).
+  Duration pause = const Duration(milliseconds: 1500);
+
+  static const String _deviceKey = 'sms_gateway_device_id';
+  static String? _deviceId;
+
+  /// Shu o'rnatishning doimiy ID si: bir hisob bilan bir nechta telefon ulanganda server ularni ajratadi.
+  static Future<String> deviceId() async {
+    final cached = _deviceId;
+    if (cached != null) return cached;
+    final prefs = await SharedPreferences.getInstance();
+    var value = prefs.getString(_deviceKey);
+    if (value == null || value.isEmpty) {
+      final random = Random.secure();
+      value = 'a-${List<String>.generate(16, (_) => random.nextInt(256).toRadixString(16).padLeft(2, '0')).join()}';
+      await prefs.setString(_deviceKey, value);
+    }
+    return _deviceId = value;
+  }
+
+  void _limits(Map<String, dynamic> data) {
+    if (data.containsKey('daily_limit')) dailyLimit = asInt(data['daily_limit']);
+    if (data.containsKey('left_window')) leftWindow = asInt(data['left_window']);
+    if (data.containsKey('window_limit')) windowLimit = asInt(data['window_limit']);
+    if (data.containsKey('window_minutes')) windowMinutes = asInt(data['window_minutes']);
+    if (data.containsKey('pause_ms')) {
+      final ms = asInt(data['pause_ms']);
+      if (ms > 0) pause = Duration(milliseconds: ms.clamp(500, 120000).toInt());
+    }
+    if (data.containsKey('next_at')) nextAt = DateTime.tryParse(asText(data['next_at']))?.toLocal();
+    if (data.containsKey('paused_until')) pausedUntil = DateTime.tryParse(asText(data['paused_until']))?.toLocal();
+    final serverError = asText(data['last_error']);
+    if (serverError.isNotEmpty && pausedUntil != null) lastError = serverError;
+  }
+
   bool get supported => Platform.isAndroid;
 
   String get _prefKey => isPlatform ? 'sms_gateway_platform_${asInt(_session?.user['id'])}' : 'sms_gateway_${_session?.organizationId ?? 0}';
@@ -92,7 +141,12 @@ class SmsGatewayService extends ChangeNotifier {
   Future<void> enable(Session session) async {
     _session = session;
     final model = await deviceModel();
-    await session.api.post('$prefix/register', <String, Object?>{'name': session.userName, 'device_model': model});
+    final registered = asMap(await session.api.post('$prefix/register', <String, Object?>{
+      'name': session.userName,
+      'device_model': model,
+      'device_id': await deviceId(),
+    }));
+    _limits(registered);
     // Platforma telefoni: tashkilotsiz hisobda ham jim push kelsin (qurilma ro'yxatdan o'tadi).
     if (isPlatform) unawaited(PushService.instance.attach(session));
     final prefs = await SharedPreferences.getInstance();
@@ -111,7 +165,7 @@ class SmsGatewayService extends ChangeNotifier {
     notifyListeners();
     if (session != null) {
       try {
-        await session.api.post('$prefix/unregister');
+        await session.api.post('$prefix/unregister', <String, Object?>{'device_id': await deviceId()});
       } catch (_) {}
     }
   }
@@ -144,9 +198,11 @@ class SmsGatewayService extends ChangeNotifier {
     try {
       do {
         _again = false;
-        final data = asMap(await session.api.get('$prefix/next', query: <String, Object?>{'limit': 10}));
+        final device = await deviceId();
+        final data = asMap(await session.api.get('$prefix/next', query: <String, Object?>{'limit': 10, 'device_id': device}));
         lastPoll = DateTime.now();
         leftToday = asInt(data['left_today']);
+        _limits(data);
         final messages = asList(data['messages'], 'messages');
         if (messages.isEmpty) break;
         final results = <Map<String, Object?>>[];
@@ -169,11 +225,15 @@ class SmsGatewayService extends ChangeNotifier {
             lastError = error;
           }
           notifyListeners();
-          // Operator spam deb bloklamasligi uchun SMS'lar orasida qisqa tanaffus.
-          await Future<void>.delayed(const Duration(milliseconds: 1500));
+          // Operator spam deb bloklamasligi uchun SMS'lar orasida tanaffus (server sozlamasi).
+          await Future<void>.delayed(pause);
         }
-        await session.api.post('$prefix/report', <String, Object?>{'results': results});
-        if (messages.length >= 10) _again = true;
+        final report = asMap(await session.api.post('$prefix/report', <String, Object?>{'device_id': device, 'results': results}));
+        if (report.containsKey('paused_until')) {
+          pausedUntil = DateTime.tryParse(asText(report['paused_until']))?.toLocal();
+        }
+        // Server yana beradi (to'liq to'plam keldi va chegara bor) — darhol so'raymiz.
+        if (messages.length >= 10 && pausedUntil == null && (windowLimit == 0 || leftWindow > 0)) _again = true;
       } while (_again && enabled);
     } on ApiException catch (e) {
       lastError = e.message;
