@@ -103,6 +103,20 @@ Hammasi `docs/screenshots/` da (tungi rejim — `*-tungi.png`). Yangilash: `scre
 xabarida `[skrinshot]` bo'lsa yoki Actions → Screenshots → «Run workflow»; rasmlar `screenshots` branch'iga yoziladi
 (`git fetch origin screenshots && git checkout FETCH_HEAD -- '*.png'`).
 
+## 3.15 da yangi (xatolar tuzatildi)
+
+- Davomat qayta saqlanganda vebda qo'yilgan ball va izoh o'chib ketmaydi.
+- Push: hujjat tasdiqlansa — rahbarga «Berilgan hujjat» (platforma egasiga — platforma hujjati), kerak bo'lsa tashkilot
+  almashadi; platforma egasiga yangi murojaat — so'rov sahifasi; o'quvchiga to'lov — «To'lovlarim»; kartaga o'tkazma
+  Telegram akkaunti muammosi — «Kartaga o'tkazmalar».
+- Test: javob yuborilmagan bo'lsa test yakunlanmaydi — «Javoblar yuborilmadi» xabari, o'quvchi sahifada qoladi.
+- Suhbatlar: ilova faylini bosib ochish; rollar va bo'sh nomli suhbat avatari xatosi tuzatildi.
+- Testlar ro'yxati (Testlar, Skaner, varaqa tekshiruvi) — 30 ta emas, hammasi (200 tagacha).
+- Jurnal: yangi dars qo'shilgach jadval yuklanmasa — «Qayta urinish». Davomat guruhlari va jurnal internetsiz ham
+  oxirgi ma'lumotni ko'rsatadi.
+- O'qituvchi: **Maoshim** (Yana → Maoshim, CRM): oy bo'yicha hisoblangan, berilgan va qoldiq.
+- Sahifa yopilgandan keyin kelgan javobda ilova yiqilmaydi (bir nechta sahifada).
+
 ## 3.14 da yangi (server 1.48: maktab va o'quv markaz birga)
 
 - Menyu atamalari serverdan, tashkilot turidan emas: sinflar va pullik guruh/to'garaklar bir tashkilotda bo'lsa —

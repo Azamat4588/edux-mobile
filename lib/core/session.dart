@@ -253,6 +253,9 @@ class Session extends ChangeNotifier implements ApiCredentials {
       case 'my_payments':
         // O'quvchi CRM kabineti (crm/me): balans, hisoblar, to'lovlar.
         return full && hasModule('crm');
+      case 'my_salary':
+        // 3.15: o'qituvchi maoshi (server: crm/my/salary — organization:teacher + CRM).
+        return role == 'teacher' && hasModule('crm');
     }
     return false;
   }

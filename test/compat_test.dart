@@ -39,6 +39,9 @@ void main() {
       expect(PushService.normalize(<String, dynamic>{'type': 'attempt', 'route': 'my.attempt', 'link': '/my/attempts/15'})['attempt_id'], '15');
       expect(PushService.normalize(<String, dynamic>{'route': 'crm.leads', 'link': '/crm/leads?lead=9'})['lead_id'], '9');
       expect(PushService.normalize(<String, dynamic>{'route': 'my.payments', 'link': '/home/payments'})['type'], 'payment');
+      // 3.15: kartaga o'tkazma Telegram akkaunti (route=settings.payments) — tur saqlanadi.
+      expect(PushService.normalize(<String, dynamic>{'type': 'p2p_telegram', 'route': 'settings.payments', 'link': '/settings/payments'})['type'], 'p2p_telegram');
+      expect(PushService.normalize(<String, dynamic>{'type': 'support', 'route': 'platform.support', 'ticket_id': '4'})['ticket_id'], '4');
     });
 
     test('route/url dan tur va id', () {

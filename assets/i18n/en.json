@@ -1,4 +1,13 @@
 {
+"Berilgan pullar": "Payouts",
+"Bu oy hali pul berilmagan.": "No payouts this month yet.",
+"Bu oy uchun maosh hisoblanmagan.": "No salary accrued for this month.",
+"Faylni ochib bo'lmadi.": "Could not open the file.",
+"Faylni ochish": "Open file",
+"Hisob-kitob": "Breakdown",
+"Javoblar yuborilmadi. Internetni tekshirib, qayta urining.": "Answers were not sent. Check your internet connection and try again.",
+"boshqa oyda yozilgan": "recorded in another month",
+"{0} ta dars": "{0} lessons",
 "Sinf va guruhlar": "Classes and groups",
 "Sinf va guruhlarim": "My classes and groups",
 "Sinf yoki guruh": "Class or group",

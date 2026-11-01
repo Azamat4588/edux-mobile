@@ -46,6 +46,7 @@ import '../settings/settings_page.dart';
 import '../staff/attendance_page.dart';
 import '../staff/exams_page.dart';
 import '../staff/journal_page.dart';
+import '../staff/salary_page.dart';
 import '../staff/staff_home_page.dart';
 import '../staff/students_page.dart';
 import '../student/assignments_page.dart';
@@ -132,9 +133,13 @@ class _HomeShellState extends State<HomeShell> with WidgetsBindingObserver {
       return s.isStudent && s.hasModule('testing') && id > 0 ? AttemptResultPage(attemptId: id) : null;
     };
     // 3.5: murojaatga javob (server 1.38: type=support, route=info.support.ticket, token).
+    // 3.15: platforma egasiga yangi murojaat (type=support, route=platform.support, ticket_id; token yo'q).
     routes['support'] = (data) {
       final token = asText(data['token']);
-      return RegExp(r'^[A-Za-z0-9]{40}$').hasMatch(token) ? TicketPage(token: token) : const SupportPage();
+      if (RegExp(r'^[A-Za-z0-9]{40}$').hasMatch(token)) return TicketPage(token: token);
+      final ticket = asInt(data['ticket_id']);
+      if (ticket > 0 && session().can('platform')) return PlatformTicketPage(id: ticket);
+      return const SupportPage();
     };
     // 1.39: mijozlar fikri — yangi fikr / mas'ul (rahbar paneli) va muallifga javob.
     routes['feedback'] = (data) {
@@ -154,11 +159,28 @@ class _HomeShellState extends State<HomeShell> with WidgetsBindingObserver {
       final id = asInt(data['thread_id']);
       return id > 0 ? ChatThreadPage(threadId: id) : const ChatListPage();
     };
-    // 3.13: yangi hujjat (server 1.47: type=document, document_id).
+    // 3.13: yangi hujjat (server 1.47: type=document, document_id). 3.15: scope — 'mine' (menga yuborilgan) yoki
+    // 'issued' (men bergan hujjat tasdiqlandi); organization_id bo'sh — platforma hujjati. Tashkilot open() da almashadi.
     routes['document'] = (data) {
+      final s = session();
       final id = asInt(data['document_id']);
+      final scope = asText(data['scope']);
+      final platform = asInt(data['organization_id']) == 0;
+      final issued = scope.isNotEmpty ? scope == 'issued' : s.isPlatformOwnerOnly;
+      if (issued) {
+        if (platform && s.can('platform')) return id > 0 ? IssuedDocumentPage(id: id, platform: true) : const IssuedDocumentsPage(platform: true);
+        if (s.isManager) return id > 0 ? IssuedDocumentPage(id: id) : const IssuedDocumentsPage();
+        return null;
+      }
       return id > 0 ? MyDocumentPage(id: id) : const MyDocumentsPage();
     };
+    // 3.15: o'quvchiga to'lov qabul qilindi — «To'lovlarim» (ota-onada — bosh sahifa, farzand kartasi).
+    routes['payment'] = (_) {
+      final s = session();
+      return s.isStudent && s.can('my_payments') ? const MyPaymentsPage() : null;
+    };
+    // 3.15: kartaga o'tkazmalar Telegram akkaunti ishlamay qoldi (route=settings.payments) — «Kartaga o'tkazmalar».
+    routes['p2p_telegram'] = (_) => session().can('p2p') ? const P2pPage() : null;
     routes['certificate'] = (_) {
       final s = session();
       return s.isStudent && !s.isGuest && (s.hasModule('testing') || s.hasModule('lms')) ? const CertificatesPage() : null;
@@ -311,6 +333,8 @@ class _HomeShellState extends State<HomeShell> with WidgetsBindingObserver {
         return MasterDetail(master: const JournalPage(), hint: tr('Jurnalni tanlang — darslar va baholar shu yerda ochiladi.'));
       case 'my.payments':
         return const MyPaymentsPage();
+      case 'crm.my.salary':
+        return const MySalaryPage();
     }
     return null;
   }
