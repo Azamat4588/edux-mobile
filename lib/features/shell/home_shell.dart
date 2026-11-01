@@ -3,6 +3,7 @@
 // nechta yorliq bo'lsa — tepada yorliqlar (veb: SectionTabs). Ota-onada bitta bo'lim — pastki menyuda uning yorliqlari.
 import 'package:flutter/material.dart';
 
+import '../documents/documents_pages.dart';
 import '../../core/adaptive.dart';
 import '../../core/api.dart';
 import '../../core/app_update.dart';
@@ -142,6 +143,11 @@ class _HomeShellState extends State<HomeShell> with WidgetsBindingObserver {
     routes['feedback_reply'] = (data) {
       final id = asInt(data['feedback_id']);
       return id > 0 ? MyFeedbackDetailPage(id: id) : const MyFeedbackPage(initialTab: 1);
+    };
+    // 3.13: yangi hujjat (server 1.47: type=document, document_id).
+    routes['document'] = (data) {
+      final id = asInt(data['document_id']);
+      return id > 0 ? MyDocumentPage(id: id) : const MyDocumentsPage();
     };
     routes['certificate'] = (_) {
       final s = session();

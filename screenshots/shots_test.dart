@@ -8,6 +8,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:ui' as ui;
 
+import 'package:edux/features/documents/documents_pages.dart';
 import 'package:edux/core/api.dart';
 import 'package:edux/core/games.dart';
 import 'package:edux/core/adaptive.dart';
@@ -532,5 +533,15 @@ void main() {
     await shoot(tester, '15-faol-qurilmalar', org: 'platform', role: 'owner', page: const SessionsPage());
     final session = sessionFor('platform', 'owner');
     await shoot(tester, '15-platforma-yana', org: 'platform', role: 'owner', page: morePage(session), tab: 'more');
+  });
+
+  // 3.13: hujjatlar (server 1.47) — o'quvchi (ota-ona) «Hujjatlarim» va tasdiqlash, direktor ro'yxati, platforma egasi.
+  testWidgets('16 hujjatlar', (tester) async {
+    quietImages();
+    await shoot(tester, '16-hujjatlarim', org: 'center', role: 'student', page: const MyDocumentsPage());
+    await shoot(tester, '16-hujjat-tasdiqlash', org: 'center', role: 'student', page: const MyDocumentPage(id: 1));
+    await shoot(tester, '16-hujjatlar-direktor', org: 'center', role: 'director', page: const IssuedDocumentsPage());
+    await shoot(tester, '16-hujjat-direktor', org: 'center', role: 'director', page: const IssuedDocumentPage(id: 4));
+    await shoot(tester, '16-hujjatlar-platforma', org: 'platform', role: 'owner', page: const IssuedDocumentsPage(platform: true));
   });
 }

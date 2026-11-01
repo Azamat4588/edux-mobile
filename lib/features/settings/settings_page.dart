@@ -13,6 +13,7 @@ import '../../core/session.dart';
 import '../../core/theme.dart';
 import '../../core/widgets.dart';
 import '../auth/organization_picker.dart';
+import '../documents/documents_pages.dart';
 import '../help/help_pages.dart';
 import 'appearance_page.dart';
 import 'sessions_page.dart';
@@ -173,6 +174,21 @@ class _SettingsPageState extends State<SettingsPage> {
                 },
               ),
             ),
+            // 3.13: hujjatlar — menga yuborilganlari; rahbarda — tashkilot bergan hujjatlar ham. Ixtiyoriy.
+            if (session.memberships.isNotEmpty)
+              MenuTile(
+                icon: Icons.description_outlined,
+                label: tr('Hujjatlarim'),
+                subtitle: tr('Shartnoma, buyruq va ma\'lumotnomalar'),
+                page: const MyDocumentsPage(),
+              ),
+            if (session.isManager)
+              MenuTile(
+                icon: Icons.folder_copy_outlined,
+                label: tr('Hujjatlar'),
+                subtitle: tr('Xodim va o\'quvchilar bilan shartnoma, buyruq'),
+                page: const IssuedDocumentsPage(),
+              ),
             // 3.11: hisobga kirilgan qurilmalar — tanimaganini yopish.
             MenuTile(
               icon: Icons.devices_outlined,

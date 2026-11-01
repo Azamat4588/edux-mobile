@@ -6,6 +6,7 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../documents/documents_pages.dart';
 import '../../core/api.dart';
 import '../../core/format.dart';
 import '../../core/i18n.dart';
@@ -154,6 +155,14 @@ class PlatformDashboardPage extends StatelessWidget {
                 icon: Icons.support_agent_outlined,
                 color: AppColors.danger,
                 onTap: () => _push(context, const PlatformSupportPage()),
+              ),
+              StatCard(
+                label: tr('Hujjatlar'),
+                value: '${asInt(asMap(data['documents'])['awaiting'])}',
+                hint: tr('Tasdiq kutilmoqda'),
+                icon: Icons.description_outlined,
+                color: AppColors.info,
+                onTap: () => _push(context, const IssuedDocumentsPage(platform: true)),
               ),
               StatCard(
                 label: tr('Faol kirishlar'),
