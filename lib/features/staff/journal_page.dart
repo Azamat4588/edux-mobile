@@ -88,16 +88,19 @@ class JournalGridPage extends StatefulWidget {
 class _JournalGridPageState extends State<JournalGridPage> {
   late int _termId = widget.termId;
   // Chorak o'zgarsa — yangi kalit (sahifa qaytadan yuklanadi).
-  GlobalKey<AsyncViewState<JournalGrid>> _view = GlobalKey<AsyncViewState<JournalGrid>>();
+  GlobalKey<AsyncViewState<Map<String, dynamic>>> _view = GlobalKey<AsyncViewState<Map<String, dynamic>>>();
 
   int get _groupId => asInt(widget.journal['group_id']);
   int get _subjectId => asInt(widget.journal['subject_id']);
 
-  Future<JournalGrid> _load(Api api) async => JournalGrid.fromJson(asMap(await api.get('school/journal', query: <String, Object?>{
+  // Xom javob AsyncView'da saqlanadi (internetsiz nusxa — offline kesh JSON), jadval builder'da quriladi.
+  Future<Map<String, dynamic>> _loadRaw(Api api) async => asMap(await api.get('school/journal', query: <String, Object?>{
         'group_id': _groupId,
         'subject_id': _subjectId,
         'term_id': _termId,
-      })));
+      }));
+
+  Future<JournalGrid> _load(Api api) async => JournalGrid.fromJson(await _loadRaw(api));
 
   Future<void> _addLesson() async {
     final api = AppScope.read(context).api;
@@ -117,13 +120,15 @@ class _JournalGridPageState extends State<JournalGridPage> {
     }
     if (!mounted) return;
     _reloadView();
-    await _openLesson(created, grid);
+    // Jadval yuklanmasa — baholash sahifasi o'zi qayta urinadi («Qayta urinish»).
+    await _openLesson(created, grid, reload: () => _load(api));
   }
 
   void _reloadView() => _view.currentState?.reload();
 
-  Future<void> _openLesson(Map<String, dynamic> lesson, JournalGrid? grid) async {
-    final saved = await Navigator.of(context).push<bool>(MaterialPageRoute<bool>(builder: (_) => LessonEntriesPage(grid: grid, lesson: lesson)));
+  Future<void> _openLesson(Map<String, dynamic> lesson, JournalGrid? grid, {Future<JournalGrid> Function()? reload}) async {
+    final saved = await Navigator.of(context).push<bool>(
+        MaterialPageRoute<bool>(builder: (_) => LessonEntriesPage(grid: grid, lesson: lesson, reload: reload)));
     if (saved == true) await _view.currentState?.reload();
   }
 
@@ -149,7 +154,7 @@ class _JournalGridPageState extends State<JournalGridPage> {
                       selected: asInt(term['id']) == _termId,
                       onSelected: (_) => setState(() {
                         _termId = asInt(term['id']);
-                        _view = GlobalKey<AsyncViewState<JournalGrid>>();
+                        _view = GlobalKey<AsyncViewState<Map<String, dynamic>>>();
                       }),
                     ),
                   ),
@@ -157,10 +162,14 @@ class _JournalGridPageState extends State<JournalGridPage> {
             ),
           ),
         Expanded(
-          child: AsyncView<JournalGrid>(
+          child: AsyncView<Map<String, dynamic>>(
             key: _view,
-            load: () => _load(api),
-            builder: (context, grid, reload) {
+            load: () => _loadRaw(api),
+            // Internetsiz — shu jurnal+chorakning oxirgi jadvali ko'rsatiladi.
+            cacheKey: 'school_journal_${_groupId}_${_subjectId}_$_termId',
+            decode: asMap,
+            builder: (context, raw, reload) {
+              final grid = JournalGrid.fromJson(raw);
               final lessons = grid.lessons;
               return Stack(children: <Widget>[
                 ListView(
@@ -231,10 +240,13 @@ class _LessonTile extends StatelessWidget {
 
 /// Bitta dars: har o'quvchiga baho va davomat. «Hammasi keldi» — bo'sh kataklarga «Qatnashdi».
 class LessonEntriesPage extends StatefulWidget {
-  const LessonEntriesPage({super.key, required this.grid, required this.lesson});
+  const LessonEntriesPage({super.key, required this.grid, required this.lesson, this.reload});
 
   final JournalGrid? grid;
   final Map<String, dynamic> lesson;
+
+  /// Jadval yo'q bo'lsa (yangi dars qo'shilgach yuklanmagan) — qayta yuklash.
+  final Future<JournalGrid> Function()? reload;
 
   @override
   State<LessonEntriesPage> createState() => _LessonEntriesPageState();
@@ -242,14 +254,46 @@ class LessonEntriesPage extends StatefulWidget {
 
 class _LessonEntriesPageState extends State<LessonEntriesPage> {
   late final int _lessonId = asInt(widget.lesson['id']);
-  late final Map<int, JournalEntry> _before = <int, JournalEntry>{
-    for (final student in widget.grid?.students ?? const <Map<String, dynamic>>[])
-      asInt(student['id']): widget.grid!.entry(_lessonId, asInt(student['id'])),
-  };
-  late final Map<int, JournalEntry> _edited = Map<int, JournalEntry>.from(_before);
+  JournalGrid? _grid;
+  final Map<int, JournalEntry> _before = <int, JournalEntry>{};
+  final Map<int, JournalEntry> _edited = <int, JournalEntry>{};
   bool _saving = false;
+  bool _retrying = false;
 
-  bool get _canWrite => widget.grid?.canWrite == true;
+  @override
+  void initState() {
+    super.initState();
+    _apply(widget.grid);
+  }
+
+  void _apply(JournalGrid? grid) {
+    _grid = grid;
+    _before
+      ..clear()
+      ..addAll(<int, JournalEntry>{
+        for (final student in grid?.students ?? const <Map<String, dynamic>>[]) asInt(student['id']): grid!.entry(_lessonId, asInt(student['id'])),
+      });
+    _edited
+      ..clear()
+      ..addAll(_before);
+  }
+
+  Future<void> _retry() async {
+    final reload = widget.reload;
+    if (reload == null || _retrying) return;
+    setState(() => _retrying = true);
+    try {
+      final grid = await reload();
+      if (!mounted) return;
+      setState(() => _apply(grid));
+    } catch (error) {
+      if (mounted) showMessage(context, errorText(error), error: true);
+    } finally {
+      if (mounted) setState(() => _retrying = false);
+    }
+  }
+
+  bool get _canWrite => _grid?.canWrite == true;
   List<Map<String, Object?>> get _changes => changedEntries(_before, _edited);
 
   void _allPresent() {
@@ -287,7 +331,7 @@ class _LessonEntriesPageState extends State<LessonEntriesPage> {
 
   @override
   Widget build(BuildContext context) {
-    final grid = widget.grid;
+    final grid = _grid;
     final day = parseDate(widget.lesson['date']);
     // O'zgarish bo'lmasa — oddiy yopiladi (iPhone'da chetdan surib orqaga qaytish ishlaydi).
     return PopScope(
@@ -304,7 +348,9 @@ class _LessonEntriesPageState extends State<LessonEntriesPage> {
           ],
         ),
         body: grid == null
-            ? ErrorState(message: tr("Ma'lumotni yuklab bo'lmadi."))
+            ? (_retrying
+                ? const SkeletonList(count: 6)
+                : ErrorState(message: tr("Ma'lumotni yuklab bo'lmadi."), onRetry: widget.reload == null ? null : _retry))
             : ListView(
                 padding: readable(context, const EdgeInsets.fromLTRB(16, 8, 16, 96)),
                 children: <Widget>[

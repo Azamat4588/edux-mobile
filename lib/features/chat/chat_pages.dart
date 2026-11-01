@@ -8,6 +8,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import '../../core/api.dart';
+import '../../core/file_open.dart';
 import '../../core/format.dart';
 import '../../core/i18n.dart';
 import '../../core/session.dart';
@@ -34,6 +35,12 @@ Future<void> refreshChatUnread(Api api) async {
   } on ApiException {
     // jim
   }
+}
+
+/// Avatar harfi: bo'sh nomda `characters.first` xato bermasin.
+String chatInitial(Object? name) {
+  final text = asText(name).trim();
+  return text.isEmpty ? '?' : text.characters.first.toUpperCase();
 }
 
 String chatTime(Object? value) {
@@ -129,7 +136,7 @@ class _ChatListPageState extends State<ChatListPage> {
                       backgroundColor: AppColors.soft(AppColors.brand),
                       foregroundColor: AppColors.brand,
                       child: kind == 'direct'
-                          ? Text(asText(item['title'], '?').characters.first)
+                          ? Text(chatInitial(item['title']))
                           : Icon(kind == 'group' ? Icons.groups_outlined : Icons.comment_outlined, size: 20),
                     ),
                     title: Text(asText(item['title']), maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontWeight: FontWeight.w600)),
@@ -250,10 +257,12 @@ class _NewChatSheetState extends State<_NewChatSheet> {
             for (final item in _contacts)
               ListTile(
                 contentPadding: EdgeInsets.zero,
-                leading: CircleAvatar(child: Text(asText(item['name'], '?').characters.first)),
+                leading: CircleAvatar(child: Text(chatInitial(item['name']))),
                 title: Text(asText(item['name'])),
                 subtitle: Text(
-                  (asList(item['roles']).isNotEmpty ? item['roles'] as List<dynamic> : <dynamic>[item['role']])
+                  // roles — matnlar ro'yxati (asList faqat Map elementlarni oladi).
+                  (asRawList(item['roles']).isNotEmpty ? asRawList(item['roles']) : <dynamic>[item['role']])
+                      .where((role) => role != null)
                       .map((role) => tr(chatRoleLabels[role.toString()] ?? role.toString()))
                       .join(', '),
                 ),
@@ -410,14 +419,16 @@ class _ChatThreadPageState extends State<ChatThreadPage> with WidgetsBindingObse
       if (action == 'delete') {
         if (!await confirm(context, tr("Xabar o'chirilsinmi?"), danger: true)) return;
         await api.delete('chat/messages/${message['id']}');
+        if (!mounted) return;
         setState(() => message
           ..['deleted'] = true
           ..['body'] = null
           ..['attachment'] = null);
       } else if (action == 'report') {
         await api.post('chat/messages/${message['id']}/report', <String, dynamic>{});
+        if (!mounted) return;
         setState(() => message['reported'] = true);
-        if (mounted) showMessage(context, tr('Shikoyat rahbariyatga yuborildi.'));
+        showMessage(context, tr('Shikoyat rahbariyatga yuborildi.'));
       } else if (action == 'edit') {
         final controller = TextEditingController(text: asText(message['body']));
         final text = await showDialog<String>(
@@ -434,10 +445,32 @@ class _ChatThreadPageState extends State<ChatThreadPage> with WidgetsBindingObse
         controller.dispose();
         if (text == null || text.isEmpty) return;
         final updated = asMap(await api.put('chat/messages/${message['id']}', <String, dynamic>{'body': text}));
+        if (!mounted) return;
         setState(() => message.addAll(updated));
       }
     } on ApiException catch (error) {
       if (mounted) showMessage(context, error.message, error: true);
+    }
+  }
+
+  int? _opening;
+
+  /// Ilova faylini yuklab, telefondagi ilovada ochadi (kurs materiallari kabi).
+  Future<void> _openAttachment(Map<String, dynamic> message) async {
+    final id = asInt(message['id']);
+    if (_opening != null) return;
+    final api = AppScope.read(context).api;
+    setState(() => _opening = id);
+    try {
+      final bytes = await api.bytes('chat/messages/$id/file');
+      final opened = await openBytesAsFile(bytes, asText(asMap(message['attachment'])['name'], 'fayl'), prefix: 'chat-$id-');
+      if (!opened && mounted) showMessage(context, tr('Bu turdagi fayl ilova ichida ochilmaydi.'), error: true);
+    } on ApiException catch (error) {
+      if (mounted) showMessage(context, error.message, error: true);
+    } catch (_) {
+      if (mounted) showMessage(context, tr("Faylni ochib bo'lmadi."), error: true);
+    } finally {
+      if (mounted) setState(() => _opening = null);
     }
   }
 
@@ -446,7 +479,7 @@ class _ChatThreadPageState extends State<ChatThreadPage> with WidgetsBindingObse
     if (kind == 'group') return tr('Guruh kanali · {0} kishi', <Object?>[asList(_thread['participants']).length]);
     if (kind == 'subject') return tr('Izoh');
     final matches = asList(_thread['participants']).where((p) => asText(p['name']) == asText(_thread['title'])).toList();
-    return asList(matches.isEmpty ? null : matches.first['roles']).map((role) => tr(chatRoleLabels[role.toString()] ?? role.toString())).join(', ');
+    return asRawList(matches.isEmpty ? null : matches.first['roles']).map((role) => tr(chatRoleLabels[role.toString()] ?? role.toString())).join(', ');
   }
 
   @override
@@ -475,6 +508,8 @@ class _ChatThreadPageState extends State<ChatThreadPage> with WidgetsBindingObse
                               showAuthor: kind != 'direct',
                               read: asInt(_messages[index]['id']) <= _readByOthers,
                               onLongPress: _messages[index]['deleted'] == true ? null : () => _actions(_messages[index]),
+                              opening: _opening == asInt(_messages[index]['id']),
+                              onOpenAttachment: () => _openAttachment(_messages[index]),
                             ),
                           ),
                   ),
@@ -514,12 +549,14 @@ class _ChatThreadPageState extends State<ChatThreadPage> with WidgetsBindingObse
 }
 
 class _Bubble extends StatelessWidget {
-  const _Bubble({required this.message, required this.showAuthor, required this.read, this.onLongPress});
+  const _Bubble({required this.message, required this.showAuthor, required this.read, this.onLongPress, this.onOpenAttachment, this.opening = false});
 
   final Map<String, dynamic> message;
   final bool showAuthor;
   final bool read;
   final VoidCallback? onLongPress;
+  final VoidCallback? onOpenAttachment;
+  final bool opening;
 
   @override
   Widget build(BuildContext context) {
@@ -553,13 +590,24 @@ class _Bubble extends StatelessWidget {
             else ...<Widget>[
               if (asText(message['body']).isNotEmpty) SelectableText(asText(message['body']), style: TextStyle(color: fg, fontSize: 15, height: 1.35)),
               if (attachment.isNotEmpty)
-                Padding(
-                  padding: const EdgeInsets.only(top: 4),
-                  child: Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
-                    Icon(attachment['image'] == true ? Icons.image_outlined : Icons.attach_file, size: 16, color: fg),
-                    const SizedBox(width: 4),
-                    Flexible(child: Text(asText(attachment['name']), style: TextStyle(color: fg, fontSize: 13, decoration: TextDecoration.underline))),
-                  ]),
+                Semantics(
+                  button: true,
+                  label: tr('Faylni ochish'),
+                  child: GestureDetector(
+                    behavior: HitTestBehavior.opaque,
+                    onTap: opening ? null : onOpenAttachment,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 6),
+                      child: Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
+                        if (opening)
+                          SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2, color: fg))
+                        else
+                          Icon(attachment['image'] == true ? Icons.image_outlined : Icons.attach_file, size: 16, color: fg),
+                        const SizedBox(width: 4),
+                        Flexible(child: Text(asText(attachment['name'], tr('Fayl')), style: TextStyle(color: fg, fontSize: 13, decoration: TextDecoration.underline))),
+                      ]),
+                    ),
+                  ),
                 ),
             ],
             const SizedBox(height: 2),

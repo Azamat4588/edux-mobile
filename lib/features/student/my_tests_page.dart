@@ -261,12 +261,14 @@ class _TakeTestPageState extends State<TakeTestPage> {
     });
     try {
       final data = asMap(await AppScope.read(context).api.post('exams/${widget.examId}/attempt'));
+      if (!mounted) return;
       setState(() {
         _accept(data);
         _loading = false;
       });
       _restartTimer();
     } on ApiException catch (error) {
+      if (!mounted) return;
       setState(() {
         _error = error.message;
         _loading = false;
@@ -309,6 +311,7 @@ class _TakeTestPageState extends State<TakeTestPage> {
   }
 
   Future<bool> _sync(int questionId) async {
+    if (!mounted) return false;
     try {
       await AppScope.read(context).api.put(
         'attempts/$_attemptId/answers/$questionId',
@@ -337,11 +340,17 @@ class _TakeTestPageState extends State<TakeTestPage> {
       }
     }
     setState(() => _finishing = true);
-    // Yuborilmay qolgan javoblar
+    // Yuborilmay qolgan javoblar. Birortasi yuborilmasa — yakunlanmaydi (aks holda javob yo'qoladi), o'quvchi sahifada qoladi.
+    var synced = true;
     for (final id in _unsynced.toList()) {
-      await _sync(id);
+      if (!await _sync(id)) synced = false;
     }
     if (!mounted) return;
+    if (!synced) {
+      setState(() => _finishing = false);
+      showMessage(context, tr('Javoblar yuborilmadi. Internetni tekshirib, qayta urining.'), error: true);
+      return;
+    }
     try {
       await AppScope.read(context).api.post('attempts/$_attemptId/finish');
       _timer?.cancel();

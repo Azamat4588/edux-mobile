@@ -31,6 +31,9 @@ class AttendancePage extends StatelessWidget {
       appBar: pageBar(context, title: Text(tr('Davomat')), actions: const <Widget>[HelpButton(HelpLinks.attendance)]),
       body: AsyncView<Map<String, dynamic>>(
         load: () => _load(session),
+        // Internetsiz — oxirgi yuklangan guruhlar ro'yxati ko'rsatiladi.
+        cacheKey: 'attendance_groups',
+        decode: asMap,
         builder: (context, data, reload) {
           final groups = asList(data['groups'], 'groups').where((group) => group['is_active'] != false).toList();
           final todayIds = asList(asMap(data['timetable'])['items'], 'items')
@@ -164,6 +167,7 @@ class _AttendanceSheetPageState extends State<AttendanceSheetPage> {
         'date': isoDay(_day),
       }));
       final students = asList(sheet['students'], 'students');
+      if (!mounted) return;
       setState(() {
         _students = students;
         _status
@@ -174,6 +178,7 @@ class _AttendanceSheetPageState extends State<AttendanceSheetPage> {
         _dirty = false;
       });
     } on ApiException catch (error) {
+      if (!mounted) return;
       setState(() {
         _error = error.message;
         _loading = false;
@@ -190,6 +195,7 @@ class _AttendanceSheetPageState extends State<AttendanceSheetPage> {
     );
     if (picked == null || !mounted) return;
     if (_dirty && !await confirm(context, tr('Saqlanmagan davomat belgilari bor. Ular saqlanmasdan tashlab yuborilsinmi?'))) return;
+    if (!mounted) return;
     setState(() => _day = picked);
     await _load();
   }
@@ -202,7 +208,13 @@ class _AttendanceSheetPageState extends State<AttendanceSheetPage> {
         'date': isoDay(_day),
         'topic': _topic.text.trim().isEmpty ? null : _topic.text.trim(),
         'marks': _students
-            .map((student) => <String, Object?>{'student_id': asInt(student['id']), 'status': _status[asInt(student['id'])]})
+            // Ball va izoh (vebda kiritilgan) qaytarib yuboriladi — aks holda server ularni o'chirib yuboradi.
+            .map((student) => <String, Object?>{
+                  'student_id': asInt(student['id']),
+                  'status': _status[asInt(student['id'])],
+                  'score': student['score'] == null ? null : asInt(student['score']),
+                  'comment': student['comment'] == null || asText(student['comment']).isEmpty ? null : asText(student['comment']),
+                })
             .toList(),
       });
       if (!mounted) return;
