@@ -103,6 +103,16 @@ Hammasi `docs/screenshots/` da (tungi rejim — `*-tungi.png`). Yangilash: `scre
 xabarida `[skrinshot]` bo'lsa yoki Actions → Screenshots → «Run workflow»; rasmlar `screenshots` branch'iga yoziladi
 (`git fetch origin screenshots && git checkout FETCH_HEAD -- '*.png'`).
 
+## 3.13 da yangi (server 1.47: suhbatlar, hujjatlar, call markaz)
+
+- **Suhbatlar** (Yana → Suhbatlar): o'quvchi ustoziga, ota-ona o'qituvchi va rahbariyatga yozadi; o'qituvchi guruh
+  kanaliga e'lon beradi. «O'qildi» belgisi, tahrirlash, o'chirish va shikoyat (uzoq bosish). Yangi xabar — push.
+  Test natijasida «Ustozga savol» (izoh). Kim kimga yoza olishi — markaz sozlamasi.
+- **Hujjatlarim**: shartnoma, buyruq, rozilik va ma'lumotnomani o'qish va «Tasdiqlayman» / «Tanishdim»; rahbar va
+  platforma egasi uchun — berilgan hujjatlar ro'yxati, yuborish va bekor qilish. Hujjat ixtiyoriy, hech narsani to'smaydi.
+- **Call markaz**: kiruvchi qo'ng'iroq haqida push (ilova yopiq bo'lsa ham); karta faqat o'zingizga kelgan qo'ng'iroq
+  uchun ochiladi.
+
 ## 3.12.1 (server 1.46)
 
 - «Faol qurilmalar» va «Sessiyalar»: ilovada kirish foydalanib turilsa o'zi uzayishi ko'rsatiladi (SMS shlyuz telefonlari
