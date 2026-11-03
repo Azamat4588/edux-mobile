@@ -103,6 +103,15 @@ Hammasi `docs/screenshots/` da (tungi rejim — `*-tungi.png`). Yangilash: `scre
 xabarida `[skrinshot]` bo'lsa yoki Actions → Screenshots → «Run workflow»; rasmlar `screenshots` branch'iga yoziladi
 (`git fetch origin screenshots && git checkout FETCH_HEAD -- '*.png'`).
 
+## 3.16 da yangi
+
+- **Profil** (barcha rollar; Yana → yuqoridagi ism yoki «Profil»): ismni o'zgartirish, parolni almashtirish yoki
+  o'rnatish (boshqa qurilmalardan chiqish bilan), telefon raqamini (kirish logini) almashtirish — joriy parol bilan,
+  SMS yoqilgan bo'lsa yangi raqamga kelgan kod bilan tasdiqlanadi (server 1.50).
+- Davomat: bugungi darsda **Kamera bilan** — o'quvchi kartasidagi QR yoki shtrix-kodni telefon kamerasi bilan o'qib,
+  shu guruh o'quvchisini «keldi» deb belgilash (uzluksiz, ovoz va tebranish bilan); boshqa guruh o'quvchisi — ogohlantirish.
+  «Kirish nazorati» qo'shimchasi yoqilmagan bo'lsa — qanday yoqish haqida tushuntirish.
+
 ## 3.15 da yangi (xatolar tuzatildi)
 
 - Davomat qayta saqlanganda vebda qo'yilgan ball va izoh o'chib ketmaydi.

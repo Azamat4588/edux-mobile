@@ -1,4 +1,6 @@
 // Davomat (CRM guruhlari): guruh va kunni tanlab, har o'quvchini belgilash. Bir bosishda «Hammasi keldi».
+// 3.16: bugungi darsda «Kamera bilan» — o'quvchi kartasidagi QR/shtrix-kod (checkins/scan + group_id, «Kirish nazorati»
+// qo'shimchasi); qo'shimcha yoqilmagan bo'lsa — tushuntirish oynasi.
 import 'package:flutter/material.dart';
 
 import '../../core/adaptive.dart';
@@ -7,9 +9,11 @@ import '../../core/format.dart';
 import '../../core/help_links.dart';
 import '../../core/i18n.dart';
 import '../../core/motion.dart';
+import '../../core/profile.dart';
 import '../../core/session.dart';
 import '../../core/theme.dart';
 import '../../core/widgets.dart';
+import '../access/checkin_page.dart';
 import 'students_page.dart';
 
 class AttendancePage extends StatelessWidget {
@@ -227,6 +231,45 @@ class _AttendanceSheetPageState extends State<AttendanceSheetPage> {
     }
   }
 
+  /// Kamera bilan belgilangan o'quvchi: varaqada «keldi» (server allaqachon yozgan; «kechikdi» bo'lsa — o'zgarmaydi).
+  void _markScanned(int studentId) {
+    if (!mounted || !_students.any((student) => asInt(student['id']) == studentId)) return;
+    final current = _status[studentId];
+    if (current == 'present' || current == 'late') return;
+    setState(() => _status[studentId] = 'present');
+  }
+
+  Future<void> _openCamera() async {
+    final session = AppScope.read(context);
+    if (!session.hasFeature('access')) {
+      await showDialog<void>(
+        context: context,
+        builder: (context) => AlertDialog(
+          icon: const Icon(Icons.qr_code_scanner),
+          title: Text(tr('Kamera bilan')),
+          content: Text(tr("QR karta va Face ID bilan belgilash «Kirish nazorati» qo'shimchasi bilan ishlaydi. Yoqish uchun direktorga murojaat qiling.")),
+          actions: <Widget>[TextButton(onPressed: () => Navigator.pop(context), child: Text(tr('Tushunarli')))],
+        ),
+      );
+      return;
+    }
+    final wasDirty = _dirty;
+    var marked = 0;
+    await Navigator.of(context, rootNavigator: true).push(MaterialPageRoute<void>(
+      builder: (_) => CheckinPage(
+        groupId: widget.groupId,
+        groupName: widget.groupName,
+        onMarked: (id) {
+          marked++;
+          _markScanned(id);
+        },
+      ),
+    ));
+    if (!mounted) return;
+    // Saqlanmagan qo'lda belgilar bo'lmasa — varaqa serverdan qayta olinadi (aniq holat: keldi / kechikdi).
+    if (marked > 0 && !wasDirty && !_dirty) await _load();
+  }
+
   void _setAll(String status) {
     setState(() {
       for (final student in _students) {
@@ -254,6 +297,12 @@ class _AttendanceSheetPageState extends State<AttendanceSheetPage> {
           automaticallyImplyLeading: !isEmbeddedDetail(context),
           title: Text(widget.groupName),
           actions: <Widget>[
+            if (sameDay(_day, DateTime.now()) && !AppScope.of(context).readOnly)
+              IconButton(
+                tooltip: tr('Kamera bilan'),
+                icon: const Icon(Icons.qr_code_scanner),
+                onPressed: _loading ? null : _openCamera,
+              ),
             TextButton.icon(
               onPressed: _pickDay,
               icon: const Icon(Icons.calendar_today, size: 18),

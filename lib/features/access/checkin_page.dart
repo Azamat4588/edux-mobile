@@ -2,6 +2,8 @@
 // Server: POST checkins/scan {payload} — o'quvchi bugungi darsiga «keldi», ota-onasiga xabar.
 // 3.4: Bluetooth / USB-OTG skaner (klaviatura rejimi) — tez ketma-ketlik + Enter = kod (lib/core/scan_keys.dart, veb
 // scanner.js bilan bir xil); kamerada QR bilan birga kartadagi shtrix-kod (Code 128, 14 raqam) ham o'qiladi.
+// 3.16: davomat varaqasidan «Kamera bilan» — shu sahifa [groupId] bilan: POST checkins/scan {payload, group_id}, faqat shu
+// guruh o'quvchisi bugungi darsga belgilanadi ([onMarked] varaqadagi qatorni yangilaydi), boshqasi — 422 other_group (SnackBar).
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -11,6 +13,7 @@ import 'package:mobile_scanner/mobile_scanner.dart';
 import '../../core/api.dart';
 import '../../core/help_links.dart';
 import '../../core/i18n.dart';
+import '../../core/profile.dart';
 import '../../core/scan_keys.dart';
 import '../../core/session.dart';
 import '../../core/theme.dart';
@@ -19,7 +22,14 @@ import '../../core/widgets.dart';
 import 'kiosk_page.dart';
 
 class CheckinPage extends StatefulWidget {
-  const CheckinPage({super.key});
+  const CheckinPage({super.key, this.groupId, this.groupName, this.onMarked});
+
+  /// Davomat varaqasidan ochilganda — guruh (faqat shu guruh o'quvchilari belgilanadi).
+  final int? groupId;
+  final String? groupName;
+
+  /// Belgilangan o'quvchi (javobdagi student_id) — davomat varaqasi qatorini yangilaydi.
+  final ValueChanged<int>? onMarked;
 
   @override
   State<CheckinPage> createState() => _CheckinPageState();
@@ -41,6 +51,11 @@ class _CheckinPageState extends State<CheckinPage> {
 
   /// Oxirgi marta tashqi skanerdan kod kelgan vaqt (ekranda «Skaner ulangan» belgisi).
   DateTime? _keyboardSeen;
+
+  /// Ketma-ket o'qishlar orasidagi qisqa tanaffus (davomat rejimi): kamera bitta kartani qayta-qayta yubormasin.
+  DateTime? _pausedUntil;
+
+  bool get _groupMode => widget.groupId != null;
 
   @override
   void initState() {
@@ -83,17 +98,34 @@ class _CheckinPageState extends State<CheckinPage> {
     final now = DateTime.now();
     final last = _recent[payload];
     if (_sending || (last != null && now.difference(last).inSeconds < 6)) return;
+    final paused = _pausedUntil;
+    if (paused != null && now.isBefore(paused)) return;
     _recent[payload] = now;
     setState(() => _sending = true);
     try {
-      final data = asMap(await AppScope.read(context).api.post('checkins/scan', <String, Object?>{'payload': payload}));
+      final data = asMap(await AppScope.read(context).api.post('checkins/scan', <String, Object?>{
+        'payload': payload,
+        if (_groupMode) 'group_id': widget.groupId,
+      }));
       HapticFeedback.mediumImpact();
+      if (_groupMode) SystemSound.play(SystemSoundType.click);
       if (data['status'] == 'ok') _count++;
+      final student = scannedStudentId(data);
+      if (_groupMode && student != null) widget.onMarked?.call(student);
       _show(data, null);
+    } on ApiException catch (error) {
+      HapticFeedback.heavyImpact();
+      if (_groupMode && error.status == 422) {
+        // Boshqa guruh o'quvchisi (other_group) yoki xodim kartasi: server xabari — pastda.
+        if (mounted) showMessage(context, error.message, error: true);
+      } else {
+        _show(null, error.message);
+      }
     } catch (e) {
       HapticFeedback.heavyImpact();
       _show(null, errorText(e));
     } finally {
+      if (_groupMode) _pausedUntil = DateTime.now().add(const Duration(milliseconds: 1200));
       if (mounted) setState(() => _sending = false);
     }
   }
@@ -145,9 +177,9 @@ class _CheckinPageState extends State<CheckinPage> {
       appBar: pageBar(context,
         backgroundColor: Colors.black,
         foregroundColor: Colors.white,
-        title: Text(tr('Kirish nazorati')),
+        title: Text(_groupMode ? (widget.groupName ?? tr('Kamera bilan')) : tr('Kirish nazorati')),
         actions: <Widget>[
-          if (session.canUseKiosk)
+          if (session.canUseKiosk && !_groupMode)
             IconButton(
               tooltip: tr('Kiosk rejimi'),
               icon: const Icon(Icons.face_retouching_natural),
@@ -202,6 +234,12 @@ class _CheckinPageState extends State<CheckinPage> {
           right: 16,
           top: 16,
           child: Column(children: <Widget>[
+            if (_groupMode)
+              Padding(
+                padding: const EdgeInsets.only(bottom: 6),
+                child: Text(tr("Faqat shu guruh o'quvchilari bugungi darsga «keldi» deb belgilanadi"),
+                    textAlign: TextAlign.center, style: const TextStyle(color: Color(0xFF86EFAC), fontSize: 13)),
+              ),
             Text(tr('QR yoki shtrix-kodni ramka ichiga, 15–25 sm masofada tuting'),
                 textAlign: TextAlign.center, style: const TextStyle(color: Colors.white, fontSize: 15, shadows: <Shadow>[Shadow(blurRadius: 6)])),
             const SizedBox(height: 6),
@@ -263,7 +301,7 @@ class _CheckinPageState extends State<CheckinPage> {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
               decoration: BoxDecoration(color: Colors.white12, borderRadius: BorderRadius.circular(12)),
-              child: Text(tr('Bugun: {0}', <Object?>[_count]), style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w700)),
+              child: Text(_groupMode ? tr('Belgilandi: {0}', <Object?>[_count]) : tr('Bugun: {0}', <Object?>[_count]), style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w700)),
             ),
           ]),
         ),
