@@ -1,4 +1,4 @@
-// «Yana» (3.8): profil, pastki menyuga sig'magan bo'limlar (to'dalar bo'yicha: «Kundalik ish», «Pul va aloqa», «Boshqaruv»),
+// «Yana» (3.8): profil (3.16: bosilsa — «Profil»: ism, telefon, parol), pastki menyuga sig'magan bo'limlar (to'dalar bo'yicha: «Kundalik ish», «Pul va aloqa», «Boshqaruv»),
 // ilova bandlari (bildirishnomalar, murojaatlar, yordam), sozlamalar (til, «Ko'rinish», skaner) va chiqish.
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -8,6 +8,7 @@ import '../../core/app_update.dart';
 import '../../core/design.dart';
 import '../../core/i18n.dart';
 import '../../core/koshin.dart';
+import '../../core/motion.dart';
 import '../../core/push.dart';
 import '../../core/session.dart';
 import '../../core/theme.dart';
@@ -16,6 +17,7 @@ import '../auth/organization_picker.dart';
 import '../documents/documents_pages.dart';
 import '../help/help_pages.dart';
 import 'appearance_page.dart';
+import 'profile_page.dart';
 import 'sessions_page.dart';
 
 /// Skaner sozlamalari (qurilmada saqlanadi).
@@ -132,29 +134,50 @@ class _SettingsPageState extends State<SettingsPage> {
       body: ListView(
         padding: readable(context, const EdgeInsets.fromLTRB(16, 16, 16, 32)),
         children: <Widget>[
-          // Profil — lojuvard banner (kirish paneli oilasi): kim va qaysi tashkilotda.
-          KoshinBanner(
-            radius: AppRadius.card + 4,
-            padding: const EdgeInsets.all(16),
-            child: Row(children: <Widget>[
-              Avatar(session.userName, size: 52),
-              const SizedBox(width: 14),
-              Expanded(
-                child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
-                  Text(session.userName, style: AppTheme.title(size: 20, color: Colors.white)),
-                  const SizedBox(height: 2),
-                  Text(
-                    <String>[if (membership != null) roleLabel(membership.role), session.organizationName].where((item) => item.isNotEmpty).join(', '),
-                    style: TextStyle(color: Colors.white.withAlpha(204), fontSize: 13.5),
-                  ),
-                ]),
+          // Profil — lojuvard banner (kirish paneli oilasi): kim, qaysi tashkilotda, telefon (login). 3.16: bosilsa — «Profil».
+          Pressable(
+            scale: 0.98,
+            child: Semantics(
+              button: true,
+              label: tr('Profil'),
+              child: GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onTap: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const ProfilePage())),
+                child: KoshinBanner(
+                  radius: AppRadius.card + 4,
+                  padding: const EdgeInsets.all(16),
+                  child: Row(children: <Widget>[
+                    Avatar(session.userName, size: 52),
+                    const SizedBox(width: 14),
+                    Expanded(
+                      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
+                        Text(session.userName, style: AppTheme.title(size: 20, color: Colors.white)),
+                        const SizedBox(height: 2),
+                        Text(
+                          <String>[if (membership != null) roleLabel(membership.role), session.organizationName].where((item) => item.isNotEmpty).join(', '),
+                          style: TextStyle(color: Colors.white.withAlpha(204), fontSize: 13.5),
+                        ),
+                        if (session.userPhone.isNotEmpty)
+                          Text(session.userPhone, style: TextStyle(color: Colors.white.withAlpha(204), fontSize: 13.5)),
+                      ]),
+                    ),
+                    const Icon(Icons.chevron_right, color: Colors.white70),
+                  ]),
+                ),
               ),
-            ]),
+            ),
           ),
           if (widget.extra.isNotEmpty) _group(null, widget.extra),
           for (final group in widget.groups)
             if (group.items.isNotEmpty) _group(group.title, group.items),
           _group(tr('Sozlamalar'), <Widget>[
+            MenuTile(
+              icon: Icons.person_outline,
+              color: AppColors.brand,
+              label: tr('Profil'),
+              subtitle: tr('Ism, telefon raqami va parol'),
+              page: const ProfilePage(),
+            ),
             MenuTile(
               icon: Icons.palette_outlined,
               color: AppColors.accent,

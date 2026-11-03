@@ -266,6 +266,37 @@ class Session extends ChangeNotifier implements ApiCredentials {
   bool get canUseTutor => isStudent && !isGuest && hasFeature('ai') && aiStatus?['tutor'] != false;
 
   String get userName => asText(user['name']);
+
+  /// Telefon raqami — tizimga kirish logini (3.16 «Profil»da almashtiriladi).
+  String get userPhone => asText(user['phone']);
+
+  /// Hisobda parol bormi (faqat kod / Telegram bilan kirganlarda yo'q). Eski server bermasa — bor deb olinadi.
+  bool get hasPassword => user['has_password'] != false;
+
+  /// 3.16: profil o'zgargach (ism, telefon) server qaytargan auth payload: foydalanuvchi va a'zoliklar yangilanadi,
+  /// internetsiz ochilish nusxasi (offline.me) ham — keyingi ochilishda eski ism/raqam ko'rinmasin. Token o'zgarmaydi.
+  Future<void> applyProfile(Map<String, dynamic> data) async {
+    if (data['user'] is! Map) return;
+    user = <String, dynamic>{...asMap(data['user'])};
+    if (data['memberships'] is List) memberships = asList(data['memberships']).map(Membership.fromJson).toList();
+    notifyListeners();
+    await _saveOfflineMe();
+  }
+
+  /// Parol o'rnatilgach/almashgach (javobda foydalanuvchi yo'q): «parol bor» belgisi.
+  Future<void> markPasswordSet() async {
+    if (user['has_password'] == true) return;
+    user = <String, dynamic>{...user, 'has_password': true};
+    notifyListeners();
+    await _saveOfflineMe();
+  }
+
+  Future<void> _saveOfflineMe() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('offline.me', jsonEncode(<String, Object?>{'user': user, 'memberships': _membershipsJson()}));
+    } catch (_) {}
+  }
   String get organizationName => asText(asMap(context['organization'])['name']);
   String? get organizationLogo {
     final logo = asMap(context['organization'])['logo_url'];
