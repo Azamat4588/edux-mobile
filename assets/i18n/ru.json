@@ -1,4 +1,13 @@
 {
+"Kamerani o'chirish": "Выключить камеру",
+"Kamerani yoqish": "Включить камеру",
+"Kartadagi QR yoki shtrix-kodni telefon kamerasi bilan o'qish": "Считать QR или штрихкод карты камерой телефона",
+"O'quvchi yuzini telefon kamerasiga ko'rsatadi": "Ученик показывает лицо камере телефона",
+"QR karta (kamera)": "QR-карта (камера)",
+"Skaner qurilmasi": "Сканер-устройство",
+"Skanerni qurilmaga tuting": "Поднесите карту к сканеру",
+"USB yoki Bluetooth QR/shtrix-kod skaneri": "USB или Bluetooth сканер QR/штрихкодов",
+"USB yoki Bluetooth skanerni ulang — kartani skanerlang, kod o'zi yuboriladi": "Подключите USB или Bluetooth сканер — отсканируйте карту, код отправится сам",
 "Belgilandi: {0}": "Отмечено: {0}",
 "Bu telefondan boshqa barcha kirishlar yopiladi": "Все входы, кроме этого телефона, будут закрыты",
 "Faqat shu guruh o'quvchilari bugungi darsga «keldi» deb belgilanadi": "На сегодняшнем уроке «пришёл» отмечаются только ученики этой группы",

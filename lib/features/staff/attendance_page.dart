@@ -1,6 +1,7 @@
 // Davomat (CRM guruhlari): guruh va kunni tanlab, har o'quvchini belgilash. Bir bosishda «Hammasi keldi».
 // 3.16: bugungi darsda «Kamera bilan» — o'quvchi kartasidagi QR/shtrix-kod (checkins/scan + group_id, «Kirish nazorati»
 // qo'shimchasi); qo'shimcha yoqilmagan bo'lsa — tushuntirish oynasi.
+// 3.17: «Kamera bilan» — tanlov: QR karta (kamera), Face ID (veb sahifa WebView'da), skaner qurilmasi (kamerasiz CheckinPage).
 import 'package:flutter/material.dart';
 
 import '../../core/adaptive.dart';
@@ -14,6 +15,7 @@ import '../../core/session.dart';
 import '../../core/theme.dart';
 import '../../core/widgets.dart';
 import '../access/checkin_page.dart';
+import '../access/face_checkin_page.dart';
 import 'students_page.dart';
 
 class AttendancePage extends StatelessWidget {
@@ -253,21 +255,54 @@ class _AttendanceSheetPageState extends State<AttendanceSheetPage> {
       );
       return;
     }
-    final wasDirty = _dirty;
-    var marked = 0;
-    await Navigator.of(context, rootNavigator: true).push(MaterialPageRoute<void>(
-      builder: (_) => CheckinPage(
-        groupId: widget.groupId,
-        groupName: widget.groupName,
-        onMarked: (id) {
-          marked++;
-          _markScanned(id);
-        },
+    final choice = await showModalBottomSheet<String>(
+      context: context,
+      showDragHandle: true,
+      builder: (context) => SafeArea(
+        child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+          ListTile(
+            leading: const Icon(Icons.qr_code_scanner),
+            title: Text(tr('QR karta (kamera)')),
+            subtitle: Text(tr("Kartadagi QR yoki shtrix-kodni telefon kamerasi bilan o'qish")),
+            onTap: () => Navigator.pop(context, 'qr'),
+          ),
+          ListTile(
+            leading: const Icon(Icons.face_outlined),
+            title: const Text('Face ID'),
+            subtitle: Text(tr("O'quvchi yuzini telefon kamerasiga ko'rsatadi")),
+            onTap: () => Navigator.pop(context, 'face'),
+          ),
+          ListTile(
+            leading: const Icon(Icons.document_scanner_outlined),
+            title: Text(tr('Skaner qurilmasi')),
+            subtitle: Text(tr('USB yoki Bluetooth QR/shtrix-kod skaneri')),
+            onTap: () => Navigator.pop(context, 'device'),
+          ),
+          const SizedBox(height: 8),
+        ]),
       ),
-    ));
+    );
+    if (choice == null || !mounted) return;
+    final wasDirty = _dirty;
+    final navigator = Navigator.of(context, rootNavigator: true);
+    if (choice == 'face') {
+      // Veb sahifa o'zi belgilaydi — qaytgach varaqa serverdan yangilanadi.
+      await navigator.push(MaterialPageRoute<bool>(
+        builder: (_) => FaceCheckinPage(groupId: widget.groupId, groupName: widget.groupName),
+      ));
+    } else {
+      await navigator.push(MaterialPageRoute<void>(
+        builder: (_) => CheckinPage(
+          groupId: widget.groupId,
+          groupName: widget.groupName,
+          camera: choice == 'qr',
+          onMarked: _markScanned,
+        ),
+      ));
+    }
     if (!mounted) return;
     // Saqlanmagan qo'lda belgilar bo'lmasa — varaqa serverdan qayta olinadi (aniq holat: keldi / kechikdi).
-    if (marked > 0 && !wasDirty && !_dirty) await _load();
+    if (!wasDirty && !_dirty) await _load();
   }
 
   void _setAll(String status) {

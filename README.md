@@ -103,6 +103,14 @@ Hammasi `docs/screenshots/` da (tungi rejim — `*-tungi.png`). Yangilash: `scre
 xabarida `[skrinshot]` bo'lsa yoki Actions → Screenshots → «Run workflow»; rasmlar `screenshots` branch'iga yoziladi
 (`git fetch origin screenshots && git checkout FETCH_HEAD -- '*.png'`).
 
+## 3.17 da yangi
+
+- Davomat → **Kamera bilan** endi tanlov: **QR karta (kamera)**, **Face ID** (o'quvchi yuzi telefon kamerasi bilan
+  tanib olinadi — server 1.50 /attendance/camera sahifasi ilova ichida) yoki **Skaner qurilmasi** (kamerasiz).
+- Kirish nazorati: app bar'da **Face ID** (umumiy kirish) va kamerani o'chirish/yoqish (skaner bilan ishlaganda batareya tejaladi).
+- Oddiy USB-OTG yoki Bluetooth QR/shtrix-kod skaneri (klaviatura rejimi) — kod tez yoziladi va Enter/Tab bilan
+  yuboriladi; kamera bilan birga ham, alohida ham ishlaydi. Matn maydoniga yozishga xalaqit bermaydi.
+
 ## 3.16 da yangi
 
 - **Profil** (barcha rollar; Yana → yuqoridagi ism yoki «Profil»): ismni o'zgartirish, parolni almashtirish yoki
