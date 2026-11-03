@@ -254,14 +254,11 @@ class _ProfilePageState extends State<ProfilePage> {
                   decoration: InputDecoration(labelText: tr('Tasdiqlash kodi')),
                 ),
                 const SizedBox(height: 6),
-                Row(children: <Widget>[
-                  TextButton(
-                    onPressed: _savingPhone ? null : () => setState(() => _pendingPhone = null),
-                    child: Text(tr('Bekor qilish')),
-                  ),
-                  const Spacer(),
-                  FilledButton(onPressed: _savingPhone ? null : _confirmPhone, child: _busy(_savingPhone, tr('Tasdiqlash'))),
-                ]),
+                FilledButton(onPressed: _savingPhone ? null : _confirmPhone, child: _busy(_savingPhone, tr('Tasdiqlash'))),
+                TextButton(
+                  onPressed: _savingPhone ? null : () => setState(() => _pendingPhone = null),
+                  child: Text(tr('Bekor qilish')),
+                ),
               ],
             ]),
           ),
