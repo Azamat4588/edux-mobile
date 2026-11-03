@@ -99,8 +99,22 @@ class _CheckinPageState extends State<CheckinPage> {
     if (_history.length > 20) _history.removeRange(20, _history.length);
   }
 
+  /// Face ID sahifasi kamerani o'zi ishlatadi — QR kamera vaqtincha to'xtatiladi, qaytgach yana yoqiladi.
   Future<void> _openFace() async {
+    final wasOn = _camera;
+    if (wasOn) {
+      try {
+        await _scanner.stop();
+      } catch (_) {}
+    }
+    if (!mounted) return;
     await Navigator.of(context).push(MaterialPageRoute<bool>(builder: (_) => const FaceCheckinPage()));
+    if (!mounted || !wasOn || !_camera) return;
+    try {
+      await _scanner.start();
+    } catch (_) {
+      // kamera ochilmadi — errorBuilder ko'rsatadi
+    }
   }
 
   Future<void> _submit(String payload) async {
