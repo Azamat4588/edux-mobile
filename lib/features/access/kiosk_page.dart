@@ -1,6 +1,5 @@
 // Kiosk rejimi (1.18): telefon yoki planshetni kirishga qo'yib, o'quvchilar QR karta yoki yuz (Face ID) orqali
 // o'zlari qayd etiladi. Ilova serverdagi /kiosk/<token> sahifasini to'liq ekranda ochadi (yuzni tanish — brauzerda).
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -16,6 +15,7 @@ import '../../core/session.dart';
 import '../../core/theme.dart';
 import '../../core/webview_guard.dart';
 import '../../core/widgets.dart';
+import 'face_checkin_page.dart';
 
 class KioskPage extends StatefulWidget {
   const KioskPage({super.key});
@@ -88,25 +88,10 @@ class _KioskPageState extends State<KioskPage> {
     await _start();
   }
 
-  /// Kamera ruxsatini oldindan so'raydi (WebView o'zi Android ruxsat oynasini ocha olmaydi).
-  Future<bool> _cameraPermission() async {
-    try {
-      final cameras = await availableCameras();
-      if (cameras.isEmpty) return false;
-      final front = cameras.firstWhere((camera) => camera.lensDirection == CameraLensDirection.front, orElse: () => cameras.first);
-      final controller = CameraController(front, ResolutionPreset.low, enableAudio: false);
-      await controller.initialize();
-      await controller.dispose();
-      return true;
-    } catch (_) {
-      return false;
-    }
-  }
-
   Future<void> _start() async {
     final url = _url;
     if (url == null) return;
-    if (!await _cameraPermission()) {
+    if (!await ensureCameraPermission()) {
       if (mounted) {
         showMessage(context, tr("Kamerani ochib bo'lmadi. Ilovaga kamera ruxsatini bering."),
             error: true, actionLabel: tr('Sozlamalar'), onAction: openAppSettings);
