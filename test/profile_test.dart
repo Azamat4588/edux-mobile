@@ -168,6 +168,8 @@ void main() {
 
     await tester.enterText(find.widgetWithText(TextField, 'Tasdiqlash kodi'), '000000');
     await tapText(tester, 'Tasdiqlash');
+    // Oldingi xabar yopilib, yangisi chiqishi (SnackBar animatsiyasi).
+    await tester.pumpAndSettle(const Duration(milliseconds: 100));
     expect(find.text("Kod noto'g'ri."), findsOneWidget);
     expect(session.userPhone, '+998901112233');
 
