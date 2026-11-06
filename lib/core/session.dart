@@ -560,12 +560,21 @@ class Session extends ChangeNotifier implements ApiCredentials {
     notifyListeners();
   }
 
-  Future<void> login(String login, String password) async {
+  /// Parol bilan kirish. Ikki bosqichli kirish yoqilgan bo'lsa — «chaqiruv» qaytadi (keyin [loginTwoFactor]).
+  Future<String?> login(String login, String password) async {
     final data = asMap(await api.post('auth/login', <String, Object?>{
       'login': login.trim(),
       'password': password,
       'device_name': 'EduX mobil',
     }));
+    if (data['two_factor'] == true) return asText(data['challenge']);
+    await _accept(data);
+    return null;
+  }
+
+  /// 1.64: ilovadagi 6 xonali kod yoki zaxira kod (XXXX-XXXX).
+  Future<void> loginTwoFactor(String challenge, String code) async {
+    final data = asMap(await api.post('auth/2fa', <String, Object?>{'challenge': challenge, 'code': code.trim(), 'device_name': 'EduX mobil'}));
     await _accept(data);
   }
 

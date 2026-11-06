@@ -1,4 +1,7 @@
 {
+"Ikki bosqichli kirish": "Two-step sign-in",
+"Google Authenticator (yoki boshqa) ilovasidagi 6 xonali kod. Telefon yo'q bo'lsa — zaxira kodlardan birini yozing (XXXX-XXXX).": "The 6-digit code from Google Authenticator (or another app). No phone? Enter one of your backup codes (XXXX-XXXX).",
+"Ilovadagi kod": "Code from the app",
 "Kamerani o'chirish": "Turn camera off",
 "Kamerani yoqish": "Turn camera on",
 "Kartadagi QR yoki shtrix-kodni telefon kamerasi bilan o'qish": "Read the card's QR or barcode with the phone camera",

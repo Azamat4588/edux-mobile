@@ -1,4 +1,7 @@
 {
+"Ikki bosqichli kirish": "Двухэтапный вход",
+"Google Authenticator (yoki boshqa) ilovasidagi 6 xonali kod. Telefon yo'q bo'lsa — zaxira kodlardan birini yozing (XXXX-XXXX).": "6-значный код из Google Authenticator (или другого приложения). Нет телефона — введите один из резервных кодов (XXXX-XXXX).",
+"Ilovadagi kod": "Код из приложения",
 "Kamerani o'chirish": "Выключить камеру",
 "Kamerani yoqish": "Включить камеру",
 "Kartadagi QR yoki shtrix-kodni telefon kamerasi bilan o'qish": "Считать QR или штрихкод карты камерой телефона",

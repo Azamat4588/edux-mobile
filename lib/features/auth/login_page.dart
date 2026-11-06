@@ -78,12 +78,67 @@ class _LoginPageState extends State<LoginPage> {
       _error = null;
     });
     try {
-      await AppScope.read(context).login(_login.text, _password.text);
+      final session = AppScope.read(context);
+      final challenge = await session.login(_login.text, _password.text);
+      if (challenge != null && mounted) await _twoFactor(session, challenge);
     } on ApiException catch (error) {
       if (mounted) setState(() => _error = error.message);
     } finally {
       if (mounted) setState(() => _busy = false);
     }
+  }
+
+  /// Ikki bosqichli kirish: ilovadagi kod so'raladi (xato bo'lsa oyna ochiq qoladi).
+  Future<void> _twoFactor(Session session, String challenge) async {
+    final controller = TextEditingController();
+    String? error;
+    var busy = false;
+    await showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => StatefulBuilder(
+        builder: (context, setDialog) {
+          Future<void> verify() async {
+            setDialog(() {
+              busy = true;
+              error = null;
+            });
+            try {
+              await session.loginTwoFactor(challenge, controller.text);
+              if (context.mounted) Navigator.pop(context);
+            } on ApiException catch (e) {
+              setDialog(() => error = e.message);
+            } finally {
+              if (context.mounted) setDialog(() => busy = false);
+            }
+          }
+
+          return AlertDialog(
+            title: Text(tr('Ikki bosqichli kirish')),
+            content: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+              Text(tr("Google Authenticator (yoki boshqa) ilovasidagi 6 xonali kod. Telefon yo'q bo'lsa — zaxira kodlardan birini yozing (XXXX-XXXX)."),
+                  style: TextStyle(color: AppColors.muted)),
+              const SizedBox(height: 14),
+              TextField(
+                controller: controller,
+                autofocus: true,
+                keyboardType: TextInputType.visiblePassword,
+                autofillHints: const <String>[AutofillHints.oneTimeCode],
+                textAlign: TextAlign.center,
+                maxLength: 9,
+                decoration: InputDecoration(hintText: tr('Ilovadagi kod'), errorText: error, counterText: ''),
+                onSubmitted: (_) => busy ? null : verify(),
+              ),
+            ]),
+            actions: <Widget>[
+              TextButton(onPressed: busy ? null : () => Navigator.pop(context), child: Text(tr('Bekor qilish'))),
+              FilledButton(onPressed: busy ? null : verify, child: Text(tr('Kirish'))),
+            ],
+          );
+        },
+      ),
+    );
+    controller.dispose();
   }
 
   Future<void> _inviteLogin() async {
