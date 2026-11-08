@@ -46,6 +46,8 @@ import '../settings/settings_page.dart';
 import '../staff/attendance_page.dart';
 import '../staff/exams_page.dart';
 import '../staff/journal_page.dart';
+import '../staff/school_attendance_page.dart';
+import '../staff/school_report_page.dart';
 import '../staff/salary_page.dart';
 import '../staff/staff_home_page.dart';
 import '../staff/students_page.dart';
@@ -331,6 +333,10 @@ class _HomeShellState extends State<HomeShell> with WidgetsBindingObserver {
         return const TutorPage();
       case 'school.journal':
         return MasterDetail(master: const JournalPage(), hint: tr('Jurnalni tanlang — darslar va baholar shu yerda ochiladi.'));
+      case 'school.attendance':
+        return MasterDetail(master: const SchoolAttendancePage(), hint: tr('Sinfni tanlang — darslar va davomat shu yerda ochiladi.'));
+      case 'school.reports':
+        return const SchoolReportPage();
       case 'my.payments':
         return const MyPaymentsPage();
       case 'crm.my.salary':

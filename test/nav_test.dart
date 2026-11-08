@@ -76,4 +76,16 @@ void main() {
     expect(director.last.key, 'platform');
     expect(director.last.tabs.first.key, 'platform.dashboard');
   });
+
+  test('3.19: maktab davomati va «Maktab hisoboti» bo\'limi', () {
+    final director = buildNav(ctx('director', <String>{'students', 'school_attendance', 'school_report'}));
+    expect(director.map((item) => item.key).toList(), <String>['home', 'students', 'reports']);
+    expect(director.first.key, 'home');
+    expect(sectionOfTab(director, 'school.attendance')?.key, 'students');
+    expect(sectionOfTab(director, 'school.reports')?.key, 'reports');
+    // Ruxsat bo'lmasa (administrator, reports.school o'chirilgan) — bo'lim chiqmaydi.
+    expect(buildNav(ctx('admin', <String>{'students', 'school_attendance'})).any((item) => item.key == 'reports'), isFalse);
+    final teacher = buildNav(ctx('teacher', <String>{'students', 'journal', 'school_attendance'}));
+    expect(teacher.firstWhere((item) => item.key == 'groups').tabs.map((tab) => tab.key).toList(), <String>['students', 'school.journal', 'school.attendance']);
+  });
 }

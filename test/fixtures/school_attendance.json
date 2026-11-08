@@ -1,0 +1,239 @@
+{
+    "class_name": "11-A",
+    "date": "2026-11-04",
+    "today": "2026-11-08",
+    "gate": true,
+    "can_decide": true,
+    "students": [
+        {
+            "id": 11,
+            "full_name": "Ergashev Timur",
+            "notice": null,
+            "arrived_at": null
+        },
+        {
+            "id": 1,
+            "full_name": "Ergasheva Mohinur",
+            "notice": null,
+            "arrived_at": null
+        },
+        {
+            "id": 4,
+            "full_name": "Hasanova Malika",
+            "notice": null,
+            "arrived_at": null
+        },
+        {
+            "id": 3,
+            "full_name": "Karimov Sardor",
+            "notice": null,
+            "arrived_at": null
+        },
+        {
+            "id": 10,
+            "full_name": "Nazarova Sevara",
+            "notice": null,
+            "arrived_at": null
+        },
+        {
+            "id": 9,
+            "full_name": "Qodirov Sherzod",
+            "notice": null,
+            "arrived_at": null
+        },
+        {
+            "id": 6,
+            "full_name": "Rahimova Nigora",
+            "notice": null,
+            "arrived_at": null
+        },
+        {
+            "id": 8,
+            "full_name": "Saidova Zarina",
+            "notice": null,
+            "arrived_at": null
+        },
+        {
+            "id": 5,
+            "full_name": "Tursunov Jasur",
+            "notice": null,
+            "arrived_at": null
+        },
+        {
+            "id": 2,
+            "full_name": "Valiyev Bobur",
+            "notice": null,
+            "arrived_at": null
+        },
+        {
+            "id": 7,
+            "full_name": "Yusupov Aziz",
+            "notice": null,
+            "arrived_at": null
+        }
+    ],
+    "lessons": [
+        {
+            "lesson_id": null,
+            "subject_id": 3,
+            "subject": "Ona tili va adabiyot",
+            "period_number": 1,
+            "topic": null,
+            "can_write": false,
+            "entries": [],
+            "starts_at": "08:00"
+        },
+        {
+            "lesson_id": null,
+            "subject_id": 1,
+            "subject": "Matematika",
+            "period_number": 2,
+            "topic": null,
+            "can_write": true,
+            "entries": [],
+            "starts_at": "08:55"
+        },
+        {
+            "lesson_id": 118,
+            "subject_id": 4,
+            "subject": "Ingliz tili",
+            "period_number": null,
+            "topic": "Reading: Unit 4",
+            "can_write": false,
+            "entries": {
+                "1": {
+                    "mark": 5,
+                    "attendance": "present",
+                    "note": null
+                },
+                "2": {
+                    "mark": null,
+                    "attendance": "absent",
+                    "note": null
+                },
+                "3": {
+                    "mark": null,
+                    "attendance": "absent",
+                    "note": null
+                },
+                "4": {
+                    "mark": null,
+                    "attendance": "present",
+                    "note": null
+                },
+                "5": {
+                    "mark": null,
+                    "attendance": "present",
+                    "note": null
+                },
+                "6": {
+                    "mark": 4,
+                    "attendance": "present",
+                    "note": null
+                },
+                "7": {
+                    "mark": 3,
+                    "attendance": "present",
+                    "note": null
+                },
+                "8": {
+                    "mark": 3,
+                    "attendance": "present",
+                    "note": null
+                },
+                "9": {
+                    "mark": null,
+                    "attendance": "present",
+                    "note": null
+                },
+                "10": {
+                    "mark": null,
+                    "attendance": "present",
+                    "note": null
+                },
+                "11": {
+                    "mark": 4,
+                    "attendance": "present",
+                    "note": null
+                }
+            },
+            "starts_at": null
+        },
+        {
+            "lesson_id": 120,
+            "subject_id": 5,
+            "subject": "Tarix",
+            "period_number": null,
+            "topic": "Temuriylar davri",
+            "can_write": false,
+            "entries": {
+                "1": {
+                    "mark": 5,
+                    "attendance": "present",
+                    "note": null
+                },
+                "2": {
+                    "mark": null,
+                    "attendance": "present",
+                    "note": null
+                },
+                "3": {
+                    "mark": null,
+                    "attendance": "present",
+                    "note": null
+                },
+                "4": {
+                    "mark": 4,
+                    "attendance": "present",
+                    "note": null
+                },
+                "5": {
+                    "mark": 5,
+                    "attendance": "present",
+                    "note": null
+                },
+                "6": {
+                    "mark": 3,
+                    "attendance": "present",
+                    "note": null
+                },
+                "7": {
+                    "mark": null,
+                    "attendance": "absent",
+                    "note": null
+                },
+                "8": {
+                    "mark": 3,
+                    "attendance": "present",
+                    "note": null
+                },
+                "9": {
+                    "mark": null,
+                    "attendance": "present",
+                    "note": null
+                },
+                "10": {
+                    "mark": null,
+                    "attendance": "present",
+                    "note": null
+                },
+                "11": {
+                    "mark": null,
+                    "attendance": "absent",
+                    "note": null
+                }
+            },
+            "starts_at": null
+        }
+    ],
+    "subjects": [
+        {
+            "id": 2,
+            "name": "Fizika"
+        },
+        {
+            "id": 1,
+            "name": "Matematika"
+        }
+    ]
+}
