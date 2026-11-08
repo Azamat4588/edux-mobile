@@ -141,7 +141,8 @@ List<TodayItem> managerToday(Map<String, dynamic> overview, {Map<String, dynamic
     final month = asMap(dashboard['month']);
     // 1.40: 6 oylik tushum — mini-grafik, shu oy o'tgan oyga nisbatan (delta).
     final incomes = <num>[for (final row in asList(dashboard['series'], 'series')) asInt(row['income'])];
-    cards.add(TodayItem(
+    // 2.47 (server): tushum «Moliyaviy hisobot» ruxsatisiz kelmaydi — karta ham chiqmaydi.
+    if (crm.containsKey('income_today')) cards.add(TodayItem(
       key: 'income',
       value: money(asInt(crm['income_today'])),
       text: tr("bugun to'landi"),
