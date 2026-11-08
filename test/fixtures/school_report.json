@@ -1,0 +1,249 @@
+{
+    "from": "2026-10-10",
+    "to": "2026-11-08",
+    "year": "2026\u20132027",
+    "totals": {
+        "classes": 3,
+        "students": 24,
+        "lessons": 110,
+        "attendance_rate": 89.2,
+        "journal_fill": 22.7,
+        "entries": 167,
+        "absent": 17,
+        "late": 3,
+        "excused": 1,
+        "avg_mark": 4.06,
+        "marks": 131
+    },
+    "classes": [
+        {
+            "id": 3,
+            "name": "9-B",
+            "class_teacher": "Toshev Anvar",
+            "students": 7,
+            "lessons": 28,
+            "attendance_rate": null,
+            "journal_fill": 0,
+            "entries": 0,
+            "absent": 0,
+            "late": 0,
+            "excused": 0,
+            "avg_mark": null,
+            "marks": 0
+        },
+        {
+            "id": 4,
+            "name": "10-A",
+            "class_teacher": "Toshev Anvar",
+            "students": 6,
+            "lessons": 28,
+            "attendance_rate": null,
+            "journal_fill": 0,
+            "entries": 0,
+            "absent": 0,
+            "late": 0,
+            "excused": 0,
+            "avg_mark": null,
+            "marks": 0
+        },
+        {
+            "id": 1,
+            "name": "M-11",
+            "class_teacher": "Karimova Nodira",
+            "students": 11,
+            "lessons": 54,
+            "attendance_rate": 89.2,
+            "journal_fill": 46.3,
+            "entries": 167,
+            "absent": 17,
+            "late": 3,
+            "excused": 1,
+            "avg_mark": 4.06,
+            "marks": 131
+        }
+    ],
+    "subjects": [
+        {
+            "id": 2,
+            "name": "Fizika",
+            "lessons": 17,
+            "avg_mark": 4.24,
+            "marks": 21,
+            "journal_fill": 29.4
+        },
+        {
+            "id": 4,
+            "name": "Ingliz tili",
+            "lessons": 15,
+            "avg_mark": 4.21,
+            "marks": 14,
+            "journal_fill": 26.7
+        },
+        {
+            "id": 6,
+            "name": "Ingliz tili (IELTS)",
+            "lessons": 13,
+            "avg_mark": null,
+            "marks": 0,
+            "journal_fill": 0
+        },
+        {
+            "id": 1,
+            "name": "Matematika",
+            "lessons": 21,
+            "avg_mark": 3.96,
+            "marks": 51,
+            "journal_fill": 33.3
+        },
+        {
+            "id": 7,
+            "name": "Nemis tili",
+            "lessons": 12,
+            "avg_mark": null,
+            "marks": 0,
+            "journal_fill": 0
+        },
+        {
+            "id": 3,
+            "name": "Ona tili va adabiyot",
+            "lessons": 16,
+            "avg_mark": 4.06,
+            "marks": 33,
+            "journal_fill": 37.5
+        },
+        {
+            "id": 5,
+            "name": "Tarix",
+            "lessons": 16,
+            "avg_mark": 4,
+            "marks": 12,
+            "journal_fill": 18.8
+        }
+    ],
+    "teachers": [
+        {
+            "id": 4,
+            "name": "Usmonova Dildora",
+            "lessons": 17,
+            "without_topic": 0,
+            "without_marks": 17,
+            "journal_fill": 0
+        },
+        {
+            "id": 9,
+            "name": "Toshev Anvar",
+            "lessons": 37,
+            "without_topic": 0,
+            "without_marks": 28,
+            "journal_fill": 24.3
+        },
+        {
+            "id": 1,
+            "name": "Rustamov Akmal",
+            "lessons": 15,
+            "without_topic": 0,
+            "without_marks": 11,
+            "journal_fill": 26.7
+        },
+        {
+            "id": 8,
+            "name": "Karimova Nodira",
+            "lessons": 41,
+            "without_topic": 0,
+            "without_marks": 29,
+            "journal_fill": 29.3
+        }
+    ],
+    "absentees": [
+        {
+            "id": 2,
+            "name": "Valiyev Bobur",
+            "class": "M-11",
+            "absent": 6,
+            "late": 0
+        },
+        {
+            "id": 11,
+            "name": "Ergashev Timur",
+            "class": "M-11",
+            "absent": 3,
+            "late": 1
+        },
+        {
+            "id": 4,
+            "name": "Hasanova Malika",
+            "class": "M-11",
+            "absent": 2,
+            "late": 1
+        },
+        {
+            "id": 3,
+            "name": "Karimov Sardor",
+            "class": "M-11",
+            "absent": 2,
+            "late": 0
+        },
+        {
+            "id": 9,
+            "name": "Qodirov Sherzod",
+            "class": "M-11",
+            "absent": 2,
+            "late": 0
+        },
+        {
+            "id": 6,
+            "name": "Rahimova Nigora",
+            "class": "M-11",
+            "absent": 1,
+            "late": 0
+        },
+        {
+            "id": 7,
+            "name": "Yusupov Aziz",
+            "class": "M-11",
+            "absent": 1,
+            "late": 0
+        },
+        {
+            "id": 1,
+            "name": "Ergasheva Mohinur",
+            "class": "M-11",
+            "absent": 0,
+            "late": 1
+        }
+    ],
+    "finance": {
+        "totals": {
+            "charged": 5694000,
+            "paid": 6090000,
+            "debt": 750000,
+            "debtors": 2
+        },
+        "classes": [
+            {
+                "id": 3,
+                "name": "9-B",
+                "charged": 0,
+                "paid": 0,
+                "debt": 0,
+                "debtors": 0
+            },
+            {
+                "id": 4,
+                "name": "10-A",
+                "charged": 0,
+                "paid": 0,
+                "debt": 0,
+                "debtors": 0
+            },
+            {
+                "id": 1,
+                "name": "M-11",
+                "charged": 5694000,
+                "paid": 6090000,
+                "debt": 750000,
+                "debtors": 2
+            }
+        ]
+    }
+}

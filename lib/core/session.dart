@@ -118,6 +118,10 @@ class Session extends ChangeNotifier implements ApiCredentials {
   /// Eski server `features` qaytarmaydi — unda qo'shimchalar alohida cheklanmagan deb hisoblanadi.
   bool hasFeature(String feature) => context['features'] is! List || features.contains(feature);
 
+  /// 2.41 rollar ruxsatlari (GET context → permissions). Eski server bermasa — cheklanmaydi (veb bilan bir xil).
+  List<String> get permissions => asRawList(context['permissions']).map((item) => '$item').toList();
+  bool allows(String ability) => context['permissions'] is! List || permissions.contains(ability);
+
   /// Bitta test ishtirokchisi (havola orqali kirgan mehmon): kabinetida faqat o'sha test.
   bool get isGuest => context['guest'] == true;
 
@@ -241,6 +245,12 @@ class Session extends ChangeNotifier implements ApiCredentials {
         return full && hasRewards;
       case 'certificates':
         return full && (hasModule('testing') || hasModule('lms'));
+      case 'school_attendance':
+        // 3.19: maktab davomati (server: school/attendance — direktor, administrator, o'qituvchi + module:school).
+        return isAcademicStaff && hasModule('school');
+      case 'school_report':
+        // 3.19: maktab hisoboti (server: school/reports/summary — direktor; administrator — reports.school ruxsati bilan).
+        return isManager && hasModule('school') && allows('reports.school');
       case 'journal':
         // Maktab jurnali (server: school/journal — direktor, administrator, o'qituvchi + module:school).
         return isAcademicStaff && hasModule('school');

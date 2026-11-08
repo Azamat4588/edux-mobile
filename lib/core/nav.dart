@@ -75,6 +75,8 @@ List<NavSection> buildNav(NavContext ctx) {
         _when(can('students'), NavTab('students', tr("Ro'yxat"))),
         _when(can('leads'), NavTab('crm.leads', tr('Lidlar'))),
         _when(can('attendance'), NavTab('attendance', tr('Davomat'))),
+        // 3.19: maktab davomati (dars bo'yicha).
+        _when(can('school_attendance'), NavTab('school.attendance', tr('Sinf davomati'))),
         _when(can('checkin'), NavTab('access.checkin', tr('Kirish nazorati'))),
       ]),
       _education(ctx),
@@ -92,6 +94,8 @@ List<NavSection> buildNav(NavContext ctx) {
         // 1.39: mijozlar fikri paneli (veb: «Aloqa → Fikrlar»).
         _when(can('feedback_manage'), NavTab('feedback', tr('Fikrlar'))),
       ]),
+      // 3.19: maktab hisoboti (veb 2.43 «Hisobotlar → Maktab hisoboti»).
+      _section('reports', tr('Hisobotlar'), 'trending-up', <NavTab?>[_when(can('school_report'), NavTab('school.reports', tr('Maktab hisoboti')))]),
       _section('settings', tr('Sozlamalar'), 'cog', <NavTab?>[
         _when(can('kiosk'), NavTab('access.kiosk', tr('Kiosk rejimi'))),
         _when(can('billing'), NavTab('billing', tr('Modullar va obuna'))),
@@ -106,6 +110,7 @@ List<NavSection> buildNav(NavContext ctx) {
         _when(can('students'), NavTab('students', ctx.studentsLabel)),
         _when(can('attendance'), NavTab('attendance', tr('Davomat'))),
         _when(can('journal'), NavTab('school.journal', tr('Jurnal'))),
+        _when(can('school_attendance'), NavTab('school.attendance', tr('Sinf davomati'))),
         _when(can('checkin'), NavTab('access.checkin', tr('Kirish nazorati'))),
       ]),
       _education(ctx),
@@ -309,6 +314,7 @@ const Map<String, int> sectionColors = <String, int>{
   'tutor': 0xFF7446E6,
   'assistant': 0xFF7446E6,
   'settings': 0xFF556378,
+  'reports': 0xFF0B6E99,
   'child': 0xFF2D4BD0,
   'platform': 0xFF556378,
   'feedback': 0xFFD2560C,
