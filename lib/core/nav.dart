@@ -329,7 +329,7 @@ const Map<String, int> sectionColors = <String, int>{
 const List<(String, String, List<String>)> navClusters = <(String, String, List<String>)>[
   ('daily', 'Kundalik ish', <String>['home', 'students', 'groups', 'schedule', 'education', 'testing', 'tasks', 'child', 'tests', 'courses', 'diary', 'my']),
   ('money', 'Pul va aloqa', <String>['finance', 'payments', 'debtors', 'comms', 'callcenter', 'leads', 'rewards', 'salary', 'achievements', 'tutor', 'feedback', 'assistant']),
-  ('manage', 'Boshqaruv', <String>['reports', 'settings', 'platform']),
+  ('manage', 'Tashkilot', <String>['reports', 'management', 'settings', 'platform']),
   ('clients', 'Mijozlar', <String>['organizations', 'invoices', 'inbox']),
   ('system', 'Tizim', <String>['system']),
 ];
