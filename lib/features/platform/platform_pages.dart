@@ -456,9 +456,9 @@ class _PlatformOrganizationPageState extends State<PlatformOrganizationPage> {
 /// Modul nomlari (server App\\Enums\\Module::label).
 const Map<String, String> _moduleLabels = <String, String>{
   'testing': 'Test tizimi',
-  'crm': 'CRM',
+  'crm': "O'quv markazi (CRM)",
   'lms': "Ta'lim (kurslar)",
-  'school': 'Maktab boshqaruvi',
+  'school': 'Xususiy maktab (jurnal va sinflar)',
 };
 
 // ─────────────────────────────── Hisoblar ───────────────────────────────

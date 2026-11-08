@@ -206,7 +206,7 @@ class Session extends ChangeNotifier implements ApiCredentials {
       case 'checkin':
         return canCheckIn;
       case 'kiosk':
-        return canUseKiosk;
+        return canUseKiosk && !isTutorOrg;
       case 'scan':
         return canScan;
       case 'topic_tests':
@@ -218,7 +218,7 @@ class Session extends ChangeNotifier implements ApiCredentials {
       case 'p2p':
         return canSeeP2p;
       case 'callcenter':
-        return canCallCenter;
+        return canCallCenter && !isTutorOrg;
       case 'tasks':
         return canSeeTasks;
       case 'sms_gateway':
@@ -308,6 +308,10 @@ class Session extends ChangeNotifier implements ApiCredentials {
     } catch (_) {}
   }
   String get organizationName => asText(asMap(context['organization'])['name']);
+
+  /// 2.45: tashkilot turi (center, private_school, tutor...). «Repetitor» — yengil menyu (veb TUTOR_HIDDEN bilan bir xil g'oya).
+  String get organizationType => asText(asMap(context['organization'])['type']);
+  bool get isTutorOrg => organizationType == 'tutor';
   String? get organizationLogo {
     final logo = asMap(context['organization'])['logo_url'];
     return logo == null ? null : api.absolute(logo.toString());
