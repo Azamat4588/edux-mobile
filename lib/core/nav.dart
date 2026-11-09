@@ -78,6 +78,8 @@ List<NavSection> buildNav(NavContext ctx) {
         // 3.19: maktab davomati (dars bo'yicha).
         _when(can('school_attendance'), NavTab('school.attendance', tr('Sinf davomati'))),
         _when(can('checkin'), NavTab('access.checkin', tr('Kirish nazorati'))),
+        // 3.27 (server 2.61): kiosk rejimi — kirish nazorati yonida (vebdagidek, sozlamalarda emas).
+        _when(can('kiosk'), NavTab('access.kiosk', tr('Kiosk rejimi'))),
         // 3.25 (server 2.58): keyingi yilga qayta ro'yxat paneli.
         _when(can('reenroll'), NavTab('reenroll', tr("Qayta ro'yxat"))),
       ]),
@@ -95,13 +97,14 @@ List<NavSection> buildNav(NavContext ctx) {
         _when(can('tasks'), NavTab('crm.tasks', tr('Topshiriqlar'))),
         // 1.39: mijozlar fikri paneli (veb: «Aloqa → Fikrlar»).
         _when(can('feedback_manage'), NavTab('feedback', tr('Fikrlar'))),
+        // 3.27 (server 2.61): AI yordamchi — «Aloqa»da.
+        _when(can('staff_ai'), NavTab('ai.staff', tr('AI yordamchi'))),
       ]),
       // 3.19: maktab hisoboti (veb 2.43 «Hisobotlar → Maktab hisoboti»).
       _section('reports', tr('Hisobotlar'), 'trending-up', <NavTab?>[_when(can('school_report'), NavTab('school.reports', tr('Maktab hisoboti')))]),
       _section('settings', tr('Sozlamalar'), 'cog', <NavTab?>[
-        _when(can('kiosk'), NavTab('access.kiosk', tr('Kiosk rejimi'))),
+        // 3.27 (server 2.61): sozlamalarda faqat butun tashkilotga oid narsa.
         _when(can('billing'), NavTab('billing', tr('Modullar va obuna'))),
-        _when(can('staff_ai'), NavTab('ai.staff', tr('AI yordamchi'))),
       ]),
     ]);
   } else if (role == 'teacher') {

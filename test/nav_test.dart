@@ -88,4 +88,11 @@ void main() {
     final teacher = buildNav(ctx('teacher', <String>{'students', 'journal', 'school_attendance'}));
     expect(teacher.firstWhere((item) => item.key == 'groups').tabs.map((tab) => tab.key).toList(), <String>['students', 'school.journal', 'school.attendance']);
   });
+
+  test('3.27: kiosk — O\'quvchilarda, AI yordamchi — Aloqada, sozlamalarda faqat obuna', () {
+    final sections = buildNav(ctx('director', <String>{'crm', 'students', 'checkin', 'kiosk', 'staff_ai', 'tasks', 'billing'}));
+    expect(sectionOfTab(sections, 'access.kiosk')?.key, 'students');
+    expect(sectionOfTab(sections, 'ai.staff')?.key, 'comms');
+    expect(sections.firstWhere((item) => item.key == 'settings').tabs.map((tab) => tab.key).toList(), <String>['billing']);
+  });
 }
