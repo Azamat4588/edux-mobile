@@ -434,9 +434,11 @@ class _ReEnrollCardState extends State<_ReEnrollCard> {
       reason = await _askReason();
       if (reason == null) return;
     }
+    if (!mounted) return;
+    final api = AppScope.read(context).api;
     setState(() => _busy = true);
     try {
-      await AppScope.read(context).api.post('my/reenroll/${asInt(widget.row['id'])}', <String, Object?>{'answer': answer, if (reason != null) 'reason': reason});
+      await api.post('my/reenroll/${asInt(widget.row['id'])}', <String, Object?>{'answer': answer, if (reason != null) 'reason': reason});
       if (mounted) {
         showMessage(context, answer == 'yes' ? tr('Rahmat! Joy saqlab qolindi.') : answer == 'no' ? tr('Javobingiz qabul qilindi. Rahmat!') : tr('Yaxshi, muddatgacha qaror qiling.'));
       }
@@ -779,7 +781,7 @@ class _ReEnrollBannerState extends State<ReEnrollBanner> {
           Expanded(
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
               Text(waiting ? tr('Keyingi qadamlar') : tr("Keyingi o'quv yili"), style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 16)),
-              Text(waiting ? tr("Shartnoma va avans — joyni band qilish uchun.") : tr('Javob muddati: {0}', <Object>[date(campaign['deadline'])]),
+              Text(waiting ? tr('Shartnoma va avans — joyni band qilish uchun.') : tr('Javob muddati: {0}', <Object>[date(campaign['deadline'])]),
                   style: TextStyle(color: AppColors.muted)),
             ]),
           ),
