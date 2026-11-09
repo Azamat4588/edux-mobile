@@ -1,3 +1,3 @@
 # EduX mobil skrinshotlari
 
-Manba: 57fffe053d7421661376df6d1ead92a2e5b4eeb6 (2026-11-09T08:16Z)
+Manba: 4d27e0dc467cf1cf50471501b22271af077cba30 (2026-11-09T09:15Z)
