@@ -133,6 +133,10 @@ class _AttendanceSheetPageState extends State<AttendanceSheetPage> {
   final TextEditingController _topic = TextEditingController();
   MasterDetailState? _owner;
 
+  /// 3.22 (server 2.54): o'tilgan dars (oilaga hisobot shu darsga yoziladi) va tayyor iboralar.
+  Map<String, dynamic>? _lesson;
+  List<String> _templates = <String>[];
+
   @override
   void initState() {
     super.initState();
@@ -180,6 +184,8 @@ class _AttendanceSheetPageState extends State<AttendanceSheetPage> {
           ..clear()
           ..addEntries(students.map((s) => MapEntry<int, String?>(asInt(s['id']), s['status']?.toString())));
         _topic.text = asText(asMap(sheet['lesson'])['topic']);
+        _lesson = sheet['lesson'] is Map ? asMap(sheet['lesson']) : null;
+        _templates = asRawList(sheet['report_templates']).map((item) => '$item').toList();
         _loading = false;
         _dirty = false;
       });
@@ -226,6 +232,8 @@ class _AttendanceSheetPageState extends State<AttendanceSheetPage> {
       if (!mounted) return;
       setState(() => _dirty = false);
       showMessage(context, tr('Saqlandi.'));
+      // Dars yaratilgan bo'lsa — «Oilaga hisobot» tugmasi ochilsin.
+      await _load();
     } on ApiException catch (error) {
       if (mounted) showMessage(context, error.message, error: true);
     } finally {
@@ -305,6 +313,20 @@ class _AttendanceSheetPageState extends State<AttendanceSheetPage> {
     if (!wasDirty && !_dirty) await _load();
   }
 
+  Future<void> _openReport() async {
+    final sent = await Navigator.of(context).push<bool>(MaterialPageRoute<bool>(
+      builder: (_) => LessonReportFormPage(
+        groupId: widget.groupId,
+        groupName: widget.groupName,
+        day: isoDay(_day),
+        lesson: _lesson ?? <String, dynamic>{},
+        students: _students.where((student) => student['enrollment'] != 'frozen').toList(),
+        templates: _templates,
+      ),
+    ));
+    if (sent != null && mounted) await _load();
+  }
+
   void _setAll(String status) {
     setState(() {
       for (final student in _students) {
@@ -338,6 +360,12 @@ class _AttendanceSheetPageState extends State<AttendanceSheetPage> {
                 icon: const Icon(Icons.qr_code_scanner),
                 onPressed: _loading ? null : _openCamera,
               ),
+            // 3.22 (server 2.55): oylik hisobot (oilaga).
+            IconButton(
+              tooltip: tr('Oylik hisobot'),
+              icon: const Icon(Icons.insights_outlined),
+              onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => MonthlyReportsPage(groupId: widget.groupId, groupName: widget.groupName))),
+            ),
             TextButton.icon(
               onPressed: _pickDay,
               icon: const Icon(Icons.calendar_today, size: 18),
@@ -381,12 +409,27 @@ class _AttendanceSheetPageState extends State<AttendanceSheetPage> {
                   child: AppScope.of(context).readOnly
                       ? Text(tr("Obuna muddati tugagan: ma'lumotlar ko'rinadi, lekin yangi yozuv kiritib bo'lmaydi."),
                           textAlign: TextAlign.center, style: TextStyle(color: AppColors.warning))
-                      : FilledButton(
-                    onPressed: _saving ? null : _save,
-                    child: _saving
-                        ? const SizedBox(width: 22, height: 22, child: CircularProgressIndicator(strokeWidth: 2.4, color: Colors.white))
-                        : Text(tr('Saqlash')),
-                  ),
+                      : Row(children: <Widget>[
+                          Expanded(
+                            child: FilledButton(
+                              onPressed: _saving ? null : _save,
+                              child: _saving
+                                  ? const SizedBox(width: 22, height: 22, child: CircularProgressIndicator(strokeWidth: 2.4, color: Colors.white))
+                                  : Text(tr('Saqlash')),
+                            ),
+                          ),
+                          // 3.22: darsdan keyin oilaga hisobot (mavzu, uy vazifasi, har o'quvchiga izoh).
+                          if (_lesson != null && asText(_lesson!['status'], 'held') == 'held') ...<Widget>[
+                            const SizedBox(width: 8),
+                            Expanded(
+                              child: OutlinedButton.icon(
+                                onPressed: _saving || _dirty ? null : _openReport,
+                                icon: Icon(_lesson!['report_sent_at'] != null ? Icons.mark_email_read_outlined : Icons.outgoing_mail, size: 18),
+                                label: Text(tr('Oilaga hisobot'), maxLines: 1, overflow: TextOverflow.ellipsis),
+                              ),
+                            ),
+                          ],
+                        ]),
                 ),
               ),
       ),
@@ -538,6 +581,291 @@ class _StatusChoice extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+
+/// 3.22 (server 2.54): darsdan keyingi hisobot — dars mazmuni, uy vazifasi va har o'quvchiga oilaga izoh. «Saqlash» —
+/// qoralama, «Oilaga yuborish» — ota-ona va o'quvchiga push (ilovada «Dars hisobotlari»).
+class LessonReportFormPage extends StatefulWidget {
+  const LessonReportFormPage({super.key, required this.groupId, required this.groupName, required this.day, required this.lesson, required this.students, required this.templates});
+
+  final int groupId;
+  final String groupName;
+  final String day;
+  final Map<String, dynamic> lesson;
+  final List<Map<String, dynamic>> students;
+  final List<String> templates;
+
+  @override
+  State<LessonReportFormPage> createState() => _LessonReportFormPageState();
+}
+
+class _LessonReportFormPageState extends State<LessonReportFormPage> {
+  late final TextEditingController _summary = TextEditingController(text: asText(widget.lesson['summary']));
+  late final TextEditingController _homework = TextEditingController(text: asText(widget.lesson['homework']));
+  late final Map<int, TextEditingController> _notes = <int, TextEditingController>{
+    for (final student in widget.students) asInt(student['id']): TextEditingController(text: asText(student['family_note'])),
+  };
+  int? _focused;
+  bool _busy = false;
+
+  @override
+  void dispose() {
+    _summary.dispose();
+    _homework.dispose();
+    for (final controller in _notes.values) {
+      controller.dispose();
+    }
+    super.dispose();
+  }
+
+  Future<void> _submit(bool send) async {
+    final sentBefore = widget.lesson['report_sent_at'] != null;
+    if (send && sentBefore && !await confirm(context, tr('Hisobot oilaga qayta yuborilsinmi?'))) return;
+    if (!mounted) return;
+    final api = AppScope.read(context).api;
+    setState(() => _busy = true);
+    try {
+      await api.put('crm/attendance/report', <String, Object?>{
+        'group_id': widget.groupId,
+        'date': widget.day,
+        'summary': _summary.text.trim().isEmpty ? null : _summary.text.trim(),
+        'homework': _homework.text.trim().isEmpty ? null : _homework.text.trim(),
+        'notes': _notes.entries.map((entry) => <String, Object?>{'student_id': entry.key, 'note': entry.value.text.trim().isEmpty ? null : entry.value.text.trim()}).toList(),
+        'send': send,
+      });
+      if (!mounted) return;
+      showMessage(context, send ? tr('Hisobot oilalarga yuborildi.') : tr('Saqlandi.'));
+      Navigator.of(context).pop(send);
+    } catch (error) {
+      if (mounted) showMessage(context, errorText(error), error: true);
+    } finally {
+      if (mounted) setState(() => _busy = false);
+    }
+  }
+
+  void _addPhrase(String phrase) {
+    final id = _focused;
+    if (id == null) return;
+    final controller = _notes[id]!;
+    final text = controller.text.trim();
+    controller.text = text.isEmpty ? tr(phrase) : '$text ${tr(phrase)}';
+    setState(() {});
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final sentAt = widget.lesson['report_sent_at'];
+    return Scaffold(
+      appBar: pageBar(context, title: Text(tr('Oilaga hisobot'))),
+      body: ListView(
+        padding: readable(context, const EdgeInsets.fromLTRB(16, 12, 16, 100)),
+        children: <Widget>[
+          Text('${widget.groupName} · ${date(widget.day)}', style: TextStyle(color: AppColors.muted)),
+          if (sentAt != null) ...<Widget>[
+            const SizedBox(height: 6),
+            Pill(tr('Yuborilgan: {0}', <Object>[dateTime(sentAt)]), color: AppColors.success),
+          ],
+          const SizedBox(height: 12),
+          TextField(controller: _summary, maxLines: 3, maxLength: 2000, decoration: InputDecoration(labelText: tr("Darsda nima o'tildi"))),
+          TextField(controller: _homework, maxLines: 3, maxLength: 2000, decoration: InputDecoration(labelText: tr('Uy vazifasi'))),
+          SectionTitle(tr("O'quvchilarga izoh (ixtiyoriy)")),
+          for (final student in widget.students) ...<Widget>[
+            Focus(
+              onFocusChange: (focused) {
+                if (focused) setState(() => _focused = asInt(student['id']));
+              },
+              child: TextField(
+                controller: _notes[asInt(student['id'])],
+                maxLength: 500,
+                decoration: InputDecoration(labelText: asText(student['full_name'])),
+              ),
+            ),
+            // Tayyor iboralar — faqat tanlangan o'quvchi ostida.
+            if (_focused == asInt(student['id']) && widget.templates.isNotEmpty)
+              Padding(
+                padding: const EdgeInsets.only(bottom: 8),
+                child: Wrap(spacing: 6, runSpacing: 6, children: <Widget>[
+                  for (final phrase in widget.templates) ActionChip(label: Text(tr(phrase), style: const TextStyle(fontSize: 12)), onPressed: () => _addPhrase(phrase)),
+                ]),
+              ),
+          ],
+        ],
+      ),
+      bottomNavigationBar: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
+          child: Row(children: <Widget>[
+            Expanded(child: OutlinedButton(onPressed: _busy ? null : () => _submit(false), child: Text(tr('Saqlash')))),
+            const SizedBox(width: 8),
+            Expanded(child: FilledButton(onPressed: _busy ? null : () => _submit(true), child: Text(sentAt != null ? tr('Qayta yuborish') : tr('Oilaga yuborish')))),
+          ]),
+        ),
+      ),
+    );
+  }
+}
+
+
+/// 3.22 (server 2.55): oylik hisobot — har o'quvchi bo'yicha tizim ko'rsatkichlari (davomat, baho, mashq) va matn
+/// (o'zi yozadi yoki AI qoralama), «Oilaga yuborish».
+class MonthlyReportsPage extends StatefulWidget {
+  const MonthlyReportsPage({super.key, required this.groupId, required this.groupName});
+
+  final int groupId;
+  final String groupName;
+
+  @override
+  State<MonthlyReportsPage> createState() => _MonthlyReportsPageState();
+}
+
+class _MonthlyReportsPageState extends State<MonthlyReportsPage> {
+  // Oy oxiri yaqin bo'lmasa — o'tgan oy (hisobot odatda oy tugagach yoziladi).
+  late DateTime _month = DateTime.now().day >= 25 ? DateTime(DateTime.now().year, DateTime.now().month) : DateTime(DateTime.now().year, DateTime.now().month - 1);
+  Key _view = UniqueKey();
+
+  String get _period => '${_month.year}-${two(_month.month)}';
+
+  void _shift(int months) => setState(() {
+        _month = DateTime(_month.year, _month.month + months);
+        _view = UniqueKey();
+      });
+
+  @override
+  Widget build(BuildContext context) {
+    final api = AppScope.of(context).api;
+    final now = DateTime.now();
+    return Scaffold(
+      appBar: pageBar(context, title: Text(tr('Oylik hisobot'))),
+      body: Column(children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.fromLTRB(8, 4, 8, 0),
+          child: Row(children: <Widget>[
+            IconButton(tooltip: tr('Oldingi oy'), icon: const Icon(Icons.chevron_left), onPressed: () => _shift(-1)),
+            Expanded(child: Text('${widget.groupName} · ${monthName(_month.month)} ${_month.year}', textAlign: TextAlign.center, style: const TextStyle(fontWeight: FontWeight.w700))),
+            IconButton(
+              tooltip: tr('Keyingi oy'),
+              icon: const Icon(Icons.chevron_right),
+              onPressed: _month.year == now.year && _month.month == now.month ? null : () => _shift(1),
+            ),
+          ]),
+        ),
+        Expanded(
+          child: AsyncView<Map<String, dynamic>>(
+            key: _view,
+            load: () async => asMap(await api.get('crm/progress', query: <String, Object?>{'group_id': widget.groupId, 'period': _period})),
+            builder: (context, data, reload) {
+              final rows = asList(data['data']);
+              if (rows.isEmpty) return ListView(children: <Widget>[EmptyState(text: tr("Bu oyda o'quvchi yo'q"))]);
+              return ListView.separated(
+                padding: readable(context, const EdgeInsets.fromLTRB(16, 8, 16, 32)),
+                itemCount: rows.length,
+                separatorBuilder: (_, __) => const SizedBox(height: 10),
+                itemBuilder: (context, i) => _MonthlyRow(groupId: widget.groupId, period: _period, row: rows[i], ai: data['ai'] == true),
+              );
+            },
+          ),
+        ),
+      ]),
+    );
+  }
+}
+
+class _MonthlyRow extends StatefulWidget {
+  const _MonthlyRow({required this.groupId, required this.period, required this.row, required this.ai});
+
+  final int groupId;
+  final String period;
+  final Map<String, dynamic> row;
+  final bool ai;
+
+  @override
+  State<_MonthlyRow> createState() => _MonthlyRowState();
+}
+
+class _MonthlyRowState extends State<_MonthlyRow> {
+  late final TextEditingController _text = TextEditingController(text: asText(widget.row['text']));
+  late Object? _sentAt = widget.row['sent_at'];
+  bool _busy = false;
+
+  int get _studentId => asInt(asMap(widget.row['student'])['id']);
+
+  @override
+  void dispose() {
+    _text.dispose();
+    super.dispose();
+  }
+
+  Future<void> _draft() async {
+    final api = AppScope.read(context).api;
+    setState(() => _busy = true);
+    try {
+      final res = asMap(await api.post('crm/progress/draft', <String, Object?>{'group_id': widget.groupId, 'period': widget.period, 'student_id': _studentId}));
+      _text.text = asText(res['text']);
+    } catch (error) {
+      if (mounted) showMessage(context, errorText(error), error: true);
+    } finally {
+      if (mounted) setState(() => _busy = false);
+    }
+  }
+
+  Future<void> _save(bool send) async {
+    if (send && _sentAt != null && !await confirm(context, tr('Hisobot oilaga qayta yuborilsinmi?'))) return;
+    if (!mounted) return;
+    final api = AppScope.read(context).api;
+    setState(() => _busy = true);
+    try {
+      final res = asMap(await api.put('crm/progress', <String, Object?>{
+        'group_id': widget.groupId,
+        'period': widget.period,
+        'student_id': _studentId,
+        'text': _text.text.trim().isEmpty ? null : _text.text.trim(),
+        'send': send,
+      }));
+      if (!mounted) return;
+      setState(() => _sentAt = res['sent_at']);
+      showMessage(context, send ? tr('{0}: hisobot oilaga yuborildi.', <Object>[asText(asMap(widget.row['student'])['full_name'])]) : tr('Saqlandi.'));
+    } catch (error) {
+      if (mounted) showMessage(context, errorText(error), error: true);
+    } finally {
+      if (mounted) setState(() => _busy = false);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final stats = asMap(widget.row['stats']);
+    final lessons = asInt(stats['lessons']);
+    final facts = <String>[
+      if (lessons > 0) tr('Davomat: {0}% ({1}/{2})', <Object>[asInt(stats['attendance_percent']), asInt(stats['present']), lessons]),
+      if (stats['avg_score'] != null) tr("O'rtacha baho: {0}/{1}", <Object>[stats['avg_score'], stats['score_max'] ?? '']),
+      if (asInt(stats['practice_days']) > 0) tr('Uyda mashq: {0} kun, {1} daqiqa', <Object>[asInt(stats['practice_days']), asInt(stats['practice_minutes'])]),
+      for (final exam in asList(stats['exams'], 'exams')) '${asText(exam['title'])}: ${asText(exam['score'])}/${asText(exam['max'])}',
+    ];
+    return AppCard(
+      child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
+        Row(children: <Widget>[
+          Expanded(child: Text(asText(asMap(widget.row['student'])['full_name']), style: const TextStyle(fontWeight: FontWeight.w700))),
+          if (_sentAt != null) Pill(tr('Yuborilgan'), color: AppColors.success),
+        ]),
+        if (facts.isNotEmpty) Padding(padding: const EdgeInsets.only(top: 4), child: Text(facts.join(' · '), style: TextStyle(color: AppColors.muted, fontSize: 13))),
+        const SizedBox(height: 8),
+        TextField(
+          controller: _text,
+          maxLines: 5,
+          minLines: 3,
+          maxLength: 4000,
+          onChanged: (_) => setState(() {}),
+          decoration: InputDecoration(hintText: tr("Oilaga: yutuqlar, nimaga e'tibor berish kerak, keyingi oy uchun tavsiya.")),
+        ),
+        Wrap(alignment: WrapAlignment.end, spacing: 8, runSpacing: 8, children: <Widget>[
+          if (widget.ai) OutlinedButton(onPressed: _busy ? null : _draft, child: Text(tr('AI qoralama'))),
+          OutlinedButton(onPressed: _busy ? null : () => _save(false), child: Text(tr('Saqlash'))),
+          FilledButton(onPressed: _busy || _text.text.trim().isEmpty ? null : () => _save(true), child: Text(_sentAt != null ? tr('Qayta yuborish') : tr('Oilaga yuborish'))),
+        ]),
+      ]),
     );
   }
 }
