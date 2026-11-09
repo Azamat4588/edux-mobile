@@ -437,6 +437,10 @@ List<QuickAction> quickActions(String role, bool Function(String permission) can
       if (can('school')) list.add(QuickAction(key: 'child.diary', label: tr('Kundalik'), hint: tr('Baholar va uy vazifasi'), icon: 'pen-line'));
       if (can('testing')) list.add(QuickAction(key: 'child.tests', label: tr('Test natijalari'), icon: 'clipboard-list'));
       if (can('lms')) list.add(QuickAction(key: 'child.courses', label: tr('Kurslar'), hint: tr("O'zlashtirish"), icon: 'book'));
+      // 3.22 (server 2.54–2.55): dars hisobotlari va uyda mashq.
+      if (can('crm')) list.add(QuickAction(key: 'child.lessons', label: tr('Dars hisobotlari'), hint: tr('Mavzu va uy vazifasi'), icon: 'book'));
+      if (can('crm')) list.add(QuickAction(key: 'child.practice', label: tr('Uyda mashq'), icon: 'check-circle'));
+      if (can('crm')) list.add(QuickAction(key: 'child.booking', label: tr('Yakka darslar'), icon: 'calendar'));
   }
   return list.take(6).toList();
 }

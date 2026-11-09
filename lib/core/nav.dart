@@ -165,6 +165,10 @@ List<NavSection> buildNav(NavContext ctx) {
           _when(can('lms'), NavTab('lms.my.assignments', tr('Uy vazifalari'))),
           _when(can('fun'), NavTab('fun.labs', tr('Laboratoriya'))),
           _when(can('fun'), NavTab('fun.games', tr("O'yinlar"))),
+          // 3.22 (server 2.53–2.55): dars hisobotlari, uyda mashq, yakka darslar.
+          _when(can('crm'), NavTab('my.lessons', tr('Dars hisobotlari'))),
+          _when(can('crm'), NavTab('my.practice', tr('Uyda mashq'))),
+          _when(can('crm'), NavTab('my.booking', tr('Yakka darslar'))),
         ]),
         _section('diary', tr('Kundalik'), 'pen-line', <NavTab?>[_when(can('school'), NavTab('school.diary', tr('Kundalik')))]),
         _section('achievements', tr('Yutuqlarim'), 'trophy', <NavTab?>[
