@@ -78,6 +78,8 @@ List<NavSection> buildNav(NavContext ctx) {
         // 3.19: maktab davomati (dars bo'yicha).
         _when(can('school_attendance'), NavTab('school.attendance', tr('Sinf davomati'))),
         _when(can('checkin'), NavTab('access.checkin', tr('Kirish nazorati'))),
+        // 3.25 (server 2.58): keyingi yilga qayta ro'yxat paneli.
+        _when(can('reenroll'), NavTab('reenroll', tr("Qayta ro'yxat"))),
       ]),
       _education(ctx),
       _testing(ctx),

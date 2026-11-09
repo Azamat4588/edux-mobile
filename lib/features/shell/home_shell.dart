@@ -51,6 +51,7 @@ import '../staff/school_attendance_page.dart';
 import '../staff/school_report_page.dart';
 import '../staff/salary_page.dart';
 import '../staff/staff_home_page.dart';
+import '../staff/reenroll_page.dart';
 import '../staff/students_page.dart';
 import '../student/assignments_page.dart';
 import '../student/certificates_page.dart';
@@ -342,6 +343,8 @@ class _HomeShellState extends State<HomeShell> with WidgetsBindingObserver {
       case 'my.certificates':
         return const CertificatesPage();
       // 3.22: oila sahifalari (o'quvchi).
+      case 'reenroll':
+        return const ReEnrollAdminPage();
       case 'my.lessons':
         return const LessonReportsPage();
       case 'my.practice':
