@@ -115,4 +115,13 @@ void main() {
       expect(_session('teacher').canManageBilling, isFalse);
     });
   });
+
+  group('3.26: menyu qo\'shimchalari (server 2.60 menu_extras)', () {
+    test('fun faqat yoqilgan bo\'lsa; eski serverda cheklanmaydi', () {
+      expect(_session('student', features: <String>['fun']).can('fun'), isTrue);
+      expect(_session('student', features: <String>['fun'], extra: <String, dynamic>{'menu_extras': <String>['fun']}).can('fun'), isTrue);
+      expect(_session('student', features: <String>['fun'], extra: <String, dynamic>{'menu_extras': <String>[]}).can('fun'), isFalse);
+      expect(_session('student', extra: <String, dynamic>{'menu_extras': <String>['events']}).menuExtra('fun'), isFalse);
+    });
+  });
 }

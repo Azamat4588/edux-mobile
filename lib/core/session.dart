@@ -118,6 +118,10 @@ class Session extends ChangeNotifier implements ApiCredentials {
   /// Eski server `features` qaytarmaydi — unda qo'shimchalar alohida cheklanmagan deb hisoblanadi.
   bool hasFeature(String feature) => context['features'] is! List || features.contains(feature);
 
+  /// 3.26 (server 2.60): «Menyu va bo'limlar» — direktor yoqqan qo'shimcha bo'limlar (fun, admissions, events…).
+  /// Eski server `menu_extras` qaytarmaydi — unda hammasi ko'rinadi.
+  bool menuExtra(String key) => context['menu_extras'] is! List || asRawList(context['menu_extras']).map((item) => '$item').contains(key);
+
   /// 2.41 rollar ruxsatlari (GET context → permissions). Eski server bermasa — cheklanmaydi (veb bilan bir xil).
   List<String> get permissions => asRawList(context['permissions']).map((item) => '$item').toList();
   bool allows(String ability) => context['permissions'] is! List || permissions.contains(ability);
@@ -236,7 +240,7 @@ class Session extends ChangeNotifier implements ApiCredentials {
       case 'lms_staff':
         return canTeachLms;
       case 'fun':
-        return full && hasFeature('fun');
+        return full && hasFeature('fun') && menuExtra('fun');
       case 'olympiad':
         return full && hasModule('testing') && hasFeature('olympiad');
       case 'tutor':
