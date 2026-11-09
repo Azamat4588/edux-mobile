@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import '../chat/chat_pages.dart';
 import '../documents/documents_pages.dart';
+import '../family/family_pages.dart';
 import '../../core/adaptive.dart';
 import '../../core/api.dart';
 import '../../core/app_update.dart';
@@ -192,6 +193,12 @@ class _HomeShellState extends State<HomeShell> with WidgetsBindingObserver {
       return s.isStudent && !s.isGuest && s.hasModule('lms') ? const AssignmentsPage() : null;
     };
     routes['task'] = (_) => session().canSeeTasks ? const TasksPage() : null;
+    // 3.22 (server 2.53–2.58): dars hisobotlari, uyda mashq, yakka dars va qayta ro'yxat — o'quvchi va ota-ona.
+    bool family() => session().isStudent || session().role == 'guardian';
+    routes['lesson_report'] = (data) => family() && session().hasModule('crm') ? LessonReportsPage(studentId: _childId(data)) : null;
+    routes['practice'] = (data) => family() && session().hasModule('crm') ? PracticePage(studentId: _childId(data)) : null;
+    routes['family_booking'] = (data) => family() && session().hasModule('crm') ? BookingPage(studentId: _childId(data)) : null;
+    routes['reenroll'] = (_) => session().role == 'guardian' ? const ReEnrollPage() : null;
     routes['lead'] = (data) {
       if (!session().canSeeLeads) return null;
       return asInt(data['lead_id']) > 0 ? LeadPage(leadId: asInt(data['lead_id'])) : const LeadsPage();
@@ -208,6 +215,11 @@ class _HomeShellState extends State<HomeShell> with WidgetsBindingObserver {
       final course = asInt(data['course_id']);
       return s.isStudent && s.hasModule('lms') && course > 0 ? CoursePage(courseId: course, title: tr('Kurs')) : null;
     };
+  }
+
+  int? _childId(Map<String, dynamic> data) {
+    final id = asInt(data['student_id']);
+    return id > 0 ? id : null;
   }
 
   @override
@@ -329,6 +341,13 @@ class _HomeShellState extends State<HomeShell> with WidgetsBindingObserver {
         return const AchievementsPage();
       case 'my.certificates':
         return const CertificatesPage();
+      // 3.22: oila sahifalari (o'quvchi).
+      case 'my.lessons':
+        return const LessonReportsPage();
+      case 'my.practice':
+        return const PracticePage();
+      case 'my.booking':
+        return const BookingPage();
       case 'my.tutor':
         return const TutorPage();
       case 'school.journal':

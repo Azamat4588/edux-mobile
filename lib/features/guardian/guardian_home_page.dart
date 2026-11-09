@@ -20,6 +20,7 @@ import '../notifications/notifications_page.dart';
 import '../student/diary_page.dart';
 import '../../core/home_today.dart';
 import '../../core/home_widgets.dart';
+import '../family/family_pages.dart';
 import '../lms/child_courses_view.dart';
 import 'guardian_repository.dart';
 
@@ -79,6 +80,18 @@ class _GuardianHomePageState extends State<GuardianHomePage> {
   void _open(String key, GuardianChild child) {
     if (key == 'pay') {
       unawaited(_repository.pay(context, child.id, onDone: () => setState(() => _focusSeq++)));
+      return;
+    }
+    // 3.22: alohida sahifalar (farzand bo'yicha).
+    final page = switch (key) {
+      'child.lessons' => LessonReportsPage(studentId: child.id),
+      'child.practice' => PracticePage(studentId: child.id),
+      'child.booking' => BookingPage(studentId: child.id),
+      'child.reenroll' => const ReEnrollPage(),
+      _ => null,
+    };
+    if (page != null) {
+      unawaited(Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => page)));
       return;
     }
     final tab = widget.tab;
@@ -387,6 +400,8 @@ class _OverviewTab extends StatelessWidget {
                       ),
               ),
             ),
+            // 3.22 (server 2.58): keyingi o'quv yiliga qayta ro'yxat so'rovi.
+            if (can('school') || can('crm')) ReEnrollBanner(key: ValueKey<int>(child.id), studentId: child.id),
             // 3.4 (veb 1.35 StudentToday, ota-ona): «Bugun» kartalari va tezkor harakatlar.
             if (today.isNotEmpty)
               Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[

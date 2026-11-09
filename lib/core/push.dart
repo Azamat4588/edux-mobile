@@ -154,6 +154,15 @@ class PushService {
       result['type'] = 'payment';
     } else if (path == '/child/diary' || path == '/school/diary') {
       result['type'] = 'diary';
+    } else if (path == '/child/lessons' || path == '/lessons') {
+      // 3.22: dars va oylik hisobotlar.
+      result['type'] = 'lesson_report';
+    } else if (path == '/child/practice' || path == '/practice') {
+      result['type'] = 'practice';
+    } else if (path == '/child/booking' || path == '/booking') {
+      result['type'] = 'family_booking';
+    } else if (path == '/child/reenroll') {
+      result['type'] = 'reenroll';
     } else if (path == '/child') {
       result['type'] = 'child';
     } else if (path == '/my/certificates' || path == '/certificates' || path.startsWith('/c/')) {
