@@ -173,8 +173,8 @@ class _ReEnrollAdminPageState extends State<ReEnrollAdminPage> {
               const SizedBox(height: 10),
               Wrap(spacing: 8, runSpacing: 8, children: <Widget>[
                 for (final k in _order) Pill('${tr(_labels[k]!)}: ${asInt(totals[k])}', color: _color(k)),
-                if (asInt(campaign['deposit']) > 0) Pill(tr("Avans to'ladi") + ': ${asInt(totals['deposit_paid'])}/${asInt(totals['yes'])}', color: AppColors.info, dot: false),
-                if (campaign['contract'] != null) Pill(tr('Shartnoma tasdiqlandi') + ': ${asInt(totals['signed'])}/${asInt(totals['yes'])}', color: AppColors.info, dot: false),
+                if (asInt(campaign['deposit']) > 0) Pill('${tr("Avans to'ladi")}: ${asInt(totals['deposit_paid'])}/${asInt(totals['yes'])}', color: AppColors.info, dot: false),
+                if (campaign['contract'] != null) Pill('${tr('Shartnoma tasdiqlandi')}: ${asInt(totals['signed'])}/${asInt(totals['yes'])}', color: AppColors.info, dot: false),
               ]),
             ],
             if (status == 'open' && campaign['accepting'] == true) ...<Widget>[
