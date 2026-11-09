@@ -251,6 +251,9 @@ class Session extends ChangeNotifier implements ApiCredentials {
       case 'school_report':
         // 3.19: maktab hisoboti (server: school/reports/summary — direktor; administrator — reports.school ruxsati bilan).
         return isManager && hasModule('school') && allows('reports.school');
+      case 'reenroll':
+        // 3.25: qayta ro'yxat (server: reenroll — direktor, administrator + module:school|crm).
+        return (role == 'director' || role == 'admin') && (hasModule('school') || hasModule('crm'));
       case 'journal':
         // Maktab jurnali (server: school/journal — direktor, administrator, o'qituvchi + module:school).
         return isAcademicStaff && hasModule('school');

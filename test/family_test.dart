@@ -24,4 +24,11 @@ void main() {
     expect(type('/child/reenroll', 'reenroll'), 'reenroll');
     expect(PushService.normalize(<String, dynamic>{'link': '/child/lessons?student=7'})['student_id'], '7');
   });
+
+  test('3.25: qayta ro\'yxat — faqat rahbar va administrator, maktab yoki CRM bilan', () {
+    List<String> tabs(String role, Set<String> allowed) =>
+        buildNav(ctx(role, allowed)).where((item) => item.key == 'students').expand((item) => item.tabs).map((tab) => tab.key).toList();
+    expect(tabs('director', <String>{'students', 'reenroll'}), contains('reenroll'));
+    expect(tabs('director', <String>{'students'}), isNot(contains('reenroll')));
+  });
 }
