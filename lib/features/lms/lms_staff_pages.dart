@@ -296,7 +296,7 @@ class _LmsAnnouncementsPageState extends State<LmsAnnouncementsPage> {
                   if (data['enabled'] == false) {
                     return ListView(children: <Widget>[EmptyState(
                         icon: Icons.campaign_outlined,
-                        text: tr("Kurs e'lonlari sozlamalarda o'chirilgan (Sozlamalar → Ta'lim)."),
+                        text: tr("Kurs e'lonlari o'chirilgan (Ta'lim → Kurs sozlamalari)."),
                         action: <String>['director', 'admin'].contains(AppScope.of(context).role) ? const OpenWebButton(WebPages.lmsSettings) : null,
                       )]);
                   }

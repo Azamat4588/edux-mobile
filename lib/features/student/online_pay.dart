@@ -316,7 +316,7 @@ class _PayFormState extends State<_PayForm> {
           const SizedBox(height: 14),
           Text(tr("To'lov usulini tanlang"), style: TextStyle(color: AppColors.muted, fontWeight: FontWeight.w600)),
           const SizedBox(height: 8),
-          // Usullar server bergan tartibda (direktor «Sozlamalar → Onlayn to'lov» da tartiblaydi).
+          // Usullar server bergan tartibda (direktor «Moliya → Onlayn to'lov» da tartiblaydi).
           for (final method in widget.methods) ...<Widget>[
             FilledButton(
               onPressed: _busy ? null : () => _pay(method),

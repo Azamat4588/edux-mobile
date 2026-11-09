@@ -116,7 +116,7 @@ class _P2pPageState extends State<P2pPage> {
                         child: AppCard(
                           color: AppColors.soft(AppColors.warning),
                           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
-                            Text(tr("Kartaga o'tkazma sozlamada o'chirilgan (Sozlamalar → Onlayn to'lov → Kartaga o'tkazma).")),
+                            Text(tr("Kartaga o'tkazma o'chirilgan (Moliya → Onlayn to'lov → Kartaga o'tkazma).")),
                             const OpenWebButton(WebPages.paymentsP2p),
                           ]),
                         ),

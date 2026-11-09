@@ -177,7 +177,7 @@ class _SmsGatewayPageState extends State<SmsGatewayPage> with WidgetsBindingObse
             title: Text(tr("Bank SMS'larini yuborish")),
             subtitle: bank.serverDisabled
                 ? Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
-                    Text(tr("Sozlamada SMS manbasi o'chirilgan (Sozlamalar → Onlayn to'lov → Kartaga o'tkazma)."), style: TextStyle(color: AppColors.warning)),
+                    Text(tr("SMS manbasi o'chirilgan (Moliya → Onlayn to'lov → Kartaga o'tkazma)."), style: TextStyle(color: AppColors.warning)),
                     const OpenWebButton(WebPages.paymentsP2p),
                   ])
                 : null,
