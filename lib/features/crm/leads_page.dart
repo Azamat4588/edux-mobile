@@ -11,6 +11,7 @@ import '../../core/i18n.dart';
 import '../../core/session.dart';
 import '../../core/theme.dart';
 import '../../core/widgets.dart';
+import 'lead_match_page.dart';
 
 const Map<String, String> leadStatusLabels = <String, String>{
   'new': 'Yangi',
@@ -191,6 +192,14 @@ class _LeadPageState extends State<LeadPage> {
     }
   }
 
+  /// «Du, Ch, Ju · 17:00–21:00 · B1».
+  String _criteria(Map<String, dynamic> lead) {
+    const names = <String>['Du', 'Se', 'Ch', 'Pa', 'Ju', 'Sh', 'Ya'];
+    final days = asRawList(lead['preferred_days']).map((d) => asInt(d)).where((d) => d >= 1 && d <= 7).map((d) => tr(names[d - 1])).join(', ');
+    final time = asText(lead['preferred_from']).isEmpty ? '' : '${asText(lead['preferred_from'])}–${asText(lead['preferred_to'])}';
+    return <String>[days, time, asText(lead['level'])].where((s) => s.isNotEmpty).join(' · ');
+  }
+
   @override
   Widget build(BuildContext context) {
     final api = AppScope.of(context).api;
@@ -239,6 +248,30 @@ class _LeadPageState extends State<LeadPage> {
                   ],
                 ]),
               ),
+              // 3.24 (server 2.57): qulay vaqt va mos guruh / yakka sinov darsi.
+              if (lead['student_id'] == null) ...<Widget>[
+                const SizedBox(height: 12),
+                AppCard(
+                  onTap: () async {
+                    final done = await Navigator.of(context).push<bool>(MaterialPageRoute<bool>(builder: (_) => LeadMatchPage(leadId: widget.leadId, lead: lead)));
+                    if (done == true || mounted) await reload();
+                  },
+                  child: Row(children: <Widget>[
+                    Icon(Icons.join_inner, color: AppColors.brand),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
+                        Text(tr('Mos guruh'), style: const TextStyle(fontWeight: FontWeight.w700)),
+                        Text(
+                          _criteria(lead).isEmpty ? tr("Qulay kunlar va vaqtni kiriting — tanlov aniqroq bo'ladi.") : _criteria(lead),
+                          style: TextStyle(color: AppColors.muted, fontSize: 13),
+                        ),
+                      ]),
+                    ),
+                    const Icon(Icons.chevron_right),
+                  ]),
+                ),
+              ],
               if (lead['student_id'] == null) ...<Widget>[
                 SectionTitle(tr('Holat')),
                 Wrap(spacing: 8, runSpacing: 8, children: <Widget>[
