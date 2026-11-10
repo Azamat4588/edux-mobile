@@ -6,13 +6,15 @@ NavContext ctx(String role, Set<String> allowed) => NavContext(role: role, can: 
 void main() {
   test('direktor: birinchi 4 bo\'lim pastki menyuda, qolgani «Yana»da', () {
     final sections = buildNav(ctx('director', <String>{'crm', 'students', 'leads', 'attendance', 'testing', 'scan', 'lms_staff', 'finance', 'p2p', 'tasks', 'billing'}));
-    expect(sections.map((item) => item.key).toList(), <String>['home', 'students', 'education', 'testing', 'finance', 'comms', 'settings']);
+    // 3.28: «Sotuv» (lidlar) — O'quvchilardan keyin.
+    expect(sections.map((item) => item.key).toList(), <String>['home', 'students', 'sales', 'education', 'testing', 'finance', 'comms', 'settings']);
     final bottom = bottomNav(sections);
-    expect(bottom.map((item) => item.key).toList(), <String>['home', 'students', 'education', 'testing']);
+    expect(bottom.map((item) => item.key).toList(), <String>['home', 'students', 'sales', 'education']);
     expect(bottom.every((item) => item.kind == 'section'), isTrue);
-    expect(overflowSections(sections, bottom).map((item) => item.key).toList(), <String>['finance', 'comms', 'settings']);
+    expect(overflowSections(sections, bottom).map((item) => item.key).toList(), <String>['testing', 'finance', 'comms', 'settings']);
+    expect(sectionOfTab(sections, 'crm.leads')?.key, 'sales');
     expect(sectionOfTab(sections, 'pay.p2p')?.key, 'finance');
-    expect(bottomActive(bottom, section: 'testing'), 'testing');
+    expect(bottomActive(bottom, section: 'education'), 'education');
     expect(bottomActive(bottom, section: 'finance'), isNull);
   });
 
