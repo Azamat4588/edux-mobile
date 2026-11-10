@@ -15,6 +15,7 @@ import '../../core/session.dart';
 import '../../core/theme.dart';
 import '../../core/widgets.dart';
 import '../access/checkin_page.dart';
+import '../family/family_pages.dart' show openProgressPdf;
 import '../access/face_checkin_page.dart';
 import 'students_page.dart';
 
@@ -738,7 +739,15 @@ class _MonthlyReportsPageState extends State<MonthlyReportsPage> {
     final api = AppScope.of(context).api;
     final now = DateTime.now();
     return Scaffold(
-      appBar: pageBar(context, title: Text(tr('Oylik hisobot'))),
+      appBar: pageBar(context, title: Text(tr('Oylik hisobot')), actions: <Widget>[
+        // 3.29 (server 2.66): rahbar nazorati — guruhlar bo'yicha yozilgan va yuborilgan hisobotlar.
+        if (AppScope.of(context).isManager)
+          IconButton(
+            tooltip: tr('Nazorat'),
+            icon: const Icon(Icons.fact_check_outlined),
+            onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => ProgressOverviewPage(period: _period))),
+          ),
+      ]),
       body: Column(children: <Widget>[
         Padding(
           padding: const EdgeInsets.fromLTRB(8, 4, 8, 0),
@@ -861,11 +870,108 @@ class _MonthlyRowState extends State<_MonthlyRow> {
           decoration: InputDecoration(hintText: tr("Oilaga: yutuqlar, nimaga e'tibor berish kerak, keyingi oy uchun tavsiya.")),
         ),
         Wrap(alignment: WrapAlignment.end, spacing: 8, runSpacing: 8, children: <Widget>[
+          OutlinedButton.icon(
+            onPressed: _busy
+                ? null
+                : () => openProgressPdf(context, 'crm/progress/pdf?group_id=${widget.groupId}&student_id=$_studentId&period=${widget.period}',
+                    '${asText(asMap(widget.row['student'])['full_name'])}-${widget.period}.pdf'),
+            icon: const Icon(Icons.picture_as_pdf_outlined, size: 18),
+            label: const Text('PDF'),
+          ),
           if (widget.ai) OutlinedButton(onPressed: _busy ? null : _draft, child: Text(tr('AI qoralama'))),
           OutlinedButton(onPressed: _busy ? null : () => _save(false), child: Text(tr('Saqlash'))),
           FilledButton(onPressed: _busy || _text.text.trim().isEmpty ? null : () => _save(true), child: Text(_sentAt != null ? tr('Qayta yuborish') : tr('Oilaga yuborish'))),
         ]),
       ]),
+    );
+  }
+}
+
+
+/// 3.29 (server 2.66): rahbar nazorati — oy bo'yicha har guruh: o'qituvchi, yozilgan va oilaga yuborilgan hisobotlar;
+/// hisobot yubormagan o'qituvchiga eslatma.
+class ProgressOverviewPage extends StatefulWidget {
+  const ProgressOverviewPage({super.key, required this.period});
+
+  final String period;
+
+  @override
+  State<ProgressOverviewPage> createState() => _ProgressOverviewPageState();
+}
+
+class _ProgressOverviewPageState extends State<ProgressOverviewPage> {
+  bool _busy = false;
+
+  Future<void> _remind(int? groupId) async {
+    setState(() => _busy = true);
+    try {
+      final res = asMap(await AppScope.read(context).api.post('crm/progress/remind', <String, Object?>{'period': widget.period, if (groupId != null) 'group_id': groupId}));
+      if (!mounted) return;
+      final teachers = asInt(res['teachers']);
+      showMessage(context, teachers > 0 ? tr("{0} ta o'qituvchiga eslatma yuborildi.", <Object>[teachers]) : tr("Eslatma kerak emas: hammasi yuborilgan yoki o'qituvchi biriktirilmagan."));
+    } catch (error) {
+      if (mounted) showMessage(context, errorText(error), error: true);
+    } finally {
+      if (mounted) setState(() => _busy = false);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final api = AppScope.of(context).api;
+    final parts = widget.period.split('-');
+    final title = parts.length == 2 ? '${monthName(int.tryParse(parts[1]) ?? 1)} ${parts[0]}' : widget.period;
+    return Scaffold(
+      appBar: pageBar(context, title: Text('${tr('Nazorat')} · $title')),
+      body: AsyncView<Map<String, dynamic>>(
+        load: () async => asMap(await api.get('crm/progress/overview', query: <String, Object?>{'period': widget.period})),
+        builder: (context, data, reload) {
+          final rows = asList(data['data']);
+          final totals = asMap(data['totals']);
+          if (rows.isEmpty) return ListView(children: <Widget>[EmptyState(text: tr("Bu oyda o'quvchi yo'q"))]);
+          return ListView(
+            padding: readable(context, const EdgeInsets.fromLTRB(16, 16, 16, 32)),
+            children: <Widget>[
+              Text(tr('{0} / {1} guruh tayyor · {2} / {3} hisobot yuborilgan',
+                  <Object>[asInt(totals['done']), asInt(totals['groups']), asInt(totals['sent']), asInt(totals['students'])])),
+              if (asInt(totals['done']) < asInt(totals['groups']))
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: OutlinedButton(onPressed: _busy ? null : () => _remind(null), child: Text(tr('Hammasiga eslatma'))),
+                ),
+              const SizedBox(height: 8),
+              for (final row in rows)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: AppCard(
+                    child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
+                      Row(children: <Widget>[
+                        Expanded(child: Text(asText(asMap(row['group'])['name']), style: const TextStyle(fontWeight: FontWeight.w700))),
+                        Text('${asInt(row['sent'])} / ${asInt(row['students'])}', style: TextStyle(color: row['done'] == true ? AppColors.success : AppColors.muted)),
+                      ]),
+                      if (row['teacher'] != null) Text(asText(asMap(row['teacher'])['name']), style: TextStyle(color: AppColors.muted, fontSize: 13)),
+                      const SizedBox(height: 8),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(6),
+                        child: LinearProgressIndicator(
+                          value: asInt(row['students']) == 0 ? 0 : asInt(row['sent']) / asInt(row['students']),
+                          minHeight: 6,
+                          color: row['done'] == true ? AppColors.success : AppColors.accent,
+                          backgroundColor: AppColors.sunken,
+                        ),
+                      ),
+                      if (row['done'] != true && row['teacher'] != null)
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: TextButton(onPressed: _busy ? null : () => _remind(asInt(asMap(row['group'])['id'])), child: Text(tr('Eslatma'))),
+                        ),
+                    ]),
+                  ),
+                ),
+            ],
+          );
+        },
+      ),
     );
   }
 }

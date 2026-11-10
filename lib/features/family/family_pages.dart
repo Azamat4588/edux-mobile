@@ -1,8 +1,9 @@
 // 3.22 (server 2.53–2.58): oila (ota-ona va o'quvchi) uchun yangi sahifalar.
 //   GET  crm/my/lesson-reports[?student_id] — darsdan keyingi hisobotlar (mavzu, uy vazifasi, ustoz izohi);
-//   GET  crm/my/progress[?student_id]       — oylik hisobotlar;
+//   GET  crm/my/progress[?student_id]       — oylik hisobotlar; 3.29 (server 2.66): GET crm/my/progress/pdf?report_id — PDF, davomat dinamikasi;
 //   POST crm/my/review                       — markaz haqida sharh (moderatsiyadan keyin saytda);
 //   GET/POST crm/my/practice                 — uyda mashq kundaligi (yozadi — o'quvchi, ko'radi — ota-ona);
+//   3.29 (server 2.67): haftalik maqsad va natija, XP/coin mukofot, POST crm/my/practice/seen — ota-ona «Ko'rdim»;
 //   GET  crm/my/booking/slots, POST crm/my/booking, POST crm/my/booking/{id}/reply — yakka darslar;
 //   GET  my/reenroll, POST my/reenroll/{id}  — keyingi o'quv yiliga qayta ro'yxat (ota-ona).
 import 'package:flutter/material.dart';
@@ -10,6 +11,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../core/adaptive.dart';
 import '../../core/api.dart';
+import '../../core/file_open.dart';
 import '../../core/format.dart';
 import '../../core/i18n.dart';
 import '../../core/session.dart';
@@ -81,11 +83,12 @@ class _LessonReportsPageState extends State<LessonReportsPage> {
               if (items.isEmpty) {
                 return ListView(children: <Widget>[EmptyState(icon: Icons.insights_outlined, text: tr("Oylik hisobot hali yo'q. Oy yakunida ustoz yuboradi."))]);
               }
+              final trend = _attendanceTrend(items);
               return ListView.separated(
                 padding: readable(context, const EdgeInsets.fromLTRB(16, 16, 16, 96)),
-                itemCount: items.length,
+                itemCount: items.length + (trend == null ? 0 : 1),
                 separatorBuilder: (_, __) => const SizedBox(height: 10),
-                itemBuilder: (context, i) => _MonthlyCard(items[i]),
+                itemBuilder: (context, i) => trend != null && i == 0 ? trend : _MonthlyCard(items[trend == null ? i : i - 1]),
               );
             },
           ),
@@ -129,6 +132,57 @@ class _LessonCard extends StatelessWidget {
   }
 }
 
+/// 3.29: davomat dinamikasi — eng so'nggi hisobot guruhi bo'yicha oxirgi 6 oy (kamida 2 oy bo'lsa).
+Widget? _attendanceTrend(List<Map<String, dynamic>> items) {
+  if (items.isEmpty) return null;
+  final group = asText(items.first['group']);
+  final rows = items.where((row) => asText(row['group']) == group && asMap(row['stats'])['attendance_percent'] != null).take(6).toList().reversed.toList();
+  if (rows.length < 2) return null;
+  return AppCard(
+    child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
+      Text('${tr('Davomat dinamikasi, %')} · $group', style: const TextStyle(fontWeight: FontWeight.w700)),
+      const SizedBox(height: 12),
+      SizedBox(
+        height: 120,
+        child: Row(crossAxisAlignment: CrossAxisAlignment.end, children: <Widget>[
+          for (var i = 0; i < rows.length; i++)
+            Expanded(
+              child: Semantics(
+                label: '${asText(rows[i]['period'])}: ${asInt(asMap(rows[i]['stats'])['attendance_percent'])}%',
+                child: Column(mainAxisAlignment: MainAxisAlignment.end, children: <Widget>[
+                  Text('${asInt(asMap(rows[i]['stats'])['attendance_percent'])}', style: const TextStyle(fontSize: 12, fontFeatures: <FontFeature>[FontFeature.tabularFigures()])),
+                  const SizedBox(height: 4),
+                  Container(
+                    height: (asInt(asMap(rows[i]['stats'])['attendance_percent']).clamp(2, 100)) * 0.8,
+                    margin: const EdgeInsets.symmetric(horizontal: 6),
+                    decoration: BoxDecoration(
+                      color: i == rows.length - 1 ? AppColors.accent : AppColors.accent.withValues(alpha: 0.3),
+                      borderRadius: const BorderRadius.vertical(top: Radius.circular(4)),
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text('${asText(rows[i]['period']).substring(5)}.${asText(rows[i]['period']).substring(2, 4)}', style: TextStyle(fontSize: 11, color: AppColors.muted)),
+                ]),
+              ),
+            ),
+        ]),
+      ),
+    ]),
+  );
+}
+
+/// 3.29: oylik hisobot PDF — serverdan yuklab, telefondagi ilovada ochadi.
+Future<void> openProgressPdf(BuildContext context, String path, String fileName) async {
+  final api = AppScope.read(context).api;
+  try {
+    final bytes = await api.bytes(path);
+    final opened = await openBytesAsFile(bytes, fileName, prefix: 'hisobot-');
+    if (!opened && context.mounted) showMessage(context, tr("PDF ni ochadigan ilova topilmadi."), error: true);
+  } catch (error) {
+    if (context.mounted) showMessage(context, errorText(error), error: true);
+  }
+}
+
 class _MonthlyCard extends StatelessWidget {
   const _MonthlyCard(this.row);
 
@@ -154,6 +208,14 @@ class _MonthlyCard extends StatelessWidget {
           for (final exam in asList(stats['exams'], 'exams')) Pill('${asText(exam['title'])}: ${asText(exam['score'])}/${asText(exam['max'])}', color: AppColors.muted, dot: false),
         ]),
         if (asText(row['text']).isNotEmpty) ...<Widget>[const SizedBox(height: 10), Text(asText(row['text']), style: const TextStyle(height: 1.45))],
+        Align(
+          alignment: Alignment.centerRight,
+          child: TextButton.icon(
+            onPressed: () => openProgressPdf(context, 'crm/my/progress/pdf?report_id=${asInt(row['id'])}', '$period.pdf'),
+            icon: const Icon(Icons.picture_as_pdf_outlined),
+            label: Text(tr('PDF yuklab olish')),
+          ),
+        ),
       ]),
     );
   }
@@ -279,6 +341,9 @@ class PracticePage extends StatelessWidget {
           final logs = asList(data['data']);
           final streak = asInt(data['streak']);
           final minutes = logs.fold<int>(0, (sum, row) => sum + asInt(row['minutes']));
+          final goal = data['goal'] == null ? null : asMap(data['goal']);
+          final week = asMap(data['week']);
+          final canConfirm = data['can_confirm'] == true;
           return ListView(
             padding: readable(context, const EdgeInsets.fromLTRB(16, 16, 16, 32)),
             children: <Widget>[
@@ -288,6 +353,7 @@ class PracticePage extends StatelessWidget {
                 Expanded(child: StatCard(label: tr('30 kunda'), value: tr('{0} daqiqa', <Object>[minutes]), icon: Icons.timer_outlined, color: AppColors.accent)),
               ]),
               const SizedBox(height: 14),
+              if (goal != null) _GoalCard(goal: goal, week: week, reached: data['reached'] == true),
               if (data['can_write'] == true) _PracticeForm(today: asText(data['today']), onSaved: reload),
               SectionTitle(tr('Oxirgi 30 kun')),
               if (logs.isEmpty)
@@ -307,12 +373,81 @@ class PracticePage extends StatelessWidget {
                           const SizedBox(height: 8),
                           _Labeled(icon: Icons.chat_bubble_outline, label: tr('Ustoz izohi'), text: asText(log['teacher_note']), color: AppColors.accent),
                         ],
+                        if (log['seen_at'] != null)
+                          Padding(
+                            padding: const EdgeInsets.only(top: 6),
+                            child: Row(children: <Widget>[
+                              Icon(Icons.check, size: 16, color: AppColors.success),
+                              const SizedBox(width: 4),
+                              Text(tr("Ota-ona ko'rdi"), style: TextStyle(color: AppColors.success, fontSize: 13)),
+                            ]),
+                          )
+                        else if (canConfirm)
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: OutlinedButton(
+                              onPressed: () async {
+                                try {
+                                  await AppScope.read(context).api.post('crm/my/practice/seen', <String, Object?>{'log_id': asInt(log['id'])});
+                                  await reload();
+                                } catch (error) {
+                                  if (context.mounted) showMessage(context, errorText(error), error: true);
+                                }
+                              },
+                              child: Text(tr("Ko'rdim")),
+                            ),
+                          ),
                       ]),
                     ),
                   ),
             ],
           );
         },
+      ),
+    );
+  }
+}
+
+/// 3.29: haftalik maqsad va shu hafta natijasi (o'qituvchi qo'yadi).
+class _GoalCard extends StatelessWidget {
+  const _GoalCard({required this.goal, required this.week, required this.reached});
+
+  final Map<String, dynamic> goal;
+  final Map<String, dynamic> week;
+  final bool reached;
+
+  @override
+  Widget build(BuildContext context) {
+    final parts = <(String, double)>[
+      if (asInt(goal['minutes']) > 0) (tr('{0} / {1} daqiqa', <Object>[asInt(week['minutes']), asInt(goal['minutes'])]), asInt(week['minutes']) / asInt(goal['minutes'])),
+      if (asInt(goal['days']) > 0) (tr('{0} / {1} kun', <Object>[asInt(week['days']), asInt(goal['days'])]), asInt(week['days']) / asInt(goal['days'])),
+    ];
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 14),
+      child: AppCard(
+        child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
+          Row(children: <Widget>[
+            Expanded(child: Text(tr('Haftalik maqsad'), style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 16))),
+            if (reached) Pill(tr('Bajarildi! 🎉'), color: AppColors.success, dot: false),
+          ]),
+          for (final part in parts) ...<Widget>[
+            const SizedBox(height: 10),
+            Row(children: <Widget>[
+              Expanded(child: Text(part.$1, style: TextStyle(color: AppColors.muted, fontSize: 13))),
+              Text('${(part.$2.clamp(0, 1) * 100).round()}%', style: TextStyle(color: AppColors.muted, fontSize: 13)),
+            ]),
+            const SizedBox(height: 4),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(6),
+              child: LinearProgressIndicator(
+                value: part.$2.clamp(0, 1).toDouble(),
+                minHeight: 8,
+                color: part.$2 >= 1 ? AppColors.success : AppColors.accent,
+                backgroundColor: AppColors.sunken,
+              ),
+            ),
+          ],
+        ]),
       ),
     );
   }
@@ -345,9 +480,17 @@ class _PracticeFormState extends State<_PracticeForm> {
     final today = DateTime.tryParse(widget.today) ?? DateTime.now();
     final day = _yesterday ? today.subtract(const Duration(days: 1)) : today;
     try {
-      await AppScope.read(context).api.post('crm/my/practice', <String, Object?>{'date': isoDay(day), 'minutes': _minutes, if (_note.text.trim().isNotEmpty) 'note': _note.text.trim()});
+      final res = asMap(await AppScope.read(context).api.post('crm/my/practice', <String, Object?>{'date': isoDay(day), 'minutes': _minutes, if (_note.text.trim().isNotEmpty) 'note': _note.text.trim()}));
       _note.clear();
-      if (mounted) showMessage(context, tr('Saqlandi.'));
+      // 3.29: mukofot (XP / coin) xabarda.
+      final reward = asMap(res['reward']);
+      final parts = <String>[
+        if (asInt(reward['xp']) > 0) '+${asInt(reward['xp'])} XP',
+        if (asInt(reward['coins']) > 0) tr('+{0} coin', <Object>[asInt(reward['coins'])]),
+      ];
+      final streak = asInt(res['streak']);
+      final base = streak > 1 ? tr('Saqlandi! Ketma-ket {0} kun 🔥', <Object>[streak]) : tr('Saqlandi!');
+      if (mounted) showMessage(context, parts.isEmpty ? base : '$base ${parts.join(' · ')}');
       await widget.onSaved();
     } catch (error) {
       if (mounted) showMessage(context, errorText(error), error: true);
