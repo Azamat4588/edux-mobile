@@ -73,7 +73,6 @@ List<NavSection> buildNav(NavContext ctx) {
       _section('home', tr('Bosh sahifa'), 'home', <NavTab?>[NavTab('home', tr('Bosh sahifa'))]),
       _section('students', ctx.studentsLabel, 'academic-cap', <NavTab?>[
         _when(can('students'), NavTab('students', tr("Ro'yxat"))),
-        _when(can('leads'), NavTab('crm.leads', tr('Lidlar'))),
         _when(can('attendance'), NavTab('attendance', tr('Davomat'))),
         // 3.19: maktab davomati (dars bo'yicha).
         _when(can('school_attendance'), NavTab('school.attendance', tr('Sinf davomati'))),
@@ -83,6 +82,8 @@ List<NavSection> buildNav(NavContext ctx) {
         // 3.25 (server 2.58): keyingi yilga qayta ro'yxat paneli.
         _when(can('reenroll'), NavTab('reenroll', tr("Qayta ro'yxat"))),
       ]),
+      // 3.28 (server 2.63): «Sotuv» — lidlar alohida bo'limda (vebdagidek).
+      _section('sales', tr('Sotuv'), 'columns', <NavTab?>[_when(can('leads'), NavTab('crm.leads', tr('Lidlar')))]),
       _education(ctx),
       _testing(ctx),
       _section('finance', tr('Moliya'), 'banknote', <NavTab?>[
@@ -149,7 +150,7 @@ List<NavSection> buildNav(NavContext ctx) {
     if (can('crm')) {
       sections.addAll(<NavSection?>[
         _section('home', tr('Bosh sahifa'), 'home', <NavTab?>[NavTab('home', tr('Bosh sahifa'))]),
-        _section('leads', tr('Lidlar'), 'columns', <NavTab?>[_when(can('leads'), NavTab('crm.leads', tr('Lidlar')))]),
+        _section('sales', tr('Sotuv'), 'columns', <NavTab?>[_when(can('leads'), NavTab('crm.leads', tr('Lidlar')))]),
         _section('callcenter', tr('Call markazi'), 'headphones', <NavTab?>[_when(can('callcenter'), NavTab('crm.callcenter', tr('Call markazi')))]),
         _section('tasks', tr('Topshiriqlar'), 'list-checks', <NavTab?>[_when(can('tasks'), NavTab('crm.tasks', tr('Topshiriqlar')))]),
       ]);
@@ -316,6 +317,7 @@ const Map<String, int> sectionColors = <String, int>{
   'comms': 0xFFD2560C,
   'callcenter': 0xFFD2560C,
   'leads': 0xFFC97A00,
+  'sales': 0xFFC97A00,
   'tasks': 0xFF5149DC,
   'rewards': 0xFFC97A00,
   'achievements': 0xFFC97A00,
@@ -337,7 +339,7 @@ const Map<String, int> sectionColors = <String, int>{
 /// bo'lim yo'li («Kundalik ish › Davomat») va «Yana» menyusida guruh sarlavhalari.
 const List<(String, String, List<String>)> navClusters = <(String, String, List<String>)>[
   ('daily', 'Kundalik ish', <String>['home', 'students', 'groups', 'schedule', 'education', 'testing', 'tasks', 'child', 'tests', 'courses', 'diary', 'my']),
-  ('money', 'Pul va aloqa', <String>['finance', 'payments', 'debtors', 'comms', 'callcenter', 'leads', 'rewards', 'salary', 'achievements', 'tutor', 'feedback', 'assistant']),
+  ('money', 'Pul va aloqa', <String>['finance', 'payments', 'debtors', 'comms', 'callcenter', 'leads', 'sales', 'rewards', 'salary', 'achievements', 'tutor', 'feedback', 'assistant']),
   ('manage', 'Tashkilot', <String>['reports', 'management', 'settings', 'platform']),
   ('clients', 'Mijozlar', <String>['organizations', 'invoices', 'inbox']),
   ('system', 'Tizim', <String>['system']),
