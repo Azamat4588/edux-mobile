@@ -504,7 +504,16 @@ class _RailItem extends StatelessWidget {
     final (activeBg, activeFg) = railActiveColors(item);
     final fg = active ? activeFg : AppColors.navFg;
     final radius = BorderRadius.circular(AppColors.choice.template == 'spring' || AppColors.choice.template == 'soft' ? 99 : AppRadius.control);
-    final icon = _badged(Icon(item.icon, size: 22, color: active ? activeFg : railIconColor(item)), item.badge);
+    // 3.30 «Naqsh»: faol band — oq chip (soya bilan), belgi bo'lim rangida.
+    final naqsh = AppColors.choice.template == 'classic';
+    final activeIcon = naqsh ? readableOn(item.color ?? AppColors.accent, activeBg, min: 3) : activeFg;
+    final chipShadow = naqsh && active
+        ? <BoxShadow>[
+            BoxShadow(color: Colors.black.withAlpha(AppColors.dark ? 90 : 12), blurRadius: 3, offset: const Offset(0, 1)),
+            BoxShadow(color: Colors.black.withAlpha(AppColors.dark ? 120 : 26), blurRadius: 16, offset: const Offset(0, 6), spreadRadius: -10),
+          ]
+        : null;
+    final icon = _badged(Icon(item.icon, size: 22, color: active ? activeIcon : railIconColor(item)), item.badge);
     final label = Text(
       item.label,
       maxLines: extended ? 1 : 2,
@@ -534,7 +543,7 @@ class _RailItem extends StatelessWidget {
                     curve: AppCurves.out,
                     height: 46,
                     padding: const EdgeInsets.symmetric(horizontal: 12),
-                    decoration: BoxDecoration(color: active ? activeBg : Colors.transparent, borderRadius: radius),
+                    decoration: BoxDecoration(color: active ? activeBg : Colors.transparent, borderRadius: radius, boxShadow: chipShadow),
                     child: Row(children: <Widget>[icon, const SizedBox(width: 14), Expanded(child: label)]),
                   )
                 : Padding(
@@ -544,7 +553,7 @@ class _RailItem extends StatelessWidget {
                         duration: duration,
                         curve: AppCurves.out,
                         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-                        decoration: BoxDecoration(color: active ? activeBg : Colors.transparent, borderRadius: BorderRadius.circular(99)),
+                        decoration: BoxDecoration(color: active ? activeBg : Colors.transparent, borderRadius: BorderRadius.circular(99), boxShadow: chipShadow),
                         child: icon,
                       ),
                       const SizedBox(height: 4),

@@ -1,4 +1,4 @@
-// EduX ko'rinishi v3 (3.9, veb 1.41 «Koshin», docs/design.md «Rang qiymatlari (mobil ilova uchun)»):
+// EduX ko'rinishi v3 (3.9, veb 1.41 «Koshin»; 3.30 — standart shablon «Naqsh», veb 2.75), docs/design.md «Rang qiymatlari (mobil ilova uchun)»):
 // 9 shablon × yorug'/tungi palitra (aniq hex qiymatlar), 12 asosiy rang shkalasi (50/100/300/500/600/700), holat ranglari
 // (fg/bg + to'liq «solid»), koshin ranglari (feruza, lojuvard, anor, pista, shafran, olxo'ri), semantik tokenlar.
 //
@@ -143,9 +143,10 @@ TemplatePalette _p(List<int> v) => TemplatePalette(
 /// Tartib: canvas, surface, surface-2, raised, text-1, text-2, text-3, border, border-strong, sidebar-bg, sidebar-fg,
 /// sidebar-active-bg, sidebar-active-fg, header-bg.
 final Map<String, List<TemplatePalette>> templatePalettes = <String, List<TemplatePalette>>{
+  // 3.30 «Naqsh» (veb 2.75): yorug' varaq (canvas), yon menyu — asosiy rang tusidagi qobiq, faol band — oq chip.
   'classic': <TemplatePalette>[
-    _p(<int>[0xf2f6f9, 0xffffff, 0xf6f9fb, 0xffffff, 0x111c3a, 0x49566d, 0x556378, 0xdde5ec, 0xc8d2dc, 0xffffff, 0x33415c, 0x00808b, 0xffffff, 0xffffff]),
-    _p(<int>[0x0b1424, 0x111c2f, 0x15223a, 0x1a2842, 0xedf2f6, 0xaab5c4, 0x9ba7b8, 0x22304a, 0x33435f, 0x0e1828, 0xc5cfd9, 0x00808b, 0xffffff, 0x0e1828]),
+    _p(<int>[0xfafcfd, 0xffffff, 0xf5f8fb, 0xffffff, 0x111c3a, 0x49566d, 0x556378, 0xdde5ec, 0xc8d2dc, 0xe8eef3, 0x33415c, 0xffffff, 0x111c3a, 0xfafcfd]),
+    _p(<int>[0x0c1526, 0x111c2f, 0x142039, 0x1a2842, 0xedf2f6, 0xaab5c4, 0x9ba7b8, 0x22304a, 0x33435f, 0x060c18, 0xc5cfd9, 0x16233c, 0xffffff, 0x0c1526]),
   ],
   'soft': <TemplatePalette>[
     _p(<int>[0xe9f8fb, 0xffffff, 0xf2fdfe, 0xffffff, 0x111c3a, 0x49566d, 0x556378, 0xdde5ec, 0xc8d2dc, 0xf4fdfe, 0x33415c, 0x00808b, 0xffffff, 0xf0fafc]),
@@ -369,6 +370,10 @@ class AppTheme {
       AppColors.navBg = Color.lerp(Colors.white, accent.c50, 0.55)!;
       AppColors.chrome = Color.lerp(Colors.white, AppColors.canvas, 0.7)!;
     }
+    // Naqsh: yon menyu qobig'i asosiy rangning ~6% tusida (veb: color-mix(indigo-500 6%, #ebeff5)).
+    if (template == 'classic' && !dark) {
+      AppColors.navBg = Color.lerp(const Color(0xFFEBEFF5), accent.c500, 0.06)!;
+    }
     AppColors.surface = AppColors.canvas;
     AppColors.sunken = Color.lerp(AppColors.canvas, dark ? Colors.black : AppColors.lineStrong, dark ? 0.25 : 0.22)!;
 
@@ -392,6 +397,9 @@ class AppTheme {
       case 'school':
       case 'spring':
         AppColors.navActiveBg = teal ? palette.sidebarActiveBg : sectionActive(accent.c600);
+        AppColors.navActiveFg = palette.sidebarActiveFg;
+      case 'classic':
+        AppColors.navActiveBg = palette.sidebarActiveBg;
         AppColors.navActiveFg = palette.sidebarActiveFg;
       default:
         AppColors.navActiveBg = accent.c600;
@@ -496,6 +504,16 @@ class AppTheme {
       default:
         AppColors.cardBorder = palette.border;
         AppColors.cardShadow = const <BoxShadow>[];
+        // Naqsh: ingichka chiziq + deyarli sezilmas qatlam soyasi (veb: --t-card-shadow).
+        if (template == 'classic') {
+          AppColors.cardBorder = dark ? palette.border : Color.lerp(palette.border, Colors.white, 0.1)!;
+          AppColors.cardShadow = dark
+              ? const <BoxShadow>[BoxShadow(color: Color(0xB3000000), blurRadius: 20, offset: Offset(0, 8), spreadRadius: -14)]
+              : const <BoxShadow>[
+                  BoxShadow(color: Color(0x09111C3A), blurRadius: 2, offset: Offset(0, 1)),
+                  BoxShadow(color: Color(0x17111C3A), blurRadius: 14, offset: Offset(0, 4), spreadRadius: -8),
+                ];
+        }
     }
 
     AppColors.onChrome = palette.text1;

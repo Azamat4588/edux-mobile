@@ -17,7 +17,7 @@ void main() {
 
   test('9 shablon (veb bilan bir xil kalitlar) va standartlar', () {
     expect(themeOptions['template'], <String>['classic', 'soft', 'night', 'compact', 'school', 'atlas', 'ocean', 'graphite', 'spring']);
-    expect(templateLabels['classic'], 'Koshin');
+    expect(templateLabels['classic'], 'Naqsh');
     expect(templateLabels['night'], 'Lojuvard');
     expect(templateLabels['atlas'], 'Atlas');
     for (final key in themeOptions['template']!) {

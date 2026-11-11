@@ -79,7 +79,7 @@ class _EduxAppState extends State<EduxApp> with WidgetsBindingObserver {
       title: 'EduX',
       debugShowCheckedModeBanner: false,
       theme: buildTheme(),
-      locale: Locale(I18n.locale),
+      locale: Locale(I18n.materialLocale),
       supportedLocales: const <Locale>[Locale('uz'), Locale('ru'), Locale('en')],
       localizationsDelegates: const <LocalizationsDelegate<dynamic>>[
         GlobalMaterialLocalizations.delegate,

@@ -233,7 +233,24 @@ class _KoshinTileState extends State<KoshinTile> {
         if (widget.footer != null) ...<Widget>[const SizedBox(height: 8), widget.footer!],
       ]),
     );
+    // 3.30 «Naqsh»: koshin sirining chuqurligi — yuqori chap burchakda yorug'lik (veb: .today-card radial).
+    final glaze = !AppColors.choice.quietTiles;
     final content = Stack(children: <Widget>[
+      if (glaze)
+        Positioned.fill(
+          child: IgnorePointer(
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                gradient: RadialGradient(
+                  center: Alignment.topLeft,
+                  radius: 1.3,
+                  colors: <Color>[Colors.white.withAlpha(40), Colors.white.withAlpha(0)],
+                  stops: const <double>[0, 0.55],
+                ),
+              ),
+            ),
+          ),
+        ),
       Positioned(
         right: -28,
         top: -28,
@@ -260,6 +277,21 @@ class _KoshinTileState extends State<KoshinTile> {
             )
           : content,
     );
+    if (glaze) {
+      // Rangli soya: plitka varaqdan ko'tarilib turadi (tungi rejimda — qora).
+      tile = DecoratedBox(
+        decoration: BoxDecoration(borderRadius: radius, boxShadow: <BoxShadow>[
+          BoxShadow(color: Colors.black.withAlpha(AppColors.dark ? 70 : 15), blurRadius: 3, offset: const Offset(0, 1)),
+          BoxShadow(
+            color: AppColors.dark ? Colors.black.withAlpha(150) : Color.lerp(colors.background, Colors.black, 0.2)!.withAlpha(110),
+            blurRadius: 24,
+            offset: const Offset(0, 12),
+            spreadRadius: -16,
+          ),
+        ]),
+        child: tile,
+      );
+    }
     if (interactive) tile = Pressable(scale: 0.97, child: tile);
     return Semantics(
       button: interactive,

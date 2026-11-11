@@ -89,7 +89,7 @@ class HomeHeader extends StatelessWidget {
     final now = homeClock();
     final first = firstNameOf(name);
     final dense = AppColors.choice.dense;
-    return Padding(
+    final header = Padding(
       padding: const EdgeInsets.only(top: 2, bottom: 4),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
         Row(children: <Widget>[
@@ -133,6 +133,29 @@ class HomeHeader extends StatelessWidget {
         ],
       ]),
     );
+    if (AppColors.choice.template != 'classic') return header;
+    // 3.30 «Naqsh» (veb 2.75: varaq tepasidagi girih): o'ng yuqorida asosiy rangdagi naqsh, chapga va pastga so'nadi.
+    return Stack(children: <Widget>[
+      Positioned(
+        top: 0,
+        right: 0,
+        width: 240,
+        height: 170,
+        child: IgnorePointer(
+          child: ShaderMask(
+            blendMode: BlendMode.dstIn,
+            shaderCallback: (rect) => const LinearGradient(
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+              colors: <Color>[Color(0xFF000000), Color(0x00000000)],
+              stops: <double>[0.05, 0.75],
+            ).createShader(rect),
+            child: CustomPaint(painter: GirihPatternPainter(step: 60, color: AppColors.accent.withAlpha(AppColors.dark ? 34 : 26))),
+          ),
+        ),
+      ),
+      header,
+    ]);
   }
 }
 

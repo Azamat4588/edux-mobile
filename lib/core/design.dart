@@ -64,7 +64,7 @@ const Map<String, Map<String, String>> themeLegacy = <String, Map<String, String
 
 /// Shablon va boshqa variantlar nomlari (tanlash panelida, tarjima kaliti — o'zbekcha matn).
 const Map<String, String> templateLabels = <String, String>{
-  'classic': 'Koshin',
+  'classic': 'Naqsh',
   'soft': 'Yumshoq',
   'night': 'Lojuvard',
   'compact': 'Ixcham',

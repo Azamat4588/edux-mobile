@@ -4,7 +4,7 @@ import '../../core/i18n.dart';
 import '../../core/session.dart';
 import '../../core/theme.dart';
 
-/// Til tanlash tugmasi (globus): o'zbek, rus, ingliz.
+/// Til tanlash tugmasi (globus): o'zbek (lotin, kirill, yangi lotin), rus, ingliz.
 class LanguageButton extends StatelessWidget {
   const LanguageButton({super.key, this.color});
 
@@ -25,7 +25,7 @@ class LanguageButton extends StatelessWidget {
         child: Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
           Icon(Icons.language, size: 20, color: color ?? AppColors.muted),
           const SizedBox(width: 6),
-          Text(I18n.locale.toUpperCase(), style: TextStyle(fontWeight: FontWeight.w700, color: color ?? AppColors.muted)),
+          Text(I18n.short[I18n.locale] ?? I18n.locale.toUpperCase(), style: TextStyle(fontWeight: FontWeight.w700, color: color ?? AppColors.muted)),
         ]),
       ),
     );

@@ -36,12 +36,16 @@ void main() {
         expect(templatePalettes[template], hasLength(2), reason: template);
       }
       AppTheme.apply(dark: false, accent: accentOf('teal'));
-      expect(AppColors.canvas, const Color(0xFFF2F6F9));
+      // 3.30 «Naqsh»: yorug' varaq, qobiq tusidagi menyu, faol band — oq chip (siyoh matn).
+      expect(AppColors.canvas, const Color(0xFFFAFCFD));
       expect(AppColors.card, const Color(0xFFFFFFFF));
       expect(AppColors.ink, const Color(0xFF111C3A));
       expect(AppColors.line, const Color(0xFFDDE5EC));
-      expect(AppColors.navActiveBg, const Color(0xFF00808B));
-      expect(AppColors.chrome, const Color(0xFFFFFFFF));
+      expect(AppColors.navActiveBg, const Color(0xFFFFFFFF));
+      expect(AppColors.navActiveFg, const Color(0xFF111C3A));
+      expect(AppColors.navBg, isNot(const Color(0xFFFFFFFF)));
+      expect(AppColors.cardShadow, isNotEmpty);
+      expect(AppColors.chrome, const Color(0xFFFAFCFD));
       AppTheme.apply(dark: false, accent: accentOf('teal'), choice: const ThemeChoice(template: 'atlas'));
       expect(AppColors.canvas, const Color(0xFFFAF4F8));
       expect(AppColors.navBg, const Color(0xFF3A1342));
@@ -101,8 +105,10 @@ void main() {
       }
     });
 
-    test('karta uslubi: v3 standarti soyasiz; Okean tekis; Bahor stiker', () {
+    test('karta uslubi: Naqsh — chiziq + yengil soya, boshqa chegarali shablon soyasiz; Okean tekis; Bahor stiker', () {
       AppTheme.apply(dark: false, accent: accentOf('teal'));
+      expect(AppColors.cardShadow, hasLength(2));
+      AppTheme.apply(dark: false, accent: accentOf('teal'), choice: const ThemeChoice(template: 'night'));
       expect(AppColors.cardBorder, const Color(0xFFDDE5EC));
       expect(AppColors.cardShadow, isEmpty);
       AppTheme.apply(dark: false, accent: accentOf('teal'), choice: const ThemeChoice(template: 'ocean'));

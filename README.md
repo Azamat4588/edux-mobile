@@ -103,6 +103,16 @@ Hammasi `docs/screenshots/` da (tungi rejim — `*-tungi.png`). Yangilash: `scre
 xabarida `[skrinshot]` bo'lsa yoki Actions → Screenshots → «Run workflow»; rasmlar `screenshots` branch'iga yoziladi
 (`git fetch origin screenshots && git checkout FETCH_HEAD -- '*.png'`).
 
+## 3.30 da yangi (server 2.74–2.75)
+
+- **«Naqsh» dizayni** (veb 2.75 bilan bir xil til): standart shablonda sahifa — yorug' varaq, iPad yon menyusi asosiy rang
+  tusidagi qobiq, faol band — oq chip va bo'lim rangidagi belgi; kartalarda ingichka chiziq va yengil soya; bosh sahifa
+  sarlavhasi ortida girih naqshi; «Bugun» plitkalarida koshin sirining yorug'ligi va rangli soya.
+- **Yangi yozuvlar:** o'zbekcha kirill (Ўзбекча) va yangi lotin (Ózbekça) — til tanlashda. Lug'at yo'q: o'zbekcha matn
+  `lib/core/script.dart` qoidalari bilan o'giriladi (veb `script.js` va server `Script.php` bilan aynan bir xil;
+  `test/script_test.dart` veb natijalari bilan ~530 namunada solishtiradi). Serverga `X-Locale: oz|yl` yuboriladi —
+  server xabarlari, yordam va AI ham shu yozuvda. Material (tizim) tili — `uz`.
+
 ## 3.17 da yangi
 
 - Davomat → **Kamera bilan** endi tanlov: **QR karta (kamera)**, **Face ID** (o'quvchi yuzi telefon kamerasi bilan
