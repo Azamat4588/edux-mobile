@@ -142,7 +142,9 @@ class HomeHeader extends StatelessWidget {
         width: 240,
         height: 170,
         child: IgnorePointer(
-          child: ShaderMask(
+          // ClipRect: naqsh chizuvchisi oxirgi qatorni o'lchamdan tashqariga ham chizadi (niqobsiz qolmasin).
+          child: ClipRect(
+            child: ShaderMask(
             blendMode: BlendMode.dstIn,
             shaderCallback: (rect) => const RadialGradient(
               center: Alignment.topRight,
@@ -151,6 +153,7 @@ class HomeHeader extends StatelessWidget {
               stops: <double>[0.05, 0.78],
             ).createShader(rect),
             child: CustomPaint(painter: GirihPatternPainter(step: 60, color: AppColors.accent.withAlpha(AppColors.dark ? 34 : 26))),
+          ),
           ),
         ),
       ),
