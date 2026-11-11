@@ -146,9 +146,9 @@ class HomeHeader extends StatelessWidget {
             blendMode: BlendMode.dstIn,
             shaderCallback: (rect) => const RadialGradient(
               center: Alignment.topRight,
-              radius: 1.0,
+              radius: 0.9,
               colors: <Color>[Color(0xFF000000), Color(0x00000000)],
-              stops: <double>[0.1, 0.95],
+              stops: <double>[0.05, 0.78],
             ).createShader(rect),
             child: CustomPaint(painter: GirihPatternPainter(step: 60, color: AppColors.accent.withAlpha(AppColors.dark ? 34 : 26))),
           ),
