@@ -190,6 +190,11 @@ class Session extends ChangeNotifier implements ApiCredentials {
   /// Menyu va bosh sahifa ruxsatlari bir joyda (lib/core/nav.dart, home_today.dart).
   bool can(String permission) {
     final full = isStudent && !isGuest;
+    // 3.31: «platform:<soha>» — platforma jamoasi sohasi; «platform:areas» — sohalar bo'yicha cheklangan xodim (ega emas).
+    if (permission.startsWith('platform:')) {
+      final area = permission.substring('platform:'.length);
+      return area == 'areas' ? isPlatformAdmin && !isPlatformOwner : platformCan(area);
+    }
     switch (permission) {
       case 'crm':
         return hasModule('crm');
@@ -232,7 +237,7 @@ class Session extends ChangeNotifier implements ApiCredentials {
       case 'platform':
         return isPlatformAdmin;
       case 'platform_sms':
-        return isPlatformAdmin && defaultTargetPlatform == TargetPlatform.android;
+        return platformCan('settings') && defaultTargetPlatform == TargetPlatform.android;
       case 'billing':
         return canManageBilling;
       case 'staff_ai':
@@ -365,8 +370,20 @@ class Session extends ChangeNotifier implements ApiCredentials {
       .map((item) => <String, Object?>{'organization_id': item.organizationId, 'organization': item.organization, 'role': item.role})
       .toList();
 
-  /// Platforma egasi (3.11: ilovada ham platforma paneli — tashkilotlar, hisoblar, arizalar, murojaatlar, sessiyalar, SMS shlyuz).
-  bool get isPlatformAdmin => user['is_platform_admin'] == true;
+  /// Platforma paneli (3.11: tashkilotlar, hisoblar, arizalar, murojaatlar, sessiyalar, SMS shlyuz). 3.31 (server 2.76):
+  /// ega yoki platforma jamoasi a'zosi — xodim faqat o'z sohalarini ko'radi (platformCan).
+  bool get isPlatformAdmin => user['is_platform_admin'] == true || user['is_platform_staff'] == true;
+
+  /// Faqat platforma egasi (hamma narsa).
+  bool get isPlatformOwner => user['is_platform_admin'] == true;
+
+  /// 3.31: platforma sohasi (server PlatformAccess::AREAS). Ega — hamma; eski server (sohalar yo'q) — egada hamma.
+  bool platformCan(String area) {
+    if (isPlatformOwner) return true;
+    if (!isPlatformAdmin) return false;
+    final areas = user['platform_areas'];
+    return areas is List && areas.contains(area);
+  }
 
   /// Faqat platforma egasi (hech qaysi tashkilotda a'zo emas): ilova to'liq platforma paneli sifatida ochiladi.
   bool get isPlatformOwnerOnly => isPlatformAdmin && memberships.isEmpty;

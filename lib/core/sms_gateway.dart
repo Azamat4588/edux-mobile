@@ -116,7 +116,7 @@ class SmsGatewayService extends ChangeNotifier {
   String get _prefKey => isPlatform ? 'sms_gateway_platform_${asInt(_session?.user['id'])}' : 'sms_gateway_${_session?.organizationId ?? 0}';
 
   /// Shu navbatni ishlatishga ruxsat (platforma — egasi; tashkilot — SMS qo'shimchasi va yozish holati).
-  bool allowed(Session session) => isPlatform ? session.isPlatformAdmin : session.canUseSmsGateway && !session.readOnly;
+  bool allowed(Session session) => isPlatform ? session.platformCan('settings') : session.canUseSmsGateway && !session.readOnly;
 
   /// Ilova ochilganda: bu telefon avval shlyuz qilib yoqilgan bo'lsa — ishni davom ettiradi.
   Future<void> resume(Session session) async {

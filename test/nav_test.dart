@@ -60,6 +60,16 @@ void main() {
     expect(guest.single.key, 'my');
   });
 
+  test('3.31: platforma jamoasi a\'zosi faqat o\'z sohalarini ko\'radi', () {
+    final operator = buildNav(ctx('', <String>{'platform', 'platform:areas', 'platform:requests', 'platform:support', 'platform:organizations'}));
+    final tabs = operator.expand((section) => section.tabs).map((tab) => tab.key).toList();
+    expect(tabs, containsAll(<String>['platform.organizations', 'platform.requests', 'platform.support']));
+    expect(tabs, isNot(contains('platform.invoices')));
+    expect(tabs, isNot(contains('platform.sessions')));
+    final tech = buildNav(ctx('', <String>{'platform', 'platform:areas', 'platform:sessions'}));
+    expect(tech.expand((section) => section.tabs).map((tab) => tab.key).toList(), <String>['platform.sessions']);
+  });
+
   test('platforma egasi: platforma SMS shlyuzi', () {
     final sections = buildNav(ctx('', <String>{'platform_sms'}));
     expect(sections.single.tabs.single.key, 'platform.sms');

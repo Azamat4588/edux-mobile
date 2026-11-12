@@ -67,6 +67,8 @@ NavTab? _when(bool condition, NavTab tab) => condition ? tab : null;
 List<NavSection> buildNav(NavContext ctx) {
   final can = ctx.can;
   final role = ctx.role;
+  // 3.31: platforma jamoasi a'zosi faqat o'z sohalarini ko'radi; ega (yoki eski server) — hammasini.
+  bool pc(String area) => !can('platform:areas') || can('platform:$area');
   final sections = <NavSection?>[];
   if (_managers.contains(role)) {
     sections.addAll(<NavSection?>[
@@ -203,26 +205,27 @@ List<NavSection> buildNav(NavContext ctx) {
   // ishlasa — bitta «Platforma» bo'limi. SMS shlyuz — faqat Android.
   if (can('platform') && role.isEmpty) {
     sections.addAll(<NavSection?>[
-      _section('home', tr('Bosh sahifa'), 'home', <NavTab?>[NavTab('platform.dashboard', tr('Bosh sahifa'))]),
-      _section('organizations', tr('Tashkilotlar'), 'building', <NavTab?>[NavTab('platform.organizations', tr('Tashkilotlar'))]),
-      _section('invoices', tr('Hisoblar'), 'receipt', <NavTab?>[NavTab('platform.invoices', tr('Hisoblar'))]),
+      // 3.31: jamoa a'zosi — faqat o'z sohalari (pc).
+      _section('home', tr('Bosh sahifa'), 'home', <NavTab?>[_when(pc('organizations'), NavTab('platform.dashboard', tr('Bosh sahifa')))]),
+      _section('organizations', tr('Tashkilotlar'), 'building', <NavTab?>[_when(pc('organizations'), NavTab('platform.organizations', tr('Tashkilotlar')))]),
+      _section('invoices', tr('Hisoblar'), 'receipt', <NavTab?>[_when(pc('billing'), NavTab('platform.invoices', tr('Hisoblar')))]),
       _section('inbox', tr('Murojaatlar'), 'inbox', <NavTab?>[
-        NavTab('platform.requests', tr('Ulanish arizalari'), short: tr('Arizalar')),
-        NavTab('platform.support', tr("Yordam so'rovlari"), short: tr("So'rovlar")),
+        _when(pc('requests'), NavTab('platform.requests', tr('Ulanish arizalari'), short: tr('Arizalar'))),
+        _when(pc('support'), NavTab('platform.support', tr("Yordam so'rovlari"), short: tr("So'rovlar"))),
       ]),
       _section('system', tr('Tizim'), 'devices', <NavTab?>[
-        NavTab('platform.sessions', tr('Sessiyalar')),
+        _when(pc('sessions'), NavTab('platform.sessions', tr('Sessiyalar'))),
         _when(can('platform_sms'), NavTab('platform.sms', tr('SMS shlyuz'))),
       ]),
     ]);
   } else if (can('platform')) {
     sections.add(_section('platform', tr('Platforma'), 'server', <NavTab?>[
-      NavTab('platform.dashboard', tr('Umumiy')),
-      NavTab('platform.organizations', tr('Tashkilotlar')),
-      NavTab('platform.invoices', tr('Hisoblar')),
-      NavTab('platform.requests', tr('Ulanish arizalari')),
-      NavTab('platform.support', tr("Yordam so'rovlari")),
-      NavTab('platform.sessions', tr('Sessiyalar')),
+      _when(pc('organizations'), NavTab('platform.dashboard', tr('Umumiy'))),
+      _when(pc('organizations'), NavTab('platform.organizations', tr('Tashkilotlar'))),
+      _when(pc('billing'), NavTab('platform.invoices', tr('Hisoblar'))),
+      _when(pc('requests'), NavTab('platform.requests', tr('Ulanish arizalari'))),
+      _when(pc('support'), NavTab('platform.support', tr("Yordam so'rovlari"))),
+      _when(pc('sessions'), NavTab('platform.sessions', tr('Sessiyalar'))),
       _when(can('platform_sms'), NavTab('platform.sms', tr('SMS shlyuz (platforma)'))),
     ]));
   } else if (can('platform_sms')) {

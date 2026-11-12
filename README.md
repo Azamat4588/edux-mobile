@@ -103,6 +103,13 @@ Hammasi `docs/screenshots/` da (tungi rejim — `*-tungi.png`). Yangilash: `scre
 xabarida `[skrinshot]` bo'lsa yoki Actions → Screenshots → «Run workflow»; rasmlar `screenshots` branch'iga yoziladi
 (`git fetch origin screenshots && git checkout FETCH_HEAD -- '*.png'`).
 
+## 3.31 da yangi (server 2.76)
+
+- **Platforma jamoasi:** ilovaga platforma egasidan tashqari jamoa a'zosi ham kira oladi (boshqaruvchi, operator, texnik
+  xodim va boshqalar). Unga faqat o'z bo'limlari ko'rinadi: Tashkilotlar, Hisoblar, Arizalar, So'rovlar, Sessiyalar.
+  Platforma SMS shlyuzi faqat «Platforma sozlamalari» bo'limi berilgan xodimga ochiladi. Bo'limlar ro'yxatini server
+  yuboradi (`platform_areas`). Eski serverda va egada hamma bo'lim ko'rinadi.
+
 ## 3.30 da yangi (server 2.74–2.75)
 
 - **«Naqsh» dizayni** (veb 2.75 bilan bir xil til): standart shablonda sahifa — yorug' varaq, iPad yon menyusi asosiy rang
