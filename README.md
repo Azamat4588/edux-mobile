@@ -103,6 +103,12 @@ Hammasi `docs/screenshots/` da (tungi rejim — `*-tungi.png`). Yangilash: `scre
 xabarida `[skrinshot]` bo'lsa yoki Actions → Screenshots → «Run workflow»; rasmlar `screenshots` branch'iga yoziladi
 (`git fetch origin screenshots && git checkout FETCH_HEAD -- '*.png'`).
 
+## 3.32 da yangi (server 2.77)
+
+- **Obuna ekrani:** promo-kod maydoni (`POST billing/promo` — bepul oylar, sinov kunlari yoki chegirma), amaldagi
+  promo-kod chegirmasi holat kartasida, «EduX haqida fikringiz» kartasi (`GET/POST billing/story`, saytda e'lon qilishga
+  rozilik bilan). Eski serverda fikr kartasi bo'sh qoladi, promo-kod esa tushunarli xato bilan javob beradi.
+
 ## 3.31 da yangi (server 2.76)
 
 - **Platforma jamoasi:** ilovaga platforma egasidan tashqari jamoa a'zosi ham kira oladi (boshqaruvchi, operator, texnik

@@ -128,6 +128,13 @@ class BillingRepository {
 
   Future<Map<String, dynamic>> pay(int invoiceId, String provider) async =>
       asMap(await _api.post('billing/invoices/$invoiceId/pay/$provider'));
+
+  // 3.32 (server 2.77): promo-kod va «EduX haqida fikringiz».
+  Future<Map<String, dynamic>> promo(String code) async => asMap(await _api.post('billing/promo', <String, Object?>{'code': code}));
+
+  Future<Map<String, dynamic>> story() async => asMap(asMap(await _api.get('billing/story'))['story']);
+
+  Future<Map<String, dynamic>> sendStory(Map<String, Object?> body) async => asMap(await _api.post('billing/story', body));
 }
 
 class BillingPage extends StatefulWidget {
@@ -391,6 +398,10 @@ class _BillingPageState extends State<BillingPage> with WidgetsBindingObserver {
       padding: readable(context, const EdgeInsets.fromLTRB(16, 12, 16, 32)),
       children: <Widget>[
         _StatusCard(billing: billing),
+        _PromoCard(repository: _repository, onApplied: () {
+          _load();
+          AppScope.read(context).loadContext().catchError((Object _) {});
+        }),
         if (usageRows.isNotEmpty) ...<Widget>[
           SectionTitle(tr('Limitlar')),
           AppCard(
@@ -474,6 +485,9 @@ class _BillingPageState extends State<BillingPage> with WidgetsBindingObserver {
               ],
             ]),
           ),
+        // 3.32: EduX haqida fikr (sotuv sahifasidagi «Bizni tanlaganlar» uchun).
+        SectionTitle(tr('EduX haqida fikringiz')),
+        _StoryCard(repository: _repository),
       ],
     );
   }
@@ -650,6 +664,15 @@ class _StatusCard extends StatelessWidget {
         if (limit != null) KeyValue(tr("O'quvchilar chegarasi"), '$students / $limit', valueColor: students >= limit ? AppColors.danger : null),
         if (asInt(billing['discount_percent']) > 0)
           KeyValue(tr('Shaxsiy chegirma'), '${asInt(billing['discount_percent'])}%', valueColor: AppColors.success),
+        if (asMap(billing['promo']).isNotEmpty)
+          KeyValue(
+            tr('Promo-kod {0}:', <Object?>[asText(asMap(billing['promo'])['code'])]),
+            [
+              '${asInt(asMap(billing['promo'])['percent'])}%',
+              if (asText(asMap(billing['promo'])['until']).isNotEmpty) tr('({0} gacha)', <Object?>[date(asMap(billing['promo'])['until'])]),
+            ].join(' '),
+            valueColor: AppColors.success,
+          ),
         if (billing['tier_exceeded'] == true)
           Padding(
             padding: const EdgeInsets.only(top: 8),
@@ -862,6 +885,259 @@ class _OpenInvoice extends StatelessWidget {
             SelectableText(asText(bankNote!['details']), style: const TextStyle(fontWeight: FontWeight.w600)),
           ],
         ],
+      ]),
+    );
+  }
+}
+
+
+/// 3.32: platforma promo-kodi (pilot, aksiya) — bepul oylar, sinov kunlari yoki chegirma.
+class _PromoCard extends StatefulWidget {
+  const _PromoCard({required this.repository, required this.onApplied});
+
+  final BillingRepository repository;
+  final VoidCallback onApplied;
+
+  @override
+  State<_PromoCard> createState() => _PromoCardState();
+}
+
+class _PromoCardState extends State<_PromoCard> {
+  final _code = TextEditingController();
+  bool _busy = false;
+  String? _error;
+
+  @override
+  void dispose() {
+    _code.dispose();
+    super.dispose();
+  }
+
+  Future<void> _apply() async {
+    final code = _code.text.trim();
+    if (code.isEmpty) return;
+    setState(() {
+      _busy = true;
+      _error = null;
+    });
+    try {
+      final data = await widget.repository.promo(code);
+      if (!mounted) return;
+      _code.clear();
+      showMessage(context, tr(asText(data['message'], "Promo-kod qo'llandi.")));
+      widget.onApplied();
+    } on ApiException catch (error) {
+      if (mounted) setState(() => _error = error.field('code') ?? error.message);
+    } finally {
+      if (mounted) setState(() => _busy = false);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 12),
+      child: AppCard(
+        child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
+          Expanded(
+            child: TextField(
+              controller: _code,
+              textCapitalization: TextCapitalization.characters,
+              autocorrect: false,
+              enableSuggestions: false,
+              textInputAction: TextInputAction.done,
+              onSubmitted: (_) => _apply(),
+              decoration: InputDecoration(labelText: tr('Promo-kod'), hintText: tr('Masalan: PILOT'), errorText: _error, errorMaxLines: 3),
+            ),
+          ),
+          const SizedBox(width: 10),
+          Padding(
+            padding: const EdgeInsets.only(top: 6),
+            child: OutlinedButton(onPressed: _busy ? null : _apply, child: Text(tr("Qo'llash"))),
+          ),
+        ]),
+      ),
+    );
+  }
+}
+
+/// 3.32: direktor EduX haqida fikr yozadi — roziligi bilan saytdagi «Bizni tanlaganlar» bo'limida chiqadi (ko'rib chiqilgach).
+class _StoryCard extends StatefulWidget {
+  const _StoryCard({required this.repository});
+
+  final BillingRepository repository;
+
+  @override
+  State<_StoryCard> createState() => _StoryCardState();
+}
+
+class _StoryCardState extends State<_StoryCard> {
+  static const Map<String, String> _statuses = <String, String>{
+    'pending': "Ko'rib chiqilmoqda",
+    'published': "Saytda e'lon qilingan",
+    'hidden': 'Yashirilgan',
+    'draft': 'Qoralama',
+  };
+
+  Map<String, dynamic> _story = <String, dynamic>{};
+  bool _editing = false;
+  bool _busy = false;
+  bool _consent = false;
+  int _rating = 5;
+  Map<String, String> _errors = <String, String>{};
+  final _name = TextEditingController();
+  final _role = TextEditingController();
+  final _quote = TextEditingController();
+  final _result = TextEditingController();
+  final _city = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _load();
+  }
+
+  @override
+  void dispose() {
+    for (final controller in <TextEditingController>[_name, _role, _quote, _result, _city]) {
+      controller.dispose();
+    }
+    super.dispose();
+  }
+
+  Future<void> _load() async {
+    try {
+      final story = await widget.repository.story();
+      if (mounted) setState(() => _story = story);
+    } catch (_) {
+      // Fikr bo'lmasa yoki server eski bo'lsa — karta bo'sh holatda qoladi.
+    }
+  }
+
+  void _edit() {
+    final session = AppScope.read(context);
+    _name.text = asText(_story['person_name'], session.userName);
+    _role.text = asText(_story['person_role'], tr('Direktor'));
+    _quote.text = asText(_story['quote']);
+    _result.text = asText(_story['result']);
+    _city.text = asText(_story['city']);
+    setState(() {
+      _rating = asInt(_story['rating'], 5);
+      _consent = false;
+      _errors = <String, String>{};
+      _editing = true;
+    });
+  }
+
+  Future<void> _send() async {
+    setState(() {
+      _busy = true;
+      _errors = <String, String>{};
+    });
+    try {
+      final data = await widget.repository.sendStory(<String, Object?>{
+        'person_name': _name.text.trim(),
+        'person_role': _role.text.trim(),
+        'quote': _quote.text.trim(),
+        'result': _result.text.trim(),
+        'city': _city.text.trim(),
+        'rating': _rating,
+        'consent': _consent,
+      });
+      if (!mounted) return;
+      showMessage(context, tr(asText(data['message'], "Rahmat! Fikringiz ko'rib chiqilgach saytda e'lon qilinadi.")));
+      setState(() => _editing = false);
+      _load();
+    } on ApiException catch (error) {
+      if (!mounted) return;
+      setState(() => _errors = <String, String>{
+            for (final field in <String>['person_name', 'quote', 'result', 'consent'])
+              if (error.field(field) != null) field: error.field(field)!,
+            if (error.errors.isEmpty) 'form': error.message,
+          });
+    } finally {
+      if (mounted) setState(() => _busy = false);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final status = asText(_story['status']);
+    if (!_editing) {
+      return AppCard(
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
+          Text(
+            tr("EduX ishingizda nimani o'zgartirdi? Fikringiz va natijangiz roziligingiz bilan saytimizdagi «Bizni tanlaganlar» bo'limida chiqadi — boshqa markazlarga tanlashda yordam beradi."),
+            style: TextStyle(color: AppColors.muted, fontSize: 13),
+          ),
+          if (_story.isNotEmpty) ...<Widget>[
+            const SizedBox(height: 12),
+            Pill(tr(_statuses[status] ?? status), color: status == 'published' ? AppColors.success : (status == 'pending' ? AppColors.warning : AppColors.muted)),
+            const SizedBox(height: 8),
+            Text('«${asText(_story['quote'])}»'),
+            if (asText(_story['result']).isNotEmpty) ...<Widget>[
+              const SizedBox(height: 6),
+              Text(asText(_story['result']), style: TextStyle(color: AppColors.success, fontWeight: FontWeight.w700)),
+            ],
+          ],
+          const SizedBox(height: 12),
+          OutlinedButton.icon(
+            onPressed: _edit,
+            icon: const Icon(Icons.edit_outlined, size: 18),
+            label: Text(_story.isEmpty ? tr('Fikr yozish') : tr("O'zgartirish")),
+          ),
+        ]),
+      );
+    }
+    return AppCard(
+      child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
+        TextField(controller: _name, textCapitalization: TextCapitalization.words, decoration: InputDecoration(labelText: tr('Ismingiz'), errorText: _errors['person_name'])),
+        const SizedBox(height: 10),
+        TextField(controller: _role, decoration: InputDecoration(labelText: tr('Lavozim'))),
+        const SizedBox(height: 10),
+        TextField(
+          controller: _quote,
+          minLines: 4,
+          maxLines: 8,
+          maxLength: 1500,
+          textCapitalization: TextCapitalization.sentences,
+          decoration: InputDecoration(
+            labelText: tr('Fikringiz'),
+            alignLabelWithHint: true,
+            hintText: tr("Masalan: avval qarzdorlarni daftardan qidirardik, endi ota-onaga eslatma o'zi boradi..."),
+            hintMaxLines: 3,
+            errorText: _errors['quote'],
+            errorMaxLines: 3,
+          ),
+        ),
+        TextField(controller: _result, decoration: InputDecoration(labelText: tr('Natija (raqam bilan)'), hintText: tr('Masalan: qarzdorlik 30% kamaydi'), errorText: _errors['result'])),
+        const SizedBox(height: 10),
+        TextField(controller: _city, textCapitalization: TextCapitalization.words, decoration: InputDecoration(labelText: tr('Shahar'))),
+        const SizedBox(height: 12),
+        Text(tr('Baho'), style: TextStyle(color: AppColors.muted, fontSize: 13)),
+        Row(children: <Widget>[
+          for (var value = 1; value <= 5; value++)
+            IconButton(
+              tooltip: tr('{0} yulduz', <Object?>[value]),
+              onPressed: () => setState(() => _rating = value),
+              icon: Icon(_rating >= value ? Icons.star_rounded : Icons.star_outline_rounded, color: _rating >= value ? AppColors.warning : AppColors.muted),
+            ),
+        ]),
+        CheckboxListTile(
+          value: _consent,
+          contentPadding: EdgeInsets.zero,
+          controlAffinity: ListTileControlAffinity.leading,
+          onChanged: (value) => setState(() => _consent = value ?? false),
+          title: Text(tr("Fikrim, ismim, lavozimim va tashkilotim nomi hamda logotipi EduX saytida e'lon qilinishiga roziman."), style: const TextStyle(fontSize: 13)),
+          subtitle: _errors['consent'] == null ? null : Text(_errors['consent']!, style: TextStyle(color: AppColors.danger)),
+        ),
+        if (_errors['form'] != null) Text(_errors['form']!, style: TextStyle(color: AppColors.danger)),
+        const SizedBox(height: 8),
+        Row(mainAxisAlignment: MainAxisAlignment.end, children: <Widget>[
+          TextButton(onPressed: _busy ? null : () => setState(() => _editing = false), child: Text(tr('Bekor qilish'))),
+          const SizedBox(width: 8),
+          FilledButton(onPressed: _busy || !_consent ? null : _send, child: Text(tr('Yuborish'))),
+        ]),
       ]),
     );
   }
