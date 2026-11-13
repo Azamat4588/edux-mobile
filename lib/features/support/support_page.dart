@@ -701,6 +701,14 @@ class _MessageBubble extends StatelessWidget {
             const SizedBox(height: 6),
             Wrap(spacing: 6, runSpacing: 6, children: <Widget>[
               for (final file in files)
+                if (!asText(file['mime'], 'image/').startsWith('image/'))
+                  // 3.32: Excel, CSV, ZIP, PDF (server 2.77 «Ko'chirishni bizga topshiring») — fayl nomi, bosilsa tashqarida ochiladi.
+                  ActionChip(
+                    avatar: const Icon(Icons.attach_file, size: 18),
+                    label: ConstrainedBox(constraints: const BoxConstraints(maxWidth: 200), child: Text(asText(file['name']), overflow: TextOverflow.ellipsis)),
+                    onPressed: () => launchUrl(Uri.parse(asText(file['url'])), mode: LaunchMode.externalApplication),
+                  )
+                else
                 GestureDetector(
                   onTap: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => ImageViewerPage(url: asText(file['url']), title: asText(file['name'])))),
                   child: ClipRRect(

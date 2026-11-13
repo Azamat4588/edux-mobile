@@ -108,6 +108,8 @@ xabarida `[skrinshot]` bo'lsa yoki Actions → Screenshots → «Run workflow»;
 - **Obuna ekrani:** promo-kod maydoni (`POST billing/promo` — bepul oylar, sinov kunlari yoki chegirma), amaldagi
   promo-kod chegirmasi holat kartasida, «EduX haqida fikringiz» kartasi (`GET/POST billing/story`, saytda e'lon qilishga
   rozilik bilan). Eski serverda fikr kartasi bo'sh qoladi, promo-kod esa tushunarli xato bilan javob beradi.
+- **3.32.1:** yordam so'rovidagi rasm bo'lmagan fayllar (Excel, CSV, ZIP, PDF) nomi bilan chip ko'rinishida, bosilsa
+  tashqarida ochiladi; hisobdagi promo-kod qatorlari tarjima qilinadi.
 
 ## 3.31 da yangi (server 2.76)
 

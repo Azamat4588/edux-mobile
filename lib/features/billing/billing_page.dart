@@ -81,10 +81,15 @@ String billingLine(String text) {
   if (match != null) return tr("Yillik to'lov chegirmasi ({0}%)", <Object?>[match.group(1)]);
   match = RegExp(r"^(3 oylik|6 oylik) to'lov chegirmasi \((\d+)%\)$").firstMatch(text);
   if (match != null) return tr("{0} to'lov chegirmasi ({1}%)", <Object?>[tr(match.group(1)!), match.group(2)]);
+  match = RegExp(r'^Paket: (.+) — (\d+) oy bepul \(promo-kod ([A-Z0-9_-]+)\)$').firstMatch(text);
+  if (match != null) return tr('Paket: {0} — {1} oy bepul (promo-kod {2})', <Object?>[match.group(1), match.group(2), match.group(3)]);
   match = RegExp(r'^Paket: (.+)$').firstMatch(text);
   if (match != null) return tr('Paket: {0}', <Object?>[match.group(1)]);
   match = RegExp(r"^Qo'shimcha o'quvchilar: (\d+) ta$").firstMatch(text);
   if (match != null) return tr("Qo'shimcha o'quvchilar: {0} ta", <Object?>[match.group(1)]);
+  // 3.32: promo-kod qatorlari (server 2.77).
+  match = RegExp(r'^Promo-kod ([A-Z0-9_-]+) \((\d+)%\)$').firstMatch(text);
+  if (match != null) return tr('Promo-kod {0} ({1}%)', <Object?>[match.group(1), match.group(2)]);
   match = RegExp(r'^Shaxsiy chegirma \((\d+)%\)$').firstMatch(text);
   if (match != null) return tr('Shaxsiy chegirma ({0}%)', <Object?>[match.group(1)]);
   match = RegExp(r'^(.+) — bepul$').firstMatch(text);
