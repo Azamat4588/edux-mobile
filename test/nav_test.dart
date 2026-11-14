@@ -18,6 +18,21 @@ void main() {
     expect(bottomActive(bottom, section: 'finance'), isNull);
   });
 
+  test('3.33: oddiy rejim — rahbarda faqat asosiy bo\'limlar, boshqa rollar o\'zgarmaydi', () {
+    const all = <String>{'crm', 'students', 'leads', 'attendance', 'testing', 'scan', 'lms_staff', 'finance', 'p2p', 'tasks', 'billing', 'callcenter', 'kiosk', 'checkin'};
+    NavContext simple(String role) => NavContext(role: role, can: all.contains, simple: true);
+    final sections = buildNav(simple('director'));
+    expect(sections.map((item) => item.key).toList(), <String>['home', 'students', 'testing', 'finance', 'settings']);
+    expect(sections.firstWhere((item) => item.key == 'students').tabs.map((tab) => tab.key).toList(), <String>['students', 'attendance']);
+    expect(sections.firstWhere((item) => item.key == 'finance').tabs.map((tab) => tab.key).toList(), <String>['crm.payments', 'crm.debtors']);
+    expect(sectionOfTab(sections, 'crm.leads'), isNull);
+    expect(buildNav(simple('admin')).map((item) => item.key).toList(), <String>['home', 'students', 'testing', 'finance', 'settings']);
+    // Kassir va o'qituvchi menyusi o'zgarmaydi.
+    for (final role in <String>['cashier', 'teacher']) {
+      expect(buildNav(simple(role)).map((item) => item.key).toList(), buildNav(ctx(role, all)).map((item) => item.key).toList());
+    }
+  });
+
   test('yorliqsiz bo\'lim chiqmaydi (LMS yo\'q)', () {
     final sections = buildNav(ctx('director', <String>{'students', 'testing'}));
     expect(sections.any((item) => item.key == 'education'), isFalse);

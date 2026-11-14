@@ -120,6 +120,9 @@ class Session extends ChangeNotifier implements ApiCredentials {
 
   /// 3.26 (server 2.60): «Menyu va bo'limlar» — direktor yoqqan qo'shimcha bo'limlar (fun, admissions, events…).
   /// Eski server `menu_extras` qaytarmaydi — unda hammasi ko'rinadi.
+  /// 3.33 (server 2.79): «Oddiy rejim» — rahbar menyusi qisqa (o'quvchilar, davomat, testlar, to'lovlar). Eski server — yo'q.
+  bool get simpleMenu => isManager && context['menu_mode'] == 'simple';
+
   bool menuExtra(String key) => context['menu_extras'] is! List || asRawList(context['menu_extras']).map((item) => '$item').contains(key);
 
   /// 2.41 rollar ruxsatlari (GET context → permissions). Eski server bermasa — cheklanmaydi (veb bilan bir xil).

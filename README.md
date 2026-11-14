@@ -103,6 +103,10 @@ Hammasi `docs/screenshots/` da (tungi rejim — `*-tungi.png`). Yangilash: `scre
 xabarida `[skrinshot]` bo'lsa yoki Actions → Screenshots → «Run workflow»; rasmlar `screenshots` branch'iga yoziladi
 (`git fetch origin screenshots && git checkout FETCH_HEAD -- '*.png'`).
 
+## 3.33 da yangi (server 2.79)
+
+- **Oddiy rejim:** veb «Sozlamalar → Menyu va bo'limlar»da direktor yoqsa (`menu_mode: simple`), rahbar (direktor, administrator) menyusida faqat Bosh sahifa, O'quvchilar (ro'yxat, davomat), Testlar, Moliya (to'lovlar, qarzdorlar) va Sozlamalar qoladi (`lib/core/nav.dart` → `simpleSections`, `simpleTabs`). O'qituvchi, kassir, o'quvchi va ota-ona menyusi o'zgarmaydi. Eski server `menu_mode` bermasa — to'liq menyu.
+
 ## 3.32 da yangi (server 2.77)
 
 - **Obuna ekrani:** promo-kod maydoni (`POST billing/promo` — bepul oylar, sinov kunlari yoki chegirma), amaldagi

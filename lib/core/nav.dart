@@ -41,7 +41,7 @@ class NavItem {
 }
 
 class NavContext {
-  const NavContext({required this.role, required this.can, this.studentsLabel = "O'quvchilar", this.groupsLabel = 'Guruhlar', this.myGroupsLabel = ''});
+  const NavContext({required this.role, required this.can, this.studentsLabel = "O'quvchilar", this.groupsLabel = 'Guruhlar', this.myGroupsLabel = '', this.simple = false});
 
   final String role;
 
@@ -52,7 +52,19 @@ class NavContext {
 
   /// 1.48: o'qituvchi bo'limi — «Sinflarim», «Guruhlarim» yoki aralash tashkilotda «Sinf va guruhlarim».
   final String myGroupsLabel;
+
+  /// 3.33 (server 2.79): «Oddiy rejim» — rahbar menyusida faqat asosiy bo'limlar.
+  final bool simple;
 }
+
+/// 3.33 (server 2.79, veb `SIMPLE_SECTIONS` / `SIMPLE_KEEP`): oddiy rejimda rahbar ko'radigan bo'lim va yorliqlar.
+const List<String> simpleSections = <String>['home', 'students', 'testing', 'finance', 'settings'];
+const Set<String> simpleTabs = <String>{'home', 'students', 'attendance', 'school.attendance', 'exams', 'scanner', 'scans', 'crm.payments', 'crm.debtors', 'billing'};
+
+List<NavSection?> _simple(List<NavSection?> sections) => sections.whereType<NavSection>()
+    .where((section) => simpleSections.contains(section.key))
+    .map((section) => _section(section.key, section.label, section.icon, section.tabs.where((tab) => simpleTabs.contains(tab.key)).toList()))
+    .toList();
 
 const List<String> _managers = <String>['director', 'admin'];
 
@@ -71,7 +83,7 @@ List<NavSection> buildNav(NavContext ctx) {
   bool pc(String area) => !can('platform:areas') || can('platform:$area');
   final sections = <NavSection?>[];
   if (_managers.contains(role)) {
-    sections.addAll(<NavSection?>[
+    final manager = <NavSection?>[
       _section('home', tr('Bosh sahifa'), 'home', <NavTab?>[NavTab('home', tr('Bosh sahifa'))]),
       _section('students', ctx.studentsLabel, 'academic-cap', <NavTab?>[
         _when(can('students'), NavTab('students', tr("Ro'yxat"))),
@@ -109,7 +121,8 @@ List<NavSection> buildNav(NavContext ctx) {
         // 3.27 (server 2.61): sozlamalarda faqat butun tashkilotga oid narsa.
         _when(can('billing'), NavTab('billing', tr('Modullar va obuna'))),
       ]),
-    ]);
+    ];
+    sections.addAll(ctx.simple ? _simple(manager) : manager);
   } else if (role == 'teacher') {
     final mine = ctx.myGroupsLabel.isNotEmpty ? ctx.myGroupsLabel : (ctx.groupsLabel == 'Sinflar' ? 'Sinflarim' : 'Guruhlarim');
     sections.addAll(<NavSection?>[

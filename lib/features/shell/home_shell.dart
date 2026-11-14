@@ -72,6 +72,8 @@ NavContext navContextOf(Session session) => NavContext(
       studentsLabel: session.term('students', "O'quvchilar"),
       groupsLabel: asText(asMap(session.context['terms'])['groups'], 'Guruhlar'),
       myGroupsLabel: asText(asMap(session.context['terms'])['my_groups'], ''),
+      // 3.33: oddiy rejim (server 2.79 `menu_mode`).
+      simple: session.simpleMenu,
     );
 
 class HomeShell extends StatefulWidget {
