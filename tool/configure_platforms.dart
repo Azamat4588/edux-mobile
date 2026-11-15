@@ -123,6 +123,22 @@ void _android({bool store = false}) {
   stdout.writeln('  android: AndroidManifest.xml');
   _mainActivity();
   _minSdk();
+  _noLintVital();
+}
+
+/// 3.34: plaginlar (kutubxona modullari) uchun ham «lintVital*» vazifalari o'chiriladi — Flutter 3.50 + AGP lint
+/// camera_android_camerax da NoSuchMethodError (JavaDocParser) bilan yiqiladi.
+void _noLintVital() {
+  for (final name in <String>['android/build.gradle.kts', 'android/build.gradle']) {
+    final file = File(name);
+    if (!file.existsSync()) continue;
+    var text = file.readAsStringSync();
+    if (text.contains('lintVital')) continue;
+    // Kotlin DSL va Groovy uchun bir xil sintaksis.
+    text += '\n// EduX: reliz yig\'ishda lintVital o\'chiq (tool/configure_platforms.dart)\nsubprojects {\n    tasks.matching { it.name.startsWith("lintVital") }.configureEach { enabled = false }\n}\n';
+    file.writeAsStringSync(text);
+    stdout.writeln('  android: $name (lintVital o\'chiq)');
+  }
 }
 
 /// 3.34: Google Play nusxasi — SMS ruxsatlari, SMS shlyuz fon xizmati va bank SMS qabul qiluvchisi olib tashlanadi.
@@ -152,6 +168,12 @@ void _minSdk() {
     var text = file.readAsStringSync();
     text = text.replaceFirst(RegExp(r'minSdk(Version)?\s*=?\s*flutter\.minSdkVersion'),
         name.endsWith('.kts') ? 'minSdk = maxOf(flutter.minSdkVersion, 23)' : 'minSdkVersion Math.max(flutter.minSdkVersion, 23)');
+    // 3.34: reliz yig'ishda «lintVital» o'chiq — Flutter 3.50 dagi lint plaginlarda (camera_android_camerax) NoSuchMethodError
+    // bilan yiqiladi; lint yig'ish sifatiga ta'sir qilmaydi (tahlil «flutter analyze» da).
+    if (!text.contains('checkReleaseBuilds')) {
+      text = text.replaceFirst(RegExp(r'^android\s*\{', multiLine: true),
+          name.endsWith('.kts') ? 'android {\n    lint {\n        checkReleaseBuilds = false\n    }' : 'android {\n    lint {\n        checkReleaseBuilds false\n    }');
+    }
     file.writeAsStringSync(text);
     stdout.writeln('  android: $name (minSdk 23+)');
   }
