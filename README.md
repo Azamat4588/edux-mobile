@@ -28,7 +28,9 @@ ham **Releases → latest** ga qo'shiladi (kalitsiz — faqat Actions → Build 
 2. [Play Console](https://play.google.com/console) → ilova yaratish (paket nomi `uz.edux.edux`) → **Play App Signing** yoqilgan holda
    Testing → Internal testing → Create release → `.aab` ni yuklang (versionCode = yig'ish raqami, har safar o'sadi).
 3. Store listing (tavsif, skrinshotlar, ikonka 512×512), Data safety, Content rating, Privacy policy havolasi
-   (`<server>/privacy`) to'ldirilgach — Production'ga chiqarish.
+   (`<server>/privacy`), hisobni o'chirish havolasi (`<server>/hisobni-ochirish`) to'ldirilgach — Production'ga chiqarish.
+   `.aab` SMS ruxsatlarisiz (3.34) — «SMS and Call Log permissions» deklaratsiyasi kerak emas. To'liq qo'llanma:
+   server repozitoriysidagi `docs/store-publishing.md`.
 
 **iPhone / iPad / App Store:** Apple Developer Program hisobi ochilgach faqat GitHub secrets qo'shiladi — CI o'zi imzolaydi va
 TestFlight'ga yuklaydi (pastda «iPhone va iPad: App Store'ga chiqarish»).
@@ -102,6 +104,18 @@ Hammasi `docs/screenshots/` da (tungi rejim — `*-tungi.png`). Yangilash: `scre
 `screenshots/devices_test.dart` (demo ma'lumot `screenshots/fixtures/`, haqiqiy shriftlar, demo vaqt — juma 15:40) — commit
 xabarida `[skrinshot]` bo'lsa yoki Actions → Screenshots → «Run workflow»; rasmlar `screenshots` branch'iga yoziladi
 (`git fetch origin screenshots && git checkout FETCH_HEAD -- '*.png'`).
+
+## 3.34 da yangi (server 2.82): do'konlarga tayyor
+
+- **Google Play nusxasi SMS ruxsatlarisiz.** Google Play `SEND_SMS` / `RECEIVE_SMS` ni faqat standart SMS ilovasiga va bir nechta
+  istisnoga beradi — telefondan ommaviy SMS (SMS shlyuz) bu istisnolarga kirmaydi, ilova rad etiladi. Endi `.aab`
+  `--dart-define=EDUX_STORE=true` bilan va `dart run tool/configure_platforms.dart --store` dan keyin yig'iladi: manifestda SMS
+  ruxsatlari, SMS shlyuz fon xizmati, bank SMS qabul qiluvchisi, `RECEIVE_BOOT_COMPLETED` va batareya istisnosi yo'q
+  (`tools:node="remove"` — plaginlar manifesti ham qaytarmaydi; CI birlashgan manifestni tekshiradi). Ilovada SMS shlyuz
+  sahifasi «saytdagi APK'ni o'rnating» deydi, bank SMS o'chiq (`lib/core/store_build.dart` → `kStoreBuild`).
+  **APK** (sayt, «Releases → latest») avvalgidek to'liq — SMS shlyuz va bank SMS bilan. App Store `.ipa` ham `EDUX_STORE=true`.
+- **Hisobni o'chirish** (App Store 5.1.1(v), Google Play talabi): Profil → «Hisobni o'chirish» (`GET profile/delete`,
+  `DELETE profile {confirm, password?}`). Veb manzil (Play Console → Data safety → «Delete account URL»): `<server>/hisobni-ochirish`.
 
 ## 3.33 da yangi (server 2.79)
 

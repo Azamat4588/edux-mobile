@@ -1,4 +1,13 @@
 {
+"Bu amalni ortga qaytarib bo'lmaydi.": "This action cannot be undone.",
+"Google Play'dagi ilovada SMS shlyuz yo'q: Google ilovalarga telefondan SMS yuborishga ruxsat bermaydi. SMS shlyuz uchun saytdagi «Ilovalar» sahifasidan Android APK'ni o'rnating.": "The Google Play version has no SMS gateway: Google does not allow apps to send SMS from the phone. For the SMS gateway, install the Android APK from the Apps page on the website.",
+"Hisobingiz o'chirildi.": "Your account has been deleted.",
+"Hisobni butunlay o'chirish": "Delete account permanently",
+"Hisobni o'chirasizmi?": "Delete your account?",
+"Hisobni o'chirish": "Delete account",
+"Hisobni o'chirsangiz, ismingiz, telefon raqamingiz, emailingiz, Telegram bog'lanishi va parolingiz o'chiriladi. Barcha qurilmalardagi kirishlar yopiladi. Hisobni qayta tiklab bo'lmaydi.": "Deleting your account removes your name, phone number, email, Telegram link and password. You are signed out on all devices. The account cannot be restored.",
+"O'quv markazi yoki maktabga tegishli yozuvlar (baholar, davomat, to'lovlar) tashkilotda qoladi va «O'chirilgan foydalanuvchi» nomi bilan ko'rinadi — ularni tashkilot qonunga ko'ra saqlaydi. To'liq o'chirishni tashkilotingizdan so'rashingiz mumkin.": "Records that belong to the learning centre or school (grades, attendance, payments) stay with the organisation under the name \"Deleted user\" — the organisation keeps them as required by law. You can ask your organisation for full erasure.",
+"Tasdiqlash uchun O'CHIRISH deb yozing": "Type O'CHIRISH to confirm",
 "Promo-kod {0} ({1}%)": "Promo code {0} ({1}%)",
 "Paket: {0} — {1} oy bepul (promo-kod {2})": "Plan: {0} — {1} months free (promo code {2})",
 "({0} gacha)": "(until {0})",

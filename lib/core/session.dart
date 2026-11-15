@@ -748,6 +748,21 @@ class Session extends ChangeNotifier implements ApiCredentials {
     notifyListeners();
   }
 
+  /// 3.34 (server 2.82): hisobni o'chirish — DELETE profile {confirm, password?}. Muvaffaqiyatli bo'lsa server barcha
+  /// tokenlarni yopadi; telefondagi ma'lumot ham tozalanadi. Xato — ApiException (422 {message, errors}).
+  Future<String> deleteAccount({required String confirm, String? password}) async {
+    final data = asMap(await api.deleteJson('profile', <String, Object?>{'confirm': confirm, if (password != null && password.isNotEmpty) 'password': password}));
+    await SmsGatewayService.stopAll();
+    try {
+      await PushService.instance.detach(this);
+    } catch (_) {
+      // token allaqachon yopilgan
+    }
+    await _forget();
+    notifyListeners();
+    return asText(data['message'], tr("Hisobingiz o'chirildi."));
+  }
+
   Future<void> _forget() async {
     _token = null;
     contextFromCache = false;

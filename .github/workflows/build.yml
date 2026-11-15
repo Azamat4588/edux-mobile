@@ -201,7 +201,16 @@ jobs:
         if: github.event_name == 'workflow_dispatch' || env.SIGNED_RELEASE == 'true'
         run: |
           set -o pipefail
-          flutter build appbundle --release --build-number=${{ github.run_number }} --dart-define=EDUX_SERVER=$EDUX_SERVER 2>&1 | tee -a build.log
+          # 3.34: Google Play nusxasi — SMS ruxsatlarisiz (Play SMS siyosati), SMS shlyuz va bank SMS yashirin.
+          # To'liq imkoniyatli APK yuqorida yig'ilgan (sayt va «Releases → latest»).
+          dart run tool/configure_platforms.dart --store 2>&1 | tee -a ci.log
+          flutter build appbundle --release --build-number=${{ github.run_number }} --dart-define=EDUX_SERVER=$EDUX_SERVER --dart-define=EDUX_STORE=true 2>&1 | tee -a build.log
+          # Tekshiruv: birlashgan manifestda SMS ruxsatlari qolmagan bo'lsin.
+          merged=$(find build/app/intermediates -path '*release*' -name AndroidManifest.xml 2>/dev/null | grep -i merged | head -1)
+          if [ -n "$merged" ] && grep -qE 'android.permission.(SEND|RECEIVE|READ)_SMS"' "$merged" && ! grep -qE '(SEND|RECEIVE)_SMS" *tools:node="remove"' "$merged"; then
+            echo "::error::AAB manifestida SMS ruxsati qoldi — Google Play rad etadi"; exit 1
+          fi
+          echo "::notice::AAB (Google Play): SMS ruxsatlarisiz
 
       - name: Xato tafsilotlari
         if: failure()
@@ -431,7 +440,7 @@ jobs:
         if: steps.signing.outputs.signed == 'true'
         run: |
           set -o pipefail
-          flutter build ipa --release --export-options-plist="$RUNNER_TEMP/ExportOptions.plist" --build-number=${{ github.run_number }} --dart-define=EDUX_SERVER=$EDUX_SERVER 2>&1 | tee build-ipa.log
+          flutter build ipa --release --export-options-plist="$RUNNER_TEMP/ExportOptions.plist" --build-number=${{ github.run_number }} --dart-define=EDUX_SERVER=$EDUX_SERVER --dart-define=EDUX_STORE=true 2>&1 | tee build-ipa.log
           ls -la build/ios/ipa
 
       - uses: actions/upload-artifact@v7

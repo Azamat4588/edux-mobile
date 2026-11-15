@@ -7,18 +7,31 @@
 //
 //   dart run tool/configure_platforms.dart          # Android va iOS
 //   dart run tool/configure_platforms.dart --ios    # faqat iOS (macOS CI, android/ papkasiz)
+//   dart run tool/configure_platforms.dart --store  # 3.34: Google Play nusxasi — SMS ruxsatlari, SMS shlyuz xizmati va bank
+//                                                   # SMS qabul qiluvchisi olib tashlanadi (Play SMS siyosati); oddiy
+//                                                   # yig'ishdan keyin ishga tushirilsa ham ularni tozalaydi.
 import 'dart:io';
 
 /// firebase_core 5 / firebase_messaging 17 (Firebase iOS SDK 12) iOS 15 talab qiladi; mobile_scanner 7 — 13+.
 const String iosMinimum = '15.0';
 
 void main(List<String> args) {
-  if (!args.contains('--ios')) _android();
+  if (!args.contains('--ios')) _android(store: args.contains('--store'));
   _ios();
   stdout.writeln('EduX: platforma sozlamalari tayyor.');
 }
 
-void _android() {
+/// Google Play nusxasida bo'lmasligi kerak bo'lgan ruxsatlar (SMS siyosati; fon xizmati deklaratsiyasi; batareya istisnosi).
+const List<String> storeRemoved = <String>[
+  'android.permission.SEND_SMS',
+  'android.permission.RECEIVE_SMS',
+  'android.permission.READ_SMS',
+  'android.permission.FOREGROUND_SERVICE_SPECIAL_USE',
+  'android.permission.RECEIVE_BOOT_COMPLETED',
+  'android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS',
+];
+
+void _android({bool store = false}) {
   final manifest = File('android/app/src/main/AndroidManifest.xml');
   if (!manifest.existsSync()) {
     stderr.writeln('android/app/src/main/AndroidManifest.xml topilmadi — avval `flutter create` ni ishga tushiring.');
@@ -41,6 +54,7 @@ void _android() {
     'android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS',
   ];
   for (final permission in permissions) {
+    if (store && storeRemoved.contains(permission)) continue;
     if (!text.contains('"$permission"')) {
       text = text.replaceFirst('<application', '<uses-permission android:name="$permission"/>\n    <application');
     }
@@ -50,8 +64,9 @@ void _android() {
         '<application', '<uses-feature android:name="android.hardware.camera" android:required="false"/>\n    <application');
   }
   text = text.replaceFirst(RegExp(r'android:label="[^"]*"'), 'android:label="EduX"');
+  if (store) text = _stripForStore(text);
   // Bank SMS qabul qiluvchisi (ilova yopiq bo'lsa ham SMS telefondagi navbatga yoziladi).
-  if (!text.contains('.BankSmsReceiver')) {
+  if (!store && !text.contains('.BankSmsReceiver')) {
     const receiver = '''
         <receiver android:name=".BankSmsReceiver" android:exported="true" android:permission="android.permission.BROADCAST_SMS">
             <intent-filter android:priority="999">
@@ -62,7 +77,7 @@ void _android() {
     text = text.replaceFirst('</application>', '$receiver    </application>');
   }
   // 3.12: SMS shlyuz fon xizmati va telefon qayta yoqilganda uni tiklovchi qabul qiluvchi.
-  if (!text.contains('.SmsGatewayService')) {
+  if (!store && !text.contains('.SmsGatewayService')) {
     const service = '''
         <service android:name=".SmsGatewayService" android:exported="false" android:foregroundServiceType="specialUse">
             <property android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
@@ -108,6 +123,25 @@ void _android() {
   stdout.writeln('  android: AndroidManifest.xml');
   _mainActivity();
   _minSdk();
+}
+
+/// 3.34: Google Play nusxasi — SMS ruxsatlari, SMS shlyuz fon xizmati va bank SMS qabul qiluvchisi olib tashlanadi.
+/// Plaginlar manifestlari birlashganda ham qaytib kelmasligi uchun `tools:node="remove"` qo'yiladi.
+String _stripForStore(String text) {
+  for (final permission in storeRemoved) {
+    text = text.replaceAll(RegExp('\\s*<uses-permission android:name="${RegExp.escape(permission)}"\\s*/>'), '');
+  }
+  text = text.replaceAll(RegExp(r'\s*<receiver android:name="\.BankSmsReceiver".*?</receiver>', dotAll: true), '');
+  text = text.replaceAll(RegExp(r'\s*<service android:name="\.SmsGatewayService".*?</service>', dotAll: true), '');
+  text = text.replaceAll(RegExp(r'\s*<receiver android:name="\.GatewayBootReceiver".*?</receiver>', dotAll: true), '');
+  if (!text.contains('xmlns:tools=')) {
+    text = text.replaceFirst('<manifest ', '<manifest xmlns:tools="http://schemas.android.com/tools" ');
+  }
+  final removals = storeRemoved.where((p) => !text.contains('"$p" tools:node="remove"'))
+      .map((p) => '<uses-permission android:name="$p" tools:node="remove"/>').join('\n    ');
+  if (removals.isNotEmpty) text = text.replaceFirst('<application', '$removals\n    <application');
+  stdout.writeln("  android: do'kon nusxasi — SMS ruxsatlari va xizmatlari olib tashlandi");
+  return text;
 }
 
 /// mobile_scanner va WebView kamerasi uchun Android 6.0+ (API 23).

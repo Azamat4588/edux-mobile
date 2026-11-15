@@ -16,6 +16,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'api.dart';
 import 'session.dart';
+import 'store_build.dart';
 
 /// Standart bank jo'natuvchilari (SMS «kimdan» maydoni). Sozlamada o'zgartiriladi.
 const List<String> defaultBankSenders = <String>[
@@ -113,7 +114,8 @@ class BankSmsForwarder extends ChangeNotifier {
   bool serverDisabled = false;
   bool _busy = false;
 
-  bool get supported => !kIsWeb && Platform.isAndroid;
+  /// 3.34: do'kon nusxasida yo'q (store_build.dart).
+  bool get supported => !kIsWeb && Platform.isAndroid && !kStoreBuild;
 
   String get _scope => '${_session?.organizationId ?? 0}';
 

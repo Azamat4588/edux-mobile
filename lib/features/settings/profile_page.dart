@@ -12,6 +12,7 @@ import '../../core/profile.dart';
 import '../../core/session.dart';
 import '../../core/theme.dart';
 import '../../core/widgets.dart';
+import 'delete_account_page.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -296,6 +297,17 @@ class _ProfilePageState extends State<ProfilePage> {
               const SizedBox(height: 4),
               FilledButton(onPressed: _savingPassword ? null : _savePassword, child: _busy(_savingPassword, tr('Saqlash'))),
             ]),
+          ),
+          // 3.34: hisobni o'chirish (App Store / Google Play talabi).
+          const SizedBox(height: 8),
+          AppCard(
+            padding: EdgeInsets.zero,
+            child: ListTile(
+              leading: Icon(Icons.person_remove_outlined, color: AppColors.danger),
+              title: Text(tr("Hisobni o'chirish"), style: TextStyle(color: AppColors.danger, fontWeight: FontWeight.w600)),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const DeleteAccountPage())),
+            ),
           ),
         ],
       ),

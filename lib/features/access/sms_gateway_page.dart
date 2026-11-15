@@ -2,6 +2,7 @@
 // 3.4: platforma egasi hisobida — platforma navbati (kirish va tiklash kodlari); tashkilotda — bank SMS'larini serverga
 // yuborish (kartaga o'tkazmani avtomatik tasdiqlash), yoqish/o'chirish, jo'natuvchilar ro'yxati va oxirgi yuborilganlar.
 import 'dart:async';
+import 'dart:io' show Platform;
 
 import 'package:flutter/material.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
@@ -13,6 +14,7 @@ import '../../core/help_links.dart';
 import '../../core/i18n.dart';
 import '../../core/session.dart';
 import '../../core/sms_gateway.dart';
+import '../../core/store_build.dart';
 import '../../core/theme.dart';
 import '../../core/webview_guard.dart';
 import '../../core/web_links.dart';
@@ -240,7 +242,9 @@ class _SmsGatewayPageState extends State<SmsGatewayPage> with WidgetsBindingObse
         padding: const EdgeInsets.all(16),
         children: <Widget>[
           if (!gateway.supported)
-            AppCard(child: Text(tr('SMS shlyuz faqat Android telefonda ishlaydi: iPhone ilovalarga SMS yuborishga ruxsat bermaydi.')))
+            AppCard(child: Text(kStoreBuild && Platform.isAndroid
+                ? tr("Google Play'dagi ilovada SMS shlyuz yo'q: Google ilovalarga telefondan SMS yuborishga ruxsat bermaydi. SMS shlyuz uchun saytdagi «Ilovalar» sahifasidan Android APK'ni o'rnating.")
+                : tr('SMS shlyuz faqat Android telefonda ishlaydi: iPhone ilovalarga SMS yuborishga ruxsat bermaydi.')))
           else ...<Widget>[
             AppCard(
               child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[

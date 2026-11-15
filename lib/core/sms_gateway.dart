@@ -24,6 +24,7 @@ import 'api.dart';
 import 'i18n.dart';
 import 'push.dart';
 import 'session.dart';
+import 'store_build.dart';
 
 /// Navbat yo'llari: tashkilot — crm/sms/gateway, platforma — platform/sms/gateway.
 String gatewayPrefix(String scope) => scope == 'platform' ? 'platform/sms/gateway' : 'crm/sms/gateway';
@@ -111,7 +112,8 @@ class SmsGatewayService extends ChangeNotifier {
     if (serverError.isNotEmpty && pausedUntil != null) lastError = serverError;
   }
 
-  bool get supported => Platform.isAndroid;
+  /// 3.34: do'kon nusxasida yo'q (store_build.dart).
+  bool get supported => Platform.isAndroid && !kStoreBuild;
 
   String get _prefKey => isPlatform ? 'sms_gateway_platform_${asInt(_session?.user['id'])}' : 'sms_gateway_${_session?.organizationId ?? 0}';
 

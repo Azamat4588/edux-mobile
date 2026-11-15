@@ -1,4 +1,13 @@
 {
+"Bu amalni ortga qaytarib bo'lmaydi.": "Это действие нельзя отменить.",
+"Google Play'dagi ilovada SMS shlyuz yo'q: Google ilovalarga telefondan SMS yuborishga ruxsat bermaydi. SMS shlyuz uchun saytdagi «Ilovalar» sahifasidan Android APK'ni o'rnating.": "В версии из Google Play нет SMS-шлюза: Google не разрешает приложениям отправлять SMS с телефона. Для SMS-шлюза установите Android APK со страницы «Приложения» на сайте.",
+"Hisobingiz o'chirildi.": "Ваш аккаунт удалён.",
+"Hisobni butunlay o'chirish": "Удалить аккаунт навсегда",
+"Hisobni o'chirasizmi?": "Удалить аккаунт?",
+"Hisobni o'chirish": "Удаление аккаунта",
+"Hisobni o'chirsangiz, ismingiz, telefon raqamingiz, emailingiz, Telegram bog'lanishi va parolingiz o'chiriladi. Barcha qurilmalardagi kirishlar yopiladi. Hisobni qayta tiklab bo'lmaydi.": "При удалении аккаунта удаляются ваше имя, номер телефона, email, привязка Telegram и пароль. Все входы на всех устройствах закрываются. Восстановить аккаунт нельзя.",
+"O'quv markazi yoki maktabga tegishli yozuvlar (baholar, davomat, to'lovlar) tashkilotda qoladi va «O'chirilgan foydalanuvchi» nomi bilan ko'rinadi — ularni tashkilot qonunga ko'ra saqlaydi. To'liq o'chirishni tashkilotingizdan so'rashingiz mumkin.": "Записи учебного центра или школы (оценки, посещаемость, платежи) остаются в организации под именем «Удалённый пользователь» — организация хранит их по закону. Полное удаление можно запросить у вашей организации.",
+"Tasdiqlash uchun O'CHIRISH deb yozing": "Для подтверждения введите O'CHIRISH",
 "Promo-kod {0} ({1}%)": "Промокод {0} ({1}%)",
 "Paket: {0} — {1} oy bepul (promo-kod {2})": "Пакет: {0} — {1} мес. бесплатно (промокод {2})",
 "({0} gacha)": "(до {0})",
