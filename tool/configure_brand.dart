@@ -43,7 +43,7 @@ void main(List<String> args) {
   final hasIcon = icon != null && File(icon).existsSync();
   if (hasIcon) {
     for (final target in <String>['assets/brand/icon.png', 'assets/brand/mark.png']) {
-      File(icon).copySync(target);
+      File(icon!).copySync(target);
     }
   }
   // Faqat Android yig'iladi (ios/ papkasi yo'q); logotip bo'lsa — moslashuvchan ikonka o'rniga oddiy ikonka.
