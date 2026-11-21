@@ -23,6 +23,7 @@ import '../../core/home_widgets.dart';
 import '../family/family_pages.dart';
 import '../lms/child_courses_view.dart';
 import 'guardian_repository.dart';
+import '../staff/student_photo.dart';
 
 /// Push xabari bosilganda (ota-ona): qaysi farzand (`student_id`) va yorliq (xabar turi) ochilsin — shell yozadi.
 class GuardianFocus {
@@ -389,7 +390,15 @@ class _OverviewTab extends StatelessWidget {
                   if (child.code != null && child.code!.isNotEmpty) '${tr("O'quvchi kodi")}: ${child.code}',
                   if (groups.isNotEmpty) groups.join(', '),
                 ].join(', '),
-                trailing: Avatar(child.name, size: 40, heroTag: 'child-${child.id}'),
+                trailing: StudentPhotoAvatar(
+                  studentId: child.id,
+                  name: child.name,
+                  size: 40,
+                  heroTag: 'child-${child.id}',
+                  photo: asMap(insights['student'])['photo_url']?.toString(),
+                  editable: asMap(insights['student'])['photo_self'] == true,
+                  mine: true,
+                ),
                 facts: studentFacts(insights, guardian: true),
                 action: hero == null
                     ? null

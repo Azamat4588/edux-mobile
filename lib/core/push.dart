@@ -59,7 +59,7 @@ class PushService {
 
   static final PushService instance = PushService._();
 
-  static const String appVersion = '3.36.0';
+  static const String appVersion = '3.37.0';
 
   bool _ready = false;
   bool _initTried = false;
@@ -94,6 +94,7 @@ class PushService {
     'public.certificate': 'certificate',
     'crm.leads': 'lead',
     'crm.tasks': 'task',
+    'crm.cash': 'cash_transfer',
     'info.support.ticket': 'support',
     // 1.39: mijozlar fikri — rahbar paneli (yangi fikr, mas'ul) va muallifga javob.
     'feedback.show': 'feedback',
@@ -115,7 +116,7 @@ class PushService {
       return result;
     }
     final type = asText(data['type']);
-    const known = <String>['payment', 'attendance', 'arrival', 'attempt', 'assignment', 'certificate', 'lead', 'task', 'diary', 'child', 'sms_gateway', 'support', 'feedback', 'feedback_reply', 'document', 'chat', 'call', 'p2p_telegram'];
+    const known = <String>['payment', 'attendance', 'arrival', 'attempt', 'assignment', 'certificate', 'lead', 'task', 'diary', 'child', 'sms_gateway', 'support', 'feedback', 'feedback_reply', 'document', 'chat', 'call', 'p2p_telegram', 'cash_transfer'];
     if (known.contains(type)) return data;
     // 1.35: dars savoli/javobi va kurs e'loni — id lar havolada (/learn/courses/{kurs}/lessons/{dars}).
     if (type == 'lesson_question' || type == 'lesson_answer' || type == 'course_announcement') {
@@ -175,6 +176,8 @@ class PushService {
       if (lead != null) result['lead_id'] = lead;
     } else if (path.startsWith('/crm/tasks')) {
       result['type'] = 'task';
+    } else if (path.startsWith('/crm/cash')) {
+      result['type'] = 'cash_transfer';
     } else if (path.startsWith('/support/t/') && segments.length == 3) {
       result['type'] = 'support';
       result['token'] = segments[2];

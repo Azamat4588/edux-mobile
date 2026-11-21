@@ -89,6 +89,8 @@ class _TodayTab extends StatelessWidget {
         final summary = asMap(payments['summary']);
         final items = asList(payments);
         final accounts = asList(asMap(data['cash'])['accounts'], 'accounts');
+        final pending = asList(asMap(data['cash'])['pending'], 'pending');
+        final inTransit = asInt(asMap(data['cash'])['in_transit']);
         final byMethod = <String, int>{};
         for (final payment in items) {
           if (payment['voided_at'] != null) continue;
@@ -126,6 +128,22 @@ class _TodayTab extends StatelessWidget {
                   for (var i = 0; i < accounts.length; i++) ...<Widget>[
                     if (i > 0) const Divider(),
                     _CashRow(account: accounts[i]),
+                  ],
+                ]),
+              ),
+            ],
+            if (pending.isNotEmpty) ...<Widget>[
+              SectionTitle(tr("Yo'ldagi pul (filiallar orasida)")),
+              AppCard(
+                padding: EdgeInsets.zero,
+                child: Column(children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(AppSpacing.l, AppSpacing.m, AppSpacing.l, 0),
+                    child: KeyValue(tr("Yo'ldagi pul"), money(inTransit), valueColor: AppColors.warning),
+                  ),
+                  for (var i = 0; i < pending.length; i++) ...<Widget>[
+                    if (i > 0) const Divider(),
+                    _PendingTransferRow(transfer: pending[i], repository: repository, onDone: () => reload()),
                   ],
                 ]),
               ),
@@ -171,8 +189,108 @@ class _CashRow extends StatelessWidget {
         '+${groupDigits(asInt(account['in']))}',
         '−${groupDigits(asInt(account['out']))}',
         if (shift.isNotEmpty) tr('smena ochiq'),
+        if (account['over_limit'] == true) tr('limitdan oshdi'),
       ].join(', ')),
       trailing: Text(money(asInt(account['balance'])), style: const TextStyle(fontWeight: FontWeight.w800)),
+    );
+  }
+}
+
+/// Filiallararo o'tkazma (veb 2.92): pul yuboruvchidan chiqqan, qabul qiluvchi filial tasdiqlashi kerak.
+class _PendingTransferRow extends StatefulWidget {
+  const _PendingTransferRow({required this.transfer, required this.repository, required this.onDone});
+
+  final Map<String, dynamic> transfer;
+  final FinanceRepository repository;
+  final VoidCallback onDone;
+
+  @override
+  State<_PendingTransferRow> createState() => _PendingTransferRowState();
+}
+
+class _PendingTransferRowState extends State<_PendingTransferRow> {
+  bool _busy = false;
+
+  String _side(Map<String, dynamic> side) =>
+      <String>[asText(side['name']), if (asText(side['branch']).isNotEmpty) asText(side['branch'])].join(' · ');
+
+  Future<void> _run(Future<void> Function() action, String done) async {
+    setState(() => _busy = true);
+    try {
+      await action();
+      if (!mounted) return;
+      showMessage(context, done);
+      widget.onDone();
+    } on ApiException catch (error) {
+      if (mounted) showMessage(context, error.message, error: true);
+    } finally {
+      if (mounted) setState(() => _busy = false);
+    }
+  }
+
+  Future<void> _reject() async {
+    final controller = TextEditingController();
+    final reason = await showDialog<String>(
+      context: context,
+      builder: (dialog) => AlertDialog(
+        title: Text(tr("O'tkazmani qaytarish")),
+        content: TextField(
+          controller: controller,
+          autofocus: true,
+          maxLength: 255,
+          decoration: InputDecoration(labelText: tr('Sabab'), hintText: tr("Masalan: summa to'g'ri kelmadi")),
+        ),
+        actions: <Widget>[
+          TextButton(onPressed: () => Navigator.pop(dialog), child: Text(tr('Bekor qilish'))),
+          FilledButton(onPressed: () => Navigator.pop(dialog, controller.text.trim()), child: Text(tr('Qaytarish'))),
+        ],
+      ),
+    );
+    controller.dispose();
+    if (reason == null || !mounted) return;
+    if (reason.length < 3) {
+      showMessage(context, tr('Sababni yozing.'), error: true);
+      return;
+    }
+    await _run(() => widget.repository.rejectTransfer(asInt(widget.transfer['id']), reason), tr("O'tkazma qaytarildi."));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final transfer = widget.transfer;
+    final incoming = transfer['incoming'] == true;
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.l, vertical: AppSpacing.m),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
+        Row(children: <Widget>[
+          Icon(incoming ? Icons.call_received : Icons.call_made, color: AppColors.warning),
+          const SizedBox(width: AppSpacing.m),
+          Expanded(
+            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
+              Text('${_side(asMap(transfer['from']))} → ${_side(asMap(transfer['to']))}', style: const TextStyle(fontWeight: FontWeight.w600)),
+              Text(
+                <String>[
+                  incoming ? tr('Sizga yuborilgan — qabul qiling') : tr('Qabul kutilmoqda'),
+                  if (asText(transfer['note']).isNotEmpty) asText(transfer['note']),
+                ].join(' · '),
+                style: TextStyle(color: AppColors.muted, fontSize: 13),
+              ),
+            ]),
+          ),
+          Text(money(asInt(transfer['amount'])), style: const TextStyle(fontWeight: FontWeight.w800)),
+        ]),
+        if (incoming) ...<Widget>[
+          const SizedBox(height: AppSpacing.s),
+          Wrap(alignment: WrapAlignment.end, spacing: AppSpacing.s, children: <Widget>[
+            OutlinedButton(onPressed: _busy ? null : _reject, child: Text(tr('Qaytarish'))),
+            FilledButton.icon(
+              onPressed: _busy ? null : () => _run(() => widget.repository.receiveTransfer(asInt(transfer['id'])), tr('Pul qabul qilindi.')),
+              icon: const Icon(Icons.check, size: 18),
+              label: Text(tr('Qabul qildim')),
+            ),
+          ]),
+        ],
+      ]),
     );
   }
 }

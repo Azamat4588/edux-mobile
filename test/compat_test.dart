@@ -52,6 +52,9 @@ void main() {
       expect(PushService.normalize(<String, dynamic>{'route': '/child/diary'})['type'], 'diary');
       expect(PushService.normalize(<String, dynamic>{'url': '/crm/leads?lead=9'})['lead_id'], '9');
       expect(PushService.normalize(<String, dynamic>{'url': '/crm/tasks'})['type'], 'task');
+      // 3.37 (server 2.92): filiallararo o'tkazma — Moliya.
+      expect(PushService.normalize(<String, dynamic>{'route': 'crm.cash', 'type': 'cash_transfer'})['type'], 'cash_transfer');
+      expect(PushService.normalize(<String, dynamic>{'url': '/crm/cash'})['type'], 'cash_transfer');
       expect(PushService.normalize(<String, dynamic>{'url': '/learn/assignments'})['type'], 'assignment');
     });
 

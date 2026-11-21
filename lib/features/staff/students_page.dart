@@ -13,6 +13,7 @@ import '../../core/session.dart';
 import '../../core/theme.dart';
 import '../../core/widgets.dart';
 import 'payment_sheet.dart';
+import 'student_photo.dart';
 
 class StudentsPage extends StatefulWidget {
   const StudentsPage({super.key, this.forPayment = false});
@@ -260,7 +261,7 @@ class _StudentTile extends StatelessWidget {
       selected: selected,
       selectedTileColor: AppColors.accentSoft,
       // Ro'yxat → karta: doira «uchib» o'tadi (Hero), ikki ustunli rejimda — o'z joyida.
-      leading: Avatar(asText(student['full_name']), heroTag: 'student-${asInt(student['id'])}'),
+      leading: Avatar(asText(student['full_name']), heroTag: 'student-${asInt(student['id'])}', photo: student['photo_url']?.toString()),
       title: Text(asText(student['full_name']), style: const TextStyle(fontWeight: FontWeight.w600)),
       subtitle: Text(<String>['#${asText(student['code'])}', if (groups.isNotEmpty) groups].join(', '),
           maxLines: 1, overflow: TextOverflow.ellipsis),
@@ -296,6 +297,8 @@ const Map<String, String> paymentMethods = <String, String>{
   'paynet': 'Paynet',
   'oson': 'Oson',
   'alif': 'Alif Pay',
+  'atmos': 'Atmos',
+  'multicard': 'Multicard',
   'p2p': "Kartaga o'tkazma",
 };
 
@@ -400,7 +403,13 @@ class _Card extends StatelessWidget {
       children: <Widget>[
         AppCard(
           child: Row(children: <Widget>[
-            Avatar(asText(student['full_name']), size: 52, heroTag: heroTag),
+            StudentPhotoAvatar(
+              studentId: asInt(student['id']),
+              name: asText(student['full_name']),
+              photo: student['photo_url']?.toString(),
+              heroTag: heroTag,
+              editable: asInt(student['id']) > 0 && StudentPhotoAvatar.staffCanEdit(session),
+            ),
             const SizedBox(width: 14),
             Expanded(
               child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[

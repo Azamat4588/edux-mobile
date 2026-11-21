@@ -16,6 +16,7 @@ import 'illustrations.dart';
 import 'koshin.dart';
 import 'motion.dart';
 import 'offline_cache.dart';
+import 'session.dart';
 import 'theme.dart';
 
 /// Ma'lumot yuklanadigan sahifa qismi: yuklanmoqda (skelet) / xato (qayta urinish) / natija. Pastga tortib yangilash bilan.
@@ -713,20 +714,31 @@ class KeyValue extends StatelessWidget {
 }
 
 /// Bosh harflar doirasi (veb: Avatar.vue): rang ismdan barqaror — bir odam har doim bir rangda.
+/// [photo] — o'quvchi rasmi (server bergan `photo_url`, nisbiy imzolangan havola; 3.37): yuklanmasa — bosh harflar.
 /// [heroTag] berilsa — ro'yxatdan tafsilotga o'tishda doira «uchib» o'tadi (Hero).
 class Avatar extends StatelessWidget {
-  const Avatar(this.name, {super.key, this.size = 40, Color? color, this.heroTag}) : _color = color;
+  const Avatar(this.name, {super.key, this.size = 40, Color? color, this.heroTag, this.photo}) : _color = color;
 
   final String name;
   final double size;
   final Color? _color;
   final Object? heroTag;
+  final String? photo;
+
+  /// Nisbiy yo'lni server manziliga ulaydi (AppScope bo'lmasa — o'zgarishsiz).
+  static String? resolve(BuildContext context, String? photo) {
+    if (photo == null || photo.isEmpty) return null;
+    final scope = context.getElementForInheritedWidgetOfExactType<AppScope>()?.widget as AppScope?;
+    final session = scope?.notifier;
+    if (session == null) return photo.startsWith('http') ? photo : null;
+    return session.api.absolute(photo);
+  }
 
   @override
   Widget build(BuildContext context) {
     final explicit = _color;
     final colors = explicit == null ? AppColors.tileFor(name) : tileOf(explicit);
-    final circle = Container(
+    final initials = Container(
       width: size,
       height: size,
       alignment: Alignment.center,
@@ -736,6 +748,21 @@ class Avatar extends StatelessWidget {
         style: TextStyle(color: colors.fg, fontWeight: FontWeight.w700, fontSize: size * 0.36, letterSpacing: 0.2, height: 1),
       ),
     );
+    final url = resolve(context, photo);
+    final Widget circle = url == null
+        ? initials
+        : ClipOval(
+            child: Image.network(
+              url,
+              width: size,
+              height: size,
+              fit: BoxFit.cover,
+              cacheWidth: (size * MediaQuery.devicePixelRatioOf(context)).round(),
+              semanticLabel: name,
+              loadingBuilder: (context, child, progress) => progress == null ? child : initials,
+              errorBuilder: (context, error, stack) => initials,
+            ),
+          );
     final tag = heroTag;
     if (tag == null || !Motion.any(context)) return circle;
     return Hero(tag: tag, child: Material(type: MaterialType.transparency, child: circle));

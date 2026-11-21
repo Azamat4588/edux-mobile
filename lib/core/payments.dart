@@ -36,6 +36,8 @@ const Map<String, String> providerNames = <String, String>{
   'paynet': 'Paynet',
   'oson': 'Oson',
   'alif': 'Alif Pay',
+  'atmos': 'Atmos',
+  'multicard': 'Multicard',
   'p2p': "Kartaga o'tkazma",
 };
 

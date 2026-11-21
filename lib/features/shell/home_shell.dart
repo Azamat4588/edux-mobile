@@ -188,6 +188,8 @@ class _HomeShellState extends State<HomeShell> with WidgetsBindingObserver {
     };
     // 3.15: kartaga o'tkazmalar Telegram akkaunti ishlamay qoldi (route=settings.payments) — «Kartaga o'tkazmalar».
     routes['p2p_telegram'] = (_) => session().can('p2p') ? const P2pPage() : null;
+    // 3.37 (server 2.92): filialdan pul yuborildi — «Moliya → Bugun» (yo'ldagi pul, «Qabul qildim»).
+    routes['cash_transfer'] = (_) => session().can('finance') ? const FinancePage() : null;
     routes['certificate'] = (_) {
       final s = session();
       return s.isStudent && !s.isGuest && (s.hasModule('testing') || s.hasModule('lms')) ? const CertificatesPage() : null;

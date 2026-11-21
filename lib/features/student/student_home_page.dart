@@ -16,6 +16,7 @@ import '../notifications/notifications_page.dart';
 import '../olympiad/olympiads_page.dart';
 import '../tutor/tutor_page.dart';
 import 'online_pay.dart';
+import '../staff/student_photo.dart';
 
 class StudentHomePage extends StatelessWidget {
   const StudentHomePage({super.key, this.onOpen});
@@ -152,7 +153,14 @@ class StudentOverviewBody extends StatelessWidget {
       child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
         if (!showGreeting && showIdentity && name.isNotEmpty) ...<Widget>[
           Row(children: <Widget>[
-            Avatar(name, size: 44),
+            StudentPhotoAvatar(
+              studentId: asInt(student['id']),
+              name: name,
+              size: 44,
+              photo: student['photo_url']?.toString(),
+              editable: student['photo_self'] == true && asInt(student['id']) > 0,
+              mine: true,
+            ),
             const SizedBox(width: 12),
             Expanded(
               child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
