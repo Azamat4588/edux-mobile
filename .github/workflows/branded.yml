@@ -1,0 +1,171 @@
+# 3.36: markaz logotipli Android ilova (white-label). EduX serveri (Platforma → Tashkilot → «Markaz ilovasi») GitHub API
+# orqali ishga tushiradi (workflow_dispatch) yoki qo'lda: Actions → Branded app → Run workflow.
+# Natija: «brand-<id>» relizi — <id>.apk (to'g'ridan-to'g'ri o'rnatish) va imzo kaliti bo'lsa <id>.aab (Google Play).
+# Ilova o'sha serverga ulanadi va foydalanuvchi bir nechta tashkilotda bo'lsa ham shu markazni ochadi (EDUX_ORG).
+name: Branded app
+
+on:
+  workflow_dispatch:
+    inputs:
+      id:
+        description: "Ilova identifikatori: lotin kichik harf va raqam (paket uz.edux.b.<id>)"
+        required: true
+      name:
+        description: Ilova nomi (telefonda ko'rinadi)
+        required: true
+      organization:
+        description: Tashkilot ID si (serverdagi)
+        required: true
+      server:
+        description: Server manzili (https://...)
+        required: true
+      logo_url:
+        description: Logotip (PNG/JPG, https) — ikonka
+        required: false
+        default: ''
+      color:
+        description: Ikonka foni (#RRGGBB)
+        required: false
+        default: '#FFFFFF'
+
+concurrency:
+  group: branded-${{ github.event.inputs.id }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  android:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    env:
+      BRAND_ID: ${{ github.event.inputs.id }}
+      BRAND_NAME: ${{ github.event.inputs.name }}
+      BRAND_ORG: ${{ github.event.inputs.organization }}
+      BRAND_SERVER: ${{ github.event.inputs.server }}
+      BRAND_LOGO: ${{ github.event.inputs.logo_url }}
+      BRAND_COLOR: ${{ github.event.inputs.color }}
+    steps:
+      - name: Kiritilgan qiymatlarni tekshirish
+        run: |
+          [[ "$BRAND_ID" =~ ^[a-z][a-z0-9]{1,30}$ ]] || { echo "::error::id noto'g'ri: $BRAND_ID"; exit 1; }
+          [[ "$BRAND_ORG" =~ ^[0-9]{1,10}$ ]] || { echo "::error::organization raqam bo'lishi kerak"; exit 1; }
+          [[ "$BRAND_SERVER" =~ ^https://[A-Za-z0-9.-]+(:[0-9]+)?/?$ ]] || { echo "::error::server https:// manzil bo'lishi kerak"; exit 1; }
+          [[ -z "$BRAND_LOGO" || "$BRAND_LOGO" =~ ^https://[^[:space:]\"\'\`\$]+$ ]] || { echo "::error::logo_url https:// bo'lishi kerak"; exit 1; }
+          [[ "$BRAND_COLOR" =~ ^#[0-9A-Fa-f]{6}$ ]] || echo "BRAND_COLOR=#FFFFFF" >> "$GITHUB_ENV"
+          [ ${#BRAND_NAME} -ge 1 ] && [ ${#BRAND_NAME} -le 40 ] || { echo "::error::name 1–40 belgi"; exit 1; }
+
+      - name: Diskda joy bo'shatish
+        run: |
+          sudo rm -rf /usr/share/dotnet /opt/ghc /usr/local/.ghcup /opt/hostedtoolcache/CodeQL /usr/share/swift \
+            /usr/local/share/boost /usr/local/share/powershell /opt/microsoft /opt/az /usr/share/miniconda || true
+
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Logotip → ikonka
+        run: |
+          mkdir -p "$RUNNER_TEMP/brand"
+          if [ -n "$BRAND_LOGO" ] && curl -fsSL --max-time 30 --max-filesize 5000000 -o "$RUNNER_TEMP/brand/logo" "$BRAND_LOGO"; then
+            # Logotip 1024×1024 kvadratga, 14% chetlik bilan, tanlangan rang fonida (ikonka maskasida kesilmasin).
+            convert "$RUNNER_TEMP/brand/logo[0]" -resize 720x720 -background "$BRAND_COLOR" -gravity center -extent 1024x1024 -alpha remove "$RUNNER_TEMP/brand/icon.png"
+            echo "BRAND_ICON=$RUNNER_TEMP/brand/icon.png" >> "$GITHUB_ENV"
+          else
+            echo "::warning::Logotip yuklanmadi — EduX ikonkasi qoladi"
+          fi
+
+      - name: Platforma papkalari va markaz sozlamalari
+        run: |
+          set -o pipefail
+          flutter create --org uz.edux --project-name edux --platforms=android . 2>&1 | tee -a ci.log
+          if [ -f test/widget_test.dart ] && grep -q "MyApp" test/widget_test.dart; then rm test/widget_test.dart; fi
+          flutter pub get 2>&1 | tee -a ci.log
+          dart run tool/configure_platforms.dart 2>&1 | tee -a ci.log
+          dart run tool/configure_brand.dart --name "$BRAND_NAME" --id "$BRAND_ID" ${BRAND_ICON:+--icon "$BRAND_ICON"} 2>&1 | tee -a ci.log
+          dart run flutter_launcher_icons 2>&1 | tee -a ci.log
+
+      - name: Android NDK (qayta urinish bilan)
+        # Gradle NDK ni yig'ish paytida yuklaydi; Google serveridagi arxiv buzuq kelsa («ZipFile unknown archive») yig'ish
+        # yiqiladi. Kerakli NDK ni oldindan 3 urinish bilan o'rnatamiz; bo'lmasa runner'da oldindan o'rnatilgan eng yangi NDK ishlatiladi.
+        timeout-minutes: 15
+        run: |
+          GRADLE_APP=$(ls android/app/build.gradle.kts android/app/build.gradle 2>/dev/null | head -1)
+          NDK=$(grep -rhoE 'ndkVersion[^0-9"]*"?[0-9]+\.[0-9]+\.[0-9]+' "$FLUTTER_ROOT/packages/flutter_tools/gradle" 2>/dev/null | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | sort -V | tail -1)
+          echo "::notice::Flutter NDK: ${NDK:-aniqlanmadi}; o'rnatilganlar: $(ls "$ANDROID_HOME/ndk" 2>/dev/null | tr '\n' ' ')"
+          if [ -n "$NDK" ] && [ -f "$ANDROID_HOME/ndk/$NDK/source.properties" ]; then exit 0; fi
+          SDKM="$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager"
+          if [ -n "$NDK" ]; then
+            for i in 1 2 3; do
+              yes | timeout 300 "$SDKM" "ndk;$NDK" > ndk.log 2>&1 || true
+              if [ -f "$ANDROID_HOME/ndk/$NDK/source.properties" ]; then echo "::notice::NDK $NDK o'rnatildi"; exit 0; fi
+              echo "::warning::NDK $NDK yuklash $i-urinishda muvaffaqiyatsiz: $(grep -iE 'error|warning' ndk.log | tail -1)"
+              rm -rf "$ANDROID_HOME/ndk/$NDK"; sleep 20
+            done
+          fi
+          LOCAL=$(ls "$ANDROID_HOME/ndk" 2>/dev/null | grep -E '^[0-9]+\.[0-9]+\.[0-9]+$' | sort -V | tail -1)
+          [ -n "$LOCAL" ] || { echo "::error::NDK yo'q"; exit 1; }
+          sed -i -E "s/ndkVersion *= *flutter\.ndkVersion/ndkVersion = \"$LOCAL\"/; s/ndkVersion +flutter\.ndkVersion/ndkVersion \"$LOCAL\"/" "$GRADLE_APP"
+          grep -n ndkVersion "$GRADLE_APP" || sed -i -E "0,/^android *\{/s//android {\n    ndkVersion = \"$LOCAL\"/" "$GRADLE_APP"
+          echo "::warning::NDK $NDK yuklanmadi — runner'dagi $LOCAL ishlatiladi ($(grep -n ndkVersion "$GRADLE_APP"))"
+
+      - name: Imzo
+        env:
+          KEYSTORE: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          STORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: |
+          set -o pipefail
+          if [ -n "$KEYSTORE" ]; then
+            echo "$KEYSTORE" | base64 -d > android/app/upload.jks
+            printf 'storeFile=upload.jks\nstorePassword=%s\nkeyAlias=%s\nkeyPassword=%s\n' "$STORE_PASSWORD" "$KEY_ALIAS" "$KEY_PASSWORD" > android/key.properties
+            echo "SIGNED_RELEASE=true" >> "$GITHUB_ENV"
+          fi
+          dart run tool/configure_signing.dart 2>&1 | tee -a ci.log
+
+      - name: APK
+        run: |
+          set -o pipefail
+          defines=(--dart-define=EDUX_SERVER="$BRAND_SERVER" --dart-define=EDUX_ORG="$BRAND_ORG" --dart-define=EDUX_BRAND="$BRAND_NAME")
+          flutter build apk --release --build-number=${{ github.run_number }} "${defines[@]}" 2>&1 | tee build.log
+          cp build/app/outputs/flutter-apk/app-release.apk "$BRAND_ID.apk"
+          if [ "$SIGNED_RELEASE" = "true" ]; then
+            dart run tool/configure_platforms.dart --store 2>&1 | tee -a ci.log
+            flutter build appbundle --release --build-number=${{ github.run_number }} "${defines[@]}" --dart-define=EDUX_STORE=true 2>&1 | tee -a build.log
+            cp build/app/outputs/bundle/release/app-release.aab "$BRAND_ID.aab"
+          fi
+
+      - name: Reliz
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          tag="brand-$BRAND_ID"
+          files=("$BRAND_ID.apk"); [ -f "$BRAND_ID.aab" ] && files+=("$BRAND_ID.aab")
+          notes="$BRAND_NAME — markaz ilovasi (tashkilot $BRAND_ORG, server $BRAND_SERVER). Yig'ish ${{ github.run_number }}, ${{ github.sha }}."
+          if gh release view "$tag" > /dev/null 2>&1; then
+            gh release edit "$tag" --title "$BRAND_NAME" --notes "$notes"
+            gh release upload "$tag" "${files[@]}" --clobber
+          else
+            gh release create "$tag" "${files[@]}" --prerelease --title "$BRAND_NAME" --notes "$notes" --target "$GITHUB_SHA"
+          fi
+          echo "::notice::Tayyor: $(gh release view "$tag" --json url --jq .url)"
+
+      - name: Xato tafsilotlari
+        if: failure()
+        run: |
+          for file in ci.log build.log; do
+            [ -f "$file" ] || continue
+            grep -nE "(error|Error|FAILED|Exception|What went wrong|\.dart:[0-9]+:[0-9]+)" "$file" | head -12 | while IFS= read -r line; do
+              echo "::error title=$file::$(echo "$line" | cut -c1-900)"
+            done
+          done

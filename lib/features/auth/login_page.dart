@@ -2,6 +2,7 @@
 // o'quvchi — shaxsiy havola orqali. Ota-ona hisobsiz ham to'lov havolasi bilan to'lay oladi. Til va server manzili shu yerda.
 import 'package:flutter/material.dart';
 
+import '../../core/brand.dart';
 import '../../core/api.dart';
 import '../../core/help_links.dart';
 import '../../core/design.dart';
@@ -434,7 +435,7 @@ class _KoshinPanel extends StatelessWidget {
         Row(children: <Widget>[
           GestureDetector(onLongPress: onLogoLongPress, child: Image.asset('assets/brand/mark.png', width: 40, height: 40)),
           const SizedBox(width: 10),
-          Text('EduX', style: AppTheme.display(size: 23, color: Colors.white).copyWith(letterSpacing: -0.4)),
+          Flexible(child: Text(brandName, overflow: TextOverflow.ellipsis, style: AppTheme.display(size: 23, color: Colors.white).copyWith(letterSpacing: -0.4))),
           const Spacer(),
           if (!wide) const LanguageButton(color: Colors.white),
         ]),

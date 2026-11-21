@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'core/api.dart';
+import 'core/brand.dart';
 import 'core/i18n.dart';
 import 'core/koshin.dart';
 import 'core/push.dart';
@@ -76,7 +77,7 @@ class _EduxAppState extends State<EduxApp> with WidgetsBindingObserver {
       key: ValueKey<String>(I18n.locale),
       themeAnimationDuration: Duration.zero,
       navigatorKey: rootNavigator,
-      title: 'EduX',
+      title: brandName,
       debugShowCheckedModeBanner: false,
       theme: buildTheme(),
       locale: Locale(I18n.materialLocale),

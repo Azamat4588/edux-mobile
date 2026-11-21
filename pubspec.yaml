@@ -1,7 +1,7 @@
 name: edux
 description: EduX — test, CRM, kurslar va maktab tizimining mobil ilovasi (iPhone, iPad va Android).
 publish_to: none
-version: 3.35.0+43
+version: 3.36.0+44
 
 environment:
   sdk: '>=3.5.0 <4.0.0'

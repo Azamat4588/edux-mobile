@@ -10,6 +10,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'api.dart';
+import 'brand.dart';
 import 'design.dart';
 import 'feedback.dart';
 import 'i18n.dart';
@@ -678,6 +679,8 @@ class Session extends ChangeNotifier implements ApiCredentials {
       if (isPlatformAdmin) unawaited(PushService.instance.attach(this));
       return;
     }
+    // 3.36: markaz ilovasi (EDUX_ORG) — foydalanuvchi o'sha markazda bo'lsa, doim shu markaz ochiladi.
+    if (isBranded && memberships.any((item) => item.organizationId == brandOrganization)) _organizationId = brandOrganization;
     final saved = memberships.where((item) => item.organizationId == _organizationId);
     if (saved.isEmpty) {
       if (memberships.length > 1) {
