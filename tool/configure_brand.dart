@@ -40,17 +40,19 @@ void main(List<String> args) {
     gradle.writeAsStringSync(updated);
   }
 
-  if (icon != null && File(icon).existsSync()) {
+  final hasIcon = icon != null && File(icon).existsSync();
+  if (hasIcon) {
     for (final target in <String>['assets/brand/icon.png', 'assets/brand/mark.png']) {
       File(icon).copySync(target);
     }
-    final pubspec = File('pubspec.yaml');
-    pubspec.writeAsStringSync(pubspec
-        .readAsStringSync()
-        .split('\n')
-        .where((line) => !line.trimLeft().startsWith('adaptive_icon_'))
-        .map((line) => line == '  ios: true' ? '  ios: false' : line)
-        .join('\n'));
   }
+  // Faqat Android yig'iladi (ios/ papkasi yo'q); logotip bo'lsa — moslashuvchan ikonka o'rniga oddiy ikonka.
+  final pubspec = File('pubspec.yaml');
+  pubspec.writeAsStringSync(pubspec
+      .readAsStringSync()
+      .split('\n')
+      .where((line) => !hasIcon || !line.trimLeft().startsWith('adaptive_icon_'))
+      .map((line) => line == '  ios: true' ? '  ios: false' : line)
+      .join('\n'));
   stdout.writeln('EduX: markaz ilovasi sozlandi — $name (uz.edux.b.$id).');
 }
