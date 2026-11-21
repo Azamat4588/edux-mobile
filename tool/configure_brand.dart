@@ -4,7 +4,8 @@
 //
 // Android: ilova nomi (android:label), paket nomi uz.edux.b.<id> (EduX ilovasi bilan yonma-yon o'rnatiladi), ikonka va
 // kirish ekranidagi belgi (assets/brand/*.png) — markaz logotipi. Moslashuvchan (adaptive) ikonka o'chiriladi: logotip
-// oddiy ikonka sifatida ishlatiladi (CI uni 1024×1024 kvadratga rang fonida joylaydi). Takror ishga tushirish xavfsiz.
+// oddiy ikonka sifatida ishlatiladi (CI uni 1024×1024 kvadratga rang fonida joylaydi). Faqat Android (iOS ikonkasi yaratilmaydi).
+// Takror ishga tushirish xavfsiz.
 import 'dart:io';
 
 void main(List<String> args) {
@@ -48,6 +49,7 @@ void main(List<String> args) {
         .readAsStringSync()
         .split('\n')
         .where((line) => !line.trimLeft().startsWith('adaptive_icon_'))
+        .map((line) => line == '  ios: true' ? '  ios: false' : line)
         .join('\n'));
   }
   stdout.writeln('EduX: markaz ilovasi sozlandi — $name (uz.edux.b.$id).');
