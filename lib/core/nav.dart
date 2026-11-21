@@ -197,7 +197,11 @@ List<NavSection> buildNav(NavContext ctx) {
           _when(can('certificates'), NavTab('my.certificates', tr('Sertifikatlar'))),
         ]),
         _section('payments', tr("To'lovlarim"), 'wallet', <NavTab?>[_when(can('my_payments'), NavTab('my.payments', tr("To'lovlarim")))]),
-        _section('tutor', tr('AI ustoz'), 'sparkle', <NavTab?>[_when(can('tutor'), NavTab('my.tutor', tr('AI ustoz')))]),
+        _section('tutor', tr('AI ustoz'), 'sparkle', <NavTab?>[
+          _when(can('tutor'), NavTab('my.tutor', tr('AI ustoz'))),
+          // 3.35: AI speaking (server 2.90).
+          _when(can('tutor'), NavTab('my.speaking', tr('AI speaking'))),
+        ]),
       ]);
     }
   } else if (role == 'guardian') {

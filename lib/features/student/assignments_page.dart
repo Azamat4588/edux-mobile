@@ -86,6 +86,28 @@ class AssignmentCard extends StatelessWidget {
           if (asText(submission['content']).isNotEmpty) Text(asText(submission['content'])),
           if (submission['has_file'] == true)
             Text('📎 ${asText(submission['file_name'])}', style: TextStyle(color: AppColors.muted)),
+          // 3.35 (server 2.90): AI dastlabki tekshiruvi — vazifada «AI darhol izoh beradi» yoqilgan bo'lsa.
+          if (!graded && submission['ai'] is Map) ...<Widget>[
+            const SizedBox(height: 8),
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(color: AppColors.info.withAlpha(20), borderRadius: BorderRadius.circular(10)),
+              child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
+                Text(
+                  asMap(submission['ai'])['score'] == null
+                      ? tr('AI dastlabki tekshiruvi')
+                      : '${tr('AI dastlabki tekshiruvi')} · ${tr('taxminiy ball')}: ${number(asDouble(asMap(submission['ai'])['score']))} / ${asInt(assignment['max_score'])}',
+                  style: const TextStyle(fontWeight: FontWeight.w600),
+                ),
+                if (asText(asMap(submission['ai'])['feedback']).isNotEmpty) Text(asText(asMap(submission['ai'])['feedback'])),
+                Text(tr("Rasmiy bahoni o'qituvchi qo'yadi. Xatoni tuzatib, javobni qayta yuborishingiz mumkin."), style: TextStyle(color: AppColors.muted, fontSize: 12.5)),
+              ]),
+            ),
+          ] else if (!graded && asText(assignment['ai_mode'], 'off') != 'off' && asText(submission['content']).isNotEmpty) ...<Widget>[
+            const SizedBox(height: 6),
+            Text(tr('AI javobingizni tekshirmoqda — birozdan keyin sahifani yangilang.'), style: TextStyle(color: AppColors.muted, fontSize: 13)),
+          ],
           if (asText(submission['feedback']).isNotEmpty) ...<Widget>[
             const SizedBox(height: 8),
             Container(

@@ -63,6 +63,7 @@ import '../student/online_pay.dart';
 import '../student/student_home_page.dart';
 import '../support/support_page.dart';
 import '../testing/topic_tests_page.dart';
+import '../tutor/speaking_page.dart';
 import '../tutor/tutor_page.dart';
 
 /// Menyu konteksti Session'dan (rol, atamalar va ruxsatlar).
@@ -355,6 +356,8 @@ class _HomeShellState extends State<HomeShell> with WidgetsBindingObserver {
         return const BookingPage();
       case 'my.tutor':
         return const TutorPage();
+      case 'my.speaking':
+        return const SpeakingPage();
       case 'school.journal':
         return MasterDetail(master: const JournalPage(), hint: tr('Jurnalni tanlang — darslar va baholar shu yerda ochiladi.'));
       case 'school.attendance':
