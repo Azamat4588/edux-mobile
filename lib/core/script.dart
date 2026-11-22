@@ -1,4 +1,4 @@
-// 3.30 (server 2.74): o'zbek tilining ikki qo'shimcha yozuvi — kirill (oz, «Ўзбекча») va yangi lotin (yl, «Ózbekça»).
+// 3.30 (server 2.74): o'zbek tilining ikki qo'shimcha yozuvi — kirill (oz, «Ўзбекча») va yangi lotin (yl, «Özbekça»).
 // Matnlar alohida tarjima qilinmaydi: o'zbekcha (lotin) asl matn qoidalar bilan o'giriladi. Qoidalar veb
 // (resources/js/i18n/script.js) va server (app/Support/I18n/Script.php) bilan aynan bir xil — test/script_test.dart.
 // O'girilmaydi: brend va xalqaro qisqartmalar (SMS, Click, Telegram...), havola, e-pochta, {0} o'rinbosarlar, HTML teglar.
@@ -123,7 +123,7 @@ class Script {
       final lo = ch.toLowerCase();
       final nlo = _at(word, i + 1).toLowerCase();
       if ((lo == 'o' || lo == 'g') && _isApos(_at(word, i + 1))) {
-        final mapped = lo == 'o' ? 'ó' : 'ğ';
+        final mapped = lo == 'o' ? 'ö' : 'ğ';
         out.write(_isUpper(ch) ? mapped.toUpperCase() : mapped);
         i++;
         continue;

@@ -9,7 +9,7 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   test('asosiy qoidalar', () {
     expect(Script.convert("O'quvchilar", 'oz'), 'Ўқувчилар');
-    expect(Script.convert("O'quvchilar", 'yl'), 'Óquvçilar');
+    expect(Script.convert("O'quvchilar", 'yl'), 'Öquvçilar');
     expect(Script.convert("Telegram'ga xabar", 'oz'), "Telegram'га хабар");
     expect(Script.convert('{0} ta SMS', 'oz'), '{0} та SMS');
     expect(Script.convert('Operatsiya, pensiya', 'oz'), 'Операция, пенсия');

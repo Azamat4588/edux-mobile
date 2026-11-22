@@ -14,13 +14,13 @@ class I18n {
   static const Map<String, String> labels = <String, String>{
     'uz': "O'zbekcha",
     'oz': 'Ўзбекча',
-    'yl': 'Ózbekça',
+    'yl': 'Özbekça',
     'ru': 'Русский',
     'en': 'English',
   };
 
-  /// Tugmadagi qisqa nom (UZ, ЎЗ, ÓZ, RU, EN).
-  static const Map<String, String> short = <String, String>{'uz': 'UZ', 'oz': 'ЎЗ', 'yl': 'ÓZ', 'ru': 'RU', 'en': 'EN'};
+  /// Tugmadagi qisqa nom (UZ, ЎЗ, ÖZ, RU, EN).
+  static const Map<String, String> short = <String, String>{'uz': 'UZ', 'oz': 'ЎЗ', 'yl': 'ÖZ', 'ru': 'RU', 'en': 'EN'};
 
   /// Tizim (Material) tili: kirill va yangi lotin — o'zbekcha.
   static String get materialLocale => Script.isScript(_locale) ? 'uz' : _locale;
