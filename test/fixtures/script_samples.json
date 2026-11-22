@@ -535,4 +535,7 @@
 ["KASSA CHEKI, MASHQ, AQSH, F.I.SH.","КАССА ЧЕКИ, МАШҚ, АҚШ, Ф.И.Ш.","KASSA ÇEKI, MAŞQ, AQŞ, F.I.Ş."],
 ["SMS, AI, IELTS va ChSB, MChJ","SMS, AI, IELTS ва ЧСБ, МЧЖ","SMS, AI, IELTS va ÇSB, MÇJ"],
 ["Atmos va Multicard orqali to'lov","Atmos ва Multicard орқали тўлов","Atmos va Multicard orqali tölov"],
-["Javoblar: A, B, C, D (to'g'risi C)","Жавоблар: А, Б, С, Д (тўғриси С)","Javoblar: A, B, C, D (töğrisi C)"]]
+["Javoblar: A, B, C, D (to'g'risi C)","Жавоблар: А, Б, С, Д (тўғриси С)","Javoblar: A, B, C, D (töğrisi C)"],
+["Serverda: sudo bash deploy/telephony/install-asterisk.sh ni ishga tushiring","Серверда: sudo bash deploy/telephony/install-asterisk.sh ни ишга туширинг","Serverda: sudo bash deploy/telephony/install-asterisk.sh ni işga tuşiring"],
+["Fayl ~/edux/.env da saqlanadi","Файл ~/edux/.env да сақланади","Fayl ~/edux/.env da saqlanadi"],
+["km/soat va g/mol","км/соат ва г/мол","km/soat va g/mol"]]

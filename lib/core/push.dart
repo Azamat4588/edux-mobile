@@ -59,7 +59,7 @@ class PushService {
 
   static final PushService instance = PushService._();
 
-  static const String appVersion = '3.37.2';
+  static const String appVersion = '3.37.3';
 
   bool _ready = false;
   bool _initTried = false;

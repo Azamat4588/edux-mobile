@@ -13,7 +13,7 @@ class Script {
   static const String _apos = "'ʻʼ‘’`";
   static final RegExp _word = RegExp(r"[A-Za-z'ʻʼ‘’`]+");
   static final RegExp _protect = RegExp(
-    r'''(https?://\S+|www\.\S+|[\w.+-]+@[\w-]+\.[\w.-]+|\b[\w-]+\.(?:uz|com|io|org|net|ru)\b\S*|\{[^{}]*\}|<[^>]*>|&[a-z#0-9]+;|`[^`]*`|(?:^|\s)/[\w\-./:?=&]+|\b[\w-]+\.(?:php|js|json|md|sh|env|xlsx|csv|pdf|png|jpg|zip|apk|webp)\b|[A-Za-z0-9]*_[A-Za-z0-9_]+|(?<![A-Za-z'ʻʼ‘’`])(?=[A-Za-z0-9₀-₉₊₋]*[0-9₀-₉])[A-Z][a-z]?(?:[A-Z][a-z]?|[0-9₀-₉₊₋]|n(?=[A-Z0-9₀-₉₊₋]))*(?![A-Za-z'ʻʼ‘’`])|(?<=[–—])[A-Z][a-z]?(?:[A-Z][a-z]?)*(?![A-Za-z'ʻʼ‘’`])|\b(?:HCHO|COOH|CHO)\b)''',
+    r'''(https?://\S+|www\.\S+|[\w.+-]+@[\w-]+\.[\w.-]+|\b[\w-]+\.(?:uz|com|io|org|net|ru)\b\S*|\{[^{}]*\}|<[^>]*>|&[a-z#0-9]+;|`[^`]*`|(?:^|\s)/[\w\-./:?=&]+|~/[\w.\-/]*|\b[\w.-]+(?:/[\w.-]+)+\.(?:php|js|json|md|sh|env|conf|py|yml|yaml|service|log|ini|txt)\b|\b[\w-]+\.(?:php|js|json|md|sh|env|xlsx|csv|pdf|png|jpg|zip|apk|webp)\b|[A-Za-z0-9]*_[A-Za-z0-9_]+|(?<![A-Za-z'ʻʼ‘’`])(?=[A-Za-z0-9₀-₉₊₋]*[0-9₀-₉])[A-Z][a-z]?(?:[A-Z][a-z]?|[0-9₀-₉₊₋]|n(?=[A-Z0-9₀-₉₊₋]))*(?![A-Za-z'ʻʼ‘’`])|(?<=[–—])[A-Z][a-z]?(?:[A-Z][a-z]?)*(?![A-Za-z'ʻʼ‘’`])|\b(?:HCHO|COOH|CHO)\b)''',
   );
 
   /// O'zgarmaydigan so'zlar: brend, mahsulot va xalqaro qisqartmalar (katta-kichik harfi bilan aynan).
@@ -31,6 +31,7 @@ class Script {
     'LaTeX', 'MathJax', 'Meta', 'Pixel', 'Ads', 'TikTok', 'Uzbekistan', 'Aqlly', 'Igoo', 'Darslinker', 'UstozCRM', 'Zukkoma', 'Umai', 'Edulog',
     'Soff', 'Alfa', 'PlayMarket', 'GitHub', 'GitLab', 'PerformTransaction', 'CancelTransaction', 'GetStatement', 'GetInformation', 'Mini',
     'TestFlight', 'Xcode', 'Gradle', 'Flutter', 'Tauri', 'Rust', 'Node', 'npm', 'Vite', 'Tailwind', 'Lucide', 'OFL',
+    'sudo', 'bash', 'apt', 'curl', 'wget', 'ffmpeg', 'artisan', 'systemctl', 'supervisorctl', 'git', 'composer', 'php', 'nginx', 'crontab', 'cron', 'unzip', 'docker', 'certbot',
   };
 
   /// Xalqaro qisqartmalar — lotincha qoladi. O'zbekcha qisqartmalar (BSB, DTM, STIR, MChJ...) o'giriladi.
