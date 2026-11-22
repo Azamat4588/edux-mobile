@@ -13,33 +13,35 @@ class Script {
   static const String _apos = "'ʻʼ‘’`";
   static final RegExp _word = RegExp(r"[A-Za-z'ʻʼ‘’`]+");
   static final RegExp _protect = RegExp(
-    r'(https?://\S+|www\.\S+|[\w.+-]+@[\w-]+\.[\w.-]+|\b[\w-]+\.(?:uz|com|io|org|net|ru)\b\S*|\{[^{}]*\}|<[^>]*>|&[a-z#0-9]+;|`[^`]*`|(?:^|\s)/[\w\-./:?=&]+|\b[\w-]+\.(?:php|js|json|md|sh|env|xlsx|csv|pdf|png|jpg|zip|apk|webp)\b)',
+    r'(https?://\S+|www\.\S+|[\w.+-]+@[\w-]+\.[\w.-]+|\b[\w-]+\.(?:uz|com|io|org|net|ru)\b\S*|\{[^{}]*\}|<[^>]*>|&[a-z#0-9]+;|`[^`]*`|(?:^|\s)/[\w\-./:?=&]+|\b[\w-]+\.(?:php|js|json|md|sh|env|xlsx|csv|pdf|png|jpg|zip|apk|webp)\b|[A-Za-z0-9]*_[A-Za-z0-9_]+|(?<![A-Za-z'ʻʼ‘’`])(?=[A-Za-z0-9₀-₉₊₋]*[0-9₀-₉])[A-Z][a-z]?(?:[A-Z][a-z]?|[0-9₀-₉₊₋]|n(?=[A-Z0-9₀-₉₊₋]))*(?![A-Za-z'ʻʼ‘’`])|(?<=[–—])[A-Z][a-z]?(?:[A-Z][a-z]?)*(?![A-Za-z'ʻʼ‘’`])|\b(?:HCHO|COOH|CHO)\b)',
   );
 
   /// O'zgarmaydigan so'zlar: brend, mahsulot va xalqaro qisqartmalar (katta-kichik harfi bilan aynan).
   static const Set<String> keepWords = <String>{
-    'EduX', 'Call', 'call', 'Click', 'Payme', 'Uzum', 'Paynet', 'Oson', 'OSON', 'Alif', 'Pay', 'Telegram', 'Instagram', 'Excel', 'Google', 'Android', 'iPhone', 'iPad',
-    'Windows', 'macOS', 'Linux', 'Hikvision', 'ZKTeco', 'OpenAI', 'Claude', 'Gemini', 'Face', 'Bluetooth', 'WhatsApp', 'Facebook', 'YouTube', 'Zoom',
-    'Meet', 'Zadarma', 'OnlinePBX', 'UTEL', 'Modme', 'ModMe', 'AlfaCRM', 'Hollihop', 'Eskiz', 'Infobip', 'PlayMobile', 'Chrome', 'Safari', 'Firefox',
-    'Yandex', 'Bing', 'Firebase', 'Apple', 'Microsoft', 'Outlook', 'iCloud', 'Sheets', 'Docs', 'Drive', 'Calendar', 'Webmaster', 'Search', 'Console',
-    'Store', 'Play', 'App', 'Gmail', 'Mail', 'Webhook', 'webhook', 'Markdown', 'Ollama', 'Groq', 'OpenRouter', 'DeepSeek', 'Mistral', 'Anthropic',
-    'Uzcard', 'Humo', 'Visa', 'Mastercard', 'Kapitalbank', 'Ipak', "Yo'li", 'Supervisor', 'Nginx', 'PHP', 'MySQL', 'Redis', 'Python', 'Pillow',
-    'NumPy', 'Laravel', 'Vue', 'Ubuntu', 'Debian', 'healthchecks', 'UptimeRobot', 'BetterStack', 'Cloudflare', 'Mock', 'Writing', 'Reading',
-    'Listening', 'Speaking', 'Task', 'Band', 'Academic', 'General', 'Beginner', 'Elementary', 'Intermediate', 'Advanced', 'Upper', 'Pre',
-    'Milliy', 'Lojuvard', 'Atlas', 'Bahor', 'Grafit', 'Okean', 'Onest', 'Commissioner', 'Manrope', 'Nunito', 'Golos', 'Inter', 'Roboto',
-    'Asterisk', 'FreePBX', 'Bitrix', 'amoCRM', 'Sipuni', 'Mango', 'Zvonobot', 'Kiosk', 'Wi', 'Fi', 'Wi-Fi', 'LaTeX', 'MathJax', 'Meta', 'Pixel',
-    'Ads', 'TikTok', 'Uzbekistan', 'Aqlly', 'Igoo', 'Darslinker', 'UstozCRM', 'Zukkoma', 'Umai', 'Edulog', 'Soff', 'Alfa', 'PlayMarket',
-    'Mini', 'TestFlight', 'Xcode', 'Gradle', 'Flutter', 'Tauri', 'Rust', 'Node', 'npm', 'Vite', 'Tailwind', 'Lucide', 'OFL',
+    'EduX', 'Call', 'call', 'Click', 'Payme', 'Uzum', 'Paynet', 'Oson', 'OSON', 'Alif', 'Pay', 'Atmos', 'ATMOS', 'Multicard', 'Telegram', 'Instagram',
+    'Excel', 'Google', 'Android', 'iPhone', 'iPad', 'Windows', 'macOS', 'Linux', 'Hikvision', 'ZKTeco', 'OpenAI', 'Claude', 'Gemini', 'Face',
+    'Bluetooth', 'WhatsApp', 'Facebook', 'YouTube', 'Zoom', 'Meet', 'Zadarma', 'OnlinePBX', 'UTEL', 'Modme', 'ModMe', 'AlfaCRM', 'Hollihop', 'Eskiz',
+    'Infobip', 'PlayMobile', 'Chrome', 'Safari', 'Firefox', 'Yandex', 'Bing', 'Firebase', 'Apple', 'Microsoft', 'Outlook', 'iCloud', 'Sheets', 'Docs',
+    'Drive', 'Calendar', 'Webmaster', 'Search', 'Console', 'Store', 'Play', 'App', 'Gmail', 'Mail', 'Webhook', 'webhook', 'Markdown', 'Ollama',
+    'Groq', 'OpenRouter', 'DeepSeek', 'Mistral', 'Anthropic', 'Uzcard', 'Humo', 'Visa', 'Mastercard', 'Kapitalbank', 'Ipak', "Yo'li", 'Supervisor',
+    'Nginx', 'PHP', 'MySQL', 'Redis', 'Python', 'Pillow', 'NumPy', 'Laravel', 'Vue', 'Ubuntu', 'Debian', 'healthchecks', 'UptimeRobot', 'BetterStack',
+    'Cloudflare', 'Mock', 'Writing', 'Reading', 'Listening', 'Speaking', 'Task', 'Band', 'Academic', 'General', 'Beginner', 'Elementary',
+    'Intermediate', 'Advanced', 'Upper', 'Pre', 'Milliy', 'Lojuvard', 'Atlas', 'Bahor', 'Grafit', 'Okean', 'Onest', 'Commissioner', 'Manrope',
+    'Nunito', 'Golos', 'Inter', 'Roboto', 'Asterisk', 'FreePBX', 'Bitrix', 'amoCRM', 'Sipuni', 'Mango', 'Zvonobot', 'Kiosk', 'Wi', 'Fi', 'Wi-Fi',
+    'LaTeX', 'MathJax', 'Meta', 'Pixel', 'Ads', 'TikTok', 'Uzbekistan', 'Aqlly', 'Igoo', 'Darslinker', 'UstozCRM', 'Zukkoma', 'Umai', 'Edulog',
+    'Soff', 'Alfa', 'PlayMarket', 'GitHub', 'GitLab', 'PerformTransaction', 'CancelTransaction', 'GetStatement', 'GetInformation', 'Mini',
+    'TestFlight', 'Xcode', 'Gradle', 'Flutter', 'Tauri', 'Rust', 'Node', 'npm', 'Vite', 'Tailwind', 'Lucide', 'OFL',
   };
 
   /// Xalqaro qisqartmalar — lotincha qoladi. O'zbekcha qisqartmalar (BSB, DTM, STIR, MChJ...) o'giriladi.
   static const Set<String> keepUpper = <String>{
     'SMS', 'AI', 'QR', 'PDF', 'IELTS', 'SAT', 'CEFR', 'TOEFL', 'GMAT', 'GRE', 'CRM', 'LMS', 'KPI', 'LTV', 'UTM', 'USB', 'API', 'ID', 'IP', 'PBX',
-    'SMTP', 'URL', 'OMR', 'XP', 'MCP', 'HTML', 'CSV', 'JSON', 'XML', 'PIN', 'OTP', 'SIP', 'VoIP', 'HTTP', 'HTTPS', 'SSL', 'TLS', 'DNS', 'VPS',
-    'CPU', 'RAM', 'SSD', 'HDD', 'GB', 'MB', 'KB', 'TB', 'OK', 'IT', 'UI', 'UX', 'PWA', 'APK', 'IPA', 'iOS', 'SEO', 'FAQ', 'IBAN', 'SWIFT',
-    'MFO', 'NFC', 'RFID', 'HID', 'PC', 'TV', 'LED', 'GPS', 'VIP', 'CEO', 'HR', 'PR', 'SaaS', 'ZIP', 'WEBP', 'PNG', 'JPG', 'JPEG', 'MP4', 'MP3',
-    'WAV', 'DOCX', 'XLSX', 'PPTX', 'TXT', 'S3', 'WebDAV', 'FCM', 'ASCII', 'UTC', 'GMT', 'NB', 'PS', 'AM', 'PM', 'ISO', 'IIN', 'STEM', 'STEAM',
-    'GPT', 'LLM', 'TTS', 'STT', 'ASR', 'ELO', 'MMR', 'BMI', 'IQ', 'EQ', 'DISC', 'MBTI', 'RIASEC', 'SMART', 'GROW', 'OKR', 'SWOT', 'KYC', 'P2P',
+    'SMTP', 'URL', 'OMR', 'XP', 'MCP', 'HTML', 'CSV', 'JSON', 'XML', 'PIN', 'OTP', 'SIP', 'VoIP', 'HTTP', 'HTTPS', 'SSL', 'TLS', 'DNS', 'VPS', 'CPU',
+    'RAM', 'SSD', 'HDD', 'GB', 'MB', 'KB', 'TB', 'OK', 'IT', 'UI', 'UX', 'PWA', 'APK', 'IPA', 'iOS', 'SEO', 'FAQ', 'IBAN', 'SWIFT', 'MFO', 'NFC',
+    'RFID', 'HID', 'PC', 'TV', 'LED', 'GPS', 'VIP', 'CEO', 'HR', 'PR', 'SaaS', 'ZIP', 'WEBP', 'PNG', 'JPG', 'JPEG', 'MP4', 'MP3', 'WAV', 'DOCX',
+    'XLSX', 'PPTX', 'TXT', 'S3', 'WebDAV', 'FCM', 'ASCII', 'UTC', 'GMT', 'NB', 'PS', 'AM', 'PM', 'ISO', 'IIN', 'STEM', 'STEAM', 'GPT', 'LLM', 'TTS',
+    'STT', 'ASR', 'ELO', 'MMR', 'BMI', 'IQ', 'EQ', 'DISC', 'MBTI', 'RIASEC', 'SMART', 'GROW', 'OKR', 'SWOT', 'KYC', 'P2P', 'PUSH', 'POP', 'SHA',
+    'LIFO', 'FIFO', 'ENQUEUE', 'DEQUEUE',
   };
 
   static const Map<String, String> _cyr = <String, String>{
@@ -55,6 +57,8 @@ class Script {
   static final RegExp _mixed = RegExp(r'^[a-z]+[A-Z]');
   static final RegExp _edgeApos = RegExp(r"^['ʻʼ‘’`]+|['ʻʼ‘’`]+$");
   static final RegExp _brand = RegExp(r"^(.+?)(['’])([a-z]+)$");
+  // O'zbek lotinida «w» yo'q, «c» faqat «ch» da — bunday so'z chet tilidan (check, cache, switch, Scratch).
+  static final RegExp _foreign = RegExp(r'[wW]|[cC](?![hH])');
 
   static bool _isApos(String? ch) => ch != null && ch.isNotEmpty && _apos.contains(ch);
   static bool _isUpper(String ch) => ch != ch.toLowerCase();
@@ -142,13 +146,15 @@ class Script {
   static bool _keep(String word) {
     final bare = word.replaceAll(_edgeApos, '');
     if (keepWords.contains(bare) || keepUpper.contains(bare)) return true;
-    return _mixed.hasMatch(bare);
+    // Bitta harf (javob varianti «C», koeffitsiyent «c») — o'giriladi.
+    return _mixed.hasMatch(bare) || (bare.length > 1 && _foreign.hasMatch(bare));
   }
 
   static String _convertWord(String w, String Function(String) convert) {
-    if (_keep(w)) return w;
+    // Avval «brend + qo'shimcha» (GitHub'dagi: brend va apostrof qoladi, qo'shimcha o'giriladi), keyin o'zgarmas so'zlar.
     final match = _brand.firstMatch(w);
     if (match != null && _keep(match.group(1)!)) return match.group(1)! + match.group(2)! + convert(match.group(3)!);
+    if (_keep(w)) return w;
     return convert(w);
   }
 
