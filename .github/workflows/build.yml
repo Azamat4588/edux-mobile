@@ -19,7 +19,10 @@ on:
   push:
     # main — to'liq yig'ish va reliz; boshqa branch'lar — faqat tahlil va testlar (`check` job, relizsiz).
     branches: ['**', '!screenshots']
+    # «EduX Shlyuz» (gateway/) — o'z workflow'i bor (gateway.yml), asosiy ilova qayta yig'ilmaydi.
+    paths-ignore: ['gateway/**', '.github/workflows/gateway.yml']
   pull_request:
+    paths-ignore: ['gateway/**', '.github/workflows/gateway.yml']
   workflow_dispatch:
 
 concurrency:
