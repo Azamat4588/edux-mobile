@@ -38,6 +38,7 @@ class SmsEngine(private val context: Context) {
             if (!reg.ok) return failed(reg.message())
             registered = true
         }
+        flushBank(pairing, deviceId)
         val next = Api.call(pairing, deviceId, "GET", "${pairing.smsPrefix}/next?limit=10&device_id=" + URLEncoder.encode(deviceId, "UTF-8"))
         if (next.revoked || next.code == 404) return revoked(next)
         if (!next.ok) return failed(next.message())
@@ -77,6 +78,32 @@ class SmsEngine(private val context: Context) {
         if (!reported) return failed("report")
         val full = messages.length() >= 10 && data.isNull("paused_until")
         return if (full) 0 else pause.coerceAtLeast(2000)
+    }
+
+    /** Bank SMS'lari navbatini serverga yuboradi (kartaga o'tkazmani avtomatik tasdiqlash uchun). */
+    private fun flushBank(pairing: Store.Pairing, deviceId: String) {
+        if (pairing.scope == "platform") return
+        while (true) {
+            val items = Store.bankPending(context)
+            if (items.length() == 0) return
+            val batch = JSONArray()
+            for (i in 0 until minOf(50, items.length())) batch.put(items.get(i))
+            val response = Api.call(pairing, deviceId, "POST", "crm/sms/gateway/incoming", JSONObject().put("device_id", deviceId).put("messages", batch))
+            if (!response.ok && response.code != 422) {
+                Store.updateStatus(context, "sms") { it.put("bank_error", response.message()) }
+                return
+            }
+            Store.dropBank(context, batch.length())
+            Store.updateStatus(context, "sms") {
+                it.put("bank_sent", it.optInt("bank_sent") + batch.length()).remove("bank_error")
+            }
+            // Server sozlamada SMS manbasini o'chirgan — bank SMS'larini yig'ish to'xtaydi.
+            if (response.ok && !response.json().optBoolean("enabled", true)) {
+                Store.setBank(context, false)
+                Store.updateStatus(context, "sms") { it.put("bank_error", "server: disabled") }
+                return
+            }
+        }
     }
 
     fun reset() {

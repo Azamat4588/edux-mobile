@@ -20,7 +20,11 @@ android {
         minSdk = 24
         targetSdk = 34
         versionCode = (System.getenv("VERSION_CODE") ?: "1").toInt()
-        versionName = "1.0.0"
+        versionName = "1.1.0"
+        // SIP (Linphone) mahalliy kutubxonalari — faqat zamonaviy telefonlar (APK hajmi).
+        ndk {
+            abiFilters += listOf("arm64-v8a", "armeabi-v7a")
+        }
     }
 
     signingConfigs {
@@ -63,4 +67,6 @@ dependencies {
     implementation("androidx.activity:activity-ktx:1.9.2")
     implementation("androidx.work:work-runtime-ktx:2.9.1")
     implementation("com.journeyapps:zxing-android-embedded:4.3.0")
+    // SIP softfon (EduX ATS). Linphone SDK — GPLv3 (ilova manbasi ochiq: edux-mobile/gateway).
+    implementation("org.linphone.no-video:linphone-sdk-android:5.4.+")
 }

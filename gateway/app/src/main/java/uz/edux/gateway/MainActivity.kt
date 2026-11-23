@@ -231,65 +231,152 @@ class MainActivity : ComponentActivity() {
     private fun askPermissions() {
         val wanted = mutableListOf<String>()
         if (Store.smsOn(this)) wanted += Device.smsPermissions()
+        if (Store.bankOn(this)) wanted += android.Manifest.permission.RECEIVE_SMS
         if (Store.callsOn(this)) wanted += Device.callPermissions()
+        if (Store.sipOn(this)) wanted += android.Manifest.permission.RECORD_AUDIO
         if (Build.VERSION.SDK_INT >= 33) wanted += "android.permission.POST_NOTIFICATIONS"
         val missing = wanted.filter { !Device.granted(this, it) }
         if (missing.isNotEmpty()) permissions.launch(missing.toTypedArray())
+    }
+
+    private fun toggle(label: String, checked: Boolean, onChange: (Boolean) -> Unit): Switch = Switch(this).apply {
+        text = label
+        textSize = 16f
+        typeface = Typeface.DEFAULT_BOLD
+        isChecked = checked
+        setOnCheckedChangeListener { _, on -> onChange(on) }
+    }
+
+    private fun applied(on: Boolean) {
+        if (on) {
+            askPermissions()
+            GatewayService.ensure(this)
+            GatewayService.poke(this)
+            Watchdog.schedule(this)
+        } else if (!Store.active(this)) {
+            GatewayService.stop(this)
+            Watchdog.cancel(this)
+        } else {
+            GatewayService.poke(this)
+        }
     }
 
     private fun renderStatus(pairing: Store.Pairing) {
         root.addView(text(Texts.format(this, "paired_as", pairing.organizationName, pairing.userName), 15f, muted))
         val updates = mutableListOf<() -> Unit>()
 
-        fun section(kind: String, label: String, allowed: Boolean) {
-            if (!allowed) return
+        // Operator holati (call markaz).
+        if (pairing.calls) {
             val box = card()
-            val toggle = Switch(this).apply {
-                text = label
-                textSize = 17f
-                typeface = Typeface.DEFAULT_BOLD
-                isChecked = if (kind == "sms") Store.smsOn(context) else Store.callsOn(context)
-                setOnCheckedChangeListener { _, on ->
-                    if (kind == "sms") Store.setSms(context, on) else Store.setCalls(context, on)
-                    if (on) {
-                        Store.updateStatus(context, kind) { it.remove("stopped") }
-                        askPermissions()
-                        GatewayService.ensure(context)
-                        GatewayService.poke(context)
-                        Watchdog.schedule(context)
-                    } else if (!Store.active(context)) {
-                        GatewayService.stop(context)
-                        Watchdog.cancel(context)
+            box.addView(text(t("operator"), 15f, bold = true))
+            val row = LinearLayout(this).apply { orientation = LinearLayout.HORIZONTAL }
+            val chips = mutableMapOf<String, Button>()
+            fun paint(current: String) {
+                row.removeAllViews()
+                for (key in listOf("available", "break", "offline")) {
+                    val chip = Ui.chip(this, t("status_$key"), current == key) {
+                        paint(key)
+                        CallCenter.setStatus(this, key) { ok -> if (!ok) runOnUiThread { paint(Store.status(this, "calls").optString("operator", "offline")) } }
                     }
+                    chips[key] = chip
+                    row.addView(chip)
                 }
             }
-            box.addView(toggle)
+            paint(Store.status(this, "calls").optString("operator", "offline"))
+            box.addView(row)
+            root.addView(box)
+        }
+
+        if (pairing.sms) {
+            val box = card()
+            box.addView(toggle(t("sms"), Store.smsOn(this)) { on ->
+                Store.setSms(this, on)
+                if (on) Store.updateStatus(this, "sms") { it.remove("stopped") }
+                applied(on)
+                render()
+            })
             val line1 = text("", 14f, muted)
             val line2 = text("", 13f, muted)
             val line3 = text("", 13f, danger)
-            box.addView(line1)
-            box.addView(line2)
-            box.addView(line3)
+            box.addView(line1); box.addView(line2); box.addView(line3)
+            if (pairing.scope != "platform" && Store.smsOn(this)) {
+                box.addView(toggle(t("bank"), Store.bankOn(this)) { on -> Store.setBank(this, on); applied(true); render() })
+                if (Store.bankOn(this)) {
+                    box.addView(text(t("bank_hint"), 13f, muted))
+                    val senders = EditText(this).apply {
+                        setText(Store.senders(this@MainActivity).joinToString(", "))
+                        textSize = 13f
+                        inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_MULTI_LINE
+                    }
+                    box.addView(senders)
+                    box.addView(button(t("bank_save"), primary = false) { Store.setSenders(this, senders.text.toString()) })
+                    val bank = text("", 13f, muted)
+                    box.addView(bank)
+                    updates += {
+                        val status = Store.status(this, "sms")
+                        bank.text = Texts.format(this, "bank_status", status.optInt("bank_sent")) +
+                            status.optString("bank_error").let { if (it.isEmpty()) "" else " · $it" }
+                    }
+                }
+            }
             root.addView(box)
             updates += {
-                val status = Store.status(this, kind)
-                val on = if (kind == "sms") Store.smsOn(this) else Store.callsOn(this)
-                if (toggle.isChecked != on) toggle.isChecked = on
-                line1.text = if (kind == "sms") Texts.format(this, "sms_status", status.optInt("sent"), status.optInt("failed"))
-                else Texts.format(this, "calls_status", status.optInt("logged"), Store.pending(this).length(), status.optInt("dialed"))
+                val status = Store.status(this, "sms")
+                line1.text = Texts.format(this, "sms_status", status.optInt("sent"), status.optInt("failed"))
                 line2.text = Texts.format(this, "last_poll", ago(status.optLong("last_poll")))
                 val error = status.optString("last_error")
                 line3.text = when {
                     status.has("stopped") -> Texts.format(this, "stopped", error)
-                    error.isNotEmpty() && on -> error
+                    error.isNotEmpty() && Store.smsOn(this) -> error
                     else -> ""
                 }
                 line3.visibility = if (line3.text.isEmpty()) View.GONE else View.VISIBLE
             }
         }
 
-        section("sms", t("sms"), pairing.sms)
-        section("calls", t("calls"), pairing.calls)
+        if (pairing.calls) {
+            val box = card()
+            box.addView(toggle(t("calls"), Store.callsOn(this)) { on ->
+                Store.setCalls(this, on)
+                if (on) Store.updateStatus(this, "calls") { it.remove("stopped") }
+                applied(on)
+                render()
+            })
+            val line1 = text("", 14f, muted)
+            val line2 = text("", 13f, muted)
+            val line3 = text("", 13f, danger)
+            box.addView(line1); box.addView(line2); box.addView(line3)
+            if (Store.callsOn(this)) {
+                box.addView(toggle(t("sip"), Store.sipOn(this)) { on -> Store.setSip(this, on); applied(true); render() })
+                val sip = text("", 13f, muted)
+                box.addView(sip)
+                updates += {
+                    val status = Store.status(this, "sip")
+                    sip.text = when {
+                        !Store.sipOn(this) -> ""
+                        status.has("available") && !status.optBoolean("available") -> t("sip_unavailable")
+                        SipPhone.registration == "failed" -> Texts.format(this, "sip_state_failed", SipPhone.lastError)
+                        else -> t("sip_state_" + SipPhone.registration)
+                    }
+                    sip.setTextColor(if (SipPhone.registration == "ok") success else muted)
+                    sip.visibility = if (sip.text.isEmpty()) View.GONE else View.VISIBLE
+                }
+                box.addView(button(t("queue_open"), primary = false) { startActivity(Intent(this, QueueActivity::class.java)) })
+            }
+            root.addView(box)
+            updates += {
+                val status = Store.status(this, "calls")
+                line1.text = Texts.format(this, "calls_status", status.optInt("logged"), Store.pending(this).length(), status.optInt("dialed"))
+                line2.text = Texts.format(this, "last_poll", ago(status.optLong("last_poll")))
+                val error = status.optString("last_error")
+                line3.text = when {
+                    status.has("stopped") -> Texts.format(this, "stopped", error)
+                    error.isNotEmpty() && Store.callsOn(this) -> error
+                    else -> ""
+                }
+                line3.visibility = if (line3.text.isEmpty()) View.GONE else View.VISIBLE
+            }
+        }
 
         // Uzilmasligi uchun: har band — holat va «Tuzatish».
         val checks = card()
@@ -318,8 +405,9 @@ class MainActivity : ComponentActivity() {
         }
         check(t("check_battery"), { Device.batteryUnrestricted(this) }) { Device.requestBatteryExemption(this) }
         check(t("check_notifications"), { Device.notificationsAllowed(this) }) { askPermissions(); Device.openAppSettings(this) }
-        if (pairing.sms) check(t("check_sms"), { Device.smsPermissions().all { Device.granted(this, it) } }) { askPermissions() }
+        if (pairing.sms) check(t("check_sms"), { Device.smsPermissions().all { Device.granted(this, it) } && (!Store.bankOn(this) || Device.granted(this, android.Manifest.permission.RECEIVE_SMS)) }) { askPermissions() }
         if (pairing.calls) check(t("check_calls"), { Device.callPermissions().all { Device.granted(this, it) } }) { askPermissions() }
+        if (Store.sipOn(this)) check(t("check_microphone"), { Device.granted(this, android.Manifest.permission.RECORD_AUDIO) }) { askPermissions() }
         check(t("check_data"), { Device.backgroundDataAllowed(this) }) { Device.openDataSaver(this) }
         if (Device.hasAutostart(this)) {
             checks.addView(text(t("check_autostart"), 14f))
@@ -328,9 +416,45 @@ class MainActivity : ComponentActivity() {
         checks.addView(text(t("tip"), 13f, muted))
         root.addView(checks)
 
+        // Diagnostika: server tomonidan ko'rinadigan holat (SMS kanali, ro'yxat, call markaz, SIP).
+        val diag = card()
+        val diagText = text("", 13f, muted)
+        diag.addView(button(t("diagnose"), primary = false) { diagnose(pairing, diagText) })
+        diag.addView(diagText)
+        root.addView(diag)
+
         root.addView(button(t("unpair"), primary = false) { confirmUnpair(pairing) })
         refresh = { updates.forEach { it() } }
         refresh?.invoke()
+    }
+
+    private fun diagnose(pairing: Store.Pairing, out: TextView) {
+        out.setTextColor(muted)
+        out.text = t("diag_running")
+        Thread {
+            val lines = mutableListOf<String>()
+            lines += "${if (GatewayService.running) "✓" else "✗"} ${t("diag_service")}"
+            val response = try { Api.call(pairing, Store.deviceId(this), "GET", "gateway/me") } catch (e: Exception) { null }
+            when {
+                response == null -> lines += "✗ ${t("diag_server")}: ${t("no_internet")}"
+                response.revoked -> lines += "✗ ${t("diag_token")}: ${response.message()}"
+                !response.ok -> lines += "✗ ${t("diag_server")}: ${response.message()}"
+                else -> {
+                    lines += "✓ ${t("diag_server")}"
+                    val rows = response.json().optJSONArray("diagnostics")
+                    for (i in 0 until (rows?.length() ?: 0)) {
+                        val row = rows!!.getJSONObject(i)
+                        lines += "${if (row.optBoolean("ok")) "✓" else "✗"} ${row.optString("note")}"
+                    }
+                }
+            }
+            if (Store.sipOn(this)) lines += "${if (SipPhone.ready()) "✓" else "✗"} ${t("diag_sip")}: ${t("sip_state_" + SipPhone.registration)} ${SipPhone.lastError}"
+            GatewayService.poke(this)
+            runOnUiThread {
+                out.setTextColor(Color.parseColor("#101828"))
+                out.text = lines.joinToString("\n")
+            }
+        }.start()
     }
 
     private fun confirmUnpair(pairing: Store.Pairing) {

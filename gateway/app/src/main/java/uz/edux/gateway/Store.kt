@@ -73,8 +73,9 @@ object Store {
     }
 
     fun clear(context: Context) {
-        prefs(context).edit().remove("pairing").remove("status_sms").remove("status_calls").remove("pending")
-            .putBoolean("sms_on", false).putBoolean("calls_on", false).commit()
+        prefs(context).edit().remove("pairing").remove("status_sms").remove("status_calls").remove("status_sip").remove("pending")
+            .remove("bank_pending").remove("sip_credentials")
+            .putBoolean("sms_on", false).putBoolean("calls_on", false).putBoolean("bank_on", false).putBoolean("sip_on", false).commit()
     }
 
     // --- Vazifalar ---
@@ -86,6 +87,64 @@ object Store {
     fun setSms(context: Context, on: Boolean) = prefs(context).edit().putBoolean("sms_on", on).commit()
 
     fun setCalls(context: Context, on: Boolean) = prefs(context).edit().putBoolean("calls_on", on).commit()
+
+    // --- 1.1: bank SMS'lari, SIP softfon, sozlamalar ---
+
+    fun bankOn(context: Context): Boolean = smsOn(context) && pairing(context)?.scope != "platform" && prefs(context).getBoolean("bank_on", false)
+
+    fun setBank(context: Context, on: Boolean) = prefs(context).edit().putBoolean("bank_on", on).commit()
+
+    val DEFAULT_SENDERS = listOf(
+        "UZCARD", "HUMO", "HUMOCARD", "CardXabar", "Kapitalbank", "Hamkorbank", "NBU", "Agrobank", "Ipotekabank", "Asakabank",
+        "Xalqbank", "Infinbank", "TBC", "Anorbank", "Davrbank", "Orient", "Aloqabank", "Turonbank", "Trastbank", "SQB",
+        "Universalbank", "Uzumbank", "Ipakyuli", "Hayotbank", "Poytaxtbank", "Mikrokreditbank", "Tengebank", "KDB", "Ziraat",
+        "Octobank", "Garantbank", "AVO",
+    )
+
+    fun senders(context: Context): List<String> =
+        prefs(context).getString("bank_senders", null)?.split(",")?.map { it.trim() }?.filter { it.isNotEmpty() }?.ifEmpty { null } ?: DEFAULT_SENDERS
+
+    fun setSenders(context: Context, value: String) = prefs(context).edit().putString("bank_senders", value).commit()
+
+    fun sipOn(context: Context): Boolean = callsOn(context) && prefs(context).getBoolean("sip_on", false)
+
+    fun setSip(context: Context, on: Boolean) = prefs(context).edit().putBoolean("sip_on", on).commit()
+
+    /** SIP ma'lumotlari (server, port, login, parol) — serverdan (crm/callcenter/sip). */
+    fun sipCredentials(context: Context): JSONObject? = try {
+        prefs(context).getString("sip_credentials", null)?.let { JSONObject(it) }
+    } catch (_: Exception) {
+        null
+    }
+
+    fun setSipCredentials(context: Context, value: JSONObject?) {
+        val edit = prefs(context).edit()
+        if (value == null) edit.remove("sip_credentials") else edit.putString("sip_credentials", value.toString())
+        edit.commit()
+    }
+
+    @Synchronized
+    fun bankPending(context: Context): JSONArray = try {
+        JSONArray(prefs(context).getString("bank_pending", "[]") ?: "[]")
+    } catch (_: Exception) {
+        JSONArray()
+    }
+
+    @Synchronized
+    fun enqueueBank(context: Context, message: JSONObject) {
+        val items = bankPending(context)
+        items.put(message)
+        while (items.length() > 200) items.remove(0)
+        prefs(context).edit().putString("bank_pending", items.toString()).commit()
+    }
+
+    @Synchronized
+    fun dropBank(context: Context, count: Int) {
+        val items = bankPending(context)
+        val left = JSONArray()
+        for (i in count until items.length()) left.put(items.get(i))
+        prefs(context).edit().putString("bank_pending", left.toString()).commit()
+    }
 
     /** Xizmat ishlashi kerakmi (qo'riqchi shunga qaraydi). */
     fun active(context: Context): Boolean = smsOn(context) || callsOn(context)

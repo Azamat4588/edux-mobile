@@ -8,11 +8,9 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
-import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.provider.CallLog
-import android.telecom.TelecomManager
 import android.telephony.TelephonyManager
 import org.json.JSONArray
 import org.json.JSONObject
@@ -66,6 +64,8 @@ class CallEngine(private val context: Context, private val wake: () -> Unit) {
                     call.ringingSent = true
                     Store.enqueue(context, event(call, "ringing"))
                     wake()
+                    // Kim qo'ng'iroq qilyapti — lid yoki o'quvchi kartasi bildirishnomada.
+                    CallCenter.showCaller(context, call.number!!)
                 }
             }
             TelephonyManager.EXTRA_STATE_OFFHOOK -> {
@@ -178,6 +178,7 @@ class CallEngine(private val context: Context, private val wake: () -> Unit) {
         val pollMs = data.optLong("poll_ms", 30000).coerceIn(3000L, 120000L)
         Store.updateStatus(context, "calls") {
             it.put("last_poll", System.currentTimeMillis()).put("log", data.optString("log", "all")).remove("last_error")
+            it.put("operator", data.optString("status", "offline"))
             it.put("pending", Store.pending(context).length())
         }
         val dial = data.optJSONObject("dial")
@@ -205,6 +206,17 @@ class CallEngine(private val context: Context, private val wake: () -> Unit) {
                 // 422 — noto'g'ri hodisa: qayta yuborilmaydi (navbat tiqilib qolmasin).
                 Store.drop(context, batch.length())
                 val logged = response.json().optInt("logged")
+                // Gaplashilgan qo'ng'iroqqa natija yozish taklifi (qiziqdi, sinov darsi, qayta qo'ng'iroq ...).
+                val created = response.json().optJSONArray("calls") ?: JSONArray()
+                for (i in 0 until created.length()) {
+                    val item = created.getJSONObject(i)
+                    for (j in 0 until batch.length()) {
+                        val row = batch.getJSONObject(j)
+                        if (row.optString("id") == item.optString("event") && row.optString("phase") == "end" && row.optString("result") == "answered") {
+                            CallCenter.askOutcome(context, row.optString("phone"), item.optLong("call_id"))
+                        }
+                    }
+                }
                 Store.updateStatus(context, "calls") {
                     it.put("logged", it.optInt("logged") + logged).put("pending", Store.pending(context).length())
                     if (logged > 0) it.put("last_call", System.currentTimeMillis())
@@ -228,18 +240,17 @@ class CallEngine(private val context: Context, private val wake: () -> Unit) {
         return 20000
     }
 
-    /** Raqamni terish: CALL_PHONE bo'lsa — darhol, aks holda bildirishnoma (bosilsa terish oynasi). */
+    /** Vebdan «Qo'ng'iroq»: raqamni terish (SIP ulangan bo'lsa — softfon, aks holda SIM). */
     private fun dial(phone: String) {
         lastDialNumber = clean(phone)
         lastDialAt = System.currentTimeMillis()
-        val uri = Uri.fromParts("tel", phone, null)
-        if (Device.granted(context, Manifest.permission.CALL_PHONE)) {
-            try {
-                (context.getSystemService(Context.TELECOM_SERVICE) as TelecomManager).placeCall(uri, Bundle())
-                return
-            } catch (_: Exception) {}
+        if (SipPhone.ready() || Device.granted(context, Manifest.permission.CALL_PHONE)) {
+            CallCenter.dial(context, phone)
+            return
         }
+        // Ruxsat yo'q: bildirishnoma — bosilsa terish oynasi (fonda oyna ochib bo'lmaydi).
         try {
+            val uri = Uri.fromParts("tel", phone, null)
             val tap = PendingIntent.getActivity(context, 2, Intent(Intent.ACTION_DIAL, uri).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
                 PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
             val builder = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) Notification.Builder(context, GatewayService.DIAL_CHANNEL) else @Suppress("DEPRECATION") Notification.Builder(context)
@@ -250,4 +261,5 @@ class CallEngine(private val context: Context, private val wake: () -> Unit) {
             (context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager).notify(GatewayService.DIAL_NOTIFICATION_ID, note)
         } catch (_: Exception) {}
     }
+
 }
