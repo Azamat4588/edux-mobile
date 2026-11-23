@@ -2,17 +2,18 @@
 // planda bo'lganda har 10 soniyada yangilanadi), javobsiz qo'ng'iroqlar navbati, jurnal va skriptlar.
 // Barcha so'rovlar CallCenterRepository orqali.
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../core/api.dart';
-import '../../core/call_phone.dart';
 import '../../core/format.dart';
 import '../../core/i18n.dart';
 import '../../core/session.dart';
 import '../../core/theme.dart';
 import '../../core/widgets.dart';
+import '../access/gateway_moved_page.dart';
 import '../crm/leads_page.dart';
 import '../staff/students_page.dart';
 import 'callcenter_repository.dart';
@@ -264,8 +265,9 @@ class _LiveTab extends StatelessWidget {
             ]),
           ),
           const SizedBox(height: AppSpacing.m),
-          if (CallPhoneService.instance.supported) ...<Widget>[
-            const _PhoneModeCard(),
+          // 3.39: telefon orqali qo'ng'iroqlar va SIP softfon — EduX Shlyuz ilovasida.
+          if (Platform.isAndroid) ...<Widget>[
+            const GatewayMovedCard(calls: true),
             const SizedBox(height: AppSpacing.m),
           ],
           if (calls.isEmpty)
@@ -1208,93 +1210,6 @@ class _ScriptsTab extends StatelessWidget {
           },
         );
       },
-    );
-  }
-}
-
-// ---------------------------------------------------------------------------
-// 3.38: telefon orqali — shu telefon SIM kartasidan qo'ng'iroqlar jurnalga yoziladi, vebdan raqam teriladi
-// ---------------------------------------------------------------------------
-
-class _PhoneModeCard extends StatefulWidget {
-  const _PhoneModeCard();
-
-  @override
-  State<_PhoneModeCard> createState() => _PhoneModeCardState();
-}
-
-class _PhoneModeCardState extends State<_PhoneModeCard> {
-  bool _busy = false;
-
-  static const Map<String, String> _labels = <String, String>{
-    'call_log': "Qo'ng'iroqlar jurnali",
-    'phone_state': 'Jiringlashni bilish',
-    'call_phone': 'Avtomatik terish',
-  };
-
-  Future<void> _toggle(bool value) async {
-    final service = CallPhoneService.instance;
-    setState(() => _busy = true);
-    try {
-      if (value) {
-        await service.enable(AppScope.read(context));
-        if (mounted) showMessage(context, tr("Telefon orqali yoqildi: qo'ng'iroqlar endi o'zi yoziladi."));
-      } else {
-        await service.disable();
-      }
-    } catch (e) {
-      if (mounted) showMessage(context, errorText(e), error: true, actionLabel: tr('Sozlamalar'), onAction: service.openAppSettings);
-    } finally {
-      if (mounted) setState(() => _busy = false);
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final service = CallPhoneService.instance;
-    return ListenableBuilder(
-      listenable: service,
-      builder: (context, _) => AppCard(
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
-          SwitchListTile(
-            contentPadding: EdgeInsets.zero,
-            value: service.enabled,
-            onChanged: _busy ? null : _toggle,
-            title: Text(tr('Telefon orqali'), style: const TextStyle(fontWeight: FontWeight.w600)),
-            subtitle: Text(tr("Shu telefon SIM kartasidan qilingan va kelgan qo'ng'iroqlar o'zi jurnalga va lid yoki o'quvchi kartasiga yoziladi; vebdagi «Qo'ng'iroq» tugmasi raqamni shu telefonda teradi.")),
-          ),
-          if (service.enabled) ...<Widget>[
-            Text(
-              tr("Yozildi: {0} · navbatda: {1}", <Object?>[service.logged, service.pending]),
-              style: TextStyle(color: AppColors.muted, fontSize: 13),
-            ),
-            if (service.log == 'crm')
-              Padding(
-                padding: const EdgeInsets.only(top: AppSpacing.xs),
-                child: Text(tr("Faqat CRM'dagi raqamlar va EduX'dan terilganlar yoziladi."), style: TextStyle(color: AppColors.muted, fontSize: 13)),
-              ),
-            if (service.lastError != null)
-              Padding(
-                padding: const EdgeInsets.only(top: AppSpacing.xs),
-                child: Text(service.lastError!, style: TextStyle(color: AppColors.warning, fontSize: 13)),
-              ),
-          ],
-          if (service.stopped)
-            Text(tr("Telefon orqali ish to'xtadi (kirish tugagan yoki rahbar o'chirgan). Qayta yoqing."), style: TextStyle(color: AppColors.warning, fontSize: 13)),
-          const SizedBox(height: AppSpacing.s),
-          Wrap(spacing: AppSpacing.m, runSpacing: AppSpacing.xs, children: <Widget>[
-            for (final entry in _labels.entries)
-              Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
-                Icon(service.permissions[entry.key] == true ? Icons.check_circle_outline : Icons.remove_circle_outline,
-                    size: 16, color: service.permissions[entry.key] == true ? AppColors.success : AppColors.muted),
-                const SizedBox(width: 4),
-                Text(tr(entry.value), style: const TextStyle(fontSize: 13)),
-              ]),
-          ]),
-          const SizedBox(height: AppSpacing.xs),
-          Text(tr("Suhbat yozib olinmaydi — Android buni oddiy ilovalarga ruxsat bermaydi."), style: TextStyle(color: AppColors.muted, fontSize: 12)),
-        ]),
-      ),
     );
   }
 }

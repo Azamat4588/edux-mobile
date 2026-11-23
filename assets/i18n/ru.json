@@ -4822,5 +4822,10 @@
 "Telefon orqali yoqildi: qo'ng'iroqlar endi o'zi yoziladi.": "Режим «Через телефон» включён: звонки теперь записываются сами.",
 "Yozildi: {0}": "Записано: {0}",
 "Yozildi: {0} · navbatda: {1}": "Записано: {0} · в очереди: {1}",
-"{0} raqamini terish uchun bosing": "Нажмите, чтобы набрать {0}"
+"{0} raqamini terish uchun bosing": "Нажмите, чтобы набрать {0}",
+"EduX Shlyuz ilovasi": "Приложение EduX Шлюз",
+"Qo'ng'iroqlarni telefon orqali yozish, SIP softfon va qayta qo'ng'iroqlar endi alohida EduX Shlyuz ilovasida. U telefon qulflanganda ham uzilmaydi.": "Запись звонков через телефон, SIP-софтфон и перезвоны теперь в отдельном приложении EduX Шлюз. Оно не отключается, когда телефон заблокирован.",
+"SMS'ni telefon orqali yuborish va bank SMS'lari endi alohida EduX Shlyuz ilovasida. U telefon qulflanganda ham uzilmaydi.": "Отправка SMS через телефон и банковские SMS теперь в отдельном приложении EduX Шлюз. Оно не отключается, когда телефон заблокирован.",
+"1. Ilovani o'rnating. 2. Vebda SMS sahifasi yoki Sozlamalar → Call markazda «Ulash kodini yaratish». 3. Ilovada QR kodni skanerlang.": "1. Установите приложение. 2. В вебе на странице SMS или в Настройках → Колл-центр нажмите «Создать код подключения». 3. Отсканируйте QR-код в приложении.",
+"EduX Shlyuz ilovasini yuklab olish": "Скачать приложение EduX Шлюз"
 }

@@ -1,6 +1,7 @@
 // Asosiy oyna (3.4): menyu veb menyusi tartibida (lib/core/nav.dart ← resources/js/nav/build.js), pastki navigatsiya —
 // vebdagi `bottomNav()`: menyuning birinchi 4 bo'limi + «Yana» (qolgan bo'limlar, til, rejim, chiqish). Bo'lim ichida bir
 // nechta yorliq bo'lsa — tepada yorliqlar (veb: SectionTabs). Ota-onada bitta bo'lim — pastki menyuda uning yorliqlari.
+import 'dart:async';
 import 'package:flutter/material.dart';
 
 import '../chat/chat_pages.dart';
@@ -24,7 +25,7 @@ import '../../core/widgets.dart';
 import '../auth/organization_picker.dart';
 import '../access/checkin_page.dart';
 import '../access/kiosk_page.dart';
-import '../access/sms_gateway_page.dart';
+import '../access/gateway_moved_page.dart';
 import '../billing/billing_page.dart';
 import '../callcenter/callcenter_page.dart';
 import '../crm/device_sms_page.dart';
@@ -111,23 +112,13 @@ class _HomeShellState extends State<HomeShell> with WidgetsBindingObserver {
     NotificationStore.instance.load();
     PushService.instance.onHome = _home;
     _registerRoutes();
-    // Jim xabar: navbatda telefon orqali yuboriladigan SMS bor (scope=platform — platforma navbati).
-    PushService.instance.dataHandlers['sms_gateway'] = (data) {
-      if (asText(data['scope']) == 'platform') {
-        SmsGatewayService.platform.poke();
-      } else {
-        SmsGatewayService.organization.poke();
-      }
-    };
-    // 3.38: vebdan «Qo'ng'iroq» bosildi — telefon orqali call markaz xizmati raqamni darhol tersin.
-    PushService.instance.dataHandlers['call_dial'] = (data) => CallPhoneService.instance.poke();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
       final session = AppScope.read(context);
-      CallPhoneService.instance.resume(session);
-      SmsGatewayService.organization.resume(session);
-      SmsGatewayService.platform.resume(session);
-      BankSmsForwarder.instance.resume(session);
+      // 3.39: SMS shlyuz, bank SMS va «Telefon orqali» — EduX Shlyuz ilovasida; eski o'rnatishdagi fon xizmatlari to'xtatiladi.
+      unawaited(SmsGatewayService.stopAll());
+      unawaited(CallPhoneService.stopAll());
+      unawaited(BankSmsForwarder.instance.disable());
       // Yangi versiya chiqqan bo'lsa (server «Ilovalar» sozlamasi) — kuniga bir marta taklif.
       AppUpdate.maybeNotify(context, session.api);
       if (session.memberships.isNotEmpty) refreshChatUnread(session.api);
@@ -251,7 +242,6 @@ class _HomeShellState extends State<HomeShell> with WidgetsBindingObserver {
     if (session.contextFromCache) {
       session.loadContext().catchError((Object _) {});
     }
-    BankSmsForwarder.instance.drain();
   }
 
   void _go(String key) => setState(() {
@@ -307,11 +297,11 @@ class _HomeShellState extends State<HomeShell> with WidgetsBindingObserver {
       case 'crm.callcenter':
         return const CallCenterPage();
       case 'sms.gateway':
-        return const SmsGatewayPage();
+        return const GatewayMovedPage();
       case 'sms.device':
         return const DeviceSmsPage();
       case 'platform.sms':
-        return const SmsGatewayPage(platform: true);
+        return const GatewayMovedPage();
       // 3.11: platforma egasi paneli.
       case 'platform.dashboard':
         return const PlatformDashboardPage();

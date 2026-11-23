@@ -16,7 +16,9 @@ import 'dart:io';
 const String iosMinimum = '15.0';
 
 void main(List<String> args) {
-  if (!args.contains('--ios')) _android(store: args.contains('--store'));
+  // 3.39: SMS shlyuz, bank SMS va «Telefon orqali» — alohida EduX Shlyuz ilovasida (gateway/). Asosiy ilova hamma
+  // nusxada (sayt APK ham) SMS/qo'ng'iroq ruxsatlarisiz va fon xizmatlarisiz yig'iladi — do'kon nusxasi bilan bir xil.
+  if (!args.contains('--ios')) _android(store: true);
   _ios();
   stdout.writeln('EduX: platforma sozlamalari tayyor.');
 }

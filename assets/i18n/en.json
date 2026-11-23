@@ -4822,5 +4822,10 @@
 "Telefon orqali yoqildi: qo'ng'iroqlar endi o'zi yoziladi.": "Via phone is on: calls are now logged automatically.",
 "Yozildi: {0}": "Logged: {0}",
 "Yozildi: {0} · navbatda: {1}": "Logged: {0} · queued: {1}",
-"{0} raqamini terish uchun bosing": "Tap to dial {0}"
+"{0} raqamini terish uchun bosing": "Tap to dial {0}",
+"EduX Shlyuz ilovasi": "EduX Gateway app",
+"Qo'ng'iroqlarni telefon orqali yozish, SIP softfon va qayta qo'ng'iroqlar endi alohida EduX Shlyuz ilovasida. U telefon qulflanganda ham uzilmaydi.": "Logging calls via the phone, the SIP softphone and callbacks now live in the separate EduX Gateway app. It keeps working when the phone is locked.",
+"SMS'ni telefon orqali yuborish va bank SMS'lari endi alohida EduX Shlyuz ilovasida. U telefon qulflanganda ham uzilmaydi.": "Sending SMS via the phone and bank SMS now live in the separate EduX Gateway app. It keeps working when the phone is locked.",
+"1. Ilovani o'rnating. 2. Vebda SMS sahifasi yoki Sozlamalar → Call markazda «Ulash kodini yaratish». 3. Ilovada QR kodni skanerlang.": "1. Install the app. 2. On the web, open the SMS page or Settings → Call center and click «Create connection code». 3. Scan the QR code in the app.",
+"EduX Shlyuz ilovasini yuklab olish": "Download the EduX Gateway app"
 }
