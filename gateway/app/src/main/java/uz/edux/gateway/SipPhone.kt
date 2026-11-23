@@ -120,7 +120,6 @@ object SipPhone {
             appContext = app
             try {
                 val factory = Factory.instance()
-                factory.setDebugMode(false, "EduXSip")
                 val created = factory.createCore(null, null, app)
                 created.isVideoCaptureEnabled = false
                 created.isVideoDisplayEnabled = false
