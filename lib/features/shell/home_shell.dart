@@ -17,6 +17,7 @@ import '../../core/nav.dart';
 import '../../core/notification_store.dart';
 import '../../core/push.dart';
 import '../../core/session.dart';
+import '../../core/call_phone.dart';
 import '../../core/sms_gateway.dart';
 import '../../core/theme.dart';
 import '../../core/widgets.dart';
@@ -118,9 +119,12 @@ class _HomeShellState extends State<HomeShell> with WidgetsBindingObserver {
         SmsGatewayService.organization.poke();
       }
     };
+    // 3.38: vebdan «Qo'ng'iroq» bosildi — telefon orqali call markaz xizmati raqamni darhol tersin.
+    PushService.instance.dataHandlers['call_dial'] = (data) => CallPhoneService.instance.poke();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
       final session = AppScope.read(context);
+      CallPhoneService.instance.resume(session);
       SmsGatewayService.organization.resume(session);
       SmsGatewayService.platform.resume(session);
       BankSmsForwarder.instance.resume(session);

@@ -17,6 +17,7 @@ import 'i18n.dart';
 import 'notification_store.dart';
 import 'offline_cache.dart';
 import 'push.dart';
+import 'call_phone.dart';
 import 'sms_gateway.dart';
 import 'theme.dart';
 import 'webview_guard.dart';
@@ -740,6 +741,7 @@ class Session extends ChangeNotifier implements ApiCredentials {
     if (_token != null) {
       // 3.12: SMS shlyuz fon xizmati shu token bilan ishlaydi — chiqishda to'xtaydi.
       await SmsGatewayService.stopAll();
+      await CallPhoneService.stopAll();
       await PushService.instance.detach(this);
       try {
         await api.post('auth/logout');
@@ -756,6 +758,7 @@ class Session extends ChangeNotifier implements ApiCredentials {
   Future<String> deleteAccount({required String confirm, String? password}) async {
     final data = asMap(await api.deleteJson('profile', <String, Object?>{'confirm': confirm, if (password != null && password.isNotEmpty) 'password': password}));
     await SmsGatewayService.stopAll();
+    await CallPhoneService.stopAll();
     try {
       await PushService.instance.detach(this);
     } catch (_) {

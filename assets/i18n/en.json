@@ -4807,5 +4807,20 @@
 "Sizga yuborilgan — qabul qiling": "Sent to you — please receive",
 "Yo'ldagi pul": "Money in transit",
 "Yo'ldagi pul (filiallar orasida)": "Money in transit (between branches)",
-"limitdan oshdi": "over limit"
+"limitdan oshdi": "over limit",
+"Avtomatik terish": "Auto-dial",
+"EduX: qo'ng'iroq qiling": "EduX: make a call",
+"EduX: qo'ng'iroqlar yozilmoqda": "EduX: calls are being logged",
+"Faqat CRM'dagi raqamlar va EduX'dan terilganlar yoziladi.": "Only CRM numbers and numbers dialed from EduX are logged.",
+"Jiringlashni bilish": "Detect ringing",
+"Qo'ng'iroqlar jurnali": "Call log",
+"Qo'ng'iroqlar jurnali va telefon holati ruxsatlarisiz telefon orqali ishlab bo'lmaydi.": "Via phone mode cannot work without the call log and phone state permissions.",
+"Shu telefon SIM kartasidan qilingan va kelgan qo'ng'iroqlar o'zi jurnalga va lid yoki o'quvchi kartasiga yoziladi; vebdagi «Qo'ng'iroq» tugmasi raqamni shu telefonda teradi.": "Calls made and received with this phone's SIM card are logged automatically to the journal and the lead or student card; the «Call» button on the web dials the number on this phone.",
+"Suhbat yozib olinmaydi — Android buni oddiy ilovalarga ruxsat bermaydi.": "Conversations are not recorded — Android does not allow this for regular apps.",
+"Telefon orqali": "Via phone",
+"Telefon orqali ish to'xtadi (kirish tugagan yoki rahbar o'chirgan). Qayta yoqing.": "Via phone mode stopped (sign-in expired or a manager turned it off). Turn it on again.",
+"Telefon orqali yoqildi: qo'ng'iroqlar endi o'zi yoziladi.": "Via phone is on: calls are now logged automatically.",
+"Yozildi: {0}": "Logged: {0}",
+"Yozildi: {0} · navbatda: {1}": "Logged: {0} · queued: {1}",
+"{0} raqamini terish uchun bosing": "Tap to dial {0}"
 }

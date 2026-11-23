@@ -4807,5 +4807,20 @@
 "Sizga yuborilgan — qabul qiling": "Отправлено вам — примите",
 "Yo'ldagi pul": "Деньги в пути",
 "Yo'ldagi pul (filiallar orasida)": "Деньги в пути (между филиалами)",
-"limitdan oshdi": "превышен лимит"
+"limitdan oshdi": "превышен лимит",
+"Avtomatik terish": "Автонабор",
+"EduX: qo'ng'iroq qiling": "EduX: позвоните",
+"EduX: qo'ng'iroqlar yozilmoqda": "EduX: звонки записываются в журнал",
+"Faqat CRM'dagi raqamlar va EduX'dan terilganlar yoziladi.": "Записываются только номера из CRM и набранные из EduX.",
+"Jiringlashni bilish": "Определение входящего",
+"Qo'ng'iroqlar jurnali": "Журнал звонков",
+"Qo'ng'iroqlar jurnali va telefon holati ruxsatlarisiz telefon orqali ishlab bo'lmaydi.": "Без разрешений на журнал звонков и состояние телефона режим «Через телефон» не работает.",
+"Shu telefon SIM kartasidan qilingan va kelgan qo'ng'iroqlar o'zi jurnalga va lid yoki o'quvchi kartasiga yoziladi; vebdagi «Qo'ng'iroq» tugmasi raqamni shu telefonda teradi.": "Звонки с SIM-карты этого телефона — исходящие и входящие — сами записываются в журнал и в карточку лида или ученика; кнопка «Позвонить» в вебе набирает номер на этом телефоне.",
+"Suhbat yozib olinmaydi — Android buni oddiy ilovalarga ruxsat bermaydi.": "Разговор не записывается — Android не разрешает это обычным приложениям.",
+"Telefon orqali": "Через телефон",
+"Telefon orqali ish to'xtadi (kirish tugagan yoki rahbar o'chirgan). Qayta yoqing.": "Режим «Через телефон» остановлен (вход истёк или руководитель отключил). Включите снова.",
+"Telefon orqali yoqildi: qo'ng'iroqlar endi o'zi yoziladi.": "Режим «Через телефон» включён: звонки теперь записываются сами.",
+"Yozildi: {0}": "Записано: {0}",
+"Yozildi: {0} · navbatda: {1}": "Записано: {0} · в очереди: {1}",
+"{0} raqamini terish uchun bosing": "Нажмите, чтобы набрать {0}"
 }

@@ -29,6 +29,10 @@ const List<String> storeRemoved = <String>[
   'android.permission.FOREGROUND_SERVICE_SPECIAL_USE',
   'android.permission.RECEIVE_BOOT_COMPLETED',
   'android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS',
+  // 3.38: telefon orqali call markaz — Play faqat standart telefon ilovasiga qo'ng'iroqlar jurnalini beradi.
+  'android.permission.READ_CALL_LOG',
+  'android.permission.READ_PHONE_STATE',
+  'android.permission.CALL_PHONE',
 ];
 
 void _android({bool store = false}) {
@@ -52,6 +56,9 @@ void _android({bool store = false}) {
     'android.permission.POST_NOTIFICATIONS',
     'android.permission.RECEIVE_BOOT_COMPLETED',
     'android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS',
+    'android.permission.READ_CALL_LOG',
+    'android.permission.READ_PHONE_STATE',
+    'android.permission.CALL_PHONE',
   ];
   for (final permission in permissions) {
     if (store && storeRemoved.contains(permission)) continue;
@@ -89,6 +96,16 @@ void _android({bool store = false}) {
                 <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
             </intent-filter>
         </receiver>
+''';
+    text = text.replaceFirst('</application>', '$service    </application>');
+  }
+  // 3.38: telefon orqali call markaz fon xizmati.
+  if (!store && !text.contains('.CallGatewayService')) {
+    const service = '''
+        <service android:name=".CallGatewayService" android:exported="false" android:foregroundServiceType="specialUse">
+            <property android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="Logs the organization's work calls made and received on this phone (number, duration, result) to the user's CRM and dials numbers the user starts from the EduX website, while the user keeps call center mode switched on." />
+        </service>
 ''';
     text = text.replaceFirst('</application>', '$service    </application>');
   }
@@ -149,6 +166,7 @@ String _stripForStore(String text) {
   }
   text = text.replaceAll(RegExp(r'\s*<receiver android:name="\.BankSmsReceiver".*?</receiver>', dotAll: true), '');
   text = text.replaceAll(RegExp(r'\s*<service android:name="\.SmsGatewayService".*?</service>', dotAll: true), '');
+  text = text.replaceAll(RegExp(r'\s*<service android:name="\.CallGatewayService".*?</service>', dotAll: true), '');
   text = text.replaceAll(RegExp(r'\s*<receiver android:name="\.GatewayBootReceiver".*?</receiver>', dotAll: true), '');
   if (!text.contains('xmlns:tools=')) {
     text = text.replaceFirst('<manifest ', '<manifest xmlns:tools="http://schemas.android.com/tools" ');
@@ -190,7 +208,7 @@ void _mainActivity() {
   if (file.path.isEmpty) return;
   final original = file.readAsStringSync();
   final package = RegExp(r'^package\s+([\w.]+)', multiLine: true).firstMatch(original)?.group(1) ?? 'uz.edux.app';
-  if (!original.contains('gatewayStatus')) {
+  if (!original.contains('callsStatus')) {
     file.writeAsStringSync(_mainActivitySource.replaceAll('__PACKAGE__', package));
     stdout.writeln('  android: MainActivity.kt (SMS kanali, bank SMS)');
   }
@@ -199,6 +217,8 @@ void _mainActivity() {
   stdout.writeln('  android: BankSmsReceiver.kt');
   File('${file.parent.path}/SmsGatewayService.kt').writeAsStringSync(_gatewayServiceSource.replaceAll('__PACKAGE__', package));
   stdout.writeln('  android: SmsGatewayService.kt (SMS shlyuz fon xizmati)');
+  File('${file.parent.path}/CallGatewayService.kt').writeAsStringSync(_callServiceSource.replaceAll('__PACKAGE__', package));
+  stdout.writeln('  android: CallGatewayService.kt (telefon orqali call markaz)');
 }
 
 const String _mainActivitySource = r'''
@@ -233,6 +253,8 @@ class MainActivity : FlutterActivity() {
     private val receivePermissionCode = 4712
     private var pendingPermission: MethodChannel.Result? = null
     private var pendingReceive: MethodChannel.Result? = null
+    private val callPermissionCode = 4714
+    private var pendingCalls: MethodChannel.Result? = null
     private val requestIds = AtomicInteger(1)
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
@@ -291,6 +313,33 @@ class MainActivity : FlutterActivity() {
                     result.success(true)
                 }
                 "gatewayStatus" -> result.success(SmsGatewayService.status(this, call.argument<String>("scope") ?: "organization"))
+                // 3.38: telefon orqali call markaz (CallGatewayService.kt).
+                "callPermissions" -> result.success(CallGatewayService.permissions(this))
+                "requestCallPermissions" -> {
+                    val missing = arrayOf(Manifest.permission.READ_CALL_LOG, Manifest.permission.READ_PHONE_STATE, Manifest.permission.CALL_PHONE)
+                        .filter { checkSelfPermission(it) != PackageManager.PERMISSION_GRANTED }
+                    if (missing.isEmpty()) {
+                        result.success(true)
+                    } else {
+                        pendingCalls?.success(false)
+                        pendingCalls = result
+                        requestPermissions(missing.toTypedArray(), callPermissionCode)
+                    }
+                }
+                "callsStart" -> {
+                    CallGatewayService.configure(this, call.argument<String>("config"))
+                    CallGatewayService.start(this)
+                    result.success(true)
+                }
+                "callsStop" -> {
+                    CallGatewayService.stop(this)
+                    result.success(true)
+                }
+                "callsPoke" -> {
+                    CallGatewayService.poke(this)
+                    result.success(true)
+                }
+                "callsStatus" -> result.success(CallGatewayService.status(this))
                 "batteryOptimized" -> {
                     val power = getSystemService(Context.POWER_SERVICE) as android.os.PowerManager
                     result.success(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !power.isIgnoringBatteryOptimizations(packageName))
@@ -410,6 +459,10 @@ class MainActivity : FlutterActivity() {
         if (requestCode == receivePermissionCode) {
             pendingReceive?.success(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)
             pendingReceive = null
+        }
+        if (requestCode == callPermissionCode) {
+            pendingCalls?.success(grantResults.isNotEmpty() && grantResults.all { it == PackageManager.PERMISSION_GRANTED })
+            pendingCalls = null
         }
     }
 }
@@ -1077,6 +1130,491 @@ class SmsGatewayService : Service() {
 class GatewayBootReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         if (SmsGatewayService.queues(context).length() > 0) SmsGatewayService.start(context)
+        if (CallGatewayService.config(context) != null) CallGatewayService.start(context)
+    }
+}
+''';
+
+/// 3.38: telefon orqali call markaz — telefon holati, qo'ng'iroqlar jurnali, vebdan terish.
+const String _callServiceSource = r'''
+package __PACKAGE__
+
+import android.Manifest
+import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.app.Service
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
+import android.content.pm.PackageManager
+import android.content.pm.ServiceInfo
+import android.net.Uri
+import android.os.Build
+import android.os.Bundle
+import android.os.Handler
+import android.os.IBinder
+import android.os.Looper
+import android.os.PowerManager
+import android.provider.CallLog
+import android.telecom.TelecomManager
+import android.telephony.TelephonyManager
+import org.json.JSONArray
+import org.json.JSONObject
+import java.io.OutputStreamWriter
+import java.net.HttpURLConnection
+import java.net.URL
+import java.net.URLEncoder
+
+/**
+ * 3.38: «Telefon orqali» call markaz. Telefon holatini kuzatadi (jiringlash → ko'tarildi → tugadi), tugagach
+ * qo'ng'iroqlar jurnalidan raqam, davomiylik va natijani olib serverga yuboradi (internet bo'lmasa navbatda saqlaydi);
+ * vebdan «Qo'ng'iroq» bosilsa raqamni teradi (CALL_PHONE bo'lsa — TelecomManager.placeCall, aks holda bildirishnoma).
+ */
+class CallGatewayService : Service() {
+    companion object {
+        private const val PREFS = "edux_call_gateway"
+        private const val CHANNEL = "edux_call_gateway"
+        private const val DIAL_CHANNEL = "edux_call_dial"
+        private const val NOTIFICATION_ID = 4802
+        private const val DIAL_NOTIFICATION_ID = 4803
+        private const val ACTION_POKE = "uz.edux.CALLS_POKE"
+        private const val MAX_PENDING = 500
+
+        private fun prefs(context: Context) = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
+
+        fun config(context: Context): JSONObject? {
+            val raw = prefs(context).getString("config", null) ?: return null
+            return try { JSONObject(raw) } catch (_: Exception) { null }
+        }
+
+        @Synchronized
+        fun configure(context: Context, config: String?) {
+            val edit = prefs(context).edit()
+            if (config == null) edit.remove("config") else edit.putString("config", config)
+            edit.apply()
+            if (config != null) {
+                val status = JSONObject(status(context))
+                status.remove("stopped")
+                status.remove("last_error")
+                saveStatus(context, status)
+            }
+        }
+
+        fun status(context: Context): String = prefs(context).getString("status", "{}") ?: "{}"
+
+        @Synchronized
+        fun saveStatus(context: Context, status: JSONObject) {
+            prefs(context).edit().putString("status", status.toString()).apply()
+        }
+
+        @Synchronized
+        fun pending(context: Context): JSONArray = try { JSONArray(prefs(context).getString("pending", "[]") ?: "[]") } catch (_: Exception) { JSONArray() }
+
+        @Synchronized
+        fun savePending(context: Context, events: JSONArray) {
+            prefs(context).edit().putString("pending", events.toString()).apply()
+        }
+
+        @Synchronized
+        fun enqueue(context: Context, event: JSONObject) {
+            val events = pending(context)
+            events.put(event)
+            // Uzoq internet yo'q bo'lsa — eng eskilari tashlanadi.
+            while (events.length() > MAX_PENDING) events.remove(0)
+            savePending(context, events)
+        }
+
+        fun granted(context: Context, permission: String): Boolean =
+            context.checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED
+
+        fun permissions(context: Context): Map<String, Boolean> = mapOf(
+            "call_log" to granted(context, Manifest.permission.READ_CALL_LOG),
+            "phone_state" to granted(context, Manifest.permission.READ_PHONE_STATE),
+            "call_phone" to granted(context, Manifest.permission.CALL_PHONE),
+        )
+
+        fun start(context: Context) {
+            val intent = Intent(context, CallGatewayService::class.java)
+            try {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) context.startForegroundService(intent) else context.startService(intent)
+            } catch (_: Exception) {
+                // Fonda ishga tushirishga ruxsat bo'lmasa — ilova ochilganda qayta urinadi.
+            }
+        }
+
+        fun poke(context: Context) {
+            try {
+                context.startService(Intent(context, CallGatewayService::class.java).setAction(ACTION_POKE))
+            } catch (_: Exception) {}
+        }
+
+        fun stop(context: Context) {
+            configure(context, null)
+            try { context.stopService(Intent(context, CallGatewayService::class.java)) } catch (_: Exception) {}
+        }
+    }
+
+    /** Joriy qo'ng'iroq (telefon holatidan). */
+    private class Current(val id: String, val direction: String, var number: String?, val startedAt: Long) {
+        var answeredAt: Long = 0
+        var ringingSent = false
+    }
+
+    @Volatile private var stopping = false
+    private var worker: Thread? = null
+    private val signal = Object()
+    private var wakeLock: PowerManager.WakeLock? = null
+    private var current: Current? = null
+    private var lastDialNumber: String? = null
+    private var lastDialAt: Long = 0
+    private var pollMs: Long = 30000
+    private val main = Handler(Looper.getMainLooper())
+
+    private val stateReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            val state = intent?.getStringExtra(TelephonyManager.EXTRA_STATE) ?: return
+            @Suppress("DEPRECATION")
+            val number = intent?.getStringExtra(TelephonyManager.EXTRA_INCOMING_NUMBER)
+            onState(state, number)
+        }
+    }
+
+    override fun onBind(intent: Intent?): IBinder? = null
+
+    override fun onCreate() {
+        super.onCreate()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val manager = getSystemService(NotificationManager::class.java)
+            manager.createNotificationChannel(NotificationChannel(CHANNEL, "Call markaz", NotificationManager.IMPORTANCE_LOW))
+            manager.createNotificationChannel(NotificationChannel(DIAL_CHANNEL, "Qo'ng'iroq qilish", NotificationManager.IMPORTANCE_HIGH))
+        }
+        val filter = IntentFilter(TelephonyManager.ACTION_PHONE_STATE_CHANGED)
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                registerReceiver(stateReceiver, filter, Context.RECEIVER_EXPORTED)
+            } else {
+                @Suppress("UnspecifiedRegisterReceiverFlag")
+                registerReceiver(stateReceiver, filter)
+            }
+        } catch (_: Exception) {}
+    }
+
+    private fun texts(): JSONObject = config(this)?.optJSONObject("texts") ?: JSONObject()
+
+    private fun notification(): Notification {
+        val texts = texts()
+        val logged = JSONObject(status(this)).optInt("logged")
+        val builder = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) Notification.Builder(this, CHANNEL) else @Suppress("DEPRECATION") Notification.Builder(this)
+        val launch = packageManager.getLaunchIntentForPackage(packageName)
+        if (launch != null) {
+            builder.setContentIntent(PendingIntent.getActivity(this, 1, launch, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE))
+        }
+        return builder.setSmallIcon(applicationInfo.icon)
+            .setContentTitle(texts.optString("title", "EduX: qo'ng'iroqlar yozilmoqda"))
+            .setContentText(texts.optString("body", "Yozildi: {0}").replace("{0}", logged.toString()))
+            .setOngoing(true).build()
+    }
+
+    private fun refreshNotification() {
+        try {
+            (getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager).notify(NOTIFICATION_ID, notification())
+        } catch (_: Exception) {}
+    }
+
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        try {
+            val note = notification()
+            if (Build.VERSION.SDK_INT >= 34) startForeground(NOTIFICATION_ID, note, ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE)
+            else startForeground(NOTIFICATION_ID, note)
+        } catch (_: Exception) {
+            stopSelf()
+            return START_NOT_STICKY
+        }
+        if (config(this) == null) {
+            stopForegroundCompat()
+            stopSelf()
+            return START_NOT_STICKY
+        }
+        if (wakeLock == null) {
+            wakeLock = (getSystemService(Context.POWER_SERVICE) as PowerManager)
+                .newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "edux:call-gateway").apply { setReferenceCounted(false) }
+        }
+        if (worker?.isAlive != true) {
+            stopping = false
+            worker = Thread({ loop() }, "edux-call-gateway").also { it.start() }
+        }
+        synchronized(signal) { signal.notifyAll() }
+        return START_STICKY
+    }
+
+    @Suppress("DEPRECATION")
+    private fun stopForegroundCompat() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) stopForeground(Service.STOP_FOREGROUND_REMOVE) else stopForeground(true)
+    }
+
+    override fun onDestroy() {
+        stopping = true
+        synchronized(signal) { signal.notifyAll() }
+        try { unregisterReceiver(stateReceiver) } catch (_: Exception) {}
+        try { wakeLock?.release() } catch (_: Exception) {}
+        super.onDestroy()
+    }
+
+    override fun onTaskRemoved(rootIntent: Intent?) {
+        if (config(this) != null) start(this)
+        super.onTaskRemoved(rootIntent)
+    }
+
+    // --- Telefon holati ---
+
+    private fun clean(number: String?): String? {
+        val value = number?.filter { it.isDigit() || it == '+' }
+        return if (value.isNullOrEmpty()) null else value
+    }
+
+    private fun event(call: Current, phase: String): JSONObject {
+        val row = JSONObject().put("id", call.id).put("phase", phase).put("direction", call.direction)
+        if (call.number != null) row.put("phone", call.number)
+        return row
+    }
+
+    @Synchronized
+    private fun onState(state: String, rawNumber: String?) {
+        val now = System.currentTimeMillis()
+        val number = clean(rawNumber)
+        when (state) {
+            TelephonyManager.EXTRA_STATE_RINGING -> {
+                val call = current ?: Current(now.toString(), "in", number, now).also { current = it }
+                if (call.number == null && number != null) call.number = number
+                if (!call.ringingSent && call.number != null) {
+                    call.ringingSent = true
+                    enqueue(this, event(call, "ringing"))
+                    wake()
+                }
+            }
+            TelephonyManager.EXTRA_STATE_OFFHOOK -> {
+                var call = current
+                if (call == null) {
+                    // Jiringlashsiz ko'tarilish — chiquvchi qo'ng'iroq (raqam: vebdan terilgan bo'lsa ma'lum, aks holda jurnaldan).
+                    val dialed = if (now - lastDialAt < 60000) lastDialNumber else null
+                    call = Current(now.toString(), "out", dialed, now)
+                    current = call
+                }
+                if (call.answeredAt == 0L) {
+                    call.answeredAt = now
+                    if (call.number != null) {
+                        enqueue(this, event(call, if (call.direction == "in") "talking" else "ringing"))
+                        wake()
+                    }
+                }
+            }
+            TelephonyManager.EXTRA_STATE_IDLE -> {
+                val call = current ?: return
+                current = null
+                // Qo'ng'iroqlar jurnali yozilishiga ulgursin.
+                main.postDelayed({ Thread { finish(call, now) }.start() }, 2500)
+            }
+        }
+    }
+
+    private fun finish(call: Current, endedAt: Long) {
+        val row = event(call, "end")
+        var number = call.number
+        var direction = call.direction
+        var duration = if (call.answeredAt > 0) ((endedAt - call.answeredAt) / 1000).toInt() else 0
+        var result = if (call.answeredAt > 0) "answered" else "no_answer"
+        val log = readCallLog(call.startedAt - 15000)
+        if (log != null) {
+            number = log.optString("number").ifEmpty { number }
+            direction = log.optString("direction", direction)
+            duration = log.optInt("duration", duration)
+            result = log.optString("result", result)
+        }
+        if (number == null) return // raqamsiz (yashirin raqam) — yozilmaydi
+        row.put("phone", number).put("direction", direction).put("duration", duration).put("result", result)
+        enqueue(this, row)
+        wake()
+    }
+
+    /** Qo'ng'iroqlar jurnalidagi shu qo'ng'iroq (since dan keyingi eng yangisi). */
+    private fun readCallLog(since: Long): JSONObject? {
+        if (!granted(this, Manifest.permission.READ_CALL_LOG)) return null
+        return try {
+            contentResolver.query(
+                CallLog.Calls.CONTENT_URI,
+                arrayOf(CallLog.Calls.NUMBER, CallLog.Calls.TYPE, CallLog.Calls.DURATION),
+                "${CallLog.Calls.DATE} >= ?", arrayOf(since.toString()), "${CallLog.Calls.DATE} DESC",
+            )?.use { cursor ->
+                if (!cursor.moveToFirst()) return null
+                val type = cursor.getInt(1)
+                val duration = cursor.getInt(2)
+                val (direction, result) = when (type) {
+                    CallLog.Calls.OUTGOING_TYPE -> "out" to (if (duration > 0) "answered" else "no_answer")
+                    CallLog.Calls.INCOMING_TYPE -> "in" to "answered"
+                    CallLog.Calls.REJECTED_TYPE -> "in" to "rejected"
+                    CallLog.Calls.BLOCKED_TYPE -> return null
+                    else -> "in" to "no_answer" // MISSED, VOICEMAIL
+                }
+                JSONObject().put("number", clean(cursor.getString(0)) ?: "").put("direction", direction).put("duration", duration).put("result", result)
+            }
+        } catch (_: Exception) {
+            null
+        }
+    }
+
+    // --- Server bilan ---
+
+    private fun wake() = synchronized(signal) { signal.notifyAll() }
+
+    private fun loop() {
+        while (!stopping) {
+            val config = config(this) ?: break
+            try { wakeLock?.acquire(60 * 1000L) } catch (_: Exception) {}
+            try {
+                flush(config)
+                poll(config)
+            } catch (e: Exception) {
+                val status = JSONObject(status(this))
+                status.put("last_error", e.message ?: e.javaClass.simpleName)
+                saveStatus(this, status)
+            } finally {
+                try { wakeLock?.release() } catch (_: Exception) {}
+            }
+            if (!stopping) synchronized(signal) { try { signal.wait(pollMs) } catch (_: InterruptedException) {} }
+        }
+        if (!stopping) {
+            stopForegroundCompat()
+            stopSelf()
+        }
+    }
+
+    private class Response(val code: Int, val body: String)
+
+    private fun http(method: String, config: JSONObject, path: String, body: JSONObject? = null): Response {
+        val server = config.optString("server").trimEnd('/')
+        val connection = URL("$server/api/v1/$path").openConnection() as HttpURLConnection
+        try {
+            connection.requestMethod = method
+            connection.connectTimeout = 15000
+            connection.readTimeout = 20000
+            connection.setRequestProperty("Accept", "application/json")
+            connection.setRequestProperty("X-Requested-With", "EduXMobile")
+            connection.setRequestProperty("X-Locale", config.optString("locale", "uz"))
+            connection.setRequestProperty("X-Platform", "android")
+            connection.setRequestProperty("X-Device-Id", config.optString("device_id"))
+            connection.setRequestProperty("X-App-Version", config.optString("app_version"))
+            connection.setRequestProperty("Authorization", "Bearer " + config.optString("token"))
+            val organization = config.optInt("organization", 0)
+            if (organization > 0) connection.setRequestProperty("X-Organization", organization.toString())
+            if (body != null) {
+                connection.doOutput = true
+                connection.setRequestProperty("Content-Type", "application/json")
+                OutputStreamWriter(connection.outputStream, Charsets.UTF_8).use { it.write(body.toString()) }
+            }
+            val code = connection.responseCode
+            val stream = if (code >= 400) connection.errorStream else connection.inputStream
+            return Response(code, stream?.bufferedReader(Charsets.UTF_8)?.use { it.readText() } ?: "")
+        } finally {
+            connection.disconnect()
+        }
+    }
+
+    private fun message(response: Response): String = try { JSONObject(response.body).optString("message", "HTTP ${response.code}") } catch (_: Exception) { "HTTP ${response.code}" }
+
+    /** Kirish tugagan yoki telefon vebda o'chirilgan — xizmat to'xtaydi, ilova ochilganda sabab ko'rinadi. */
+    private fun halt(response: Response) {
+        val status = JSONObject(status(this))
+        status.put("stopped", response.code)
+        status.put("last_error", message(response))
+        saveStatus(this, status)
+        configure(this, null)
+        stopping = true
+    }
+
+    private fun flush(config: JSONObject) {
+        val events = pending(this)
+        if (events.length() == 0) return
+        val batch = JSONArray()
+        for (i in 0 until minOf(50, events.length())) batch.put(events.get(i))
+        val response = http("POST", config, "crm/callcenter/phone/events", JSONObject().put("device_id", config.optString("device_id")).put("events", batch))
+        val status = JSONObject(status(this))
+        if (response.code == 401 || response.code == 403 || response.code == 404) return halt(response)
+        if (response.code == 422) {
+            // Noto'g'ri hodisa — qayta yuborilmaydi (navbat tiqilib qolmasin).
+            status.put("last_error", message(response))
+        } else if (response.code >= 400) {
+            status.put("last_error", message(response))
+            saveStatus(this, status)
+            return
+        } else {
+            val answer = try { JSONObject(response.body) } catch (_: Exception) { JSONObject() }
+            status.put("logged", status.optInt("logged") + answer.optInt("logged"))
+            status.remove("last_error")
+        }
+        synchronized(CallGatewayService.Companion) {
+            val left = JSONArray()
+            val now = pending(this)
+            for (i in batch.length() until now.length()) left.put(now.get(i))
+            savePending(this, left)
+            status.put("pending", left.length())
+        }
+        saveStatus(this, status)
+        refreshNotification()
+        if (status.optInt("pending") > 0) wake()
+    }
+
+    private fun poll(config: JSONObject) {
+        val device = URLEncoder.encode(config.optString("device_id"), "UTF-8")
+        val query = permissions(this).entries.joinToString("") { "&permissions%5B${it.key}%5D=${if (it.value) 1 else 0}" }
+        val response = http("GET", config, "crm/callcenter/phone/next?device_id=$device$query")
+        val status = JSONObject(status(this))
+        status.put("last_poll", System.currentTimeMillis())
+        if (response.code == 401 || response.code == 403 || response.code == 404) return halt(response)
+        if (response.code >= 400) {
+            status.put("last_error", message(response))
+            saveStatus(this, status)
+            return
+        }
+        val data = JSONObject(response.body)
+        pollMs = data.optLong("poll_ms", 30000).coerceIn(3000, 120000)
+        status.put("log", data.optString("log", "all"))
+        status.put("pending", pending(this).length())
+        val dial = data.optJSONObject("dial")
+        if (dial != null) {
+            val phone = dial.optString("phone")
+            if (phone.isNotEmpty()) {
+                dial(phone)
+                status.put("dialed", status.optInt("dialed") + 1)
+            }
+        }
+        saveStatus(this, status)
+    }
+
+    /** Raqamni terish: CALL_PHONE bo'lsa — darhol (TelecomManager), aks holda bildirishnoma — bosilsa terish oynasi. */
+    private fun dial(phone: String) {
+        lastDialNumber = clean(phone)
+        lastDialAt = System.currentTimeMillis()
+        val uri = Uri.fromParts("tel", phone, null)
+        if (granted(this, Manifest.permission.CALL_PHONE) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            try {
+                (getSystemService(Context.TELECOM_SERVICE) as TelecomManager).placeCall(uri, Bundle())
+                return
+            } catch (_: Exception) {}
+        }
+        try {
+            val texts = texts()
+            val tap = PendingIntent.getActivity(this, 2, Intent(Intent.ACTION_DIAL, uri).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+            val builder = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) Notification.Builder(this, DIAL_CHANNEL) else @Suppress("DEPRECATION") Notification.Builder(this)
+            val note = builder.setSmallIcon(applicationInfo.icon)
+                .setContentTitle(texts.optString("dial_title", "EduX: qo'ng'iroq qiling"))
+                .setContentText(texts.optString("dial_body", "{0} raqamini terish uchun bosing").replace("{0}", phone))
+                .setContentIntent(tap).setAutoCancel(true).build()
+            (getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager).notify(DIAL_NOTIFICATION_ID, note)
+        } catch (_: Exception) {}
     }
 }
 ''';
